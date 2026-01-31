@@ -13,43 +13,11 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary>
-    /// A class representing the WcfRelay data model.
-    /// Description of the WCF relay resource.
-    /// </summary>
+    /// <summary> Description of the WCF relay resource. </summary>
     public partial class WcfRelayData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WcfRelayData"/>. </summary>
         public WcfRelayData()
@@ -57,51 +25,128 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Initializes a new instance of <see cref="WcfRelayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isDynamic"> Returns true if the relay is dynamic; otherwise, false. </param>
-        /// <param name="createdOn"> The time the WCF relay was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="listenerCount"> The number of listeners for this relay. Note that min :1 and max:25 are supported. </param>
-        /// <param name="relayType"> WCF relay type. </param>
-        /// <param name="isClientAuthorizationRequired"> Returns true if client authorization is needed for this relay; otherwise, false. </param>
-        /// <param name="isTransportSecurityRequired"> Returns true if transport security is needed for this relay; otherwise, false. </param>
-        /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the WCF relay. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDynamic, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, RelayType? relayType, bool? isClientAuthorizationRequired, bool? isTransportSecurityRequired, string userMetadata, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WcfRelayData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WcfRelayProperties properties, string location) : base(id, name, resourceType, systemData)
         {
-            IsDynamic = isDynamic;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            ListenerCount = listenerCount;
-            RelayType = relayType;
-            IsClientAuthorizationRequired = isClientAuthorizationRequired;
-            IsTransportSecurityRequired = isTransportSecurityRequired;
-            UserMetadata = userMetadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Returns true if the relay is dynamic; otherwise, false. </summary>
-        public bool? IsDynamic { get; }
-        /// <summary> The time the WCF relay was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The time the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> The number of listeners for this relay. Note that min :1 and max:25 are supported. </summary>
-        public int? ListenerCount { get; }
-        /// <summary> WCF relay type. </summary>
-        public RelayType? RelayType { get; set; }
-        /// <summary> Returns true if client authorization is needed for this relay; otherwise, false. </summary>
-        public bool? IsClientAuthorizationRequired { get; set; }
-        /// <summary> Returns true if transport security is needed for this relay; otherwise, false. </summary>
-        public bool? IsTransportSecurityRequired { get; set; }
-        /// <summary> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </summary>
-        public string UserMetadata { get; set; }
+        /// <summary> Properties of the WCF relay. </summary>
+        internal WcfRelayProperties Properties { get; set; }
+
         /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
+
+        /// <summary> Returns true if the relay is dynamic; otherwise, false. </summary>
+        public bool? IsDynamic
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDynamic;
+            }
+        }
+
+        /// <summary> The time the WCF relay was created. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> The time the namespace was updated. </summary>
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
+        /// <summary> The number of listeners for this relay. Note that min :1 and max:25 are supported. </summary>
+        public int? ListenerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ListenerCount;
+            }
+        }
+
+        /// <summary> WCF relay type. </summary>
+        public RelayType? RelayType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelayType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WcfRelayProperties();
+                }
+                Properties.RelayType = value.Value;
+            }
+        }
+
+        /// <summary> Returns true if client authorization is needed for this relay; otherwise, false. </summary>
+        public bool? RequiresClientAuthorization
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresClientAuthorization;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WcfRelayProperties();
+                }
+                Properties.RequiresClientAuthorization = value.Value;
+            }
+        }
+
+        /// <summary> Returns true if transport security is needed for this relay; otherwise, false. </summary>
+        public bool? RequiresTransportSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiresTransportSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WcfRelayProperties();
+                }
+                Properties.RequiresTransportSecurity = value.Value;
+            }
+        }
+
+        /// <summary> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </summary>
+        public string UserMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WcfRelayProperties();
+                }
+                Properties.UserMetadata = value;
+            }
+        }
     }
 }

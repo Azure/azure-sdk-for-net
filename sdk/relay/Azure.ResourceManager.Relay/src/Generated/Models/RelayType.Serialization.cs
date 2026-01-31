@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Relay.Models
 {
     internal static partial class RelayTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RelayType value) => value switch
         {
             RelayType.NetTcp => "NetTcp",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Relay.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RelayType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RelayType ToRelayType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetTcp")) return RelayType.NetTcp;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return RelayType.Http;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetTcp"))
+            {
+                return RelayType.NetTcp;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http"))
+            {
+                return RelayType.Http;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RelayType value.");
         }
     }

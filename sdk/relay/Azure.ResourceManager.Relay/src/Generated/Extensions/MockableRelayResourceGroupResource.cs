@@ -8,33 +8,45 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Relay;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Relay.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableRelayResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableRelayResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _hybridConnectionsClientDiagnostics;
+        private HybridConnections _hybridConnectionsRestClient;
+        private ClientDiagnostics _wcfRelaysClientDiagnostics;
+        private WCFRelays _wcfRelaysRestClient;
+
+        /// <summary> Initializes a new instance of MockableRelayResourceGroupResource for mocking. </summary>
         protected MockableRelayResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRelayResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRelayResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRelayResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics HybridConnectionsClientDiagnostics => _hybridConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of RelayNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RelayNamespaceResources and their operations over a RelayNamespaceResource. </returns>
+        private HybridConnections HybridConnectionsRestClient => _hybridConnectionsRestClient ??= new HybridConnections(HybridConnectionsClientDiagnostics, Pipeline, Endpoint, "2024-01-01");
+
+        private ClientDiagnostics WCFRelaysClientDiagnostics => _wcfRelaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private WCFRelays WCFRelaysRestClient => _wcfRelaysRestClient ??= new WCFRelays(WCFRelaysClientDiagnostics, Pipeline, Endpoint, "2024-01-01");
+
+        /// <summary> Gets a collection of RelayNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of RelayNamespaces and their operations over a RelayNamespaceResource. </returns>
         public virtual RelayNamespaceCollection GetRelayNamespaces()
         {
             return GetCachedClient(client => new RelayNamespaceCollection(client, Id));
@@ -44,20 +56,16 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// Returns the description for the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RelayNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +76,8 @@ namespace Azure.ResourceManager.Relay.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<RelayNamespaceResource>> GetRelayNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return await GetRelayNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +85,16 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// Returns the description for the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RelayNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RelayNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +105,173 @@ namespace Azure.ResourceManager.Relay.Mocking
         [ForwardsClientCalls]
         public virtual Response<RelayNamespaceResource> GetRelayNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return GetRelayNamespaces().Get(namespaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Authorization rules for a hybrid connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HybridConnections_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="hybridConnectionName"> The hybrid connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="hybridConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionResource> GetHybridConnectionsAsync(string namespaceName, string hybridConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AuthorizationRuleData, HybridConnectionResource>(new HybridConnectionsGetAuthorizationRulesAsyncCollectionResultOfT(
+                HybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                hybridConnectionName,
+                context), data => new HybridConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Authorization rules for a hybrid connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HybridConnections_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="hybridConnectionName"> The hybrid connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="hybridConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionResource> GetHybridConnections(string namespaceName, string hybridConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(hybridConnectionName, nameof(hybridConnectionName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AuthorizationRuleData, HybridConnectionResource>(new HybridConnectionsGetAuthorizationRulesCollectionResultOfT(
+                HybridConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                hybridConnectionName,
+                context), data => new HybridConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Authorization rules for a WCF relay.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WCFRelays_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionResource> GetWCFRelaysAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AuthorizationRuleData, HybridConnectionResource>(new WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT(
+                WCFRelaysRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                relayName,
+                context), data => new HybridConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Authorization rules for a WCF relay.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WCFRelays_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="relayName"> The relay name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="HybridConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionResource> GetWCFRelays(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AuthorizationRuleData, HybridConnectionResource>(new WCFRelaysGetAuthorizationRulesCollectionResultOfT(
+                WCFRelaysRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                relayName,
+                context), data => new HybridConnectionResource(Client, data));
         }
     }
 }

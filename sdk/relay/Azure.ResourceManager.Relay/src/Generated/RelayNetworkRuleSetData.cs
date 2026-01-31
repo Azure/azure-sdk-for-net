@@ -13,72 +13,95 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary>
-    /// A class representing the RelayNetworkRuleSet data model.
-    /// Description of topic resource.
-    /// </summary>
+    /// <summary> Description of topic resource. </summary>
     public partial class RelayNetworkRuleSetData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
         public RelayNetworkRuleSetData()
         {
-            IPRules = new ChangeTrackingList<RelayNetworkRuleSetIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IList<RelayNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NetworkRuleSet properties. </param>
+        internal RelayNetworkRuleSetData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkRuleSetProperties properties) : base(id, name, resourceType, systemData)
         {
-            DefaultAction = defaultAction;
-            PublicNetworkAccess = publicNetworkAccess;
-            IPRules = ipRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+        }
+
+        /// <summary> NetworkRuleSet properties. </summary>
+        internal NetworkRuleSetProperties Properties { get; set; }
+
+        /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
+        public bool? TrustedServiceAccessEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrustedServiceAccessEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.TrustedServiceAccessEnabled = value.Value;
+            }
         }
 
         /// <summary> Default Action for Network Rule Set. </summary>
-        public RelayNetworkRuleSetDefaultAction? DefaultAction { get; set; }
+        public RelayNetworkRuleSetDefaultAction? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.DefaultAction = value.Value;
+            }
+        }
+
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public RelayPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> List of IpRules. </summary>
-        public IList<RelayNetworkRuleSetIPRule> IPRules { get; }
+        public IList<RelayNetworkRuleSetIPRule> IpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkRuleSetProperties();
+                }
+                return Properties.IpRules;
+            }
+        }
     }
 }

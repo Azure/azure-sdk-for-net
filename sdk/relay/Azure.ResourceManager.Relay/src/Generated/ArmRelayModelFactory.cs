@@ -7,45 +7,46 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmRelayModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Relay.RelayAuthorizationRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Relay.RelayAuthorizationRuleData"/> instance for mocking. </returns>
-        public static RelayAuthorizationRuleData RelayAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<RelayAccessRight> rights = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="Relay.AuthorizationRuleData"/> instance for mocking. </returns>
+        public static AuthorizationRuleData AuthorizationRuleData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RelayAccessRight> rights = default, string location = default)
         {
-            rights ??= new List<RelayAccessRight>();
-
-            return new RelayAuthorizationRuleData(
+            return new AuthorizationRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                rights?.ToList(),
-                location,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                rights is null ? default : new AuthorizationRuleProperties((rights ?? new ChangeTrackingList<RelayAccessRight>()).ToList(), null),
+                location);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RelayAccessKeys"/>. </summary>
+        /// <summary> Namespace/Relay Connection String. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit secondary key for signing and validating the SAS token. </param>
         /// <param name="keyName"> A string that describes the authorization rule. </param>
         /// <returns> A new <see cref="Models.RelayAccessKeys"/> instance for mocking. </returns>
-        public static RelayAccessKeys RelayAccessKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null)
+        public static RelayAccessKeys RelayAccessKeys(string primaryConnectionString = default, string secondaryConnectionString = default, string primaryKey = default, string secondaryKey = default, string keyName = default)
         {
             return new RelayAccessKeys(
                 primaryConnectionString,
@@ -53,16 +54,269 @@ namespace Azure.ResourceManager.Relay.Models
                 primaryKey,
                 secondaryKey,
                 keyName,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RelayRegenerateAccessKeyContent"/>. </summary>
+        /// <summary> Parameters supplied to the regenerate authorization rule operation, specifies which key needs to be reset. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         /// <param name="key"> Optional. If the key value is provided, this is set to key type, or autogenerated key value set for key type. </param>
         /// <returns> A new <see cref="Models.RelayRegenerateAccessKeyContent"/> instance for mocking. </returns>
-        public static RelayRegenerateAccessKeyContent RelayRegenerateAccessKeyContent(RelayAccessKeyType keyType = default, string key = null)
+        public static RelayRegenerateAccessKeyContent RelayRegenerateAccessKeyContent(RelayAccessKeyType keyType = default, string key = default)
         {
-            return new RelayRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData: null);
+            return new RelayRegenerateAccessKeyContent(keyType, key, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="createdOn"> The time the hybrid connection was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="listenerCount"> The number of listeners for this hybrid connection. Note that min : 1 and max:25 are supported. </param>
+        /// <param name="requiresClientAuthorization"> Returns true if client authorization is needed for this hybrid connection; otherwise, false. </param>
+        /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Relay.RelayHybridConnectionData"/> instance for mocking. </returns>
+        public static RelayHybridConnectionData RelayHybridConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, int? listenerCount = default, bool? requiresClientAuthorization = default, string userMetadata = default, string location = default)
+        {
+            return new RelayHybridConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                createdOn is null && updatedOn is null && listenerCount is null && requiresClientAuthorization is null && userMetadata is null ? default : new HybridConnectionProperties(
+                    createdOn,
+                    updatedOn,
+                    listenerCount,
+                    requiresClientAuthorization,
+                    userMetadata,
+                    null),
+                location);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isDynamic"> Returns true if the relay is dynamic; otherwise, false. </param>
+        /// <param name="createdOn"> The time the WCF relay was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="listenerCount"> The number of listeners for this relay. Note that min :1 and max:25 are supported. </param>
+        /// <param name="relayType"> WCF relay type. </param>
+        /// <param name="requiresClientAuthorization"> Returns true if client authorization is needed for this relay; otherwise, false. </param>
+        /// <param name="requiresTransportSecurity"> Returns true if transport security is needed for this relay; otherwise, false. </param>
+        /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Relay.WcfRelayData"/> instance for mocking. </returns>
+        public static WcfRelayData WcfRelayData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isDynamic = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, int? listenerCount = default, RelayType? relayType = default, bool? requiresClientAuthorization = default, bool? requiresTransportSecurity = default, string userMetadata = default, string location = default)
+        {
+            return new WcfRelayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                isDynamic is null && createdOn is null && updatedOn is null && listenerCount is null && relayType is null && requiresClientAuthorization is null && requiresTransportSecurity is null && userMetadata is null ? default : new WcfRelayProperties(
+                    isDynamic,
+                    createdOn,
+                    updatedOn,
+                    listenerCount,
+                    relayType,
+                    requiresClientAuthorization,
+                    requiresTransportSecurity,
+                    userMetadata,
+                    null),
+                location);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelayPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, RelayPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, string location = default)
+        {
+            return new RelayPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
+                location);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Relay.RelayPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static RelayPrivateLinkResourceData RelayPrivateLinkResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new RelayPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new RelayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
+        }
+
+        /// <summary> Result of the List private link resources operation. </summary>
+        /// <param name="value"> A collection of private link resources. </param>
+        /// <param name="nextLink"> A link for the next page of private link resources. </param>
+        /// <returns> A new <see cref="Models.PrivateLinkResourcesListResult"/> instance for mocking. </returns>
+        public static PrivateLinkResourcesListResult PrivateLinkResourcesListResult(IEnumerable<RelayPrivateLinkResourceData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<RelayPrivateLinkResourceData>();
+
+            return new PrivateLinkResourcesListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
+        public static RelayNamespaceData RelayNamespaceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelaySku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RelayNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    null),
+                sku);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
+        public static RelayNamespacePatch RelayNamespacePatch(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RelayNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                sku,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    null));
+        }
+
+        /// <summary> Definition of resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ResourceNamespacePatch"/> instance for mocking. </returns>
+        public static ResourceNamespacePatch ResourceNamespacePatch(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
+        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="ipRules"> List of IpRules. </param>
+        /// <returns> A new <see cref="Relay.RelayNetworkRuleSetData"/> instance for mocking. </returns>
+        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? trustedServiceAccessEnabled = default, RelayNetworkRuleSetDefaultAction? defaultAction = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = default)
+        {
+            return new RelayNetworkRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                trustedServiceAccessEnabled is null && defaultAction is null && publicNetworkAccess is null && ipRules is null ? default : new NetworkRuleSetProperties(trustedServiceAccessEnabled, defaultAction, publicNetworkAccess, (ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>()).ToList(), null));
+        }
+
+        /// <summary> Description of the check name availability request properties. </summary>
+        /// <param name="name"> The namespace name to check for availability. The namespace name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number. </param>
+        /// <returns> A new <see cref="Models.RelayNameAvailabilityContent"/> instance for mocking. </returns>
+        public static RelayNameAvailabilityContent RelayNameAvailabilityContent(string name = default)
+        {
+            return new RelayNameAvailabilityContent(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Description of the check name availability request properties. </summary>
+        /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
+        /// <param name="isNameAvailable"> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </param>
+        /// <param name="reason"> The reason for unavailability of a namespace. </param>
+        /// <returns> A new <see cref="Models.RelayNameAvailabilityResult"/> instance for mocking. </returns>
+        public static RelayNameAvailabilityResult RelayNameAvailabilityResult(string message = default, bool? isNameAvailable = default, RelayNameUnavailableReason? reason = default)
+        {
+            return new RelayNameAvailabilityResult(message, isNameAvailable, reason, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayHybridConnectionData"/>. </summary>
@@ -77,30 +331,17 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.RelayHybridConnectionData"/> instance for mocking. </returns>
-        public static RelayHybridConnectionData RelayHybridConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, int? listenerCount = null, bool? isClientAuthorizationRequired = null, string userMetadata = null, AzureLocation? location = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayHybridConnectionData RelayHybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, bool? isClientAuthorizationRequired, string userMetadata, AzureLocation? location)
         {
             return new RelayHybridConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                createdOn,
-                updatedOn,
-                listenerCount,
-                isClientAuthorizationRequired,
-                userMetadata,
-                location,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RelayNameAvailabilityResult"/>. </summary>
-        /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
-        /// <param name="isNameAvailable"> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </param>
-        /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        /// <returns> A new <see cref="Models.RelayNameAvailabilityResult"/> instance for mocking. </returns>
-        public static RelayNameAvailabilityResult RelayNameAvailabilityResult(string message = null, bool? isNameAvailable = null, RelayNameUnavailableReason? reason = null)
-        {
-            return new RelayNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayNamespaceData"/>. </summary>
@@ -120,28 +361,22 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RelaySku sku = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = null, RelayPublicNetworkAccess? publicNetworkAccess = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess)
         {
-            tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<RelayPrivateEndpointConnectionData>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
 
             return new RelayNamespaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                sku,
-                provisioningState,
-                status,
-                createdOn,
-                updatedOn,
-                serviceBusEndpoint,
-                metricId,
-                privateEndpointConnections?.ToList(),
-                publicNetworkAccess,
-                serializedAdditionalRawData: null);
+                default,
+                sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateEndpointConnectionData"/>. </summary>
@@ -154,18 +389,17 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RelayPrivateLinkServiceConnectionState connectionState = null, RelayPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location)
         {
             return new RelayPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
-                connectionState,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelayNamespacePatch"/>. </summary>
@@ -184,52 +418,21 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelaySku sku = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IDictionary<string, string> tags = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, IDictionary<string, string> tags)
         {
-            privateEndpointConnections ??= new List<RelayPrivateEndpointConnectionData>();
-            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new RelayNamespacePatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                sku,
-                provisioningState,
-                status,
-                createdOn,
-                updatedOn,
-                serviceBusEndpoint,
-                metricId,
-                privateEndpointConnections?.ToList(),
-                publicNetworkAccess,
+                additionalBinaryDataProperties: null,
                 tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Relay.RelayPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static RelayPrivateLinkResourceData RelayPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new RelayPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
+                sku,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayNetworkRuleSetData"/>. </summary>
@@ -241,19 +444,18 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <returns> A new <see cref="Relay.RelayNetworkRuleSetData"/> instance for mocking. </returns>
-        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelayNetworkRuleSetDefaultAction? defaultAction = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayNetworkRuleSetDefaultAction? defaultAction, RelayPublicNetworkAccess? publicNetworkAccess, IEnumerable<RelayNetworkRuleSetIPRule> ipRules)
         {
-            ipRules ??= new List<RelayNetworkRuleSetIPRule>();
+            ipRules ??= new ChangeTrackingList<RelayNetworkRuleSetIPRule>();
 
             return new RelayNetworkRuleSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                defaultAction,
-                publicNetworkAccess,
-                ipRules?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.WcfRelayData"/>. </summary>
@@ -271,23 +473,17 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.WcfRelayData"/> instance for mocking. </returns>
-        public static WcfRelayData WcfRelayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDynamic = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, int? listenerCount = null, RelayType? relayType = null, bool? isClientAuthorizationRequired = null, bool? isTransportSecurityRequired = null, string userMetadata = null, AzureLocation? location = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WcfRelayData WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDynamic, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, RelayType? relayType, bool? isClientAuthorizationRequired, bool? isTransportSecurityRequired, string userMetadata, AzureLocation? location)
         {
             return new WcfRelayData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                isDynamic,
-                createdOn,
-                updatedOn,
-                listenerCount,
-                relayType,
-                isClientAuthorizationRequired,
-                isTransportSecurityRequired,
-                userMetadata,
-                location,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                location);
         }
     }
 }
