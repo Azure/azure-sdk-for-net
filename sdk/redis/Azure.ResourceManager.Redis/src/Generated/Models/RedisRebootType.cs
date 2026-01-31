@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisRebootType : IEquatable<RedisRebootType>
     {
         private readonly string _value;
+        /// <summary> Reboot the primary nodes used for redis write operations. (This may trigger role changes.). </summary>
+        private const string PrimaryNodeValue = "PrimaryNode";
+        /// <summary> Reboot only the secondary or replica nodes. </summary>
+        private const string SecondaryNodeValue = "SecondaryNode";
+        /// <summary> Reboot all nodes, not guaranteed to happen simultaneously. </summary>
+        private const string AllNodesValue = "AllNodes";
 
         /// <summary> Initializes a new instance of <see cref="RedisRebootType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisRebootType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PrimaryNodeValue = "PrimaryNode";
-        private const string SecondaryNodeValue = "SecondaryNode";
-        private const string AllNodesValue = "AllNodes";
-
-        /// <summary> PrimaryNode. </summary>
+        /// <summary> Reboot the primary nodes used for redis write operations. (This may trigger role changes.). </summary>
         public static RedisRebootType PrimaryNode { get; } = new RedisRebootType(PrimaryNodeValue);
-        /// <summary> SecondaryNode. </summary>
+
+        /// <summary> Reboot only the secondary or replica nodes. </summary>
         public static RedisRebootType SecondaryNode { get; } = new RedisRebootType(SecondaryNodeValue);
-        /// <summary> AllNodes. </summary>
+
+        /// <summary> Reboot all nodes, not guaranteed to happen simultaneously. </summary>
         public static RedisRebootType AllNodes { get; } = new RedisRebootType(AllNodesValue);
+
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisRebootType left, RedisRebootType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisRebootType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisRebootType left, RedisRebootType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisRebootType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisRebootType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisRebootType(string value) => new RedisRebootType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisRebootType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisRebootType?(string value) => value == null ? null : new RedisRebootType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisRebootType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisRebootType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

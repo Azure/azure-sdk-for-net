@@ -5,8 +5,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
-
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary>
@@ -21,19 +20,19 @@ namespace Azure.ResourceManager.Redis.Models
         /// Serialized Name: TlsVersion.1.0
         /// </summary>
         [CodeGenMember("One0")]
-        public static RedisTlsVersion Tls1_0 { get; } = new RedisTlsVersion(Tls1_0Value);
+        public static RedisTlsVersion Tls1_0 { get; } = new RedisTlsVersion(_10Value);
         /// <summary>
         /// 1.1
         /// Serialized Name: TlsVersion.1.1
         /// </summary>
         [CodeGenMember("One1")]
-        public static RedisTlsVersion Tls1_1 { get; } = new RedisTlsVersion(Tls1_1Value);
+        public static RedisTlsVersion Tls1_1 { get; } = new RedisTlsVersion(_11Value);
         /// <summary>
         /// 1.2
         /// Serialized Name: TlsVersion.1.2
         /// </summary>
         [CodeGenMember("One2")]
-        public static RedisTlsVersion Tls1_2 { get; } = new RedisTlsVersion(Tls1_2Value);
+        public static RedisTlsVersion Tls1_2 { get; } = new RedisTlsVersion(_12Value);
 #pragma warning restore CA1707
     }
 }

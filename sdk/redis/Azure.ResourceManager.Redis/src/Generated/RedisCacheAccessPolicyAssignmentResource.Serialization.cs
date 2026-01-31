@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisCacheAccessPolicyAssignmentResource : IJsonModel<RedisCacheAccessPolicyAssignmentData>
     {
-        private static RedisCacheAccessPolicyAssignmentData s_dataDeserializationInstance;
-        private static RedisCacheAccessPolicyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisCacheAccessPolicyAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisCacheAccessPolicyAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisCacheAccessPolicyAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisCacheAccessPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyAssignmentData>)Data).Write(writer, options);
 
-        RedisCacheAccessPolicyAssignmentData IJsonModel<RedisCacheAccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisCacheAccessPolicyAssignmentData IJsonModel<RedisCacheAccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisCacheAccessPolicyAssignmentData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisCacheAccessPolicyAssignmentData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisCacheAccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisCacheAccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

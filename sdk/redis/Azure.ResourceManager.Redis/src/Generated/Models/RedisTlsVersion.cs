@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,34 +15,62 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisTlsVersion : IEquatable<RedisTlsVersion>
     {
         private readonly string _value;
+        /// <summary> TLS protocol version 1.0 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        private const string _10Value = "1.0";
+        /// <summary> TLS protocol version 1.1 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        private const string _11Value = "1.1";
+        /// <summary> TLS protocol version 1.2 -- use this value, or higher, for new caches. Or do not specify, so that your cache uses the recommended default value. </summary>
+        private const string _12Value = "1.2";
 
         /// <summary> Initializes a new instance of <see cref="RedisTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisTlsVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls1_0Value = "1.0";
-        private const string Tls1_1Value = "1.1";
-        private const string Tls1_2Value = "1.2";
+        /// <summary> TLS protocol version 1.0 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        public static RedisTlsVersion _10 { get; } = new RedisTlsVersion(_10Value);
+
+        /// <summary> TLS protocol version 1.1 -- deprecated for security reasons. Do not use this value for new caches. </summary>
+        public static RedisTlsVersion _11 { get; } = new RedisTlsVersion(_11Value);
+
+        /// <summary> TLS protocol version 1.2 -- use this value, or higher, for new caches. Or do not specify, so that your cache uses the recommended default value. </summary>
+        public static RedisTlsVersion _12 { get; } = new RedisTlsVersion(_12Value);
+
         /// <summary> Determines if two <see cref="RedisTlsVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisTlsVersion left, RedisTlsVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisTlsVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisTlsVersion left, RedisTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisTlsVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisTlsVersion(string value) => new RedisTlsVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisTlsVersion?(string value) => value == null ? null : new RedisTlsVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisTlsVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

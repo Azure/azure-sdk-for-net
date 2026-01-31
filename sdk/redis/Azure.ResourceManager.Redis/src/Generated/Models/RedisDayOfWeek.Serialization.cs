@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal static partial class RedisDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RedisDayOfWeek value) => value switch
         {
             RedisDayOfWeek.Monday => "Monday",
@@ -25,17 +26,45 @@ namespace Azure.ResourceManager.Redis.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RedisDayOfWeek ToRedisDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return RedisDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return RedisDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return RedisDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return RedisDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return RedisDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return RedisDayOfWeek.Saturday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return RedisDayOfWeek.Sunday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Everyday")) return RedisDayOfWeek.Everyday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Weekend")) return RedisDayOfWeek.Weekend;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return RedisDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return RedisDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return RedisDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return RedisDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return RedisDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return RedisDayOfWeek.Saturday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return RedisDayOfWeek.Sunday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Everyday"))
+            {
+                return RedisDayOfWeek.Everyday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Weekend"))
+            {
+                return RedisDayOfWeek.Weekend;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisDayOfWeek value.");
         }
     }

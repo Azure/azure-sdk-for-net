@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
@@ -25,73 +26,84 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisLinkedServerWithPropertyCollection : ArmCollection, IEnumerable<RedisLinkedServerWithPropertyResource>, IAsyncEnumerable<RedisLinkedServerWithPropertyResource>
     {
-        private readonly ClientDiagnostics _redisLinkedServerWithPropertyLinkedServerClientDiagnostics;
-        private readonly LinkedServerRestOperations _redisLinkedServerWithPropertyLinkedServerRestClient;
+        private readonly ClientDiagnostics _linkedServerClientDiagnostics;
+        private readonly LinkedServer _linkedServerRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RedisLinkedServerWithPropertyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyCollection for mocking. </summary>
         protected RedisLinkedServerWithPropertyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RedisLinkedServerWithPropertyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RedisLinkedServerWithPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisLinkedServerWithPropertyLinkedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisLinkedServerWithPropertyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RedisLinkedServerWithPropertyResource.ResourceType, out string redisLinkedServerWithPropertyLinkedServerApiVersion);
-            _redisLinkedServerWithPropertyLinkedServerRestClient = new LinkedServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisLinkedServerWithPropertyLinkedServerApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(RedisLinkedServerWithPropertyResource.ResourceType, out string redisLinkedServerWithPropertyApiVersion);
+            _linkedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisLinkedServerWithPropertyResource.ResourceType.Namespace, Diagnostics);
+            _linkedServerRestClient = new LinkedServer(_linkedServerClientDiagnostics, Pipeline, Endpoint, redisLinkedServerWithPropertyApiVersion ?? "2024-11-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RedisResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Adds a linked server to the Redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="redisRedisRebootParametersCreatOrUpdateContent"> Parameters supplied to the Create Linked server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="redisRedisRebootParametersCreatOrUpdateContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisLinkedServerWithPropertyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisLinkedServerWithPropertyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServerName, RedisRedisRebootParametersCreatOrUpdateContent redisRedisRebootParametersCreatOrUpdateContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(redisRedisRebootParametersCreatOrUpdateContent, nameof(redisRedisRebootParametersCreatOrUpdateContent));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisRedisRebootParametersCreatOrUpdateContent.ToRequestContent(redisRedisRebootParametersCreatOrUpdateContent), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
+                    new RedisLinkedServerWithPropertyOperationSource(Client),
+                    _linkedServerClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,42 +117,51 @@ namespace Azure.ResourceManager.Redis
         /// Adds a linked server to the Redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="linkedServerName"> The name of the linked server that is being added to the Redis cache. </param>
-        /// <param name="content"> Parameters supplied to the Create Linked server operation. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
+        /// <param name="redisRedisRebootParametersCreatOrUpdateContent"> Parameters supplied to the Create Linked server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="redisRedisRebootParametersCreatOrUpdateContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RedisLinkedServerWithPropertyResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisLinkedServerWithPropertyResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServerName, RedisRedisRebootParametersCreatOrUpdateContent redisRedisRebootParametersCreatOrUpdateContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(redisRedisRebootParametersCreatOrUpdateContent, nameof(redisRedisRebootParametersCreatOrUpdateContent));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(new RedisLinkedServerWithPropertyOperationSource(Client), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, _redisLinkedServerWithPropertyLinkedServerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisRedisRebootParametersCreatOrUpdateContent.ToRequestContent(redisRedisRebootParametersCreatOrUpdateContent), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
+                    new RedisLinkedServerWithPropertyOperationSource(Client),
+                    _linkedServerClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Redis
         /// Gets the detailed information about a linked server of a redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RedisLinkedServerWithPropertyResource>> GetAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RedisLinkedServerWithPropertyData> response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Redis
         /// Gets the detailed information about a linked server of a redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RedisLinkedServerWithPropertyResource> Get(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RedisLinkedServerWithPropertyData> response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Redis
         /// Gets the list of linked servers associated with this redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RedisLinkedServerWithPropertyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RedisLinkedServerWithPropertyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisLinkedServerWithPropertyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllAsyncCollectionResultOfT(_linkedServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisLinkedServerWithPropertyResource(Client, data));
         }
 
         /// <summary>
         /// Gets the list of linked servers associated with this redis cache (requires Premium SKU).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisLinkedServerWithPropertyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisLinkedServerWithPropertyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisLinkedServerWithPropertyLinkedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisLinkedServerWithPropertyResource(Client, RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(e)), _redisLinkedServerWithPropertyLinkedServerClientDiagnostics, Pipeline, "RedisLinkedServerWithPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RedisLinkedServerWithPropertyData, RedisLinkedServerWithPropertyResource>(new LinkedServerGetAllCollectionResultOfT(_linkedServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new RedisLinkedServerWithPropertyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RedisLinkedServerWithPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RedisLinkedServerWithPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Redis
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RedisLinkedServerWithPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RedisLinkedServerWithPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Redis
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RedisLinkedServerWithPropertyResource>> GetIfExistsAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RedisLinkedServerWithPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RedisLinkedServerWithPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RedisLinkedServerWithPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Redis
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LinkedServer_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="linkedServerName"> The name of the RedisLinkedServerWithProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RedisLinkedServerWithPropertyResource> GetIfExists(string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
 
-            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _linkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RedisLinkedServerWithPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RedisLinkedServerWithPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RedisLinkedServerWithPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Redis
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RedisLinkedServerWithPropertyResource> IAsyncEnumerable<RedisLinkedServerWithPropertyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

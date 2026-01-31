@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisProvisioningState : IEquatable<RedisProvisioningState>
     {
         private readonly string _value;
+        /// <summary> A create operation is in progress. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> A delete operation is in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The cache is disabled and cannot be used. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> An operation such as create or update failed. If you failed to create the cache it will not be in a usable state, so you should delete and recreate it. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Georeplication link is in progress. </summary>
+        private const string LinkingValue = "Linking";
+        /// <summary> An operation is in progress. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> A scaling operation encountered an error and recovery is in progress. </summary>
+        private const string RecoveringScaleFailureValue = "RecoveringScaleFailure";
+        /// <summary> A scaling operation is in progress. </summary>
+        private const string ScalingValue = "Scaling";
+        /// <summary> The most recent operation successfully completed. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Georeplication unlink is in progress. </summary>
+        private const string UnlinkingValue = "Unlinking";
+        /// <summary> The cache may be being disabled. </summary>
+        private const string UnprovisioningValue = "Unprovisioning";
+        /// <summary> An update operation is in progress. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> An AAD configuration update operation is in progress. </summary>
+        private const string ConfiguringAADValue = "ConfiguringAAD";
 
         /// <summary> Initializes a new instance of <see cref="RedisProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string DisabledValue = "Disabled";
-        private const string FailedValue = "Failed";
-        private const string LinkingValue = "Linking";
-        private const string ProvisioningValue = "Provisioning";
-        private const string RecoveringScaleFailureValue = "RecoveringScaleFailure";
-        private const string ScalingValue = "Scaling";
-        private const string SucceededValue = "Succeeded";
-        private const string UnlinkingValue = "Unlinking";
-        private const string UnprovisioningValue = "Unprovisioning";
-        private const string UpdatingValue = "Updating";
-        private const string ConfiguringAADValue = "ConfiguringAAD";
-
-        /// <summary> Creating. </summary>
+        /// <summary> A create operation is in progress. </summary>
         public static RedisProvisioningState Creating { get; } = new RedisProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> A delete operation is in progress. </summary>
         public static RedisProvisioningState Deleting { get; } = new RedisProvisioningState(DeletingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> The cache is disabled and cannot be used. </summary>
         public static RedisProvisioningState Disabled { get; } = new RedisProvisioningState(DisabledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> An operation such as create or update failed. If you failed to create the cache it will not be in a usable state, so you should delete and recreate it. </summary>
         public static RedisProvisioningState Failed { get; } = new RedisProvisioningState(FailedValue);
-        /// <summary> Linking. </summary>
+
+        /// <summary> Georeplication link is in progress. </summary>
         public static RedisProvisioningState Linking { get; } = new RedisProvisioningState(LinkingValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> An operation is in progress. </summary>
         public static RedisProvisioningState Provisioning { get; } = new RedisProvisioningState(ProvisioningValue);
-        /// <summary> RecoveringScaleFailure. </summary>
+
+        /// <summary> A scaling operation encountered an error and recovery is in progress. </summary>
         public static RedisProvisioningState RecoveringScaleFailure { get; } = new RedisProvisioningState(RecoveringScaleFailureValue);
-        /// <summary> Scaling. </summary>
+
+        /// <summary> A scaling operation is in progress. </summary>
         public static RedisProvisioningState Scaling { get; } = new RedisProvisioningState(ScalingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The most recent operation successfully completed. </summary>
         public static RedisProvisioningState Succeeded { get; } = new RedisProvisioningState(SucceededValue);
-        /// <summary> Unlinking. </summary>
+
+        /// <summary> Georeplication unlink is in progress. </summary>
         public static RedisProvisioningState Unlinking { get; } = new RedisProvisioningState(UnlinkingValue);
-        /// <summary> Unprovisioning. </summary>
+
+        /// <summary> The cache may be being disabled. </summary>
         public static RedisProvisioningState Unprovisioning { get; } = new RedisProvisioningState(UnprovisioningValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> An update operation is in progress. </summary>
         public static RedisProvisioningState Updating { get; } = new RedisProvisioningState(UpdatingValue);
-        /// <summary> ConfiguringAAD. </summary>
+
+        /// <summary> An AAD configuration update operation is in progress. </summary>
         public static RedisProvisioningState ConfiguringAAD { get; } = new RedisProvisioningState(ConfiguringAADValue);
+
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisProvisioningState left, RedisProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisProvisioningState left, RedisProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisProvisioningState(string value) => new RedisProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisProvisioningState?(string value) => value == null ? null : new RedisProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

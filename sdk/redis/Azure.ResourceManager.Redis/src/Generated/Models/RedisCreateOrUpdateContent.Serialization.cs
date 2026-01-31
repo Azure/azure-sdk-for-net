@@ -8,18 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RedisCreateOrUpdateContent>
+    /// <summary> Parameters supplied to the Create Redis operation. </summary>
+    public partial class RedisCreateOrUpdateContent : IJsonModel<RedisCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RedisCreateOrUpdateContent"/> for deserialization. </summary>
+        internal RedisCreateOrUpdateContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,18 +37,24 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (string item in Zones)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -56,6 +68,11 @@ namespace Azure.ResourceManager.Redis.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -65,96 +82,15 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RedisConfiguration))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration, options);
-            }
-            if (Optional.IsDefined(RedisVersion))
-            {
-                writer.WritePropertyName("redisVersion"u8);
-                writer.WriteStringValue(RedisVersion);
-            }
-            if (Optional.IsDefined(EnableNonSslPort))
-            {
-                writer.WritePropertyName("enableNonSslPort"u8);
-                writer.WriteBooleanValue(EnableNonSslPort.Value);
-            }
-            if (Optional.IsDefined(ReplicasPerMaster))
-            {
-                writer.WritePropertyName("replicasPerMaster"u8);
-                writer.WriteNumberValue(ReplicasPerMaster.Value);
-            }
-            if (Optional.IsDefined(ReplicasPerPrimary))
-            {
-                writer.WritePropertyName("replicasPerPrimary"u8);
-                writer.WriteNumberValue(ReplicasPerPrimary.Value);
-            }
-            if (Optional.IsCollectionDefined(TenantSettings))
-            {
-                writer.WritePropertyName("tenantSettings"u8);
-                writer.WriteStartObject();
-                foreach (var item in TenantSettings)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(ShardCount))
-            {
-                writer.WritePropertyName("shardCount"u8);
-                writer.WriteNumberValue(ShardCount.Value);
-            }
-            if (Optional.IsDefined(MinimumTlsVersion))
-            {
-                writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(UpdateChannel))
-            {
-                writer.WritePropertyName("updateChannel"u8);
-                writer.WriteStringValue(UpdateChannel.Value.ToString());
-            }
-            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
-            {
-                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
-                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
-            }
-            if (Optional.IsDefined(ZonalAllocationPolicy))
-            {
-                writer.WritePropertyName("zonalAllocationPolicy"u8);
-                writer.WriteStringValue(ZonalAllocationPolicy.Value.ToString());
-            }
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
-            if (Optional.IsDefined(SubnetId))
-            {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
-            }
-            if (Optional.IsDefined(StaticIP))
-            {
-                writer.WritePropertyName("staticIP"u8);
-                writer.WriteStringValue(StaticIP.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -163,268 +99,121 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        RedisCreateOrUpdateContent IJsonModel<RedisCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisCreateOrUpdateContent IJsonModel<RedisCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRedisCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static RedisCreateOrUpdateContent DeserializeRedisCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RedisCreateOrUpdateContent DeserializeRedisCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            RedisCreateProperties properties = default;
             IList<string> zones = default;
-            AzureLocation location = default;
+            string location = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            RedisCommonConfiguration redisConfiguration = default;
-            string redisVersion = default;
-            bool? enableNonSslPort = default;
-            int? replicasPerMaster = default;
-            int? replicasPerPrimary = default;
-            IDictionary<string, string> tenantSettings = default;
-            int? shardCount = default;
-            RedisTlsVersion? minimumTlsVersion = default;
-            RedisPublicNetworkAccess? publicNetworkAccess = default;
-            UpdateChannel? updateChannel = default;
-            bool? disableAccessKeyAuthentication = default;
-            ZonalAllocationPolicy? zonalAllocationPolicy = default;
-            RedisSku sku = default;
-            ResourceIdentifier subnetId = default;
-            IPAddress staticIP = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    properties = RedisCreateProperties.DeserializeRedisCreateProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("zones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("redisConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("redisVersion"u8))
-                        {
-                            redisVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableNonSslPort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableNonSslPort = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicasPerMaster"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicasPerMaster = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicasPerPrimary"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicasPerPrimary = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            tenantSettings = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("shardCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            shardCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("minimumTlsVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimumTlsVersion = new RedisTlsVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new RedisPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("updateChannel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updateChannel = new UpdateChannel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("zonalAllocationPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zonalAllocationPolicy = new ZonalAllocationPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sku"u8))
-                        {
-                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subnetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("staticIP"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staticIP = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RedisCreateOrUpdateContent(
+                properties,
                 zones ?? new ChangeTrackingList<string>(),
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                redisConfiguration,
-                redisVersion,
-                enableNonSslPort,
-                replicasPerMaster,
-                replicasPerPrimary,
-                tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
-                shardCount,
-                minimumTlsVersion,
-                publicNetworkAccess,
-                updateChannel,
-                disableAccessKeyAuthentication,
-                zonalAllocationPolicy,
-                sku,
-                subnetId,
-                staticIP,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RedisCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -434,15 +223,20 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        RedisCreateOrUpdateContent IPersistableModel<RedisCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisCreateOrUpdateContent IPersistableModel<RedisCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RedisCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
@@ -450,6 +244,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="redisCreateOrUpdateContent"> The <see cref="RedisCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RedisCreateOrUpdateContent redisCreateOrUpdateContent)
+        {
+            if (redisCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(redisCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

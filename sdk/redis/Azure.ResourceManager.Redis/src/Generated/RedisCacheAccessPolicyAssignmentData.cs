@@ -13,43 +13,11 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary>
-    /// A class representing the RedisCacheAccessPolicyAssignment data model.
-    /// Response to an operation on access policy assignment
-    /// </summary>
+    /// <summary> Response to an operation on access policy assignment. </summary>
     public partial class RedisCacheAccessPolicyAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentData"/>. </summary>
         public RedisCacheAccessPolicyAssignmentData()
@@ -57,35 +25,79 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of an access policy assignment set. </param>
-        /// <param name="objectId"> Object Id to assign access policy to. </param>
-        /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
-        /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProvisioningState? provisioningState, Guid? objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of an access policy assignment. </param>
+        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisCacheAccessPolicyAssignmentProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            ObjectId = objectId;
-            ObjectIdAlias = objectIdAlias;
-            AccessPolicyName = accessPolicyName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of an access policy assignment. </summary>
+        internal RedisCacheAccessPolicyAssignmentProperties Properties { get; set; }
+
         /// <summary> Provisioning state of an access policy assignment set. </summary>
-        [WirePath("properties.provisioningState")]
-        public AccessPolicyAssignmentProvisioningState? ProvisioningState { get; }
+        public AccessPolicyAssignmentProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Object Id to assign access policy to. </summary>
-        [WirePath("properties.objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisCacheAccessPolicyAssignmentProperties();
+                }
+                Properties.ObjectId = value;
+            }
+        }
+
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
-        [WirePath("properties.objectIdAlias")]
-        public string ObjectIdAlias { get; set; }
+        public string ObjectIdAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectIdAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisCacheAccessPolicyAssignmentProperties();
+                }
+                Properties.ObjectIdAlias = value;
+            }
+        }
+
         /// <summary> The name of the access policy that is being assigned. </summary>
-        [WirePath("properties.accessPolicyName")]
-        public string AccessPolicyName { get; set; }
+        public string AccessPolicyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisCacheAccessPolicyAssignmentProperties();
+                }
+                Properties.AccessPolicyName = value;
+            }
+        }
     }
 }

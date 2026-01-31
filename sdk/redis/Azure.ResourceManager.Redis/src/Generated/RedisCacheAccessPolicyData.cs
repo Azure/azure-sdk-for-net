@@ -13,43 +13,11 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary>
-    /// A class representing the RedisCacheAccessPolicy data model.
-    /// Response to get/put access policy.
-    /// </summary>
+    /// <summary> Response to get/put access policy. </summary>
     public partial class RedisCacheAccessPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyData"/>. </summary>
         public RedisCacheAccessPolicyData()
@@ -57,30 +25,54 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of access policy. </param>
-        /// <param name="typePropertiesType"> Built-In or Custom access policy. </param>
-        /// <param name="permissions"> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyProvisioningState? provisioningState, AccessPolicyType? typePropertiesType, string permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of an access policy. </param>
+        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisCacheAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            TypePropertiesType = typePropertiesType;
-            Permissions = permissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of an access policy. </summary>
+        internal RedisCacheAccessPolicyProperties Properties { get; set; }
+
         /// <summary> Provisioning state of access policy. </summary>
-        [WirePath("properties.provisioningState")]
-        public AccessPolicyProvisioningState? ProvisioningState { get; }
+        public AccessPolicyProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Built-In or Custom access policy. </summary>
-        [WirePath("properties.type")]
-        public AccessPolicyType? TypePropertiesType { get; }
+        public AccessPolicyType? Type
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Type;
+            }
+        }
+
         /// <summary> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </summary>
-        [WirePath("properties.permissions")]
-        public string Permissions { get; set; }
+        public string Permissions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Permissions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisCacheAccessPolicyProperties();
+                }
+                Properties.Permissions = value;
+            }
+        }
     }
 }
