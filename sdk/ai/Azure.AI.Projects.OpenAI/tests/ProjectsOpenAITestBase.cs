@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -217,9 +218,9 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
             if (message.Request is not null && message.Response is null)
             {
                 Console.WriteLine($"--- New request ---");
-                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
-                Console.WriteLine($"Headers: {headers}");
+                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
+                Console.WriteLine($"Request headers:{headers}");
                 Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
                 if (message.Request?.Content != null)
                 {
@@ -234,7 +235,15 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                         string requestDump = reader.ReadToEnd();
                         stream.Position = 0;
                         requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                        Console.WriteLine(requestDump);
+                        // Make sure JSON string is properly formatted.
+                        JsonSerializerOptions jsonOptions = new()
+                        {
+                            WriteIndented = true,
+                        };
+                        JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                        Console.WriteLine("--- Begin request content ---");
+                        Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                        Console.WriteLine("--- End request content ---");
                     }
                     else
                     {
@@ -247,8 +256,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
             }
             if (message.Response != null)
             {
-                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
+                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
                 Console.WriteLine($"Response headers: {headers}");
                 if (message.BufferResponse)
                 {

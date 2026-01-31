@@ -335,9 +335,9 @@ public class LoggingPolicy : PipelinePolicy
         if (message.Request is not null && message.Response is null)
         {
             Console.WriteLine($"--- New request ---");
-            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-            string headers = string.Join(",", headerPairs);
-            Console.WriteLine($"Headers: {headers}");
+            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Request headers:{headers}");
             Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
             if (message.Request?.Content != null)
             {
@@ -352,7 +352,15 @@ public class LoggingPolicy : PipelinePolicy
                     string requestDump = reader.ReadToEnd();
                     stream.Position = 0;
                     requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                    Console.WriteLine(requestDump);
+                    // Make sure JSON string is properly formatted.
+                    JsonSerializerOptions jsonOptions = new()
+                    {
+                        WriteIndented = true,
+                    };
+                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                    Console.WriteLine("--- Begin request content ---");
+                    Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                    Console.WriteLine("--- End request content ---");
                 }
                 else
                 {
@@ -365,9 +373,9 @@ public class LoggingPolicy : PipelinePolicy
         }
         if (message.Response != null)
         {
-            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-            string headers = string.Join(",", headerPairs);
-            Console.WriteLine($"Response headers: {headers}");
+            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Response headers:{headers}");
             if (message.BufferResponse)
             {
                 message.Response.BufferContent();
@@ -1637,7 +1645,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
 <!-- remove "Persistent" -->
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
 <!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
 [nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->

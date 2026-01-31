@@ -12,9 +12,9 @@ public class LoggingPolicy : PipelinePolicy
         if (message.Request is not null && message.Response is null)
         {
             Console.WriteLine($"--- New request ---");
-            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-            string headers = string.Join(",", headerPairs);
-            Console.WriteLine($"Headers: {headers}");
+            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Request headers:{headers}");
             Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
             if (message.Request?.Content != null)
             {
@@ -29,7 +29,15 @@ public class LoggingPolicy : PipelinePolicy
                     string requestDump = reader.ReadToEnd();
                     stream.Position = 0;
                     requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                    Console.WriteLine(requestDump);
+                    // Make sure JSON string is properly formatted.
+                    JsonSerializerOptions jsonOptions = new()
+                    {
+                        WriteIndented = true,
+                    };
+                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                    Console.WriteLine("--- Begin request content ---");
+                    Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                    Console.WriteLine("--- End request content ---");
                 }
                 else
                 {
@@ -42,9 +50,9 @@ public class LoggingPolicy : PipelinePolicy
         }
         if (message.Response != null)
         {
-            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-            string headers = string.Join(",", headerPairs);
-            Console.WriteLine($"Response headers: {headers}");
+            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Response headers:{headers}");
             if (message.BufferResponse)
             {
                 message.Response.BufferContent();
