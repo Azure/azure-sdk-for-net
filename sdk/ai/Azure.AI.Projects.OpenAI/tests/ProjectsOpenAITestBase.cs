@@ -7,11 +7,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.OpenAI.Tests.Utils;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -41,6 +43,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
+        ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
@@ -156,7 +159,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         };
     }
 
-    private AuthenticationTokenProvider GetTestAuthenticationProvider()
+    protected AuthenticationTokenProvider GetTestAuthenticationProvider()
     {
         // For local testing if you are using non default account
         // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
@@ -214,11 +217,11 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         {
             if (message.Request is not null && message.Response is null)
             {
-                Console.WriteLine($"--- New request ---");
-                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
-                Console.WriteLine($"Headers: {headers}");
                 Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+                Console.WriteLine($"--- New request ---");
+                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
+                Console.WriteLine($"Request headers:{headers}");
                 if (message.Request?.Content != null)
                 {
                     string contentType = "Unknown Content Type";
@@ -232,7 +235,15 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                         string requestDump = reader.ReadToEnd();
                         stream.Position = 0;
                         requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                        Console.WriteLine(requestDump);
+                        // Make sure JSON string is properly formatted.
+                        JsonSerializerOptions jsonOptions = new()
+                        {
+                            WriteIndented = true,
+                        };
+                        JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                        Console.WriteLine("--- Begin request content ---");
+                        Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                        Console.WriteLine("--- End request content ---");
                     }
                     else
                     {
@@ -245,8 +256,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
             }
             if (message.Response != null)
             {
-                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
+                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                string headers = string.Join("", headerPairs);
                 Console.WriteLine($"Response headers: {headers}");
                 if (message.BufferResponse)
                 {

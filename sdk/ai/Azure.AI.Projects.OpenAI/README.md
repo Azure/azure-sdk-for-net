@@ -25,6 +25,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Agents](#agents)
     - [Responses](#responses)
     - [Conversations](#conversations)
+    - [Logging](#logging)
   - [Published Agents](#published-agents)
   - [Container App](#container-app)
   - [Hosted Agents](#hosted-agents)
@@ -316,6 +317,109 @@ CreateResponseOptions responseOptions = new()
 
 List<ResponseItem> items = [];
 ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+```
+
+### Logging
+
+Logging ofservice requests and responses may be a useful tool for troubleshooting of the issues.
+It can be implemented through custom policy. In the example bwlow we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
+This class implements two methods `Process` and `ProcessAsync`. The Azure pipeline calls the chain of policies, where the preceding
+one calls the next policy, hence by placing calls to `ProcessMessage` method before and after `ProcessNext` we can print request
+and response. The `ProcessMessage` method contains logic to show the contents of web request and response along with headers and URI paths.
+
+```C# Snippet:Sample_LoggingPolicy_AgentsLogging
+public class LoggingPolicy : PipelinePolicy
+{
+    private static void ProcessMessage(PipelineMessage message)
+    {
+        if (message.Request is not null && message.Response is null)
+        {
+            Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+            Console.WriteLine($"--- New request ---");
+            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Request headers:{headers}");
+            if (message.Request?.Content != null)
+            {
+                string contentType = "Unknown Content Type";
+                if (message.Request.Headers?.TryGetValue("Content-Type", out contentType) == true
+                    && contentType == "application/json")
+                {
+                    using MemoryStream stream = new();
+                    message.Request.Content.WriteTo(stream, default);
+                    stream.Position = 0;
+                    using StreamReader reader = new(stream);
+                    string requestDump = reader.ReadToEnd();
+                    stream.Position = 0;
+                    requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
+                    // Make sure JSON string is properly formatted.
+                    JsonSerializerOptions jsonOptions = new()
+                    {
+                        WriteIndented = true,
+                    };
+                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                    Console.WriteLine("--- Begin request content ---");
+                    Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                    Console.WriteLine("--- End request content ---");
+                }
+                else
+                {
+                    string length = message.Request.Content.TryComputeLength(out long numberLength)
+                        ? $"{numberLength} bytes"
+                        : "unknown length";
+                    Console.WriteLine($"<< Non-JSON content: {contentType} >> {length}");
+                }
+            }
+        }
+        if (message.Response != null)
+        {
+            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Response headers:{headers}");
+            if (message.BufferResponse)
+            {
+                message.Response.BufferContent();
+                Console.WriteLine("--- Begin response content ---");
+                Console.WriteLine(message.Response.Content?.ToString());
+                Console.WriteLine("--- End of response content ---");
+            }
+            else
+            {
+                Console.WriteLine("--- Response (unbuffered, content not rendered) ---");
+            }
+        }
+    }
+
+    public LoggingPolicy(){}
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        ProcessMessage(message); // for request
+        ProcessNext(message, pipeline, currentIndex);
+        ProcessMessage(message); // for response
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        ProcessMessage(message); // for request
+        await ProcessNextAsync(message, pipeline, currentIndex);
+        ProcessMessage(message); // for response
+    }
+}
+```
+
+To apply the policy to the pipeline, we create `AIProjectClientOptions` object
+containing  `LoggingPolicy`, inform the pipeline to execute this policy by call
+and set the option while instantiating `AIProjectClient` that we will consequently use.
+
+```C# Snippet:Sample_CreateClient_AgentsLogging
+string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
+string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+AIProjectClientOptions options = new();
+options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
+AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
 ### Published Agents
@@ -1541,7 +1645,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
 <!-- remove "Persistent" -->
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
 <!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
 [nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->

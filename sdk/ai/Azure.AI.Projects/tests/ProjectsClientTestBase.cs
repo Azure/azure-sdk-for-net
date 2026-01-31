@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
@@ -33,11 +34,11 @@ namespace Azure.AI.Projects.Tests
             {
                 if (message.Request is not null && message.Response is null)
                 {
-                    Console.WriteLine($"--- New request ---");
-                    IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                    string headers = string.Join(",", headerPairs);
-                    Console.WriteLine($"Headers: {headers}");
                     Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+                    Console.WriteLine($"--- New request ---");
+                    IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                    string headers = string.Join("", headerPairs);
+                    Console.WriteLine($"Request headers:{headers}");
                     if (message.Request?.Content != null)
                     {
                         string contentType = "Unknown Content Type";
@@ -51,7 +52,15 @@ namespace Azure.AI.Projects.Tests
                             string requestDump = reader.ReadToEnd();
                             stream.Position = 0;
                             requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                            Console.WriteLine(requestDump);
+                            // Make sure JSON string is properly formatted.
+                            JsonSerializerOptions jsonOptions = new()
+                            {
+                                WriteIndented = true,
+                            };
+                            JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                            Console.WriteLine("--- Begin request content ---");
+                            Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                            Console.WriteLine("--- End request content ---");
                         }
                         else
                         {
@@ -64,11 +73,12 @@ namespace Azure.AI.Projects.Tests
                 }
                 if (message.Response != null)
                 {
-                    IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                    string headers = string.Join(",", headerPairs);
+                    IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n   {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                    string headers = string.Join("", headerPairs);
                     Console.WriteLine($"Response headers: {headers}");
                     if (message.BufferResponse)
                     {
+                        message.Response.BufferContent();
                         Console.WriteLine("--- Begin response content ---");
                         Console.WriteLine(message.Response.Content?.ToString());
                         Console.WriteLine("--- End of response content ---");
@@ -153,10 +163,17 @@ namespace Azure.AI.Projects.Tests
             return TestEnvironment.Credential;
         }
 
-        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default)
+        protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint=false)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
+            Uri endpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+            if (useDefaultEndpoint)
+            {
+                string[] segments = endpoint.Segments;
+                segments[segments.Length - 1] = "_default";
+                endpoint = new Uri(new Uri($"{endpoint.Scheme}://{endpoint.Host}"), relativeUri: string.Join("", segments));
+            }
+            return CreateProxyFromClient(new AIProjectClient(endpoint, GetTestTokenProvider(), projectClientOptions));
         }
 
         protected AIProjectClient GetTestProjectClientForLegacyAgents(Dictionary<string, string> headers = default)
