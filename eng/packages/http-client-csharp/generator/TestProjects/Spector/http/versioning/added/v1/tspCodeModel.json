@@ -116,6 +116,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -266,7 +271,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Added.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Added"
           },
           "parameters": [
             {

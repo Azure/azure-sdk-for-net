@@ -12,7 +12,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification
-    /// 
     /// Context information for a search response including pagination details.
     /// </summary>
     public partial class StacContextExtension

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class MySqlFlexibleServerMaintenanceOperationSource : IOperationSource<MySqlFlexibleServerMaintenanceResource>
+    /// <summary></summary>
+    internal partial class MySqlFlexibleServerMaintenanceOperationSource : IOperationSource<MySqlFlexibleServerMaintenanceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MySqlFlexibleServerMaintenanceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MySqlFlexibleServerMaintenanceResource IOperationSource<MySqlFlexibleServerMaintenanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerMaintenanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MySqlFlexibleServerMaintenanceData data = MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MySqlFlexibleServerMaintenanceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MySqlFlexibleServerMaintenanceResource> IOperationSource<MySqlFlexibleServerMaintenanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerMaintenanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
-            return await Task.FromResult(new MySqlFlexibleServerMaintenanceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MySqlFlexibleServerMaintenanceData data = MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MySqlFlexibleServerMaintenanceResource(_client, data);
         }
     }
 }

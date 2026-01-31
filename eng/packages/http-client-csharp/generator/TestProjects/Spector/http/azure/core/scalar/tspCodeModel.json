@@ -163,6 +163,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureLocationModel"
+        }
+      },
       "properties": [
         {
           "$id": "19",
@@ -325,7 +330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -439,7 +445,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -589,7 +596,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -716,7 +724,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -816,7 +825,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {

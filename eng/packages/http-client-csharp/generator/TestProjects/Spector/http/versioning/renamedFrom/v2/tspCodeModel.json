@@ -163,6 +163,11 @@
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewModel"
+        }
+      },
       "properties": [
         {
           "$id": "17",
@@ -382,7 +387,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.RenamedFrom"
           },
           "parameters": [
             {
@@ -627,7 +633,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.RenamedFrom"
               },
               "parameters": [
                 {

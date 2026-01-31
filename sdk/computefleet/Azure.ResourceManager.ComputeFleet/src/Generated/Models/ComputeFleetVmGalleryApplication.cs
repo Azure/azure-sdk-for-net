@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -17,37 +18,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetVmGalleryApplication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId">
@@ -81,8 +53,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// If set to true, when a new Gallery Application version is available in PIR/SIG,
         /// it will be automatically updated for the VM/VMSS
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmGalleryApplication(string tags, int? order, ResourceIdentifier packageReferenceId, string configurationReference, bool? isTreatFailureAsDeploymentFailureEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmGalleryApplication(string tags, int? order, ResourceIdentifier packageReferenceId, string configurationReference, bool? isTreatFailureAsDeploymentFailureEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Order = order;
@@ -90,33 +62,33 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ConfigurationReference = configurationReference;
             IsTreatFailureAsDeploymentFailureEnabled = isTreatFailureAsDeploymentFailureEnabled;
             IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmGalleryApplication"/> for deserialization. </summary>
-        internal ComputeFleetVmGalleryApplication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional, Specifies a passthrough value for more generic context. </summary>
         public string Tags { get; set; }
+
         /// <summary> Optional, Specifies the order in which the packages have to be installed. </summary>
         public int? Order { get; set; }
+
         /// <summary>
         /// Specifies the GalleryApplicationVersion resource id on the form of
         /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}
         /// </summary>
         public ResourceIdentifier PackageReferenceId { get; set; }
+
         /// <summary>
         /// Optional, Specifies the uri to an azure blob that will replace the default
         /// configuration for the package if provided
         /// </summary>
         public string ConfigurationReference { get; set; }
+
         /// <summary>
         /// Optional, If true, any failure for any operation in the VmApplication will fail
         /// the deployment
         /// </summary>
         public bool? IsTreatFailureAsDeploymentFailureEnabled { get; set; }
+
         /// <summary>
         /// If set to true, when a new Gallery Application version is available in PIR/SIG,
         /// it will be automatically updated for the VM/VMSS

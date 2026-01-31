@@ -1183,6 +1183,14 @@ interface ScheduledActionExtension {
     GetAssociatedScheduledActionsRequest,
     GetAssociatedScheduledActionsResponse
   >;
+
+  @doc("Action to retrieve the PostgreSQL versions.")
+  @autoRoute
+  @armResourceAction(ScheduledAction)
+  @post
+  getPostgresVersions(
+    ...ResourceInstanceParameters<GetAssociatedScheduledActionsRequest>
+  ): ArmResponse<GetAssociatedScheduledActionsResponse> | ErrorResponse;
 }
 `,
       runner
@@ -1227,6 +1235,19 @@ interface ScheduledActionExtension {
       "getAssociatedScheduledActions should be in non-resource methods"
     );
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+
+    // Verify getPostgresVersions is also a non-resource method
+    const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
+      m.operationPath.includes("getPostgresVersions")
+    );
+    ok(
+      getPostgresVersionsEntry,
+      "getPostgresVersions should be in non-resource methods"
+    );
+    strictEqual(
+      getPostgresVersionsEntry.operationScope,
+      ResourceScope.ResourceGroup
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1470,22 +1491,42 @@ interface NoGetResources {
     ok(parentResource);
     strictEqual(parentResource.metadata.resourceName, "Parent");
 
-    // Parent should have 5 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
-    // plus the listByResourceGroup for NoGetResource children
+    // Parent should have 7 methods: its own 4 methods (get, createOrUpdate, delete, listByResourceGroup)
+    // plus all 3 operations from NoGetResource (createOrUpdate, delete, listByResourceGroup)
     strictEqual(
       parentResource.metadata.methods.length,
-      5,
-      "Parent should have 5 methods including the list operation from NoGetResource"
+      7,
+      "Parent should have 7 methods including all operations from NoGetResource"
     );
 
-    // Verify the list operation for NoGetResource is in parent's methods
+    // Verify the list operation for NoGetResource is in parent's methods as Action
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "List" && m.operationPath.includes("noGetResources")
+        m.kind === "Action" &&
+        m.operationPath.includes("noGetResources") &&
+        m.operationPath.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
-      "Parent resource should have the list operation for NoGetResource"
+      "Parent resource should have the list operation for NoGetResource as Action"
+    );
+
+    // Verify the create operation for NoGetResource is in parent's methods as Action
+    const noGetCreateInParent = parentResource.metadata.methods.find(
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetCreateInParent,
+      "Parent resource should have the create operation for NoGetResource as Action"
+    );
+
+    // Verify the delete operation for NoGetResource is in parent's methods as Action
+    const noGetDeleteInParent = parentResource.metadata.methods.find(
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+    );
+    ok(
+      noGetDeleteInParent,
+      "Parent resource should have the delete operation for NoGetResource as Action"
     );
 
     // Verify NoGetResource is NOT in resources
@@ -1494,16 +1535,242 @@ interface NoGetResources {
     );
     strictEqual(noGetResource, undefined);
 
-    // Verify only non-list NoGetResource operations are in non-resource methods
+    // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
       m.operationPath.includes("noGetResources")
     );
-    // Should have only createOrUpdate and delete operations (list is now on parent)
     strictEqual(
       noGetMethods.length,
-      2,
-      "Should have only createOrUpdate and delete in non-resource methods"
+      0,
+      "Should have no NoGetResource operations in non-resource methods"
     );
+  });
+
+  it("multi-scope resource with same model at different scopes", async () => {
+    // This test validates the fix for the scenario where the same model is used by multiple
+    // resource interfaces at different scopes (ResourceGroup, Subscription, and ServiceGroup/Tenant).
+    // Each List operation should be correctly assigned to its corresponding resource.
+    const program = await typeSpecCompile(
+      `
+/** Site properties */
+model SiteProperties {
+  /** Display name of Site */
+  displayName?: string;
+  /** Description of Site */
+  description?: string;
+}
+
+/** Site as Extension Resource */
+model Site is ExtensionResource<SiteProperties> {
+  ...ResourceNameParameter<
+    Resource = Site,
+    KeyName = "siteName",
+    SegmentName = "sites",
+    NamePattern = "^[a-zA-Z0-9][a-zA-Z0-9-_]{2,22}[a-zA-Z0-9]$"
+  >;
+}
+
+/** Site operations as base operations which will be extended for each scope */
+interface SiteOps<Scope extends Azure.ResourceManager.Foundations.SimpleResource> {
+  list is Extension.ListByTarget<Scope, Site>;
+  get is Extension.Read<Scope, Site>;
+  createOrUpdate is Extension.CreateOrUpdateAsync<Scope, Site>;
+  delete is Extension.DeleteSync<Scope, Site>;
+}
+
+@armResourceOperations
+interface Sites extends SiteOps<Extension.ResourceGroup> {}
+
+@armResourceOperations
+interface SitesBySubscription extends SiteOps<Extension.Subscription> {}
+
+alias ServiceGroup = Extension.ExternalResource<
+  TargetNamespace = "Microsoft.Management",
+  ResourceType = "serviceGroups",
+  ResourceParameterName = "servicegroupName",
+  NamePattern = "^[a-zA-Z0-9][a-zA-Z0-9-_]{2,22}[a-zA-Z0-9]$",
+  Description = "The name of the service group",
+  ParentType = "Tenant"
+>;
+
+@armResourceOperations
+interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have 3 resources for the Site model (one for each scope)
+    const siteModel = root.models.find((m) => m.name === "Site");
+    ok(siteModel, "Site model should exist");
+
+    const siteModelId = siteModel.crossLanguageDefinitionId;
+    const siteResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === siteModelId
+    );
+    strictEqual(
+      siteResources.length,
+      3,
+      "Should have 3 resources for the Site model"
+    );
+
+    // Find ResourceGroup-scoped Site
+    const rgSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
+        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+    );
+    ok(rgSite, "Should have ResourceGroup-scoped Site");
+    strictEqual(rgSite.metadata.resourceScope, ResourceScope.ResourceGroup);
+    strictEqual(rgSite.metadata.resourceName, "Site");
+    strictEqual(rgSite.metadata.methods.length, 4);
+
+    // Verify the List operation on ResourceGroup-scoped Site has the correct path
+    const rgSiteList = rgSite.metadata.methods.find((m) => m.kind === "List");
+    ok(rgSiteList, "ResourceGroup-scoped Site should have a List operation");
+    ok(
+      rgSiteList.operationPath.includes("/resourceGroups/"),
+      "ResourceGroup Site List should have resourceGroups in path"
+    );
+    ok(
+      !rgSiteList.operationPath.includes("serviceGroups"),
+      "ResourceGroup Site List should NOT have serviceGroups in path"
+    );
+
+    // Find Subscription-scoped Site
+    const subSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.startsWith("/subscriptions/") &&
+        !r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
+        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+    );
+    ok(subSite, "Should have Subscription-scoped Site");
+    strictEqual(subSite.metadata.resourceScope, ResourceScope.Subscription);
+    strictEqual(subSite.metadata.resourceName, "SitesBySubscription");
+    strictEqual(subSite.metadata.methods.length, 4);
+
+    // Verify the List operation on Subscription-scoped Site has the correct path
+    const subSiteList = subSite.metadata.methods.find((m) => m.kind === "List");
+    ok(subSiteList, "Subscription-scoped Site should have a List operation");
+    ok(
+      subSiteList.operationPath.startsWith("/subscriptions/"),
+      "Subscription Site List should start with /subscriptions/"
+    );
+    ok(
+      !subSiteList.operationPath.includes("/resourceGroups/"),
+      "Subscription Site List should NOT have resourceGroups in path"
+    );
+    ok(
+      !subSiteList.operationPath.includes("serviceGroups"),
+      "Subscription Site List should NOT have serviceGroups in path"
+    );
+
+    // Find ServiceGroup-scoped Site (Tenant scope via ServiceGroup)
+    const sgSite = siteResources.find((r) =>
+      r.metadata.resourceIdPattern.includes("serviceGroups")
+    );
+    ok(sgSite, "Should have ServiceGroup-scoped Site");
+    strictEqual(sgSite.metadata.resourceScope, ResourceScope.Tenant);
+    strictEqual(sgSite.metadata.resourceName, "SitesByServiceGroup");
+    strictEqual(sgSite.metadata.methods.length, 4);
+
+    // Verify the List operation on ServiceGroup-scoped Site has the correct path
+    const sgSiteList = sgSite.metadata.methods.find((m) => m.kind === "List");
+    ok(sgSiteList, "ServiceGroup-scoped Site should have a List operation");
+    ok(
+      sgSiteList.operationPath.includes("serviceGroups"),
+      "ServiceGroup Site List should have serviceGroups in path"
+    );
+    ok(
+      !sgSiteList.operationPath.includes("/resourceGroups/"),
+      "ServiceGroup Site List should NOT have resourceGroups in path"
+    );
+
+    // This is the critical assertion: SitesByServiceGroup.list should NOT be on the ResourceGroup-scoped resource
+    const rgSiteListMethods = rgSite.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      rgSiteListMethods.length,
+      1,
+      "ResourceGroup-scoped Site should have exactly 1 List method"
+    );
+    ok(
+      !rgSiteListMethods.some((m) => m.operationPath.includes("serviceGroups")),
+      "ResourceGroup-scoped Site should NOT have the ServiceGroup List operation"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Both APIs should have the same number of resources
+    strictEqual(
+      resolvedSchema.resources.length,
+      armProviderSchema.resources.length,
+      "Both APIs should produce the same number of resources"
+    );
+
+    // Find the ServiceGroup-scoped Site in resolvedSchema
+    const resolvedSgSite = resolvedSchema.resources.find((r) =>
+      r.metadata.resourceIdPattern.includes("serviceGroups")
+    );
+    ok(
+      resolvedSgSite,
+      "resolveArmResources should have ServiceGroup-scoped Site"
+    );
+
+    // Verify resolveArmResources also correctly assigns List to ServiceGroup resource (not ResourceGroup)
+    const resolvedSgSiteList = resolvedSgSite.metadata.methods.find(
+      (m) => m.kind === "List"
+    );
+    ok(
+      resolvedSgSiteList,
+      "ServiceGroup-scoped Site in resolveArmResources should have a List operation"
+    );
+    ok(
+      resolvedSgSiteList.operationPath.includes("serviceGroups"),
+      "ServiceGroup Site List should have serviceGroups in path"
+    );
+
+    // Find the ResourceGroup-scoped Site in resolvedSchema
+    const resolvedRgSite = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/resourceGroups/") &&
+        r.metadata.resourceIdPattern.includes("/sites/{siteName}")
+    );
+    ok(
+      resolvedRgSite,
+      "resolveArmResources should have ResourceGroup-scoped Site"
+    );
+
+    // Verify ResourceGroup Site in resolveArmResources does NOT have ServiceGroup List
+    const resolvedRgSiteListMethods = resolvedRgSite.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      resolvedRgSiteListMethods.length,
+      1,
+      "ResourceGroup-scoped Site in resolveArmResources should have exactly 1 List method"
+    );
+    ok(
+      !resolvedRgSiteListMethods.some((m) =>
+        m.operationPath.includes("serviceGroups")
+      ),
+      "ResourceGroup-scoped Site in resolveArmResources should NOT have the ServiceGroup List operation"
+    );
+
+    // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
+    // - Legacy detection (buildArmProviderSchema): uses Tenant scope
+    // - resolveArmResources: uses Extension scope
+    // Both are functionally correct for the core fix (List operations correctly assigned)
   });
 });

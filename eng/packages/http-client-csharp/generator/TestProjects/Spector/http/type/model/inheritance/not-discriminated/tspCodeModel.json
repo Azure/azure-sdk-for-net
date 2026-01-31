@@ -78,6 +78,11 @@
       "usage": "Input,Output,Json",
       "doc": "The third level model in the normal multiple levels inheritance.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Siamese"
+        }
+      },
       "baseModel": {
         "$id": "10",
         "kind": "model",
@@ -87,6 +92,11 @@
         "usage": "Input,Output,Json",
         "doc": "The second level model in the normal multiple levels inheritance.",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "Cat"
+          }
+        },
         "baseModel": {
           "$id": "11",
           "kind": "model",
@@ -96,6 +106,11 @@
           "usage": "Input,Output,Json",
           "doc": "This is base model for not-discriminated normal multiple levels inheritance.",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Pet"
+            }
+          },
           "properties": [
             {
               "$id": "12",
@@ -263,7 +278,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
@@ -359,7 +375,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
@@ -480,7 +497,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {

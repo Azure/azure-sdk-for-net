@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesSku : IEquatable<DeviceProvisioningServicesSku>
     {
         private readonly string _value;
+        private const string S1Value = "S1";
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceProvisioningServicesSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string S1Value = "S1";
-
-        /// <summary> S1. </summary>
+        /// <summary> Gets the S1. </summary>
         public static DeviceProvisioningServicesSku S1 { get; } = new DeviceProvisioningServicesSku(S1Value);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesSku left, DeviceProvisioningServicesSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesSku left, DeviceProvisioningServicesSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesSku(string value) => new DeviceProvisioningServicesSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesSku?(string value) => value == null ? null : new DeviceProvisioningServicesSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

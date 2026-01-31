@@ -12,42 +12,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// Describes the parameters of ephemeral disk settings that can be specified for
-    /// operating system disk. **Note:** The ephemeral disk settings can only be
+    /// operating system disk. <b>Note:</b> The ephemeral disk settings can only be
     /// specified for managed disk.
     /// </summary>
     public partial class ComputeFleetDiffDiskSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiffDiskSettings"/>. </summary>
         public ComputeFleetDiffDiskSettings()
@@ -58,27 +29,28 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement">
         /// Specifies the ephemeral disk placement for operating system disk. Possible
-        /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
-        /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
+        /// values are: <b>CacheDisk,</b> <b>ResourceDisk.</b> The defaulting behavior is:
+        /// <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b>
         /// is used. Refer to the VM size documentation for Windows VM at
         /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
         /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
         /// sizes exposes a cache disk.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetDiffDiskSettings(ComputeFleetDiffDiskOption? option, ComputeFleetDiffDiskPlacement? placement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetDiffDiskSettings(ComputeFleetDiffDiskOption? option, ComputeFleetDiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Option = option;
             Placement = placement;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
         public ComputeFleetDiffDiskOption? Option { get; set; }
+
         /// <summary>
         /// Specifies the ephemeral disk placement for operating system disk. Possible
-        /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
-        /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
+        /// values are: <b>CacheDisk,</b> <b>ResourceDisk.</b> The defaulting behavior is:
+        /// <b>CacheDisk</b> if one is configured for the VM size otherwise <b>ResourceDisk</b>
         /// is used. Refer to the VM size documentation for Windows VM at
         /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
         /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -211,8 +212,11 @@ namespace Azure.Generator.Management.Providers
         private MethodBodyStatement[] BuildGetNextResponseMethodBody()
         {
             // Since we're generating collection result, we just need to call the Create*Request method on the client
-            // The method name is derived from the convenience method name (e.g., GetDependencies -> CreateGetDependenciesRequest)
-            var baseName = _methodName.EndsWith("Async") && _isAsync ? _methodName.Substring(0, _methodName.Length - 5) : _methodName;
+            // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
+            // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
+            var originalMethodName = convenienceMethod.Signature.Name;
+            var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";
 
             var requestArgs = new List<ValueExpression>();

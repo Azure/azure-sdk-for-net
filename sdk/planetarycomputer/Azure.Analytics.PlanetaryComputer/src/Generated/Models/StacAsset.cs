@@ -12,7 +12,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#asset-object
-    /// 
     /// Represents a STAC asset, which is a file or resource associated with a STAC item.
     /// </summary>
     public partial class StacAsset

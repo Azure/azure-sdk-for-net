@@ -46,6 +46,11 @@
       "usage": "Input,Json",
       "doc": "This is a simple model.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "User"
+        }
+      },
       "properties": [
         {
           "$id": "6",
@@ -82,6 +87,11 @@
       "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "9",
@@ -230,7 +240,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {
@@ -391,7 +402,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Basic"
               },
               "parameters": [
                 {

@@ -461,6 +461,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.DefaultDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DefaultDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -505,6 +510,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.ISO8601DurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ISO8601DurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "62",
@@ -549,6 +559,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32SecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "66",
@@ -593,6 +608,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "70",
@@ -637,6 +657,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64SecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Float64SecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "74",
@@ -681,6 +706,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32MillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "78",
@@ -725,6 +755,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "82",
@@ -769,6 +804,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Float64MillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "86",
@@ -813,6 +853,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsDurationArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "90",
@@ -879,6 +924,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsDurationArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "97",
@@ -945,6 +995,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32SecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "104",
@@ -989,6 +1044,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "108",
@@ -1033,6 +1093,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32MillisecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "112",
@@ -1077,6 +1142,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "116",
@@ -1222,7 +1292,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1318,7 +1389,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.iso8601",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1414,7 +1486,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1510,7 +1583,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32SecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1606,7 +1680,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.floatSeconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1702,7 +1777,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.floatSecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1798,7 +1874,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.float64Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1894,7 +1971,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -1990,7 +2068,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32MillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2086,7 +2165,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.floatMilliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2182,7 +2262,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.floatMillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2278,7 +2359,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.float64Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2397,7 +2479,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32SecondsArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2504,7 +2587,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Query.int32MillisecondsArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Query"
               },
               "parameters": [
                 {
@@ -2669,7 +2753,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -2825,7 +2910,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.iso8601",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -2981,7 +3067,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.int32Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3137,7 +3224,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatSeconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3293,7 +3381,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.float64Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3449,7 +3538,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.int32Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3605,7 +3695,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatMilliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3761,7 +3852,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.float64Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -3917,7 +4009,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4073,7 +4166,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4229,7 +4323,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.int32SecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4385,7 +4480,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatSecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4541,7 +4637,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.int32MillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4697,7 +4794,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Property.floatMillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Property"
               },
               "parameters": [
                 {
@@ -4868,7 +4966,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.default",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -4964,7 +5063,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.iso8601",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5084,7 +5184,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.iso8601Array",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5168,7 +5269,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.int32Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5264,7 +5366,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.int32SecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5360,7 +5463,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.floatSeconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5456,7 +5560,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.floatSecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5552,7 +5657,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.float64Seconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5648,7 +5754,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.int32Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5744,7 +5851,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.int32MillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5840,7 +5948,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.floatMilliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -5936,7 +6045,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.floatMillisecondsLargerUnit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -6032,7 +6142,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.float64Milliseconds",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {
@@ -6152,7 +6263,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Duration.Header.int32MillisecondsArray",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Duration.Header"
               },
               "parameters": [
                 {

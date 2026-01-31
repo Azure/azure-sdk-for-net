@@ -477,6 +477,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.MultiPartRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "60",
@@ -551,6 +552,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.MultiPartRequestWithWireName",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "65",
@@ -625,6 +627,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.MultiPartOptionalRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "70",
@@ -699,6 +702,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.ComplexPartsRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "75",
@@ -744,6 +748,7 @@
             "crossLanguageDefinitionId": "Payload.MultiPart.Address",
             "usage": "Input",
             "decorators": [],
+            "serializationOptions": {},
             "properties": [
               {
                 "$id": "79",
@@ -875,6 +880,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.JsonPartRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "87",
@@ -945,6 +951,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.BinaryArrayPartsRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "91",
@@ -1026,6 +1033,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.MultiBinaryPartsRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "97",
@@ -1101,6 +1109,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.Request.anonymous",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "102",
@@ -1144,6 +1153,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.ComplexHttpPartsModelRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "105",
@@ -1216,6 +1226,7 @@
             "crossLanguageDefinitionId": "Payload.MultiPart.FileRequiredMetaData",
             "usage": "Input",
             "decorators": [],
+            "serializationOptions": {},
             "baseModel": {
               "$id": "110",
               "kind": "model",
@@ -1226,6 +1237,7 @@
               "doc": "A file in an HTTP request, response, or multipart payload.\n\nFiles have a special meaning that the HTTP library understands. When the body of an HTTP request, response,\nor multipart payload is _effectively_ an instance of `TypeSpec.Http.File` or any type that extends it, the\noperation is treated as a file upload or download.\n\nWhen using file bodies, the fields of the file model are defined to come from particular locations by default:\n\n- `contentType`: The `Content-Type` header of the request, response, or multipart payload (CANNOT be overridden or changed).\n- `contents`: The body of the request, response, or multipart payload (CANNOT be overridden or changed).\n- `filename`: The `filename` parameter value of the `Content-Disposition` header of the response or multipart payload\n(MAY be overridden or changed).\n\nA File may be used as a normal structured JSON object in a request or response, if the request specifies an explicit\n`Content-Type` header. In this case, the entire File model is serialized as if it were any other model. In a JSON payload,\nit will have a structure like:\n\n```\n{\n  \"contentType\": <string?>,\n  \"filename\": <string?>,\n  \"contents\": <string, base64>\n}\n```\n\nThe `contentType` _within_ the file defines what media types the data inside the file can be, but if the specification\ndefines a `Content-Type` for the payload as HTTP metadata, that `Content-Type` metadata defines _how the file is\nserialized_. See the examples below for more information.\n\nNOTE: The `filename` and `contentType` fields are optional. Furthermore, the default location of `filename`\n(`Content-Disposition: <disposition>; filename=<filename>`) is only valid in HTTP responses and multipart payloads. If\nyou wish to send the `filename` in a request, you must use HTTP metadata decorators to describe the location of the\n`filename` field. You can combine the metadata decorators with `@visibility` to control when the `filename` location\nis overridden, as shown in the examples below.",
               "summary": "A file in an HTTP request, response, or multipart payload.",
               "decorators": [],
+              "serializationOptions": {},
               "properties": [
                 {
                   "$id": "111",
@@ -1514,6 +1526,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.FileWithHttpPartSpecificContentTypeRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "130",
@@ -1528,6 +1541,7 @@
             "crossLanguageDefinitionId": "Payload.MultiPart.FileSpecificContentType",
             "usage": "Input",
             "decorators": [],
+            "serializationOptions": {},
             "baseModel": {
               "$ref": "110"
             },
@@ -1676,6 +1690,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.FileWithHttpPartRequiredContentTypeRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "141",
@@ -1720,6 +1735,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.FileWithHttpPartOptionalContentTypeRequest",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "143",
@@ -1734,6 +1750,7 @@
             "crossLanguageDefinitionId": "Payload.MultiPart.FileOptionalContentType",
             "usage": "Input",
             "decorators": [],
+            "serializationOptions": {},
             "baseModel": {
               "$ref": "110"
             },
@@ -1860,6 +1877,7 @@
       "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.Request.anonymous",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "152",
@@ -2056,7 +2074,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2169,7 +2188,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2282,7 +2302,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2395,7 +2416,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2508,7 +2530,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2621,7 +2644,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2734,7 +2758,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2847,7 +2872,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -2960,7 +2986,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Payload.MultiPart.FormData"
               },
               "parameters": [
                 {
@@ -3120,7 +3147,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Payload.MultiPart.FormData.HttpParts"
                   },
                   "parameters": [
                     {
@@ -3280,7 +3308,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3393,7 +3422,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3506,7 +3536,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType"
                       },
                       "parameters": [
                         {
@@ -3667,7 +3698,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Payload.MultiPart.FormData.HttpParts.NonString"
                       },
                       "parameters": [
                         {

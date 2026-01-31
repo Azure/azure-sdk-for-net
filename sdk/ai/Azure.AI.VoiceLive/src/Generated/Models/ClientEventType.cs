@@ -30,6 +30,7 @@ namespace Azure.AI.VoiceLive
         private const string ResponseCreateValue = "response.create";
         private const string ResponseCancelValue = "response.cancel";
         private const string SessionAvatarConnectValue = "session.avatar.connect";
+        private const string McpApprovalResponseValue = "mcp_approval_response";
 
         /// <summary> Initializes a new instance of <see cref="ClientEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -88,6 +89,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the SessionAvatarConnect. </summary>
         public static ClientEventType SessionAvatarConnect { get; } = new ClientEventType(SessionAvatarConnectValue);
+
+        /// <summary> Gets the McpApprovalResponse. </summary>
+        public static ClientEventType McpApprovalResponse { get; } = new ClientEventType(McpApprovalResponseValue);
 
         /// <summary> Determines if two <see cref="ClientEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

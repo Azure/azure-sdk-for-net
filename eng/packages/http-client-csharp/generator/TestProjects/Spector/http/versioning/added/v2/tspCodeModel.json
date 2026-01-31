@@ -241,6 +241,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
       "properties": [
         {
           "$id": "25",
@@ -346,6 +351,11 @@
       "crossLanguageDefinitionId": "Versioning.Added.ModelV2",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV2"
+        }
+      },
       "properties": [
         {
           "$id": "34",
@@ -558,7 +568,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Added.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Added"
           },
           "parameters": [
             {
@@ -737,7 +748,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Added.v2",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Added"
           },
           "parameters": [
             {
@@ -960,7 +972,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.v2InInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.Added"
               },
               "parameters": [
                 {

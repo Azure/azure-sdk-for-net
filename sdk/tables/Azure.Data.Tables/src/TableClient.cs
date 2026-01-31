@@ -1069,17 +1069,7 @@ namespace Azure.Data.Tables
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
         }
 
         /// <summary>
@@ -1116,17 +1106,7 @@ namespace Azure.Data.Tables
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-            scope.Start();
-            try
-            {
-                return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
         }
 
         /// <summary>

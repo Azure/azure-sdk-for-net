@@ -58,24 +58,6 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotaRequestStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaRequestStatusResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
-        public static GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableQuotaArmClient(client).GetGroupQuotaRequestStatusResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="GroupQuotaSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -127,6 +109,24 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableQuotaArmClient(client).GetGroupQuotaLimitListResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GroupQuotaRequestStatusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaRequestStatusResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
+        public static GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetGroupQuotaRequestStatusResource(id);
         }
 
         /// <summary>
@@ -230,8 +230,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,8 +254,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -316,8 +314,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -341,8 +338,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="resourceName">
         /// Resource name for a given resource provider. For example:
-        /// - SKU name for Microsoft.Compute
-        /// - SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices
+        /// <list type="bullet"><item><description>SKU name for Microsoft.Compute</description></item><item><description>SKU or TotalLowPriorityCores for Microsoft.MachineLearningServices</description></item></list>
         ///  For Microsoft.Network PublicIPAddresses.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -392,7 +388,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetail(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -412,7 +408,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID **id** is returned in the response of the PUT operation.
+        /// Get the quota request details and status by quota request ID for the resources of the resource provider at a specific location. The quota request ID <b>id</b> is returned in the response of the PUT operation.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetailAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>

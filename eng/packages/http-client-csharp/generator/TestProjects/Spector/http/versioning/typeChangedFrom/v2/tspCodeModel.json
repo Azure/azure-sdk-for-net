@@ -98,6 +98,11 @@
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.TestModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "TestModel"
+        }
+      },
       "properties": [
         {
           "$id": "10",
@@ -273,7 +278,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.TypeChangedFrom"
           },
           "parameters": [
             {

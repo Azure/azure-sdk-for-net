@@ -30,7 +30,7 @@
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+  <PropertyGroup Condition="'$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
@@ -104,6 +104,7 @@
     <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoEngPath)\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
@@ -395,7 +396,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">

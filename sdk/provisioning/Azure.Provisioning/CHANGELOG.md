@@ -1,6 +1,16 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.1 (2026-01-23)
 
 ### Features Added
 
@@ -9,6 +19,10 @@
     - BatchSize - Adds `@batchSize(n)` decorator for loop deployments
     - OnlyIfNotExists - Adds `@onlyIfNotExists()` decorator
 - Added `BicepMetadata` property on `ProvisionableResource`
+
+### Bugs Fixed
+
+- Fixed `PropertyName` in `Self` reference for `IBicepValue` instances of collection items to include its index (for list) or its key (for dictionary) to avoid colliding with its enclosing collection's property name. (#54802)
 
 ## 1.4.0 (2025-12-10)
 

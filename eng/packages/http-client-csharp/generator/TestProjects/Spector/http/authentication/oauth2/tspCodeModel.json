@@ -12,6 +12,11 @@
       "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InvalidAuth"
+        }
+      },
       "properties": [
         {
           "$id": "2",
@@ -79,7 +84,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.OAuth2.valid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.OAuth2"
           },
           "parameters": [],
           "response": {},
@@ -118,7 +124,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.OAuth2.invalid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.OAuth2"
           },
           "parameters": [],
           "response": {},

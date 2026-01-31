@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Chaos.Models
     internal readonly partial struct SelectorType : IEquatable<SelectorType>
     {
         private readonly string _value;
+        /// <summary> List selector type. </summary>
+        private const string ListValue = "List";
+        /// <summary> Query selector type. </summary>
+        private const string QueryValue = "Query";
 
         /// <summary> Initializes a new instance of <see cref="SelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelectorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ListValue = "List";
-        private const string QueryValue = "Query";
+            _value = value;
+        }
 
         /// <summary> List selector type. </summary>
         public static SelectorType List { get; } = new SelectorType(ListValue);
+
         /// <summary> Query selector type. </summary>
         public static SelectorType Query { get; } = new SelectorType(QueryValue);
+
         /// <summary> Determines if two <see cref="SelectorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelectorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelectorType left, SelectorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelectorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelectorType(string value) => new SelectorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelectorType?(string value) => value == null ? null : new SelectorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelectorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceRegistryNamespaceDescription : IUtf8JsonSerializable, IJsonModel<DeviceRegistryNamespaceDescription>
+    /// <summary> Description of the Device Registry namespace that is linked to the provisioning service. </summary>
+    public partial class DeviceRegistryNamespaceDescription : IJsonModel<DeviceRegistryNamespaceDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryNamespaceDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDescription"/> for deserialization. </summary>
+        internal DeviceRegistryNamespaceDescription()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistryNamespaceDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDescription)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("authenticationType"u8);
@@ -43,15 +49,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("selectedUserAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(SelectedUserAssignedIdentityResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,22 +66,27 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceRegistryNamespaceDescription IJsonModel<DeviceRegistryNamespaceDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceDescription IJsonModel<DeviceRegistryNamespaceDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistryNamespaceDescription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDescription)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeviceRegistryNamespaceDescription(document.RootElement, options);
         }
 
-        internal static DeviceRegistryNamespaceDescription DeserializeDeviceRegistryNamespaceDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeviceRegistryNamespaceDescription DeserializeDeviceRegistryNamespaceDescription(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,42 +94,43 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             ResourceIdentifier resourceId = default;
             DeviceRegistryNamespaceAuthenticationType authenticationType = default;
             ResourceIdentifier selectedUserAssignedIdentityResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authenticationType"u8))
+                if (prop.NameEquals("authenticationType"u8))
                 {
-                    authenticationType = new DeviceRegistryNamespaceAuthenticationType(property.Value.GetString());
+                    authenticationType = new DeviceRegistryNamespaceAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selectedUserAssignedIdentityResourceId"u8))
+                if (prop.NameEquals("selectedUserAssignedIdentityResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selectedUserAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
+                    selectedUserAssignedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistryNamespaceDescription(resourceId, authenticationType, selectedUserAssignedIdentityResourceId, serializedAdditionalRawData);
+            return new DeviceRegistryNamespaceDescription(resourceId, authenticationType, selectedUserAssignedIdentityResourceId, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DeviceRegistryNamespaceDescription>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryNamespaceDescription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -128,15 +140,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
-        DeviceRegistryNamespaceDescription IPersistableModel<DeviceRegistryNamespaceDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceDescription IPersistableModel<DeviceRegistryNamespaceDescription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeviceRegistryNamespaceDescription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDescription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceRegistryNamespaceDescription(document.RootElement, options);
                     }
                 default:
@@ -144,6 +161,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistryNamespaceDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

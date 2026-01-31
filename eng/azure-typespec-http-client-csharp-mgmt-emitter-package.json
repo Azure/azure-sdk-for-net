@@ -1,14 +1,14 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260120.1"
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260128.1"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.64.0",
     "@azure-tools/typespec-azure-core": "0.64.0",
     "@azure-tools/typespec-azure-resource-manager": "0.64.0",
     "@azure-tools/typespec-azure-rulesets": "0.64.0",
-    "@azure-tools/typespec-client-generator-core": "0.64.2",
+    "@azure-tools/typespec-client-generator-core": "0.64.4",
     "@azure-tools/typespec-liftr-base": "0.11.0",
     "@typespec/compiler": "1.8.0",
     "@typespec/http": "1.8.0",

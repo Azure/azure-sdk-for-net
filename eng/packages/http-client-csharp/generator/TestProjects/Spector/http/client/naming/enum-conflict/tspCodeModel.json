@@ -176,6 +176,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstModel"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -235,6 +240,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondModel"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -430,7 +440,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
@@ -636,7 +647,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
