@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text.Authoring
     {
         private readonly TextAnalysisAuthoringClient _client;
         private readonly string _projectKind;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
@@ -25,15 +25,15 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
         /// <param name="projectKind"> The project kind, default value is CustomSingleLabelClassification. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResultOfT(TextAnalysisAuthoringClient client, string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public TextAnalysisAuthoringClientGetTrainingConfigVersionsCollectionResultOfT(TextAnalysisAuthoringClient client, string projectKind, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectKind = projectKind;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTrainingConfigVersionsRequest(nextLink, pageSize, _context) : _client.CreateGetTrainingConfigVersionsRequest(_projectKind, _top, _skip, pageSize, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTrainingConfigVersionsRequest(nextLink, pageSize, _context) : _client.CreateGetTrainingConfigVersionsRequest(_projectKind, _maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetTrainingConfigVersions");
             scope.Start();
             try

@@ -75,6 +75,7 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(TextAuthoringAssignedDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringAssignedProjectDeploymentMetadata))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringAssignedProjectDeploymentsMetadata))]
+    [ModelReaderWriterBuildable(typeof(TextAuthoringConfusionMatrixCell))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringConfusionMatrixRow))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringCopyProjectDetails))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringCopyProjectState))]

@@ -8,9 +8,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomEntityRecognitionDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>
     {
-        internal CustomEntityRecognitionDocumentEvalResult() : base (default(string), default(string)) { }
+        internal CustomEntityRecognitionDocumentEvalResult() { }
         public Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult CustomEntityRecognitionResult { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -19,9 +22,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomEntityRecognitionEvalSummary : Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>
     {
-        internal CustomEntityRecognitionEvalSummary() : base (default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails)) { }
+        internal CustomEntityRecognitionEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary CustomEntityRecognitionEvaluation { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -30,9 +36,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomHealthcareDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult>
     {
-        internal CustomHealthcareDocumentEvalResult() : base (default(string), default(string)) { }
+        internal CustomHealthcareDocumentEvalResult() { }
         public Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult CustomHealthcareResult { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomHealthcareDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -41,9 +50,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomHealthcareEvalSummary : Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary>
     {
-        internal CustomHealthcareEvalSummary() : base (default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails)) { }
+        internal CustomHealthcareEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary CustomHealthcareEvaluation { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomHealthcareEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -52,9 +64,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomMultiLabelClassificationDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>
     {
-        internal CustomMultiLabelClassificationDocumentEvalResult() : base (default(string), default(string)) { }
+        internal CustomMultiLabelClassificationDocumentEvalResult() { }
         public Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult CustomMultiLabelClassificationResult { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -63,9 +78,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomMultiLabelClassificationEvalSummary : Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary>
     {
-        internal CustomMultiLabelClassificationEvalSummary() : base (default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails)) { }
+        internal CustomMultiLabelClassificationEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary CustomMultiLabelClassificationEvaluation { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomMultiLabelClassificationEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -74,9 +92,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomSingleLabelClassificationDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult>
     {
-        internal CustomSingleLabelClassificationDocumentEvalResult() : base (default(string), default(string)) { }
+        internal CustomSingleLabelClassificationDocumentEvalResult() { }
         public Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult CustomSingleLabelClassificationResult { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -85,9 +106,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomSingleLabelClassificationEvalSummary : Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary>
     {
-        internal CustomSingleLabelClassificationEvalSummary() : base (default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails)) { }
+        internal CustomSingleLabelClassificationEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary CustomSingleLabelClassificationEvaluation { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -96,9 +120,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomTextSentimentDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult>
     {
-        internal CustomTextSentimentDocumentEvalResult() : base (default(string), default(string)) { }
+        internal CustomTextSentimentDocumentEvalResult() { }
         public Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult CustomTextSentimentResult { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -107,9 +134,12 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public partial class CustomTextSentimentEvalSummary : Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary>
     {
-        internal CustomTextSentimentEvalSummary() : base (default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails)) { }
+        internal CustomTextSentimentEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary CustomTextSentimentEvaluation { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -120,7 +150,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public CustomTextSentimentProjectAssets() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument> Documents { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -131,36 +164,26 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public DataGenerationConnectionInfo(string resourceId, string deploymentName) { }
         public string DeploymentName { get { throw null; } }
-        public Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind Kind { get { throw null; } }
         public string ResourceId { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataGenerationConnectionInfoKind : System.IEquatable<Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataGenerationConnectionInfoKind(string value) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind AzureOpenAI { get { throw null; } }
-        public bool Equals(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind left, Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind right) { throw null; }
-        public static implicit operator Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind left, Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DataGenerationSetting : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DataGenerationSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DataGenerationSetting>
     {
         public DataGenerationSetting(bool enableDataGeneration, Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo dataGenerationConnectionInfo) { }
         public Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo DataGenerationConnectionInfo { get { throw null; } }
         public bool EnableDataGeneration { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DataGenerationSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DataGenerationSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DataGenerationSetting System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DataGenerationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DataGenerationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DataGenerationSetting System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DataGenerationSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -173,7 +196,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Category { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -183,8 +209,11 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentEntityRecognitionEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult>
     {
         internal DocumentEntityRecognitionEvalResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> Entities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> Entities { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,11 +223,14 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentEntityRegionEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>
     {
         internal DocumentEntityRegionEvalResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> ExpectedEntities { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> PredictedEntities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> ExpectedEntities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> PredictedEntities { get { throw null; } }
         public int RegionLength { get { throw null; } }
         public int RegionOffset { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -208,8 +240,11 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentHealthcareEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult>
     {
         internal DocumentHealthcareEvalResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> Entities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> Entities { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentHealthcareEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,9 +254,12 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentMultiLabelClassificationEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult>
     {
         internal DocumentMultiLabelClassificationEvalResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> ExpectedClasses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> PredictedClasses { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExpectedClasses { get { throw null; } }
+        public System.Collections.Generic.IList<string> PredictedClasses { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentMultiLabelClassificationEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -234,7 +272,10 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringSentiment Category { get { throw null; } }
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -246,7 +287,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal DocumentSingleLabelClassificationEvalResult() { }
         public string ExpectedClass { get { throw null; } }
         public string PredictedClass { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -256,9 +300,12 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class DocumentTextSentimentEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>
     {
         internal DocumentTextSentimentEvalResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> ExpectedSentimentSpans { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> PredictedSentimentSpans { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> ExpectedSentimentSpans { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> PredictedSentimentSpans { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -268,15 +315,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class EntityRecognitionEvalSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary>
     {
         internal EntityRecognitionEvalSummary() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary> Entities { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary> Entities { get { throw null; } }
         public float MacroF1 { get { throw null; } }
         public float MacroPrecision { get { throw null; } }
         public float MacroRecall { get { throw null; } }
         public float MicroF1 { get { throw null; } }
         public float MicroPrecision { get { throw null; } }
         public float MicroRecall { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -290,7 +340,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public string SummaryLocation { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,7 +354,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public ExportedCustomAbstractiveSummarizationProjectAsset() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument> Documents { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -315,7 +371,10 @@ namespace Azure.AI.Language.Text.Authoring
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> Entities { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -327,7 +386,10 @@ namespace Azure.AI.Language.Text.Authoring
         public ExportedCustomEntityRecognitionProjectAsset() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> Documents { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> Entities { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -341,7 +403,10 @@ namespace Azure.AI.Language.Text.Authoring
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> Entities { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -353,7 +418,10 @@ namespace Azure.AI.Language.Text.Authoring
         public ExportedCustomHealthcareProjectAsset() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> Documents { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> Entities { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -367,7 +435,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Dataset { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -379,7 +450,10 @@ namespace Azure.AI.Language.Text.Authoring
         public ExportedCustomMultiLabelClassificationProjectAsset() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> Classes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument> Documents { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -393,7 +467,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Dataset { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -405,7 +482,10 @@ namespace Azure.AI.Language.Text.Authoring
         public ExportedCustomSingleLabelClassificationProjectAsset() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> Classes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument> Documents { get { throw null; } }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -419,7 +499,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Language { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel> SentimentSpans { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -430,7 +513,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public ExportedDocumentClass() { }
         public string Category { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentClass JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentClass PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedDocumentClass System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentClass>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentClass>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedDocumentClass System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedDocumentClass>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -443,7 +529,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Category { get { throw null; } set { } }
         public int? Length { get { throw null; } set { } }
         public int? Offset { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -456,7 +545,10 @@ namespace Azure.AI.Language.Text.Authoring
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel> Labels { get { throw null; } }
         public int? RegionLength { get { throw null; } set { } }
         public int? RegionOffset { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -469,7 +561,10 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringSentiment? Category { get { throw null; } set { } }
         public int? Length { get { throw null; } set { } }
         public int? Offset { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -479,8 +574,12 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class ExportedModelManifest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedModelManifest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedModelManifest>
     {
         internal ExportedModelManifest() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> ModelFiles { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> ModelFiles { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedModelManifest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.ExportedModelManifest (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.ExportedModelManifest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.ExportedModelManifest System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.ExportedModelManifest System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.ExportedModelManifest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -497,7 +596,10 @@ namespace Azure.AI.Language.Text.Authoring
         public double Recall { get { throw null; } }
         public int TrueNegativeCount { get { throw null; } }
         public int TruePositiveCount { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -507,14 +609,17 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class MultiLabelClassificationEvalSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary>
     {
         internal MultiLabelClassificationEvalSummary() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary> Classes { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary> Classes { get { throw null; } }
         public float MacroF1 { get { throw null; } }
         public float MacroPrecision { get { throw null; } }
         public float MacroRecall { get { throw null; } }
         public float MicroF1 { get { throw null; } }
         public float MicroPrecision { get { throw null; } }
         public float MicroRecall { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -531,7 +636,10 @@ namespace Azure.AI.Language.Text.Authoring
         public double Recall { get { throw null; } }
         public int TrueNegativeCount { get { throw null; } }
         public int TruePositiveCount { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.SentimentEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.SentimentEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.SentimentEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SentimentEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SentimentEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.SentimentEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SentimentEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -548,7 +656,10 @@ namespace Azure.AI.Language.Text.Authoring
         public double Recall { get { throw null; } }
         public int TrueNegativeCount { get { throw null; } }
         public int TruePositiveCount { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -558,15 +669,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class SingleLabelClassificationEvalSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary>
     {
         internal SingleLabelClassificationEvalSummary() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary> Classes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary> Classes { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
         public float MacroF1 { get { throw null; } }
         public float MacroPrecision { get { throw null; } }
         public float MacroRecall { get { throw null; } }
         public float MicroF1 { get { throw null; } }
         public float MicroPrecision { get { throw null; } }
         public float MicroRecall { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -576,15 +690,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class SpanSentimentEvalSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>
     {
         internal SpanSentimentEvalSummary() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> ConfusionMatrix { get { throw null; } }
         public float MacroF1 { get { throw null; } }
         public float MacroPrecision { get { throw null; } }
         public float MacroRecall { get { throw null; } }
         public float MicroF1 { get { throw null; } }
         public float MicroPrecision { get { throw null; } }
         public float MicroRecall { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.SentimentEvalSummary> Sentiments { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.SentimentEvalSummary> Sentiments { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -603,6 +720,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.StringIndexType left, Azure.AI.Language.Text.Authoring.StringIndexType right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.StringIndexType (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.StringIndexType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.StringIndexType left, Azure.AI.Language.Text.Authoring.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -681,7 +799,9 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.CustomSingleLabelClassificationEvalSummary CustomSingleLabelClassificationEvalSummary(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null, Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary customSingleLabelClassificationEvaluation = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.CustomTextSentimentDocumentEvalResult CustomTextSentimentDocumentEvalResult(string location = null, string language = null, Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult customTextSentimentResult = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.CustomTextSentimentEvalSummary CustomTextSentimentEvalSummary(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null, Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary customTextSentimentEvaluation = null) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo DataGenerationConnectionInfo(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind kind = default(Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfoKind), string resourceId = null, string deploymentName = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.CustomTextSentimentProjectAssets CustomTextSentimentProjectAssets(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo DataGenerationConnectionInfo(string resourceId = null, string deploymentName = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.DataGenerationSetting DataGenerationSetting(bool enableDataGeneration = false, Azure.AI.Language.Text.Authoring.DataGenerationConnectionInfo dataGenerationConnectionInfo = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult DocumentEntityLabelEvalResult(string category = null, int offset = 0, int length = 0) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DocumentEntityRecognitionEvalResult DocumentEntityRecognitionEvalResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult> entities = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DocumentEntityRegionEvalResult DocumentEntityRegionEvalResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> expectedEntities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.DocumentEntityLabelEvalResult> predictedEntities = null, int regionOffset = 0, int regionLength = 0) { throw null; }
@@ -690,23 +810,40 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult DocumentSentimentLabelEvalResult(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment category = default(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment), int offset = 0, int length = 0) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DocumentSingleLabelClassificationEvalResult DocumentSingleLabelClassificationEvalResult(string expectedClass = null, string predictedClass = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult DocumentTextSentimentEvalResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> expectedSentimentSpans = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> predictedSentimentSpans = null) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary EntityRecognitionEvalSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary> entities = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.EntityRecognitionEvalSummary EntityRecognitionEvalSummary(System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary> entities = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
         public static Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationProjectAsset ExportedCustomAbstractiveSummarizationProjectAsset(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomAbstractiveSummarizationDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument ExportedCustomEntityRecognitionDocument(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> entities = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionProjectAsset ExportedCustomEntityRecognitionProjectAsset(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomEntityRecognitionDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument ExportedCustomHealthcareDocument(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion> entities = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareProjectAsset ExportedCustomHealthcareProjectAsset(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomHealthcareDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument ExportedCustomMultiLabelClassificationDocument(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedDocumentClass> classes = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationProjectAsset ExportedCustomMultiLabelClassificationProjectAsset(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> classes = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomMultiLabelClassificationDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument ExportedCustomSingleLabelClassificationDocument(Azure.AI.Language.Text.Authoring.ExportedDocumentClass @class = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationProjectAsset ExportedCustomSingleLabelClassificationProjectAsset(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass> classes = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedCustomSingleLabelClassificationDocument> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedCustomTextSentimentDocument ExportedCustomTextSentimentDocument(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel> sentimentSpans = null, string location = null, string language = null, string dataset = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedDocumentClass ExportedDocumentClass(string category = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel ExportedDocumentEntityLabel(string category = null, int? offset = default(int?), int? length = default(int?)) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedDocumentEntityRegion ExportedDocumentEntityRegion(int? regionOffset = default(int?), int? regionLength = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.ExportedDocumentEntityLabel> labels = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.ExportedDocumentSentimentLabel ExportedDocumentSentimentLabel(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment? category = default(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment?), int? offset = default(int?), int? length = default(int?)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.ExportedModelManifest ExportedModelManifest(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile> modelFiles = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary MultiLabelClassEvalSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary MultiLabelClassificationEvalSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary> classes = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.MultiLabelClassificationEvalSummary MultiLabelClassificationEvalSummary(System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.MultiLabelClassEvalSummary> classes = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
         public static Azure.AI.Language.Text.Authoring.SentimentEvalSummary SentimentEvalSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
         public static Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary SingleLabelClassEvalSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary SingleLabelClassificationEvalSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary> classes = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
-        public static Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary SpanSentimentEvalSummary(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Text.Authoring.SentimentEvalSummary> sentiments = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary SingleLabelClassificationEvalSummary(System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.SingleLabelClassEvalSummary> classes = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary SpanSentimentEvalSummary(System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow> confusionMatrix = null, System.Collections.Generic.IDictionary<string, Azure.AI.Language.Text.Authoring.SentimentEvalSummary> sentiments = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails TextAuthoringAssignDeploymentResourcesDetails(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> resourcesMetadata = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource TextAuthoringAssignedDeploymentResource(string azureResourceId = null, Azure.Core.AzureLocation region = default(Azure.Core.AzureLocation)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata TextAuthoringAssignedProjectDeploymentMetadata(string deploymentName = null, System.DateTimeOffset lastDeployedOn = default(System.DateTimeOffset), System.DateTimeOffset deploymentExpiresOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata TextAuthoringAssignedProjectDeploymentsMetadata(string projectName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell TextAuthoringConfusionMatrixCell(float normalizedValue = 0f, float rawValue = 0f) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow TextAuthoringConfusionMatrixRow(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string targetProjectName = null, string accessToken = null, System.DateTimeOffset expiresAt = default(System.DateTimeOffset), string targetResourceId = null, string targetResourceRegion = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails TextAuthoringCreateProjectDetails(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string storageInputContainerName = null, Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = default(bool?), string description = null, string language = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails TextAuthoringDeleteDeploymentDetails(System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState TextAuthoringDeploymentDeleteFromResourcesState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource TextAuthoringDeploymentResource(string resourceId = null, string region = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState TextAuthoringDeploymentResourcesState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
@@ -714,10 +851,20 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult TextAuthoringDocumentEvalResult(string projectKind = null, string location = null, string language = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary TextAuthoringEntityEvalSummary(double f1 = 0, double precision = 0, double recall = 0, int truePositiveCount = 0, int trueNegativeCount = 0, int falsePositiveCount = 0, int falseNegativeCount = 0) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary TextAuthoringEvalSummary(string projectKind = null, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails TextAuthoringEvaluationDetails(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind? kind = default(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind?), int? trainingSplitPercentage = default(int?), int? testingSplitPercentage = default(int?)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult TextAuthoringEvaluationJobResult(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = 0) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState TextAuthoringEvaluationState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult result = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass TextAuthoringExportedClass(string category = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity TextAuthoringExportedCompositeEntity(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode? compositionSetting = default(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode?), Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList list = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> prebuilts = null, string category = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity TextAuthoringExportedEntity(string category = null, string description = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList TextAuthoringExportedEntityList(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist> sublists = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym TextAuthoringExportedEntityListSynonym(string language = null, System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist TextAuthoringExportedEntitySublist(string listKey = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym> synonyms = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails TextAuthoringExportedModelDetails(string trainedModelLabel = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity TextAuthoringExportedPrebuiltEntity(string category = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject TextAuthoringExportedProject(string projectFileVersion = null, Azure.AI.Language.Text.Authoring.StringIndexType stringIndexType = default(Azure.AI.Language.Text.Authoring.StringIndexType), Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails metadata = null, Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset assets = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset TextAuthoringExportedProjectAsset(string projectKind = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel TextAuthoringExportedTrainedModel(string exportedModelName = null, string modelId = null, System.DateTimeOffset lastTrainedOn = default(System.DateTimeOffset), System.DateTimeOffset lastExportedModelOn = default(System.DateTimeOffset), System.DateTimeOffset modelExpiredOn = default(System.DateTimeOffset), string modelTrainingConfigVersion = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState TextAuthoringExportProjectState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string resultUrl = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState TextAuthoringImportProjectState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
@@ -727,21 +874,29 @@ namespace Azure.AI.Language.Text.Authoring
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState TextAuthoringProjectDeletionState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment TextAuthoringProjectDeployment(string deploymentName = null, string modelId = null, System.DateTimeOffset lastTrainedOn = default(System.DateTimeOffset), System.DateTimeOffset lastDeployedOn = default(System.DateTimeOffset), System.DateTimeOffset deploymentExpiredOn = default(System.DateTimeOffset), string modelTrainingConfigVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource> assignedResources = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata TextAuthoringProjectMetadata(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedOn = default(System.DateTimeOffset), System.DateTimeOffset? lastTrainedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastDeployedOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind projectKind = default(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind), string storageInputContainerName = null, Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = default(bool?), string description = null, string language = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings TextAuthoringProjectSettings(float? confidenceThreshold = default(float?), string amlProjectPath = null, bool? isLabelingLocked = default(bool?), bool? runGptPredictions = default(bool?), int? gptPredictiveLookahead = default(int?)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel TextAuthoringProjectTrainedModel(string label = null, string modelId = null, System.DateTimeOffset lastTrainedOn = default(System.DateTimeOffset), int lastTrainingDurationInSeconds = 0, System.DateTimeOffset modelExpiredOn = default(System.DateTimeOffset), string modelTrainingConfigVersion = null, bool hasSnapshot = false) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata TextAuthoringResourceMetadata(string azureResourceId = null, string customDomain = null, string region = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState TextAuthoringSubTrainingState(int percentComplete = 0, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage TextAuthoringSupportedLanguage(string languageName = null, string languageCode = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails TextAuthoringSwapDeploymentsDetails(string firstDeploymentName = null, string secondDeploymentName = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion TextAuthoringTrainingConfigVersion(string trainingConfigVersion = null, System.DateTimeOffset modelExpiredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails TextAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions = null, Azure.AI.Language.Text.Authoring.DataGenerationSetting dataGenerationSettings = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult TextAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState trainingStatus = null, Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState evaluationStatus = null, System.DateTimeOffset? estimatedEndOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState TextAuthoringTrainingState(string jobId = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus status = default(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult result = null) { throw null; }
+        public static Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails TextAuthoringUnassignDeploymentResourcesDetails(System.Collections.Generic.IEnumerable<string> assignedResourceIds = null) { throw null; }
         public static Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary TextSentimentEvalSummary(Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary spanSentimentsEvaluation = null, float microF1 = 0f, float microPrecision = 0f, float microRecall = 0f, float macroF1 = 0f, float macroPrecision = 0f, float macroRecall = 0f) { throw null; }
     }
     public partial class TextAuthoringAssignDeploymentResourcesDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails>
     {
         public TextAuthoringAssignDeploymentResourcesDetails(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> resourcesMetadata) { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata> ResourcesMetadata { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails textAuthoringAssignDeploymentResourcesDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -754,7 +909,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string AzureResourceId { get { throw null; } }
         public Azure.Core.AzureLocation Region { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -767,7 +925,10 @@ namespace Azure.AI.Language.Text.Authoring
         public System.DateTimeOffset DeploymentExpiresOn { get { throw null; } }
         public string DeploymentName { get { throw null; } }
         public System.DateTimeOffset LastDeployedOn { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -777,9 +938,12 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringAssignedProjectDeploymentsMetadata : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>
     {
         internal TextAuthoringAssignedProjectDeploymentsMetadata() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata> DeploymentsMetadata { get { throw null; } }
         public string ProjectName { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -799,6 +963,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode left, Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode left, Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -807,7 +972,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringConfusionMatrixCell() { }
         public float NormalizedValue { get { throw null; } }
         public float RawValue { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixCell>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -818,7 +986,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringConfusionMatrixRow() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringConfusionMatrixRow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -834,7 +1005,12 @@ namespace Azure.AI.Language.Text.Authoring
         public string TargetProjectName { get { throw null; } set { } }
         public string TargetResourceId { get { throw null; } set { } }
         public string TargetResourceRegion { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails (Azure.Response response) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails textAuthoringCopyProjectDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -845,13 +1021,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringCopyProjectState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringCopyProjectState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -863,7 +1043,11 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringCreateDeploymentDetails(string trainedModelLabel) { }
         public System.Collections.Generic.IList<string> AssignedResourceIds { get { throw null; } }
         public string TrainedModelLabel { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails textAuthoringCreateDeploymentDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateDeploymentDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -880,7 +1064,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string ProjectName { get { throw null; } set { } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings Settings { get { throw null; } set { } }
         public string StorageInputContainerName { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -891,7 +1078,11 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringDeleteDeploymentDetails() { }
         public System.Collections.Generic.IList<string> AssignedResourceIds { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails textAuthoringDeleteDeploymentDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeleteDeploymentDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -931,13 +1122,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringDeploymentDeleteFromResourcesState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentDeleteFromResourcesState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -949,7 +1144,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringDeploymentResource() { }
         public string Region { get { throw null; } }
         public string ResourceId { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -960,13 +1158,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringDeploymentResourcesState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -977,13 +1179,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringDeploymentState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -992,10 +1198,13 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public abstract partial class TextAuthoringDocumentEvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>
     {
-        protected TextAuthoringDocumentEvalResult(string location, string language) { }
+        internal TextAuthoringDocumentEvalResult() { }
         public string Language { get { throw null; } }
         public string Location { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1012,7 +1221,10 @@ namespace Azure.AI.Language.Text.Authoring
         public double Recall { get { throw null; } }
         public int TrueNegativeCount { get { throw null; } }
         public int TruePositiveCount { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEntityEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1021,9 +1233,13 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public abstract partial class TextAuthoringEvalSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>
     {
-        protected TextAuthoringEvalSummary(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails evaluationOptions) { }
+        internal TextAuthoringEvalSummary() { }
         public Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails EvaluationOptions { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1036,7 +1252,11 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind? Kind { get { throw null; } set { } }
         public int? TestingSplitPercentage { get { throw null; } set { } }
         public int? TrainingSplitPercentage { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails textAuthoringEvaluationDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1050,7 +1270,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string ModelLabel { get { throw null; } }
         public int PercentComplete { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1070,6 +1293,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind left, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind left, Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1077,14 +1301,18 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringEvaluationState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationJobResult Result { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1095,7 +1323,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringExportedClass() { }
         public string Category { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedClass>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1109,7 +1340,10 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringCompositionMode? CompositionSetting { get { throw null; } set { } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList List { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> Prebuilts { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1121,7 +1355,10 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringExportedEntity() { }
         public string Category { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1132,7 +1369,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringExportedEntityList() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist> Sublists { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1144,7 +1384,10 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringExportedEntityListSynonym() { }
         public string Language { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1156,7 +1399,10 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringExportedEntitySublist() { }
         public string ListKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityListSynonym> Synonyms { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntitySublist>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1192,7 +1438,11 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringExportedModelDetails(string trainedModelLabel) { }
         public string TrainedModelLabel { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails textAuthoringExportedModelDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1203,13 +1453,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringExportedModelState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedModelState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1220,7 +1474,10 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringExportedPrebuiltEntity(string category) { }
         public string Category { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1234,7 +1491,11 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringCreateProjectDetails Metadata { get { throw null; } }
         public string ProjectFileVersion { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.StringIndexType StringIndexType { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject textAuthoringExportedProject) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1243,8 +1504,11 @@ namespace Azure.AI.Language.Text.Authoring
     }
     public abstract partial class TextAuthoringExportedProjectAsset : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset>
     {
-        protected TextAuthoringExportedProjectAsset() { }
+        internal TextAuthoringExportedProjectAsset() { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedProjectAsset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1260,7 +1524,11 @@ namespace Azure.AI.Language.Text.Authoring
         public System.DateTimeOffset ModelExpiredOn { get { throw null; } }
         public string ModelId { get { throw null; } }
         public string ModelTrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportedTrainedModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1271,14 +1539,18 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringExportProjectState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string ResultUrl { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringExportProjectState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1289,13 +1561,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringImportProjectState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringImportProjectState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1306,13 +1582,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringLoadSnapshotState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringLoadSnapshotState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1324,7 +1604,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringModelFile() { }
         public System.Uri ContentUri { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringModelFile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringModelFile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringModelFile System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringModelFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringModelFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1349,6 +1632,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus left, Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus left, Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1358,7 +1642,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string Category { get { throw null; } }
         public string Description { get { throw null; } }
         public string Examples { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringPrebuiltEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1454,13 +1741,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringProjectDeletionState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeletionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1470,14 +1761,18 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringProjectDeployment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment>
     {
         internal TextAuthoringProjectDeployment() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource> AssignedResources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResource> AssignedResources { get { throw null; } }
         public System.DateTimeOffset DeploymentExpiredOn { get { throw null; } }
         public string DeploymentName { get { throw null; } }
         public System.DateTimeOffset LastDeployedOn { get { throw null; } }
         public System.DateTimeOffset LastTrainedOn { get { throw null; } }
         public string ModelId { get { throw null; } }
         public string ModelTrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1501,6 +1796,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind left, Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind left, Azure.AI.Language.Text.Authoring.TextAuthoringProjectKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1518,7 +1814,11 @@ namespace Azure.AI.Language.Text.Authoring
         public string ProjectName { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings Settings { get { throw null; } }
         public string StorageInputContainerName { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1533,7 +1833,10 @@ namespace Azure.AI.Language.Text.Authoring
         public int? GptPredictiveLookahead { get { throw null; } set { } }
         public bool? IsLabelingLocked { get { throw null; } set { } }
         public bool? RunGptPredictions { get { throw null; } set { } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1550,7 +1853,11 @@ namespace Azure.AI.Language.Text.Authoring
         public System.DateTimeOffset ModelExpiredOn { get { throw null; } }
         public string ModelId { get { throw null; } }
         public string ModelTrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringProjectTrainedModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1563,7 +1870,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string AzureResourceId { get { throw null; } }
         public string CustomDomain { get { throw null; } }
         public string Region { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringResourceMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1584,6 +1894,7 @@ namespace Azure.AI.Language.Text.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment left, Azure.AI.Language.Text.Authoring.TextAuthoringSentiment right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringSentiment (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.Text.Authoring.TextAuthoringSentiment? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.Authoring.TextAuthoringSentiment left, Azure.AI.Language.Text.Authoring.TextAuthoringSentiment right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1594,7 +1905,10 @@ namespace Azure.AI.Language.Text.Authoring
         public int PercentComplete { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1606,7 +1920,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringSupportedLanguage() { }
         public string LanguageCode { get { throw null; } }
         public string LanguageName { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringSupportedLanguage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1618,7 +1935,11 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringSwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName) { }
         public string FirstDeploymentName { get { throw null; } }
         public string SecondDeploymentName { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails textAuthoringSwapDeploymentsDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1629,13 +1950,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringSwapDeploymentsState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1666,9 +1991,9 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual System.Threading.Tasks.Task<Azure.Response> GetModelEvalSummaryAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary>> GetModelEvalSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult> GetModelEvaluationResults(Azure.AI.Language.Text.Authoring.StringIndexType stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetModelEvaluationResults(string stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, Azure.AI.Language.Text.Authoring.StringIndexType stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult> GetModelEvaluationResultsAsync(Azure.AI.Language.Text.Authoring.StringIndexType stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetModelEvaluationResultsAsync(string stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, Azure.AI.Language.Text.Authoring.StringIndexType stringIndexType, int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetModelEvaluationSummary(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.Text.Authoring.TextAuthoringEvalSummary> GetModelEvaluationSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetModelEvaluationSummaryAsync(Azure.RequestContext context) { throw null; }
@@ -1688,7 +2013,10 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringTrainingConfigVersion() { }
         public System.DateTimeOffset ModelExpiredOn { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingConfigVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1702,7 +2030,11 @@ namespace Azure.AI.Language.Text.Authoring
         public Azure.AI.Language.Text.Authoring.TextAuthoringEvaluationDetails EvaluationOptions { get { throw null; } set { } }
         public string ModelLabel { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails textAuthoringTrainingJobDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1717,7 +2049,10 @@ namespace Azure.AI.Language.Text.Authoring
         public string ModelLabel { get { throw null; } }
         public string TrainingConfigVersion { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringSubTrainingState TrainingStatus { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1728,14 +2063,18 @@ namespace Azure.AI.Language.Text.Authoring
     {
         internal TextAuthoringTrainingState() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult Result { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.TextAuthoringOperationStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1746,7 +2085,11 @@ namespace Azure.AI.Language.Text.Authoring
     {
         public TextAuthoringUnassignDeploymentResourcesDetails(System.Collections.Generic.IEnumerable<string> assignedResourceIds) { }
         public System.Collections.Generic.IList<string> AssignedResourceIds { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails textAuthoringUnassignDeploymentResourcesDetails) { throw null; }
+        protected virtual Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1763,7 +2106,10 @@ namespace Azure.AI.Language.Text.Authoring
         public float MicroPrecision { get { throw null; } }
         public float MicroRecall { get { throw null; } }
         public Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary SpanSentimentsEvaluation { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

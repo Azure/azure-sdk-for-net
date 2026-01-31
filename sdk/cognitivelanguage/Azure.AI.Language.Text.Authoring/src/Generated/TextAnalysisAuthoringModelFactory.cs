@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class LanguageTextAuthoringModelFactory
+    public static partial class TextAnalysisAuthoringModelFactory
     {
 
         /// <summary> Represents the metadata of a project. </summary>
@@ -1192,6 +1192,15 @@ namespace Azure.AI.Language.Text.Authoring
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new TextAuthoringConfusionMatrixRow(additionalProperties);
+        }
+
+        /// <summary> Represents a cell in a confusion matrix. </summary>
+        /// <param name="normalizedValue"> Represents normalized value in percentages. </param>
+        /// <param name="rawValue"> Represents raw value. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringConfusionMatrixCell"/> instance for mocking. </returns>
+        public static TextAuthoringConfusionMatrixCell TextAuthoringConfusionMatrixCell(float normalizedValue = default, float rawValue = default)
+        {
+            return new TextAuthoringConfusionMatrixCell(normalizedValue, rawValue, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the evaluation summary for an entity. </summary>
