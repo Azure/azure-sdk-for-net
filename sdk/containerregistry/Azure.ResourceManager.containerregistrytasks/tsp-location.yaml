@@ -1,0 +1,6 @@
+directory: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks
+commit: 3f223d61b02c0496581dfb71c78104761b448d5e
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
