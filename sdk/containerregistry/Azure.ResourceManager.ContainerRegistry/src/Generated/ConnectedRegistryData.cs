@@ -13,133 +13,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary>
-    /// A class representing the ConnectedRegistry data model.
-    /// An object that represents a connected registry for a container registry.
-    /// </summary>
+    /// <summary> An object that represents a connected registry for a container registry. </summary>
     public partial class ConnectedRegistryData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryData"/>. </summary>
         public ConnectedRegistryData()
         {
-            ClientTokenIds = new ChangeTrackingList<ResourceIdentifier>();
-            StatusDetails = new ChangeTrackingList<ConnectedRegistryStatusDetail>();
-            NotificationsList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="mode"> The mode of the connected registry resource that indicates the permissions of the registry. </param>
-        /// <param name="version"> The current version of ACR runtime on the connected registry. </param>
-        /// <param name="connectionState"> The current connection state of the connected registry. </param>
-        /// <param name="lastActivityOn"> The last activity time of the connected registry. </param>
-        /// <param name="activation"> The activation properties of the connected registry. </param>
-        /// <param name="parent"> The parent of the connected registry. </param>
-        /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
-        /// <param name="loginServer"> The login server properties of the connected registry. </param>
-        /// <param name="logging"> The logging properties of the connected registry. </param>
-        /// <param name="statusDetails"> The list of current statuses of the connected registry. </param>
-        /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
-        /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryActivation activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the connected registry. </param>
+        internal ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectedRegistryProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            Mode = mode;
-            Version = version;
-            ConnectionState = connectionState;
-            LastActivityOn = lastActivityOn;
-            Activation = activation;
-            Parent = parent;
-            ClientTokenIds = clientTokenIds;
-            LoginServer = loginServer;
-            Logging = logging;
-            StatusDetails = statusDetails;
-            NotificationsList = notificationsList;
-            GarbageCollection = garbageCollection;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get; }
-        /// <summary> The mode of the connected registry resource that indicates the permissions of the registry. </summary>
-        [WirePath("properties.mode")]
-        public ConnectedRegistryMode? Mode { get; set; }
-        /// <summary> The current version of ACR runtime on the connected registry. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; }
-        /// <summary> The current connection state of the connected registry. </summary>
-        [WirePath("properties.connectionState")]
-        public ConnectedRegistryConnectionState? ConnectionState { get; }
-        /// <summary> The last activity time of the connected registry. </summary>
-        [WirePath("properties.lastActivityTime")]
-        public DateTimeOffset? LastActivityOn { get; }
-        /// <summary> The activation properties of the connected registry. </summary>
-        internal ConnectedRegistryActivation Activation { get; }
-        /// <summary> The activation status of the connected registry. </summary>
-        [WirePath("properties.activation.status")]
-        public ConnectedRegistryActivationStatus? ActivationStatus
-        {
-            get => Activation?.Status;
-        }
-
-        /// <summary> The parent of the connected registry. </summary>
-        [WirePath("properties.parent")]
-        public ConnectedRegistryParent Parent { get; set; }
-        /// <summary> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </summary>
-        [WirePath("properties.clientTokenIds")]
-        public IList<ResourceIdentifier> ClientTokenIds { get; }
-        /// <summary> The login server properties of the connected registry. </summary>
-        [WirePath("properties.loginServer")]
-        public ConnectedRegistryLoginServer LoginServer { get; set; }
-        /// <summary> The logging properties of the connected registry. </summary>
-        [WirePath("properties.logging")]
-        public ConnectedRegistryLogging Logging { get; set; }
-        /// <summary> The list of current statuses of the connected registry. </summary>
-        [WirePath("properties.statusDetails")]
-        public IReadOnlyList<ConnectedRegistryStatusDetail> StatusDetails { get; }
-        /// <summary> The list of notifications subscription information for the connected registry. </summary>
-        [WirePath("properties.notificationsList")]
-        public IList<string> NotificationsList { get; }
-        /// <summary> The garbage collection properties of the connected registry. </summary>
-        [WirePath("properties.garbageCollection")]
-        public GarbageCollectionProperties GarbageCollection { get; set; }
+        /// <summary> The properties of the connected registry. </summary>
+        public ConnectedRegistryProperties Properties { get; set; }
     }
 }

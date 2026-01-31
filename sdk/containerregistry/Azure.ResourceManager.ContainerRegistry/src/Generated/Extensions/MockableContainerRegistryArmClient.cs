@@ -6,74 +6,63 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableContainerRegistryArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerRegistryArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableContainerRegistryArmClient for mocking. </summary>
         protected MockableContainerRegistryArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerRegistryArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableContainerRegistryArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableContainerRegistryArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableContainerRegistryArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="RegistryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
-        public virtual ContainerRegistryResource GetContainerRegistryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RegistryResource"/> object. </returns>
+        public virtual RegistryResource GetRegistryResource(ResourceIdentifier id)
         {
-            ContainerRegistryResource.ValidateResourceId(id);
-            return new ContainerRegistryResource(Client, id);
+            RegistryResource.ValidateResourceId(id);
+            return new RegistryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
-        public virtual ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
-            return new ContainerRegistryPrivateLinkResource(Client, id);
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryCacheRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryCacheRuleResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryCacheRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CacheRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryCacheRuleResource"/> object. </returns>
-        public virtual ContainerRegistryCacheRuleResource GetContainerRegistryCacheRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CacheRuleResource"/> object. </returns>
+        public virtual CacheRuleResource GetCacheRuleResource(ResourceIdentifier id)
         {
-            ContainerRegistryCacheRuleResource.ValidateResourceId(id);
-            return new ContainerRegistryCacheRuleResource(Client, id);
+            CacheRuleResource.ValidateResourceId(id);
+            return new CacheRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedRegistryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="CredentialSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CredentialSetResource"/> object. </returns>
+        public virtual CredentialSetResource GetCredentialSetResource(ResourceIdentifier id)
+        {
+            CredentialSetResource.ValidateResourceId(id);
+            return new CredentialSetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConnectedRegistryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConnectedRegistryResource"/> object. </returns>
         public virtual ConnectedRegistryResource GetConnectedRegistryResource(ResourceIdentifier id)
@@ -82,46 +71,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             return new ConnectedRegistryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryCredentialSetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryCredentialSetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryCredentialSetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ReplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryCredentialSetResource"/> object. </returns>
-        public virtual ContainerRegistryCredentialSetResource GetContainerRegistryCredentialSetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationResource"/> object. </returns>
+        public virtual ReplicationResource GetReplicationResource(ResourceIdentifier id)
         {
-            ContainerRegistryCredentialSetResource.ValidateResourceId(id);
-            return new ContainerRegistryCredentialSetResource(Client, id);
+            ReplicationResource.ValidateResourceId(id);
+            return new ReplicationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            ContainerRegistryPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ContainerRegistryPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryReplicationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryReplicationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryReplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryReplicationResource"/> object. </returns>
-        public virtual ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(ResourceIdentifier id)
-        {
-            ContainerRegistryReplicationResource.ValidateResourceId(id);
-            return new ContainerRegistryReplicationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ScopeMapResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScopeMapResource.CreateResourceIdentifier" /> to create a <see cref="ScopeMapResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ScopeMapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScopeMapResource"/> object. </returns>
         public virtual ScopeMapResource GetScopeMapResource(ResourceIdentifier id)
@@ -130,76 +89,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             return new ScopeMapResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryTokenResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryTokenResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTokenResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TokenResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTokenResource"/> object. </returns>
-        public virtual ContainerRegistryTokenResource GetContainerRegistryTokenResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TokenResource"/> object. </returns>
+        public virtual TokenResource GetTokenResource(ResourceIdentifier id)
         {
-            ContainerRegistryTokenResource.ValidateResourceId(id);
-            return new ContainerRegistryTokenResource(Client, id);
+            TokenResource.ValidateResourceId(id);
+            return new TokenResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryWebhookResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryWebhookResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryWebhookResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="WebhookResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryWebhookResource"/> object. </returns>
-        public virtual ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebhookResource"/> object. </returns>
+        public virtual WebhookResource GetWebhookResource(ResourceIdentifier id)
         {
-            ContainerRegistryWebhookResource.ValidateResourceId(id);
-            return new ContainerRegistryWebhookResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
-        public virtual ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(ResourceIdentifier id)
-        {
-            ContainerRegistryAgentPoolResource.ValidateResourceId(id);
-            return new ContainerRegistryAgentPoolResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
-        public virtual ContainerRegistryRunResource GetContainerRegistryRunResource(ResourceIdentifier id)
-        {
-            ContainerRegistryRunResource.ValidateResourceId(id);
-            return new ContainerRegistryRunResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryTaskRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryTaskRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
-        public virtual ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(ResourceIdentifier id)
-        {
-            ContainerRegistryTaskRunResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskRunResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryTaskResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
-        public virtual ContainerRegistryTaskResource GetContainerRegistryTaskResource(ResourceIdentifier id)
-        {
-            ContainerRegistryTaskResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskResource(Client, id);
+            WebhookResource.ValidateResourceId(id);
+            return new WebhookResource(Client, id);
         }
     }
 }
