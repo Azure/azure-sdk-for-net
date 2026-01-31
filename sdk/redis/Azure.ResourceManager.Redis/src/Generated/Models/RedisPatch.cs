@@ -8,132 +8,259 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters supplied to the Update Redis operation. </summary>
     public partial class RedisPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisPatch"/>. </summary>
         public RedisPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            TenantSettings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisPatch"/>. </summary>
+        /// <param name="properties"> Redis cache properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta, maxmemory-policy,notify-keyspace-events, aof-backup-enabled, aof-storage-connection-string-0, aof-storage-connection-string-1 etc. </param>
-        /// <param name="redisVersion"> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </param>
-        /// <param name="enableNonSslPort"> Specifies whether the non-ssl Redis server port (6379) is enabled. </param>
-        /// <param name="replicasPerMaster"> The number of replicas to be created per primary. </param>
-        /// <param name="replicasPerPrimary"> The number of replicas to be created per primary. </param>
-        /// <param name="tenantSettings"> A dictionary of tenant settings. </param>
-        /// <param name="shardCount"> The number of shards to be created on a Premium Cluster Cache. </param>
-        /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
-        /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
-        /// <param name="isAccessKeyAuthenticationDisabled"> Authentication to Redis through access keys is disabled when set as true. Default value is false. </param>
-        /// <param name="zonalAllocationPolicy"> Optional: Specifies how availability zones are allocated to the Redis cache. 'Automatic' enables zone redundancy and Azure will automatically select zones based on regional availability and capacity. 'UserDefined' will select availability zones passed in by you using the 'zones' parameter. 'NoZones' will produce a non-zonal cache. If 'zonalAllocationPolicy' is not passed, it will be set to 'UserDefined' when zones are passed in, otherwise, it will be set to 'Automatic' in regions where zones are supported and 'NoZones' in regions where zones are not supported. </param>
-        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, RedisSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPatch(RedisUpdateProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
             Identity = identity;
-            RedisConfiguration = redisConfiguration;
-            RedisVersion = redisVersion;
-            EnableNonSslPort = enableNonSslPort;
-            ReplicasPerMaster = replicasPerMaster;
-            ReplicasPerPrimary = replicasPerPrimary;
-            TenantSettings = tenantSettings;
-            ShardCount = shardCount;
-            MinimumTlsVersion = minimumTlsVersion;
-            PublicNetworkAccess = publicNetworkAccess;
-            UpdateChannel = updateChannel;
-            IsAccessKeyAuthenticationDisabled = isAccessKeyAuthenticationDisabled;
-            ZonalAllocationPolicy = zonalAllocationPolicy;
-            Sku = sku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Redis cache properties. </summary>
+        internal RedisUpdateProperties Properties { get; set; }
+
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The identity of the resource. </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta, maxmemory-policy,notify-keyspace-events, aof-backup-enabled, aof-storage-connection-string-0, aof-storage-connection-string-1 etc. </summary>
-        [WirePath("properties.redisConfiguration")]
-        public RedisCommonConfiguration RedisConfiguration { get; set; }
+        public RedisCommonConfiguration RedisConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.RedisConfiguration = value;
+            }
+        }
+
         /// <summary> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </summary>
-        [WirePath("properties.redisVersion")]
-        public string RedisVersion { get; set; }
+        public string RedisVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.RedisVersion = value;
+            }
+        }
+
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
-        [WirePath("properties.enableNonSslPort")]
-        public bool? EnableNonSslPort { get; set; }
+        public bool? EnableNonSslPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableNonSslPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.EnableNonSslPort = value.Value;
+            }
+        }
+
         /// <summary> The number of replicas to be created per primary. </summary>
-        [WirePath("properties.replicasPerMaster")]
-        public int? ReplicasPerMaster { get; set; }
+        public int? ReplicasPerMaster
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicasPerMaster;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.ReplicasPerMaster = value.Value;
+            }
+        }
+
         /// <summary> The number of replicas to be created per primary. </summary>
-        [WirePath("properties.replicasPerPrimary")]
-        public int? ReplicasPerPrimary { get; set; }
+        public int? ReplicasPerPrimary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicasPerPrimary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.ReplicasPerPrimary = value.Value;
+            }
+        }
+
         /// <summary> A dictionary of tenant settings. </summary>
-        [WirePath("properties.tenantSettings")]
-        public IDictionary<string, string> TenantSettings { get; }
+        public IDictionary<string, string> TenantSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                return Properties.TenantSettings;
+            }
+        }
+
         /// <summary> The number of shards to be created on a Premium Cluster Cache. </summary>
-        [WirePath("properties.shardCount")]
-        public int? ShardCount { get; set; }
+        public int? ShardCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShardCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.ShardCount = value.Value;
+            }
+        }
+
         /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </summary>
-        [WirePath("properties.minimumTlsVersion")]
-        public RedisTlsVersion? MinimumTlsVersion { get; set; }
-        /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public RedisTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
+        /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. </summary>
+        public RedisPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
-        [WirePath("properties.updateChannel")]
-        public UpdateChannel? UpdateChannel { get; set; }
+        public UpdateChannel? UpdateChannel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateChannel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.UpdateChannel = value.Value;
+            }
+        }
+
         /// <summary> Authentication to Redis through access keys is disabled when set as true. Default value is false. </summary>
-        [WirePath("properties.disableAccessKeyAuthentication")]
-        public bool? IsAccessKeyAuthenticationDisabled { get; set; }
+        public bool? IsAccessKeyAuthenticationDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAccessKeyAuthenticationDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.IsAccessKeyAuthenticationDisabled = value.Value;
+            }
+        }
+
         /// <summary> Optional: Specifies how availability zones are allocated to the Redis cache. 'Automatic' enables zone redundancy and Azure will automatically select zones based on regional availability and capacity. 'UserDefined' will select availability zones passed in by you using the 'zones' parameter. 'NoZones' will produce a non-zonal cache. If 'zonalAllocationPolicy' is not passed, it will be set to 'UserDefined' when zones are passed in, otherwise, it will be set to 'Automatic' in regions where zones are supported and 'NoZones' in regions where zones are not supported. </summary>
-        [WirePath("properties.zonalAllocationPolicy")]
-        public ZonalAllocationPolicy? ZonalAllocationPolicy { get; set; }
+        public ZonalAllocationPolicy? ZonalAllocationPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZonalAllocationPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.ZonalAllocationPolicy = value.Value;
+            }
+        }
+
         /// <summary> The SKU of the Redis cache to deploy. </summary>
-        [WirePath("properties.sku")]
-        public RedisSku Sku { get; set; }
+        public RedisSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisUpdateProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
     }
 }

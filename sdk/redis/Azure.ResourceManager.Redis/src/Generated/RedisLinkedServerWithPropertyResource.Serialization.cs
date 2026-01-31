@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisLinkedServerWithPropertyResource : IJsonModel<RedisLinkedServerWithPropertyData>
     {
-        private static RedisLinkedServerWithPropertyData s_dataDeserializationInstance;
-        private static RedisLinkedServerWithPropertyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisLinkedServerWithPropertyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisLinkedServerWithPropertyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisLinkedServerWithPropertyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisLinkedServerWithPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisLinkedServerWithPropertyData>)Data).Write(writer, options);
 
-        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisLinkedServerWithPropertyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisLinkedServerWithPropertyData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisLinkedServerWithPropertyData IPersistableModel<RedisLinkedServerWithPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisLinkedServerWithPropertyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

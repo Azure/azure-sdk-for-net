@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisOperationSource : IOperationSource<RedisResource>
+    /// <summary></summary>
+    internal partial class RedisOperationSource : IOperationSource<RedisResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RedisOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RedisResource IOperationSource<RedisResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RedisData data = RedisData.DeserializeRedisData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RedisResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RedisResource> IOperationSource<RedisResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
-            return await Task.FromResult(new RedisResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RedisData data = RedisData.DeserializeRedisData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RedisResource(_client, data);
         }
     }
 }

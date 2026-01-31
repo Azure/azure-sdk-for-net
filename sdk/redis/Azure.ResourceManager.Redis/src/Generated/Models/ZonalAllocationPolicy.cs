@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct ZonalAllocationPolicy : IEquatable<ZonalAllocationPolicy>
     {
         private readonly string _value;
+        /// <summary> The zones for the cache will be selected automatically based on availability and capacity. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> UserDefined means the zones for the cache are manually configured using the 'zones' property, and can not be automatically selected. </summary>
+        private const string UserDefinedValue = "UserDefined";
+        /// <summary> The cache will not use multiple availability zones. </summary>
+        private const string NoZonesValue = "NoZones";
 
         /// <summary> Initializes a new instance of <see cref="ZonalAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ZonalAllocationPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AutomaticValue = "Automatic";
-        private const string UserDefinedValue = "UserDefined";
-        private const string NoZonesValue = "NoZones";
-
-        /// <summary> Automatic. </summary>
+        /// <summary> The zones for the cache will be selected automatically based on availability and capacity. </summary>
         public static ZonalAllocationPolicy Automatic { get; } = new ZonalAllocationPolicy(AutomaticValue);
-        /// <summary> UserDefined. </summary>
+
+        /// <summary> UserDefined means the zones for the cache are manually configured using the 'zones' property, and can not be automatically selected. </summary>
         public static ZonalAllocationPolicy UserDefined { get; } = new ZonalAllocationPolicy(UserDefinedValue);
-        /// <summary> NoZones. </summary>
+
+        /// <summary> The cache will not use multiple availability zones. </summary>
         public static ZonalAllocationPolicy NoZones { get; } = new ZonalAllocationPolicy(NoZonesValue);
+
         /// <summary> Determines if two <see cref="ZonalAllocationPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ZonalAllocationPolicy left, ZonalAllocationPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ZonalAllocationPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ZonalAllocationPolicy left, ZonalAllocationPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ZonalAllocationPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ZonalAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ZonalAllocationPolicy(string value) => new ZonalAllocationPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ZonalAllocationPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ZonalAllocationPolicy?(string value) => value == null ? null : new ZonalAllocationPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ZonalAllocationPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ZonalAllocationPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

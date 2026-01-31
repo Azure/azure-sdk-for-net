@@ -13,89 +13,85 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary>
-    /// A class representing the RedisLinkedServerWithProperty data model.
-    /// Response to put/get linked server (with properties) for Redis cache.
-    /// </summary>
+    /// <summary> Response to put/get linked server (with properties) for Redis cache. </summary>
     public partial class RedisLinkedServerWithPropertyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
-        public RedisLinkedServerWithPropertyData()
+        internal RedisLinkedServerWithPropertyData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
-        /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
-        /// <param name="serverRole"> Role of the linked server. </param>
-        /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
-        /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
-        /// <param name="provisioningState"> Terminal state of the link between primary and secondary redis cache. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedRedisCacheId, AzureLocation? linkedRedisCacheLocation, RedisLinkedServerRole? serverRole, string geoReplicatedPrimaryHostName, string primaryHostName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the linked server. </param>
+        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisLinkedServerProperties properties) : base(id, name, resourceType, systemData)
         {
-            LinkedRedisCacheId = linkedRedisCacheId;
-            LinkedRedisCacheLocation = linkedRedisCacheLocation;
-            ServerRole = serverRole;
-            GeoReplicatedPrimaryHostName = geoReplicatedPrimaryHostName;
-            PrimaryHostName = primaryHostName;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the linked server. </summary>
+        internal RedisLinkedServerProperties Properties { get; }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
-        [WirePath("properties.linkedRedisCacheId")]
-        public ResourceIdentifier LinkedRedisCacheId { get; set; }
+        public ResourceIdentifier LinkedRedisCacheId
+        {
+            get
+            {
+                return Properties.LinkedRedisCacheId;
+            }
+        }
+
         /// <summary> Location of the linked redis cache. </summary>
-        [WirePath("properties.linkedRedisCacheLocation")]
-        public AzureLocation? LinkedRedisCacheLocation { get; set; }
+        public AzureLocation LinkedRedisCacheLocation
+        {
+            get
+            {
+                return Properties.LinkedRedisCacheLocation;
+            }
+        }
+
         /// <summary> Role of the linked server. </summary>
-        [WirePath("properties.serverRole")]
-        public RedisLinkedServerRole? ServerRole { get; set; }
+        public RedisLinkedServerRole ServerRole
+        {
+            get
+            {
+                return Properties.ServerRole;
+            }
+        }
+
         /// <summary> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </summary>
-        [WirePath("properties.geoReplicatedPrimaryHostName")]
-        public string GeoReplicatedPrimaryHostName { get; }
+        public string GeoReplicatedPrimaryHostName
+        {
+            get
+            {
+                return Properties.GeoReplicatedPrimaryHostName;
+            }
+        }
+
         /// <summary> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </summary>
-        [WirePath("properties.primaryHostName")]
-        public string PrimaryHostName { get; }
+        public string PrimaryHostName
+        {
+            get
+            {
+                return Properties.PrimaryHostName;
+            }
+        }
+
         /// <summary> Terminal state of the link between primary and secondary redis cache. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
     }
 }

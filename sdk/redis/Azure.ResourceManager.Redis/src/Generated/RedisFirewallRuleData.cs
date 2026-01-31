@@ -7,88 +7,78 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary>
-    /// A class representing the RedisFirewallRule data model.
-    /// A firewall rule on a redis cache has a name, and describes a contiguous range of IP addresses permitted to connect
-    /// </summary>
+    /// <summary> A firewall rule on a redis cache has a name, and describes a contiguous range of IP addresses permitted to connect. </summary>
     public partial class RedisFirewallRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
-        public RedisFirewallRuleData(IPAddress startIP, IPAddress endIP)
+        public RedisFirewallRuleData(string startIP, string endIP)
         {
             Argument.AssertNotNull(startIP, nameof(startIP));
             Argument.AssertNotNull(endIP, nameof(endIP));
 
-            StartIP = startIP;
-            EndIP = endIP;
+            Properties = new RedisFirewallRuleProperties(startIP, endIP);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startIP"> lowest IP address included in the range. </param>
-        /// <param name="endIP"> highest IP address included in the range. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIP, IPAddress endIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> redis cache firewall rule properties. </param>
+        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisFirewallRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            StartIP = startIP;
-            EndIP = endIP;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/> for deserialization. </summary>
-        internal RedisFirewallRuleData()
-        {
-        }
+        /// <summary> redis cache firewall rule properties. </summary>
+        internal RedisFirewallRuleProperties Properties { get; set; }
 
         /// <summary> lowest IP address included in the range. </summary>
-        [WirePath("properties.startIP")]
-        public IPAddress StartIP { get; set; }
+        public string StartIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisFirewallRuleProperties();
+                }
+                Properties.StartIP = value;
+            }
+        }
+
         /// <summary> highest IP address included in the range. </summary>
-        [WirePath("properties.endIP")]
-        public IPAddress EndIP { get; set; }
+        public string EndIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisFirewallRuleProperties();
+                }
+                Properties.EndIP = value;
+            }
+        }
     }
 }

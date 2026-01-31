@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Redis.Models
     public readonly partial struct RedisSkuName : IEquatable<RedisSkuName>
     {
         private readonly string _value;
+        /// <summary> The well known 'Basic' SKU for Azure Cache for Redis. Basic SKU does not have an availability SLA. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> The well known 'Standard' SKU for Azure Cache for Redis. Standard SKU has an availability SLA. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> The well known 'Premium' SKU for Azure Cache for Redis. Premium SKU has an availability SLA, and higher performance tiers and more features compared with Standard SKU. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="RedisSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-
-        /// <summary> Basic. </summary>
+        /// <summary> The well known 'Basic' SKU for Azure Cache for Redis. Basic SKU does not have an availability SLA. </summary>
         public static RedisSkuName Basic { get; } = new RedisSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> The well known 'Standard' SKU for Azure Cache for Redis. Standard SKU has an availability SLA. </summary>
         public static RedisSkuName Standard { get; } = new RedisSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> The well known 'Premium' SKU for Azure Cache for Redis. Premium SKU has an availability SLA, and higher performance tiers and more features compared with Standard SKU. </summary>
         public static RedisSkuName Premium { get; } = new RedisSkuName(PremiumValue);
+
         /// <summary> Determines if two <see cref="RedisSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisSkuName left, RedisSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisSkuName left, RedisSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisSkuName(string value) => new RedisSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisSkuName?(string value) => value == null ? null : new RedisSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisPrivateEndpointConnectionResource : IJsonModel<RedisPrivateEndpointConnectionData>
     {
-        private static RedisPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static RedisPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        RedisPrivateEndpointConnectionData IJsonModel<RedisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisPrivateEndpointConnectionData IJsonModel<RedisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisPrivateEndpointConnectionData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisPrivateEndpointConnectionData IPersistableModel<RedisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

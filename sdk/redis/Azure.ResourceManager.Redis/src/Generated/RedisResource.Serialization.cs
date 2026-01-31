@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisResource : IJsonModel<RedisData>
     {
-        private static RedisData s_dataDeserializationInstance;
-        private static RedisData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisData>)Data).Write(writer, options);
 
-        RedisData IJsonModel<RedisData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisData IJsonModel<RedisData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisData IPersistableModel<RedisData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Redis
 {
+    /// <summary></summary>
     public partial class RedisFirewallRuleResource : IJsonModel<RedisFirewallRuleData>
     {
-        private static RedisFirewallRuleData s_dataDeserializationInstance;
-        private static RedisFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisFirewallRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisFirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisFirewallRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)Data).Write(writer, options);
 
-        RedisFirewallRuleData IJsonModel<RedisFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisFirewallRuleData IJsonModel<RedisFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisFirewallRuleData>(Data, options, AzureResourceManagerRedisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisFirewallRuleData IPersistableModel<RedisFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisFirewallRuleData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

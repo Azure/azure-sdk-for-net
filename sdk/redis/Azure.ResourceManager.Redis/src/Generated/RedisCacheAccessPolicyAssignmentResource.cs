@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
     /// <summary>
-    /// A Class representing a RedisCacheAccessPolicyAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisCacheAccessPolicyAssignmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRedisCacheAccessPolicyAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisCacheAccessPolicyAssignment method.
+    /// A class representing a RedisCacheAccessPolicyAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisCacheAccessPolicyAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisCacheAccessPolicyAssignments method.
     /// </summary>
     public partial class RedisCacheAccessPolicyAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RedisCacheAccessPolicyAssignmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="cacheName"> The cacheName. </param>
-        /// <param name="accessPolicyAssignmentName"> The accessPolicyAssignmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyAssignmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics;
-        private readonly AccessPolicyAssignmentRestOperations _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient;
+        private readonly ClientDiagnostics _redisCacheAccessPolicyAssignmentsClientDiagnostics;
+        private readonly RedisCacheAccessPolicyAssignments _redisCacheAccessPolicyAssignmentsRestClient;
         private readonly RedisCacheAccessPolicyAssignmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/accessPolicyAssignments";
 
-        /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyAssignmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RedisCacheAccessPolicyAssignmentResource for mocking. </summary>
         protected RedisCacheAccessPolicyAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisCacheAccessPolicyAssignmentResource(ArmClient client, RedisCacheAccessPolicyAssignmentData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Redis
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RedisCacheAccessPolicyAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyAssignmentAccessPolicyAssignmentApiVersion);
-            _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient = new AccessPolicyAssignmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyAssignmentAccessPolicyAssignmentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyAssignmentApiVersion);
+            _redisCacheAccessPolicyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
+            _redisCacheAccessPolicyAssignmentsRestClient = new RedisCacheAccessPolicyAssignments(_redisCacheAccessPolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, redisCacheAccessPolicyAssignmentApiVersion ?? "2024-11-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RedisCacheAccessPolicyAssignmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cacheName"> The cacheName. </param>
+        /// <param name="accessPolicyAssignmentName"> The accessPolicyAssignmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyAssignmentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the list of assignments for an access policy of a redis cache
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RedisCacheAccessPolicyAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RedisCacheAccessPolicyAssignmentData> response = Response.FromValue(RedisCacheAccessPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisCacheAccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Redis
         /// Gets the list of assignments for an access policy of a redis cache
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RedisCacheAccessPolicyAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RedisCacheAccessPolicyAssignmentData> response = Response.FromValue(RedisCacheAccessPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RedisCacheAccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Redis
         /// Deletes the access policy assignment from a redis cache
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RedisArmOperation operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Redis
         /// Deletes the access policy assignment from a redis cache
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RedisArmOperation operation = new RedisArmOperation(_redisCacheAccessPolicyAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Adds the access policy assignment to the specified users
+        /// Update a RedisCacheAccessPolicyAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_CreateUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RedisArmOperation<RedisCacheAccessPolicyAssignmentResource> operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(
+                    new RedisCacheAccessPolicyAssignmentOperationSource(Client),
+                    _redisCacheAccessPolicyAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Adds the access policy assignment to the specified users
+        /// Update a RedisCacheAccessPolicyAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RedisCacheAccessPolicyAssignments_CreateUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisCacheAccessPolicyAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
+            using DiagnosticScope scope = _redisCacheAccessPolicyAssignmentsClientDiagnostics.CreateScope("RedisCacheAccessPolicyAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(new RedisCacheAccessPolicyAssignmentOperationSource(Client), _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentClientDiagnostics, Pipeline, _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _redisCacheAccessPolicyAssignmentsRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RedisArmOperation<RedisCacheAccessPolicyAssignmentResource> operation = new RedisArmOperation<RedisCacheAccessPolicyAssignmentResource>(
+                    new RedisCacheAccessPolicyAssignmentOperationSource(Client),
+                    _redisCacheAccessPolicyAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
