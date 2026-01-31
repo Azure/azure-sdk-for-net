@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias BaseShares;
+extern alias DMBlob;
 extern alias DMShare;
 
 using System;
@@ -17,6 +18,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
+using DMBlob::Azure.Storage.DataMovement.Blobs;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
@@ -68,6 +70,17 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareDirectoryClient directory = destinationContainer.GetRootDirectoryClient().GetSubdirectoryClient(directoryPath);
             await directory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
+        }
+
+        protected async Task CreateDirectoryWithOptionsInDestinationAsync(
+            ShareClient destinationContainer,
+            string directoryPath,
+            ShareDirectoryCreateOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            ShareDirectoryClient directory = destinationContainer.GetRootDirectoryClient().GetSubdirectoryClient(directoryPath);
+            await directory.CreateIfNotExistsAsync(options: options, cancellationToken: cancellationToken);
         }
 
         protected override Task CreateDirectoryInSourceAsync(BlobContainerClient sourceContainer, string directoryPath, CancellationToken cancellationToken = default)
@@ -331,11 +344,166 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
+        protected async Task VerifyFileContentsAsync(
+            string sourceBlobName,
+            BlobContainerClient sourceBlobContainerClient,
+            ShareFileClient destinationFileClient,
+            CancellationToken cancellationToken)
+        {
+            // Assert file and file contents
+            BlobBaseClient sourceBlobClient = sourceBlobContainerClient.GetBlobClient(sourceBlobName);
+            using Stream sourceStream = await sourceBlobClient.OpenReadAsync(cancellationToken: cancellationToken);
+            using Stream destinationStream = await destinationFileClient.OpenReadAsync(cancellationToken: cancellationToken);
+            Assert.That(sourceStream, Is.EqualTo(destinationStream));
+        }
+
         [Test]
         public override Task DirectoryToDirectory_OAuth()
         {
-            // NoOp this test since File To Blob
+            // NoOp this test since Blob To File
             return Task.CompletedTask;
+        }
+
+        [RecordedTest]
+        public async Task BlobDirectoryToShareDirectory_SkipIfExists_ExistingDirectoriesTransferFiles()
+        {
+            // Arrange
+            await using IDisposingContainer<BlobContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            int size = DataMovementTestConstants.KB;
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            // Setup SOURCE: Create blob directory structure WITH files (blobs don't have real directories)
+            string sourceItemName1 = $"{sourcePrefix}/item1";
+            await CreateObjectInSourceAsync(source.Container, size, sourceItemName1);
+            string sourceItemName2 = $"{sourcePrefix}/item2";
+            await CreateObjectInSourceAsync(source.Container, size, sourceItemName2);
+            string sourceItemName3 = $"{sourcePrefix}/bar/item3";
+            await CreateObjectInSourceAsync(source.Container, size, sourceItemName3);
+            string sourceItemName4 = $"{sourcePrefix}/pik/item4";
+            await CreateObjectInSourceAsync(source.Container, size, sourceItemName4);
+            // This creates:
+            // sourceFolder/
+            // ├── item1 (blob)
+            // ├── item2 (blob)
+            // ├── bar/
+            // │   └── item3 (blob)
+            // └── pik/
+            //     └── item4 (blob)
+
+            // Destination directory metadata and properties (DIFFERENT from source)
+            ShareDirectoryCreateOptions destDirOptions = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.System,
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default),
+                    FileChangedOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 10, 1, 9, 5, 55, default),
+                },
+            };
+
+            // Setup DESTINATION: Create EMPTY directory structure with specific properties
+            await CreateDirectoryWithOptionsInDestinationAsync(destination.Container, destPrefix, destDirOptions);
+            string destSubDir1 = string.Join("/", destPrefix, "bar");
+            await CreateDirectoryWithOptionsInDestinationAsync(destination.Container, destSubDir1, destDirOptions);
+            string destSubDir2 = string.Join("/", destPrefix, "pik");
+            await CreateDirectoryWithOptionsInDestinationAsync(destination.Container, destSubDir2, destDirOptions);
+            // Destination has the directories but NO files
+
+            // Store original destination directory properties to verify they weren't changed
+            ShareDirectoryClient destBarDir = destination.Container.GetDirectoryClient(destSubDir1);
+            ShareDirectoryProperties originalBarProps = await destBarDir.GetPropertiesAsync();
+
+            // Create storage resource containers
+            BlobContainerClient sourceContainer = source.Container;
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(
+                sourceContainer,
+                new BlobStorageResourceContainerOptions()
+                {
+                    BlobPrefix = sourcePrefix
+                });
+
+            ShareDirectoryClient destinationDirectory = destination.Container.GetDirectoryClient(destPrefix);
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destinationDirectory,
+                new ShareFileStorageResourceOptions());
+
+            TransferOptions options = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.SkipIfExists
+            };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            TransferManager transferManager = new TransferManager();
+
+            // Act
+            TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert: Transfer should complete successfully
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Verify FILES were transferred
+            ShareDirectoryClient destDirectory = destination.Container.GetDirectoryClient(destPrefix);
+
+            // Check root level files
+            ShareFileClient destFile1 = destDirectory.GetFileClient("item1");
+            Assert.IsTrue(await destFile1.ExistsAsync());
+            await VerifyFileContentsAsync(
+                sourceItemName1,
+                sourceContainer,
+                destFile1,
+                CancellationToken.None);
+
+            ShareFileClient destFile2 = destDirectory.GetFileClient("item2");
+            Assert.IsTrue(await destFile2.ExistsAsync());
+            await VerifyFileContentsAsync(
+                sourceItemName2,
+                sourceContainer,
+                destFile2,
+                CancellationToken.None);
+
+            // Check files in subdirectories
+            ShareDirectoryClient destBarDirClient = destDirectory.GetSubdirectoryClient("bar");
+            ShareFileClient destFile3 = destBarDirClient.GetFileClient("item3");
+            Assert.IsTrue(await destFile3.ExistsAsync());
+            await VerifyFileContentsAsync(
+                sourceItemName3,
+                sourceContainer,
+                destFile3,
+                CancellationToken.None);
+
+            ShareDirectoryClient destPikDirClient = destDirectory.GetSubdirectoryClient("pik");
+            ShareFileClient destFile4 = destPikDirClient.GetFileClient("item4");
+            Assert.IsTrue(await destFile4.ExistsAsync());
+            await VerifyFileContentsAsync(
+                sourceItemName4,
+                sourceContainer,
+                destFile4,
+                CancellationToken.None);
+
+            // Assert: Verify directory properties were NOT changed (directory was skipped)
+            ShareDirectoryProperties currentBarProps = await destBarDir.GetPropertiesAsync();
+
+            // Directory should retain its ORIGINAL properties (not source properties)
+            Assert.That(originalBarProps.Metadata, Is.EqualTo(currentBarProps.Metadata),
+                "Directory metadata should not change when skipped");
+            Assert.AreEqual(originalBarProps.SmbProperties.FileAttributes, currentBarProps.SmbProperties.FileAttributes,
+                "Directory attributes should not change when skipped");
+            Assert.AreEqual(originalBarProps.SmbProperties.FileCreatedOn, currentBarProps.SmbProperties.FileCreatedOn,
+                "Directory FileCreatedOn should not change when skipped");
         }
     }
 }

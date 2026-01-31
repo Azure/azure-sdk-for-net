@@ -137,7 +137,8 @@ namespace Azure.Storage.DataMovement
 
         internal static class ErrorCode
         {
-            internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file." };
+            internal static readonly string CannotOverwriteDirectory = "Cannot overwrite directory";
+            internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file."};
             internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
         }
 

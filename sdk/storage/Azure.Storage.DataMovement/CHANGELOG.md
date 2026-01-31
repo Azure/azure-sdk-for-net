@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where `StorageResourceCreationMode.SkipIfExists` failed on existing destination directories during container transfers. Existing directories are now skipped without error.
 
 ### Other Changes
 

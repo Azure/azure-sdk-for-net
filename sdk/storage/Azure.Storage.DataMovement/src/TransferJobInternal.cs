@@ -4,8 +4,8 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -330,6 +330,22 @@ namespace Azure.Storage.DataMovement
                             await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                         bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
                         await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception ex) when (
+                        _creationPreference == StorageResourceCreationMode.SkipIfExists &&
+                        (
+                            // Share Directory already exists
+                            (ex is InvalidOperationException operationException &&
+                             operationException.Message.Contains(DataMovementConstants.ErrorCode.CannotOverwriteDirectory)) ||
+                            // Local Directory already exists
+                            (ex is IOException ioException &&
+                             (ioException.Message.Contains("already exists") ||
+                              ioException.Message.Contains("Cannot create")))
+                        ))
+                    {
+                        DataMovementEventSource.Singleton.DirectorySkipped(
+                            _transferOperation.Id,
+                            subContainer.Uri.AbsolutePath);
                     }
                     catch (Exception ex)
                     {
