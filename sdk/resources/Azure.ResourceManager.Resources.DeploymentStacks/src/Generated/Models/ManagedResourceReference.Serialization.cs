@@ -8,11 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     public partial class ManagedResourceReference : IUtf8JsonSerializable, IJsonModel<ManagedResourceReference>
     {
@@ -71,6 +70,10 @@ namespace Azure.ResourceManager.Resources.Models
             ResourceStatusMode? status = default;
             DenyStatusMode? denyStatus = default;
             string id = default;
+            DeploymentExtension extension = default;
+            string type = default;
+            IReadOnlyDictionary<string, BinaryData> identifiers = default;
+            string apiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,81 +101,61 @@ namespace Azure.ResourceManager.Resources.Models
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extension = DeploymentExtension.DeserializeDeploymentExtension(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identifiers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    identifiers = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("apiVersion"u8))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedResourceReference(id, serializedAdditionalRawData, status, denyStatus);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DenyStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  denyStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DenyStatus))
-                {
-                    builder.Append("  denyStatus: ");
-                    builder.AppendLine($"'{DenyStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ManagedResourceReference(
+                id,
+                extension,
+                type,
+                identifiers ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                apiVersion,
+                serializedAdditionalRawData,
+                status,
+                denyStatus);
         }
 
         BinaryData IPersistableModel<ManagedResourceReference>.Write(ModelReaderWriterOptions options)
@@ -182,9 +165,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedResourceReference)} does not support writing '{options.Format}' format.");
             }

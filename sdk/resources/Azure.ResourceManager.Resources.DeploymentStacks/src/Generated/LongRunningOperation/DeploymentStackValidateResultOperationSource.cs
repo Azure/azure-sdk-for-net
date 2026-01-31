@@ -9,9 +9,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.DeploymentStacks
 {
     internal class DeploymentStackValidateResultOperationSource : IOperationSource<DeploymentStackValidateResult>
     {

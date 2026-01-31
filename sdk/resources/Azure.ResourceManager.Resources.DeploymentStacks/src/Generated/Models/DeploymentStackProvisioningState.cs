@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> State of the deployment stack. </summary>
     public readonly partial struct DeploymentStackProvisioningState : IEquatable<DeploymentStackProvisioningState>
@@ -33,29 +33,35 @@ namespace Azure.ResourceManager.Resources.Models
         private const string FailedValue = "failed";
         private const string CanceledValue = "canceled";
         private const string DeletingValue = "deleting";
+        private const string InitializingValue = "initializing";
+        private const string RunningValue = "running";
 
-        /// <summary> creating. </summary>
+        /// <summary> The deployment stack is currently being created. </summary>
         public static DeploymentStackProvisioningState Creating { get; } = new DeploymentStackProvisioningState(CreatingValue);
-        /// <summary> validating. </summary>
+        /// <summary> The deployment stack is currently being validated. </summary>
         public static DeploymentStackProvisioningState Validating { get; } = new DeploymentStackProvisioningState(ValidatingValue);
-        /// <summary> waiting. </summary>
+        /// <summary> The deployment stack is currently waiting. </summary>
         public static DeploymentStackProvisioningState Waiting { get; } = new DeploymentStackProvisioningState(WaitingValue);
-        /// <summary> deploying. </summary>
+        /// <summary> The deployment stack is currently deploying. </summary>
         public static DeploymentStackProvisioningState Deploying { get; } = new DeploymentStackProvisioningState(DeployingValue);
-        /// <summary> canceling. </summary>
+        /// <summary> The deployment stack is being cancelled. </summary>
         public static DeploymentStackProvisioningState Canceling { get; } = new DeploymentStackProvisioningState(CancelingValue);
-        /// <summary> updatingDenyAssignments. </summary>
+        /// <summary> The deployment stack is updating deny assignments. </summary>
         public static DeploymentStackProvisioningState UpdatingDenyAssignments { get; } = new DeploymentStackProvisioningState(UpdatingDenyAssignmentsValue);
-        /// <summary> deletingResources. </summary>
+        /// <summary> The deployment stack is deleting resources. </summary>
         public static DeploymentStackProvisioningState DeletingResources { get; } = new DeploymentStackProvisioningState(DeletingResourcesValue);
-        /// <summary> succeeded. </summary>
+        /// <summary> The deployment stack completed successfully. </summary>
         public static DeploymentStackProvisioningState Succeeded { get; } = new DeploymentStackProvisioningState(SucceededValue);
-        /// <summary> failed. </summary>
+        /// <summary> The deployment stack has failed. </summary>
         public static DeploymentStackProvisioningState Failed { get; } = new DeploymentStackProvisioningState(FailedValue);
-        /// <summary> canceled. </summary>
+        /// <summary> The deployment stack has been cancelled. </summary>
         public static DeploymentStackProvisioningState Canceled { get; } = new DeploymentStackProvisioningState(CanceledValue);
-        /// <summary> deleting. </summary>
+        /// <summary> The deployment stack is being deleted. </summary>
         public static DeploymentStackProvisioningState Deleting { get; } = new DeploymentStackProvisioningState(DeletingValue);
+        /// <summary> The deployment stack is currently being initialized. </summary>
+        public static DeploymentStackProvisioningState Initializing { get; } = new DeploymentStackProvisioningState(InitializingValue);
+        /// <summary> The deployment stack is currently performing an operation. </summary>
+        public static DeploymentStackProvisioningState Running { get; } = new DeploymentStackProvisioningState(RunningValue);
         /// <summary> Determines if two <see cref="DeploymentStackProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DeploymentStackProvisioningState left, DeploymentStackProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeploymentStackProvisioningState"/> values are not the same. </summary>

@@ -1,0 +1,6 @@
+directory: specification/resources/resource-manager/Microsoft.Resources/deploymentStacks
+commit: 652ad4cb131256f10a90ea2df207b38cf35d6671
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json

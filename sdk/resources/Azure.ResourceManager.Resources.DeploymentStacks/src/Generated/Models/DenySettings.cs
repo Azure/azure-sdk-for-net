@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 {
     /// <summary> Defines how resources deployed by the Deployment stack are locked. </summary>
     public partial class DenySettings
@@ -75,16 +75,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> denySettings Mode that defines denied actions. </summary>
-        [WirePath("mode")]
         public DenySettingsMode Mode { get; set; }
         /// <summary> List of AAD principal IDs excluded from the lock. Up to 5 principals are permitted. </summary>
-        [WirePath("excludedPrincipals")]
         public IList<string> ExcludedPrincipals { get; }
         /// <summary> List of role-based management operations that are excluded from the denySettings. Up to 200 actions are permitted. If the denySetting mode is set to 'denyWriteAndDelete', then the following actions are automatically appended to 'excludedActions': '*\/read' and 'Microsoft.Authorization/locks/delete'. If the denySetting mode is set to 'denyDelete', then the following actions are automatically appended to 'excludedActions': 'Microsoft.Authorization/locks/delete'. Duplicate actions will be removed. </summary>
-        [WirePath("excludedActions")]
         public IList<string> ExcludedActions { get; }
         /// <summary> DenySettings will be applied to child resource scopes of every managed resource with a deny assignment. </summary>
-        [WirePath("applyToChildScopes")]
         public bool? ApplyToChildScopes { get; set; }
     }
 }
