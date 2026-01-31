@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,83 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ValidateProbeResult(isValid, errorCode, message, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isValid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsValid))
+                {
+                    builder.Append("  isValid: ");
+                    var boolValue = IsValid.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    builder.Append("  errorCode: ");
+                    if (ErrorCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorCode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ValidateProbeResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ValidateProbeResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +207,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support writing '{options.Format}' format.");
             }

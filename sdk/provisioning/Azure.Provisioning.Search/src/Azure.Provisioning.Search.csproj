@@ -5,12 +5,13 @@
     <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <!-- Temporarily add this because this is blocking releases https://github.com/Azure/azure-sdk-for-net/issues/54387 -->
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

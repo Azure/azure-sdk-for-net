@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsResourceStatus : IEquatable<DevOpsResourceStatus>
     {
         private readonly string _value;
+        /// <summary> Represents a machine resource that is ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Represents a machine resource that is not ready. </summary>
+        private const string NotReadyValue = "NotReady";
+        /// <summary> Represents a machine resource that is allocated. </summary>
+        private const string AllocatedValue = "Allocated";
+        /// <summary> Represents a machine resource that is pending return. </summary>
+        private const string PendingReturnValue = "PendingReturn";
+        /// <summary> Represents a machine resource that is returned. </summary>
+        private const string ReturnedValue = "Returned";
+        /// <summary> Represents a machine resource that is leased. </summary>
+        private const string LeasedValue = "Leased";
+        /// <summary> Represents a machine resource that is provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Represents a machine resource that is updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Represents a machine resource that is starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Represents a machine resource that is pending reimage. </summary>
+        private const string PendingReimageValue = "PendingReimage";
+        /// <summary> Represents a machine resource that is reimaging. </summary>
+        private const string ReimagingValue = "Reimaging";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsResourceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadyValue = "Ready";
-        private const string NotReadyValue = "NotReady";
-        private const string AllocatedValue = "Allocated";
-        private const string PendingReturnValue = "PendingReturn";
-        private const string ReturnedValue = "Returned";
-        private const string LeasedValue = "Leased";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string StartingValue = "Starting";
-        private const string PendingReimageValue = "PendingReimage";
-        private const string ReimagingValue = "Reimaging";
+            _value = value;
+        }
 
         /// <summary> Represents a machine resource that is ready. </summary>
         public static DevOpsResourceStatus Ready { get; } = new DevOpsResourceStatus(ReadyValue);
+
         /// <summary> Represents a machine resource that is not ready. </summary>
         public static DevOpsResourceStatus NotReady { get; } = new DevOpsResourceStatus(NotReadyValue);
+
         /// <summary> Represents a machine resource that is allocated. </summary>
         public static DevOpsResourceStatus Allocated { get; } = new DevOpsResourceStatus(AllocatedValue);
+
         /// <summary> Represents a machine resource that is pending return. </summary>
         public static DevOpsResourceStatus PendingReturn { get; } = new DevOpsResourceStatus(PendingReturnValue);
+
         /// <summary> Represents a machine resource that is returned. </summary>
         public static DevOpsResourceStatus Returned { get; } = new DevOpsResourceStatus(ReturnedValue);
+
         /// <summary> Represents a machine resource that is leased. </summary>
         public static DevOpsResourceStatus Leased { get; } = new DevOpsResourceStatus(LeasedValue);
+
         /// <summary> Represents a machine resource that is provisioning. </summary>
         public static DevOpsResourceStatus Provisioning { get; } = new DevOpsResourceStatus(ProvisioningValue);
+
         /// <summary> Represents a machine resource that is updating. </summary>
         public static DevOpsResourceStatus Updating { get; } = new DevOpsResourceStatus(UpdatingValue);
+
         /// <summary> Represents a machine resource that is starting. </summary>
         public static DevOpsResourceStatus Starting { get; } = new DevOpsResourceStatus(StartingValue);
+
         /// <summary> Represents a machine resource that is pending reimage. </summary>
         public static DevOpsResourceStatus PendingReimage { get; } = new DevOpsResourceStatus(PendingReimageValue);
+
         /// <summary> Represents a machine resource that is reimaging. </summary>
         public static DevOpsResourceStatus Reimaging { get; } = new DevOpsResourceStatus(ReimagingValue);
+
         /// <summary> Determines if two <see cref="DevOpsResourceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsResourceStatus left, DevOpsResourceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsResourceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsResourceStatus left, DevOpsResourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsResourceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsResourceStatus(string value) => new DevOpsResourceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsResourceStatus?(string value) => value == null ? null : new DevOpsResourceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsResourceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

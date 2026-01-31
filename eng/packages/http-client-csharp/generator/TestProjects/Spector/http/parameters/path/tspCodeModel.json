@@ -64,7 +64,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.Path.normal",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.Path"
           },
           "parameters": [
             {
@@ -147,7 +148,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.Path.optional",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.Path"
           },
           "parameters": [
             {
@@ -211,9 +213,11 @@
           "crossLanguageDefinitionId": "Parameters.Path.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Path",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

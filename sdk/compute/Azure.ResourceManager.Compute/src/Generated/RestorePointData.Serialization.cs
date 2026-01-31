@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView, options);
             }
+            if (Optional.IsDefined(InstantAccessDurationMinutes))
+            {
+                writer.WritePropertyName("instantAccessDurationMinutes"u8);
+                writer.WriteNumberValue(InstantAccessDurationMinutes.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Compute
             DateTimeOffset? timeCreated = default;
             WritableSubResource sourceRestorePoint = default;
             RestorePointInstanceView instanceView = default;
+            int? instantAccessDurationMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,6 +222,15 @@ namespace Azure.ResourceManager.Compute
                             instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("instantAccessDurationMinutes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instantAccessDurationMinutes = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -237,6 +252,7 @@ namespace Azure.ResourceManager.Compute
                 timeCreated,
                 sourceRestorePoint,
                 instanceView,
+                instantAccessDurationMinutes,
                 serializedAdditionalRawData);
         }
 

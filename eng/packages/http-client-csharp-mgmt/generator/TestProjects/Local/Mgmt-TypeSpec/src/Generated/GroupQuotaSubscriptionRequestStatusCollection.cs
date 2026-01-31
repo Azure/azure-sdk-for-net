@@ -13,21 +13,19 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaSubscriptionRequestStatusResource"/> and their operations.
-    /// Each <see cref="GroupQuotaSubscriptionRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> instance call the GetGroupQuotaSubscriptionRequestStatuses method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotaSubscriptionRequestStatusResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> instance call the GetGroupQuotaSubscriptionRequestStatuses method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class GroupQuotaSubscriptionRequestStatusCollection : ArmCollection
     {
         private readonly ClientDiagnostics _groupQuotaSubscriptionRequestStatusesClientDiagnostics;
         private readonly GroupQuotaSubscriptionRequestStatuses _groupQuotaSubscriptionRequestStatusesRestClient;
-        /// <summary> The managementGroupId. </summary>
-        private readonly string _managementGroupId;
 
         /// <summary> Initializes a new instance of GroupQuotaSubscriptionRequestStatusCollection for mocking. </summary>
         protected GroupQuotaSubscriptionRequestStatusCollection()
@@ -37,11 +35,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
-        internal GroupQuotaSubscriptionRequestStatusCollection(ArmClient client, ResourceIdentifier id, string managementGroupId) : base(client, id)
+        internal GroupQuotaSubscriptionRequestStatusCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GroupQuotaSubscriptionRequestStatusResource.ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
-            _managementGroupId = managementGroupId;
             _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
             _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
@@ -51,9 +47,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TenantResource.ResourceType)
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
             }
         }
 
@@ -66,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -90,7 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -115,7 +111,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -139,7 +135,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -156,7 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -164,7 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -188,7 +184,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -213,7 +209,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -221,7 +217,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -245,7 +241,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -270,7 +266,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -278,7 +274,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +298,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -331,7 +327,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -339,7 +335,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GroupQuotaSubscriptionRequestStatuses_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -363,7 +359,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(_managementGroupId, requestId, context);
+                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;

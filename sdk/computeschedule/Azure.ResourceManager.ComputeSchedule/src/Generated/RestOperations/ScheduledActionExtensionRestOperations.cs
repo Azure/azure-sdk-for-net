@@ -6,184 +6,67 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class ScheduledActionExtensionRestOperations
+    internal partial class ScheduledActionExtension
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ScheduledActionExtensionRestOperations. </summary>
+        /// <summary> Initializes a new instance of ScheduledActionExtension for mocking. </summary>
+        protected ScheduledActionExtension()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ScheduledActionExtension. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ScheduledActionExtensionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ScheduledActionExtension(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-15-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetAssociatedScheduledActionsRequestUri(string resourceUri)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetAssociatedScheduledActionsRequest(string resourceUri, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.ComputeSchedule/associatedScheduledActions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAssociatedScheduledActionsRequest(string resourceUri)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/associatedScheduledActions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List ScheduledActionResources resources by parent. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<ScheduledActionResourcesListResult>> GetAssociatedScheduledActionsAsync(string resourceUri, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAssociatedScheduledActionsRequest(Uri nextPage, string resourceUri, RequestContext context)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateGetAssociatedScheduledActionsRequest(resourceUri);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourcesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionResourcesListResult.DeserializeScheduledActionResourcesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledActionResources resources by parent. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<ScheduledActionResourcesListResult> GetAssociatedScheduledActions(string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateGetAssociatedScheduledActionsRequest(resourceUri);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourcesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionResourcesListResult.DeserializeScheduledActionResourcesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAssociatedScheduledActionsNextPageRequestUri(string nextLink, string resourceUri)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAssociatedScheduledActionsNextPageRequest(string nextLink, string resourceUri)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List ScheduledActionResources resources by parent. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<ScheduledActionResourcesListResult>> GetAssociatedScheduledActionsNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateGetAssociatedScheduledActionsNextPageRequest(nextLink, resourceUri);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourcesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledActionResourcesListResult.DeserializeScheduledActionResourcesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScheduledActionResources resources by parent. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public Response<ScheduledActionResourcesListResult> GetAssociatedScheduledActionsNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateGetAssociatedScheduledActionsNextPageRequest(nextLink, resourceUri);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledActionResourcesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScheduledActionResourcesListResult.DeserializeScheduledActionResourcesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

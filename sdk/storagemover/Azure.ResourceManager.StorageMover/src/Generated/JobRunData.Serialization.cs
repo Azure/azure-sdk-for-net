@@ -10,16 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobRunData : IUtf8JsonSerializable, IJsonModel<JobRunData>
+    /// <summary> The Job Run resource. </summary>
+    public partial class JobRunData : ResourceData, IJsonModel<JobRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,557 +33,114 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobRunData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanStatus))
-            {
-                writer.WritePropertyName("scanStatus"u8);
-                writer.WriteStringValue(ScanStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentName))
-            {
-                writer.WritePropertyName("agentName"u8);
-                writer.WriteStringValue(AgentName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
-            {
-                writer.WritePropertyName("agentResourceId"u8);
-                writer.WriteStringValue(AgentResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
-            {
-                writer.WritePropertyName("executionStartTime"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
-            {
-                writer.WritePropertyName("executionEndTime"u8);
-                writer.WriteStringValue(ExecutionEndOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
-            {
-                writer.WritePropertyName("lastStatusUpdate"u8);
-                writer.WriteStringValue(LastStatusUpdate.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsScanned))
-            {
-                writer.WritePropertyName("itemsScanned"u8);
-                writer.WriteNumberValue(ItemsScanned.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsExcluded))
-            {
-                writer.WritePropertyName("itemsExcluded"u8);
-                writer.WriteNumberValue(ItemsExcluded.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsUnsupported))
-            {
-                writer.WritePropertyName("itemsUnsupported"u8);
-                writer.WriteNumberValue(ItemsUnsupported.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsNoTransferNeeded))
-            {
-                writer.WritePropertyName("itemsNoTransferNeeded"u8);
-                writer.WriteNumberValue(ItemsNoTransferNeeded.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsFailed))
-            {
-                writer.WritePropertyName("itemsFailed"u8);
-                writer.WriteNumberValue(ItemsFailed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ItemsTransferred))
-            {
-                writer.WritePropertyName("itemsTransferred"u8);
-                writer.WriteNumberValue(ItemsTransferred.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesScanned))
-            {
-                writer.WritePropertyName("bytesScanned"u8);
-                writer.WriteNumberValue(BytesScanned.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesExcluded))
-            {
-                writer.WritePropertyName("bytesExcluded"u8);
-                writer.WriteNumberValue(BytesExcluded.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesUnsupported))
-            {
-                writer.WritePropertyName("bytesUnsupported"u8);
-                writer.WriteNumberValue(BytesUnsupported.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesNoTransferNeeded))
-            {
-                writer.WritePropertyName("bytesNoTransferNeeded"u8);
-                writer.WriteNumberValue(BytesNoTransferNeeded.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesFailed))
-            {
-                writer.WritePropertyName("bytesFailed"u8);
-                writer.WriteNumberValue(BytesFailed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesTransferred))
-            {
-                writer.WritePropertyName("bytesTransferred"u8);
-                writer.WriteNumberValue(BytesTransferred.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceName))
-            {
-                writer.WritePropertyName("sourceName"u8);
-                writer.WriteStringValue(SourceName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceProperties))
-            {
-                writer.WritePropertyName("sourceProperties"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceProperties);
-#else
-                using (JsonDocument document = JsonDocument.Parse(SourceProperties, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsDefined(TargetName))
-            {
-                writer.WritePropertyName("targetName"u8);
-                writer.WriteStringValue(TargetName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
-            {
-                writer.WritePropertyName("targetResourceId"u8);
-                writer.WriteStringValue(TargetResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TargetProperties))
-            {
-                writer.WritePropertyName("targetProperties"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TargetProperties);
-#else
-                using (JsonDocument document = JsonDocument.Parse(TargetProperties, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsDefined(JobDefinitionProperties))
-            {
-                writer.WritePropertyName("jobDefinitionProperties"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(JobDefinitionProperties);
-#else
-                using (JsonDocument document = JsonDocument.Parse(JobDefinitionProperties, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (JobRunData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobRunData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJobRunData(document.RootElement, options);
         }
 
-        internal static JobRunData DeserializeJobRunData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static JobRunData DeserializeJobRunData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            JobRunStatus? status = default;
-            JobRunScanStatus? scanStatus = default;
-            string agentName = default;
-            ResourceIdentifier agentResourceId = default;
-            DateTimeOffset? executionStartTime = default;
-            DateTimeOffset? executionEndTime = default;
-            DateTimeOffset? lastStatusUpdate = default;
-            long? itemsScanned = default;
-            long? itemsExcluded = default;
-            long? itemsUnsupported = default;
-            long? itemsNoTransferNeeded = default;
-            long? itemsFailed = default;
-            long? itemsTransferred = default;
-            long? bytesScanned = default;
-            long? bytesExcluded = default;
-            long? bytesUnsupported = default;
-            long? bytesNoTransferNeeded = default;
-            long? bytesFailed = default;
-            long? bytesTransferred = default;
-            string sourceName = default;
-            ResourceIdentifier sourceResourceId = default;
-            BinaryData sourceProperties = default;
-            string targetName = default;
-            ResourceIdentifier targetResourceId = default;
-            BinaryData targetProperties = default;
-            BinaryData jobDefinitionProperties = default;
-            JobRunError error = default;
-            StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            JobRunProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new JobRunStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scanStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scanStatus = new JobRunScanStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("agentName"u8))
-                        {
-                            agentName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            agentResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("executionStartTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            executionStartTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("executionEndTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            executionEndTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastStatusUpdate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastStatusUpdate = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsScanned"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsScanned = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsExcluded"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsExcluded = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsUnsupported"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsUnsupported = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsNoTransferNeeded"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsNoTransferNeeded = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsFailed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsFailed = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("itemsTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            itemsTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesScanned"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesScanned = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesExcluded"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesExcluded = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesUnsupported"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesUnsupported = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesNoTransferNeeded"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesNoTransferNeeded = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesFailed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesFailed = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bytesTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bytesTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceName"u8))
-                        {
-                            sourceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceProperties = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetName"u8))
-                        {
-                            targetName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetProperties = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("jobDefinitionProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            jobDefinitionProperties = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("error"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            error = JobRunError.DeserializeJobRunError(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new StorageMoverProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = JobRunProperties.DeserializeJobRunProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new JobRunData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                status,
-                scanStatus,
-                agentName,
-                agentResourceId,
-                executionStartTime,
-                executionEndTime,
-                lastStatusUpdate,
-                itemsScanned,
-                itemsExcluded,
-                itemsUnsupported,
-                itemsNoTransferNeeded,
-                itemsFailed,
-                itemsTransferred,
-                bytesScanned,
-                bytesExcluded,
-                bytesUnsupported,
-                bytesNoTransferNeeded,
-                bytesFailed,
-                bytesTransferred,
-                sourceName,
-                sourceResourceId,
-                sourceProperties,
-                targetName,
-                targetResourceId,
-                targetProperties,
-                jobDefinitionProperties,
-                error,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -591,15 +150,20 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
-        JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => (JobRunData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJobRunData(document.RootElement, options);
                     }
                 default:
@@ -607,6 +171,14 @@ namespace Azure.ResourceManager.StorageMover
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JobRunData"/> from. </param>
+        internal static JobRunData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeJobRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -31,7 +31,7 @@ public class AIModelsFeature : AzureProjectFeature
     /// <param name="infrastructure"></param>
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        CognitiveServicesAccount cognitiveServices = new("aiservices")
+        CognitiveServicesAccount cognitiveServices = new("aiservices", resourceVersion: "2024-10-01")
         {
             Name = infrastructure.ProjectId,
             Kind = "AIServices",

@@ -73,8 +73,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
             Assert.AreEqual("{\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
-            var ex = Assert.Throws<InvalidOperationException>(() => jp.GetString("$[0].property1"u8));
-            Assert.AreEqual("$[0].property1 was not found in the JSON structure.", ex!.Message);
+            var ex = Assert.Throws<KeyNotFoundException>(() => jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("No value found at JSON path '$[0].property1'.", ex!.Message);
             Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
 
             Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.ToString("J"));
@@ -476,6 +476,345 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"a\":[\"one\",\"two\",\"three\"]}"u8.ToArray());
             jp.Set("$.a[1]"u8, "newTwo");
             Assert.AreEqual("{\"a\":[\"one\",\"newTwo\",\"three\"]}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SetStringWithEscapedCharacters()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.text"u8, "Line1\nLine2\tTabbed\"Quote\"");
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\u0022Quote\\u0022\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SetJsonWithEscapedCharacters()
+        {
+            JsonPatch jp = new();
+
+            jp.Set("$.text"u8, "\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8);
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void SeedWithEscapedCharacters()
+        {
+            // Start with a seeded json patch with escaped characters
+            JsonPatch jp = new("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}"u8.ToArray());
+
+            // GetString should return single escape
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", jp.GetString("$.text"u8));
+            Assert.IsTrue(jp.TryGetValue("$.text"u8, out string? value));
+            Assert.AreEqual("Line1\nLine2\tTabbed\"Quote\"", value);
+            Assert.IsTrue(value!.Contains("\n"));
+            Assert.IsFalse(value.Contains("\\n"));
+
+            // GetJson should return the exact byte array we passed in
+            CollectionAssert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), jp.GetJson("$.text"u8).ToArray());
+
+            // EncodedValue should have the exact byte array we passed in
+            Assert.IsTrue(jp.TryGetEncodedValue("$.text"u8, out var encodedValue));
+            Assert.AreEqual("\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\""u8.ToArray(), encodedValue.Value.ToArray());
+
+            // ToString will have 2 characters to represent the escaped characters 0x0A (\n), 0x09 (\t), and \u0022 (")
+            Assert.AreEqual("{\"text\":\"Line1\\nLine2\\tTabbed\\\"Quote\\\"\"}", jp.ToString("J"));
+        }
+
+        [Test]
+        public void NonExistentPathShouldNotThrow()
+        {
+            JsonPatch patch = new("{\"choices\":[{\"delta\":{\"content\":\"hello\"}}]}"u8.ToArray());
+
+            Assert.DoesNotThrow(() => patch.TryGetValue("$.reasoning"u8, out string? value));
+        }
+
+        [Test]
+        public void IterateOnArray_RemoveItemMatch()
+        {
+            var json = """
+{
+  "output": [
+    {
+      "id": "rs_01dfc61333fbdf3600692dffc53f4c8196b55eae21c8727d1a",
+      "type": "reasoning",
+      "summary": []
+    },
+    {
+      "id": "ci_01dfc61333fbdf3600692dfff0a80881968003a7f1010139ba", 
+      "type": "code_interpreter_call", 
+      "status": "completed", 
+      "code": "import numpy as np\r\nimport matplotlib.pyplot as plt\r\n\r\n# Generate data\r\nx = np.linspace(0, 2*np.pi, 1000)\r\ny = np.sin(x)\r\n\r\n# Create plot\r\nplt.figure(figsize=(6, 4))\r\nplt.plot(x, y, label='sin(x)', color='royalblue')\r\nplt.title('Sine Wave (0 to 2\u03c0)')\r\nplt.xlabel('x')\r\nplt.ylabel('sin(x)')\r\nplt.grid(True, alpha=0.3)\r\nplt.legend()\r\n\r\n# Save as PNG\r\noutput_path = '/mnt/data/sine_wave.png'\r\nplt.savefig(output_path, dpi=150, bbox_inches='tight')\r\n\r\n# Show the plot inline\r\nplt.show()\r\n\r\noutput_path", 
+      "container_id": "cntr_692dffc4e7708190bcd6e0e7c35b27ce000abd71d9736540", 
+      "outputs": [
+        {
+          "type": "image",
+          "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg"
+        }
+      ]
+    },
+    {
+      "id": "msg_01dfc61333fbdf3600692dfffcbcfc81969f92318d9d3c41ca",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "I've generated the sine wave plot and embedded it in the tool outputs as a base64 PNG."
+        }
+      ],
+      "role": "assistant"
+    }
+  ]
+}
+""";
+
+            var expected = """
+{
+  "output": [
+    {
+      "id": "rs_01dfc61333fbdf3600692dffc53f4c8196b55eae21c8727d1a",
+      "type": "reasoning",
+      "summary": []
+    },
+    {
+      "id": "ci_01dfc61333fbdf3600692dfff0a80881968003a7f1010139ba", 
+      "type": "code_interpreter_call", 
+      "status": "completed", 
+      "code": "import numpy as np\r\nimport matplotlib.pyplot as plt\r\n\r\n# Generate data\r\nx = np.linspace(0, 2*np.pi, 1000)\r\ny = np.sin(x)\r\n\r\n# Create plot\r\nplt.figure(figsize=(6, 4))\r\nplt.plot(x, y, label='sin(x)', color='royalblue')\r\nplt.title('Sine Wave (0 to 2\u03c0)')\r\nplt.xlabel('x')\r\nplt.ylabel('sin(x)')\r\nplt.grid(True, alpha=0.3)\r\nplt.legend()\r\n\r\n# Save as PNG\r\noutput_path = '/mnt/data/sine_wave.png'\r\nplt.savefig(output_path, dpi=150, bbox_inches='tight')\r\n\r\n# Show the plot inline\r\nplt.show()\r\n\r\noutput_path", 
+      "container_id": "cntr_692dffc4e7708190bcd6e0e7c35b27ce000abd71d9736540", 
+      "outputs": [
+        {
+          "type": "image"}
+      ]
+    },
+    {
+      "id": "msg_01dfc61333fbdf3600692dfffcbcfc81969f92318d9d3c41ca",
+      "type": "message",
+      "status": "completed",
+      "content": [
+        {
+          "type": "output_text",
+          "annotations": [],
+          "logprobs": [],
+          "text": "I've generated the sine wave plot and embedded it in the tool outputs as a base64 PNG."
+        }
+      ],
+      "role": "assistant"
+    }
+  ]
+}
+""";
+
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            var index = 0;
+            var imageUrl = "";
+
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.output[{index}].type"), out string? type))
+            {
+                if (type == "code_interpreter_call")
+                {
+                    var path = Encoding.UTF8.GetBytes($"$.output[{index}].outputs[0].url");
+
+                    imageUrl = patch.GetString(path);
+
+                    patch.Remove(path);
+                }
+
+                ++index;
+            }
+
+            Assert.AreEqual(expected, patch.ToString("J"));
+        }
+
+        [Test]
+        public void IterateOverArrayItems()
+        {
+            var json = """
+{
+    "items": [
+        { "id": 1, "name": "Item1" },
+        { "id": 2, "name": "Item2" },
+        { "id": 3, "name": "Item3" }
+    ]
+}
+""";
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            var index = 0;
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                ++index;
+            }
+
+            Assert.AreEqual(3, index);
+        }
+
+        [Test]
+        public void IterateOverArrayItems_WithModify()
+        {
+            var json = """
+{
+    "items": [
+        { "id": 1, "name": "Item1" },
+        { "id": 2, "name": "Item2" },
+        { "id": 3, "name": "Item3" }
+    ]
+}
+""";
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            patch.Set("$.items[1].name"u8, "UpdatedItem2");
+            var index = 0;
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                if (index == 1)
+                {
+                    Assert.AreEqual("UpdatedItem2", patch.GetString(namePath));
+                }
+                else
+                {
+                    Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                }
+                ++index;
+            }
+
+            Assert.AreEqual(3, index);
+        }
+
+        [Test]
+        public void IterateOverArrayItems_WithRemoveItemProperty()
+        {
+            var json = """
+{
+    "items": [
+        { "id": 1, "name": "Item1" },
+        { "id": 2, "name": "Item2" },
+        { "id": 3, "name": "Item3" }
+    ]
+}
+""";
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            patch.Remove("$.items[1].id"u8);
+            var index = 0;
+            while (patch.TryGetJson(Encoding.UTF8.GetBytes($"$.items[{index}]"), out var itemJson))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{index + 1}", patch.GetString(namePath));
+                ++index;
+            }
+
+            Assert.AreEqual(3, index);
+
+            // if we look for id it will stop after 1 item because the 2nd item id was removed
+            index = 0;
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                ++index;
+            }
+
+            Assert.AreEqual(1, index);
+
+            // if we get by json it will iterate over all 3 since the id property removal can still be returned as empty json
+            index = 0;
+            while (patch.TryGetJson(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out var idJson))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{index + 1}", patch.GetString(namePath));
+                ++index;
+            }
+
+            Assert.AreEqual(3, index);
+        }
+
+        [Test]
+        public void IterateOverArrayItems_WithRemoveItem()
+        {
+            var json = """
+{
+    "items": [
+        { "id": 1, "name": "Item1" },
+        { "id": 2, "name": "Item2" },
+        { "id": 3, "name": "Item3" }
+    ]
+}
+""";
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            patch.Remove("$.items[1]"u8);
+            var index = 0;
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                ++index;
+            }
+
+            // iteration will stop after 1 item because item 2 was removed and therefore it won't have an id
+            Assert.AreEqual(1, index);
+            Assert.AreEqual("{ \"id\": 3, \"name\": \"Item3\" }", patch.GetJson("$.items[2]"u8).ToString());
+            Assert.AreEqual(3, patch.GetInt32("$.items[2].id"u8));
+            Assert.AreEqual("Item3", patch.GetString("$.items[2].name"u8));
+        }
+
+        [Test]
+        public void IterateOverArrayItems_WithAppend()
+        {
+            var json = """
+{
+    "items": [
+        { "id": 1, "name": "Item1" },
+        { "id": 2, "name": "Item2" },
+        { "id": 3, "name": "Item3" }
+    ]
+}
+""";
+            var patch = new JsonPatch(BinaryData.FromString(json));
+            patch.Append("$.items"u8, "{\"id\":4,\"name\":\"Item4\"}"u8);
+            var index = 0;
+            while (patch.TryGetValue(Encoding.UTF8.GetBytes($"$.items[{index}].id"), out int id))
+            {
+                var namePath = Encoding.UTF8.GetBytes($"$.items[{index}].name");
+                Assert.AreEqual($"Item{id}", patch.GetString(namePath));
+                ++index;
+            }
+
+            Assert.AreEqual(4, index);
         }
     }
 }

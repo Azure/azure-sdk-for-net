@@ -176,6 +176,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstModel"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -235,6 +240,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondModel"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -327,6 +337,7 @@
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict",
       "apiVersions": [],
@@ -429,7 +440,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
@@ -525,15 +537,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations",
           "apiVersions": [],
           "parent": {
             "$ref": "25"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "41",
@@ -633,7 +647,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.EnumConflict"
               },
               "parameters": [
                 {
@@ -729,17 +744,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations",
           "apiVersions": [],
           "parent": {
             "$ref": "25"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

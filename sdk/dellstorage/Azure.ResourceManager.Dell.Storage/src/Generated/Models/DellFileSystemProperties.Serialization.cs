@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     {
                         continue;
                     }
-                    oneFsUri = new Uri(prop.Value.GetString());
+                    oneFsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dellReferenceNumber"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDellFileSystemProperties(document.RootElement, options);
                     }

@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotOperationsDataflowProfileResource"/> and their operations.
     /// Each <see cref="IotOperationsDataflowProfileResource"/> in the collection will belong to the same instance of <see cref="IotOperationsInstanceResource"/>.
-    /// To get an <see cref="IotOperationsDataflowProfileCollection"/> instance call the GetIotOperationsDataflowProfiles method from an instance of <see cref="IotOperationsInstanceResource"/>.
+    /// To get a <see cref="IotOperationsDataflowProfileCollection"/> instance call the GetIotOperationsDataflowProfiles method from an instance of <see cref="IotOperationsInstanceResource"/>.
     /// </summary>
     public partial class IotOperationsDataflowProfileCollection : ArmCollection, IEnumerable<IotOperationsDataflowProfileResource>, IAsyncEnumerable<IotOperationsDataflowProfileResource>
     {
-        private readonly ClientDiagnostics _iotOperationsDataflowProfileDataflowProfileClientDiagnostics;
-        private readonly DataflowProfileRestOperations _iotOperationsDataflowProfileDataflowProfileRestClient;
+        private readonly ClientDiagnostics _dataflowProfileClientDiagnostics;
+        private readonly DataflowProfile _dataflowProfileRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsDataflowProfileCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotOperationsDataflowProfileCollection for mocking. </summary>
         protected IotOperationsDataflowProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsDataflowProfileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperationsDataflowProfileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotOperationsDataflowProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotOperationsDataflowProfileDataflowProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsDataflowProfileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IotOperationsDataflowProfileResource.ResourceType, out string iotOperationsDataflowProfileDataflowProfileApiVersion);
-            _iotOperationsDataflowProfileDataflowProfileRestClient = new DataflowProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsDataflowProfileDataflowProfileApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(IotOperationsDataflowProfileResource.ResourceType, out string iotOperationsDataflowProfileApiVersion);
+            _dataflowProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsDataflowProfileResource.ResourceType.Namespace, Diagnostics);
+            _dataflowProfileRestClient = new DataflowProfile(_dataflowProfileClientDiagnostics, Pipeline, Endpoint, iotOperationsDataflowProfileApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a DataflowProfileResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<IotOperationsDataflowProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataflowProfileName, IotOperationsDataflowProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _iotOperationsDataflowProfileDataflowProfileRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(new IotOperationsDataflowProfileOperationSource(Client), _iotOperationsDataflowProfileDataflowProfileClientDiagnostics, Pipeline, _iotOperationsDataflowProfileDataflowProfileRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, IotOperationsDataflowProfileData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotOperationsArmOperation<IotOperationsDataflowProfileResource> operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(
+                    new IotOperationsDataflowProfileOperationSource(Client),
+                    _dataflowProfileClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.IotOperations
         /// Create a DataflowProfileResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<IotOperationsDataflowProfileResource> CreateOrUpdate(WaitUntil waitUntil, string dataflowProfileName, IotOperationsDataflowProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _iotOperationsDataflowProfileDataflowProfileRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, data, cancellationToken);
-                var operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(new IotOperationsDataflowProfileOperationSource(Client), _iotOperationsDataflowProfileDataflowProfileClientDiagnostics, Pipeline, _iotOperationsDataflowProfileDataflowProfileRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, IotOperationsDataflowProfileData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotOperationsArmOperation<IotOperationsDataflowProfileResource> operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(
+                    new IotOperationsDataflowProfileOperationSource(Client),
+                    _dataflowProfileClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a DataflowProfileResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IotOperationsDataflowProfileResource>> GetAsync(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Get");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iotOperationsDataflowProfileDataflowProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotOperationsDataflowProfileData> response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsDataflowProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a DataflowProfileResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IotOperationsDataflowProfileResource> Get(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Get");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _iotOperationsDataflowProfileDataflowProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotOperationsDataflowProfileData> response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsDataflowProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.IotOperations
         /// List DataflowProfileResource resources by InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotOperationsDataflowProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotOperationsDataflowProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotOperationsDataflowProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsDataflowProfileDataflowProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsDataflowProfileDataflowProfileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotOperationsDataflowProfileResource(Client, IotOperationsDataflowProfileData.DeserializeIotOperationsDataflowProfileData(e)), _iotOperationsDataflowProfileDataflowProfileClientDiagnostics, Pipeline, "IotOperationsDataflowProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>
         /// List DataflowProfileResource resources by InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.IotOperations
         /// <returns> A collection of <see cref="IotOperationsDataflowProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotOperationsDataflowProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsDataflowProfileDataflowProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsDataflowProfileDataflowProfileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotOperationsDataflowProfileResource(Client, IotOperationsDataflowProfileData.DeserializeIotOperationsDataflowProfileData(e)), _iotOperationsDataflowProfileDataflowProfileClientDiagnostics, Pipeline, "IotOperationsDataflowProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Exists");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _iotOperationsDataflowProfileDataflowProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotOperationsDataflowProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsDataflowProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.IotOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Exists");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _iotOperationsDataflowProfileDataflowProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotOperationsDataflowProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsDataflowProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IotOperationsDataflowProfileResource>> GetIfExistsAsync(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iotOperationsDataflowProfileDataflowProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotOperationsDataflowProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsDataflowProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotOperationsDataflowProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsDataflowProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataflowProfileResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataflowProfile_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsDataflowProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IotOperationsDataflowProfileResource> GetIfExists(string dataflowProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataflowProfileName, nameof(dataflowProfileName));
 
-            using var scope = _iotOperationsDataflowProfileDataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _dataflowProfileClientDiagnostics.CreateScope("IotOperationsDataflowProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iotOperationsDataflowProfileDataflowProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataflowProfileName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataflowProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotOperationsDataflowProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotOperationsDataflowProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotOperationsDataflowProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotOperationsDataflowProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsDataflowProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.IotOperations
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotOperationsDataflowProfileResource> IAsyncEnumerable<IotOperationsDataflowProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

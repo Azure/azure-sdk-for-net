@@ -83,3 +83,46 @@ catch (Exception e)
 }
 ```
 
+### Offline verification using stored keys
+
+In cases where you have downloaded the keys ahead of time, it is possible to use them to perform verification without the
+network calls to download them from the ledger.
+
+**First, you would need to have the keys stored:**
+
+```C# Snippet:CodeTransparencyVerification_StoreForOfflineUse
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
+// Download the transparent statement
+Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.44");
+string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
+File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
+// Download and store the public keys for offline verification
+Response<JwksDocument> ledgerKeys = client.GetPublicKeys();
+CodeTransparencyOfflineKeys allKeys = new();
+allKeys.Add("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
+string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
+File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
+```
+
+**Then, read the files and verify:**
+
+```C# Snippet:CodeTransparencyVerification_Offline
+var transparentStatement = File.ReadAllBytes(filePath);
+var keys = File.ReadAllBytes(keysFilePath);
+try
+{
+    var verificationOptions = new CodeTransparencyVerificationOptions
+    {
+        UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
+        OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
+        OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+    };
+    CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+
+    Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
+}
+catch (Exception e)
+{
+    Console.WriteLine($"Verification failed: {e.Message}");
+}
+```

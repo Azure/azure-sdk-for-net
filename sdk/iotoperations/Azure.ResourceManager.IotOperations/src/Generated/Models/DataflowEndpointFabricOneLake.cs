@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Microsoft Fabric endpoint properties. </summary>
     public partial class DataflowEndpointFabricOneLake
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointFabricOneLake"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only one authentication property is allowed per entry. </param>
@@ -69,30 +41,29 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="oneLakePathType"> Type of location of the data in the workspace. Can be either tables or files. </param>
         /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </param>
         /// <param name="batching"> Batching configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Authentication = authentication;
             Names = names;
             OneLakePathType = oneLakePathType;
             Host = host;
             Batching = batching;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointFabricOneLake"/> for deserialization. </summary>
-        internal DataflowEndpointFabricOneLake()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Authentication configuration. NOTE - only one authentication property is allowed per entry. </summary>
         public DataflowEndpointFabricOneLakeAuthentication Authentication { get; set; }
+
         /// <summary> Names of the workspace and lakehouse. </summary>
         public DataflowEndpointFabricOneLakeNames Names { get; set; }
+
         /// <summary> Type of location of the data in the workspace. Can be either tables or files. </summary>
         public DataflowEndpointFabricPathType OneLakePathType { get; set; }
+
         /// <summary> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </summary>
         public string Host { get; set; }
+
         /// <summary> Batching configuration. </summary>
         public IotOperationsBatchingConfig Batching { get; set; }
     }

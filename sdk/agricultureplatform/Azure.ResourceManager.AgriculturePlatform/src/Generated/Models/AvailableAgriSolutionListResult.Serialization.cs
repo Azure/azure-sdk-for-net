@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAvailableAgriSolutionListResult(document.RootElement, options);
                     }
@@ -151,11 +151,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailableAgriSolutionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AvailableAgriSolutionListResult"/> from. </param>
-        internal static AvailableAgriSolutionListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailableAgriSolutionListResult"/> from. </param>
+        internal static AvailableAgriSolutionListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAvailableAgriSolutionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

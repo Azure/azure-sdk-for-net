@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -189,7 +189,27 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary> Update a InstanceResource. </summary>
+        /// <summary>
+        /// Update a InstanceResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WeightsAndBiasesInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -221,7 +241,27 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary> Update a InstanceResource. </summary>
+        /// <summary>
+        /// Update a InstanceResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WeightsAndBiasesInstanceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -262,7 +302,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Instances_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +351,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Instances_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -388,7 +428,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -436,7 +476,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -479,7 +519,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     WeightsAndBiasesInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     WeightsAndBiasesInstancePatch patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -522,7 +562,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     WeightsAndBiasesInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     WeightsAndBiasesInstancePatch patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -568,7 +608,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -614,7 +654,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

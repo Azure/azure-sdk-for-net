@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> The redundant type of the server storage. The parameter is used for server creation. </summary>
+    /// <summary> Enum to indicate whether storage sku value is 'ZoneRedundancy' or 'LocalRedundancy'. </summary>
     public readonly partial struct MySqlFlexibleServerStorageRedundancyType : IEquatable<MySqlFlexibleServerStorageRedundancyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerStorageRedundancyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string LocalRedundancyValue = "LocalRedundancy";
         private const string ZoneRedundancyValue = "ZoneRedundancy";
 
-        /// <summary> LocalRedundancy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerStorageRedundancyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the LocalRedundancy. </summary>
         public static MySqlFlexibleServerStorageRedundancyType LocalRedundancy { get; } = new MySqlFlexibleServerStorageRedundancyType(LocalRedundancyValue);
-        /// <summary> ZoneRedundancy. </summary>
+
+        /// <summary> Gets the ZoneRedundancy. </summary>
         public static MySqlFlexibleServerStorageRedundancyType ZoneRedundancy { get; } = new MySqlFlexibleServerStorageRedundancyType(ZoneRedundancyValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerStorageRedundancyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerStorageRedundancyType left, MySqlFlexibleServerStorageRedundancyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerStorageRedundancyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerStorageRedundancyType left, MySqlFlexibleServerStorageRedundancyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerStorageRedundancyType(string value) => new MySqlFlexibleServerStorageRedundancyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerStorageRedundancyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerStorageRedundancyType?(string value) => value == null ? null : new MySqlFlexibleServerStorageRedundancyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerStorageRedundancyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerStorageRedundancyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

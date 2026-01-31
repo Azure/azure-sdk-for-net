@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     {
                         continue;
                     }
-                    accountUri = new Uri(prop.Value.GetString());
+                    accountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeCodeSigningAccountProperties(document.RootElement, options);
                     }

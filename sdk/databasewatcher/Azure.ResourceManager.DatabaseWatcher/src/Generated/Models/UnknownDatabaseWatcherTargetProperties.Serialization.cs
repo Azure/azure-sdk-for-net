@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
-    internal partial class UnknownDatabaseWatcherTargetProperties : IUtf8JsonSerializable, IJsonModel<DatabaseWatcherTargetProperties>
+    internal partial class UnknownDatabaseWatcherTargetProperties : DatabaseWatcherTargetProperties, IJsonModel<DatabaseWatcherTargetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseWatcherTargetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownDatabaseWatcherTargetProperties"/> for deserialization. </summary>
+        internal UnknownDatabaseWatcherTargetProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,96 +33,101 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseWatcherTargetProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DatabaseWatcherTargetProperties IJsonModel<DatabaseWatcherTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherTargetProperties IJsonModel<DatabaseWatcherTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseWatcherTargetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseWatcherTargetProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatabaseWatcherTargetProperties(document.RootElement, options);
         }
 
-        internal static UnknownDatabaseWatcherTargetProperties DeserializeUnknownDatabaseWatcherTargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownDatabaseWatcherTargetProperties DeserializeUnknownDatabaseWatcherTargetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string targetType = "Unknown";
+            string targetType = "unknown";
             TargetAuthenticationType targetAuthenticationType = default;
             TargetAuthenticationVaultSecret targetVault = default;
             string connectionServerName = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("targetType"u8))
+                if (prop.NameEquals("targetType"u8))
                 {
-                    targetType = property.Value.GetString();
+                    targetType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetAuthenticationType"u8))
+                if (prop.NameEquals("targetAuthenticationType"u8))
                 {
-                    targetAuthenticationType = new TargetAuthenticationType(property.Value.GetString());
+                    targetAuthenticationType = new TargetAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVault"u8))
+                if (prop.NameEquals("targetVault"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetVault = TargetAuthenticationVaultSecret.DeserializeTargetAuthenticationVaultSecret(property.Value, options);
+                    targetVault = TargetAuthenticationVaultSecret.DeserializeTargetAuthenticationVaultSecret(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("connectionServerName"u8))
+                if (prop.NameEquals("connectionServerName"u8))
                 {
-                    connectionServerName = property.Value.GetString();
+                    connectionServerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DatabaseWatcherResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new DatabaseWatcherResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownDatabaseWatcherTargetProperties(
                 targetType,
                 targetAuthenticationType,
                 targetVault,
                 connectionServerName,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DatabaseWatcherTargetProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabaseWatcherTargetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,15 +137,20 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
-        DatabaseWatcherTargetProperties IPersistableModel<DatabaseWatcherTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherTargetProperties IPersistableModel<DatabaseWatcherTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseWatcherTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatabaseWatcherTargetProperties(document.RootElement, options);
                     }
                 default:
@@ -143,6 +158,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatabaseWatcherTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

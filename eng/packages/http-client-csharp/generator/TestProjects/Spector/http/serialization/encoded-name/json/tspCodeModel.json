@@ -45,6 +45,11 @@
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "JsonEncodedNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "6",
@@ -115,6 +120,7 @@
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json",
       "apiVersions": [],
@@ -193,7 +199,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Serialization.EncodedName.Json.Property"
               },
               "parameters": [
                 {
@@ -289,7 +296,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Serialization.EncodedName.Json.Property"
               },
               "parameters": [
                 {
@@ -350,17 +358,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
+              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

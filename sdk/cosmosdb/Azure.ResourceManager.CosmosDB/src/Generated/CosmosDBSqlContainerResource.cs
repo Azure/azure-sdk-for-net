@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -562,98 +562,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Merges the partitions of a SQL Container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/partitionMerge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_ListSqlContainerPartitionMerge</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="mergeParameters"> The parameters for the merge operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mergeParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionStorageInfoCollection>> GetSqlContainerPartitionMergeAsync(WaitUntil waitUntil, MergeParameters mergeParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(mergeParameters, nameof(mergeParameters));
-
-            using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerResource.GetSqlContainerPartitionMerge");
-            scope.Start();
-            try
-            {
-                var response = await _cosmosDBSqlContainerSqlResourcesRestClient.ListSqlContainerPartitionMergeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainerPartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Merges the partitions of a SQL Container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/partitionMerge</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_ListSqlContainerPartitionMerge</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="mergeParameters"> The parameters for the merge operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mergeParameters"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionStorageInfoCollection> GetSqlContainerPartitionMerge(WaitUntil waitUntil, MergeParameters mergeParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(mergeParameters, nameof(mergeParameters));
-
-            using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerResource.GetSqlContainerPartitionMerge");
-            scope.Start();
-            try
-            {
-                var response = _cosmosDBSqlContainerSqlResourcesRestClient.ListSqlContainerPartitionMerge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainerPartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Retrieves continuous backup information for a container resource.
         /// <list type="bullet">
         /// <item>
@@ -666,7 +574,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -712,7 +620,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -758,7 +666,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -820,7 +728,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -882,7 +790,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -939,7 +847,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -996,7 +904,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1056,7 +964,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <description>2025-10-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

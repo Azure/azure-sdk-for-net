@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +11,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Azure.Core.Expressions.DataFactory" />
   </ItemGroup>
 
   <ItemGroup>

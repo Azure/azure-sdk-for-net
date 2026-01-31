@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </summary>
+    /// <summary>
+    /// The outbound (egress) routing method. This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
+    /// Serialized Name: OutboundType
+    /// </summary>
     public readonly partial struct ContainerServiceOutboundType : IEquatable<ContainerServiceOutboundType>
     {
         private readonly string _value;
@@ -26,15 +29,33 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string UserDefinedRoutingValue = "userDefinedRouting";
         private const string ManagedNatGatewayValue = "managedNATGateway";
         private const string UserAssignedNatGatewayValue = "userAssignedNATGateway";
+        private const string NoneValue = "none";
 
-        /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
+        /// <summary>
+        /// The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer).
+        /// Serialized Name: OutboundType.loadBalancer
+        /// </summary>
         public static ContainerServiceOutboundType LoadBalancer { get; } = new ContainerServiceOutboundType(LoadBalancerValue);
-        /// <summary> Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting). </summary>
+        /// <summary>
+        /// Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting).
+        /// Serialized Name: OutboundType.userDefinedRouting
+        /// </summary>
         public static ContainerServiceOutboundType UserDefinedRouting { get; } = new ContainerServiceOutboundType(UserDefinedRoutingValue);
-        /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
+        /// <summary>
+        /// The AKS-managed NAT gateway is used for egress.
+        /// Serialized Name: OutboundType.managedNATGateway
+        /// </summary>
         public static ContainerServiceOutboundType ManagedNatGateway { get; } = new ContainerServiceOutboundType(ManagedNatGatewayValue);
-        /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
+        /// <summary>
+        /// The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration.
+        /// Serialized Name: OutboundType.userAssignedNATGateway
+        /// </summary>
         public static ContainerServiceOutboundType UserAssignedNatGateway { get; } = new ContainerServiceOutboundType(UserAssignedNatGatewayValue);
+        /// <summary>
+        /// The AKS cluster is not set with any outbound-type. All AKS nodes follows Azure VM default outbound behavior. Please refer to https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/
+        /// Serialized Name: OutboundType.none
+        /// </summary>
+        public static ContainerServiceOutboundType None { get; } = new ContainerServiceOutboundType(NoneValue);
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are not the same. </summary>

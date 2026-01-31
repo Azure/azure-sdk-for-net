@@ -6,11 +6,11 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">net8.0</ApiCompatBaselineTargetFramework>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 

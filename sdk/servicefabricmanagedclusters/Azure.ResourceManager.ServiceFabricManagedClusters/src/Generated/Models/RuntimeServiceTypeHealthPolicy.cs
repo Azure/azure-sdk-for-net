@@ -13,42 +13,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Cluster level definition that represents the health policy used to evaluate the health of services belonging to a service type. </summary>
     public partial class RuntimeServiceTypeHealthPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RuntimeServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
-        ///
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -56,7 +26,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
-        ///
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -64,7 +33,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        ///
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
@@ -80,7 +48,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="RuntimeServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
-        ///
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -88,7 +55,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
-        ///
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -96,47 +62,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        ///
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
         /// The computation rounds up to tolerate one failure on small numbers of replicas.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RuntimeServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxPercentUnhealthyServices = maxPercentUnhealthyServices;
             MaxPercentUnhealthyPartitionsPerService = maxPercentUnhealthyPartitionsPerService;
             MaxPercentUnhealthyReplicasPerPartition = maxPercentUnhealthyReplicasPerPartition;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RuntimeServiceTypeHealthPolicy"/> for deserialization. </summary>
-        internal RuntimeServiceTypeHealthPolicy()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The maximum allowed percentage of unhealthy services.
-        ///
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
         /// The computation rounds up to tolerate one failure on small numbers of services.
         /// </summary>
         public int MaxPercentUnhealthyServices { get; }
+
         /// <summary>
         /// The maximum allowed percentage of unhealthy partitions per service.
-        ///
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
         /// The computation rounds up to tolerate one failure on small numbers of partitions.
         /// </summary>
         public int MaxPercentUnhealthyPartitionsPerService { get; }
+
         /// <summary>
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        ///
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.

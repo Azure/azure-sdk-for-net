@@ -36,6 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
             writer.WritePropertyName("counters"u8);
             writer.WriteObjectValue(Counters, options);
+            writer.WritePropertyName("indexersRuntime"u8);
+            writer.WriteObjectValue(IndexersRuntime, options);
             writer.WritePropertyName("limits"u8);
             writer.WriteObjectValue(Limits, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,6 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             SearchServiceCounters counters = default;
+            ServiceIndexersRuntime indexersRuntime = default;
             SearchServiceLimits limits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,6 +87,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("counters"u8))
                 {
                     counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("indexersRuntime"u8))
+                {
+                    indexersRuntime = ServiceIndexersRuntime.DeserializeServiceIndexersRuntime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -97,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchServiceStatistics(counters, limits, serializedAdditionalRawData);
+            return new SearchServiceStatistics(counters, indexersRuntime, limits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceStatistics>.Write(ModelReaderWriterOptions options)

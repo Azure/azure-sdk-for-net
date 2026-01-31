@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
-        internal BackupsList()
+        /// <param name="value"> The Backup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal BackupsList(IEnumerable<NetAppBackupData> value)
         {
-            Value = new ChangeTrackingList<NetAppBackupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
-        /// <param name="value"> A list of Backups. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The Backup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupsList(IReadOnlyList<NetAppBackupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupsList(IReadOnlyList<NetAppBackupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of Backups. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupsList"/> for deserialization. </summary>
+        internal BackupsList()
+        {
+        }
+
+        /// <summary> The Backup items on this page. </summary>
         public IReadOnlyList<NetAppBackupData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

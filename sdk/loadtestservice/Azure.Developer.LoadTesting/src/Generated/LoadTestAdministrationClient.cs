@@ -6,126 +6,60 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    // Data plane generated client.
-    /// <summary> The LoadTestAdministration service client. </summary>
+    /// <summary> The LoadTestAdministrationClient. </summary>
     public partial class LoadTestAdministrationClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClient for mocking. </summary>
         protected LoadTestAdministrationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
-        {
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, LoadTestingClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new LoadTestingClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Create a new test or update an existing test by providing the test Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new test or update an existing test by providing the test Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -135,36 +69,31 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Add an app component to a test.
+        /// [Protocol Method] Create a new test or update an existing test by providing the test Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -174,12 +103,10 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Add an app component to a test.
+        /// [Protocol Method] Add an app component to a test by providing the resource Id, name and type.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,22 +115,22 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateAppComponents(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -213,12 +140,10 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Configure server metrics for a test
+        /// [Protocol Method] Add an app component to a test by providing the resource Id, name and type.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,22 +152,22 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -255,9 +180,7 @@ namespace Azure.Developer.LoadTesting
         /// [Protocol Method] Configure server metrics for a test
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,22 +189,22 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateServerMetricsConfig(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -290,52 +213,11 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TestAppComponents>> GetAppComponentsAsync(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAppComponentsAsync(testId, context).ConfigureAwait(false);
-            return Response.FromValue(TestAppComponents.FromResponse(response), response);
-        }
-
-        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TestAppComponents> GetAppComponents(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAppComponents(testId, context);
-            return Response.FromValue(TestAppComponents.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get associated app component (collection of azure resources) for the given test.
+        /// [Protocol Method] Configure server metrics for a test
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAppComponentsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,21 +225,23 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context)
+        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAppComponentsRequest(testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -370,14 +254,7 @@ namespace Azure.Developer.LoadTesting
         /// [Protocol Method] Get associated app component (collection of azure resources) for the given test.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAppComponents(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,21 +262,21 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAppComponents(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
                 using HttpMessage message = CreateGetAppComponentsRequest(testId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -408,52 +285,11 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> List server metrics configuration for the given test. </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TestServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetServerMetricsConfigAsync(testId, context).ConfigureAwait(false);
-            return Response.FromValue(TestServerMetricsConfiguration.FromResponse(response), response);
-        }
-
-        /// <summary> List server metrics configuration for the given test. </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TestServerMetricsConfiguration> GetServerMetricsConfig(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetServerMetricsConfig(testId, context);
-            return Response.FromValue(TestServerMetricsConfiguration.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] List server metrics configuration for the given test.
+        /// [Protocol Method] Get associated app component (collection of azure resources) for the given test.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetServerMetricsConfigAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,21 +297,21 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context)
+        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponents");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+                using HttpMessage message = CreateGetAppComponentsRequest(testId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -484,18 +320,45 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TestAppComponents> GetAppComponents(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = GetAppComponents(testId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TestAppComponents)result, result);
+        }
+
+        /// <summary> Get associated app component (collection of azure resources) for the given test. </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TestAppComponents>> GetAppComponentsAsync(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = await GetAppComponentsAsync(testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TestAppComponents)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] List server metrics configuration for the given test.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetServerMetricsConfig(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,21 +366,21 @@ namespace Azure.Developer.LoadTesting
         /// Unique name for the load test, must contain only lower-case alphabetic,
         /// numeric, underscore or hyphen characters.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetServerMetricsConfig(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
                 using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -526,65 +389,33 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get load test details by test Id. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<LoadTest>> GetTestAsync(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTestAsync(testId, context).ConfigureAwait(false);
-            return Response.FromValue(LoadTest.FromResponse(response), response);
-        }
-
-        /// <summary> Get load test details by test Id. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<LoadTest> GetTest(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTest(testId, context);
-            return Response.FromValue(LoadTest.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get load test details by test Id
+        /// [Protocol Method] List server metrics configuration for the given test.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context)
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTest");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestRequest(testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -593,37 +424,64 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> List server metrics configuration for the given test. </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TestServerMetricsConfiguration> GetServerMetricsConfig(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = GetServerMetricsConfig(testId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TestServerMetricsConfiguration)result, result);
+        }
+
+        /// <summary> List server metrics configuration for the given test. </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TestServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = await GetServerMetricsConfigAsync(testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TestServerMetricsConfiguration)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Get load test details by test Id
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTest(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTest(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTest");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTest");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
                 using HttpMessage message = CreateGetTestRequest(testId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -632,71 +490,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get all the files that are associated with a test. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileName"> Name of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TestFileInfo>> GetTestFileAsync(string testId, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTestFileAsync(testId, fileName, context).ConfigureAwait(false);
-            return Response.FromValue(TestFileInfo.FromResponse(response), response);
-        }
-
-        /// <summary> Get all the files that are associated with a test. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileName"> Name of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TestFileInfo> GetTestFile(string testId, string fileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTestFile(testId, fileName, context);
-            return Response.FromValue(TestFileInfo.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get all the files that are associated with a test.
+        /// [Protocol Method] Get load test details by test Id
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="fileName"> Name of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context)
+        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestFileRequest(testId, fileName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+                using HttpMessage message = CreateGetTestRequest(testId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -705,39 +522,266 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Get load test details by test Id. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<LoadTest> GetTest(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = GetTest(testId, cancellationToken.ToRequestContext());
+            return Response.FromValue((LoadTest)result, result);
+        }
+
+        /// <summary> Get load test details by test Id. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<LoadTest>> GetTestAsync(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Response result = await GetTestAsync(testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((LoadTest)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Get all the files that are associated with a test.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTestFile(string testId, string fileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
                 using HttpMessage message = CreateGetTestFileRequest(testId, fileName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all the files that are associated with a test.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+                using HttpMessage message = CreateGetTestFileRequest(testId, fileName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all the files that are associated with a test. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TestFileInfo> GetTestFile(string testId, string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            Response result = GetTestFile(testId, fileName, cancellationToken.ToRequestContext());
+            return Response.FromValue((TestFileInfo)result, result);
+        }
+
+        /// <summary> Get all the files that are associated with a test. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TestFileInfo>> GetTestFileAsync(string testId, string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            Response result = await GetTestFileAsync(testId, fileName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TestFileInfo)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all test files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all test files.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context);
+        }
+
+        /// <summary> Get all test files. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<TestFileInfo> GetTestFiles(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return new LoadTestAdministrationClientGetTestFilesCollectionResultOfT(this, testId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Get all test files. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<TestFileInfo> GetTestFilesAsync(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResultOfT(this, testId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload input file for a given test Id. File size can't be more than 50 MB.
+        /// Existing file with same name for the given test will be overwritten. File
+        /// should be provided in the request body as application/octet-stream.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="fileType"> File type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileName, content, fileType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload input file for a given test Id. File size can't be more than 50 MB.
+        /// Existing file with same name for the given test will be overwritten. File
+        /// should be provided in the request body as application/octet-stream.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testId">
+        /// Unique name for the load test, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="fileType"> File type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileName, content, fileType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -758,19 +802,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="body"> The file content as application/octet-stream. </param>
         /// <param name="fileType"> File type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<TestFileInfo>> UploadTestFileAsync(string testId, string fileName, BinaryData body, LoadTestingFileType? fileType = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<TestFileInfo> UploadTestFile(string testId, string fileName, BinaryData body, LoadTestingFileType? fileType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadTestFileAsync(testId, fileName, content, fileType?.ToString(), context).ConfigureAwait(false);
-            return Response.FromValue(TestFileInfo.FromResponse(response), response);
+            Response result = UploadTestFile(testId, fileName, RequestContent.Create(body), fileType?.ToString(), cancellationToken.ToRequestContext());
+            return Response.FromValue((TestFileInfo)result, result);
         }
 
         /// <summary>
@@ -785,148 +822,40 @@ namespace Azure.Developer.LoadTesting
         /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="body"> The file content as application/octet-stream. </param>
         /// <param name="fileType"> File type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<TestFileInfo> UploadTestFile(string testId, string fileName, BinaryData body, LoadTestingFileType? fileType = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadTestFile(testId, fileName, content, fileType?.ToString(), context);
-            return Response.FromValue(TestFileInfo.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Upload input file for a given test Id. File size can't be more than 50 MB.
-        /// Existing file with same name for the given test will be overwritten. File
-        /// should be provided in the request body as application/octet-stream.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UploadTestFileAsync(string,string,BinaryData,LoadTestingFileType?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="fileType"> File type. Allowed values: "JMX_FILE" | "USER_PROPERTIES" | "ADDITIONAL_ARTIFACTS" | "ZIPPED_ARTIFACTS" | "URL_TEST_CONFIG" | "TEST_SCRIPT". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
+        internal virtual async Task<Response<TestFileInfo>> UploadTestFileAsync(string testId, string fileName, BinaryData body, LoadTestingFileType? fileType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileName, content, fileType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await UploadTestFileAsync(testId, fileName, RequestContent.Create(body), fileType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TestFileInfo)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Upload input file for a given test Id. File size can't be more than 50 MB.
-        /// Existing file with same name for the given test will be overwritten. File
-        /// should be provided in the request body as application/octet-stream.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="UploadTestFile(string,string,BinaryData,LoadTestingFileType?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testId">
-        /// Unique name for the load test, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="fileType"> File type. Allowed values: "JMX_FILE" | "USER_PROPERTIES" | "ADDITIONAL_ARTIFACTS" | "ZIPPED_ARTIFACTS" | "URL_TEST_CONFIG" | "TEST_SCRIPT". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUploadTestFileRequest(testId, fileName, content, fileType, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete file by the file name for a test
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileName, RequestContext context = null)
+        public virtual Response DeleteTestFile(string testId, string fileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
                 using HttpMessage message = CreateDeleteTestFileRequest(testId, fileName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -935,70 +864,94 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete file by the file name for a test
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteTestFile(string testId, string fileName, RequestContext context = null)
+        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete file by the file name for a test. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteTestFile(string testId, string fileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileName, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return DeleteTestFile(testId, fileName, cancellationToken.ToRequestContext());
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary> Delete file by the file name for a test. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="fileName"> Name of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            return await DeleteTestFileAsync(testId, fileName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// [Protocol Method] Delete a test by its test Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTestAsync(string testId, RequestContext context = null)
+        public virtual Response DeleteTest(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTest");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTest");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
                 using HttpMessage message = CreateDeleteTestRequest(testId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1007,33 +960,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete a test by its test Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteTest(string testId, RequestContext context = null)
+        public virtual async Task<Response> DeleteTestAsync(string testId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTest");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTest");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
                 using HttpMessage message = CreateDeleteTestRequest(testId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1042,70 +992,58 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Delete a test by its test Id. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteTest(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return DeleteTest(testId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete a test by its test Id. </summary>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteTestAsync(string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            return await DeleteTestAsync(testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
-        /// [Protocol Method] Create a new test profile or update an existing test profile.
+        /// [Protocol Method] Create a new test profile or update an existing test profile by providing the test profile Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateTestProfileAsync(string testProfileId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTestProfile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateTestProfileRequest(testProfileId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new test profile or update an existing test profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateTestProfile(string testProfileId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTestProfile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTestProfile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateTestProfileRequest(testProfileId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1114,33 +1052,64 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a test profile.
+        /// [Protocol Method] Create a new test profile or update an existing test profile by providing the test profile Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateOrUpdateTestProfileAsync(string testProfileId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTestProfile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateTestProfileRequest(testProfileId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a test profile by its test profile Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTestProfileAsync(string testProfileId, RequestContext context = null)
+        public virtual Response DeleteTestProfile(string testProfileId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestProfile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestProfile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
                 using HttpMessage message = CreateDeleteTestProfileRequest(testProfileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1149,33 +1118,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a test profile.
+        /// [Protocol Method] Delete a test profile by its test profile Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteTestProfile(string testProfileId, RequestContext context = null)
+        public virtual async Task<Response> DeleteTestProfileAsync(string testProfileId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestProfile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestProfile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
                 using HttpMessage message = CreateDeleteTestProfileRequest(testProfileId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1184,106 +1150,56 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get load test profile details. </summary>
+        /// <summary> Delete a test profile by its test profile Id. </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get load test profile details by test profile Id. </remarks>
-        public virtual async Task<Response<TestProfile>> GetTestProfileAsync(string testProfileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTestProfileAsync(testProfileId, context).ConfigureAwait(false);
-            return Response.FromValue(TestProfile.FromResponse(response), response);
-        }
-
-        /// <summary> Get load test profile details. </summary>
-        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get load test profile details by test profile Id. </remarks>
-        public virtual Response<TestProfile> GetTestProfile(string testProfileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTestProfile(testProfileId, context);
-            return Response.FromValue(TestProfile.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get load test profile details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestProfileAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestProfileAsync(string testProfileId, RequestContext context)
+        public virtual Response DeleteTestProfile(string testProfileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTestProfileRequest(testProfileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return DeleteTestProfile(testProfileId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete a test profile by its test profile Id. </summary>
+        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteTestProfileAsync(string testProfileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
+            return await DeleteTestProfileAsync(testProfileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// [Protocol Method] Get load test profile details.
+        /// [Protocol Method] Get load test profile details by test profile Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestProfile(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTestProfile(string testProfileId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
                 using HttpMessage message = CreateGetTestProfileRequest(testProfileId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1293,33 +1209,29 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update operation template.
+        /// [Protocol Method] Get load test profile details by test profile Id.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateTriggerAsync(string triggerId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetTestProfileAsync(string testProfileId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTrigger");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(triggerId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
+                using HttpMessage message = CreateGetTestProfileRequest(testProfileId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1328,34 +1240,60 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Get load test profile details by test profile Id. </summary>
+        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TestProfile> GetTestProfile(string testProfileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
+            Response result = GetTestProfile(testProfileId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TestProfile)result, result);
+        }
+
+        /// <summary> Get load test profile details by test profile Id. </summary>
+        /// <param name="testProfileId"> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TestProfile>> GetTestProfileAsync(string testProfileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testProfileId, nameof(testProfileId));
+
+            Response result = await GetTestProfileAsync(testProfileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TestProfile)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateTrigger(string triggerId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTrigger");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateTriggerRequest(triggerId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1364,33 +1302,32 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Resource delete operation template.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTriggerAsync(string triggerId, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateTriggerAsync(string triggerId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTrigger");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTrigger");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteTriggerRequest(triggerId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateTriggerRequest(triggerId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1399,33 +1336,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Resource delete operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteTrigger(string triggerId, RequestContext context = null)
+        public virtual Response DeleteTrigger(string triggerId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTrigger");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTrigger");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
                 using HttpMessage message = CreateDeleteTriggerRequest(triggerId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1434,104 +1368,88 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Resource read operation template. </summary>
+        /// <summary>
+        /// [Protocol Method] Resource delete operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<LoadTestingTrigger>> GetTriggerAsync(string triggerId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteTriggerAsync(string triggerId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTrigger");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTriggerAsync(triggerId, context).ConfigureAwait(false);
-            return Response.FromValue(LoadTestingTrigger.FromResponse(response), response);
+                using HttpMessage message = CreateDeleteTriggerRequest(triggerId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Resource read operation template. </summary>
+        /// <summary> Resource delete operation template. </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<LoadTestingTrigger> GetTrigger(string triggerId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteTrigger(string triggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTrigger(triggerId, context);
-            return Response.FromValue(LoadTestingTrigger.FromResponse(response), response);
+            return DeleteTrigger(triggerId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Resource delete operation template. </summary>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteTriggerAsync(string triggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
+            return await DeleteTriggerAsync(triggerId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
         /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTriggerAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTriggerAsync(string triggerId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTrigger");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTriggerRequest(triggerId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource read operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTrigger(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="triggerId"> The unique identifier of the trigger. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTrigger(string triggerId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTrigger");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTrigger");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
                 using HttpMessage message = CreateGetTriggerRequest(triggerId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1541,33 +1459,29 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update operation template.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateNotificationRuleAsync(string notificationRuleId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetTriggerAsync(string triggerId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateNotificationRule");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTrigger");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateNotificationRuleRequest(notificationRuleId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
+                using HttpMessage message = CreateGetTriggerRequest(triggerId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1576,34 +1490,156 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<LoadTestingTrigger> GetTrigger(string triggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
+            Response result = GetTrigger(triggerId, cancellationToken.ToRequestContext());
+            return Response.FromValue((LoadTestingTrigger)result, result);
+        }
+
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="triggerId"> The unique identifier of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<LoadTestingTrigger>> GetTriggerAsync(string triggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerId, nameof(triggerId));
+
+            Response result = await GetTriggerAsync(triggerId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((LoadTestingTrigger)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resource list operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
+        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            return new LoadTestAdministrationClientGetTriggersCollectionResult(
+                this,
+                testIds,
+                states,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resource list operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
+        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            return new LoadTestAdministrationClientGetTriggersAsyncCollectionResult(
+                this,
+                testIds,
+                states,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary> Resource list operation template. </summary>
+        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
+        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<LoadTestingTrigger> GetTriggers(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTriggersCollectionResultOfT(
+                this,
+                testIds,
+                states?.ToString(),
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Resource list operation template. </summary>
+        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
+        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<LoadTestingTrigger> GetTriggersAsync(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTriggersAsyncCollectionResultOfT(
+                this,
+                testIds,
+                states?.ToString(),
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
         /// <summary>
         /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateNotificationRule(string notificationRuleId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateNotificationRule");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateNotificationRule");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrUpdateNotificationRuleRequest(notificationRuleId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1612,33 +1648,32 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Resource delete operation template.
+        /// [Protocol Method] Create or update operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteNotificationRuleAsync(string notificationRuleId, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateNotificationRuleAsync(string notificationRuleId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteNotificationRule");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateNotificationRule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteNotificationRuleRequest(notificationRuleId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrUpdateNotificationRuleRequest(notificationRuleId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1647,33 +1682,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Resource delete operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteNotificationRule(string notificationRuleId, RequestContext context = null)
+        public virtual Response DeleteNotificationRule(string notificationRuleId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteNotificationRule");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteNotificationRule");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
                 using HttpMessage message = CreateDeleteNotificationRuleRequest(notificationRuleId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1682,104 +1714,88 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Resource read operation template. </summary>
+        /// <summary>
+        /// [Protocol Method] Resource delete operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NotificationRule>> GetNotificationRuleAsync(string notificationRuleId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteNotificationRuleAsync(string notificationRuleId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteNotificationRule");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNotificationRuleAsync(notificationRuleId, context).ConfigureAwait(false);
-            return Response.FromValue(NotificationRule.FromResponse(response), response);
+                using HttpMessage message = CreateDeleteNotificationRuleRequest(notificationRuleId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Resource read operation template. </summary>
+        /// <summary> Resource delete operation template. </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NotificationRule> GetNotificationRule(string notificationRuleId, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteNotificationRule(string notificationRuleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNotificationRule(notificationRuleId, context);
-            return Response.FromValue(NotificationRule.FromResponse(response), response);
+            return DeleteNotificationRule(notificationRuleId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Resource delete operation template. </summary>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteNotificationRuleAsync(string notificationRuleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
+            return await DeleteNotificationRuleAsync(notificationRuleId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
         /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNotificationRuleAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetNotificationRuleAsync(string notificationRuleId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRule");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetNotificationRuleRequest(notificationRuleId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource read operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNotificationRule(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetNotificationRule(string notificationRuleId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRule");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRule");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
                 using HttpMessage message = CreateGetNotificationRuleRequest(notificationRuleId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1788,65 +1804,30 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Get the status of a long running operation. </summary>
-        /// <param name="operationId"> The unique ID of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetOperationStatusAsync(operationId, context).ConfigureAwait(false);
-            return Response.FromValue(OperationStatus.FromResponse(response), response);
-        }
-
-        /// <summary> Get the status of a long running operation. </summary>
-        /// <param name="operationId"> The unique ID of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetOperationStatus(operationId, context);
-            return Response.FromValue(OperationStatus.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get the status of a long running operation.
+        /// [Protocol Method] Resource read operation template.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetOperationStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> The unique ID of the operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationStatusAsync(string operationId, RequestContext context)
+        public virtual async Task<Response> GetNotificationRuleAsync(string notificationRuleId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetOperationStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
+                using HttpMessage message = CreateGetNotificationRuleRequest(notificationRuleId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1855,1050 +1836,312 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<NotificationRule> GetNotificationRule(string notificationRuleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
+            Response result = GetNotificationRule(notificationRuleId, cancellationToken.ToRequestContext());
+            return Response.FromValue((NotificationRule)result, result);
+        }
+
+        /// <summary> Resource read operation template. </summary>
+        /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<NotificationRule>> GetNotificationRuleAsync(string notificationRuleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRuleId, nameof(notificationRuleId));
+
+            Response result = await GetNotificationRuleAsync(notificationRuleId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((NotificationRule)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resource list operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
+        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            return new LoadTestAdministrationClientGetNotificationRulesCollectionResult(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resource list operation template.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
+        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResult(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary> Resource list operation template. </summary>
+        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
+        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<NotificationRule> GetNotificationRules(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Resource list operation template. </summary>
+        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
+        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<NotificationRule> GetNotificationRulesAsync(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Clone the given test with optional overrides applied to the clone test. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> CloneTest(WaitUntil waitUntil, string testId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CloneTest");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCloneTestRequest(testId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Clone the given test with optional overrides applied to the clone test. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> CloneTestAsync(WaitUntil waitUntil, string testId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CloneTest");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCloneTestRequest(testId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Clone the given test with optional overrides applied to the clone test. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="newTestId"> Unique identifier for the new test that will be created. </param>
+        /// <param name="displayName"> Display Name override for the newly created test. </param>
+        /// <param name="description"> Description override for the newly created test. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="newTestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="newTestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<LoadTest> CloneTest(WaitUntil waitUntil, string testId, string newTestId, string displayName = default, string description = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
+
+            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            Operation<BinaryData> result = CloneTest(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
+        }
+
+        /// <summary> Clone the given test with optional overrides applied to the clone test. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="newTestId"> Unique identifier for the new test that will be created. </param>
+        /// <param name="displayName"> Display Name override for the newly created test. </param>
+        /// <param name="description"> Description override for the newly created test. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="newTestId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="newTestId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<LoadTest>> CloneTestAsync(WaitUntil waitUntil, string testId, string newTestId, string displayName = default, string description = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
+
+            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            Operation<BinaryData> result = await CloneTestAsync(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync");
+        }
+
         /// <summary>
         /// [Protocol Method] Get the status of a long running operation.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetOperationStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The unique ID of the operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetOperationStatus(string operationId, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetOperationStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the status of a long running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The unique ID of the operation. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetOperationStatus");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the status of a long running operation. </summary>
+        /// <param name="operationId"> The unique ID of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<OperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetOperationStatusRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetOperationStatus(operationId, cancellationToken.ToRequestContext());
+            return Response.FromValue((OperationStatus)result, result);
         }
 
-        /// <summary> Get all test files. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<TestFileInfo> GetTestFilesAsync(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestFileInfo.DeserializeTestFileInfo(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
-        }
-
-        /// <summary> Get all test files. </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<TestFileInfo> GetTestFiles(string testId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestFileInfo.DeserializeTestFileInfo(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get all test files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestFilesAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <summary> Get the status of a long running operation. </summary>
+        /// <param name="operationId"> The unique ID of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context)
+        public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
+            Response result = await GetOperationStatusAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((OperationStatus)result, result);
         }
-
-        /// <summary>
-        /// [Protocol Method] Get all test files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTestFiles(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestFilesRequest(testId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestFilesNextPageRequest(nextLink, testId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
-        }
-
-        /// <summary> Resource list operation template. </summary>
-        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
-        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<LoadTestingTrigger> GetTriggersAsync(string testIds = null, TriggerState? states = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTriggersRequest(testIds, states?.ToString(), lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTriggersNextPageRequest(nextLink, testIds, states?.ToString(), lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LoadTestingTrigger.DeserializeLoadTestingTrigger(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTriggers", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Resource list operation template. </summary>
-        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
-        /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<LoadTestingTrigger> GetTriggers(string testIds = null, TriggerState? states = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTriggersRequest(testIds, states?.ToString(), lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTriggersNextPageRequest(nextLink, testIds, states?.ToString(), lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LoadTestingTrigger.DeserializeLoadTestingTrigger(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTriggers", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource list operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTriggersAsync(string,TriggerState?,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
-        /// <param name="states"> Filter triggers based on a comma separated list of states. Allowed values: "Active" | "Paused" | "Completed" | "Disabled". </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTriggersRequest(testIds, states, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTriggersNextPageRequest(nextLink, testIds, states, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTriggers", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource list operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTriggers(string,TriggerState?,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
-        /// <param name="states"> Filter triggers based on a comma separated list of states. Allowed values: "Active" | "Paused" | "Completed" | "Disabled". </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTriggersRequest(testIds, states, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTriggersNextPageRequest(nextLink, testIds, states, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTriggers", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Resource list operation template. </summary>
-        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
-        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<NotificationRule> GetNotificationRulesAsync(string testIds = null, string scopes = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNotificationRulesRequest(testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNotificationRulesNextPageRequest(nextLink, testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NotificationRule.DeserializeNotificationRule(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetNotificationRules", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Resource list operation template. </summary>
-        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
-        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<NotificationRule> GetNotificationRules(string testIds = null, string scopes = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNotificationRulesRequest(testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNotificationRulesNextPageRequest(nextLink, testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NotificationRule.DeserializeNotificationRule(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetNotificationRules", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource list operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNotificationRulesAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
-        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNotificationRulesRequest(testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNotificationRulesNextPageRequest(nextLink, testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetNotificationRules", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resource list operation template.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNotificationRules(string,string,DateTimeOffset?,DateTimeOffset?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
-        /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNotificationRulesRequest(testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNotificationRulesNextPageRequest(nextLink, testIds, scopes, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetNotificationRules", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Clone a load test. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="newTestId"> Unique identifier for the new test that will be created. </param>
-        /// <param name="displayName"> Display Name override for the newly created test. </param>
-        /// <param name="description"> Description override for the newly created test. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="newTestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Clone the given test with optional overrides applied to the clone test. </remarks>
-        public virtual async Task<Operation<LoadTest>> CloneTestAsync(WaitUntil waitUntil, string testId, string newTestId, string displayName = null, string description = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(newTestId, nameof(newTestId));
-
-            CloneTestRequest1 cloneTestRequest1 = new CloneTestRequest1(newTestId, displayName, description, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await CloneTestAsync(waitUntil, testId, cloneTestRequest1.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, LoadTest.FromResponse, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
-        }
-
-        /// <summary> Clone a load test. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="newTestId"> Unique identifier for the new test that will be created. </param>
-        /// <param name="displayName"> Display Name override for the newly created test. </param>
-        /// <param name="description"> Description override for the newly created test. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="newTestId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Clone the given test with optional overrides applied to the clone test. </remarks>
-        public virtual Operation<LoadTest> CloneTest(WaitUntil waitUntil, string testId, string newTestId, string displayName = null, string description = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(newTestId, nameof(newTestId));
-
-            CloneTestRequest1 cloneTestRequest1 = new CloneTestRequest1(newTestId, displayName, description, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = CloneTest(waitUntil, testId, cloneTestRequest1.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, LoadTest.FromResponse, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Clone a load test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CloneTestAsync(WaitUntil,string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CloneTestAsync(WaitUntil waitUntil, string testId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CloneTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCloneTestRequest(testId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Clone a load test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CloneTest(WaitUntil,string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation<BinaryData> CloneTest(WaitUntil waitUntil, string testId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CloneTest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCloneTestRequest(testId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest", OperationFinalStateVia.OperationLocation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string testId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/app-components", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string testId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/server-metrics-config", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAppComponentsRequest(string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/app-components", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetServerMetricsConfigRequest(string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/server-metrics-config", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestRequest(string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestFileRequest(string testId, string fileName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestFilesRequest(string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/files", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (orderby != null)
-            {
-                uri.AppendQuery("orderby", orderby, true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
-            if (lastModifiedStartTime != null)
-            {
-                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
-            }
-            if (lastModifiedEndTime != null)
-            {
-                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileName, RequestContent content, string fileType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (fileType != null)
-            {
-                uri.AppendQuery("fileType", fileType, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/octet-stream");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTestRequest(string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateTestProfileRequest(string testProfileId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/test-profiles/", false);
-            uri.AppendPath(testProfileId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTestProfileRequest(string testProfileId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/test-profiles/", false);
-            uri.AppendPath(testProfileId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestProfileRequest(string testProfileId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/test-profiles/", false);
-            uri.AppendPath(testProfileId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestProfilesRequest(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/test-profiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            if (lastModifiedStartTime != null)
-            {
-                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
-            }
-            if (lastModifiedEndTime != null)
-            {
-                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
-            }
-            if (testProfileIds != null && !(testProfileIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("testProfileIds", testProfileIds, ",", true);
-            }
-            if (testIds != null && !(testIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("testIds", testIds, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateTriggerRequest(string triggerId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(triggerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteTriggerRequest(string triggerId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(triggerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTriggerRequest(string triggerId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(triggerId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTriggersRequest(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/triggers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (testIds != null)
-            {
-                uri.AppendQuery("testIds", testIds, true);
-            }
-            if (states != null)
-            {
-                uri.AppendQuery("states", states, true);
-            }
-            if (lastModifiedStartTime != null)
-            {
-                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
-            }
-            if (lastModifiedEndTime != null)
-            {
-                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateNotificationRuleRequest(string notificationRuleId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/notification-rules/", false);
-            uri.AppendPath(notificationRuleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteNotificationRuleRequest(string notificationRuleId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/notification-rules/", false);
-            uri.AppendPath(notificationRuleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetNotificationRuleRequest(string notificationRuleId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/notification-rules/", false);
-            uri.AppendPath(notificationRuleId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetNotificationRulesRequest(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/notification-rules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (testIds != null)
-            {
-                uri.AppendQuery("testIds", testIds, true);
-            }
-            if (scopes != null)
-            {
-                uri.AppendQuery("scopes", scopes, true);
-            }
-            if (lastModifiedStartTime != null)
-            {
-                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
-            }
-            if (lastModifiedEndTime != null)
-            {
-                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCloneTestRequest(string testId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/tests/", false);
-            uri.AppendPath(testId, true);
-            uri.AppendPath(":clone", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetOperationStatusRequest(string operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestFilesNextPageRequest(string nextLink, string testId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTestProfilesNextPageRequest(string nextLink, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTriggersNextPageRequest(string nextLink, string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetNotificationRulesNextPageRequest(string nextLink, string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200201;
-        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier201;
-        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

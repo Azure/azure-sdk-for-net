@@ -97,7 +97,7 @@ public partial class RedisEnterprisePrivateEndpointConnection : ProvisionableRes
     /// </param>
     /// <param name="resourceVersion">Version of the RedisEnterprisePrivateEndpointConnection.</param>
     public RedisEnterprisePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise/privateEndpointConnections", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.Cache/redisEnterprise/privateEndpointConnections", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -122,6 +122,11 @@ public partial class RedisEnterprisePrivateEndpointConnection : ProvisionableRes
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

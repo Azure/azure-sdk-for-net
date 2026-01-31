@@ -1,3 +1,4 @@
 directory: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/ServiceFabricManagedClusters
-commit: 43ad039a24dc67633aee23176c5213b31aa1bc9f
+commit: b287d44e9793aa5facd4a4352587f975d387b745
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -340,6 +340,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case "Message":
                     telemetrySchemaTypeCounter._traceCount++;
                     break;
+                case "Availability":
+                    telemetrySchemaTypeCounter._availabilityCount++;
+                    break;
                     // Unknown types are not tracked
             }
         }
@@ -464,13 +467,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case "Message":
                     telemetrySchemaTypeCounter._traceCount = Math.Max(0, telemetrySchemaTypeCounter._traceCount - 1);
                     break;
+                case "Availability":
+                    telemetrySchemaTypeCounter._availabilityCount = Math.Max(0, telemetrySchemaTypeCounter._availabilityCount - 1);
+                    break;
             }
         }
 
         private static bool HasAnyCount(TelemetrySchemaTypeCounter telemetrySchemaTypeCounter)
         {
             return telemetrySchemaTypeCounter._requestCount > 0 || telemetrySchemaTypeCounter._dependencyCount > 0 || telemetrySchemaTypeCounter._exceptionCount > 0 ||
-                   telemetrySchemaTypeCounter._eventCount > 0 || telemetrySchemaTypeCounter._metricCount > 0 || telemetrySchemaTypeCounter._traceCount > 0;
+                   telemetrySchemaTypeCounter._eventCount > 0 || telemetrySchemaTypeCounter._metricCount > 0 || telemetrySchemaTypeCounter._traceCount > 0 ||
+                   telemetrySchemaTypeCounter._availabilityCount > 0;
         }
     }
 }

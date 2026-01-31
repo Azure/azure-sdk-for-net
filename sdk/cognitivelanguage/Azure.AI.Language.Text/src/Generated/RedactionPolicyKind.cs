@@ -25,6 +25,7 @@ namespace Azure.AI.Language.Text
         private const string NoMaskValue = "noMask";
         private const string CharacterMaskValue = "characterMask";
         private const string EntityMaskValue = "entityMask";
+        private const string SyntheticReplacementValue = "syntheticReplacement";
 
         /// <summary> Do not redact detected entities. </summary>
         public static RedactionPolicyKind NoMask { get; } = new RedactionPolicyKind(NoMaskValue);
@@ -32,6 +33,8 @@ namespace Azure.AI.Language.Text
         public static RedactionPolicyKind CharacterMask { get; } = new RedactionPolicyKind(CharacterMaskValue);
         /// <summary> Redact detected entities with entity type. </summary>
         public static RedactionPolicyKind EntityMask { get; } = new RedactionPolicyKind(EntityMaskValue);
+        /// <summary> Replace detected entities with synthetic values. </summary>
+        public static RedactionPolicyKind SyntheticReplacement { get; } = new RedactionPolicyKind(SyntheticReplacementValue);
         /// <summary> Determines if two <see cref="RedactionPolicyKind"/> values are the same. </summary>
         public static bool operator ==(RedactionPolicyKind left, RedactionPolicyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedactionPolicyKind"/> values are not the same. </summary>

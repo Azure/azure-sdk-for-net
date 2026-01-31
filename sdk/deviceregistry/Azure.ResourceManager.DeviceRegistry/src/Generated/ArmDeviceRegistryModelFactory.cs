@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="statusErrors"> Array object to transfer and persist errors that originate from the Edge. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IReadOnlyList<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = default, Uri targetAddress = default, string endpointProfileType = default, DeviceRegistryAuthentication authentication = default, string additionalConfiguration = default, string discoveredAssetEndpointProfileRef = default, IEnumerable<AssetEndpointProfileStatusError> statusErrors = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             return new DeviceRegistryAssetEndpointProfileProperties(
                 uuid,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 authentication,
                 additionalConfiguration,
                 discoveredAssetEndpointProfileRef,
-                statusErrors is null ? default : new AssetEndpointProfileStatus(statusErrors, new Dictionary<string, BinaryData>()),
+                statusErrors is null ? default : new AssetEndpointProfileStatus((statusErrors ?? new ChangeTrackingList<AssetEndpointProfileStatusError>()).ToList(), null),
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="billingContainerProvisioningState"> Provisioning state of the resource. </param>
-        /// <param name="eTag"> Resource ETag. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
-        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? eTag = default)
+        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistryProvisioningState? billingContainerProvisioningState = default, ETag? etag = default)
         {
             return new DeviceRegistryBillingContainerData(
                 id,
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, new Dictionary<string, BinaryData>()),
-                eTag);
+                billingContainerProvisioningState is null ? default : new BillingContainerProperties(billingContainerProvisioningState, null),
+                etag);
         }
 
         /// <summary> Namespace definition. </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
         public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
-            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), provisioningState, additionalBinaryDataProperties: null);
+            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints, null), provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed service identity (either system assigned, or none). </summary>
@@ -361,23 +361,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new SystemAssignedServiceIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The type used for update operations of the Namespace. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="namespaceUpdateMessagingEndpoints"> Dictionary of messaging endpoints. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespacePatch"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, NamespaceUpdateProperties properties = default)
+        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, IDictionary<string, MessagingEndpoint> namespaceUpdateMessagingEndpoints = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeviceRegistryNamespacePatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
-        /// <returns> A new <see cref="Models.NamespaceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceUpdateProperties NamespaceUpdateProperties(IDictionary<string, MessagingEndpoint> messagingEndpoints = default)
-        {
-            return new NamespaceUpdateProperties(messagingEndpoints is null ? default : new Messaging(messagingEndpoints, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeviceRegistryNamespacePatch(identity, tags, namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(new Messaging(namespaceUpdateMessagingEndpoints, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
@@ -400,6 +392,93 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static DeviceRegistryErrorDetails DeviceRegistryErrorDetails(string code = default, string message = default, string info = default, string correlationId = default)
         {
             return new DeviceRegistryErrorDetails(code, message, info, correlationId, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="credentialProvisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="DeviceRegistry.CredentialData"/> instance for mocking. </returns>
+        public static CredentialData CredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryProvisioningState? credentialProvisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CredentialData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                credentialProvisioningState is null ? default : new CredentialProperties(credentialProvisioningState, null));
+        }
+
+        /// <summary> The type used for update operations of the Credential. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CredentialPatch"/> instance for mocking. </returns>
+        public static CredentialPatch CredentialPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CredentialPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Credential Policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
+        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PolicyProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Details of the Credential Policy. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="certificate"> The certificate configuration. </param>
+        /// <returns> A new <see cref="Models.PolicyProperties"/> instance for mocking. </returns>
+        public static PolicyProperties PolicyProperties(DeviceRegistryProvisioningState? provisioningState = default, CertificateConfiguration certificate = default)
+        {
+            return new PolicyProperties(provisioningState, certificate, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The configuration to set up an ICA. </summary>
+        /// <param name="keyType"> Crypto type: ECC. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. Generated based on on validity period. </param>
+        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. Generated based on validity period. </param>
+        /// <returns> A new <see cref="Models.CertificateAuthorityConfiguration"/> instance for mocking. </returns>
+        public static CertificateAuthorityConfiguration CertificateAuthorityConfiguration(SupportedKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default)
+        {
+            return new CertificateAuthorityConfiguration(keyType, subject, validityNotBefore, validityNotAfter, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="policyUpdateCertificate"> The certificate configuration. </param>
+        /// <returns> A new <see cref="Models.PolicyPatch"/> instance for mocking. </returns>
+        public static PolicyPatch PolicyPatch(IDictionary<string, string> tags = default, CertificateConfiguration policyUpdateCertificate = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PolicyPatch(tags, policyUpdateCertificate is null ? default : new PolicyUpdateProperties(policyUpdateCertificate, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Asset definition. </summary>
@@ -809,7 +888,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -817,10 +895,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> Resource Tag. </param>
+        /// <param name="etag"> Resource Tag. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string eTag = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string etag = default, DeviceRegistryExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -833,11 +911,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 tags,
                 location,
                 properties,
-                eTag,
+                etag,
                 extendedLocation);
         }
 
-        /// <summary> Defines the device properties. </summary>
         /// <param name="uuid"> A unique identifier for the device. </param>
         /// <param name="enabled"> Indicates if the resource is enabled or not. </param>
         /// <param name="externalDeviceId"> The Device ID provided by the customer. </param>
@@ -852,8 +929,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
         /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDeviceProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default, ResourceIdentifier resourceId = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -872,6 +950,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 version,
                 lastTransitionOn,
                 provisioningState,
+                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -903,7 +982,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DeviceStatus"/> instance for mocking. </returns>
         public static DeviceStatus DeviceStatus(DeviceRegistryStatusConfig config = default, IReadOnlyDictionary<string, DeviceStatusEndpoint> endpointsInbound = default)
         {
-            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the device status properties. </summary>
@@ -925,17 +1004,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceDevicePatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The updatable properties of the NamespaceDevice. </summary>
         /// <param name="operatingSystemVersion"> Device operating system version. </param>
         /// <param name="endpoints"> Property bag containing the device's unassigned and assigned endpoints. </param>
         /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
+        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <param name="enabled"> Indicates if the resource and identity are enabled or not. A disabled device cannot authenticate with Microsoft Entra ID. </param>
         /// <returns> A new <see cref="Models.NamespaceDeviceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, bool? enabled = default)
+        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, ResourceIdentifier resourceId = default, bool? enabled = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new NamespaceDeviceUpdateProperties(operatingSystemVersion, endpoints, attributes, enabled, additionalBinaryDataProperties: null);
+            return new NamespaceDeviceUpdateProperties(
+                operatingSystemVersion,
+                endpoints,
+                attributes,
+                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, null),
+                enabled,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Discovered asset definition. </summary>
@@ -1298,7 +1383,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             inbound ??= new ChangeTrackingDictionary<string, DiscoveredInboundEndpoints>();
 
-            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new DiscoveredMessagingEndpoints(inbound, outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> An endpoint to connect to the device. </summary>

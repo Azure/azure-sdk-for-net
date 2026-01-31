@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public void AnalyzeConversationalAI()
         {
             ConversationAnalysisClient client = Client;
@@ -133,7 +133,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview)]
         public async Task AnalyzeConversationalAIAsync()
         {
             ConversationAnalysisClient client = Client;

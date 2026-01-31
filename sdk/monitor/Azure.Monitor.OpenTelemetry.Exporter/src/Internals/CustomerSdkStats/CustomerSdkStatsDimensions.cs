@@ -22,8 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         {
             return new TagList
             {
-                { "language", SdkVersionUtils.IsDistro ? "dotnet-distro" : "dotnet-exp" },
-                { "version", SdkVersionUtils.ExtensionsVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
+                { "language", "dotnet" },
+                { "version", SdkVersionUtils.ExtensionVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
                 { "computeType", GetComputeType() },
                 { "telemetry_type", telemetryType }
             };

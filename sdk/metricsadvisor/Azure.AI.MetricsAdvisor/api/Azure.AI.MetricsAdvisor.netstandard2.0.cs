@@ -232,9 +232,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             public static Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType Basic { get { throw null; } }
             public static Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType ManagedIdentity { get { throw null; } }
             public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType right) { throw null; }
             public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureBlobDataFeedSource.AuthenticationType (string value) { throw null; }
@@ -267,9 +265,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType ServicePrincipal { get { throw null; } }
             public static Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
             public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType right) { throw null; }
             public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureDataExplorerDataFeedSource.AuthenticationType (string value) { throw null; }
@@ -298,9 +294,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
             public static Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType SharedKey { get { throw null; } }
             public bool Equals(Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType right) { throw null; }
             public static implicit operator Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType (string value) { throw null; }
@@ -545,9 +539,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType ServicePrincipalInKeyVault { get { throw null; } }
             public static Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType SqlConnectionString { get { throw null; } }
             public bool Equals(Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType other) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
-            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType left, Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType right) { throw null; }
             public static implicit operator Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType (string value) { throw null; }
@@ -608,9 +600,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection Down { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection Up { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection left, Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalyDetectorDirection (string value) { throw null; }
@@ -641,9 +631,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Active { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Resolved { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus left, Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus (string value) { throw null; }
@@ -660,9 +648,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.AnomalySeverity Low { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.AnomalySeverity Medium { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalySeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalySeverity left, Azure.AI.MetricsAdvisor.Models.AnomalySeverity right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalySeverity (string value) { throw null; }
@@ -678,9 +664,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.AnomalyStatus Active { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.AnomalyStatus Resolved { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalyStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalyStatus left, Azure.AI.MetricsAdvisor.Models.AnomalyStatus right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalyStatus (string value) { throw null; }
@@ -697,9 +681,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.AnomalyValue AutoDetect { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.AnomalyValue NotAnomaly { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.AnomalyValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.AnomalyValue left, Azure.AI.MetricsAdvisor.Models.AnomalyValue right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.AnomalyValue (string value) { throw null; }
@@ -716,9 +698,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.BoundaryDirection Down { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.BoundaryDirection Up { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.BoundaryDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.BoundaryDirection left, Azure.AI.MetricsAdvisor.Models.BoundaryDirection right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.BoundaryDirection (string value) { throw null; }
@@ -734,9 +714,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType Mean { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType Value { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType left, Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.BoundaryMeasureType (string value) { throw null; }
@@ -753,9 +731,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.ChangePointValue ChangePoint { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.ChangePointValue NotChangePoint { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.ChangePointValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.ChangePointValue left, Azure.AI.MetricsAdvisor.Models.ChangePointValue right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.ChangePointValue (string value) { throw null; }
@@ -802,9 +778,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode Private { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode Public { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode left, Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode (string value) { throw null; }
@@ -824,9 +798,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod None { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod Sum { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod left, Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedAutoRollupMethod (string value) { throw null; }
@@ -859,9 +831,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Weekly { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType Yearly { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType left, Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedGranularityType (string value) { throw null; }
@@ -915,9 +885,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType PreviousValue { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType SmartFilling { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType left, Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType (string value) { throw null; }
@@ -942,9 +910,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedRollupType NoRollupNeeded { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedRollupType RollupNeeded { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedRollupType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedRollupType left, Azure.AI.MetricsAdvisor.Models.DataFeedRollupType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedRollupType (string value) { throw null; }
@@ -978,9 +944,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind PostgreSql { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind SqlServer { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind left, Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedSourceKind (string value) { throw null; }
@@ -996,9 +960,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataFeedStatus Active { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataFeedStatus Paused { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataFeedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataFeedStatus left, Azure.AI.MetricsAdvisor.Models.DataFeedStatus right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedStatus (string value) { throw null; }
@@ -1031,9 +993,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind ServicePrincipalInKeyVault { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind SqlConnectionString { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind left, Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataSourceCredentialKind (string value) { throw null; }
@@ -1049,9 +1009,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator And { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator Or { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator left, Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DetectionConditionOperator (string value) { throw null; }
@@ -1104,9 +1062,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.IngestionStatusType Scheduled { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.IngestionStatusType Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.IngestionStatusType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.IngestionStatusType left, Azure.AI.MetricsAdvisor.Models.IngestionStatusType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.IngestionStatusType (string value) { throw null; }
@@ -1132,9 +1088,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator Or { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator Xor { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator left, Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.MetricAlertConfigurationsOperator (string value) { throw null; }
@@ -1167,9 +1121,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType TopN { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType WholeSeries { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType left, Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.MetricAnomalyAlertScopeType (string value) { throw null; }
@@ -1216,9 +1168,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind Comment { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind Period { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind left, Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.MetricFeedbackKind (string value) { throw null; }
@@ -1234,9 +1184,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.MetricPeriodType AssignValue { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.MetricPeriodType AutoDetect { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.MetricPeriodType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.MetricPeriodType left, Azure.AI.MetricsAdvisor.Models.MetricPeriodType right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.MetricPeriodType (string value) { throw null; }
@@ -1313,9 +1261,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.NotificationHookKind Email { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.NotificationHookKind Webhook { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.NotificationHookKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.NotificationHookKind left, Azure.AI.MetricsAdvisor.Models.NotificationHookKind right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.NotificationHookKind (string value) { throw null; }
@@ -1344,9 +1290,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static Azure.AI.MetricsAdvisor.Models.SnoozeScope Metric { get { throw null; } }
         public static Azure.AI.MetricsAdvisor.Models.SnoozeScope Series { get { throw null; } }
         public bool Equals(Azure.AI.MetricsAdvisor.Models.SnoozeScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.MetricsAdvisor.Models.SnoozeScope left, Azure.AI.MetricsAdvisor.Models.SnoozeScope right) { throw null; }
         public static implicit operator Azure.AI.MetricsAdvisor.Models.SnoozeScope (string value) { throw null; }

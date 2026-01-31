@@ -7,50 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Fault Simulation Request for Start action. </summary>
     public partial class FaultSimulationContentWrapper
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/>. </summary>
-        /// <param name="parameters">
-        /// Parameters for Fault Simulation start action.
-        /// Please note <see cref="FaultSimulationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ZoneFaultSimulationContent"/>.
-        /// </param>
+        /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public FaultSimulationContentWrapper(FaultSimulationContent parameters)
         {
@@ -60,28 +28,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/>. </summary>
-        /// <param name="parameters">
-        /// Parameters for Fault Simulation start action.
-        /// Please note <see cref="FaultSimulationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ZoneFaultSimulationContent"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulationContentWrapper(FaultSimulationContent parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaultSimulationContentWrapper(FaultSimulationContent parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/> for deserialization. </summary>
-        internal FaultSimulationContentWrapper()
-        {
-        }
-
-        /// <summary>
-        /// Parameters for Fault Simulation start action.
-        /// Please note <see cref="FaultSimulationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ZoneFaultSimulationContent"/>.
-        /// </summary>
+        /// <summary> Parameters for Fault Simulation start action. </summary>
         public FaultSimulationContent Parameters { get; }
     }
 }

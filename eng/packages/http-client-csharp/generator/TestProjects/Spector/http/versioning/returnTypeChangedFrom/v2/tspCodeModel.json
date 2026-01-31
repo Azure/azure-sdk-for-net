@@ -238,7 +238,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.ReturnTypeChangedFrom"
           },
           "parameters": [
             {
@@ -358,12 +359,14 @@
           "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom",
       "apiVersions": [
         "v1",
         "v2"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

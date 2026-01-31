@@ -7,48 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A Class representing a DedicatedHsm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHsmResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDedicatedHsmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedHsm method.
+    /// A class representing a DedicatedHsm along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHsmResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedHsms method.
     /// </summary>
     public partial class DedicatedHsmResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DedicatedHsmResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dedicatedHsmClientDiagnostics;
-        private readonly DedicatedHsmsRestOperations _dedicatedHsmRestClient;
+        private readonly ClientDiagnostics _dedicatedHsmsClientDiagnostics;
+        private readonly DedicatedHsms _dedicatedHsmsRestClient;
         private readonly DedicatedHsmData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
 
-        /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DedicatedHsmResource for mocking. </summary>
         protected DedicatedHsmResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DedicatedHsmResource(ArmClient client, DedicatedHsmData data) : this(client, data.Id)
@@ -57,71 +46,92 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DedicatedHsmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHsmResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dedicatedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
-            _dedicatedHsmRestClient = new DedicatedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
+            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DedicatedHsmData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the specified Azure dedicated HSM.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DedicatedHsmResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,118 +145,42 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Gets the specified Azure dedicated HSM.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DedicatedHsmResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified Azure Dedicated HSM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _dedicatedHsmRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified Azure Dedicated HSM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _dedicatedHsmRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -259,20 +193,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Update a dedicated HSM in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,14 +218,27 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
+                    new DedicatedHsmOperationSource(Client),
+                    _dedicatedHsmsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,20 +252,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Update a dedicated HSM in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +277,125 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
+                    new DedicatedHsmOperationSource(Client),
+                    _dedicatedHsmsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified Azure Dedicated HSM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified Azure Dedicated HSM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dedicatedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -351,50 +409,52 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_ListOutboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
         /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_ListOutboundNetworkDependenciesEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DedicatedHsmResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,32 +462,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -437,28 +479,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DedicatedHsmPatch();
-                    foreach (var tag in current.Tags)
+                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -469,27 +517,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -499,28 +527,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DedicatedHsmPatch();
-                    foreach (var tag in current.Tags)
+                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -531,53 +565,39 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DedicatedHsmResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DedicatedHsmPatch();
+                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -588,53 +608,39 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DedicatedHsmResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DedicatedHsmPatch();
+                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -645,27 +651,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -673,28 +659,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DedicatedHsmPatch();
-                    foreach (var tag in current.Tags)
+                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -705,27 +697,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -733,28 +705,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
+            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DedicatedHsmResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DedicatedHsmPatch();
-                    foreach (var tag in current.Tags)
+                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

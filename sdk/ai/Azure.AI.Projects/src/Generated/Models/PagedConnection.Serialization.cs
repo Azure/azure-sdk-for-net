@@ -113,7 +113,7 @@ namespace Azure.Core.Foundations
                     {
                         continue;
                     }
-                    nextLink = new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.Core.Foundations
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedConnection(document.RootElement, options);
                     }
@@ -167,8 +167,8 @@ namespace Azure.Core.Foundations
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedConnection"/> from. </param>
         public static explicit operator PagedConnection(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

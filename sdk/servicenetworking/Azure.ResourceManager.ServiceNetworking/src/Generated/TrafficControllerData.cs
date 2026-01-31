@@ -14,95 +14,112 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary>
-    /// A class representing the TrafficController data model.
-    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
-    /// </summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class TrafficControllerData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public TrafficControllerData(AzureLocation location) : base(location)
         {
-            ConfigurationEndpoints = new ChangeTrackingList<string>();
-            Frontends = new ChangeTrackingList<SubResource>();
-            Associations = new ChangeTrackingList<SubResource>();
-            SecurityPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="configurationEndpoints"> Configuration Endpoints. </param>
-        /// <param name="frontends"> Frontends References List. </param>
-        /// <param name="associations"> Associations References List. </param>
-        /// <param name="securityPolicies"> Security Policies References List. </param>
-        /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
-        /// <param name="trafficControllerProvisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, IReadOnlyList<SubResource> securityPolicies, SecurityPolicyConfigurations securityPolicyConfigurations, ServiceNetworkingProvisioningState? trafficControllerProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TrafficControllerProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ConfigurationEndpoints = configurationEndpoints;
-            Frontends = frontends;
-            Associations = associations;
-            SecurityPolicies = securityPolicies;
-            SecurityPolicyConfigurations = securityPolicyConfigurations;
-            TrafficControllerProvisioningState = trafficControllerProvisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/> for deserialization. </summary>
-        internal TrafficControllerData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal TrafficControllerProperties Properties { get; set; }
 
         /// <summary> Configuration Endpoints. </summary>
-        public IReadOnlyList<string> ConfigurationEndpoints { get; }
+        public IReadOnlyList<string> ConfigurationEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                return Properties.ConfigurationEndpoints;
+            }
+        }
+
         /// <summary> Frontends References List. </summary>
-        public IReadOnlyList<SubResource> Frontends { get; }
+        public IReadOnlyList<SubResource> Frontends
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                return Properties.Frontends;
+            }
+        }
+
         /// <summary> Associations References List. </summary>
-        public IReadOnlyList<SubResource> Associations { get; }
+        public IReadOnlyList<SubResource> Associations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                return Properties.Associations;
+            }
+        }
+
         /// <summary> Security Policies References List. </summary>
-        public IReadOnlyList<SubResource> SecurityPolicies { get; }
+        public IReadOnlyList<SubResource> SecurityPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                return Properties.SecurityPolicies;
+            }
+        }
+
         /// <summary> Security Policy Configuration. </summary>
-        public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
+        public SecurityPolicyConfigurations SecurityPolicyConfigurations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityPolicyConfigurations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                Properties.SecurityPolicyConfigurations = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public ServiceNetworkingProvisioningState? TrafficControllerProvisioningState { get; }
+        public ServiceNetworkingProvisioningState? TrafficControllerProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficControllerProvisioningState;
+            }
+        }
     }
 }

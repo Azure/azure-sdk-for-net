@@ -163,6 +163,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureLocationModel"
+        }
+      },
       "properties": [
         {
           "$id": "19",
@@ -238,6 +243,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar",
       "apiVersions": [
@@ -324,7 +330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -438,7 +445,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -588,7 +596,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -715,7 +724,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -815,7 +825,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
@@ -884,9 +895,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar",
           "apiVersions": [
@@ -894,9 +906,11 @@
           ],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

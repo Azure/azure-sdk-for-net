@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.ServiceBus
 
         private readonly ClientDiagnostics _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics;
         private readonly QueueAuthorizationRulesRestOperations _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient;
+        private readonly ClientDiagnostics _serviceBusQueueQueuesClientDiagnostics;
+        private readonly QueuesRestOperations _serviceBusQueueQueuesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,6 +66,9 @@ namespace Azure.ResourceManager.ServiceBus
             _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceBusQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
             _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
+            _serviceBusQueueQueuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusQueueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceBusQueueResource.ResourceType, out string serviceBusQueueQueuesApiVersion);
+            _serviceBusQueueQueuesRestClient = new QueuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueQueuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +188,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +232,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +276,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +324,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,30 +364,30 @@ namespace Azure.ResourceManager.ServiceBus
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/ListKeys</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/listKeys</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QueueAuthorizationRules_ListKeys</description>
+        /// <description>Queues_ListKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceBusAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleResource.GetKeys");
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
-                var response = await _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusQueueQueuesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -397,30 +402,30 @@ namespace Azure.ResourceManager.ServiceBus
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/ListKeys</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/listKeys</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>QueueAuthorizationRules_ListKeys</description>
+        /// <description>Queues_ListKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
+        /// <description><see cref="ServiceBusQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceBusAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleResource.GetKeys");
+            using var scope = _serviceBusQueueQueuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
-                var response = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _serviceBusQueueQueuesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -443,7 +448,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -485,7 +490,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

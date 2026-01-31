@@ -25,7 +25,12 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
+
+    <!--
+      THIS IS NOT AN APPROVED DEPENDENCY AND MUST BE REVIEWED BY THE ARCHITECTS
+      BEFORE A STABLE RELEASE
+    -->
+    <PackageReference Include="RL.Net" />
   </ItemGroup>
 
 </Project>

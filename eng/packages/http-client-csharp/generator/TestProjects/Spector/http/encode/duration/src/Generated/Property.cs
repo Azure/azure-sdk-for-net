@@ -98,5 +98,37 @@ namespace Encode.Duration._Property
         public virtual Response<FloatMillisecondsDurationArrayProperty> FloatMillisecondsArray(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response<FloatMillisecondsDurationArrayProperty>> FloatMillisecondsArrayAsync(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Int32SecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> Int32SecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<Int32SecondsLargerUnitDurationProperty> Int32SecondsLargerUnit(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<Int32SecondsLargerUnitDurationProperty>> Int32SecondsLargerUnitAsync(Int32SecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatSecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> FloatSecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<FloatSecondsLargerUnitDurationProperty> FloatSecondsLargerUnit(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<FloatSecondsLargerUnitDurationProperty>> FloatSecondsLargerUnitAsync(FloatSecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Int32MillisecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<Int32MillisecondsLargerUnitDurationProperty> Int32MillisecondsLargerUnit(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<Int32MillisecondsLargerUnitDurationProperty>> Int32MillisecondsLargerUnitAsync(Int32MillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMillisecondsLargerUnit(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsLargerUnitAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<FloatMillisecondsLargerUnitDurationProperty> FloatMillisecondsLargerUnit(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<FloatMillisecondsLargerUnitDurationProperty>> FloatMillisecondsLargerUnitAsync(FloatMillisecondsLargerUnitDurationProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

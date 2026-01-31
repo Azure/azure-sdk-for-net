@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinuousModeProperties"/>. </summary>
-        /// <param name="tier"> Enum to indicate type of Continuos backup mode. </param>
+        /// <param name="tier"> Enum to indicate type of Continuous backup mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContinuousModeProperties(ContinuousTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enum to indicate type of Continuos backup mode. </summary>
+        /// <summary> Enum to indicate type of Continuous backup mode. </summary>
         [WirePath("tier")]
         public ContinuousTier? Tier { get; set; }
     }

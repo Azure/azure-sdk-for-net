@@ -169,7 +169,7 @@ additional questions or comments.
 [product_documentation]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/
 [docs]: https://learn.microsoft.com/dotnet/api/azure.health.deidentification
 [deid_nuget]: https://www.nuget.org/packages/Azure.Health.Deidentification
-[string_index]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/StringIndex.cs
+[string_index]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src/Generated/Models/StringIndex.cs
 [character_encoding]: https://learn.microsoft.com/dotnet/standard/base-types/character-encoding-introduction
 [deid_redaction_format]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format
 [azure_subscription]: https://azure.microsoft.com/free/

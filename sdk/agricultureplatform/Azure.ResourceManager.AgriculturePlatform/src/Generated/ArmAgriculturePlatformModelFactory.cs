@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AgriculturePlatform;
 using Azure.ResourceManager.Models;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceProperties"/> instance for mocking. </returns>
-        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IReadOnlyList<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
+        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
         {
             dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
             installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             return new AgricultureServiceProperties(
                 provisioningState,
                 config,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources, new Dictionary<string, BinaryData>()),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<SubResource>()).ToList(), null),
                 dataConnectorCredentials.ToList(),
                 installedSolutions.ToList(),
                 additionalBinaryDataProperties: null);
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.AgricultureServicePatch"/> instance for mocking. </returns>
-        public static AgricultureServicePatch AgricultureServicePatch(ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default, IDictionary<string, string> tags = default, AgriServiceResourceUpdateProperties properties = default)
+        public static AgricultureServicePatch AgricultureServicePatch(ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default, IDictionary<string, string> tags = default, AgricultureServicePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
-        /// <returns> A new <see cref="Models.AgriServiceResourceUpdateProperties"/> instance for mocking. </returns>
-        public static AgriServiceResourceUpdateProperties AgriServiceResourceUpdateProperties(AgricultureServiceConfig config = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
+        /// <returns> A new <see cref="Models.AgricultureServicePatchProperties"/> instance for mocking. </returns>
+        public static AgricultureServicePatchProperties AgricultureServicePatchProperties(AgricultureServiceConfig config = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
         {
             dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
             installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
 
-            return new AgriServiceResourceUpdateProperties(config, dataConnectorCredentials.ToList(), installedSolutions.ToList(), additionalBinaryDataProperties: null);
+            return new AgricultureServicePatchProperties(config, dataConnectorCredentials.ToList(), installedSolutions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The list of available agri solutions. </summary>

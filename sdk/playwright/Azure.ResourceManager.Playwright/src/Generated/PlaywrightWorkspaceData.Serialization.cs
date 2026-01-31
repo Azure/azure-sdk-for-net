@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Playwright
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePlaywrightWorkspaceData(document.RootElement, options);
                     }
@@ -221,11 +221,10 @@ namespace Azure.ResourceManager.Playwright
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceData"/> from. </param>
-        internal static PlaywrightWorkspaceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceData"/> from. </param>
+        internal static PlaywrightWorkspaceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePlaywrightWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

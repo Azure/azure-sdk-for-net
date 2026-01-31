@@ -84,8 +84,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             string text = default;
             string language = default;
-            UtteranceEntitiesEvaluationResult entitiesResult = default;
-            UtteranceIntentsEvaluationResult intentsResult = default;
+            AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult = default;
+            AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,12 +102,12 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("entitiesResult"u8))
                 {
-                    entitiesResult = UtteranceEntitiesEvaluationResult.DeserializeUtteranceEntitiesEvaluationResult(property.Value, options);
+                    entitiesResult = AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("intentsResult"u8))
                 {
-                    intentsResult = UtteranceIntentsEvaluationResult.DeserializeUtteranceIntentsEvaluationResult(property.Value, options);
+                    intentsResult = AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceIntentsEvaluationResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

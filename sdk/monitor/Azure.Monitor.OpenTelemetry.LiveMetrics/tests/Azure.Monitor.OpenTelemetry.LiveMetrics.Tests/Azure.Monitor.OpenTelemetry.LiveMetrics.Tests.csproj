@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -20,6 +20,12 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
   </ItemGroup>
 
+  <!-- Only include ASP.NET Core dependencies for modern .NET targets -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.AspNetCore\tests\Azure.Monitor.AspNetCoreTestApp\Azure.Monitor.AspNetCoreTestApp.csproj" />
@@ -32,15 +38,4 @@
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\EventSourceTestHelper.cs" LinkBase="CommonTestFramework" />
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\TestEventListener.cs" LinkBase="CommonTestFramework" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="8.0.15" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="9.0.4" />
-  </ItemGroup>
-
 </Project>

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeStorageDiscoveryWorkspaceData(document.RootElement, options);
                     }
@@ -221,11 +221,10 @@ namespace Azure.ResourceManager.StorageDiscovery
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StorageDiscoveryWorkspaceData"/> from. </param>
-        internal static StorageDiscoveryWorkspaceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageDiscoveryWorkspaceData"/> from. </param>
+        internal static StorageDiscoveryWorkspaceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStorageDiscoveryWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

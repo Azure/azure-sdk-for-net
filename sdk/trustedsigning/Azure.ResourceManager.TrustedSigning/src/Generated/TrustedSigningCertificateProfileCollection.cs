@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// A class representing a collection of <see cref="TrustedSigningCertificateProfileResource"/> and their operations.
-    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of the parent resource.
+    /// Each <see cref="TrustedSigningCertificateProfileResource"/> in the collection will belong to the same instance of <see cref="TrustedSigningAccountResource"/>.
+    /// To get a <see cref="TrustedSigningCertificateProfileCollection"/> instance call the GetTrustedSigningCertificateProfiles method from an instance of <see cref="TrustedSigningAccountResource"/>.
     /// </summary>
     public partial class TrustedSigningCertificateProfileCollection : ArmCollection, IEnumerable<TrustedSigningCertificateProfileResource>, IAsyncEnumerable<TrustedSigningCertificateProfileResource>
     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CertificateProfiles_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CertificateProfiles_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> List certificate profiles under a trusted signing account. </summary>
+        /// <summary>
+        /// List certificate profiles under a trusted signing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_ListByCodeSigningAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningCertificateProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.TrustedSigning
             return new AsyncPageableWrapper<TrustedSigningCertificateProfileData, TrustedSigningCertificateProfileResource>(new CertificateProfilesGetByCodeSigningAccountAsyncCollectionResultOfT(_certificateProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new TrustedSigningCertificateProfileResource(Client, data));
         }
 
-        /// <summary> List certificate profiles under a trusted signing account. </summary>
+        /// <summary>
+        /// List certificate profiles under a trusted signing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}/certificateProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateProfiles_ListByCodeSigningAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningCertificateProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningCertificateProfileResource> GetAll(CancellationToken cancellationToken = default)
@@ -293,7 +325,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get details of a certificate profile.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -301,7 +333,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -350,7 +382,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get details of a certificate profile.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -358,7 +390,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -407,7 +439,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get details of a certificate profile.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -415,7 +447,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -468,7 +500,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get details of a certificate profile.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -476,7 +508,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

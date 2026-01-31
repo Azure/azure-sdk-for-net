@@ -50,7 +50,7 @@ public class BasicCognitiveServicesTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource account 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+            resource account 'Microsoft.CognitiveServices/accounts@2025-09-01' = {
               name: take('account-${uniqueString(resourceGroup().id)}', 64)
               location: location
               identity: {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dell.Storage;
 using Azure.ResourceManager.Models;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 provisioningState,
                 delegatedSubnetId,
                 delegatedSubnetCidr,
-                userEmail is null ? default : new DellFileSystemUserDetails(userEmail, new Dictionary<string, BinaryData>()),
+                userEmail is null ? default : new DellFileSystemUserDetails(userEmail, null),
                 fileSystemId,
                 smartConnectFqdn,
                 oneFsUri,

@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    internal partial class ApplicationsRestOperations
+    internal partial class Applications
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ApplicationsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Applications for mocking. </summary>
+        protected Applications()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Applications. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ApplicationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Applications(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -49,100 +54,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceFabricManagedApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedApplicationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ServiceFabricManagedApplicationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceFabricManagedApplicationData> Get(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedApplicationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ServiceFabricManagedApplicationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -153,96 +75,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create or update a Service Fabric managed application resource with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="data"> The application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create or update a Service Fabric managed application resource with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="data"> The application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -253,104 +98,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates the tags of an application resource of a given managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="patch"> The application resource updated tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceFabricManagedApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationPatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedApplicationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates the tags of an application resource of a given managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="patch"> The application resource updated tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceFabricManagedApplicationData> Update(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, ServiceFabricManagedApplicationPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, applicationName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedApplicationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -361,87 +121,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a Service Fabric managed application resource with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a Service Fabric managed application resource with the specified name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -451,91 +140,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/applications", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets all managed application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationResourceList.DeserializeApplicationResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Gets all managed application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationResourceList> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateReadUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationResourceList.DeserializeApplicationResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateReadUpgradeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -547,86 +174,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(applicationName, true);
             uri.AppendPath("/fetchUpgradeStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateReadUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendPath("/fetchUpgradeStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
             return message;
         }
 
-        /// <summary> Get the status of the latest application upgrade. It will query the cluster to find the status of the latest application upgrade. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReadUpgradeAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateResumeUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateReadUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the status of the latest application upgrade. It will query the cluster to find the status of the latest application upgrade. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ReadUpgrade(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateReadUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateResumeUpgradeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -638,94 +195,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(applicationName, true);
             uri.AppendPath("/resumeUpgrade", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateResumeUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendPath("/resumeUpgrade", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
-        /// <summary> Send a request to resume the current application upgrade. This will resume the application upgrade from where it was paused. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="content"> The parameters for resuming an application upgrade. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResumeUpgradeAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateStartRollbackRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateResumeUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Send a request to resume the current application upgrade. This will resume the application upgrade from where it was paused. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="content"> The parameters for resuming an application upgrade. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResumeUpgrade(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeResumeApplicationUpgradeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateResumeUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateStartRollbackRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -737,86 +218,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(applicationName, true);
             uri.AppendPath("/startRollback", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateStartRollbackRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/applications/", false);
-            uri.AppendPath(applicationName, true);
-            uri.AppendPath("/startRollback", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
             return message;
         }
 
-        /// <summary> Send a request to start a rollback of the current application upgrade. This will start rolling back the application to the previous version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartRollbackAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateStartRollbackRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Send a request to start a rollback of the current application upgrade. This will start rolling back the application to the previous version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StartRollback(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var message = CreateStartRollbackRequest(subscriptionId, resourceGroupName, clusterName, applicationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateUpgradeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -828,15 +239,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(applicationName, true);
             uri.AppendPath("/updateUpgrade", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
 
-        internal HttpMessage CreateUpdateUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content)
+        internal HttpMessage CreateFetchHealthRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -846,155 +260,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(applicationName, true);
-            uri.AppendPath("/updateUpgrade", false);
+            uri.AppendPath("/fetchHealth", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
-        /// <summary> Send a request to update the current application upgrade. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="content"> The parameters for updating an application upgrade. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateUpgradeAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateRestartDeployedCodePackageRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateUpdateUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Send a request to update the current application upgrade. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="content"> The parameters for updating an application upgrade. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateUpgrade(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateUpdateUpgradeRequest(subscriptionId, resourceGroupName, clusterName, applicationName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/applications/", false);
+            uri.AppendPath(applicationName, true);
+            uri.AppendPath("/restartDeployedCodePackage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
             return message;
-        }
-
-        /// <summary> Gets all managed application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationResourceList.DeserializeApplicationResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all managed application resources created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the cluster resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationResourceList.DeserializeApplicationResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

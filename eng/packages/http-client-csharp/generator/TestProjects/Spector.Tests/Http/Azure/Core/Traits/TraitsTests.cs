@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Traits;
+using Specs.Azure.Core.Traits;
 using Azure;
 using NUnit.Framework;
 

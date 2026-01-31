@@ -1,6 +1,27 @@
 # Release History
 
-## 1.50.0-beta.1 (Unreleased)
+## 1.52.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.51.0 (2026-01-29)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Implements support for client certificate rotation in the Azure.Core transport layer to enable dynamic token binding scenarios. The changes allow transport instances to be updated with new client certificate configurations at runtime without requiring full pipeline reconstruction.
+
+### Bugs Fixed
+
+- Fixed `NullReferenceException` when calling `GetHashCode()` on `default(AzureLocation)`.
+
+## 1.50.0 (2025-11-05)
 
 ### Acknowledgments
 
@@ -10,9 +31,7 @@ Thank you to our developer community members who helped to make the Azure.Core l
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Adopt System.ClientModel 1.8.0
 
 ### Other Changes
 

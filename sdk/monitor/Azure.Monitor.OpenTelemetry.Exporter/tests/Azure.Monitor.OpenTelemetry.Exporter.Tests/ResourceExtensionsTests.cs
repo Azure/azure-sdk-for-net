@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -113,7 +113,7 @@ public class ResourceExtensionsTests
     public void SetsSdkVersionPrefixFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "ai.sdk.prefix", "pre_" }
@@ -125,14 +125,14 @@ public class ResourceExtensionsTests
         Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
     }
 
     [Fact]
-    public void SetsSdkDistroSuffixFromResource()
+    public void SetsSdkDistroLabelFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
         {
             { "telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore" }
@@ -141,17 +141,23 @@ public class ResourceExtensionsTests
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
-        Assert.EndsWith("-d", SdkVersionUtils.s_sdkVersion);
+        Assert.Contains(":dst", SdkVersionUtils.s_sdkVersion);
+        Assert.Equal(SdkVersionType.Distro, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
     }
 
     [Fact]
-    public void DoesNotSetSdkDistroSuffixForWrongValueFromResource()
+    public void DoesNotSetSdkDistroLabelForWrongValueFromResource()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+
+        // Reset to default state before test
+        SdkVersionUtils.VersionType = SdkVersionType.Exporter;
+        SdkVersionUtils.SdkVersionPrefix = null;
+
         var testAttributes = new Dictionary<string, object>
         {
             { "telemetry.distro.name", "" }
@@ -160,17 +166,95 @@ public class ResourceExtensionsTests
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
         _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
-        Assert.DoesNotContain("-d", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":dst", SdkVersionUtils.s_sdkVersion);
+        Assert.Contains(":ext", SdkVersionUtils.s_sdkVersion);
+        Assert.Equal(SdkVersionType.Exporter, SdkVersionUtils.s_sdkVersionType);
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
+    }
+
+    [Theory]
+    [InlineData("Microsoft.ApplicationInsights", "sha", SdkVersionType.ShimBase)]
+    [InlineData("Microsoft.ApplicationInsights.AspNetCore", "shc", SdkVersionType.ShimAspNetCore)]
+    [InlineData("Microsoft.ApplicationInsights.WorkerService", "shw", SdkVersionType.ShimWorkerService)]
+    [InlineData("Microsoft.ApplicationInsights.Web", "shf", SdkVersionType.ShimWeb)]
+    internal void SetsSdkShimLabelForAllShimPackages(string distroName, string expectedLabel, SdkVersionType expectedType)
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "telemetry.distro.name", distroName }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+
+        Assert.Contains($":{expectedLabel}", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":ext", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":dst", SdkVersionUtils.s_sdkVersion);
+        Assert.Equal(expectedType, SdkVersionUtils.s_sdkVersionType);
+
+        // Clean up
+        restoreSdkVersion();
+    }
+
+    [Theory]
+    [InlineData("Microsoft.ApplicationInsights", "sha")]
+    [InlineData("Microsoft.ApplicationInsights.AspNetCore", "shc")]
+    [InlineData("Microsoft.ApplicationInsights.WorkerService", "shw")]
+    [InlineData("Microsoft.ApplicationInsights.Web", "shf")]
+    public void SetsSdkPrefixWithShimLabel(string distroName, string expectedLabel)
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "ai.sdk.prefix", "testprefix" },
+            { "telemetry.distro.name", distroName }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+
+        Assert.StartsWith("testprefix_", SdkVersionUtils.s_sdkVersion);
+        Assert.Contains($":{expectedLabel}", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":ext", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":dst", SdkVersionUtils.s_sdkVersion);
+
+        // Clean up
+        restoreSdkVersion();
+    }
+
+    [Fact]
+    public void SetsSdkPrefixWithDistroLabel()
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+        {
+            { "ai.sdk.prefix", "distroprefix" },
+            { "telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore" }
+        };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+
+        Assert.StartsWith("distroprefix_", SdkVersionUtils.s_sdkVersion);
+        Assert.Contains(":dst", SdkVersionUtils.s_sdkVersion);
+        Assert.DoesNotContain(":ext", SdkVersionUtils.s_sdkVersion);
+        Assert.Equal(SdkVersionType.Distro, SdkVersionUtils.s_sdkVersionType);
+
+        // Clean up
+        restoreSdkVersion();
     }
 
     [Fact]
     public void MissingPrefixResourceDoesNotSetSdkPrefix()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
 
         var resource = ResourceBuilder.CreateDefault().Build();
         _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
@@ -179,14 +263,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void EmptyPrefixResourceDoesNotSetSdkPrefix()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
 
         var testAttributes = new Dictionary<string, object>
         {
@@ -200,14 +284,14 @@ public class ResourceExtensionsTests
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
     }
 
     [Fact]
     public void SdkPrefixIsNotInResourceMetrics()
     {
         // SDK version is static, preserve to clean up later.
-        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
         var testAttributes = new Dictionary<string, object>
             {
                 {"foo", "bar" },
@@ -225,7 +309,78 @@ public class ResourceExtensionsTests
         Assert.False(metricsData?.Properties.ContainsKey("ai.sdk.prefix"));
 
         // Clean up
-        SdkVersionUtils.s_sdkVersion = sdkVersion;
+        restoreSdkVersion();
+    }
+
+    [Fact]
+    public void SdkDistroVersionNotEmittedForCustomerNamespaces()
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+            {
+                { "telemetry.distro.name", "Customer.App.Namespace" },
+                { "telemetry.distro.version", "do-not-use" }
+            };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform(), instrumentationKey: InstrumentationKey);
+
+        Assert.Equal("ext", SdkVersionUtils.ExtensionLabel);
+        Assert.DoesNotContain("do-not-use", SdkVersionUtils.ExtensionVersion);
+
+        Assert.StartsWith("ext", SdkVersionUtils.GetVersion());
+        Assert.DoesNotContain("do-not-use", SdkVersionUtils.GetVersion());
+
+        // Clean up
+        restoreSdkVersion();
+    }
+
+    [Fact]
+    public void SdkDistroVersionNotEmittedForUnknownNamespaces()
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+            {
+                // telemetry.distro.name not present
+                { "telemetry.distro.version", "do-not-use" }
+            };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform(), instrumentationKey: InstrumentationKey);
+
+        Assert.Equal("ext", SdkVersionUtils.ExtensionLabel); // ext is the default
+        Assert.DoesNotContain("do-not-use", SdkVersionUtils.ExtensionVersion);
+
+        Assert.StartsWith("ext", SdkVersionUtils.GetVersion());
+        Assert.DoesNotContain("do-not-use", SdkVersionUtils.GetVersion());
+
+        // Clean up
+        restoreSdkVersion();
+    }
+
+    [Fact]
+    public void SdkDistroVersionEmitted()
+    {
+        // SDK version is static, preserve to clean up later.
+        var restoreSdkVersion = SaveSdkVersionUtilsState();
+        var testAttributes = new Dictionary<string, object>
+            {
+                { "telemetry.distro.name", "Microsoft.ApplicationInsights.AspNetCore" },
+                { "telemetry.distro.version", "abc-123" }
+            };
+
+        var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform(), instrumentationKey: InstrumentationKey);
+
+        Assert.Equal("shc", SdkVersionUtils.ExtensionLabel); //shc = app insights shim for aspnetcore
+        Assert.Equal("abc-123", SdkVersionUtils.ExtensionVersion);
+
+        Assert.Equal("shcabc-123", SdkVersionUtils.GetVersion());
+
+        // Clean up
+        restoreSdkVersion();
     }
 
     [Theory]
@@ -373,5 +528,24 @@ public class ResourceExtensionsTests
             testAttributes.Add(SemanticConventions.AttributeServiceInstance, serviceInstance);
 
         return ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+    }
+
+    /// <summary>
+    /// Preserves the values hidden in SdkVersionUtils for later cleanup.
+    /// </summary>
+    /// <returns>an Action that reverts any changes made since this method was called</returns>
+    private static Action SaveSdkVersionUtilsState()
+    {
+        var sdkVersion = SdkVersionUtils.s_sdkVersion;
+        var sdkVersionType = SdkVersionUtils.VersionType;
+        var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+
+        return () =>
+        {
+            SdkVersionUtils.s_sdkVersion = sdkVersion;
+            SdkVersionUtils.VersionType = sdkVersionType;
+            SdkVersionUtils.ExtensionVersion = null;
+            SdkVersionUtils.SdkVersionPrefix = sdkPrefix;
+        };
     }
 }

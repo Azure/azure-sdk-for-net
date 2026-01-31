@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary>
     /// A class representing a collection of <see cref="AdvancedThreatProtectionResource"/> and their operations.
     /// Each <see cref="AdvancedThreatProtectionResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get an <see cref="AdvancedThreatProtectionCollection"/> instance call the GetAdvancedThreatProtections method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="AdvancedThreatProtectionCollection"/> instance call the GetAdvancedThreatProtections method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class AdvancedThreatProtectionCollection : ArmCollection, IEnumerable<AdvancedThreatProtectionResource>, IAsyncEnumerable<AdvancedThreatProtectionResource>
     {
-        private readonly ClientDiagnostics _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics;
-        private readonly AdvancedThreatProtectionSettingsRestOperations _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient;
+        private readonly ClientDiagnostics _advancedThreatProtectionSettingsClientDiagnostics;
+        private readonly AdvancedThreatProtectionSettings _advancedThreatProtectionSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AdvancedThreatProtectionCollection for mocking. </summary>
         protected AdvancedThreatProtectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AdvancedThreatProtectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
-            _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionApiVersion);
+            _advancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
+            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Updates a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_UpdatePut. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,14 +81,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
+                    new AdvancedThreatProtectionOperationSource(Client),
+                    _advancedThreatProtectionSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +115,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Updates a server's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_UpdatePut. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,14 +137,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
+                    new AdvancedThreatProtectionOperationSource(Client),
+                    _advancedThreatProtectionSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,20 +171,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Get a server's Advanced Threat Protection state
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,13 +188,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AdvancedThreatProtectionResource>> GetAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Get");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvancedThreatProtectionData> response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +216,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Get a server's Advanced Threat Protection state
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,13 +233,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AdvancedThreatProtectionResource> Get(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Get");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvancedThreatProtectionData> response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,50 +261,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Gets a list of server's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AdvancedThreatProtectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdvancedThreatProtectionResource(Client, AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(e)), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "AdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllAsyncCollectionResultOfT(_advancedThreatProtectionSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of server's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,29 +306,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="AdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AdvancedThreatProtectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdvancedThreatProtectionResource(Client, AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(e)), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "AdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AdvancedThreatProtectionData, AdvancedThreatProtectionResource>(new AdvancedThreatProtectionSettingsGetAllCollectionResultOfT(_advancedThreatProtectionSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,11 +334,29 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Exists");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,20 +370,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,11 +387,29 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Exists");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -370,20 +423,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,13 +440,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<AdvancedThreatProtectionResource>> GetIfExistsAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.GetIfExists");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AdvancedThreatProtectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,20 +480,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,13 +497,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<AdvancedThreatProtectionResource> GetIfExists(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.GetIfExists");
+            using DiagnosticScope scope = _advancedThreatProtectionSettingsClientDiagnostics.CreateScope("AdvancedThreatProtectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AdvancedThreatProtectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -458,6 +543,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AdvancedThreatProtectionResource> IAsyncEnumerable<AdvancedThreatProtectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

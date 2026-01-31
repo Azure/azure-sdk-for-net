@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+    /// <summary> Indicates the minimum allowed Tls version. The default value is Tls 1.2. Cassandra and Mongo APIs only work with Tls 1.2. </summary>
     public readonly partial struct CosmosDBMinimalTlsVersion : IEquatable<CosmosDBMinimalTlsVersion>
     {
         private readonly string _value;

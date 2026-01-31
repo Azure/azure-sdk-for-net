@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     /// <summary>
-    /// A Class representing a ConnectedClusterLoadBalancer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterLoadBalancerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterLoadBalancerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterLoadBalancer method.
+    /// A class representing a ConnectedClusterLoadBalancer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterLoadBalancerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterLoadBalancers method.
     /// </summary>
     public partial class ConnectedClusterLoadBalancerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ConnectedClusterLoadBalancerResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="loadBalancerName"> The loadBalancerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string loadBalancerName)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _connectedClusterLoadBalancerLoadBalancersClientDiagnostics;
-        private readonly LoadBalancersRestOperations _connectedClusterLoadBalancerLoadBalancersRestClient;
+        private readonly ClientDiagnostics _loadBalancersClientDiagnostics;
+        private readonly LoadBalancers _loadBalancersRestClient;
         private readonly ConnectedClusterLoadBalancerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesRuntime/loadBalancers";
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterLoadBalancerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ConnectedClusterLoadBalancerResource for mocking. </summary>
         protected ConnectedClusterLoadBalancerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterLoadBalancerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterLoadBalancerResource(ArmClient client, ConnectedClusterLoadBalancerData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterLoadBalancerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterLoadBalancerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectedClusterLoadBalancerLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string connectedClusterLoadBalancerLoadBalancersApiVersion);
-            _connectedClusterLoadBalancerLoadBalancersRestClient = new LoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterLoadBalancerLoadBalancersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string connectedClusterLoadBalancerApiVersion);
+            _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, connectedClusterLoadBalancerApiVersion ?? "2024-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ConnectedClusterLoadBalancerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string loadBalancerName)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a LoadBalancer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConnectedClusterLoadBalancerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Get");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Get");
             scope.Start();
             try
             {
-                var response = await _connectedClusterLoadBalancerLoadBalancersRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterLoadBalancerData> response = Response.FromValue(ConnectedClusterLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterLoadBalancerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a LoadBalancer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectedClusterLoadBalancerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Get");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Get");
             scope.Start();
             try
             {
-                var response = _connectedClusterLoadBalancerLoadBalancersRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterLoadBalancerData> response = Response.FromValue(ConnectedClusterLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterLoadBalancerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a LoadBalancer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Delete");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _connectedClusterLoadBalancerLoadBalancersRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _connectedClusterLoadBalancerLoadBalancersRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Delete a LoadBalancer
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Delete");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Delete");
             scope.Start();
             try
             {
-                var response = _connectedClusterLoadBalancerLoadBalancersRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _connectedClusterLoadBalancerLoadBalancersRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a LoadBalancer
+        /// Update a ConnectedClusterLoadBalancer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +316,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Update");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Update");
             scope.Start();
             try
             {
-                var response = await _connectedClusterLoadBalancerLoadBalancersRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(new ConnectedClusterLoadBalancerOperationSource(Client), _connectedClusterLoadBalancerLoadBalancersClientDiagnostics, Pipeline, _connectedClusterLoadBalancerLoadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
+                    new ConnectedClusterLoadBalancerOperationSource(Client),
+                    _loadBalancersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,23 +347,23 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a LoadBalancer
+        /// Update a ConnectedClusterLoadBalancer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/loadBalancers/{loadBalancerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancer_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterLoadBalancerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +375,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterLoadBalancerLoadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Update");
+            using DiagnosticScope scope = _loadBalancersClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerResource.Update");
             scope.Start();
             try
             {
-                var response = _connectedClusterLoadBalancerLoadBalancersRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(new ConnectedClusterLoadBalancerOperationSource(Client), _connectedClusterLoadBalancerLoadBalancersClientDiagnostics, Pipeline, _connectedClusterLoadBalancerLoadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
+                    new ConnectedClusterLoadBalancerOperationSource(Client),
+                    _loadBalancersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

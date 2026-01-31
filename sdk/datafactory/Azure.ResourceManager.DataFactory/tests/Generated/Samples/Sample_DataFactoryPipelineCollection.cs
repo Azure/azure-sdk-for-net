@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PipelinesCreate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Create.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_Create.json
             // this example is just showing the usage of "Pipelines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ value = "@pipeline().parameters.JobId",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PipelinesUpdate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Update.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_Update.json
             // this example is just showing the usage of "Pipelines_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +181,7 @@ IsSequential = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PipelinesGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
             // this example is just showing the usage of "Pipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,7 +215,7 @@ IsSequential = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PipelinesListByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_ListByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_ListByFactory.json
             // this example is just showing the usage of "Pipelines_ListByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +251,7 @@ IsSequential = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PipelinesGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
             // this example is just showing the usage of "Pipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -281,7 +281,7 @@ IsSequential = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PipelinesGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
             // this example is just showing the usage of "Pipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Monitor.Query.Metrics
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct))]
     internal partial class CodeGenTypeAttribute : Attribute

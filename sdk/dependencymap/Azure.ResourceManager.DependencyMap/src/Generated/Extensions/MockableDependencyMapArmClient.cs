@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDependencyMapArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDependencyMapArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDependencyMapArmClient for mocking. </summary>
         protected MockableDependencyMapArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDependencyMapArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDependencyMapArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDependencyMapArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDependencyMapArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DependencyMapResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DependencyMapResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DependencyMapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DependencyMapResource"/> object. </returns>
         public virtual DependencyMapResource GetDependencyMapResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             return new DependencyMapResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DependencyMapDiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DependencyMapDiscoverySourceResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapDiscoverySourceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DependencyMapDiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DependencyMapDiscoverySourceResource"/> object. </returns>
         public virtual DependencyMapDiscoverySourceResource GetDependencyMapDiscoverySourceResource(ResourceIdentifier id)

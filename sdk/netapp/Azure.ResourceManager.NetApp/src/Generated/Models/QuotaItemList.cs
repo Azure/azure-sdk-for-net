@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
-        internal QuotaItemList()
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QuotaItemList(IEnumerable<NetAppSubscriptionQuotaItem> value)
         {
-            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaItemList"/>. </summary>
-        /// <param name="value"> A list of QuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The QuotaItem items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of QuotaItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaItemList"/> for deserialization. </summary>
+        internal QuotaItemList()
+        {
+        }
+
+        /// <summary> The QuotaItem items on this page. </summary>
         public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The redirect type the rule will use when redirecting traffic.
-    /// Serialized Name: RedirectType
-    /// </summary>
+    /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
     public readonly partial struct RedirectType : IEquatable<RedirectType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string TemporaryRedirectValue = "TemporaryRedirect";
         private const string PermanentRedirectValue = "PermanentRedirect";
 
-        /// <summary>
-        /// Moved
-        /// Serialized Name: RedirectType.Moved
-        /// </summary>
+        /// <summary> Moved. </summary>
         public static RedirectType Moved { get; } = new RedirectType(MovedValue);
-        /// <summary>
-        /// Found
-        /// Serialized Name: RedirectType.Found
-        /// </summary>
+        /// <summary> Found. </summary>
         public static RedirectType Found { get; } = new RedirectType(FoundValue);
-        /// <summary>
-        /// TemporaryRedirect
-        /// Serialized Name: RedirectType.TemporaryRedirect
-        /// </summary>
+        /// <summary> TemporaryRedirect. </summary>
         public static RedirectType TemporaryRedirect { get; } = new RedirectType(TemporaryRedirectValue);
-        /// <summary>
-        /// PermanentRedirect
-        /// Serialized Name: RedirectType.PermanentRedirect
-        /// </summary>
+        /// <summary> PermanentRedirect. </summary>
         public static RedirectType PermanentRedirect { get; } = new RedirectType(PermanentRedirectValue);
         /// <summary> Determines if two <see cref="RedirectType"/> values are the same. </summary>
         public static bool operator ==(RedirectType left, RedirectType right) => left.Equals(right);

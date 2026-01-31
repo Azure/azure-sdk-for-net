@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHardwareSecurityModulesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHardwareSecurityModulesResourceGroupResource for mocking. </summary>
         protected MockableHardwareSecurityModulesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHardwareSecurityModulesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of CloudHsmClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CloudHsmClusterResources and their operations over a CloudHsmClusterResource. </returns>
+        /// <summary> Gets a collection of CloudHsmClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CloudHsmClusters and their operations over a CloudHsmClusterResource. </returns>
         public virtual CloudHsmClusterCollection GetCloudHsmClusters()
         {
             return GetCachedClient(client => new CloudHsmClusterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// Gets the specified Cloud HSM Cluster
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudHsmCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudHsmClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudHsmClusterResource>> GetCloudHsmClusterAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+
             return await GetCloudHsmClusters().GetAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// Gets the specified Cloud HSM Cluster
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudHsmCluster_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CloudHsmClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         [ForwardsClientCalls]
         public virtual Response<CloudHsmClusterResource> GetCloudHsmCluster(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+
             return GetCloudHsmClusters().Get(cloudHsmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHsmResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DedicatedHsmResources and their operations over a DedicatedHsmResource. </returns>
+        /// <summary> Gets a collection of DedicatedHsms in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DedicatedHsms and their operations over a DedicatedHsmResource. </returns>
         public virtual DedicatedHsmCollection GetDedicatedHsms()
         {
             return GetCachedClient(client => new DedicatedHsmCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// Gets the specified Azure dedicated HSM.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetDedicatedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// Gets the specified Azure dedicated HSM.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHsms_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         [ForwardsClientCalls]
         public virtual Response<DedicatedHsmResource> GetDedicatedHsm(string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetDedicatedHsms().Get(name, cancellationToken);
         }
     }

@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.Versioning.PreviewVersion
+namespace Specs.Azure.Versioning.PreviewVersion
 {
     public partial class PreviewVersionClientOptions : ClientOptions
     {

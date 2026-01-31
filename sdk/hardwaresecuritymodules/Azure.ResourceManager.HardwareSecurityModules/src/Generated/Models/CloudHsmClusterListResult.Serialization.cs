@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class CloudHsmClusterListResult : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterListResult>
+    /// <summary> The response of a CloudHsmCluster list operation. </summary>
+    internal partial class CloudHsmClusterListResult : IJsonModel<CloudHsmClusterListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/> for deserialization. </summary>
+        internal CloudHsmClusterListResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +35,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterListResult)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (var item in Value)
+            foreach (CloudHsmClusterData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,64 +69,70 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        CloudHsmClusterListResult IJsonModel<CloudHsmClusterListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudHsmClusterListResult IJsonModel<CloudHsmClusterListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudHsmClusterListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterListResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudHsmClusterListResult(document.RootElement, options);
         }
 
-        internal static CloudHsmClusterListResult DeserializeCloudHsmClusterListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudHsmClusterListResult DeserializeCloudHsmClusterListResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<CloudHsmClusterData> value = default;
+            IList<CloudHsmClusterData> value = default;
             Uri nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
                     List<CloudHsmClusterData> array = new List<CloudHsmClusterData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CloudHsmClusterListResult(value, nextLink, serializedAdditionalRawData);
+            return new CloudHsmClusterListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CloudHsmClusterListResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudHsmClusterListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -130,15 +142,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        CloudHsmClusterListResult IPersistableModel<CloudHsmClusterListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudHsmClusterListResult IPersistableModel<CloudHsmClusterListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudHsmClusterListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudHsmClusterListResult(document.RootElement, options);
                     }
                 default:
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudHsmClusterListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudHsmClusterListResult"/> from. </param>
+        internal static CloudHsmClusterListResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCloudHsmClusterListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

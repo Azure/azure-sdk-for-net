@@ -40,6 +40,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -64,6 +65,7 @@ namespace Azure.AI.Projects
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");

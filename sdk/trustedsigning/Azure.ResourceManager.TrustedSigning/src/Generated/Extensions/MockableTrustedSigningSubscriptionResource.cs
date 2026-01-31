@@ -40,7 +40,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
 
         private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-13");
 
-        /// <summary> Lists trusted signing accounts within a subscription. </summary>
+        /// <summary>
+        /// Lists trusted signing accounts within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/codeSigningAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningAccountResource> GetTrustedSigningAccountsAsync(CancellationToken cancellationToken = default)
@@ -52,7 +68,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionAsyncCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TrustedSigningAccountResource(Client, data));
         }
 
-        /// <summary> Lists trusted signing accounts within a subscription. </summary>
+        /// <summary>
+        /// Lists trusted signing accounts within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/codeSigningAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningAccountResource> GetTrustedSigningAccounts(CancellationToken cancellationToken = default)
@@ -64,7 +96,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetBySubscriptionCollectionResultOfT(CodeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new TrustedSigningAccountResource(Client, data));
         }
 
-        /// <summary> Checks that the trusted signing account name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the trusted signing account name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -96,7 +144,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             }
         }
 
-        /// <summary> Checks that the trusted signing account name is valid and is not already in use. </summary>
+        /// <summary>
+        /// Checks that the trusted signing account name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CodeSigning/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

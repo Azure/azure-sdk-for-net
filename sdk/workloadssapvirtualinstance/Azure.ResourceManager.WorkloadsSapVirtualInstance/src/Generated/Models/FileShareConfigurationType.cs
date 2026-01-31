@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     internal readonly partial struct FileShareConfigurationType : IEquatable<FileShareConfigurationType>
     {
         private readonly string _value;
+        /// <summary> Skip creating the file share. </summary>
+        private const string SkipValue = "Skip";
+        /// <summary> Fileshare will be created and mounted by service. </summary>
+        private const string CreateAndMountValue = "CreateAndMount";
+        /// <summary> Existing fileshare provided will be mounted by service. </summary>
+        private const string MountValue = "Mount";
 
         /// <summary> Initializes a new instance of <see cref="FileShareConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FileShareConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SkipValue = "Skip";
-        private const string CreateAndMountValue = "CreateAndMount";
-        private const string MountValue = "Mount";
+            _value = value;
+        }
 
         /// <summary> Skip creating the file share. </summary>
         public static FileShareConfigurationType Skip { get; } = new FileShareConfigurationType(SkipValue);
+
         /// <summary> Fileshare will be created and mounted by service. </summary>
         public static FileShareConfigurationType CreateAndMount { get; } = new FileShareConfigurationType(CreateAndMountValue);
+
         /// <summary> Existing fileshare provided will be mounted by service. </summary>
         public static FileShareConfigurationType Mount { get; } = new FileShareConfigurationType(MountValue);
+
         /// <summary> Determines if two <see cref="FileShareConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareConfigurationType left, FileShareConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareConfigurationType left, FileShareConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareConfigurationType(string value) => new FileShareConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareConfigurationType?(string value) => value == null ? null : new FileShareConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

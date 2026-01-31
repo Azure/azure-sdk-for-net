@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
@@ -79,7 +74,6 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -92,15 +86,6 @@ namespace Azure.ResourceManager.CosmosDB
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerCosmosDBContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,7 +174,6 @@ namespace Azure.ResourceManager.CosmosDB
                 location,
                 resource,
                 options0,
-                identity,
                 serializedAdditionalRawData);
         }
 
@@ -273,21 +257,6 @@ namespace Azure.ResourceManager.CosmosDB
                         }
                         builder.AppendLine("  }");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 

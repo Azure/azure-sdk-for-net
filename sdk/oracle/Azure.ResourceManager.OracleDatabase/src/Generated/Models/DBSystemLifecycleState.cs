@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBSystemLifecycleState : IEquatable<DBSystemLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Indicates that resource is Migrated state. </summary>
+        private const string MigratedValue = "Migrated";
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
+        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
+        /// <summary> Indicates that resource needs attention state. </summary>
+        private const string NeedsAttentionValue = "NeedsAttention";
+        /// <summary> Indicates that resource in Upgrading state. </summary>
+        private const string UpgradingValue = "Upgrading";
 
         /// <summary> Initializes a new instance of <see cref="DBSystemLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBSystemLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string UpdatingValue = "Updating";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string FailedValue = "Failed";
-        private const string MigratedValue = "Migrated";
-        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
-        private const string NeedsAttentionValue = "NeedsAttention";
-        private const string UpgradingValue = "Upgrading";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static DBSystemLifecycleState Provisioning { get; } = new DBSystemLifecycleState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static DBSystemLifecycleState Available { get; } = new DBSystemLifecycleState(AvailableValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static DBSystemLifecycleState Updating { get; } = new DBSystemLifecycleState(UpdatingValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static DBSystemLifecycleState Terminating { get; } = new DBSystemLifecycleState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static DBSystemLifecycleState Terminated { get; } = new DBSystemLifecycleState(TerminatedValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static DBSystemLifecycleState Failed { get; } = new DBSystemLifecycleState(FailedValue);
+
         /// <summary> Indicates that resource is Migrated state. </summary>
         public static DBSystemLifecycleState Migrated { get; } = new DBSystemLifecycleState(MigratedValue);
+
         /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static DBSystemLifecycleState MaintenanceInProgress { get; } = new DBSystemLifecycleState(MaintenanceInProgressValue);
+
         /// <summary> Indicates that resource needs attention state. </summary>
         public static DBSystemLifecycleState NeedsAttention { get; } = new DBSystemLifecycleState(NeedsAttentionValue);
+
         /// <summary> Indicates that resource in Upgrading state. </summary>
         public static DBSystemLifecycleState Upgrading { get; } = new DBSystemLifecycleState(UpgradingValue);
+
         /// <summary> Determines if two <see cref="DBSystemLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBSystemLifecycleState left, DBSystemLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBSystemLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBSystemLifecycleState left, DBSystemLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBSystemLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBSystemLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBSystemLifecycleState(string value) => new DBSystemLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBSystemLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBSystemLifecycleState?(string value) => value == null ? null : new DBSystemLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBSystemLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBSystemLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

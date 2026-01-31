@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStorageResourceLimitDetails : IUtf8JsonSerializable, IJsonModel<PureStorageResourceLimitDetails>
+    /// <summary> Limits constraining certain resource properties. </summary>
+    public partial class PureStorageResourceLimitDetails : IJsonModel<PureStorageResourceLimitDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageResourceLimitDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PureStorageResourceLimitDetails"/> for deserialization. </summary>
+        internal PureStorageResourceLimitDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageResourceLimitDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageResourceLimitDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("storagePool"u8);
             writer.WriteObjectValue(StoragePool, options);
             writer.WritePropertyName("volume"u8);
@@ -42,15 +48,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteObjectValue(ProtectionPolicy, options);
             writer.WritePropertyName("performancePolicy"u8);
             writer.WriteObjectValue(PerformancePolicy, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -59,22 +65,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageResourceLimitDetails IJsonModel<PureStorageResourceLimitDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageResourceLimitDetails IJsonModel<PureStorageResourceLimitDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageResourceLimitDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageResourceLimitDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageResourceLimitDetails(document.RootElement, options);
         }
 
-        internal static PureStorageResourceLimitDetails DeserializePureStorageResourceLimitDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStorageResourceLimitDetails DeserializePureStorageResourceLimitDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,43 +94,44 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             VolumeLimits volume = default;
             ProtectionPolicyLimits protectionPolicy = default;
             PerformancePolicyLimits performancePolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("storagePool"u8))
+                if (prop.NameEquals("storagePool"u8))
                 {
-                    storagePool = StoragePoolLimits.DeserializeStoragePoolLimits(property.Value, options);
+                    storagePool = StoragePoolLimits.DeserializeStoragePoolLimits(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("volume"u8))
+                if (prop.NameEquals("volume"u8))
                 {
-                    volume = VolumeLimits.DeserializeVolumeLimits(property.Value, options);
+                    volume = VolumeLimits.DeserializeVolumeLimits(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protectionPolicy"u8))
+                if (prop.NameEquals("protectionPolicy"u8))
                 {
-                    protectionPolicy = ProtectionPolicyLimits.DeserializeProtectionPolicyLimits(property.Value, options);
+                    protectionPolicy = ProtectionPolicyLimits.DeserializeProtectionPolicyLimits(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("performancePolicy"u8))
+                if (prop.NameEquals("performancePolicy"u8))
                 {
-                    performancePolicy = PerformancePolicyLimits.DeserializePerformancePolicyLimits(property.Value, options);
+                    performancePolicy = PerformancePolicyLimits.DeserializePerformancePolicyLimits(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PureStorageResourceLimitDetails(storagePool, volume, protectionPolicy, performancePolicy, serializedAdditionalRawData);
+            return new PureStorageResourceLimitDetails(storagePool, volume, protectionPolicy, performancePolicy, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStorageResourceLimitDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStorageResourceLimitDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -129,15 +141,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageResourceLimitDetails IPersistableModel<PureStorageResourceLimitDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageResourceLimitDetails IPersistableModel<PureStorageResourceLimitDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageResourceLimitDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageResourceLimitDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStorageResourceLimitDetails(document.RootElement, options);
                     }
                 default:
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStorageResourceLimitDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PureStorageResourceLimitDetails"/> from. </param>
+        internal static PureStorageResourceLimitDetails FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePureStorageResourceLimitDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

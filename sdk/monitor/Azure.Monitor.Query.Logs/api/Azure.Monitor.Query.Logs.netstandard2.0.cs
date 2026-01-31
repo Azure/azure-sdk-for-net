@@ -16,9 +16,7 @@ namespace Azure.Monitor.Query.Logs
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.LogsQueryAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.LogsQueryAudience left, Azure.Monitor.Query.Logs.LogsQueryAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.LogsQueryAudience (string value) { throw null; }
@@ -128,9 +126,7 @@ namespace Azure.Monitor.Query.Logs.Models
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType String { get { throw null; } }
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType Timespan { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.Models.LogsColumnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.Models.LogsColumnType left, Azure.Monitor.Query.Logs.Models.LogsColumnType right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.Models.LogsColumnType (string value) { throw null; }
@@ -158,7 +154,7 @@ namespace Azure.Monitor.Query.Logs.Models
         public System.BinaryData GetVisualization() { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response response) { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Logs.Models.LogsQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

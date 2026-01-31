@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The policy for using ARM audience token for a container registry. </summary>
+    /// <summary> The policy for using Azure Resource Manager audience token for a container registry. </summary>
     internal partial class AzureADAuthenticationAsArmPolicy
     {
         /// <summary>

@@ -3,6 +3,7 @@ $CI_YAML_FILE = "ci.yml"
 $TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "ChangeLog-Operations.ps1")
 
 #mgmt: swagger directory name to sdk directory name map
 $packageNameHash = [ordered]@{
@@ -676,6 +677,47 @@ function Invoke-GenerateAndBuildSDK () {
     }
 }
 
+function New-ChangeLogIfNotExists()
+{
+    param(
+        [string]$projectFolder,
+        [string]$version
+    )
+
+    $changeLogPath = Join-Path $projectFolder "CHANGELOG.md"
+    
+    if (!(Test-Path $changeLogPath)) {
+        Write-Host "CHANGELOG.md does not exist at $changeLogPath. Creating a new one with version $version"
+        
+        try {
+            # Create a new changelog entry using the helper function
+            $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
+            
+            if ($newEntry) {
+                # Create the changelog content
+                $changeLogContent = @()
+                $changeLogContent += "# Release History"
+                $changeLogContent += ""
+                $changeLogContent += $newEntry.ReleaseTitle
+                $changeLogContent += $newEntry.ReleaseContent
+                
+                # Write the changelog file
+                Set-Content -Path $changeLogPath -Value $changeLogContent
+                Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+            }
+            else {
+                Write-Warning "Failed to create changelog entry for version $version. The New-ChangeLogEntry function returned null, which may indicate an invalid version format."
+            }
+        }
+        catch {
+            Write-Warning "Failed to create CHANGELOG.md for version $version. Error: $_"
+        }
+    }
+    else {
+        Write-Host "CHANGELOG.md exists at $changeLogPath"
+    }
+}
+
 function GeneratePackage()
 {
     param(
@@ -701,6 +743,7 @@ function GeneratePackage()
     $content = ""
     $result = "succeeded"
     $isGenerateSuccess = $true
+    $version = ""
 
     # Generate Code
     $srcPath = Join-Path $projectFolder 'src'
@@ -719,7 +762,22 @@ function GeneratePackage()
         }
     }
 
-    if ($isGenerateSuccess) {
+    if ($isGenerateSuccess -and $serviceType -eq "data-plane") {
+        # Get the version from csproj before building
+        $projectFile = Join-Path $srcPath "$packageName.csproj"
+        $csproj = new-object xml
+        $csproj.PreserveWhitespace = $true
+        $csproj.Load($projectFile)
+        $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+        if ($versionNode) {
+            $version = $versionNode.InnerText
+        }
+        
+        # Create CHANGELOG.md if it doesn't exist
+        if (![string]::IsNullOrWhiteSpace($version)) {
+            New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
+        }
+        
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -825,16 +883,6 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # get the sdk version
-    $version = ""
-    $projectFile = Join-Path $srcPath "$packageName.csproj"
-    $csproj = new-object xml
-    $csproj.PreserveWhitespace = $true
-    $csproj.Load($projectFile)
-    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
-    if ($versionNode) {
-        $version = $versionNode.InnerText
-    }
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
@@ -914,6 +962,7 @@ function GetSDKProjectFolder()
     $service = $null
     $namespace = $null
     $packageDir = $null
+    $packageName = $null
     $emitterOutputDir = $null
 
     if ($yml) {
@@ -942,8 +991,13 @@ function GetSDKProjectFolder()
                 $namespace = $csharpOpts["namespace"]
             }
 
+            # TODO: This is should be removed once all package-dir usages are removed in spec repo
             if ($csharpOpts["package-dir"]) {
                 $packageDir = $csharpOpts["package-dir"]
+            }
+
+            if ($csharpOpts["package-name"]) {
+                $packageName = $csharpOpts["package-name"]
             }
 
             if ($csharpOpts["service-dir"]) {
@@ -983,6 +1037,14 @@ function GetSDKProjectFolder()
                     $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
                     continue
                 }
+                "{package-name}" {
+                    if ([string]::IsNullOrWhiteSpace($packageName)) {
+                        throw "[ERROR] 'package-name' must be provided when '{package-name}' is used in 'emitter-output-dir'."
+                    }
+                    $normalizedPackageName = ($packageName -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedPackageName | Where-Object { $_ })
+                    continue
+                }
                 default {
                     if (![string]::IsNullOrWhiteSpace($segment)) {
                         $resolvedSegments += $segment
@@ -1004,7 +1066,13 @@ function GetSDKProjectFolder()
     }
 
     if ([string]::IsNullOrWhiteSpace($packageDir)) {
-        $packageDir = $namespace
+        if (![string]::IsNullOrWhiteSpace($packageName)) {
+            Write-Host "Package directory is reset by package name: $packageName"
+            $packageDir = $packageName
+        } else {
+            Write-Host "Package directory is reset by namespace: $namespace"
+            $packageDir = $namespace
+        }
     }
 
     if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {

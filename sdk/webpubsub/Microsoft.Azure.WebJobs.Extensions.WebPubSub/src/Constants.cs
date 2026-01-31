@@ -13,6 +13,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public const string HubNameStringName = "WebPubSubHub";
         public const string WebPubSubValidationStringName = "WebPubSubValidation";
 
+        // Identity-based connection configuration keys
+        public const string ServiceUriKey = "serviceUri";
+
         public const string MqttWebSocketSubprotocolValue = "mqtt";
 
         public static class ContentTypes

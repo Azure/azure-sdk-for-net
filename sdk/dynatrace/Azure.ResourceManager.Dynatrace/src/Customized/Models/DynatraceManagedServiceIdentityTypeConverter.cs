@@ -6,7 +6,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {

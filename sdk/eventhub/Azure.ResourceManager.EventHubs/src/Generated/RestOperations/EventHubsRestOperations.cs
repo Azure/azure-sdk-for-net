@@ -32,8 +32,426 @@ namespace Azure.ResourceManager.EventHubs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-01-01";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByNamespaceRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByNamespaceRequest(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<EventHubListResult>> ListByNamespaceAsync(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<EventHubListResult> ListByNamespace(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<EventHubData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = EventHubData.DeserializeEventHubData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EventHubData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<EventHubData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = EventHubData.DeserializeEventHubData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EventHubData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="data"> Parameters supplied to create an Event Hub resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<EventHubData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = EventHubData.DeserializeEventHubData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="data"> Parameters supplied to create an Event Hub resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<EventHubData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = EventHubData.DeserializeEventHubData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes an Event Hub from the specified Namespace and resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes an Event Hub from the specified Namespace and resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListAuthorizationRulesRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
@@ -77,8 +495,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the authorization rules for an Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +526,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the authorization rules for an Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +551,118 @@ namespace Azure.ResourceManager.EventHubs
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetAuthorizationRuleRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/eventhubs/", false);
+            uri.AppendPath(eventHubName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<EventHubsAuthorizationRuleData>> GetAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var message = CreateGetAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, authorizationRuleName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubsAuthorizationRuleData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EventHubsAuthorizationRuleData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<EventHubsAuthorizationRuleData> GetAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var message = CreateGetAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, authorizationRuleName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EventHubsAuthorizationRuleData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EventHubsAuthorizationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,8 +715,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Creates or updates an AuthorizationRule for the specified Event Hub. Creation/update of the AuthorizationRule will take a few seconds to take effect. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -220,8 +750,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Creates or updates an AuthorizationRule for the specified Event Hub. Creation/update of the AuthorizationRule will take a few seconds to take effect. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -249,118 +779,6 @@ namespace Azure.ResourceManager.EventHubs
                         value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAuthorizationRuleRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendPath("/authorizationRules/", false);
-            uri.AppendPath(authorizationRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendPath("/authorizationRules/", false);
-            uri.AppendPath(authorizationRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubsAuthorizationRuleData>> GetAuthorizationRuleAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            using var message = CreateGetAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, authorizationRuleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubsAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EventHubsAuthorizationRuleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubsAuthorizationRuleData> GetAuthorizationRule(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            using var message = CreateGetAuthorizationRuleRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, authorizationRuleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubsAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EventHubsAuthorizationRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -409,8 +827,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Deletes an Event Hub AuthorizationRule. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -438,8 +856,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Deletes an Event Hub AuthorizationRule. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -511,8 +929,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the ACS and SAS connection strings for the Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -544,8 +962,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets the ACS and SAS connection strings for the Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -625,8 +1043,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Regenerates the ACS and SAS connection strings for the Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -660,8 +1078,8 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Regenerates the ACS and SAS connection strings for the Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -694,512 +1112,6 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal RequestUriBuilder CreateListByNamespaceRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip.Value, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByNamespaceRequest(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip.Value, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubListResult>> ListByNamespaceAsync(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
-            using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all the Event Hubs in a Namespace. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubListResult> ListByNamespace(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
-            using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="data"> Parameters supplied to create an Event Hub resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EventHubData.DeserializeEventHubData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates a new Event Hub as a nested resource within a Namespace. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="data"> Parameters supplied to create an Event Hub resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EventHubData.DeserializeEventHubData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes an Event Hub from the specified Namespace and resource group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes an Event Hub from the specified Namespace and resource group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventHub/namespaces/", false);
-            uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/eventhubs/", false);
-            uri.AppendPath(eventHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EventHubData.DeserializeEventHubData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EventHubData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets an Event Hubs description for the specified Event Hub. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        EventHubData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EventHubData.DeserializeEventHubData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((EventHubData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListAuthorizationRulesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListAuthorizationRulesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateListAuthorizationRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the authorization rules for an Event Hub. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthorizationRuleListResult> ListAuthorizationRulesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            using var message = CreateListAuthorizationRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, eventHubName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListByNamespaceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var uri = new RawRequestUriBuilder();
@@ -1224,8 +1136,8 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets all the Event Hubs in a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -1257,8 +1169,8 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets all the Event Hubs in a Namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -1281,6 +1193,94 @@ namespace Azure.ResourceManager.EventHubs
                         EventHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubListResult.DeserializeEventHubListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListAuthorizationRulesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListAuthorizationRulesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AuthorizationRuleListResult>> ListAuthorizationRulesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateListAuthorizationRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AuthorizationRuleListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the authorization rules for an Event Hub. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AuthorizationRuleListResult> ListAuthorizationRulesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            using var message = CreateListAuthorizationRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, eventHubName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AuthorizationRuleListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

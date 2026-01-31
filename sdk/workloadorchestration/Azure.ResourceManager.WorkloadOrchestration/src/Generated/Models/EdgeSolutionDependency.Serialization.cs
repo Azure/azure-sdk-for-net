@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class EdgeSolutionDependency : IUtf8JsonSerializable, IJsonModel<EdgeSolutionDependency>
+    /// <summary> Solution Dependency Context. </summary>
+    public partial class EdgeSolutionDependency : IJsonModel<EdgeSolutionDependency>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSolutionDependency>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionDependency"/> for deserialization. </summary>
+        internal EdgeSolutionDependency()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionDependency)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("solutionVersionId"u8);
             writer.WriteStringValue(SolutionVersionId);
             if (Optional.IsDefined(SolutionInstanceName))
@@ -49,21 +55,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("dependencies"u8);
                 writer.WriteStartArray();
-                foreach (var item in Dependencies)
+                foreach (EdgeSolutionDependency item in Dependencies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +78,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionDependency IJsonModel<EdgeSolutionDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionDependency IJsonModel<EdgeSolutionDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionDependency JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionDependency)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeSolutionDependency(document.RootElement, options);
         }
 
-        internal static EdgeSolutionDependency DeserializeEdgeSolutionDependency(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EdgeSolutionDependency DeserializeEdgeSolutionDependency(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,38 +108,37 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             ResourceIdentifier solutionTemplateVersionId = default;
             ResourceIdentifier targetId = default;
             IReadOnlyList<EdgeSolutionDependency> dependencies = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("solutionVersionId"u8))
+                if (prop.NameEquals("solutionVersionId"u8))
                 {
-                    solutionVersionId = new ResourceIdentifier(property.Value.GetString());
+                    solutionVersionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("solutionInstanceName"u8))
+                if (prop.NameEquals("solutionInstanceName"u8))
                 {
-                    solutionInstanceName = property.Value.GetString();
+                    solutionInstanceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("solutionTemplateVersionId"u8))
+                if (prop.NameEquals("solutionTemplateVersionId"u8))
                 {
-                    solutionTemplateVersionId = new ResourceIdentifier(property.Value.GetString());
+                    solutionTemplateVersionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetId"u8))
+                if (prop.NameEquals("targetId"u8))
                 {
-                    targetId = new ResourceIdentifier(property.Value.GetString());
+                    targetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependencies"u8))
+                if (prop.NameEquals("dependencies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EdgeSolutionDependency> array = new List<EdgeSolutionDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeserializeEdgeSolutionDependency(item, options));
                     }
@@ -137,23 +147,25 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeSolutionDependency(
                 solutionVersionId,
                 solutionInstanceName,
                 solutionTemplateVersionId,
                 targetId,
                 dependencies ?? new ChangeTrackingList<EdgeSolutionDependency>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<EdgeSolutionDependency>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeSolutionDependency>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -163,15 +175,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        EdgeSolutionDependency IPersistableModel<EdgeSolutionDependency>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionDependency IPersistableModel<EdgeSolutionDependency>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EdgeSolutionDependency PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeSolutionDependency>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeSolutionDependency(document.RootElement, options);
                     }
                 default:
@@ -179,6 +196,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeSolutionDependency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

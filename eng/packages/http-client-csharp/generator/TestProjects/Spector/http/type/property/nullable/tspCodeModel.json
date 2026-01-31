@@ -686,6 +686,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "StringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "86",
@@ -755,6 +760,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BytesProperty"
+        }
+      },
       "properties": [
         {
           "$id": "92",
@@ -825,6 +835,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Model with a datetime property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DatetimeProperty"
+        }
+      },
       "properties": [
         {
           "$id": "98",
@@ -902,6 +917,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Model with a duration property",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "105",
@@ -979,6 +999,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Model with collection bytes properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsByteProperty"
+        }
+      },
       "properties": [
         {
           "$id": "112",
@@ -1056,6 +1081,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Model with collection models properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsModelProperty"
+        }
+      },
       "properties": [
         {
           "$id": "119",
@@ -1105,6 +1135,11 @@
                 "usage": "Input,Output,JsonMergePatch,Json",
                 "doc": "Inner model used in collections model property",
                 "decorators": [],
+                "serializationOptions": {
+                  "json": {
+                    "name": "InnerModel"
+                  }
+                },
                 "properties": [
                   {
                     "$id": "125",
@@ -1166,6 +1201,11 @@
       "usage": "Input,Output,JsonMergePatch,Json",
       "doc": "Model with collection string properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CollectionsStringProperty"
+        }
+      },
       "properties": [
         {
           "$id": "128",
@@ -1274,6 +1314,7 @@
           "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.Nullable",
       "apiVersions": [],
@@ -1337,7 +1378,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1421,7 +1463,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1522,7 +1565,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1637,7 +1681,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1712,15 +1757,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.String.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.String",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "162",
@@ -1781,7 +1828,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1865,7 +1913,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -1966,7 +2015,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2081,7 +2131,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2156,15 +2207,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "186",
@@ -2225,7 +2278,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2309,7 +2363,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2410,7 +2465,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2525,7 +2581,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2600,15 +2657,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "210",
@@ -2669,7 +2728,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2753,7 +2813,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2854,7 +2915,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -2969,7 +3031,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3044,15 +3107,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.Duration",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "234",
@@ -3113,7 +3178,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3197,7 +3263,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3298,7 +3365,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3413,7 +3481,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3488,15 +3557,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "258",
@@ -3557,7 +3628,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3641,7 +3713,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3742,7 +3815,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3857,7 +3931,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -3932,15 +4007,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "282",
@@ -4001,7 +4078,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4085,7 +4163,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4186,7 +4265,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4301,7 +4381,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Property.Nullable"
               },
               "parameters": [
                 {
@@ -4376,17 +4457,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
+              "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString",
           "apiVersions": [],
           "parent": {
             "$ref": "134"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

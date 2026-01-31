@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightWorkspaceQuotaResource"/> and their operations.
-    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of the parent resource.
+    /// Each <see cref="PlaywrightWorkspaceQuotaResource"/> in the collection will belong to the same instance of <see cref="PlaywrightWorkspaceResource"/>.
+    /// To get a <see cref="PlaywrightWorkspaceQuotaCollection"/> instance call the GetPlaywrightWorkspaceQuotas method from an instance of <see cref="PlaywrightWorkspaceResource"/>.
     /// </summary>
     public partial class PlaywrightWorkspaceQuotaCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceQuotaResource>, IAsyncEnumerable<PlaywrightWorkspaceQuotaResource>
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -145,7 +145,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
+        /// <summary>
+        /// Lists quota resources for a given Playwright workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_ListByPlaywrightWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -157,7 +173,23 @@ namespace Azure.ResourceManager.Playwright
             return new AsyncPageableWrapper<PlaywrightWorkspaceQuotaData, PlaywrightWorkspaceQuotaResource>(new PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceAsyncCollectionResultOfT(_playwrightWorkspaceQuotasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PlaywrightWorkspaceQuotaResource(Client, data));
         }
 
-        /// <summary> Lists quota resources for a given Playwright workspace. </summary>
+        /// <summary>
+        /// Lists quota resources for a given Playwright workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaceQuotas_ListByPlaywrightWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceQuotaResource> GetAll(CancellationToken cancellationToken = default)
@@ -170,7 +202,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -178,7 +210,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -223,7 +255,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -231,7 +263,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -276,7 +308,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -284,7 +316,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -333,7 +365,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -341,7 +373,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

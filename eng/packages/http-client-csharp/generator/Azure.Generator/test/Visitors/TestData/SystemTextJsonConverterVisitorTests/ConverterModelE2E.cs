@@ -128,7 +128,7 @@ namespace Samples.Models
             switch (format)
             {
                 case "J":
-                    using (global::System.Text.Json.JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data))
+                    using (global::System.Text.Json.JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Samples.ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return global::Samples.Models.TestModel.DeserializeTestModel(document.RootElement, options);
                     }

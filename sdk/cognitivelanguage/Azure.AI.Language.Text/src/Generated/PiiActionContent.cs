@@ -51,6 +51,7 @@ namespace Azure.AI.Language.Text
             PiiCategories = new ChangeTrackingList<PiiCategory>();
             ExcludePiiCategories = new ChangeTrackingList<PiiCategoriesExclude>();
             EntitySynonyms = new ChangeTrackingList<EntitySynonyms>();
+            RedactionPolicies = new ChangeTrackingList<BaseRedactionPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
@@ -60,15 +61,17 @@ namespace Azure.AI.Language.Text
         /// <param name="piiCategories"> Enumeration of PII categories to be returned in the response. </param>
         /// <param name="stringIndexType"> StringIndexType to be used for analysis. </param>
         /// <param name="excludePiiCategories"> Enumeration of PII categories to be excluded in the response. </param>
-        /// <param name="redactionPolicy">
-        /// RedactionPolicy to be used on the input.
-        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/> and <see cref="NoMaskPolicyType"/>.
-        /// </param>
         /// <param name="valueExclusionPolicy"> Policy for specific words and terms that should be excluded from detection by the PII detection service. </param>
         /// <param name="entitySynonyms"> (Optional) request parameter that allows the user to provide synonyms for context words that to enhance pii entity detection. </param>
+        /// <param name="redactionPolicies">
+        /// List of RedactionPolicies to be used on the input.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/>, <see cref="NoMaskPolicyType"/> and <see cref="SyntheticReplacementPolicyType"/>.
+        /// </param>
+        /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
+        /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExclude> excludePiiCategories, BaseRedactionPolicy redactionPolicy, ValueExclusionPolicy valueExclusionPolicy, IList<EntitySynonyms> entitySynonyms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExclude> excludePiiCategories, ValueExclusionPolicy valueExclusionPolicy, IList<EntitySynonyms> entitySynonyms, IList<BaseRedactionPolicy> redactionPolicies, ConfidenceScoreThreshold confidenceScoreThreshold, bool? disableEntityValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -76,9 +79,11 @@ namespace Azure.AI.Language.Text
             PiiCategories = piiCategories;
             StringIndexType = stringIndexType;
             ExcludePiiCategories = excludePiiCategories;
-            RedactionPolicy = redactionPolicy;
             ValueExclusionPolicy = valueExclusionPolicy;
             EntitySynonyms = entitySynonyms;
+            RedactionPolicies = redactionPolicies;
+            ConfidenceScoreThreshold = confidenceScoreThreshold;
+            DisableEntityValidation = disableEntityValidation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,15 +99,19 @@ namespace Azure.AI.Language.Text
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> Enumeration of PII categories to be excluded in the response. </summary>
         public IList<PiiCategoriesExclude> ExcludePiiCategories { get; }
-        /// <summary>
-        /// RedactionPolicy to be used on the input.
-        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/> and <see cref="NoMaskPolicyType"/>.
-        /// </summary>
-        public BaseRedactionPolicy RedactionPolicy { get; set; }
         /// <summary> Policy for specific words and terms that should be excluded from detection by the PII detection service. </summary>
         public ValueExclusionPolicy ValueExclusionPolicy { get; set; }
         /// <summary> (Optional) request parameter that allows the user to provide synonyms for context words that to enhance pii entity detection. </summary>
         public IList<EntitySynonyms> EntitySynonyms { get; }
+        /// <summary>
+        /// List of RedactionPolicies to be used on the input.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/>, <see cref="NoMaskPolicyType"/> and <see cref="SyntheticReplacementPolicyType"/>.
+        /// </summary>
+        public IList<BaseRedactionPolicy> RedactionPolicies { get; }
+        /// <summary> Confidence score threshold configuration for PII entity recognition. </summary>
+        public ConfidenceScoreThreshold ConfidenceScoreThreshold { get; set; }
+        /// <summary> Disable entity validation for PII entity recognition. </summary>
+        public bool? DisableEntityValidation { get; set; }
     }
 }

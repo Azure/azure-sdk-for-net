@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Import source related properties. </summary>
     public partial class ImportSourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImportSourceProperties"/>. </summary>
         public ImportSourceProperties()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="storageUri"> Uri of the import source storage. </param>
         /// <param name="sasToken"> Sas token for accessing source storage. Read and list permissions are required for sas token. </param>
         /// <param name="dataDirPath"> Relative path of data directory in storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportSourceProperties(ImportSourceStorageType? storageType, Uri storageUri, string sasToken, string dataDirPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImportSourceProperties(ImportSourceStorageType? storageType, Uri storageUri, string sasToken, string dataDirPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageType = storageType;
             StorageUri = storageUri;
             SasToken = sasToken;
             DataDirPath = dataDirPath;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage type of import source. </summary>
         public ImportSourceStorageType? StorageType { get; set; }
+
         /// <summary> Uri of the import source storage. </summary>
         public Uri StorageUri { get; set; }
+
         /// <summary> Sas token for accessing source storage. Read and list permissions are required for sas token. </summary>
         public string SasToken { get; set; }
+
         /// <summary> Relative path of data directory in storage. </summary>
         public string DataDirPath { get; set; }
     }

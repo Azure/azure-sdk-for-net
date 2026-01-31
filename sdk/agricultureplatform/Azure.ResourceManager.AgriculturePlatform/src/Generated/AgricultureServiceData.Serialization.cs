@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAgricultureServiceData(document.RootElement, options);
                     }
@@ -253,11 +253,10 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AgricultureServiceData"/> from. </param>
-        internal static AgricultureServiceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AgricultureServiceData"/> from. </param>
+        internal static AgricultureServiceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAgricultureServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

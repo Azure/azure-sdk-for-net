@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    public partial class VirtualEnclaveCommunityPatchProperties : IUtf8JsonSerializable, IJsonModel<VirtualEnclaveCommunityPatchProperties>
+    /// <summary> Community Resource Properties without default values. </summary>
+    public partial class VirtualEnclaveCommunityPatchProperties : IJsonModel<VirtualEnclaveCommunityPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEnclaveCommunityPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveCommunityPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +29,22 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveCommunityPatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                foreach (string item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("governedServiceList"u8);
                 writer.WriteStartArray();
-                foreach (var item in GovernedServiceList)
+                foreach (VirtualEnclaveGovernedService item in GovernedServiceList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("communityRoleAssignments"u8);
                 writer.WriteStartArray();
-                foreach (var item in CommunityRoleAssignments)
+                foreach (VirtualEnclaveRoleAssignmentItem item in CommunityRoleAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -84,15 +89,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("maintenanceModeConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceModeConfiguration, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,22 +106,27 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        VirtualEnclaveCommunityPatchProperties IJsonModel<VirtualEnclaveCommunityPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEnclaveCommunityPatchProperties IJsonModel<VirtualEnclaveCommunityPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualEnclaveCommunityPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveCommunityPatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualEnclaveCommunityPatchProperties(document.RootElement, options);
         }
 
-        internal static VirtualEnclaveCommunityPatchProperties DeserializeVirtualEnclaveCommunityPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualEnclaveCommunityPatchProperties DeserializeVirtualEnclaveCommunityPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,94 +138,99 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             VirtualEnclaveFirewallSku? firewallSku = default;
             ApprovalSettingsPatchProperties approvalSettings = default;
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("dnsServers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("governedServiceList"u8))
+                if (prop.NameEquals("governedServiceList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveGovernedService> array = new List<VirtualEnclaveGovernedService>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveGovernedService.DeserializeVirtualEnclaveGovernedService(item, options));
                     }
                     governedServiceList = array;
                     continue;
                 }
-                if (property.NameEquals("policyOverride"u8))
+                if (prop.NameEquals("policyOverride"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyOverride = new VirtualEnclaveCommunityPolicyOverride(property.Value.GetString());
+                    policyOverride = new VirtualEnclaveCommunityPolicyOverride(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("communityRoleAssignments"u8))
+                if (prop.NameEquals("communityRoleAssignments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveRoleAssignmentItem> array = new List<VirtualEnclaveRoleAssignmentItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveRoleAssignmentItem.DeserializeVirtualEnclaveRoleAssignmentItem(item, options));
                     }
                     communityRoleAssignments = array;
                     continue;
                 }
-                if (property.NameEquals("firewallSku"u8))
+                if (prop.NameEquals("firewallSku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firewallSku = new VirtualEnclaveFirewallSku(property.Value.GetString());
+                    firewallSku = new VirtualEnclaveFirewallSku(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("approvalSettings"u8))
+                if (prop.NameEquals("approvalSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    approvalSettings = ApprovalSettingsPatchProperties.DeserializeApprovalSettingsPatchProperties(property.Value, options);
+                    approvalSettings = ApprovalSettingsPatchProperties.DeserializeApprovalSettingsPatchProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("maintenanceModeConfiguration"u8))
+                if (prop.NameEquals("maintenanceModeConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfigurationPatch.DeserializeVirtualEnclaveMaintenanceModeConfigurationPatch(property.Value, options);
+                    maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfigurationPatch.DeserializeVirtualEnclaveMaintenanceModeConfigurationPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualEnclaveCommunityPatchProperties(
                 dnsServers ?? new ChangeTrackingList<string>(),
                 governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
@@ -224,13 +239,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 firewallSku,
                 approvalSettings,
                 maintenanceModeConfiguration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VirtualEnclaveCommunityPatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualEnclaveCommunityPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -240,15 +258,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        VirtualEnclaveCommunityPatchProperties IPersistableModel<VirtualEnclaveCommunityPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualEnclaveCommunityPatchProperties IPersistableModel<VirtualEnclaveCommunityPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualEnclaveCommunityPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualEnclaveCommunityPatchProperties(document.RootElement, options);
                     }
                 default:
@@ -256,6 +279,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualEnclaveCommunityPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

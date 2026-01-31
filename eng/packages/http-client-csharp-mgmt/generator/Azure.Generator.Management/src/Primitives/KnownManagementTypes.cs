@@ -25,7 +25,7 @@ namespace Azure.Generator.Management.Primitives
         public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
 
-        public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToInheritableSystemTypeMap = new Dictionary<string, CSharpType>()
@@ -41,11 +41,15 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
             ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
+            ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
+            ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
@@ -56,18 +60,21 @@ namespace Azure.Generator.Management.Primitives
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)
             => _idToPrimitiveTypeMap.TryGetValue(crossLanguageDefinitionId, out primitiveType);
 
-        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-            => writer.WriteStringValue(value);
+        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        {
+            value = value.NullableStructValue(valueType);
+            return writer.WriteStringValue(value);
+        }
 
         private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
-        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(ResourceType)] = SerializeTypeWithImplicitOperatorToString,
         };
 
-        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
         };
@@ -107,10 +114,10 @@ namespace Azure.Generator.Management.Primitives
             }
         }
 
-        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression)
-            => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression)
+            => _typeToSerializationExpression.TryGetValue(type.WithNullable(false), out expression);
 
-        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-            => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
+            => _typeToDeserializationExpression.TryGetValue(type.WithNullable(false), out expression);
     }
 }

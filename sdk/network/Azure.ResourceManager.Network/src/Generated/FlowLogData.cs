@@ -37,12 +37,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
+        /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        internal FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Identity = identity;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Network
             TargetResourceGuid = targetResourceGuid;
             StorageId = storageId;
             EnabledFilteringCriteria = enabledFilteringCriteria;
+            RecordTypes = recordTypes;
             Enabled = enabled;
             RetentionPolicy = retentionPolicy;
             Format = format;
@@ -75,6 +77,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </summary>
         [WirePath("properties.enabledFilteringCriteria")]
         public string EnabledFilteringCriteria { get; set; }
+        /// <summary> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </summary>
+        [WirePath("properties.recordTypes")]
+        public string RecordTypes { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
         [WirePath("properties.enabled")]
         public bool? Enabled { get; set; }

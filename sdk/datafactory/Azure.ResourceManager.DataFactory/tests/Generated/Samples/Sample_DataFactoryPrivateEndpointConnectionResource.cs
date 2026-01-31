@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionForADatafactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/GetPrivateEndpointConnection.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/GetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPrivateEndpointConnectionForADatafactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DeletePrivateEndpointConnection.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/DeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApprovesOrRejectsAPrivateEndpointConnectionForAFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ApproveRejectPrivateEndpointConnection.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ApproveRejectPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

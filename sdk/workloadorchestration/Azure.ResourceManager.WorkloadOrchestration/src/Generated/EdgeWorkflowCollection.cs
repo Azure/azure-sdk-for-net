@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeWorkflowResource"/> and their operations.
     /// Each <see cref="EdgeWorkflowResource"/> in the collection will belong to the same instance of <see cref="EdgeContextResource"/>.
-    /// To get an <see cref="EdgeWorkflowCollection"/> instance call the GetEdgeWorkflows method from an instance of <see cref="EdgeContextResource"/>.
+    /// To get a <see cref="EdgeWorkflowCollection"/> instance call the GetEdgeWorkflows method from an instance of <see cref="EdgeContextResource"/>.
     /// </summary>
     public partial class EdgeWorkflowCollection : ArmCollection, IEnumerable<EdgeWorkflowResource>, IAsyncEnumerable<EdgeWorkflowResource>
     {
-        private readonly ClientDiagnostics _edgeWorkflowWorkflowsClientDiagnostics;
-        private readonly WorkflowsRestOperations _edgeWorkflowWorkflowsRestClient;
+        private readonly ClientDiagnostics _workflowsClientDiagnostics;
+        private readonly Workflows _workflowsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeWorkflowCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeWorkflowCollection for mocking. </summary>
         protected EdgeWorkflowCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeWorkflowCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeWorkflowCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeWorkflowWorkflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeWorkflowResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeWorkflowResource.ResourceType, out string edgeWorkflowWorkflowsApiVersion);
-            _edgeWorkflowWorkflowsRestClient = new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeWorkflowWorkflowsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeWorkflowResource.ResourceType, out string edgeWorkflowApiVersion);
+            _workflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeWorkflowResource.ResourceType.Namespace, Diagnostics);
+            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Endpoint, edgeWorkflowApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeContextResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a Workflow resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeWorkflowResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workflowName, EdgeWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeWorkflowWorkflowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, EdgeWorkflowData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeWorkflowResource> operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(
+                    new EdgeWorkflowOperationSource(Client),
+                    _workflowsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a Workflow resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeWorkflowResource> CreateOrUpdate(WaitUntil waitUntil, string workflowName, EdgeWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeWorkflowWorkflowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, EdgeWorkflowData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeWorkflowResource> operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(
+                    new EdgeWorkflowOperationSource(Client),
+                    _workflowsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Workflow resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeWorkflowResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeWorkflowData> response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Workflow resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeWorkflowResource> Get(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeWorkflowData> response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List Workflow resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_ListByContext</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_ListByContext. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeWorkflowWorkflowsRestClient.CreateListByContextRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeWorkflowWorkflowsRestClient.CreateListByContextNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeWorkflowResource(Client, EdgeWorkflowData.DeserializeEdgeWorkflowData(e)), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, "EdgeWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextAsyncCollectionResultOfT(_workflowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeWorkflowResource(Client, data));
         }
 
         /// <summary>
         /// List Workflow resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_ListByContext</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_ListByContext. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeWorkflowWorkflowsRestClient.CreateListByContextRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeWorkflowWorkflowsRestClient.CreateListByContextNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeWorkflowResource(Client, EdgeWorkflowData.DeserializeEdgeWorkflowData(e)), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, "EdgeWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeWorkflowData, EdgeWorkflowResource>(new WorkflowsGetByContextCollectionResultOfT(_workflowsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeWorkflowResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeWorkflowData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeWorkflowData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeWorkflowData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeWorkflowData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeWorkflowResource>> GetIfExistsAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeWorkflowWorkflowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeWorkflowData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeWorkflowData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeWorkflowResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workflows_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Name of the workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeWorkflowResource> GetIfExists(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _edgeWorkflowWorkflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowsClientDiagnostics.CreateScope("EdgeWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeWorkflowWorkflowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeWorkflowData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeWorkflowData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeWorkflowData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeWorkflowResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeWorkflowResource> IAsyncEnumerable<EdgeWorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

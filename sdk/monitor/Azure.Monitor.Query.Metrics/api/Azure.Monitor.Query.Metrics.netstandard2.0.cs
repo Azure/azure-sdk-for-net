@@ -26,9 +26,7 @@ namespace Azure.Monitor.Query.Metrics
         public static Azure.Monitor.Query.Metrics.MetricsClientAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.Metrics.MetricsClientAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Metrics.MetricsClientAudience other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Metrics.MetricsClientAudience left, Azure.Monitor.Query.Metrics.MetricsClientAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Metrics.MetricsClientAudience (string value) { throw null; }
@@ -55,18 +53,14 @@ namespace Azure.Monitor.Query.Metrics
         public System.Collections.Generic.IList<string> RollUpBy { get { throw null; } }
         public int? Size { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Monitor.Query.Metrics.MetricsQueryTimeRange? TimeRange { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MetricsQueryTimeRange : System.IEquatable<Azure.Monitor.Query.Metrics.MetricsQueryTimeRange>
     {
         public MetricsQueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MetricsQueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MetricsQueryTimeRange(System.TimeSpan duration) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MetricsQueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
         public static Azure.Monitor.Query.Metrics.MetricsQueryTimeRange All { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
@@ -117,7 +111,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         public System.Collections.Generic.IList<Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> Values { get { throw null; } }
         protected virtual Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult (Azure.Response response) { throw null; }
         protected virtual Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -180,9 +174,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         public static Azure.Monitor.Query.Metrics.Models.MetricUnit Seconds { get { throw null; } }
         public static Azure.Monitor.Query.Metrics.Models.MetricUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Metrics.Models.MetricUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Metrics.Models.MetricUnit left, Azure.Monitor.Query.Metrics.Models.MetricUnit right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Metrics.Models.MetricUnit (string value) { throw null; }

@@ -104,5 +104,11 @@ namespace Azure.Search.Documents.Tests
         /// Gets the optional OpenAI URL used used for Vector Search.
         /// </summary>
         public string OpenAIEndpoint => GetRecordedOptionalVariable("OPENAI_ENDPOINT");
+
+        /// <summary>
+        /// Gets the environment of the Azure resource group to be used for Live tests (e.g. AzureCloud).
+        /// Returns "AzureCloud" as default if the ENVIRONMENT variable is not set.
+        /// </summary>
+        public new string AzureEnvironment => GetRecordedOptionalVariable("ENVIRONMENT") ?? "AzureCloud";
     }
 }

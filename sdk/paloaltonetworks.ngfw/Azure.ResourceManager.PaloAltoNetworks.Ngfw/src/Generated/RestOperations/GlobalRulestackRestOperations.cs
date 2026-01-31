@@ -6,1288 +6,320 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal partial class GlobalRulestackRestOperations
+    internal partial class GlobalRulestack
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GlobalRulestackRestOperations. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestack for mocking. </summary>
+        protected GlobalRulestack()
+        {
+        }
+
+        /// <summary> Initializes a new instance of GlobalRulestack. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GlobalRulestackRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal GlobalRulestack(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri()
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        internal HttpMessage CreateListRequest()
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string globalRulestackName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks", false);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GlobalRulestackListResult>> ListAsync(CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, RequestContent content, RequestContext context)
         {
-            using var message = CreateListRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GlobalRulestackListResult.DeserializeGlobalRulestackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GlobalRulestackListResult> List(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GlobalRulestackListResult.DeserializeGlobalRulestackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
             uri.AppendPath(globalRulestackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GlobalRulestackData>> GetAsync(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateGetRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GlobalRulestackData.DeserializeGlobalRulestackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GlobalRulestackData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GlobalRulestackData> Get(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateGetRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GlobalRulestackData.DeserializeGlobalRulestackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GlobalRulestackData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string globalRulestackName, GlobalRulestackData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, GlobalRulestackData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, GlobalRulestackData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string globalRulestackName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(globalRulestackName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string globalRulestackName, GlobalRulestackData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(globalRulestackName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string globalRulestackName, GlobalRulestackPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
             uri.AppendPath(globalRulestackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string globalRulestackName, GlobalRulestackPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GlobalRulestackData>> UpdateAsync(string globalRulestackName, GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string globalRulestackName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(globalRulestackName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GlobalRulestackData.DeserializeGlobalRulestackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GlobalRulestackData> Update(string globalRulestackName, GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(globalRulestackName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GlobalRulestackData.DeserializeGlobalRulestackData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
             uri.AppendPath(globalRulestackName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string globalRulestackName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateDeleteRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a GlobalRulestackResource. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateDeleteRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCommitRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/commit", false);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCommitRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/commit", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Commit rulestack configuration. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CommitAsync(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateCommitRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Commit rulestack configuration. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Commit(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateCommitRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetChangeLogRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/getChangeLog", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetChangeLogRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/getChangeLog", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get changelog. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulestackChangelog>> GetChangeLogAsync(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateGetChangeLogRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackChangelog value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RulestackChangelog.DeserializeRulestackChangelog(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get changelog. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulestackChangelog> GetChangeLog(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateGetChangeLogRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackChangelog value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RulestackChangelog.DeserializeRulestackChangelog(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListAdvancedSecurityObjectsRequestUri(string globalRulestackName, AdvancedSecurityObjectType type, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listAdvancedSecurityObjects", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            uri.AppendQuery("type", type.ToString(), true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListAdvancedSecurityObjectsRequest(string globalRulestackName, AdvancedSecurityObjectType type, string skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listAdvancedSecurityObjects", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            uri.AppendQuery("type", type.ToString(), true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the list of advanced security objects. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdvancedSecurityObjectListResult>> ListAdvancedSecurityObjectsAsync(string globalRulestackName, AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListAdvancedSecurityObjectsRequest(globalRulestackName, type, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedSecurityObjectListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AdvancedSecurityObjectListResult.DeserializeAdvancedSecurityObjectListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the list of advanced security objects. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdvancedSecurityObjectListResult> ListAdvancedSecurityObjects(string globalRulestackName, AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListAdvancedSecurityObjectsRequest(globalRulestackName, type, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AdvancedSecurityObjectListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AdvancedSecurityObjectListResult.DeserializeAdvancedSecurityObjectListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListAppIdsRequestUri(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listAppIds", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (appIdVersion != null)
-            {
-                uri.AppendQuery("appIdVersion", appIdVersion, true);
-            }
-            if (appPrefix != null)
-            {
-                uri.AppendQuery("appPrefix", appPrefix, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListAppIdsRequest(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listAppIds", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (appIdVersion != null)
-            {
-                uri.AppendQuery("appIdVersion", appIdVersion, true);
-            }
-            if (appPrefix != null)
-            {
-                uri.AppendQuery("appPrefix", appPrefix, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
-        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulestackAppIdListResult>> ListAppIdsAsync(string globalRulestackName, string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListAppIdsRequest(globalRulestackName, appIdVersion, appPrefix, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackAppIdListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RulestackAppIdListResult.DeserializeRulestackAppIdListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
-        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulestackAppIdListResult> ListAppIds(string globalRulestackName, string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListAppIdsRequest(globalRulestackName, appIdVersion, appPrefix, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackAppIdListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RulestackAppIdListResult.DeserializeRulestackAppIdListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListCountriesRequestUri(string globalRulestackName, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listCountries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListCountriesRequest(string globalRulestackName, string skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listCountries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List of countries for Rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulestackCountryListResult>> ListCountriesAsync(string globalRulestackName, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListCountriesRequest(globalRulestackName, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackCountryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RulestackCountryListResult.DeserializeRulestackCountryListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of countries for Rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulestackCountryListResult> ListCountries(string globalRulestackName, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListCountriesRequest(globalRulestackName, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackCountryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RulestackCountryListResult.DeserializeRulestackCountryListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListFirewallsRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listFirewalls", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListFirewallsRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listFirewalls", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List of Firewalls associated with Rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulestackFirewallListResult>> ListFirewallsAsync(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListFirewallsRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackFirewallListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RulestackFirewallListResult.DeserializeRulestackFirewallListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of Firewalls associated with Rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulestackFirewallListResult> ListFirewalls(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListFirewallsRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackFirewallListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RulestackFirewallListResult.DeserializeRulestackFirewallListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListPredefinedUrlCategoriesRequestUri(string globalRulestackName, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listPredefinedUrlCategories", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListPredefinedUrlCategoriesRequest(string globalRulestackName, string skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listPredefinedUrlCategories", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List predefined URL categories for rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PredefinedUrlCategoryListResult>> ListPredefinedUrlCategoriesAsync(string globalRulestackName, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListPredefinedUrlCategoriesRequest(globalRulestackName, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PredefinedUrlCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PredefinedUrlCategoryListResult.DeserializePredefinedUrlCategoryListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List predefined URL categories for rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PredefinedUrlCategoryListResult> ListPredefinedUrlCategories(string globalRulestackName, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListPredefinedUrlCategoriesRequest(globalRulestackName, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PredefinedUrlCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PredefinedUrlCategoryListResult.DeserializePredefinedUrlCategoryListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListSecurityServicesRequestUri(string globalRulestackName, RulestackSecurityServiceType type, string skip, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listSecurityServices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            uri.AppendQuery("type", type.ToString(), true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListSecurityServicesRequest(string globalRulestackName, RulestackSecurityServiceType type, string skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/listSecurityServices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            uri.AppendQuery("type", type.ToString(), true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List the security services for rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RulestackSecurityServiceListResult>> ListSecurityServicesAsync(string globalRulestackName, RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListSecurityServicesRequest(globalRulestackName, type, skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackSecurityServiceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RulestackSecurityServiceListResult.DeserializeRulestackSecurityServiceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List the security services for rulestack. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RulestackSecurityServiceListResult> ListSecurityServices(string globalRulestackName, RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateListSecurityServicesRequest(globalRulestackName, type, skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RulestackSecurityServiceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RulestackSecurityServiceListResult.DeserializeRulestackSecurityServiceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateRevertRequestUri(string globalRulestackName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/revert", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateRevertRequest(string globalRulestackName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
-            uri.AppendPath(globalRulestackName, true);
-            uri.AppendPath("/revert", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Revert rulestack configuration. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RevertAsync(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateRevertRequest(globalRulestackName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Revert rulestack configuration. </summary>
-        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Revert(string globalRulestackName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
-            using var message = CreateRevertRequest(globalRulestackName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GlobalRulestackListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GlobalRulestackListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GlobalRulestackListResult.DeserializeGlobalRulestackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> List GlobalRulestackResource resources by Tenant. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GlobalRulestackListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCommitRequest(string globalRulestackName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/commit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
+        }
 
-            using var message = CreateListNextPageRequest(nextLink);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+        internal HttpMessage CreateGetChangeLogRequest(string globalRulestackName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/getChangeLog", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAdvancedSecurityObjectsRequest(string globalRulestackName, string @type, string skip, int? top, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listAdvancedSecurityObjects", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
             {
-                case 200:
-                    {
-                        GlobalRulestackListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GlobalRulestackListResult.DeserializeGlobalRulestackListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("skip", skip, true);
             }
+            if (top != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+            }
+            uri.AppendQuery("type", @type, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAppIdsRequest(string globalRulestackName, string appIdVersion, string appPrefix, string skip, int? top, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listAppIds", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (appIdVersion != null)
+            {
+                uri.AppendQuery("appIdVersion", appIdVersion, true);
+            }
+            if (appPrefix != null)
+            {
+                uri.AppendQuery("appPrefix", appPrefix, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCountriesRequest(string globalRulestackName, string skip, int? top, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listCountries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetFirewallsRequest(string globalRulestackName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listFirewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPredefinedUrlCategoriesRequest(string globalRulestackName, string skip, int? top, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listPredefinedUrlCategories", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSecurityServicesRequest(string globalRulestackName, string @type, string skip, int? top, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/listSecurityServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+            }
+            uri.AppendQuery("type", @type, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRevertRequest(string globalRulestackName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/revert", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
         }
     }
 }

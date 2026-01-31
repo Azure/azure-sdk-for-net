@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.PaloAltoNetworks.Ngfw.CodeGenTypeAttribute' exists on 'Azure.ResourceManager.PaloAltoNetworks.Ngfw.NgfwExtensions' in the contract but not the implementation.

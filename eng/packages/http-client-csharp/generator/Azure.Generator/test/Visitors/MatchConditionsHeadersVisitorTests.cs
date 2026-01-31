@@ -81,7 +81,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -168,7 +168,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -215,7 +215,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
 
             // visit the method
-            _ = visitor.VisitScmMethod(methods[0]);
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
 
             var writer = new TypeProviderWriter(clientProvider!.RestClient);
             var file = writer.Write();
@@ -259,7 +259,7 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-                if (method.IsProtocolMethod && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
                 }
@@ -268,10 +268,8 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(protocolMethod, "Protocol method should be found.");
             Assert.IsNotNull(protocolMethod?.BodyStatements);
 
-            var bodyText = protocolMethod!.BodyStatements!.ToDisplayString();
-
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Match header for this operation"));
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Unmodified-Since header for this operation"));
+            var result = protocolMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), result);
         }
 
         [TestCase(true)]
@@ -311,7 +309,7 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-                if (method.IsProtocolMethod && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
                 }
@@ -442,7 +440,6 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-
                 // Verify that the MatchConditions parameter is added
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "matchConditions");
@@ -485,7 +482,6 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-
                 // Verify that the RequestConditions parameter is added
                 Assert.AreEqual(2, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
@@ -530,13 +526,120 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-
                 // Verify that the RequestConditions parameter is added
                 Assert.AreEqual(3, method.Signature.Parameters.Count);
                 Assert.IsTrue(method.Signature.Parameters[0].Name == "requestConditions");
                 Assert.IsTrue(method.Signature.Parameters[0].Type.Equals(RequestConditionsType));
                 Assert.IsTrue(method.Signature.Parameters[1].Name == "someOtherParam");
                 Assert.IsTrue(method.Signature.Parameters[2].Name == "context" || method.Signature.Parameters[2].Name == "cancellationToken");
+            }
+        }
+
+        [Test]
+        public void TestMatchConditionsParameterDoesNotHaveIncorrectWireInfo()
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+
+            foreach (var method in methodCollection)
+            {
+                visitor.VisitScmMethod(method);
+                // Verify that the MatchConditions parameter is added
+                Assert.AreEqual(2, method.Signature.Parameters.Count);
+                var matchConditionsParam = method.Signature.Parameters[0];
+                Assert.AreEqual("matchConditions", matchConditionsParam.Name);
+                Assert.IsTrue(matchConditionsParam.Type.Equals(MatchConditionsType));
+
+                // Verify that the WireInfo does not contain an incorrect SerializedName
+                // The matchConditions parameter is synthetic and should not have a SerializedName
+                // from the original conditional headers like "If-Match" or "If-None-Match"
+                // It should have empty string as SerializedName since it's not directly serialized
+                Assert.AreNotEqual("If-Match", matchConditionsParam.WireInfo.SerializedName,
+                    "MatchConditions parameter should not have 'If-Match' as SerializedName");
+                Assert.AreNotEqual("If-None-Match", matchConditionsParam.WireInfo.SerializedName,
+                    "MatchConditions parameter should not have 'If-None-Match' as SerializedName");
+                Assert.AreEqual(string.Empty, matchConditionsParam.WireInfo.SerializedName,
+                    "MatchConditions parameter should have empty SerializedName since it's not directly serialized");
+            }
+        }
+
+        [Test]
+        public void TestRequestConditionsParameterDoesNotHaveIncorrectWireInfo()
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+
+            foreach (var method in methodCollection)
+            {
+                visitor.VisitScmMethod(method);
+                // Verify that the RequestConditions parameter is added
+                Assert.AreEqual(2, method.Signature.Parameters.Count);
+                var requestConditionsParam = method.Signature.Parameters[0];
+                Assert.AreEqual("requestConditions", requestConditionsParam.Name);
+                Assert.IsTrue(requestConditionsParam.Type.Equals(RequestConditionsType));
+
+                // Verify that the WireInfo does not contain an incorrect SerializedName
+                // The requestConditions parameter is synthetic and should not have a SerializedName
+                // from the original conditional headers like "If-Modified-Since" or "If-Unmodified-Since"
+                // It should have empty string as SerializedName since it's not directly serialized
+                Assert.AreNotEqual("If-Modified-Since", requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should not have 'If-Modified-Since' as SerializedName");
+                Assert.AreNotEqual("If-Unmodified-Since", requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should not have 'If-Unmodified-Since' as SerializedName");
+                Assert.AreEqual(string.Empty, requestConditionsParam.WireInfo.SerializedName,
+                    "RequestConditions parameter should have empty SerializedName since it's not directly serialized");
             }
         }
 
@@ -574,7 +677,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
             foreach (var method in methods)
             {
-                visitor.VisitScmMethod(method);
+                visitor.VisitCreateRequest(inputServiceMethod, restClient, method as ScmMethodProvider);
             }
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
@@ -684,14 +787,17 @@ namespace Azure.Generator.Tests.Visitors
                 return base.VisitMethod(method);
             }
 
+            public ScmMethodProvider? VisitCreateRequest(
+                InputServiceMethod serviceMethod,
+                RestClientProvider enclosingType,
+                MethodProvider? methodProvider)
+            {
+                return base.VisitCreateRequestMethod(serviceMethod, enclosingType, methodProvider as ScmMethodProvider);
+            }
+
             public TypeProvider? TestVisitType(TypeProvider type)
             {
                 return base.VisitType(type);
-            }
-
-            internal MethodProvider? VisitScmMethod(MethodProvider method)
-            {
-                return base.VisitMethod(method);
             }
         }
     }

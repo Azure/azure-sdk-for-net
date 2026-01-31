@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 action,
                 filterType,
                 sqlFilter,
                 correlationFilter,
-                location,
                 serializedAdditionalRawData);
         }
 

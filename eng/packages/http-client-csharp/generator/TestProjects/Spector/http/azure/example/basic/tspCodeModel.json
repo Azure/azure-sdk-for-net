@@ -114,6 +114,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionRequest",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ActionRequest"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -153,6 +158,11 @@
             "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Model",
             "usage": "Input,Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Model"
+              }
+            },
             "properties": [
               {
                 "$id": "16",
@@ -322,6 +332,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionResponse",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ActionResponse"
+        }
+      },
       "properties": [
         {
           "$id": "29",
@@ -583,7 +598,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction",
-            "decorators": []
+            "decorators": [],
+            "namespace": "AzureExampleBasicClient"
           },
           "parameters": [
             {
@@ -721,14 +737,47 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.endpoint"
+          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint"
+        },
+        {
+          "$id": "57",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "58",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "59",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2022-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

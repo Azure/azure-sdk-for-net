@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Status of the mirror relationship. </summary>
+    /// <summary> Status of the volume replication relationship. </summary>
     public readonly partial struct VolumeReplicationRelationshipStatus : IEquatable<VolumeReplicationRelationshipStatus>
     {
         private readonly string _value;

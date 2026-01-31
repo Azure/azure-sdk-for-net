@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Agents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public partial class KnowledgeSourceParams : IUtf8JsonSerializable, IJsonModel<KnowledgeSourceParams>
@@ -37,6 +37,26 @@ namespace Azure.Search.Documents.Agents.Models
 
             writer.WritePropertyName("knowledgeSourceName"u8);
             writer.WriteStringValue(KnowledgeSourceName);
+            if (Optional.IsDefined(IncludeReferences))
+            {
+                writer.WritePropertyName("includeReferences"u8);
+                writer.WriteBooleanValue(IncludeReferences.Value);
+            }
+            if (Optional.IsDefined(IncludeReferenceSourceData))
+            {
+                writer.WritePropertyName("includeReferenceSourceData"u8);
+                writer.WriteBooleanValue(IncludeReferenceSourceData.Value);
+            }
+            if (Optional.IsDefined(AlwaysQuerySource))
+            {
+                writer.WritePropertyName("alwaysQuerySource"u8);
+                writer.WriteBooleanValue(AlwaysQuerySource.Value);
+            }
+            if (Optional.IsDefined(RerankerThreshold))
+            {
+                writer.WritePropertyName("rerankerThreshold"u8);
+                writer.WriteNumberValue(RerankerThreshold.Value);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -80,7 +100,12 @@ namespace Azure.Search.Documents.Agents.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "azureBlob": return AzureBlobKnowledgeSourceParams.DeserializeAzureBlobKnowledgeSourceParams(element, options);
+                    case "indexedOneLake": return IndexedOneLakeKnowledgeSourceParams.DeserializeIndexedOneLakeKnowledgeSourceParams(element, options);
+                    case "indexedSharePoint": return IndexedSharePointKnowledgeSourceParams.DeserializeIndexedSharePointKnowledgeSourceParams(element, options);
+                    case "remoteSharePoint": return RemoteSharePointKnowledgeSourceParams.DeserializeRemoteSharePointKnowledgeSourceParams(element, options);
                     case "searchIndex": return SearchIndexKnowledgeSourceParams.DeserializeSearchIndexKnowledgeSourceParams(element, options);
+                    case "web": return WebKnowledgeSourceParams.DeserializeWebKnowledgeSourceParams(element, options);
                 }
             }
             return UnknownKnowledgeSourceParams.DeserializeUnknownKnowledgeSourceParams(element, options);

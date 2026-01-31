@@ -142,6 +142,11 @@
       "usage": "Input,Output,Json",
       "doc": "Details about a resource.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Resource"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -217,6 +222,11 @@
               "usage": "Input,Output,JsonMergePatch,Json",
               "doc": "It is the model used by Resource model",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "InnerModel"
+                }
+              },
               "properties": [
                 {
                   "$id": "26",
@@ -430,6 +440,11 @@
       "usage": "Input,JsonMergePatch,Json",
       "doc": "Details about a resource for patch operation.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourcePatch"
+        }
+      },
       "properties": [
         {
           "$id": "41",
@@ -693,7 +708,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {
@@ -850,7 +866,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {
@@ -1006,7 +1023,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateOptionalResource",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Payload.JsonMergePatch"
           },
           "parameters": [
             {
@@ -1104,9 +1122,11 @@
           "crossLanguageDefinitionId": "Payload.JsonMergePatch.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.JsonMergePatch",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

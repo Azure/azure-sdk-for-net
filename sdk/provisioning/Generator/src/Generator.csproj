@@ -1,14 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Import common settings if not already imported (for Generator project to access LtsTargetFramework) -->
+  <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(LtsTargetFramework)' == ''" />
+
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
     <Version>1.0.0-beta.1</Version>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
-    <LangVersion>12</LangVersion>
-    <NoWarn>IDE0130;$(NoWarn)</NoWarn> <!-- Ignore namespace not matching folder structure -->
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <NoWarn>IDE0130;CS1591;CS1572;CS1587;$(NoWarn)</NoWarn> <!-- Ignore namespace not matching folder structure and XML comments -->
+    <WarningsNotAsErrors>CS8600</WarningsNotAsErrors> <!-- Emitted as a warning before common properties were imported -->
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
@@ -30,6 +35,7 @@
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.ContainerService" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
+    <PackageReference Include="Azure.ResourceManager.Dns" />
     <PackageReference Include="Azure.ResourceManager.EventGrid" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
 		<PackageReference Include="Azure.ResourceManager.FrontDoor" />
@@ -40,6 +46,7 @@
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
+    <PackageReference Include="Azure.ResourceManager.PrivateDns" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />
     <PackageReference Include="Azure.ResourceManager.Search" />

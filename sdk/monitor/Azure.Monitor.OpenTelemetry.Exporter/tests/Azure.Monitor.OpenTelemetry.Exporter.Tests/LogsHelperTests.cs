@@ -1,10 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -52,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var properties = new ChangeTrackingDictionary<string, string>();
 
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Test Exception", message);
             Assert.Null(eventName);
@@ -87,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Hello from tomato 2.99.", message);
             Assert.Null(eventName);
@@ -118,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal(log, message);
             Assert.Null(eventName);
@@ -153,7 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation(log, "tomato", 2.99);
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Hello from {name} {price}.", message);
             Assert.Null(eventName);
@@ -185,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation(id, "Log Information");
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Log Information", message);
             Assert.Null(eventName);
@@ -217,7 +216,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation("Information goes here");
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Information goes here", message);
             Assert.Null(eventName);
@@ -252,7 +251,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Test Exception", message);
             Assert.Null(eventName);
@@ -283,7 +282,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             logger.LogInformation(id, log, 100, "TestAttributeEventName");
 
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Log Information {EventId} {EventName}.", message);
             Assert.Null(eventName);
@@ -395,7 +394,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Some log information message.", message);
             Assert.Null(eventName);
@@ -447,7 +446,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Some log information message.", message);
             Assert.Null(eventName);
@@ -499,7 +498,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Some log information message.", message);
             Assert.Null(eventName);
@@ -547,7 +546,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Some log information message. {attributeKey} {attributeKey}.", message);
             Assert.Null(eventName);
@@ -594,7 +593,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("Some log information message. {Some scope key}.", message);
             Assert.Null(eventName);
@@ -624,7 +623,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("MyCustomEventName", eventName);
             Assert.Null(clientAddress);
@@ -649,7 +648,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
 
             Assert.Equal("MyCustomEventName", eventName);
             Assert.Null(clientAddress);
@@ -674,10 +673,76 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientIP);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientIP, out var availabilityInfo);
 
             Assert.Equal("1.2.3.4", clientIP);
             Assert.Null(eventName);
+        }
+
+        [Fact]
+        public void VerifyAvailabilityAttributes()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+            logger.LogInformation("{microsoft.availability.id} {microsoft.availability.name} {microsoft.availability.duration} {microsoft.availability.success} {microsoft.availability.runLocation} {microsoft.availability.message}",
+                "test-id", "test-name", "00:00:05", true, "test-location", "test-message");
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
+
+            Assert.NotNull(availabilityInfo);
+            Assert.Equal("test-id", availabilityInfo.Value.Id);
+            Assert.Equal("test-name", availabilityInfo.Value.Name);
+            Assert.Equal("00:00:05", availabilityInfo.Value.Duration);
+            Assert.True(availabilityInfo.Value.Success);
+            Assert.Equal("test-location", availabilityInfo.Value.RunLocation);
+            Assert.Equal("test-message", availabilityInfo.Value.Message);
+            Assert.Null(eventName);
+            Assert.Null(clientAddress);
+        }
+
+        [Fact]
+        public void VerifyAvailabilityAttributes_MissingOptionalFields()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+            logger.LogInformation("{microsoft.availability.id} {microsoft.availability.name} {microsoft.availability.duration} {microsoft.availability.success}",
+                "test-id", "test-name", "00:00:05", false);
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress, out var availabilityInfo);
+
+            Assert.NotNull(availabilityInfo);
+            Assert.Equal("test-id", availabilityInfo.Value.Id);
+            Assert.Equal("test-name", availabilityInfo.Value.Name);
+            Assert.Equal("00:00:05", availabilityInfo.Value.Duration);
+            Assert.False(availabilityInfo.Value.Success);
+            Assert.Null(availabilityInfo.Value.RunLocation);
+            Assert.Null(availabilityInfo.Value.Message); // Should fallback to formatted message if options.IncludeFormattedMessage = true;
+            Assert.Null(eventName);
+            Assert.Null(clientAddress);
         }
 
         private class CustomObject

@@ -7,50 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A Class representing a StorageSyncService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncServiceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageSyncService method.
+    /// A class representing a StorageSyncService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageSyncServices method.
     /// </summary>
     public partial class StorageSyncServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StorageSyncServiceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _storageSyncServiceClientDiagnostics;
-        private readonly StorageSyncServicesRestOperations _storageSyncServiceRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _storageSyncServicesClientDiagnostics;
+        private readonly StorageSyncServices _storageSyncServicesRestClient;
         private readonly StorageSyncServiceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices";
 
-        /// <summary> Initializes a new instance of the <see cref="StorageSyncServiceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StorageSyncServiceResource for mocking. </summary>
         protected StorageSyncServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageSyncServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncServiceResource(ArmClient client, StorageSyncServiceData data) : this(client, data.Id)
@@ -59,345 +46,92 @@ namespace Azure.ResourceManager.StorageSync
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageSyncServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageSyncServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageSyncServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string storageSyncServiceApiVersion);
-            _storageSyncServiceRestClient = new StorageSyncServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncServiceApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
+            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2022-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StorageSyncServiceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of StorageSyncPrivateEndpointConnectionResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of StorageSyncPrivateEndpointConnectionResources and their operations over a StorageSyncPrivateEndpointConnectionResource. </returns>
-        public virtual StorageSyncPrivateEndpointConnectionCollection GetStorageSyncPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new StorageSyncPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage sync service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageSyncPrivateEndpointConnectionResource>> GetStorageSyncPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageSyncPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage sync service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageSyncPrivateEndpointConnectionResource> GetStorageSyncPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetStorageSyncPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageSyncGroupResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of StorageSyncGroupResources and their operations over a StorageSyncGroupResource. </returns>
-        public virtual StorageSyncGroupCollection GetStorageSyncGroups()
-        {
-            return GetCachedClient(client => new StorageSyncGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a given SyncGroup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageSyncGroupResource>> GetStorageSyncGroupAsync(string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageSyncGroups().GetAsync(syncGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a given SyncGroup.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageSyncGroupResource> GetStorageSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetStorageSyncGroups().Get(syncGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageSyncRegisteredServerResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of StorageSyncRegisteredServerResources and their operations over a StorageSyncRegisteredServerResource. </returns>
-        public virtual StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers()
-        {
-            return GetCachedClient(client => new StorageSyncRegisteredServerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a given registered server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverId"> GUID identifying the on-premises server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(Guid serverId, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageSyncRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a given registered server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegisteredServers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serverId"> GUID identifying the on-premises server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(Guid serverId, CancellationToken cancellationToken = default)
-        {
-            return GetStorageSyncRegisteredServers().Get(serverId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageSyncWorkflowResources in the StorageSyncService. </summary>
-        /// <returns> An object representing collection of StorageSyncWorkflowResources and their operations over a StorageSyncWorkflowResource. </returns>
-        public virtual StorageSyncWorkflowCollection GetStorageSyncWorkflows()
-        {
-            return GetCachedClient(client => new StorageSyncWorkflowCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Workflows resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncWorkflowResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageSyncWorkflowResource>> GetStorageSyncWorkflowAsync(string workflowId, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageSyncWorkflows().GetAsync(workflowId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Workflows resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/workflows/{workflowId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflows_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncWorkflowResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowId"> workflow Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageSyncWorkflowResource> GetStorageSyncWorkflow(string workflowId, CancellationToken cancellationToken = default)
-        {
-            return GetStorageSyncWorkflows().Get(workflowId, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageSyncServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Get");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _storageSyncServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,34 +145,154 @@ namespace Azure.ResourceManager.StorageSync
         /// Get a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageSyncServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Get");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _storageSyncServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch a given StorageSyncService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Storage Sync Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<StorageSyncServiceResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncServicePatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageSyncServicePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
+                    new StorageSyncServiceOperationSource(Client),
+                    _storageSyncServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch a given StorageSyncService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Storage Sync Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<StorageSyncServiceResource> Update(WaitUntil waitUntil, StorageSyncServicePatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageSyncServicePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
+                    new StorageSyncServiceOperationSource(Client),
+                    _storageSyncServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -451,20 +305,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Delete a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,14 +326,21 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Delete");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _storageSyncServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(_storageSyncServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -493,20 +354,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Delete a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageSyncServiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,14 +375,21 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Delete");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _storageSyncServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageSyncArmOperation(_storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageSyncServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageSyncArmOperation operation = new StorageSyncArmOperation(_storageSyncServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -531,169 +399,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Patch a given StorageSyncService.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Storage Sync Service resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageSyncServiceResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncServicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _storageSyncServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Patch a given StorageSyncService.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Storage Sync Service resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<StorageSyncServiceResource> Update(WaitUntil waitUntil, StorageSyncServicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _storageSyncServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the private link resources that need to be created for a storage sync service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByStorageSyncService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSyncPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageSyncPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the private link resources that need to be created for a storage sync service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByStorageSyncService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSyncPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageSyncPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "StorageSyncServiceResource.GetPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -703,28 +409,34 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.AddTag");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _storageSyncServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StorageSyncServicePatch();
-                    foreach (var tag in current.Tags)
+                    StorageSyncServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageSyncServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -735,27 +447,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -765,28 +457,34 @@ namespace Azure.ResourceManager.StorageSync
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.AddTag");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _storageSyncServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StorageSyncServicePatch();
-                    foreach (var tag in current.Tags)
+                    StorageSyncServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageSyncServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -797,53 +495,39 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<StorageSyncServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.SetTags");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _storageSyncServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StorageSyncServicePatch();
+                    StorageSyncServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageSyncServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -854,53 +538,39 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<StorageSyncServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.SetTags");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _storageSyncServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StorageSyncServicePatch();
+                    StorageSyncServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageSyncServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -911,27 +581,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -939,28 +589,34 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.RemoveTag");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _storageSyncServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StorageSyncServicePatch();
-                    foreach (var tag in current.Tags)
+                    StorageSyncServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageSyncServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -971,27 +627,7 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -999,28 +635,34 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceResource.RemoveTag");
+            using DiagnosticScope scope = _storageSyncServicesClientDiagnostics.CreateScope("StorageSyncServiceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _storageSyncServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new StorageSyncServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _storageSyncServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<StorageSyncServiceData> response = Response.FromValue(StorageSyncServiceData.FromResponse(result), result);
+                    return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StorageSyncServicePatch();
-                    foreach (var tag in current.Tags)
+                    StorageSyncServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    StorageSyncServicePatch patch = new StorageSyncServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<StorageSyncServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1029,6 +671,130 @@ namespace Azure.ResourceManager.StorageSync
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of StorageSyncPrivateEndpointConnections in the <see cref="StorageSyncServiceResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncPrivateEndpointConnections and their operations over a StorageSyncPrivateEndpointConnectionResource. </returns>
+        public virtual StorageSyncPrivateEndpointConnectionCollection GetStorageSyncPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new StorageSyncPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the storage sync service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncPrivateEndpointConnectionResource>> GetStorageSyncPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetStorageSyncPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the storage sync service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncPrivateEndpointConnectionResource> GetStorageSyncPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetStorageSyncPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StorageSyncGroups in the <see cref="StorageSyncServiceResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncGroups and their operations over a StorageSyncGroupResource. </returns>
+        public virtual StorageSyncGroupCollection GetStorageSyncGroups()
+        {
+            return GetCachedClient(client => new StorageSyncGroupCollection(client, Id));
+        }
+
+        /// <summary> Get a given SyncGroup. </summary>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncGroupResource>> GetStorageSyncGroupAsync(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            return await GetStorageSyncGroups().GetAsync(syncGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a given SyncGroup. </summary>
+        /// <param name="syncGroupName"> Name of Sync Group resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncGroupResource> GetStorageSyncGroup(string syncGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+
+            return GetStorageSyncGroups().Get(syncGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StorageSyncRegisteredServers in the <see cref="StorageSyncServiceResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncRegisteredServers and their operations over a StorageSyncRegisteredServerResource. </returns>
+        public virtual StorageSyncRegisteredServerCollection GetStorageSyncRegisteredServers()
+        {
+            return GetCachedClient(client => new StorageSyncRegisteredServerCollection(client, Id));
+        }
+
+        /// <summary> Get a given registered server. </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetStorageSyncRegisteredServerAsync(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            return await GetStorageSyncRegisteredServers().GetAsync(serverId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a given registered server. </summary>
+        /// <param name="serverId"> GUID identifying the on-premises server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncRegisteredServerResource> GetStorageSyncRegisteredServer(Guid serverId, CancellationToken cancellationToken = default)
+        {
+            return GetStorageSyncRegisteredServers().Get(serverId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StorageSyncWorkflows in the <see cref="StorageSyncServiceResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncWorkflows and their operations over a StorageSyncWorkflowResource. </returns>
+        public virtual StorageSyncWorkflowCollection GetStorageSyncWorkflows()
+        {
+            return GetCachedClient(client => new StorageSyncWorkflowCollection(client, Id));
+        }
+
+        /// <summary> Get Workflows resource. </summary>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncWorkflowResource>> GetStorageSyncWorkflowAsync(string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
+
+            return await GetStorageSyncWorkflows().GetAsync(workflowId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get Workflows resource. </summary>
+        /// <param name="workflowId"> workflow Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncWorkflowResource> GetStorageSyncWorkflow(string workflowId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowId, nameof(workflowId));
+
+            return GetStorageSyncWorkflows().Get(workflowId, cancellationToken);
         }
     }
 }

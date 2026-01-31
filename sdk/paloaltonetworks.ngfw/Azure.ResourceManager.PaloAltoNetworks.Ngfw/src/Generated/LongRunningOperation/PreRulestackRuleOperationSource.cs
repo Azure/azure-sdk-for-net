@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class PreRulestackRuleOperationSource : IOperationSource<PreRulestackRuleResource>
+    /// <summary></summary>
+    internal partial class PreRulestackRuleOperationSource : IOperationSource<PreRulestackRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PreRulestackRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PreRulestackRuleResource IOperationSource<PreRulestackRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PreRulestackRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PreRulestackRuleData data = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PreRulestackRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PreRulestackRuleResource> IOperationSource<PreRulestackRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PreRulestackRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-            return await Task.FromResult(new PreRulestackRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PreRulestackRuleData data = PreRulestackRuleData.DeserializePreRulestackRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PreRulestackRuleResource(_client, data);
         }
     }
 }

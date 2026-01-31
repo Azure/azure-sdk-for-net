@@ -6,7 +6,7 @@
         "OSVmImage": "env:WINDOWSVMIMAGE"
       }
     },
-    "TestTargetFramework": ["net462", "net8.0", "net9.0"]
+    "TestTargetFramework": ["net462", "net8.0", "net9.0", "net10.0"]
   },
   "include": [
     {
@@ -16,7 +16,7 @@
           "OSVmImage": "env:LINUXVMIMAGE"
         }
       },
-      "TestTargetFramework": "net8.0"
+      "TestTargetFramework": "net10.0"
     }
   ]
 }

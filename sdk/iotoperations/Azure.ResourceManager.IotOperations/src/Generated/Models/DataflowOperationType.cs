@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowOperationType : IEquatable<DataflowOperationType>
     {
         private readonly string _value;
+        /// <summary> Dataflow Source Operation. </summary>
+        private const string SourceValue = "Source";
+        /// <summary> Dataflow Destination Operation. </summary>
+        private const string DestinationValue = "Destination";
+        /// <summary> Dataflow BuiltIn Transformation Operation. </summary>
+        private const string BuiltInTransformationValue = "BuiltInTransformation";
 
         /// <summary> Initializes a new instance of <see cref="DataflowOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowOperationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SourceValue = "Source";
-        private const string DestinationValue = "Destination";
-        private const string BuiltInTransformationValue = "BuiltInTransformation";
+            _value = value;
+        }
 
         /// <summary> Dataflow Source Operation. </summary>
         public static DataflowOperationType Source { get; } = new DataflowOperationType(SourceValue);
+
         /// <summary> Dataflow Destination Operation. </summary>
         public static DataflowOperationType Destination { get; } = new DataflowOperationType(DestinationValue);
+
         /// <summary> Dataflow BuiltIn Transformation Operation. </summary>
         public static DataflowOperationType BuiltInTransformation { get; } = new DataflowOperationType(BuiltInTransformationValue);
+
         /// <summary> Determines if two <see cref="DataflowOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowOperationType left, DataflowOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowOperationType left, DataflowOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowOperationType(string value) => new DataflowOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowOperationType?(string value) => value == null ? null : new DataflowOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

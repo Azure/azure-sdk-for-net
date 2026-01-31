@@ -6,286 +6,88 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    internal partial class ManagedUnsupportedVMSizesRestOperations
+    internal partial class ManagedUnsupportedVMSizes
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ManagedUnsupportedVMSizesRestOperations. </summary>
+        /// <summary> Initializes a new instance of ManagedUnsupportedVMSizes for mocking. </summary>
+        protected ManagedUnsupportedVMSizes()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ManagedUnsupportedVMSizes. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ManagedUnsupportedVMSizesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ManagedUnsupportedVMSizes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetManagedUnsupportedVmSizeRequestUri(string subscriptionId, AzureLocation location, string vmSize)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetManagedUnsupportedVmSizeRequest(string subscriptionId, AzureLocation location, string vmSize, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedUnsupportedVMSizes/", false);
             uri.AppendPath(vmSize, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetManagedUnsupportedVmSizeRequest(string subscriptionId, AzureLocation location, string vmSize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/managedUnsupportedVMSizes/", false);
-            uri.AppendPath(vmSize, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get unsupported vm size for Service Fabric Managed Clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="vmSize"> VM Size name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetManagedUnsupportedVmSizesRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
-
-            using var message = CreateGetManagedUnsupportedVmSizeRequest(subscriptionId, location, vmSize);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedUnsupportedVmSize value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get unsupported vm size for Service Fabric Managed Clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="vmSize"> VM Size name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
-
-            using var message = CreateGetManagedUnsupportedVmSizeRequest(subscriptionId, location, vmSize);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceFabricManagedUnsupportedVmSize value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetManagedUnsupportedVmSizesRequestUri(string subscriptionId, AzureLocation location)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedUnsupportedVMSizes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetManagedUnsupportedVmSizesRequest(string subscriptionId, AzureLocation location)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/managedUnsupportedVMSizes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get the lists of unsupported vm sizes for Service Fabric Managed Clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedVmSizesResult>> GetManagedUnsupportedVmSizesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetManagedUnsupportedVmSizesRequest(Uri nextPage, string subscriptionId, AzureLocation location, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetManagedUnsupportedVmSizesRequest(subscriptionId, location);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedVmSizesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ManagedVmSizesResult.DeserializeManagedVmSizesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the lists of unsupported vm sizes for Service Fabric Managed Clusters. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedVmSizesResult> GetManagedUnsupportedVmSizes(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetManagedUnsupportedVmSizesRequest(subscriptionId, location);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedVmSizesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ManagedVmSizesResult.DeserializeManagedVmSizesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetManagedUnsupportedVmSizesNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetManagedUnsupportedVmSizesNextPageRequest(string nextLink, string subscriptionId, AzureLocation location)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Get the lists of unsupported vm sizes for Service Fabric Managed Clusters. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedVmSizesResult>> GetManagedUnsupportedVmSizesNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetManagedUnsupportedVmSizesNextPageRequest(nextLink, subscriptionId, location);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedVmSizesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ManagedVmSizesResult.DeserializeManagedVmSizesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the lists of unsupported vm sizes for Service Fabric Managed Clusters. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedVmSizesResult> GetManagedUnsupportedVmSizesNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateGetManagedUnsupportedVmSizesNextPageRequest(nextLink, subscriptionId, location);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedVmSizesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ManagedVmSizesResult.DeserializeManagedVmSizesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

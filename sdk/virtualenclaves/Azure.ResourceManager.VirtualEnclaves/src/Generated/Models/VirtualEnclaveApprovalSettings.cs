@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> ApprovalSettings Properties. </summary>
     public partial class VirtualEnclaveApprovalSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalSettings"/>. </summary>
         public VirtualEnclaveApprovalSettings()
@@ -67,8 +39,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="notificationOnApprovalDeletion"> Notification will be sent on deletion of an Approval Request. </param>
         /// <param name="mandatoryApprovers"> List of mandatory approvers for the approval request. </param>
         /// <param name="minimumApproversRequired"> Minimum number of approvers required for the approval request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveApprovalSettings(VirtualEnclaveApprovalPolicy? endpointCreation, VirtualEnclaveApprovalPolicy? endpointUpdate, VirtualEnclaveApprovalPolicy? endpointDeletion, VirtualEnclaveApprovalPolicy? connectionCreation, VirtualEnclaveApprovalPolicy? connectionUpdate, VirtualEnclaveApprovalPolicy? connectionDeletion, VirtualEnclaveApprovalPolicy? enclaveCreation, VirtualEnclaveApprovalPolicy? enclaveDeletion, VirtualEnclaveApprovalPolicy? maintenanceMode, VirtualEnclaveApprovalPolicy? serviceCatalogDeployment, VirtualEnclaveApprovalPolicy? notificationOnApprovalCreation, VirtualEnclaveApprovalPolicy? notificationOnApprovalAction, VirtualEnclaveApprovalPolicy? notificationOnApprovalDeletion, IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, long? minimumApproversRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveApprovalSettings(VirtualEnclaveApprovalPolicy? endpointCreation, VirtualEnclaveApprovalPolicy? endpointUpdate, VirtualEnclaveApprovalPolicy? endpointDeletion, VirtualEnclaveApprovalPolicy? connectionCreation, VirtualEnclaveApprovalPolicy? connectionUpdate, VirtualEnclaveApprovalPolicy? connectionDeletion, VirtualEnclaveApprovalPolicy? enclaveCreation, VirtualEnclaveApprovalPolicy? enclaveDeletion, VirtualEnclaveApprovalPolicy? maintenanceMode, VirtualEnclaveApprovalPolicy? serviceCatalogDeployment, VirtualEnclaveApprovalPolicy? notificationOnApprovalCreation, VirtualEnclaveApprovalPolicy? notificationOnApprovalAction, VirtualEnclaveApprovalPolicy? notificationOnApprovalDeletion, IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, long? minimumApproversRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointCreation = endpointCreation;
             EndpointUpdate = endpointUpdate;
@@ -85,37 +57,51 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             NotificationOnApprovalDeletion = notificationOnApprovalDeletion;
             MandatoryApprovers = mandatoryApprovers;
             MinimumApproversRequired = minimumApproversRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Approval required for endpoint creation (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? EndpointCreation { get; set; }
+
         /// <summary> Approval required for endpoint update (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? EndpointUpdate { get; set; }
+
         /// <summary> Approval required for endpoint deletion (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? EndpointDeletion { get; set; }
+
         /// <summary> Approval required for enclave connection creation (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? ConnectionCreation { get; set; }
+
         /// <summary> Approval required for enclave connection update (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? ConnectionUpdate { get; set; }
+
         /// <summary> Approval required for enclave connection deletion (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? ConnectionDeletion { get; set; }
+
         /// <summary> Approval required for virtual enclave creation (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? EnclaveCreation { get; set; }
+
         /// <summary> Approval required for virtual enclave deletion (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? EnclaveDeletion { get; set; }
+
         /// <summary> Approval required for toggling maintenance mode (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? MaintenanceMode { get; set; }
+
         /// <summary> Approval required for deploying service catalog templates (Required or NotRequired). </summary>
         public VirtualEnclaveApprovalPolicy? ServiceCatalogDeployment { get; set; }
+
         /// <summary> Notification will be sent on creation of an Approval Request. </summary>
         public VirtualEnclaveApprovalPolicy? NotificationOnApprovalCreation { get; set; }
+
         /// <summary> Notification will be sent on any action taken (Approve/Reject) on an Approval Request. </summary>
         public VirtualEnclaveApprovalPolicy? NotificationOnApprovalAction { get; set; }
+
         /// <summary> Notification will be sent on deletion of an Approval Request. </summary>
         public VirtualEnclaveApprovalPolicy? NotificationOnApprovalDeletion { get; set; }
+
         /// <summary> List of mandatory approvers for the approval request. </summary>
         public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
+
         /// <summary> Minimum number of approvers required for the approval request. </summary>
         public long? MinimumApproversRequired { get; set; }
     }

@@ -158,6 +158,11 @@
       "usage": "Input,Spread,Json",
       "doc": "This is a simple model.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BodyParameter"
+        }
+      },
       "properties": [
         {
           "$id": "20",
@@ -194,6 +199,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "23",
@@ -230,6 +240,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -266,6 +281,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "29",
@@ -302,6 +322,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "32",
@@ -338,6 +363,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "35",
@@ -467,6 +497,11 @@
       "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "46",
@@ -563,6 +598,7 @@
           "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Spread",
       "apiVersions": [],
@@ -641,7 +677,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -758,7 +795,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -875,7 +913,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -1038,7 +1077,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -1236,7 +1276,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -1357,15 +1398,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Model",
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "110",
@@ -1441,7 +1484,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -1601,7 +1645,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -1803,7 +1848,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -2005,7 +2051,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -2268,7 +2315,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Spread"
               },
               "parameters": [
                 {
@@ -2412,17 +2460,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Spread.Alias",
           "apiVersions": [],
           "parent": {
             "$ref": "50"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {

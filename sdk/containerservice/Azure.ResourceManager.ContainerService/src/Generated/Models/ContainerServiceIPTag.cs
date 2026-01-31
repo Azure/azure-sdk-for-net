@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Contains the IPTag associated with the object. </summary>
+    /// <summary>
+    /// Contains the IPTag associated with the object.
+    /// Serialized Name: IPTag
+    /// </summary>
     public partial class ContainerServiceIPTag
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceIPTag"/>. </summary>
-        /// <param name="ipTagType"> The IP tag type. Example: RoutingPreference. </param>
-        /// <param name="tag"> The value of the IP tag associated with the public IP. Example: Internet. </param>
+        /// <param name="ipTagType">
+        /// The IP tag type. Example: RoutingPreference.
+        /// Serialized Name: IPTag.ipTagType
+        /// </param>
+        /// <param name="tag">
+        /// The value of the IP tag associated with the public IP. Example: Internet.
+        /// Serialized Name: IPTag.tag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The IP tag type. Example: RoutingPreference. </summary>
+        /// <summary>
+        /// The IP tag type. Example: RoutingPreference.
+        /// Serialized Name: IPTag.ipTagType
+        /// </summary>
         [WirePath("ipTagType")]
         public string IPTagType { get; set; }
-        /// <summary> The value of the IP tag associated with the public IP. Example: Internet. </summary>
+        /// <summary>
+        /// The value of the IP tag associated with the public IP. Example: Internet.
+        /// Serialized Name: IPTag.tag
+        /// </summary>
         [WirePath("tag")]
         public string Tag { get; set; }
     }

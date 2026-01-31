@@ -10,33 +10,13 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Client options for Azure.Developer.LoadTesting library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class LoadTestingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_03_01_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2022-11-01". </summary>
-            V2022_11_01 = 1,
-            /// <summary> Service version "2023-04-01-preview". </summary>
-            V2023_04_01_Preview = 2,
-            /// <summary> Service version "2024-03-01-preview". </summary>
-            V2024_03_01_Preview = 3,
-            /// <summary> Service version "2024-05-01-preview". </summary>
-            V2024_05_01_Preview = 4,
-            /// <summary> Service version "2024-07-01-preview". </summary>
-            V2024_07_01_Preview = 5,
-            /// <summary> Service version "2024-12-01-preview". </summary>
-            V2024_12_01_Preview = 6,
-            /// <summary> Service version "2025-03-01-preview". </summary>
-            V2025_03_01_Preview = 7,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of LoadTestingClientOptions. </summary>
+        /// <summary> Initializes a new instance of LoadTestAdministrationClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public LoadTestingClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -50,6 +30,28 @@ namespace Azure.Developer.LoadTesting
                 ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2022-11-01 version of the Azure Load Testing API. </summary>
+            V2022_11_01 = 1,
+            /// <summary> The 2023-04-01-preview version of the Azure Load Testing API. </summary>
+            V2023_04_01_Preview = 2,
+            /// <summary> The 2024-03-01-preview version of the Azure Load Testing API. </summary>
+            V2024_03_01_Preview = 3,
+            /// <summary> The 2024-05-01-preview version of the Azure Load Testing API. </summary>
+            V2024_05_01_Preview = 4,
+            /// <summary> The 2024-07-01-preview version of the Azure Load Testing API. </summary>
+            V2024_07_01_Preview = 5,
+            /// <summary> The 2024-12-01-preview version of the Azure Load Testing API. </summary>
+            V2024_12_01_Preview = 6,
+            /// <summary> The 2025-03-01-preview version of the Azure Load Testing API. </summary>
+            V2025_03_01_Preview = 7
         }
     }
 }

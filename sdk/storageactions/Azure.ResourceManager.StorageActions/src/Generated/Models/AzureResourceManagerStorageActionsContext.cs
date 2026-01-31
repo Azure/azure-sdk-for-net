@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageActions.Models;
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.StorageActions
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageTaskAction))]
     [ModelReaderWriterBuildable(typeof(StorageTaskAssignmentsListResult))]
     [ModelReaderWriterBuildable(typeof(StorageTaskData))]

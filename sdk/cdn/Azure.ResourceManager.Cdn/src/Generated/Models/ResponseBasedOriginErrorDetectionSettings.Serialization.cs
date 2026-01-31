@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -139,6 +141,74 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorTypes, responseBasedFailoverThresholdPercentage, httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseBasedDetectedErrorType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  responseBasedDetectedErrorTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResponseBasedDetectedErrorType))
+                {
+                    builder.Append("  responseBasedDetectedErrorTypes: ");
+                    builder.AppendLine($"'{ResponseBasedDetectedErrorType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseBasedFailoverThresholdPercentage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  responseBasedFailoverThresholdPercentage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
+                {
+                    builder.Append("  responseBasedFailoverThresholdPercentage: ");
+                    builder.AppendLine($"{ResponseBasedFailoverThresholdPercentage.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpErrorRanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpErrorRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HttpErrorRanges))
+                {
+                    if (HttpErrorRanges.Any())
+                    {
+                        builder.Append("  httpErrorRanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HttpErrorRanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  httpErrorRanges: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ResponseBasedOriginErrorDetectionSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseBasedOriginErrorDetectionSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +217,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support writing '{options.Format}' format.");
             }

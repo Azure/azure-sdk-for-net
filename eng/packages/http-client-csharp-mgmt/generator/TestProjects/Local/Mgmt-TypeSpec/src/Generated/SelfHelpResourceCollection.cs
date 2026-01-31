@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +17,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="SelfHelpResource"/> and their operations.
-    /// Each <see cref="SelfHelpResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="SelfHelpResourceCollection"/> instance call the GetSelfHelpResources method from an instance of the parent resource.
+    /// Each <see cref="SelfHelpResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SelfHelpResourceCollection"/> instance call the GetSelfHelpResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SelfHelpResourceCollection : ArmCollection
     {
@@ -39,17 +38,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(SelfHelpResource.ResourceType, out string selfHelpResourceApiVersion);
             _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SelfHelpResource.ResourceType.Namespace, Diagnostics);
             _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != SelfHelpResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SelfHelpResource.ResourceType), id);
-            }
         }
 
         /// <summary>
@@ -61,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a SelfHelpResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -159,7 +147,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -208,7 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a SelfHelpResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -216,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,7 +253,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a SelfHelpResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -273,7 +261,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -326,7 +314,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a SelfHelpResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -334,7 +322,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SolutionResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

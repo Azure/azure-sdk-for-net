@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDeviceRegistryBillingContainerData(document.RootElement, options);
                     }
@@ -190,11 +190,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeviceRegistryBillingContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryBillingContainerData"/> from. </param>
-        internal static DeviceRegistryBillingContainerData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryBillingContainerData"/> from. </param>
+        internal static DeviceRegistryBillingContainerData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeviceRegistryBillingContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

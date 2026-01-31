@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The LogMetricsGroupBy.
-    /// Serialized Name: LogMetricsGroupBy
-    /// </summary>
+    /// <summary> The LogMetricsGroupBy. </summary>
     public readonly partial struct LogMetricsGroupBy : IEquatable<LogMetricsGroupBy>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string CustomDomainValue = "customDomain";
 
-        /// <summary>
-        /// httpStatusCode
-        /// Serialized Name: LogMetricsGroupBy.httpStatusCode
-        /// </summary>
+        /// <summary> httpStatusCode. </summary>
         public static LogMetricsGroupBy HttpStatusCode { get; } = new LogMetricsGroupBy(HttpStatusCodeValue);
-        /// <summary>
-        /// protocol
-        /// Serialized Name: LogMetricsGroupBy.protocol
-        /// </summary>
+        /// <summary> protocol. </summary>
         public static LogMetricsGroupBy Protocol { get; } = new LogMetricsGroupBy(ProtocolValue);
-        /// <summary>
-        /// cacheStatus
-        /// Serialized Name: LogMetricsGroupBy.cacheStatus
-        /// </summary>
+        /// <summary> cacheStatus. </summary>
         public static LogMetricsGroupBy CacheStatus { get; } = new LogMetricsGroupBy(CacheStatusValue);
-        /// <summary>
-        /// countryOrRegion
-        /// Serialized Name: LogMetricsGroupBy.countryOrRegion
-        /// </summary>
+        /// <summary> countryOrRegion. </summary>
         public static LogMetricsGroupBy CountryOrRegion { get; } = new LogMetricsGroupBy(CountryOrRegionValue);
-        /// <summary>
-        /// customDomain
-        /// Serialized Name: LogMetricsGroupBy.customDomain
-        /// </summary>
+        /// <summary> customDomain. </summary>
         public static LogMetricsGroupBy CustomDomain { get; } = new LogMetricsGroupBy(CustomDomainValue);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are the same. </summary>
         public static bool operator ==(LogMetricsGroupBy left, LogMetricsGroupBy right) => left.Equals(right);

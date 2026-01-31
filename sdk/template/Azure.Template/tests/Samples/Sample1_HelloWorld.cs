@@ -6,34 +6,35 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Template
 using Azure.Identity;
-using Azure.Template.Models;
 #endregion
 using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
+    public partial class WidgetAnalyticsSamples : SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
-        public void GettingASecret()
+        [Ignore("Widget Analytics service not available for live testing")]
+        public void GetWidgets()
         {
-            #region Snippet:Azure_Template_GetSecret
+            #region Snippet:Azure_Template_GetWidgets
 #if SNIPPET
-            string endpoint = "https://myvault.vault.azure.net";
+            string endpoint = "https://your-service-endpoint";
             var credential = new DefaultAzureCredential();
 #else
-            string endpoint = TestEnvironment.KeyVaultUri;
+            string endpoint = TestEnvironment.Endpoint;
             var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, credential);
+            var client = new WidgetAnalyticsClient(new Uri(endpoint), credential);
+            AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            SecretBundle secret = client.GetSecretValue("TestSecret");
-
-            Console.WriteLine(secret.Value);
+            // List all widgets
+            foreach (WidgetSuite widget in widgetsClient.GetWidgets())
+            {
+                Console.WriteLine($"Widget: {widget.ManufacturerId}");
+            }
             #endregion
-
-            Assert.NotNull(secret.Value);
         }
     }
 }

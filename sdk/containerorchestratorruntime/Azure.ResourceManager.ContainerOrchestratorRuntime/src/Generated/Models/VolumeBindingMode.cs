@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct VolumeBindingMode : IEquatable<VolumeBindingMode>
     {
         private readonly string _value;
+        /// <summary> Immediate binding mode. </summary>
+        private const string ImmediateValue = "Immediate";
+        /// <summary> Wait for first consumer binding mode. </summary>
+        private const string WaitForFirstConsumerValue = "WaitForFirstConsumer";
 
         /// <summary> Initializes a new instance of <see cref="VolumeBindingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VolumeBindingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImmediateValue = "Immediate";
-        private const string WaitForFirstConsumerValue = "WaitForFirstConsumer";
+            _value = value;
+        }
 
         /// <summary> Immediate binding mode. </summary>
         public static VolumeBindingMode Immediate { get; } = new VolumeBindingMode(ImmediateValue);
+
         /// <summary> Wait for first consumer binding mode. </summary>
         public static VolumeBindingMode WaitForFirstConsumer { get; } = new VolumeBindingMode(WaitForFirstConsumerValue);
+
         /// <summary> Determines if two <see cref="VolumeBindingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeBindingMode left, VolumeBindingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VolumeBindingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeBindingMode left, VolumeBindingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeBindingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VolumeBindingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeBindingMode(string value) => new VolumeBindingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeBindingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VolumeBindingMode?(string value) => value == null ? null : new VolumeBindingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VolumeBindingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VolumeBindingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

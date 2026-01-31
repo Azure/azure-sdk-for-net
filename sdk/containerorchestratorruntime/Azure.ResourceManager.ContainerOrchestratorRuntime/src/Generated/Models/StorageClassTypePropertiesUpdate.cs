@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> The model for update a storageClass. </summary>
     public partial class StorageClassTypePropertiesUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageClassTypePropertiesUpdate"/>. </summary>
         public StorageClassTypePropertiesUpdate()
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="username"> Server username. </param>
         /// <param name="password"> Server password. </param>
         /// <param name="domain"> Server domain. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassTypePropertiesUpdate(string backingStorageClassName, string azureStorageAccountName, string azureStorageAccountKey, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete, string source, string username, string password, string domain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageClassTypePropertiesUpdate(string backingStorageClassName, string azureStorageAccountName, string azureStorageAccountKey, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete, string source, string username, string password, string domain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackingStorageClassName = backingStorageClassName;
             AzureStorageAccountName = azureStorageAccountName;
@@ -78,31 +49,42 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             Username = username;
             Password = password;
             Domain = domain;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The backing storageclass used to create new storageclass. </summary>
         public string BackingStorageClassName { get; set; }
+
         /// <summary> Azure Storage Account Name. </summary>
         public string AzureStorageAccountName { get; set; }
+
         /// <summary> Azure Storage Account Key. </summary>
         public string AzureStorageAccountKey { get; set; }
+
         /// <summary> NFS Server. </summary>
         public string Server { get; set; }
+
         /// <summary> NFS share. </summary>
         public string Share { get; set; }
+
         /// <summary> Sub directory under share. If the sub directory doesn't exist, driver will create it. </summary>
         public string SubDir { get; set; }
+
         /// <summary> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </summary>
         public string MountPermissions { get; set; }
+
         /// <summary> The action to take when a NFS volume is deleted. Default is Delete. </summary>
         public NfsDirectoryActionOnVolumeDeletion? OnDelete { get; set; }
+
         /// <summary> SMB Source. </summary>
         public string Source { get; set; }
+
         /// <summary> Server username. </summary>
         public string Username { get; set; }
+
         /// <summary> Server password. </summary>
         public string Password { get; set; }
+
         /// <summary> Server domain. </summary>
         public string Domain { get; set; }
     }

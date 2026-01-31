@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerStateStoreCustomPolicy"/>. </summary>
         /// <param name="stateStoreSettings"> Settings for the policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stateStoreSettings"/> is null. </exception>
-        public BrokerStateStoreCustomPolicy(BrokerStateStorePolicySettings stateStoreSettings)
+        public BrokerStateStoreCustomPolicy(BrokerStateStorePolicySettings stateStoreSettings) : base(BrokerPersistencePolicyMode.Custom)
         {
             Argument.AssertNotNull(stateStoreSettings, nameof(stateStoreSettings));
 
             StateStoreSettings = stateStoreSettings;
-            Mode = BrokerPersistencePolicyMode.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrokerStateStoreCustomPolicy"/>. </summary>
         /// <param name="mode"> 'All' to persist all keys, 'None' to not persist any, 'Custom' to persist only the specified keys. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="stateStoreSettings"> Settings for the policy. </param>
-        internal BrokerStateStoreCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, BrokerStateStorePolicySettings stateStoreSettings) : base(mode, serializedAdditionalRawData)
+        internal BrokerStateStoreCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrokerStateStorePolicySettings stateStoreSettings) : base(mode, additionalBinaryDataProperties)
         {
             StateStoreSettings = stateStoreSettings;
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BrokerStateStoreCustomPolicy"/> for deserialization. </summary>
-        internal BrokerStateStoreCustomPolicy()
-        {
         }
 
         /// <summary> Settings for the policy. </summary>

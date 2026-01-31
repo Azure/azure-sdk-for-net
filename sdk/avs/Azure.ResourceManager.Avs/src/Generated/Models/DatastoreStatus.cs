@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct DatastoreStatus : IEquatable<DatastoreStatus>
     {
         private readonly string _value;
+        /// <summary> is unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> is accessible. </summary>
+        private const string AccessibleValue = "Accessible";
+        /// <summary> is inaccessible. </summary>
+        private const string InaccessibleValue = "Inaccessible";
+        /// <summary> is attached. </summary>
+        private const string AttachedValue = "Attached";
+        /// <summary> is detached. </summary>
+        private const string DetachedValue = "Detached";
+        /// <summary> is lost communication. </summary>
+        private const string LostCommunicationValue = "LostCommunication";
+        /// <summary> is dead or error. </summary>
+        private const string DeadOrErrorValue = "DeadOrError";
 
         /// <summary> Initializes a new instance of <see cref="DatastoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatastoreStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string AccessibleValue = "Accessible";
-        private const string InaccessibleValue = "Inaccessible";
-        private const string AttachedValue = "Attached";
-        private const string DetachedValue = "Detached";
-        private const string LostCommunicationValue = "LostCommunication";
-        private const string DeadOrErrorValue = "DeadOrError";
+            _value = value;
+        }
 
         /// <summary> is unknown. </summary>
         public static DatastoreStatus Unknown { get; } = new DatastoreStatus(UnknownValue);
+
         /// <summary> is accessible. </summary>
         public static DatastoreStatus Accessible { get; } = new DatastoreStatus(AccessibleValue);
+
         /// <summary> is inaccessible. </summary>
         public static DatastoreStatus Inaccessible { get; } = new DatastoreStatus(InaccessibleValue);
+
         /// <summary> is attached. </summary>
         public static DatastoreStatus Attached { get; } = new DatastoreStatus(AttachedValue);
+
         /// <summary> is detached. </summary>
         public static DatastoreStatus Detached { get; } = new DatastoreStatus(DetachedValue);
+
         /// <summary> is lost communication. </summary>
         public static DatastoreStatus LostCommunication { get; } = new DatastoreStatus(LostCommunicationValue);
+
         /// <summary> is dead or error. </summary>
         public static DatastoreStatus DeadOrError { get; } = new DatastoreStatus(DeadOrErrorValue);
+
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatastoreStatus left, DatastoreStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatastoreStatus left, DatastoreStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatastoreStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatastoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatastoreStatus(string value) => new DatastoreStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatastoreStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatastoreStatus?(string value) => value == null ? null : new DatastoreStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatastoreStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatastoreStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

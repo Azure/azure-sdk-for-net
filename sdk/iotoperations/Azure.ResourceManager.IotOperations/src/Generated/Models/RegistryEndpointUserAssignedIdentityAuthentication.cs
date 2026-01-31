@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>. </summary>
         /// <param name="userAssignedManagedIdentitySettings"> User assigned managed identity properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userAssignedManagedIdentitySettings"/> is null. </exception>
-        public RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings)
+        public RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings) : base(RegistryEndpointAuthenticationMethod.UserAssignedManagedIdentity)
         {
             Argument.AssertNotNull(userAssignedManagedIdentitySettings, nameof(userAssignedManagedIdentitySettings));
 
             UserAssignedManagedIdentitySettings = userAssignedManagedIdentitySettings;
-            Method = RegistryEndpointAuthenticationMethod.UserAssignedManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userAssignedManagedIdentitySettings"> User assigned managed identity properties. </param>
-        internal RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings) : base(method, serializedAdditionalRawData)
+        internal RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings) : base(@method, additionalBinaryDataProperties)
         {
             UserAssignedManagedIdentitySettings = userAssignedManagedIdentitySettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/> for deserialization. </summary>
-        internal RegistryEndpointUserAssignedIdentityAuthentication()
-        {
         }
 
         /// <summary> User assigned managed identity properties. </summary>

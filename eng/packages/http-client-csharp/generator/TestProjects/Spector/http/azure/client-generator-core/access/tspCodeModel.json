@@ -174,6 +174,11 @@
       "usage": "Output,Json",
       "doc": "Used in a public operation, should be generated and exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NoDecoratorModelInPublic"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -212,6 +217,11 @@
       "usage": "Output,Json",
       "doc": "Used in a public operation, should be generated and exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PublicDecoratorModelInPublic"
+        }
+      },
       "properties": [
         {
           "$id": "25",
@@ -249,6 +259,11 @@
       "usage": "Output,Json",
       "doc": "Used in an internal operation, should be generated but not exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NoDecoratorModelInInternal"
+        }
+      },
       "properties": [
         {
           "$id": "28",
@@ -287,6 +302,11 @@
       "usage": "Output,Json",
       "doc": "Used in an internal operation, should be generated but not exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InternalDecoratorModelInInternal"
+        }
+      },
       "properties": [
         {
           "$id": "31",
@@ -325,6 +345,11 @@
       "usage": "Output,Json",
       "doc": "Used in an internal operation but with public decorator, should be generated and exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PublicDecoratorModelInInternal"
+        }
+      },
       "properties": [
         {
           "$id": "34",
@@ -362,6 +387,11 @@
       "usage": "Output,Json",
       "doc": "Used by both public and internal operation. It should be generated and exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SharedModel"
+        }
+      },
       "properties": [
         {
           "$id": "37",
@@ -399,6 +429,11 @@
       "usage": "Output,Json",
       "doc": "Used in internal operations, should be generated but not exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OuterModel"
+        }
+      },
       "baseModel": {
         "$id": "40",
         "kind": "model",
@@ -408,6 +443,11 @@
         "usage": "Output,Json",
         "doc": "Used in internal operations, should be generated but not exported.",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "BaseModel"
+          }
+        },
         "properties": [
           {
             "$id": "41",
@@ -451,6 +491,11 @@
             "usage": "Output,Json",
             "doc": "Used in internal operations, should be generated but not exported.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "InnerModel"
+              }
+            },
             "properties": [
               {
                 "$id": "45",
@@ -509,6 +554,11 @@
       "usage": "Output,Json",
       "doc": "Used in internal operations, should be generated but not exported.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AbstractModel"
+        }
+      },
       "discriminatorProperty": {
         "$id": "48",
         "kind": "property",
@@ -576,6 +626,11 @@
           "doc": "Used in internal operations, should be generated but not exported.",
           "discriminatorValue": "real",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "RealModel"
+            }
+          },
           "baseModel": {
             "$ref": "47"
           },
@@ -649,6 +704,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access",
       "apiVersions": [],
@@ -730,7 +786,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation.noDecoratorInPublic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation"
               },
               "parameters": [
                 {
@@ -853,7 +910,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation.publicDecoratorInPublic",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation"
               },
               "parameters": [
                 {
@@ -935,15 +993,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.PublicOperation",
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "78",
@@ -1022,7 +1082,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation.noDecoratorInInternal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation"
               },
               "parameters": [
                 {
@@ -1145,7 +1206,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation.internalDecoratorInInternal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation"
               },
               "parameters": [
                 {
@@ -1268,7 +1330,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation.publicDecoratorInInternal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation"
               },
               "parameters": [
                 {
@@ -1350,15 +1413,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.InternalOperation",
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "106",
@@ -1437,7 +1502,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation.public",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation"
               },
               "parameters": [
                 {
@@ -1560,7 +1626,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation.internal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation"
               },
               "parameters": [
                 {
@@ -1642,15 +1709,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.SharedModelInOperation",
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "126",
@@ -1731,7 +1800,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation.operation",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation"
               },
               "parameters": [
                 {
@@ -1856,7 +1926,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation.discriminator",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation"
               },
               "parameters": [
                 {
@@ -1938,17 +2009,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Access.RelativeModelInOperation",
           "apiVersions": [],
           "parent": {
             "$ref": "54"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

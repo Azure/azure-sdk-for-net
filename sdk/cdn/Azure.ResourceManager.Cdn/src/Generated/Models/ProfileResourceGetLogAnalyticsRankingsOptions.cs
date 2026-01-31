@@ -40,16 +40,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The rankings. </summary>
+        [WirePath("rankings")]
         public IList<LogRanking> Rankings { get; }
         /// <summary> The metrics. </summary>
+        [WirePath("metrics")]
         public IList<LogRankingMetric> Metrics { get; }
         /// <summary> The maxRanking. </summary>
+        [WirePath("maxRanking")]
         public int MaxRanking { get; }
         /// <summary> The dateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset DateTimeBegin { get; }
         /// <summary> The dateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The customDomains. </summary>
+        [WirePath("customDomains")]
         public IList<string> CustomDomains { get; }
     }
 }

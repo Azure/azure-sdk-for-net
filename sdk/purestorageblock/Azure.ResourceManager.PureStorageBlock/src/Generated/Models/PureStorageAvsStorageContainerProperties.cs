@@ -13,43 +13,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> AVS storage container properties. </summary>
     public partial class PureStorageAvsStorageContainerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerProperties"/>. </summary>
-        /// <param name="resourceName"> Name of the storage container. </param>
-        internal PureStorageAvsStorageContainerProperties(string resourceName)
+        internal PureStorageAvsStorageContainerProperties()
         {
-            ResourceName = resourceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerProperties"/>. </summary>
@@ -58,30 +27,29 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisionedLimit"> Maximum amount of bytes that can be provisioned in this storage container; it must be a multiple of 512; each time a volume is provisioned in this container, its provisionedSize will be counted against the provisionLimit and the provisioning will fail if it goes over (minimum: 1048576 (1MiB), maximum: 4503599627370496 (4PiB)); by default it is unrestricted. </param>
         /// <param name="datastore"> VMware datastore associated with this storage container (if any). </param>
         /// <param name="mounted"> Whether the datastore is mounted in VMware or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsStorageContainerProperties(PureStorageSpaceUsage space, string resourceName, long? provisionedLimit, string datastore, bool? mounted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStorageAvsStorageContainerProperties(PureStorageSpaceUsage space, string resourceName, long? provisionedLimit, string datastore, bool? mounted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Space = space;
             ResourceName = resourceName;
             ProvisionedLimit = provisionedLimit;
             Datastore = datastore;
             Mounted = mounted;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStorageContainerProperties"/> for deserialization. </summary>
-        internal PureStorageAvsStorageContainerProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage space usage. </summary>
         public PureStorageSpaceUsage Space { get; }
+
         /// <summary> Name of the storage container. </summary>
         public string ResourceName { get; }
+
         /// <summary> Maximum amount of bytes that can be provisioned in this storage container; it must be a multiple of 512; each time a volume is provisioned in this container, its provisionedSize will be counted against the provisionLimit and the provisioning will fail if it goes over (minimum: 1048576 (1MiB), maximum: 4503599627370496 (4PiB)); by default it is unrestricted. </summary>
         public long? ProvisionedLimit { get; }
+
         /// <summary> VMware datastore associated with this storage container (if any). </summary>
         public string Datastore { get; }
+
         /// <summary> Whether the datastore is mounted in VMware or not. </summary>
         public bool? Mounted { get; }
     }

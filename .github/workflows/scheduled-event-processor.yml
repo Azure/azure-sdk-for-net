@@ -39,7 +39,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20250425.1
+          --version 1.0.0-dev.20260129.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
@@ -123,7 +123,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Archive github event data
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: event

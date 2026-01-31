@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     /// </summary>
     public partial class ConnectedClusterServiceCollection : ArmCollection, IEnumerable<ConnectedClusterServiceResource>, IAsyncEnumerable<ConnectedClusterServiceResource>
     {
-        private readonly ClientDiagnostics _connectedClusterServiceServicesClientDiagnostics;
-        private readonly ServicesRestOperations _connectedClusterServiceServicesRestClient;
+        private readonly ClientDiagnostics _servicesClientDiagnostics;
+        private readonly Services _servicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterServiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ConnectedClusterServiceCollection for mocking. </summary>
         protected ConnectedClusterServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectedClusterServiceServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConnectedClusterServiceResource.ResourceType, out string connectedClusterServiceServicesApiVersion);
-            _connectedClusterServiceServicesRestClient = new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterServiceServicesApiVersion);
+            TryGetApiVersion(ConnectedClusterServiceResource.ResourceType, out string connectedClusterServiceApiVersion);
+            _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterServiceResource.ResourceType.Namespace, Diagnostics);
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
         }
 
         /// <summary>
         /// Create a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,23 +63,31 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ConnectedClusterServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.CreateOrUpdateAsync(Id, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _connectedClusterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id, serviceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id, serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -96,20 +101,16 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Create a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,23 +118,31 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ConnectedClusterServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.CreateOrUpdate(Id, serviceName, data, cancellationToken);
-                var uri = _connectedClusterServiceServicesRestClient.CreateCreateOrUpdateRequestUri(Id, serviceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id, serviceName, ConnectedClusterServiceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterServiceResource>(Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -147,38 +156,42 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ConnectedClusterServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.GetAsync(Id, serviceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,38 +205,42 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a ServiceResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ConnectedClusterServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Get");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.Get(Id, serviceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterServiceData> response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,50 +254,44 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// List ServiceResource resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedClusterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectedClusterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterServiceServicesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedClusterServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterServiceResource(Client, ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(e)), _connectedClusterServiceServicesClientDiagnostics, Pipeline, "ConnectedClusterServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(_servicesRestClient, Id, context), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>
         /// List ServiceResource resources by parent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,45 +299,61 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <returns> A collection of <see cref="ConnectedClusterServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterServiceServicesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedClusterServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterServiceResource(Client, ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(e)), _connectedClusterServiceServicesClientDiagnostics, Pipeline, "ConnectedClusterServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ConnectedClusterServiceData, ConnectedClusterServiceResource>(new ServicesGetAllCollectionResultOfT(_servicesRestClient, Id, context), data => new ConnectedClusterServiceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.GetAsync(Id, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ConnectedClusterServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,36 +367,50 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Exists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.Get(Id, serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ConnectedClusterServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,38 +424,54 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ConnectedClusterServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _connectedClusterServiceServicesRestClient.GetAsync(Id, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ConnectedClusterServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ConnectedClusterServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -428,38 +485,54 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ConnectedClusterServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _connectedClusterServiceServicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ConnectedClusterServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _connectedClusterServiceServicesRestClient.Get(Id, serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _servicesRestClient.CreateGetRequest(Id, serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ConnectedClusterServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ConnectedClusterServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ConnectedClusterServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ConnectedClusterServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -479,6 +552,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ConnectedClusterServiceResource> IAsyncEnumerable<ConnectedClusterServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

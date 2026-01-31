@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
+    /// <summary>
+    /// Kubelet configurations of agent nodes. See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details.
+    /// Serialized Name: KubeletConfig
+    /// </summary>
     public partial class KubeletConfig
     {
         /// <summary>
@@ -52,17 +55,50 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
-        /// <param name="cpuManagerPolicy"> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </param>
-        /// <param name="isCpuCfsQuotaEnabled"> The default is true. </param>
-        /// <param name="cpuCfsQuotaPeriod"> The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </param>
-        /// <param name="imageGcHighThreshold"> To disable image garbage collection, set to 100. The default is 85%. </param>
-        /// <param name="imageGcLowThreshold"> This cannot be set higher than imageGcHighThreshold. The default is 80%. </param>
-        /// <param name="topologyManagerPolicy"> For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </param>
-        /// <param name="allowedUnsafeSysctls"> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </param>
-        /// <param name="failStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
-        /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
-        /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
-        /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
+        /// <param name="cpuManagerPolicy">
+        /// The CPU Manager policy to use. The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'.
+        /// Serialized Name: KubeletConfig.cpuManagerPolicy
+        /// </param>
+        /// <param name="isCpuCfsQuotaEnabled">
+        /// If CPU CFS quota enforcement is enabled for containers that specify CPU limits. The default is true.
+        /// Serialized Name: KubeletConfig.cpuCfsQuota
+        /// </param>
+        /// <param name="cpuCfsQuotaPeriod">
+        /// The CPU CFS quota period value. The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'.
+        /// Serialized Name: KubeletConfig.cpuCfsQuotaPeriod
+        /// </param>
+        /// <param name="imageGcHighThreshold">
+        /// The percent of disk usage after which image garbage collection is always run. To disable image garbage collection, set to 100. The default is 85%
+        /// Serialized Name: KubeletConfig.imageGcHighThreshold
+        /// </param>
+        /// <param name="imageGcLowThreshold">
+        /// The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageGcHighThreshold. The default is 80%
+        /// Serialized Name: KubeletConfig.imageGcLowThreshold
+        /// </param>
+        /// <param name="topologyManagerPolicy">
+        /// The Topology Manager policy to use. For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'.
+        /// Serialized Name: KubeletConfig.topologyManagerPolicy
+        /// </param>
+        /// <param name="allowedUnsafeSysctls">
+        /// Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`).
+        /// Serialized Name: KubeletConfig.allowedUnsafeSysctls
+        /// </param>
+        /// <param name="failStartWithSwapOn">
+        /// If set to true it will make the Kubelet fail to start if swap is enabled on the node.
+        /// Serialized Name: KubeletConfig.failSwapOn
+        /// </param>
+        /// <param name="containerLogMaxSizeInMB">
+        /// The maximum size (e.g. 10Mi) of container log file before it is rotated.
+        /// Serialized Name: KubeletConfig.containerLogMaxSizeMB
+        /// </param>
+        /// <param name="containerLogMaxFiles">
+        /// The maximum number of container log files that can be present for a container. The number must be ≥ 2.
+        /// Serialized Name: KubeletConfig.containerLogMaxFiles
+        /// </param>
+        /// <param name="podMaxPids">
+        /// The maximum number of processes per pod.
+        /// Serialized Name: KubeletConfig.podMaxPids
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,37 +116,70 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </summary>
+        /// <summary>
+        /// The CPU Manager policy to use. The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'.
+        /// Serialized Name: KubeletConfig.cpuManagerPolicy
+        /// </summary>
         [WirePath("cpuManagerPolicy")]
         public string CpuManagerPolicy { get; set; }
-        /// <summary> The default is true. </summary>
+        /// <summary>
+        /// If CPU CFS quota enforcement is enabled for containers that specify CPU limits. The default is true.
+        /// Serialized Name: KubeletConfig.cpuCfsQuota
+        /// </summary>
         [WirePath("cpuCfsQuota")]
         public bool? IsCpuCfsQuotaEnabled { get; set; }
-        /// <summary> The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </summary>
+        /// <summary>
+        /// The CPU CFS quota period value. The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'.
+        /// Serialized Name: KubeletConfig.cpuCfsQuotaPeriod
+        /// </summary>
         [WirePath("cpuCfsQuotaPeriod")]
         public string CpuCfsQuotaPeriod { get; set; }
-        /// <summary> To disable image garbage collection, set to 100. The default is 85%. </summary>
+        /// <summary>
+        /// The percent of disk usage after which image garbage collection is always run. To disable image garbage collection, set to 100. The default is 85%
+        /// Serialized Name: KubeletConfig.imageGcHighThreshold
+        /// </summary>
         [WirePath("imageGcHighThreshold")]
         public int? ImageGcHighThreshold { get; set; }
-        /// <summary> This cannot be set higher than imageGcHighThreshold. The default is 80%. </summary>
+        /// <summary>
+        /// The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageGcHighThreshold. The default is 80%
+        /// Serialized Name: KubeletConfig.imageGcLowThreshold
+        /// </summary>
         [WirePath("imageGcLowThreshold")]
         public int? ImageGcLowThreshold { get; set; }
-        /// <summary> For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </summary>
+        /// <summary>
+        /// The Topology Manager policy to use. For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'.
+        /// Serialized Name: KubeletConfig.topologyManagerPolicy
+        /// </summary>
         [WirePath("topologyManagerPolicy")]
         public string TopologyManagerPolicy { get; set; }
-        /// <summary> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </summary>
+        /// <summary>
+        /// Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`).
+        /// Serialized Name: KubeletConfig.allowedUnsafeSysctls
+        /// </summary>
         [WirePath("allowedUnsafeSysctls")]
         public IList<string> AllowedUnsafeSysctls { get; }
-        /// <summary> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </summary>
+        /// <summary>
+        /// If set to true it will make the Kubelet fail to start if swap is enabled on the node.
+        /// Serialized Name: KubeletConfig.failSwapOn
+        /// </summary>
         [WirePath("failSwapOn")]
         public bool? FailStartWithSwapOn { get; set; }
-        /// <summary> The maximum size (e.g. 10Mi) of container log file before it is rotated. </summary>
+        /// <summary>
+        /// The maximum size (e.g. 10Mi) of container log file before it is rotated.
+        /// Serialized Name: KubeletConfig.containerLogMaxSizeMB
+        /// </summary>
         [WirePath("containerLogMaxSizeMB")]
         public int? ContainerLogMaxSizeInMB { get; set; }
-        /// <summary> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </summary>
+        /// <summary>
+        /// The maximum number of container log files that can be present for a container. The number must be ≥ 2.
+        /// Serialized Name: KubeletConfig.containerLogMaxFiles
+        /// </summary>
         [WirePath("containerLogMaxFiles")]
         public int? ContainerLogMaxFiles { get; set; }
-        /// <summary> The maximum number of processes per pod. </summary>
+        /// <summary>
+        /// The maximum number of processes per pod.
+        /// Serialized Name: KubeletConfig.podMaxPids
+        /// </summary>
         [WirePath("podMaxPids")]
         public int? PodMaxPids { get; set; }
     }

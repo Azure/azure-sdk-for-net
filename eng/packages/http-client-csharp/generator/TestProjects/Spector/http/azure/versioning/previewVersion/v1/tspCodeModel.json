@@ -162,6 +162,11 @@
       "usage": "Output,Json",
       "doc": "A simple model for testing.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Widget"
+        }
+      },
       "properties": [
         {
           "$id": "17",
@@ -252,6 +257,11 @@
       "usage": "Input,JsonMergePatch,Json",
       "doc": "Update widget color request.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UpdateWidgetColorRequest"
+        }
+      },
       "properties": [
         {
           "$id": "24",
@@ -289,6 +299,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "27",
@@ -371,6 +386,36 @@
               },
               {
                 "$id": "34",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "35",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "36",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.apiVersion",
+                "readOnly": false
+              },
+              {
+                "$id": "37",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -415,16 +460,17 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
-              "$id": "35",
+              "$id": "38",
               "kind": "method",
               "name": "id",
               "serializedName": "id",
               "type": {
-                "$id": "36",
+                "$id": "39",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -440,7 +486,7 @@
               "decorators": []
             },
             {
-              "$id": "37",
+              "$id": "40",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
@@ -459,12 +505,7 @@
           ],
           "response": {
             "type": {
-              "$id": "38",
-              "kind": "nullable",
-              "type": {
-                "$ref": "16"
-              },
-              "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
+              "$ref": "16"
             }
           },
           "isOverride": false,
@@ -473,7 +514,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget"
         },
         {
-          "$id": "39",
+          "$id": "41",
           "kind": "basic",
           "name": "updateWidgetColor",
           "accessibility": "public",
@@ -482,19 +523,19 @@
           ],
           "doc": "Update widget color (preview only)",
           "operation": {
-            "$id": "40",
+            "$id": "42",
             "name": "updateWidgetColor",
             "resourceName": "PreviewVersion",
             "doc": "Update widget color (preview only)",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "41",
+                "$id": "43",
                 "kind": "path",
                 "name": "id",
                 "serializedName": "id",
                 "type": {
-                  "$id": "42",
+                  "$id": "44",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -512,7 +553,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.id"
               },
               {
-                "$id": "43",
+                "$id": "45",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
@@ -528,7 +569,37 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.contentType"
               },
               {
-                "$id": "44",
+                "$id": "46",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "47",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "48",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.apiVersion",
+                "readOnly": false
+              },
+              {
+                "$id": "49",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -544,7 +615,7 @@
                 "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.accept"
               },
               {
-                "$id": "45",
+                "$id": "50",
                 "kind": "body",
                 "name": "colorUpdate",
                 "serializedName": "colorUpdate",
@@ -595,16 +666,17 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
-              "$id": "46",
+              "$id": "51",
               "kind": "method",
               "name": "id",
               "serializedName": "id",
               "type": {
-                "$id": "47",
+                "$id": "52",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -620,7 +692,7 @@
               "decorators": []
             },
             {
-              "$id": "48",
+              "$id": "53",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
@@ -637,7 +709,7 @@
               "decorators": []
             },
             {
-              "$id": "49",
+              "$id": "54",
               "kind": "method",
               "name": "colorUpdate",
               "serializedName": "colorUpdate",
@@ -654,7 +726,7 @@
               "decorators": []
             },
             {
-              "$id": "50",
+              "$id": "55",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
@@ -673,12 +745,7 @@
           ],
           "response": {
             "type": {
-              "$id": "51",
-              "kind": "nullable",
-              "type": {
-                "$ref": "16"
-              },
-              "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
+              "$ref": "16"
             }
           },
           "isOverride": false,
@@ -687,7 +754,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor"
         },
         {
-          "$id": "52",
+          "$id": "56",
           "kind": "basic",
           "name": "listWidgets",
           "accessibility": "public",
@@ -698,19 +765,19 @@
           ],
           "doc": "List widgets with optional color filtering",
           "operation": {
-            "$id": "53",
+            "$id": "57",
             "name": "listWidgets",
             "resourceName": "PreviewVersion",
             "doc": "List widgets with optional color filtering",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "54",
+                "$id": "58",
                 "kind": "query",
                 "name": "name",
                 "serializedName": "name",
                 "type": {
-                  "$id": "55",
+                  "$id": "59",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -725,12 +792,12 @@
                 "readOnly": false
               },
               {
-                "$id": "56",
+                "$id": "60",
                 "kind": "query",
                 "name": "color",
                 "serializedName": "color",
                 "type": {
-                  "$id": "57",
+                  "$id": "61",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -745,7 +812,37 @@
                 "readOnly": false
               },
               {
-                "$id": "58",
+                "$id": "62",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "63",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "64",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.apiVersion",
+                "readOnly": false
+              },
+              {
+                "$id": "65",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -783,16 +880,17 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Versioning.PreviewVersion"
           },
           "parameters": [
             {
-              "$id": "59",
+              "$id": "66",
               "kind": "method",
               "name": "name",
               "serializedName": "name",
               "type": {
-                "$id": "60",
+                "$id": "67",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -808,12 +906,12 @@
               "decorators": []
             },
             {
-              "$id": "61",
+              "$id": "68",
               "kind": "method",
               "name": "color",
               "serializedName": "color",
               "type": {
-                "$id": "62",
+                "$id": "69",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -829,7 +927,7 @@
               "decorators": []
             },
             {
-              "$id": "63",
+              "$id": "70",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
@@ -859,13 +957,13 @@
       ],
       "parameters": [
         {
-          "$id": "64",
+          "$id": "71",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "65",
+            "$id": "72",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -876,7 +974,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "66",
+              "$id": "73",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -887,15 +985,48 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint"
+        },
+        {
+          "$id": "74",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "75",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "76",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2024-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion",
       "apiVersions": [
         "2024-01-01",
         "2024-06-01",
         "2024-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

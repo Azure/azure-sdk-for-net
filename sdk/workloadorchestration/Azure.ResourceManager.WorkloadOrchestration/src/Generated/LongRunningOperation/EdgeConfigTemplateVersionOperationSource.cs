@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    internal class EdgeConfigTemplateVersionOperationSource : IOperationSource<EdgeConfigTemplateVersionResource>
+    /// <summary></summary>
+    internal partial class EdgeConfigTemplateVersionOperationSource : IOperationSource<EdgeConfigTemplateVersionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EdgeConfigTemplateVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EdgeConfigTemplateVersionResource IOperationSource<EdgeConfigTemplateVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeConfigTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeConfigTemplateVersionData data = EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EdgeConfigTemplateVersionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeConfigTemplateVersionResource> IOperationSource<EdgeConfigTemplateVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeConfigTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return await Task.FromResult(new EdgeConfigTemplateVersionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeConfigTemplateVersionData data = EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EdgeConfigTemplateVersionResource(_client, data);
         }
     }
 }

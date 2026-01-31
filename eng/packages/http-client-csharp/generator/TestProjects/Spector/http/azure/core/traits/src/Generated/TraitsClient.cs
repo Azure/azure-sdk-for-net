@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Traits
+namespace Specs.Azure.Core.Traits
 {
     public partial class TraitsClient
     {

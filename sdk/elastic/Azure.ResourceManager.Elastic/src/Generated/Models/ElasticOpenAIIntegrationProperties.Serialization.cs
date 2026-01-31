@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticOpenAIIntegrationProperties : IUtf8JsonSerializable, IJsonModel<ElasticOpenAIIntegrationProperties>
+    /// <summary> Open AI Integration details. </summary>
+    public partial class ElasticOpenAIIntegrationProperties : IJsonModel<ElasticOpenAIIntegrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticOpenAIIntegrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticOpenAIIntegrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +30,25 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticOpenAIIntegrationProperties)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceId))
+            if (Optional.IsDefined(OpenAIResourceId))
             {
                 writer.WritePropertyName("openAIResourceId"u8);
                 writer.WriteStringValue(OpenAIResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceEndpoint))
+            if (Optional.IsDefined(OpenAIResourceEndpoint))
             {
                 writer.WritePropertyName("openAIResourceEndpoint"u8);
                 writer.WriteStringValue(OpenAIResourceEndpoint);
+            }
+            if (Optional.IsDefined(OpenAIConnectorId))
+            {
+                writer.WritePropertyName("openAIConnectorId"u8);
+                writer.WriteStringValue(OpenAIConnectorId);
             }
             if (Optional.IsDefined(Key))
             {
@@ -54,15 +60,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("lastRefreshAt"u8);
                 writer.WriteStringValue(LastRefreshOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,75 +77,93 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        ElasticOpenAIIntegrationProperties IJsonModel<ElasticOpenAIIntegrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticOpenAIIntegrationProperties IJsonModel<ElasticOpenAIIntegrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticOpenAIIntegrationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticOpenAIIntegrationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticOpenAIIntegrationProperties(document.RootElement, options);
         }
 
-        internal static ElasticOpenAIIntegrationProperties DeserializeElasticOpenAIIntegrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ElasticOpenAIIntegrationProperties DeserializeElasticOpenAIIntegrationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier openAIResourceId = default;
             string openAIResourceEndpoint = default;
+            string openAIConnectorId = default;
             string key = default;
-            DateTimeOffset? lastRefreshAt = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? lastRefreshOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("openAIResourceId"u8))
+                if (prop.NameEquals("openAIResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openAIResourceId = new ResourceIdentifier(property.Value.GetString());
+                    openAIResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openAIResourceEndpoint"u8))
+                if (prop.NameEquals("openAIResourceEndpoint"u8))
                 {
-                    openAIResourceEndpoint = property.Value.GetString();
+                    openAIResourceEndpoint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"u8))
+                if (prop.NameEquals("openAIConnectorId"u8))
                 {
-                    key = property.Value.GetString();
+                    openAIConnectorId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRefreshAt"u8))
+                if (prop.NameEquals("key"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    key = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("lastRefreshAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRefreshAt = property.Value.GetDateTimeOffset("O");
+                    lastRefreshOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticOpenAIIntegrationProperties(openAIResourceId, openAIResourceEndpoint, key, lastRefreshAt, serializedAdditionalRawData);
+            return new ElasticOpenAIIntegrationProperties(
+                openAIResourceId,
+                openAIResourceEndpoint,
+                openAIConnectorId,
+                key,
+                lastRefreshOn,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ElasticOpenAIIntegrationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ElasticOpenAIIntegrationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -149,15 +173,20 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        ElasticOpenAIIntegrationProperties IPersistableModel<ElasticOpenAIIntegrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticOpenAIIntegrationProperties IPersistableModel<ElasticOpenAIIntegrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticOpenAIIntegrationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticOpenAIIntegrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticOpenAIIntegrationProperties(document.RootElement, options);
                     }
                 default:
@@ -165,6 +194,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticOpenAIIntegrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

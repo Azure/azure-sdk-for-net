@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
     public partial class SpotPriorityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SpotPriorityProfile"/>. </summary>
         public SpotPriorityProfile()
@@ -62,8 +33,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// or update existing VMs with new VM sizes (if VMs are evicted deallocated or failed to allocate due to capacity constraint) in order to achieve the desired capacity.
         /// Maintain is enabled by default.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVm, ComputeFleetEvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? isMaintainEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVm, ComputeFleetEvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? isMaintainEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             MinCapacity = minCapacity;
@@ -71,19 +42,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             EvictionPolicy = evictionPolicy;
             AllocationStrategy = allocationStrategy;
             IsMaintainEnabled = isMaintainEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Total capacity to achieve. It is currently in terms of number of VMs. </summary>
         public int? Capacity { get; set; }
+
         /// <summary> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </summary>
         public int? MinCapacity { get; set; }
+
         /// <summary> Price per hour of each Spot VM will never exceed this. </summary>
         public float? MaxPricePerVm { get; set; }
+
         /// <summary> Eviction Policy to follow when evicting Spot VMs. </summary>
         public ComputeFleetEvictionPolicy? EvictionPolicy { get; set; }
+
         /// <summary> Allocation strategy to follow when determining the VM sizes distribution for Spot VMs. </summary>
         public SpotAllocationStrategy? AllocationStrategy { get; set; }
+
         /// <summary>
         /// Flag to enable/disable continuous goal seeking for the desired capacity and restoration of evicted Spot VMs.
         /// If maintain is enabled, AzureFleetRP will use all VM sizes in vmSizesProfile to create new VMs (if VMs are evicted deleted)

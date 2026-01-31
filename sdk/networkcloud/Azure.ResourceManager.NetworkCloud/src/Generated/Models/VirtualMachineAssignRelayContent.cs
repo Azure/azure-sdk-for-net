@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="machineId"> The resourceId of the Microsoft.HybridCompute machine resource to assign relay usage. </param>
         /// <param name="relayType"> The indicator of which relay type the machine should be assigned to use. Platform indicates the use of a platform-dedicated relay. Public indicates the use of the standard public relay for Arc services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineAssignRelayContent(ResourceIdentifier machineId, RelayType? relayType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineAssignRelayContent(ResourceIdentifier machineId, VirtualMachineAssignRelayType? relayType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MachineId = machineId;
             RelayType = relayType;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The resourceId of the Microsoft.HybridCompute machine resource to assign relay usage. </summary>
         public ResourceIdentifier MachineId { get; }
         /// <summary> The indicator of which relay type the machine should be assigned to use. Platform indicates the use of a platform-dedicated relay. Public indicates the use of the standard public relay for Arc services. </summary>
-        public RelayType? RelayType { get; set; }
+        public VirtualMachineAssignRelayType? RelayType { get; set; }
     }
 }

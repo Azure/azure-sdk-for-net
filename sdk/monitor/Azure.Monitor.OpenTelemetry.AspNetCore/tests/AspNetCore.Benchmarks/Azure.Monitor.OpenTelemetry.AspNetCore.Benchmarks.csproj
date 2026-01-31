@@ -11,9 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" VersionOverride="0.13.12" />
+    <PackageReference Include="BenchmarkDotNet" />
   </ItemGroup>
 
 </Project>

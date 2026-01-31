@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Agents.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents
 {
@@ -19,7 +19,7 @@ namespace Azure.Search.Documents
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
-        private readonly string _agentName;
+        private readonly string _knowledgeBaseName;
         private readonly Guid? _xMsClientRequestId;
         private readonly string _apiVersion;
 
@@ -30,30 +30,30 @@ namespace Azure.Search.Documents
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint URL of the search service. </param>
-        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="agentName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public KnowledgeRetrievalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string agentName, Guid? xMsClientRequestId = null, string apiVersion = "2025-08-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeRetrievalRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string knowledgeBaseName, Guid? xMsClientRequestId = null, string apiVersion = "2025-11-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _agentName = agentName ?? throw new ArgumentNullException(nameof(agentName));
+            _knowledgeBaseName = knowledgeBaseName ?? throw new ArgumentNullException(nameof(knowledgeBaseName));
             _xMsClientRequestId = xMsClientRequestId;
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateRetrieveRequest(KnowledgeAgentRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization)
+        internal HttpMessage CreateRetrieveRequest(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/agents('", false);
-            uri.AppendRaw(_agentName, true);
+            uri.AppendRaw("/knowledgebases('", false);
+            uri.AppendRaw(_knowledgeBaseName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/retrieve", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -70,12 +70,12 @@ namespace Azure.Search.Documents
             return message;
         }
 
-        /// <summary> KnowledgeAgent retrieves relevant data from backing stores. </summary>
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
-        public async Task<Response<KnowledgeAgentRetrievalResponse>> RetrieveAsync(KnowledgeAgentRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (retrievalRequest == null)
             {
@@ -87,10 +87,11 @@ namespace Azure.Search.Documents
             switch (message.Response.Status)
             {
                 case 200:
+                case 206:
                     {
-                        KnowledgeAgentRetrievalResponse value = default;
+                        KnowledgeBaseRetrievalResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = KnowledgeAgentRetrievalResponse.DeserializeKnowledgeAgentRetrievalResponse(document.RootElement);
+                        value = KnowledgeBaseRetrievalResponse.DeserializeKnowledgeBaseRetrievalResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,12 +99,12 @@ namespace Azure.Search.Documents
             }
         }
 
-        /// <summary> KnowledgeAgent retrieves relevant data from backing stores. </summary>
+        /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
-        public Response<KnowledgeAgentRetrievalResponse> Retrieve(KnowledgeAgentRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (retrievalRequest == null)
             {
@@ -115,10 +116,11 @@ namespace Azure.Search.Documents
             switch (message.Response.Status)
             {
                 case 200:
+                case 206:
                     {
-                        KnowledgeAgentRetrievalResponse value = default;
+                        KnowledgeBaseRetrievalResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = KnowledgeAgentRetrievalResponse.DeserializeKnowledgeAgentRetrievalResponse(document.RootElement);
+                        value = KnowledgeBaseRetrievalResponse.DeserializeKnowledgeBaseRetrievalResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

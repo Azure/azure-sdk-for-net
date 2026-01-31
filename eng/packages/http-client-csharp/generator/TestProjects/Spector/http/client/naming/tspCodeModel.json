@@ -237,6 +237,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ClientNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "27",
@@ -274,6 +279,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.LanguageClientNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "LanguageClientNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "30",
@@ -311,6 +321,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Property.ClientNameAndJsonEncodedNameModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ClientNameAndJsonEncodedNameModel"
+        }
+      },
       "properties": [
         {
           "$id": "33",
@@ -348,6 +363,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithClientClientName",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithClientClientName"
+        }
+      },
       "properties": [
         {
           "$id": "36",
@@ -385,6 +405,11 @@
       "crossLanguageDefinitionId": "Client.Naming.Model.ModelWithLanguageClientName",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithLanguageClientName"
+        }
+      },
       "properties": [
         {
           "$id": "39",
@@ -451,7 +476,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.operation",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming"
           },
           "parameters": [],
           "response": {},
@@ -509,7 +535,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.parameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming"
           },
           "parameters": [
             {
@@ -608,7 +635,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.client",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -721,7 +749,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.language",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -834,7 +863,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Property.compatibleWithEncodedName",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Property"
           },
           "parameters": [
             {
@@ -928,7 +958,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Header.request",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Header"
           },
           "parameters": [
             {
@@ -999,7 +1030,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Naming.Header.response",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Naming.Header"
           },
           "parameters": [],
           "response": {},
@@ -1041,6 +1073,7 @@
           "crossLanguageDefinitionId": "Client.Naming.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming",
       "apiVersions": [],
@@ -1119,7 +1152,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.Model.client",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.Model"
               },
               "parameters": [
                 {
@@ -1232,7 +1266,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.Model.language",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.Model"
               },
               "parameters": [
                 {
@@ -1307,15 +1342,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.Model",
           "apiVersions": [],
           "parent": {
             "$ref": "41"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "96",
@@ -1390,7 +1427,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.UnionEnum"
               },
               "parameters": [
                 {
@@ -1501,7 +1539,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Naming.UnionEnum.unionEnumMemberName",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Client.Naming.UnionEnum"
               },
               "parameters": [
                 {
@@ -1575,17 +1614,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.UnionEnum.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.UnionEnum",
           "apiVersions": [],
           "parent": {
             "$ref": "41"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -10,16 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    public partial class ConnectedClusterBgpPeerData : IUtf8JsonSerializable, IJsonModel<ConnectedClusterBgpPeerData>
+    /// <summary> A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
+    public partial class ConnectedClusterBgpPeerData : ResourceData, IJsonModel<ConnectedClusterBgpPeerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterBgpPeerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedClusterBgpPeerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,12 +33,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectedClusterBgpPeerData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
@@ -45,87 +46,101 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
         }
 
-        ConnectedClusterBgpPeerData IJsonModel<ConnectedClusterBgpPeerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterBgpPeerData IJsonModel<ConnectedClusterBgpPeerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectedClusterBgpPeerData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectedClusterBgpPeerData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectedClusterBgpPeerData(document.RootElement, options);
         }
 
-        internal static ConnectedClusterBgpPeerData DeserializeConnectedClusterBgpPeerData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectedClusterBgpPeerData DeserializeConnectedClusterBgpPeerData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ConnectedClusterBgpPeerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ConnectedClusterBgpPeerProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = ConnectedClusterBgpPeerProperties.DeserializeConnectedClusterBgpPeerProperties(property.Value, options);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConnectedClusterBgpPeerProperties.DeserializeConnectedClusterBgpPeerProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectedClusterBgpPeerData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<ConnectedClusterBgpPeerData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectedClusterBgpPeerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -135,15 +150,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
         }
 
-        ConnectedClusterBgpPeerData IPersistableModel<ConnectedClusterBgpPeerData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterBgpPeerData IPersistableModel<ConnectedClusterBgpPeerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterBgpPeerData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterBgpPeerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectedClusterBgpPeerData(document.RootElement, options);
                     }
                 default:
@@ -151,6 +171,26 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConnectedClusterBgpPeerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectedClusterBgpPeerData"> The <see cref="ConnectedClusterBgpPeerData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectedClusterBgpPeerData connectedClusterBgpPeerData)
+        {
+            if (connectedClusterBgpPeerData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectedClusterBgpPeerData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterBgpPeerData"/> from. </param>
+        internal static ConnectedClusterBgpPeerData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeConnectedClusterBgpPeerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

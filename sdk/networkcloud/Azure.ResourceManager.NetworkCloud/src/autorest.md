@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/a83122b78a412ed2733042cb468a98484d99ecc2/specification/networkcloud/resource-manager/readme.md
-#tag: package-2025-07-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/ccd751d5bf9d1457426de7fe6d857a4cfe890cd5/specification/networkcloud/resource-manager/readme.md
+#tag: package-2025-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -35,8 +35,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
-#  show-serialized-names: true
+#mgmt-debug:
+# show-serialized-names: true
 
 # 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
 format-by-name-rules:
@@ -46,12 +46,16 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
+  ActionState.endTime: EndOn|date-time
+  ActionState.StartTime: StartOn|date-time
   AgentOptions: NetworkCloudAgentConfiguration
   BareMetalMachine.properties.associatedResourceIds: -|arm-id
+  BareMetalMachine.properties.caCertificate: CACertificate
   BareMetalMachine.properties.clusterId: -|arm-id
   BareMetalMachine.properties.rackId: -|arm-id
   BareMetalMachine.properties.oamIpv4Address: -|ip-address
   BareMetalMachineConfigurationData: BareMetalMachineConfiguration
+  BareMetalMachineRunDataExtractsParameters: BareMetalMachineRunDataExtractsContent
   BareMetalMachineKeySet.properties.expiration: ExpireOn
   BareMetalMachineKeySet.properties.jumpHostsAllowed: -|ip-address
   BareMetalMachineKeySet.properties.lastValidation: LastValidatedOn
@@ -108,6 +112,10 @@ rename-mapping:
   Rack.properties.rackSkuId: -|arm-id
   RackDefinition.networkRackId: -|arm-id
   RackDefinition.rackSkuId: -|arm-id
+  RelayType: VirtualMachineAssignRelayType
+  StepState.endTime: EndOn|date-time
+  StepState.startTime: StartOn|date-time
+  StorageAppliance.properties.caCertificate: CACertificate
   StorageAppliance.properties.clusterId: -|arm-id
   StorageAppliance.properties.managementIpv4Address: -|ip-address
   StorageAppliance.properties.rackId: -|arm-id
@@ -124,17 +132,21 @@ rename-mapping:
   VirtualMachine.properties.memorySizeGB: MemorySizeInGB
   VirtualMachinePlacementHint.resourceId: -|arm-id
   Volume.properties.sizeMiB: SizeInMiB
+  Volume.properties.allocatedSizeMiB: AllocatedInSizeMiB
 
 models-to-treat-empty-string-as-null:
   - NetworkCloudClusterManagerData
 
 prepend-rp-prefix:
   - AadConfiguration
+  - ActionState
+  - ActionStateStatus
   - AgentPool
   - AgentPoolMode
   - BareMetalMachine
   - BareMetalMachineKeySet
   - BmcKeySet
+  - CertificateInfo
   - CloudServicesNetwork
   - Cluster
   - ClusterManager
@@ -151,6 +163,8 @@ prepend-rp-prefix:
   - RackDefinition
   - RackSku
   - SshPublicKey
+  - StepState
+  - StepStateStatus
   - StorageAppliance
   - StorageProfile
   - TrunkedNetwork

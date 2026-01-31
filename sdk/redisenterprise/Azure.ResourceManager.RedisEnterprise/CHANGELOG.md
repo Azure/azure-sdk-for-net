@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-11-10)
+
+### Features Added
+- Updated api-version to `2025-07-01`.
+
+### Breaking Changes
+- Added a new required property: PublicNetworkAccess for Cluster.
+- Updated the default value of AccessKeysAuthentication property for Database to 'Disabled'.
 
 ## 1.2.1 (2025-07-25)
 

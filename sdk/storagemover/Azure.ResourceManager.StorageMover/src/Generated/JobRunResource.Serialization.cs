@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageMover
 {
+    /// <summary></summary>
     public partial class JobRunResource : IJsonModel<JobRunData>
     {
-        private static JobRunData s_dataDeserializationInstance;
-        private static JobRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<JobRunData> s_dataDeserializationInstance;
 
+        private static IJsonModel<JobRunData> DataDeserializationInstance => s_dataDeserializationInstance ??= new JobRunData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)Data).Write(writer, options);
 
-        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JobRunData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JobRunData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobRunData>(data, options, AzureResourceManagerStorageMoverContext.Default);
 
-        string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JobRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

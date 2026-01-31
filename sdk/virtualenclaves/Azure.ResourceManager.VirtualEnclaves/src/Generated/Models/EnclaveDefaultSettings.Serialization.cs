@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    public partial class EnclaveDefaultSettings : IUtf8JsonSerializable, IJsonModel<EnclaveDefaultSettings>
+    /// <summary> Virtual Enclave Default Settings. </summary>
+    public partial class EnclaveDefaultSettings : IJsonModel<EnclaveDefaultSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnclaveDefaultSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnclaveDefaultSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnclaveDefaultSettings)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(KeyVaultResourceId))
             {
                 writer.WritePropertyName("keyVaultResourceId"u8);
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("logAnalyticsResourceIdCollection"u8);
                 writer.WriteStartArray();
-                foreach (var item in LogAnalyticsResourceIdCollection)
+                foreach (ResourceIdentifier item in LogAnalyticsResourceIdCollection)
                 {
                     if (item == null)
                     {
@@ -64,15 +65,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("diagnosticDestination"u8);
                 writer.WriteStringValue(DiagnosticDestination.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +82,27 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        EnclaveDefaultSettings IJsonModel<EnclaveDefaultSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnclaveDefaultSettings IJsonModel<EnclaveDefaultSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnclaveDefaultSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnclaveDefaultSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEnclaveDefaultSettings(document.RootElement, options);
         }
 
-        internal static EnclaveDefaultSettings DeserializeEnclaveDefaultSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EnclaveDefaultSettings DeserializeEnclaveDefaultSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,36 +111,35 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             ResourceIdentifier storageAccountResourceId = default;
             IReadOnlyList<ResourceIdentifier> logAnalyticsResourceIdCollection = default;
             VirtualEnclaveDiagnosticDestination? diagnosticDestination = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultResourceId"u8))
+                if (prop.NameEquals("keyVaultResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultResourceId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountResourceId"u8))
+                if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("logAnalyticsResourceIdCollection"u8))
+                if (prop.NameEquals("logAnalyticsResourceIdCollection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -148,28 +153,30 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     logAnalyticsResourceIdCollection = array;
                     continue;
                 }
-                if (property.NameEquals("diagnosticDestination"u8))
+                if (prop.NameEquals("diagnosticDestination"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diagnosticDestination = new VirtualEnclaveDiagnosticDestination(property.Value.GetString());
+                    diagnosticDestination = new VirtualEnclaveDiagnosticDestination(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EnclaveDefaultSettings(keyVaultResourceId, storageAccountResourceId, logAnalyticsResourceIdCollection ?? new ChangeTrackingList<ResourceIdentifier>(), diagnosticDestination, serializedAdditionalRawData);
+            return new EnclaveDefaultSettings(keyVaultResourceId, storageAccountResourceId, logAnalyticsResourceIdCollection ?? new ChangeTrackingList<ResourceIdentifier>(), diagnosticDestination, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<EnclaveDefaultSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnclaveDefaultSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -179,15 +186,20 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        EnclaveDefaultSettings IPersistableModel<EnclaveDefaultSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnclaveDefaultSettings IPersistableModel<EnclaveDefaultSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnclaveDefaultSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDefaultSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEnclaveDefaultSettings(document.RootElement, options);
                     }
                 default:
@@ -195,6 +207,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EnclaveDefaultSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

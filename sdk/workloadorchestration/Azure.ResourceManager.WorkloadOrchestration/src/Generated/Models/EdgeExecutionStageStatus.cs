@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Result of Stage execution. </summary>
     public partial class EdgeExecutionStageStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeExecutionStageStatus"/>. </summary>
         internal EdgeExecutionStageStatus()
@@ -61,8 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="isActive"> whether this stage is active or inactive. </param>
         /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
         /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeExecutionStageStatus(int? status, string statusMessage, string stage, string nextstage, string errorMessage, InstanceActiveState? isActive, IReadOnlyDictionary<string, BinaryData> inputs, IReadOnlyDictionary<string, BinaryData> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeExecutionStageStatus(int? status, string statusMessage, string stage, string nextstage, string errorMessage, InstanceActiveState? isActive, IReadOnlyDictionary<string, BinaryData> inputs, IReadOnlyDictionary<string, BinaryData> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusMessage = statusMessage;
@@ -72,78 +45,77 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IsActive = isActive;
             Inputs = inputs;
             Outputs = outputs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deployment status. </summary>
         public int? Status { get; }
+
         /// <summary> Status message. </summary>
         public string StatusMessage { get; }
+
         /// <summary> Current stage. </summary>
         public string Stage { get; }
+
         /// <summary> Next stage. </summary>
         public string Nextstage { get; }
+
         /// <summary> Error message. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> whether this stage is active or inactive. </summary>
         public InstanceActiveState? IsActive { get; }
+
         /// <summary>
         /// The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Inputs { get; }
+
         /// <summary>
         /// The outputs of the StageHistory, it is different as the different input stages.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

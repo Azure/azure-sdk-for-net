@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct NotificationType : IEquatable<NotificationType>
     {
         private readonly string _value;
+        /// <summary> Notify through e-mail. </summary>
+        private const string EmailValue = "Email";
 
         /// <summary> Initializes a new instance of <see cref="NotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EmailValue = "Email";
+            _value = value;
+        }
 
         /// <summary> Notify through e-mail. </summary>
         public static NotificationType Email { get; } = new NotificationType(EmailValue);
+
         /// <summary> Determines if two <see cref="NotificationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationType left, NotificationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationType left, NotificationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationType(string value) => new NotificationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationType?(string value) => value == null ? null : new NotificationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

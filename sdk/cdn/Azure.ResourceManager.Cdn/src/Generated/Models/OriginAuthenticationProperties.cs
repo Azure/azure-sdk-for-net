@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The JSON object that contains the properties of the origin authentication settings.
-    /// Serialized Name: OriginAuthenticationProperties
-    /// </summary>
+    /// <summary> The JSON object that contains the properties of the origin authentication settings. </summary>
     public partial class OriginAuthenticationProperties
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginAuthenticationProperties"/>. </summary>
-        /// <param name="authenticationType">
-        /// The type of the authentication for the origin.
-        /// Serialized Name: OriginAuthenticationProperties.type
-        /// </param>
-        /// <param name="userAssignedIdentity">
-        /// The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity.
-        /// Serialized Name: OriginAuthenticationProperties.userAssignedIdentity
-        /// </param>
-        /// <param name="scope">
-        /// The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
-        /// Serialized Name: OriginAuthenticationProperties.scope
-        /// </param>
+        /// <param name="authenticationType"> The type of the authentication for the origin. </param>
+        /// <param name="userAssignedIdentity"> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </param>
+        /// <param name="scope"> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, WritableSubResource userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,17 +65,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of the authentication for the origin.
-        /// Serialized Name: OriginAuthenticationProperties.type
-        /// </summary>
+        /// <summary> The type of the authentication for the origin. </summary>
+        [WirePath("type")]
         public OriginAuthenticationType? AuthenticationType { get; set; }
-        /// <summary>
-        /// The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity.
-        /// Serialized Name: OriginAuthenticationProperties.userAssignedIdentity
-        /// </summary>
+        /// <summary> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </summary>
         internal WritableSubResource UserAssignedIdentity { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("userAssignedIdentity.id")]
         public ResourceIdentifier UserAssignedIdentityId
         {
             get => UserAssignedIdentity is null ? default : UserAssignedIdentity.Id;
@@ -99,10 +83,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary>
-        /// The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default".
-        /// Serialized Name: OriginAuthenticationProperties.scope
-        /// </summary>
+        /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
+        [WirePath("scope")]
         public Uri Scope { get; set; }
     }
 }

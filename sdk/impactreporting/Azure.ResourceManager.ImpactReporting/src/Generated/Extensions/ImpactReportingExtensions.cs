@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ImpactReporting.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,25 +19,26 @@ namespace Azure.ResourceManager.ImpactReporting
     /// <summary> A class to add extension methods to Azure.ResourceManager.ImpactReporting. </summary>
     public static partial class ImpactReportingExtensions
     {
+        /// <param name="client"></param>
         private static MockableImpactReportingArmClient GetMockableImpactReportingArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableImpactReportingArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableImpactReportingArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableImpactReportingSubscriptionResource GetMockableImpactReportingSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableImpactReportingSubscriptionResource GetMockableImpactReportingSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableImpactReportingSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableImpactReportingSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadImpactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadImpactResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadImpactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadImpactResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetWorkloadImpactResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetWorkloadImpactResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="WorkloadImpactResource"/> object. </returns>
@@ -47,14 +50,13 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ImpactCategoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactCategoryResource.CreateResourceIdentifier" /> to create an <see cref="ImpactCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ImpactCategoryResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactCategoryResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactCategoryResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ImpactCategoryResource"/> object. </returns>
@@ -66,14 +68,13 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ImpactInsightResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactInsightResource.CreateResourceIdentifier" /> to create an <see cref="ImpactInsightResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ImpactInsightResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactInsightResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactInsightResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ImpactInsightResource"/> object. </returns>
@@ -85,14 +86,13 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ImpactConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactConnectorResource.CreateResourceIdentifier" /> to create an <see cref="ImpactConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ImpactConnectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingArmClient.GetImpactConnectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ImpactConnectorResource"/> object. </returns>
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets a collection of WorkloadImpactResources in the SubscriptionResource.
+        /// Gets a collection of WorkloadImpacts in the <see cref="SubscriptionResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpacts()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpacts()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of WorkloadImpactResources and their operations over a WorkloadImpactResource. </returns>
+        /// <returns> An object representing collection of WorkloadImpacts and their operations over a WorkloadImpactResource. </returns>
         public static WorkloadImpactCollection GetWorkloadImpacts(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -122,34 +122,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a WorkloadImpact
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadImpact_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadImpactResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpactAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpactAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="workloadImpactName"> workloadImpact resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="workloadImpactName"> workloadImpact resource . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="workloadImpactName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<WorkloadImpactResource>> GetWorkloadImpactAsync(this SubscriptionResource subscriptionResource, string workloadImpactName, CancellationToken cancellationToken = default)
         {
@@ -160,34 +141,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a WorkloadImpact
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkloadImpact_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkloadImpactResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpact(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetWorkloadImpact(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="workloadImpactName"> workloadImpact resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="workloadImpactName"> workloadImpact resource . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="workloadImpactName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<WorkloadImpactResource> GetWorkloadImpact(this SubscriptionResource subscriptionResource, string workloadImpactName, CancellationToken cancellationToken = default)
         {
@@ -197,15 +159,15 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets a collection of ImpactCategoryResources in the SubscriptionResource.
+        /// Gets a collection of ImpactCategories in the <see cref="SubscriptionResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategories()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategories()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ImpactCategoryResources and their operations over a ImpactCategoryResource. </returns>
+        /// <returns> An object representing collection of ImpactCategories and their operations over a ImpactCategoryResource. </returns>
         public static ImpactCategoryCollection GetImpactCategories(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -215,34 +177,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a ImpactCategory
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategoryAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategoryAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="impactCategoryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ImpactCategoryResource>> GetImpactCategoryAsync(this SubscriptionResource subscriptionResource, string impactCategoryName, CancellationToken cancellationToken = default)
         {
@@ -253,34 +196,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a ImpactCategory
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategory(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactCategory(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="impactCategoryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ImpactCategoryResource> GetImpactCategory(this SubscriptionResource subscriptionResource, string impactCategoryName, CancellationToken cancellationToken = default)
         {
@@ -290,15 +214,15 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Gets a collection of ImpactConnectorResources in the SubscriptionResource.
+        /// Gets a collection of ImpactConnectors in the <see cref="SubscriptionResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectors()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectors()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ImpactConnectorResources and their operations over a ImpactConnectorResource. </returns>
+        /// <returns> An object representing collection of ImpactConnectors and their operations over a ImpactConnectorResource. </returns>
         public static ImpactConnectorCollection GetImpactConnectors(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -308,34 +232,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a Connector
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectorAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnectorAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ImpactConnectorResource>> GetImpactConnectorAsync(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {
@@ -346,34 +251,15 @@ namespace Azure.ResourceManager.ImpactReporting
 
         /// <summary>
         /// Get a Connector
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactConnectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnector(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableImpactReportingSubscriptionResource.GetImpactConnector(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="connectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ImpactConnectorResource> GetImpactConnector(this SubscriptionResource subscriptionResource, string connectorName, CancellationToken cancellationToken = default)
         {

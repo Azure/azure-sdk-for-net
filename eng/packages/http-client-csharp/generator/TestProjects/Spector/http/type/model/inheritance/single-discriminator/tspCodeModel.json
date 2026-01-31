@@ -206,6 +206,11 @@
       "usage": "Input,Output,Json",
       "doc": "This is base model for polymorphic single level inheritance with a discriminator.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Bird"
+        }
+      },
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -272,6 +277,11 @@
           "doc": "The second level model in polymorphic single level inheritance.",
           "discriminatorValue": "seagull",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "SeaGull"
+            }
+          },
           "baseModel": {
             "$ref": "25"
           },
@@ -309,6 +319,11 @@
           "doc": "The second level model in polymorphic single level inheritance.",
           "discriminatorValue": "sparrow",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Sparrow"
+            }
+          },
           "baseModel": {
             "$ref": "25"
           },
@@ -346,6 +361,11 @@
           "doc": "The second level model in polymorphic single level inheritance.",
           "discriminatorValue": "goose",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Goose"
+            }
+          },
           "baseModel": {
             "$ref": "25"
           },
@@ -383,6 +403,11 @@
           "doc": "The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances.",
           "discriminatorValue": "eagle",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Eagle"
+            }
+          },
           "baseModel": {
             "$ref": "25"
           },
@@ -515,6 +540,11 @@
       "usage": "Output,Json",
       "doc": "Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Dinosaur"
+        }
+      },
       "discriminatorProperty": {
         "$id": "45",
         "kind": "property",
@@ -582,6 +612,11 @@
           "doc": "The second level legacy model in polymorphic single level inheritance.",
           "discriminatorValue": "t-rex",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "TRex"
+            }
+          },
           "baseModel": {
             "$ref": "44"
           },
@@ -674,7 +709,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -773,7 +809,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -869,7 +906,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -968,7 +1006,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1064,7 +1103,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1146,7 +1186,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1228,7 +1269,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
           },
           "parameters": [
             {
@@ -1292,9 +1334,11 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

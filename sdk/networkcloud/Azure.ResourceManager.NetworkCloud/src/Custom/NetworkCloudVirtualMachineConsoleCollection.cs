@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -45,6 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, consoleName, data, null, null, cancellationToken).ConfigureAwait(false);
 
@@ -71,6 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, consoleName, data, null, null, cancellationToken);
 
@@ -97,6 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudVirtualMachineConsoleResource> GetAllAsync(CancellationToken cancellationToken)
 			=> GetAllAsync(null, null, cancellationToken);
 
@@ -123,6 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudVirtualMachineConsoleResource> GetAll(CancellationToken cancellationToken)
 			=> GetAll(null, null, cancellationToken);
     }

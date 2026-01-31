@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="version"> The version of the storage appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, CertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;
-            CaCertificate = caCertificate;
+            CACertificate = caCertificate;
             Capacity = capacity;
             CapacityUsed = capacityUsed;
             ClusterId = clusterId;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
         public AdministrativeCredentials AdministratorCredentials { get; set; }
         /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
-        public CertificateInfo CaCertificate { get; }
+        public NetworkCloudCertificateInfo CACertificate { get; }
         /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
         public long? Capacity { get; }
         /// <summary> The amount of storage consumed. Measured in GiB. </summary>

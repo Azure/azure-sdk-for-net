@@ -74,6 +74,19 @@ namespace Azure.Security.CodeTransparency
             V2025_01_31_Preview = 1,
         }
     }
+    public static partial class CodeTransparencyModelFactory
+    {
+        public static Azure.Security.CodeTransparency.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
+        public static Azure.Security.CodeTransparency.JwksDocument JwksDocument(System.Collections.Generic.IEnumerable<Azure.Security.CodeTransparency.JsonWebKey> keys = null) { throw null; }
+    }
+    public sealed partial class CodeTransparencyOfflineKeys
+    {
+        public CodeTransparencyOfflineKeys() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.JwksDocument> ByIssuer { get { throw null; } }
+        public void Add(string ledgerDomain, Azure.Security.CodeTransparency.JwksDocument jwksDocument) { }
+        public static Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys FromBinaryData(System.BinaryData json) { throw null; }
+        public System.BinaryData ToBinaryData() { throw null; }
+    }
     public enum CodeTransparencyOperationStatus
     {
         Running = 0,
@@ -85,6 +98,8 @@ namespace Azure.Security.CodeTransparency
         public CodeTransparencyVerificationOptions() { }
         public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys OfflineKeys { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.OfflineKeysBehavior OfflineKeysBehavior { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
@@ -105,9 +120,12 @@ namespace Azure.Security.CodeTransparency
         public string Qi { get { throw null; } }
         public string Use { get { throw null; } }
         public string X { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> X5c { get { throw null; } }
+        public System.Collections.Generic.IList<string> X5c { get { throw null; } }
         public string Y { get { throw null; } }
+        protected virtual Azure.Security.CodeTransparency.JsonWebKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Security.CodeTransparency.JsonWebKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.CodeTransparency.JsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.JsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -117,18 +135,23 @@ namespace Azure.Security.CodeTransparency
     public partial class JwksDocument : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JwksDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>
     {
         internal JwksDocument() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.CodeTransparency.JsonWebKey> Keys { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Security.CodeTransparency.JsonWebKey> Keys { get { throw null; } }
+        protected virtual Azure.Security.CodeTransparency.JwksDocument JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.CodeTransparency.JwksDocument (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.CodeTransparency.JwksDocument PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.CodeTransparency.JwksDocument System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JwksDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.JwksDocument System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class SecurityCodeTransparencyModelFactory
+    public enum OfflineKeysBehavior
     {
-        public static Azure.Security.CodeTransparency.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
-        public static Azure.Security.CodeTransparency.JwksDocument JwksDocument(System.Collections.Generic.IEnumerable<Azure.Security.CodeTransparency.JsonWebKey> keys = null) { throw null; }
+        FallbackToNetwork = 0,
+        NoFallbackToNetwork = 1,
     }
     public partial class ServiceIdentityResult
     {
@@ -173,8 +196,9 @@ namespace Azure.Security.CodeTransparency.Receipt
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SecurityCodeTransparencyClientBuilderExtensions
+    public static partial class CodeTransparencyClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }

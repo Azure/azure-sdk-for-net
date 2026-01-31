@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The type of the authentication for the origin.
-    /// Serialized Name: OriginAuthenticationType
-    /// </summary>
+    /// <summary> The type of the authentication for the origin. </summary>
     public readonly partial struct OriginAuthenticationType : IEquatable<OriginAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string SystemAssignedIdentityValue = "SystemAssignedIdentity";
         private const string UserAssignedIdentityValue = "UserAssignedIdentity";
 
-        /// <summary>
-        /// SystemAssignedIdentity
-        /// Serialized Name: OriginAuthenticationType.SystemAssignedIdentity
-        /// </summary>
+        /// <summary> SystemAssignedIdentity. </summary>
         public static OriginAuthenticationType SystemAssignedIdentity { get; } = new OriginAuthenticationType(SystemAssignedIdentityValue);
-        /// <summary>
-        /// UserAssignedIdentity
-        /// Serialized Name: OriginAuthenticationType.UserAssignedIdentity
-        /// </summary>
+        /// <summary> UserAssignedIdentity. </summary>
         public static OriginAuthenticationType UserAssignedIdentity { get; } = new OriginAuthenticationType(UserAssignedIdentityValue);
         /// <summary> Determines if two <see cref="OriginAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(OriginAuthenticationType left, OriginAuthenticationType right) => left.Equals(right);

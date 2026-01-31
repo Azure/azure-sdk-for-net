@@ -120,6 +120,77 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(expectedProperties.Count, eventData.Properties.Count);
         }
 
+        public static void AssertAvailabilityTelemetry(
+            TelemetryItem telemetryItem,
+            string expectedId,
+            string expectedName,
+            string expectedDuration,
+            bool expectedSuccess,
+            string? expectedRunLocation = null,
+            string? expectedMessage = null,
+            IDictionary<string, string>? expectedProperties = null,
+            string? expectedSpanId = null,
+            string? expectedTraceId = null,
+            string? expectedClientIp = null,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
+        {
+            Assert.Equal("Availability", telemetryItem.Name); // telemetry type
+            Assert.Equal("AvailabilityData", telemetryItem.Data.BaseType); // telemetry data type
+            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
+            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
+
+            var expectedTagsCount = 4;
+
+            if (expectedSpanId != null && expectedTraceId != null)
+            {
+                expectedTagsCount += 2;
+
+                Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
+                Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            }
+
+            if (expectedClientIp != null)
+            {
+                expectedTagsCount += 1;
+                Assert.Equal(expectedClientIp, telemetryItem.Tags["ai.location.ip"]);
+            }
+
+            Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
+            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
+
+            var availabilityData = (AvailabilityData)telemetryItem.Data.BaseData;
+
+            Assert.Equal(expectedId, availabilityData.Id);
+            Assert.Equal(expectedName, availabilityData.Name);
+            Assert.Equal(expectedDuration, availabilityData.Duration);
+            Assert.Equal(expectedSuccess, availabilityData.Success);
+
+            if (expectedRunLocation != null)
+            {
+                Assert.Equal(expectedRunLocation, availabilityData.RunLocation);
+            }
+
+            if (expectedMessage != null)
+            {
+                Assert.Equal(expectedMessage, availabilityData.Message);
+            }
+
+            if (expectedProperties != null && expectedProperties.Count > 0)
+            {
+                foreach (var prop in expectedProperties)
+                {
+                    Assert.Equal(prop.Value, availabilityData.Properties[prop.Key]);
+                }
+
+                Assert.Equal(expectedProperties.Count, availabilityData.Properties.Count);
+            }
+        }
+
         public static void AssertLog_As_ExceptionTelemetry(
             TelemetryItem telemetryItem,
             string expectedSeverityLevel,

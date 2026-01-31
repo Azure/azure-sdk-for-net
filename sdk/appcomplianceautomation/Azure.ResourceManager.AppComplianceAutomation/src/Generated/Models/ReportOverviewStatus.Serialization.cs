@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ReportOverviewStatus : IUtf8JsonSerializable, IJsonModel<ReportOverviewStatus>
+    /// <summary> The overview of the compliance result for one report. </summary>
+    public partial class ReportOverviewStatus : IJsonModel<ReportOverviewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportOverviewStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReportOverviewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReportOverviewStatus)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(PassedCount))
             {
                 writer.WritePropertyName("passedCount"u8);
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("pendingCount"u8);
                 writer.WriteNumberValue(PendingCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +76,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        ReportOverviewStatus IJsonModel<ReportOverviewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReportOverviewStatus IJsonModel<ReportOverviewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReportOverviewStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReportOverviewStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReportOverviewStatus(document.RootElement, options);
         }
 
-        internal static ReportOverviewStatus DeserializeReportOverviewStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReportOverviewStatus DeserializeReportOverviewStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,74 +106,75 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             int? manualCount = default;
             int? notApplicableCount = default;
             int? pendingCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("passedCount"u8))
+                if (prop.NameEquals("passedCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    passedCount = property.Value.GetInt32();
+                    passedCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedCount"u8))
+                if (prop.NameEquals("failedCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failedCount = property.Value.GetInt32();
+                    failedCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("manualCount"u8))
+                if (prop.NameEquals("manualCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    manualCount = property.Value.GetInt32();
+                    manualCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("notApplicableCount"u8))
+                if (prop.NameEquals("notApplicableCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notApplicableCount = property.Value.GetInt32();
+                    notApplicableCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingCount"u8))
+                if (prop.NameEquals("pendingCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pendingCount = property.Value.GetInt32();
+                    pendingCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ReportOverviewStatus(
                 passedCount,
                 failedCount,
                 manualCount,
                 notApplicableCount,
                 pendingCount,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ReportOverviewStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReportOverviewStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -178,15 +184,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        ReportOverviewStatus IPersistableModel<ReportOverviewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReportOverviewStatus IPersistableModel<ReportOverviewStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReportOverviewStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReportOverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeReportOverviewStatus(document.RootElement, options);
                     }
                 default:
@@ -194,6 +205,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReportOverviewStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

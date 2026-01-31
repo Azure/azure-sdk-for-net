@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             ExtendedLocation = extendedLocation;
-            ActionStates = new ChangeTrackingList<ActionState>();
+            ActionStates = new ChangeTrackingList<NetworkCloudActionState>();
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
             ClusterType = clusterType;
@@ -98,15 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
         /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
-        /// <param name="clusterServicePrincipal"> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions">
-        /// The list of rack definitions for the compute racks in a multi-rack
-        /// cluster, or an empty list in a single-rack cluster.
-        /// </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
         /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
@@ -122,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IReadOnlyList<ActionState> actionStates, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IReadOnlyList<NetworkCloudActionState> actionStates, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
@@ -173,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </summary>
-        public IReadOnlyList<ActionState> ActionStates { get; }
+        public IReadOnlyList<NetworkCloudActionState> ActionStates { get; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
@@ -194,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus { get; }
         /// <summary> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </summary>
         public ResourceIdentifier ClusterManagerId { get; }
-        /// <summary> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
+        /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
         public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
         /// <summary> The type of rack configuration for the cluster. </summary>
         public ClusterType ClusterType { get; set; }
@@ -204,10 +201,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public CommandOutputSettings CommandOutputSettings { get; set; }
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
         public ValidationThreshold ComputeDeploymentThreshold { get; set; }
-        /// <summary>
-        /// The list of rack definitions for the compute racks in a multi-rack
-        /// cluster, or an empty list in a single-rack cluster.
-        /// </summary>
+        /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
         public IList<NetworkCloudRackDefinition> ComputeRackDefinitions { get; }
         /// <summary> The current detailed status of the cluster. </summary>
         public ClusterDetailedStatus? DetailedStatus { get; }

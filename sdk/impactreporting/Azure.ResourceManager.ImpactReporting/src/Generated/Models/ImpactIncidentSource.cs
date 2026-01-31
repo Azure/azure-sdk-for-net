@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public readonly partial struct ImpactIncidentSource : IEquatable<ImpactIncidentSource>
     {
         private readonly string _value;
+        /// <summary> When source of Incident is AzureDevops. </summary>
+        private const string AzureDevopsValue = "AzureDevops";
+        /// <summary> When source of Incident is Microsoft ICM. </summary>
+        private const string IcmValue = "ICM";
+        /// <summary> When source of Incident is Jira. </summary>
+        private const string JiraValue = "Jira";
+        /// <summary> When source of Incident is ServiceNow. </summary>
+        private const string ServiceNowValue = "ServiceNow";
+        /// <summary> When source of Incident is Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="ImpactIncidentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImpactIncidentSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureDevopsValue = "AzureDevops";
-        private const string IcmValue = "ICM";
-        private const string JiraValue = "Jira";
-        private const string ServiceNowValue = "ServiceNow";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> When source of Incident is AzureDevops. </summary>
         public static ImpactIncidentSource AzureDevops { get; } = new ImpactIncidentSource(AzureDevopsValue);
+
         /// <summary> When source of Incident is Microsoft ICM. </summary>
         public static ImpactIncidentSource Icm { get; } = new ImpactIncidentSource(IcmValue);
+
         /// <summary> When source of Incident is Jira. </summary>
         public static ImpactIncidentSource Jira { get; } = new ImpactIncidentSource(JiraValue);
+
         /// <summary> When source of Incident is ServiceNow. </summary>
         public static ImpactIncidentSource ServiceNow { get; } = new ImpactIncidentSource(ServiceNowValue);
+
         /// <summary> When source of Incident is Other. </summary>
         public static ImpactIncidentSource Other { get; } = new ImpactIncidentSource(OtherValue);
+
         /// <summary> Determines if two <see cref="ImpactIncidentSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImpactIncidentSource left, ImpactIncidentSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImpactIncidentSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImpactIncidentSource left, ImpactIncidentSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImpactIncidentSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImpactIncidentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImpactIncidentSource(string value) => new ImpactIncidentSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImpactIncidentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImpactIncidentSource?(string value) => value == null ? null : new ImpactIncidentSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImpactIncidentSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImpactIncidentSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

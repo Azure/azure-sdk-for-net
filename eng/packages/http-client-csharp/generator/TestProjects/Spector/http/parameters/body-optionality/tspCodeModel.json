@@ -77,6 +77,11 @@
       "crossLanguageDefinitionId": "Parameters.BodyOptionality.BodyModel",
       "usage": "Input,Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BodyModel"
+        }
+      },
       "properties": [
         {
           "$id": "10",
@@ -182,7 +187,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredExplicit",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.BodyOptionality"
           },
           "parameters": [
             {
@@ -295,7 +301,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredImplicit",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.BodyOptionality"
           },
           "parameters": [
             {
@@ -377,6 +384,7 @@
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.BodyOptionality",
       "apiVersions": [],
@@ -455,7 +463,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.set",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.BodyOptionality.OptionalExplicit"
               },
               "parameters": [
                 {
@@ -568,7 +577,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.omit",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.BodyOptionality.OptionalExplicit"
               },
               "parameters": [
                 {
@@ -643,17 +653,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
+              "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit",
           "apiVersions": [],
           "parent": {
             "$ref": "12"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

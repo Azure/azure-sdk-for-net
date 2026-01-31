@@ -3,8 +3,9 @@
     <Description>Test framework for clients built on System.ClientModel</Description>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
-    <RequiredTargetFrameworks>net462;net8.0;net9.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
@@ -16,7 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="NUnit" />
-    <PackageReference Include="System.ClientModel" /> 
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 	<ItemGroup>

@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.Kubernetes
             return subscriptionResource.GetCachedClient(client => new MockableKubernetesSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectedClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesArmClient.GetConnectedClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.Kubernetes
             return GetMockableKubernetesArmClient(client).GetConnectedClusterResource(id);
         }
 
-        /// <summary> Gets a collection of ConnectedClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of ConnectedClusters in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesResourceGroupResource.GetConnectedClusters()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ConnectedClusters and their operations over a ConnectedClusterResource. </returns>
@@ -60,7 +72,13 @@ namespace Azure.ResourceManager.Kubernetes
             return GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedClusters();
         }
 
-        /// <summary> Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesResourceGroupResource.GetConnectedClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,7 +91,13 @@ namespace Azure.ResourceManager.Kubernetes
             return await GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details. </summary>
+        /// <summary>
+        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesResourceGroupResource.GetConnectedCluster(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +110,13 @@ namespace Azure.ResourceManager.Kubernetes
             return GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedCluster(clusterName, cancellationToken);
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesSubscriptionResource.GetConnectedClustersAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.Kubernetes
             return GetMockableKubernetesSubscriptionResource(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
         }
 
-        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
+        /// <summary>
+        /// API to enumerate registered connected K8s clusters under a Subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesSubscriptionResource.GetConnectedClusters(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

@@ -82,7 +82,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [],
           "response": {},
@@ -145,7 +146,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [
             {
@@ -231,7 +233,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Resiliency.ServiceDriven"
           },
           "parameters": [
             {
@@ -340,11 +343,13 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

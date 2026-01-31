@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
-    internal class DevOpsPoolOperationSource : IOperationSource<DevOpsPoolResource>
+    /// <summary></summary>
+    internal partial class DevOpsPoolOperationSource : IOperationSource<DevOpsPoolResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevOpsPoolOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevOpsPoolResource IOperationSource<DevOpsPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevOpsInfrastructureContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevOpsPoolData data = DevOpsPoolData.DeserializeDevOpsPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevOpsPoolResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevOpsPoolResource> IOperationSource<DevOpsPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevOpsInfrastructureContext.Default);
-            return await Task.FromResult(new DevOpsPoolResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevOpsPoolData data = DevOpsPoolData.DeserializeDevOpsPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevOpsPoolResource(_client, data);
         }
     }
 }

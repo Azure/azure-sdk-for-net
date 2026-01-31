@@ -78,6 +78,11 @@
       "usage": "Input,Json",
       "doc": "Empty model used in operation parameters",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "EmptyInput"
+        }
+      },
       "properties": []
     },
     {
@@ -89,6 +94,11 @@
       "usage": "Output,Json",
       "doc": "Empty model used in operation return type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "EmptyOutput"
+        }
+      },
       "properties": []
     },
     {
@@ -100,6 +110,11 @@
       "usage": "Input,Output,Json",
       "doc": "Empty model used in both parameter and return type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "EmptyInputOutput"
+        }
+      },
       "properties": []
     }
   ],
@@ -179,7 +194,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {
@@ -275,7 +291,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.getEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {
@@ -396,7 +413,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Empty"
           },
           "parameters": [
             {
@@ -495,9 +513,11 @@
           "crossLanguageDefinitionId": "Type.Model.Empty.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Empty",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

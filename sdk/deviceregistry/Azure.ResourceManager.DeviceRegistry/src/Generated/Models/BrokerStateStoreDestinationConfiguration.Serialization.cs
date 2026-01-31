@@ -14,7 +14,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The configuration for a MQTT broker state store destination. </summary>
-    public partial class BrokerStateStoreDestinationConfiguration : IJsonModel<BrokerStateStoreDestinationConfiguration>
+    internal partial class BrokerStateStoreDestinationConfiguration : IJsonModel<BrokerStateStoreDestinationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="BrokerStateStoreDestinationConfiguration"/> for deserialization. </summary>
         internal BrokerStateStoreDestinationConfiguration()
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBrokerStateStoreDestinationConfiguration(document.RootElement, options);
                     }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageDiscoveryWorkspaceResource"/> and their operations.
-    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of the parent resource.
+    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class StorageDiscoveryWorkspaceCollection : ArmCollection, IEnumerable<StorageDiscoveryWorkspaceResource>, IAsyncEnumerable<StorageDiscoveryWorkspaceResource>
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -263,7 +263,23 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageDiscoveryWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -275,7 +291,23 @@ namespace Azure.ResourceManager.StorageDiscovery
             return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
-        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageDiscoveryWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
@@ -288,7 +320,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Get a StorageDiscoveryWorkspace
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -296,7 +328,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -345,7 +377,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Get a StorageDiscoveryWorkspace
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -353,7 +385,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -402,7 +434,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Get a StorageDiscoveryWorkspace
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -410,7 +442,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -463,7 +495,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         }
 
         /// <summary>
-        /// Get a StorageDiscoveryWorkspace
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -471,7 +503,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -30,6 +30,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of User items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "4",
@@ -50,6 +55,11 @@
               "usage": "Output,Json",
               "doc": "User model",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "User"
+                }
+              },
               "properties": [
                 {
                   "$id": "7",
@@ -216,7 +226,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Payload.Pageable"
           },
           "parameters": [
             {
@@ -280,7 +291,10 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         }
       ],
@@ -316,9 +330,11 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

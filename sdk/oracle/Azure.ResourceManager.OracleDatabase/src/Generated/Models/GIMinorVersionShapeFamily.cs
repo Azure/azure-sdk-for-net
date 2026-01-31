@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct GIMinorVersionShapeFamily : IEquatable<GIMinorVersionShapeFamily>
     {
         private readonly string _value;
+        /// <summary> Family value for Exadata Shape. </summary>
+        private const string ExadataValue = "EXADATA";
+        /// <summary> Family value for Exadb XS Shape. </summary>
+        private const string ExadbXSValue = "EXADB_XS";
 
         /// <summary> Initializes a new instance of <see cref="GIMinorVersionShapeFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GIMinorVersionShapeFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExadataValue = "EXADATA";
-        private const string ExadbXSValue = "EXADB_XS";
+            _value = value;
+        }
 
         /// <summary> Family value for Exadata Shape. </summary>
         public static GIMinorVersionShapeFamily Exadata { get; } = new GIMinorVersionShapeFamily(ExadataValue);
+
         /// <summary> Family value for Exadb XS Shape. </summary>
         public static GIMinorVersionShapeFamily ExadbXS { get; } = new GIMinorVersionShapeFamily(ExadbXSValue);
+
         /// <summary> Determines if two <see cref="GIMinorVersionShapeFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GIMinorVersionShapeFamily left, GIMinorVersionShapeFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GIMinorVersionShapeFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GIMinorVersionShapeFamily left, GIMinorVersionShapeFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GIMinorVersionShapeFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GIMinorVersionShapeFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GIMinorVersionShapeFamily(string value) => new GIMinorVersionShapeFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GIMinorVersionShapeFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GIMinorVersionShapeFamily?(string value) => value == null ? null : new GIMinorVersionShapeFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GIMinorVersionShapeFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GIMinorVersionShapeFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

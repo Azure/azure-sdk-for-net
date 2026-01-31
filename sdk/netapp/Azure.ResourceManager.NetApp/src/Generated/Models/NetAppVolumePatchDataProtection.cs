@@ -54,11 +54,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         /// <param name="backup"> Backup Properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
+        /// <param name="ransomwareProtection"> Advanced Ransomware Protection updatable settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Backup = backup;
             Snapshot = snapshot;
+            RansomwareProtection = ransomwareProtection;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,6 +77,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 if (Snapshot is null)
                     Snapshot = new VolumeSnapshotProperties();
                 Snapshot.SnapshotPolicyId = value;
+            }
+        }
+
+        /// <summary> Advanced Ransomware Protection updatable settings. </summary>
+        internal RansomwareProtectionPatchSettings RansomwareProtection { get; set; }
+        /// <summary> The desired value of the ARP feature state available to the volume. </summary>
+        public DesiredRansomwareProtectionState? DesiredRansomwareProtectionState
+        {
+            get => RansomwareProtection is null ? default : RansomwareProtection.DesiredRansomwareProtectionState;
+            set
+            {
+                if (RansomwareProtection is null)
+                    RansomwareProtection = new RansomwareProtectionPatchSettings();
+                RansomwareProtection.DesiredRansomwareProtectionState = value;
             }
         }
     }

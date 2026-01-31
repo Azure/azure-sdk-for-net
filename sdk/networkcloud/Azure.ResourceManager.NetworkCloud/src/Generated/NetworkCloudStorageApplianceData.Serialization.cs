@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
             writer.WriteObjectValue(AdministratorCredentials, options);
-            if (options.Format != "W" && Optional.IsDefined(CaCertificate))
+            if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
                 writer.WritePropertyName("caCertificate"u8);
-                writer.WriteObjectValue(CaCertificate, options);
+                writer.WriteObjectValue(CACertificate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             SystemData systemData = default;
             AdministrativeCredentials administratorCredentials = default;
-            CertificateInfo caCertificate = default;
+            NetworkCloudCertificateInfo caCertificate = default;
             long? capacity = default;
             long? capacityUsed = default;
             ResourceIdentifier clusterId = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            caCertificate = CertificateInfo.DeserializeCertificateInfo(property0.Value, options);
+                            caCertificate = NetworkCloudCertificateInfo.DeserializeNetworkCloudCertificateInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capacity"u8))

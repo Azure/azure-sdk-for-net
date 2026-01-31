@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CredentialSetGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetGet.json
             // this example is just showing the usage of "CredentialSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CredentialSetDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetDelete.json
             // this example is just showing the usage of "CredentialSets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CredentialSetUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetUpdate.json
             // this example is just showing the usage of "CredentialSets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,10 +19,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="EndpointResource"/> and their operations.
-    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of the parent resource.
+    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class EndpointResourceCollection : ArmCollection
+    public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourcesClientDiagnostics;
         private readonly EndpointResources _endpointResourcesRestClient;
@@ -39,17 +40,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceApiVersion);
             _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EndpointResource.ResourceType.Namespace, Diagnostics);
             _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != EndpointResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EndpointResource.ResourceType), id);
-            }
         }
 
         /// <summary>
@@ -61,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> EndpointResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -116,7 +106,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> EndpointResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -171,7 +161,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -220,7 +210,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -261,7 +251,63 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the endpoint to the resource.
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EndpointResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -269,7 +315,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -318,7 +364,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the endpoint to the resource.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -326,7 +372,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -375,7 +421,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the endpoint to the resource.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +429,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -436,7 +482,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the endpoint to the resource.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -444,7 +490,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -494,6 +540,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<EndpointResource> IEnumerable<EndpointResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<EndpointResource> IAsyncEnumerable<EndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

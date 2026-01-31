@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.0 (2026-01-16)
+
+### Features Added
+
+- Added new resource type `GalleryScript`.
+- Added `StorageAccountStrategy` property to `GalleryArtifactPublishingProfileBase` class.
+
+## 1.13.0 (2025-11-14)
+
+### Features Added
+
+- Added `SnapshotAccessState` property to `DiskRestorePointInstanceView` class.
+- Added `InstantAccess` property to `RestorePointGroupData` class.
+- Added `InstantAccess` property to `RestorePointGroupPatch` class.
+- Added `InstantAccessDurationMinutes` property to `RestorePointData` class.
+- Added `EnableFips1403Encryption` property to `AdditionalCapabilities` class.
+- Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
+
+### Breaking Changes
+
+- `CommunityGallery`, `CommunityGalleryImage`, `CommunityGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+- `SharedGallery`, `SharedGalleryImage`, `SharedGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
 
 ## 1.12.0 (2025-09-26)
 
@@ -47,7 +70,7 @@
 
 ### Breaking Changes
 
-- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility.
 
 ## 1.10.0 (2025-06-30)
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -659,6 +659,194 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var message = CreateDdosProtectionStatusRequest(subscriptionId, resourceGroupName, publicIPAddressName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateReserveCloudServicePublicIPAddressRequestUri(string subscriptionId, string resourceGroupName, string publicIPAddressName, ReserveCloudServicePublicIPAddressContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendPath("/reserveCloudServicePublicIpAddress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateReserveCloudServicePublicIPAddressRequest(string subscriptionId, string resourceGroupName, string publicIPAddressName, ReserveCloudServicePublicIPAddressContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendPath("/reserveCloudServicePublicIpAddress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPAddressName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ReserveCloudServicePublicIPAddressAsync(string subscriptionId, string resourceGroupName, string publicIPAddressName, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateReserveCloudServicePublicIPAddressRequest(subscriptionId, resourceGroupName, publicIPAddressName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPAddressName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ReserveCloudServicePublicIPAddress(string subscriptionId, string resourceGroupName, string publicIPAddressName, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateReserveCloudServicePublicIPAddressRequest(subscriptionId, resourceGroupName, publicIPAddressName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDisassociateCloudServiceReservedPublicIPRequestUri(string subscriptionId, string resourceGroupName, string publicIPAddressName, DisassociateCloudServicePublicIPContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendPath("/disassociateCloudServiceReservedPublicIp", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDisassociateCloudServiceReservedPublicIPRequest(string subscriptionId, string resourceGroupName, string publicIPAddressName, DisassociateCloudServicePublicIPContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendPath("/disassociateCloudServiceReservedPublicIp", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Disassociates the Cloud Service reserved Public IP and associates the specified Standalone Public IP to the same Cloud Service frontend. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPAddressName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DisassociateCloudServiceReservedPublicIPAsync(string subscriptionId, string resourceGroupName, string publicIPAddressName, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateDisassociateCloudServiceReservedPublicIPRequest(subscriptionId, resourceGroupName, publicIPAddressName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Disassociates the Cloud Service reserved Public IP and associates the specified Standalone Public IP to the same Cloud Service frontend. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPAddressName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DisassociateCloudServiceReservedPublicIP(string subscriptionId, string resourceGroupName, string publicIPAddressName, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateDisassociateCloudServiceReservedPublicIPRequest(subscriptionId, resourceGroupName, publicIPAddressName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

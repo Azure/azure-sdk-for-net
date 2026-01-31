@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AllocatedSizeMiB))
+            if (options.Format != "W" && Optional.IsDefined(AllocatedInSizeMiB))
             {
                 writer.WritePropertyName("allocatedSizeMiB"u8);
-                writer.WriteNumberValue(AllocatedSizeMiB.Value);
+                writer.WriteNumberValue(AllocatedInSizeMiB.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
             {

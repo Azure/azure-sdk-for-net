@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/c712a519a493d13c1cd997aa4e5adbab8df76e85/specification/network/resource-manager/readme.md
-#tag: package-2025-01-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/b6d0dc8ef749d50348f0e27f5eee38ac3e5469d0/specification/network/resource-manager/readme.md
+#tag: package-2025-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -141,6 +141,7 @@ rename-mapping:
   IPTraffic: NetworkVerifierIPTraffic
   IpType: IpamIPType
   IPVersion: NetworkIPVersion
+  IsRollback: UndoReservationType
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
@@ -308,6 +309,7 @@ acronym-mapping:
   IkeV2: IkeV2
   Stag: STag|stag
   Nsp: NetworkSecurityPerimeter
+  JWT: Jwt|jwt
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

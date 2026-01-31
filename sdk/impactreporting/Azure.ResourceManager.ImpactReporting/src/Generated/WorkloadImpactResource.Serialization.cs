@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
+    /// <summary></summary>
     public partial class WorkloadImpactResource : IJsonModel<WorkloadImpactData>
     {
-        private static WorkloadImpactData s_dataDeserializationInstance;
-        private static WorkloadImpactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkloadImpactData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkloadImpactData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkloadImpactData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadImpactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadImpactData>)Data).Write(writer, options);
 
-        WorkloadImpactData IJsonModel<WorkloadImpactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadImpactData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadImpactData IJsonModel<WorkloadImpactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkloadImpactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadImpactData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadImpactData IPersistableModel<WorkloadImpactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadImpactData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<WorkloadImpactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadImpactData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadImpactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -24,12 +24,8 @@ namespace Samples
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="myToken"> myToken description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="global::System.ArgumentNullException"> <paramref name="myToken"/> is null. </exception>
-        /// <exception cref="global::System.ArgumentException"> <paramref name="myToken"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNullOrEmpty(myToken, nameof(myToken));
-
             _client = client;
             _myToken = myToken;
             _context = context;
@@ -51,7 +47,7 @@ namespace Samples
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), nextPage, response);
-                if (response.Headers.TryGetValue("nextPage", out string value))
+                if ((response.Headers.TryGetValue("nextPage", out string value) && !string.IsNullOrEmpty(value)))
                 {
                     nextPage = value;
                 }

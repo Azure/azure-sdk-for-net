@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -17,41 +18,59 @@ namespace Azure.ResourceManager.Grafana.Models
     public readonly partial struct GrafanaStartTlsPolicy : IEquatable<GrafanaStartTlsPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GrafanaStartTlsPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GrafanaStartTlsPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OpportunisticStartTlsValue = "OpportunisticStartTLS";
         private const string MandatoryStartTlsValue = "MandatoryStartTLS";
         private const string NoStartTlsValue = "NoStartTLS";
 
-        /// <summary> OpportunisticStartTLS. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaStartTlsPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GrafanaStartTlsPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OpportunisticStartTls. </summary>
         public static GrafanaStartTlsPolicy OpportunisticStartTls { get; } = new GrafanaStartTlsPolicy(OpportunisticStartTlsValue);
-        /// <summary> MandatoryStartTLS. </summary>
+
+        /// <summary> Gets the MandatoryStartTls. </summary>
         public static GrafanaStartTlsPolicy MandatoryStartTls { get; } = new GrafanaStartTlsPolicy(MandatoryStartTlsValue);
-        /// <summary> NoStartTLS. </summary>
+
+        /// <summary> Gets the NoStartTls. </summary>
         public static GrafanaStartTlsPolicy NoStartTls { get; } = new GrafanaStartTlsPolicy(NoStartTlsValue);
+
         /// <summary> Determines if two <see cref="GrafanaStartTlsPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrafanaStartTlsPolicy left, GrafanaStartTlsPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrafanaStartTlsPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrafanaStartTlsPolicy left, GrafanaStartTlsPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaStartTlsPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrafanaStartTlsPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrafanaStartTlsPolicy(string value) => new GrafanaStartTlsPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrafanaStartTlsPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrafanaStartTlsPolicy?(string value) => value == null ? null : new GrafanaStartTlsPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrafanaStartTlsPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrafanaStartTlsPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

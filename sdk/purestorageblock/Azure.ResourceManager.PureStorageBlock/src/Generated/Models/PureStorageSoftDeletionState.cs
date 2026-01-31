@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> Soft-deletion state. </summary>
     public partial class PureStorageSoftDeletionState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageSoftDeletionState"/>. </summary>
         /// <param name="isDestroyed"> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </param>
@@ -55,21 +26,17 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="PureStorageSoftDeletionState"/>. </summary>
         /// <param name="isDestroyed"> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </param>
         /// <param name="eradicatedOn"> Date at which the resource will be eradicated and impossible to recover, as an RFC 3339 timestamp; invalid if destroyed is false;. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageSoftDeletionState(bool isDestroyed, DateTimeOffset? eradicatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PureStorageSoftDeletionState(bool isDestroyed, DateTimeOffset? eradicatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDestroyed = isDestroyed;
             EradicatedOn = eradicatedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PureStorageSoftDeletionState"/> for deserialization. </summary>
-        internal PureStorageSoftDeletionState()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </summary>
         public bool IsDestroyed { get; set; }
+
         /// <summary> Date at which the resource will be eradicated and impossible to recover, as an RFC 3339 timestamp; invalid if destroyed is false;. </summary>
         public DateTimeOffset? EradicatedOn { get; }
     }

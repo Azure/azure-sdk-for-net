@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Grafana
 {
+    /// <summary></summary>
     public partial class ManagedPrivateEndpointModelResource : IJsonModel<ManagedPrivateEndpointModelData>
     {
-        private static ManagedPrivateEndpointModelData s_dataDeserializationInstance;
-        private static ManagedPrivateEndpointModelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedPrivateEndpointModelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedPrivateEndpointModelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedPrivateEndpointModelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedPrivateEndpointModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedPrivateEndpointModelData>)Data).Write(writer, options);
 
-        ManagedPrivateEndpointModelData IJsonModel<ManagedPrivateEndpointModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedPrivateEndpointModelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedPrivateEndpointModelData IJsonModel<ManagedPrivateEndpointModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedPrivateEndpointModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedPrivateEndpointModelData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedPrivateEndpointModelData IPersistableModel<ManagedPrivateEndpointModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedPrivateEndpointModelData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<ManagedPrivateEndpointModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedPrivateEndpointModelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedPrivateEndpointModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

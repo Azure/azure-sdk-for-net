@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -101,7 +102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Foos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Foos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Foos_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +247,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Foos_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -287,7 +288,189 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/exportDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_FooAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<FooActionResult>> FooActionAsync(WaitUntil waitUntil, FooActionRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.FooAction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
+                    new FooActionResultOperationSource(),
+                    _foosClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/exportDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_FooAction. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<FooActionResult> FooAction(WaitUntil waitUntil, FooActionRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.FooAction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
+                    new FooActionResultOperationSource(),
+                    _foosClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/listDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_ListDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FooDependency> GetDependenciesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FooResourceGetDependenciesAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/listDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_ListDependencies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FooDependency> GetDependencies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FooResourceGetDependenciesCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -295,7 +478,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Foos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -346,7 +529,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -354,7 +537,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Foos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -436,7 +619,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -479,7 +662,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -521,7 +704,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -563,7 +746,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -604,7 +787,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -645,7 +828,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

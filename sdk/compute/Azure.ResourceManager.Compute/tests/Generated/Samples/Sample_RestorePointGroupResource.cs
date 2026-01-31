@@ -155,6 +155,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 {
                     Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"),
                 },
+                InstantAccess = true,
                 Tags =
 {
 ["key8536"] = "aaaaaaaaaaaaaaaaaaa"

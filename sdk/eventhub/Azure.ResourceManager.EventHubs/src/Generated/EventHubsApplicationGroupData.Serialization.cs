@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 isEnabled,
                 clientAppGroupIdentifier,
                 policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(),
-                location,
                 serializedAdditionalRawData);
         }
 

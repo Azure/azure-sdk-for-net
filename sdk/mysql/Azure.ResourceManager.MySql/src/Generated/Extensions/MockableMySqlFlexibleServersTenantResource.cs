@@ -8,64 +8,73 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableMySqlFlexibleServersTenantResource : ArmResource
     {
         private ClientDiagnostics _getPrivateDnsZoneSuffixClientDiagnostics;
-        private GetPrivateDnsZoneSuffixRestOperations _getPrivateDnsZoneSuffixRestClient;
+        private GetPrivateDnsZoneSuffix _getPrivateDnsZoneSuffixRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMySqlFlexibleServersTenantResource for mocking. </summary>
         protected MockableMySqlFlexibleServersTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMySqlFlexibleServersTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMySqlFlexibleServersTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private GetPrivateDnsZoneSuffixRestOperations GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffixRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics GetPrivateDnsZoneSuffixClientDiagnostics => _getPrivateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private GetPrivateDnsZoneSuffix GetPrivateDnsZoneSuffixRestClient => _getPrivateDnsZoneSuffixRestClient ??= new GetPrivateDnsZoneSuffix(GetPrivateDnsZoneSuffixClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
 
         /// <summary>
         /// Get private DNS zone suffix in the cloud.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetPrivateDnsZoneSuffix_Execute</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetPrivateDnsZoneSuffix_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
+            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {
-                var response = await GetPrivateDnsZoneSuffixRestClient.ExecuteAsync(cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -79,27 +88,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// Get private DNS zone suffix in the cloud.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.DBforMySQL/getPrivateDnsZoneSuffix. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetPrivateDnsZoneSuffix_Execute</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetPrivateDnsZoneSuffix_Execute. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
         {
-            using var scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
+            using DiagnosticScope scope = GetPrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockableMySqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {
-                var response = GetPrivateDnsZoneSuffixRestClient.Execute(cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

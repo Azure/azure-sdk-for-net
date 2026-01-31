@@ -8,7 +8,7 @@
 using System;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class HierarchyBuildingClient
     {

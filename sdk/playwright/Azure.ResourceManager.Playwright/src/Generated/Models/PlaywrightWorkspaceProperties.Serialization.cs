@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    dataplaneUri = new Uri(prop.Value.GetString());
+                    dataplaneUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalAffinity"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Playwright.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePlaywrightWorkspaceProperties(document.RootElement, options);
                     }

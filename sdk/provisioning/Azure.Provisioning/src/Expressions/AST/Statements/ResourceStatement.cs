@@ -15,6 +15,7 @@ public class ResourceStatement(string name, BicepExpression type, BicepExpressio
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.AppendAll(Decorators, (w, d) => w.Append(d).AppendLine())
             .Append("resource ").Append(Name).Append(' ').Append(Type)
-            .AppendIf(Existing, w => w.Append(" existing")).Append(" = ")
+            .AppendIf(Existing, w => w.Append(" existing"))
+            .Append(" = ")
             .Append(Body).AppendLine();
 }

@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateStrategy"/>. </summary>
-        /// <param name="maxUnavailable">
-        /// The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack.
-        /// Limited by the maximum number of machines in the increment. Defaults to the whole increment size.
-        /// </param>
+        /// <param name="maxUnavailable"> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </param>
         /// <param name="strategyType"> The mode of operation for runtime protection. </param>
         /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
         /// <param name="thresholdValue"> The numeric threshold value. </param>
@@ -81,10 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
         }
 
-        /// <summary>
-        /// The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack.
-        /// Limited by the maximum number of machines in the increment. Defaults to the whole increment size.
-        /// </summary>
+        /// <summary> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </summary>
         public long? MaxUnavailable { get; set; }
         /// <summary> The mode of operation for runtime protection. </summary>
         public ClusterUpdateStrategyType StrategyType { get; set; }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Monitor.Query.Logs.Models
 {

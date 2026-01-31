@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("properties.left")]
-        public int? BarQuotaLeft
+        public string BarQuotaLeft
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Properties = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                Properties = new BarQuotaProperties(value);
             }
         }
     }

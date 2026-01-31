@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a MySqlFlexibleServersCapability along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServersCapabilityResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServersCapabilityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetMySqlFlexibleServersCapability method.
+    /// A class representing a MySqlFlexibleServersCapability along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServersCapabilityResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetMySqlFlexibleServersCapabilities method.
     /// </summary>
     public partial class MySqlFlexibleServersCapabilityResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServersCapabilityResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="locationName"> The locationName. </param>
-        /// <param name="capabilitySetName"> The capabilitySetName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string capabilitySetName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics;
-        private readonly LocationBasedCapabilitySetRestOperations _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient;
+        private readonly ClientDiagnostics _locationBasedCapabilitySetClientDiagnostics;
+        private readonly LocationBasedCapabilitySet _locationBasedCapabilitySetRestClient;
         private readonly MySqlFlexibleServersCapabilityData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/locations/capabilitySets";
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersCapabilityResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServersCapabilityResource for mocking. </summary>
         protected MySqlFlexibleServersCapabilityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersCapabilityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFlexibleServersCapabilityResource(ArmClient client, MySqlFlexibleServersCapabilityData data) : this(client, data.Id)
@@ -54,71 +44,92 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServersCapabilityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MySqlFlexibleServersCapabilityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string mySqlFlexibleServersCapabilityLocationBasedCapabilitySetApiVersion);
-            _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient = new LocationBasedCapabilitySetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersCapabilityLocationBasedCapabilitySetApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string mySqlFlexibleServersCapabilityApiVersion);
+            _locationBasedCapabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            _locationBasedCapabilitySetRestClient = new LocationBasedCapabilitySet(_locationBasedCapabilitySetClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServersCapabilityApiVersion ?? "2024-12-30");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MySqlFlexibleServersCapabilityData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="capabilitySetName"> The capabilitySetName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string capabilitySetName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get capabilities at specified location in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocationBasedCapabilitySet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilitySet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MySqlFlexibleServersCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MySqlFlexibleServersCapabilityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityResource.Get");
+            using DiagnosticScope scope = _locationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityResource.Get");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MySqlFlexibleServersCapabilityData> response = Response.FromValue(MySqlFlexibleServersCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServersCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Get capabilities at specified location in a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocationBasedCapabilitySet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationBasedCapabilitySet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MySqlFlexibleServersCapabilityResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MySqlFlexibleServersCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MySqlFlexibleServersCapabilityResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityResource.Get");
+            using DiagnosticScope scope = _locationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityResource.Get");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MySqlFlexibleServersCapabilityData> response = Response.FromValue(MySqlFlexibleServersCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MySqlFlexibleServersCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

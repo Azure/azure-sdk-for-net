@@ -27,6 +27,8 @@ export const armResourceRead = "Azure.ResourceManager.@armResourceRead";
 export const armResourceReadName = "@armResourceRead";
 const armResourceReadRegex = "Azure\\.ResourceManager\\.@armResourceRead";
 
+export const readsResourceName = "@readsResource";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourcecreateorupdate
 export const armResourceCreateOrUpdate =
   "Azure.ResourceManager.@armResourceCreateOrUpdate";
@@ -53,6 +55,17 @@ const armResourceDeleteRegex = "Azure\\.ResourceManager\\.@armResourceDelete";
 export const armResourceUpdate = "Azure.ResourceManager.@armResourceUpdate";
 export const armResourceUpdateName = "@armResourceUpdate";
 const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
+
+export const extensionResourceOperationName = "@extensionResourceOperation";
+export const legacyExtensionResourceOperationName =
+  "@legacyExtensionResourceOperation";
+export const legacyResourceOperationName = "@legacyResourceOperation";
+export const builtInResourceOperationName = "@builtInResourceOperation";
+
+export const armResourceWithParameter =
+  "Azure.ResourceManager.Private.@armResourceWithParameter";
+const armResourceWithParameterRegex =
+  "Azure\\.ResourceManager\\.Private\\.@armResourceWithParameter";
 
 export const armResourceInternal =
   "Azure.ResourceManager.Private.@armResourceInternal";
@@ -85,6 +98,10 @@ export const nonResourceMethodMetadata =
 const nonResourceMethodMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
 
+// New unified decorator for ARM provider schema
+export const armProviderSchema =
+  "Azure.ClientGenerator.Core.@armProviderSchema";
+
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
@@ -108,6 +125,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     resourceGroupResourceRegex,
     singletonRegex,
     subscriptionResourceRegex,
-    tenantResourceRegex
+    tenantResourceRegex,
+    armResourceWithParameterRegex
   ]
 };

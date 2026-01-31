@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return subscriptionResource.GetCachedClient(client => new MockableAgriculturePlatformSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="AgricultureServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="AgricultureServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformArmClient.GetAgricultureServiceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return GetMockableAgriculturePlatformArmClient(client).GetAgricultureServiceResource(id);
         }
 
-        /// <summary> Gets a collection of AgricultureServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of AgricultureServices in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureServices()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AgricultureServices and their operations over a AgricultureServiceResource. </returns>
@@ -60,7 +72,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureServices();
         }
 
-        /// <summary> Get a AgriServiceResource. </summary>
+        /// <summary>
+        /// Get a AgriServiceResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureServiceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,7 +91,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return await GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureServiceAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a AgriServiceResource. </summary>
+        /// <summary>
+        /// Get a AgriServiceResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformResourceGroupResource.GetAgricultureService(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +110,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return GetMockableAgriculturePlatformResourceGroupResource(resourceGroupResource).GetAgricultureService(agriServiceResourceName, cancellationToken);
         }
 
-        /// <summary> List AgriServiceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgricultureServicesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
             return GetMockableAgriculturePlatformSubscriptionResource(subscriptionResource).GetAgricultureServicesAsync(cancellationToken);
         }
 
-        /// <summary> List AgriServiceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List AgriServiceResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

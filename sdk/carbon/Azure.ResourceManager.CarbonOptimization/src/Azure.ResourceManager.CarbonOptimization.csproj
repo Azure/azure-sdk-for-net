@@ -7,6 +7,5 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider CarbonOptimization.</Description>
     <PackageTags>azure;management;arm;resource manager;carbonoptimization</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

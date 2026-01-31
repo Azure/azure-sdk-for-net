@@ -36,5 +36,15 @@ namespace Azure.Generator.Management.Utilities
         {
             return ManagementClientGenerator.Instance.OutputLibrary.IsModelType(type);
         }
+
+        public static string GetXmlDocTypeName(this CSharpType type)
+        {
+            // For nullable value types, we need to append '?' to the type name for XML documentation
+            if (type.IsValueType && type.IsNullable)
+            {
+                return $"{type.Name}?";
+            }
+            return type.Name;
+        }
     }
 }

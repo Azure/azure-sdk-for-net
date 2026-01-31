@@ -20,7 +20,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         {
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
             keyMock.Setup(client => client.WrapKey("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
-                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
+                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => Enumerable.Reverse(data.ToArray()).ToArray())
                 .Verifiable();
 
             keyMock.SetupGet(client => client.KeyId).Returns("KeyId");
@@ -51,7 +51,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         {
             var keyMock = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
             keyMock.Setup(client => client.UnwrapKey("RSA-OAEP", It.IsAny<ReadOnlyMemory<byte>>(), default))
-                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => data.ToArray().Reverse().ToArray())
+                .Returns((string _, ReadOnlyMemory<byte> data, CancellationToken __) => Enumerable.Reverse(data.ToArray()).ToArray())
                 .Verifiable();
 
             var mock = new Mock<IKeyEncryptionKeyResolver>();

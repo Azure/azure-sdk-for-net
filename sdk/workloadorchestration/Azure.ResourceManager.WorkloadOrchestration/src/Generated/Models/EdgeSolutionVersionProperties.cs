@@ -7,43 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Version Properties. </summary>
     public partial class EdgeSolutionVersionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionProperties"/>. </summary>
         /// <param name="specification"> App components spec. </param>
@@ -72,8 +46,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, string solutionInstanceName, IReadOnlyList<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, EdgeJobType? actionType, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionTemplateVersionId = solutionTemplateVersionId;
             Revision = revision;
@@ -90,71 +64,76 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             LatestActionTrackingUri = latestActionTrackingUri;
             ActionType = actionType;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionProperties"/> for deserialization. </summary>
-        internal EdgeSolutionVersionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Solution Template Version Id. </summary>
         public string SolutionTemplateVersionId { get; }
+
         /// <summary> Revision number of resolved config for this solution version. </summary>
         public int? Revision { get; }
+
         /// <summary> Name of applicable target's display name. </summary>
         public string TargetDisplayName { get; }
+
         /// <summary> Resolved configuration values. </summary>
         public string Configuration { get; }
+
         /// <summary> Configuration on the line level across all solution template versions. </summary>
         public string TargetLevelConfiguration { get; }
+
         /// <summary>
         /// App components spec
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Specification { get; }
+
         /// <summary> Review id of resolved config for this solution version. </summary>
         public string ReviewId { get; }
+
         /// <summary> External validation id. </summary>
         public string ExternalValidationId { get; }
+
         /// <summary> State of solution instance. </summary>
         public SolutionInstanceState? State { get; }
+
         /// <summary> Solution instance name. </summary>
         public string SolutionInstanceName { get; }
+
         /// <summary> Solution Dependency Context. </summary>
         public IReadOnlyList<EdgeSolutionDependency> SolutionDependencies { get; }
+
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; }
+
         /// <summary> The URI for tracking the latest action performed on this solution version. </summary>
         public string LatestActionTrackingUri { get; }
+
         /// <summary> The type of the latest action performed on this solution version. </summary>
         public EdgeJobType? ActionType { get; }
+
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
     }

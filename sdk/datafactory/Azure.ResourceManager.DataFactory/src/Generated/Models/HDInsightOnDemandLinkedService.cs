@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey"> The key for the service principal id. </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterResourceGroupAuthType"> HDInsight On-demand cluster resource group authentication type. </param>
         /// <param name="clusterNamePrefix"> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterUserName"> The username to access the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterPassword"> The password to access the cluster. </param>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup, DataFactoryElement<string> clusterNamePrefix, DataFactoryElement<string> clusterUserName, DataFactorySecret clusterPassword, DataFactoryElement<string> clusterSshUserName, DataFactorySecret clusterSshPassword, IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, DataFactoryElement<string> clusterType, DataFactoryElement<string> sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, string encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<DataFactoryScriptAction> scriptActions, DataFactoryElement<string> virtualNetworkId, DataFactoryElement<string> subnetName, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup, HDInsightOnDemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType, DataFactoryElement<string> clusterNamePrefix, DataFactoryElement<string> clusterUserName, DataFactorySecret clusterPassword, DataFactoryElement<string> clusterSshUserName, DataFactorySecret clusterSshPassword, IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, DataFactoryElement<string> clusterType, DataFactoryElement<string> sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, string encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<DataFactoryScriptAction> scriptActions, DataFactoryElement<string> virtualNetworkId, DataFactoryElement<string> subnetName, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLiveExpression = timeToLiveExpression;
@@ -98,6 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
+            ClusterResourceGroupAuthType = clusterResourceGroupAuthType;
             ClusterNamePrefix = clusterNamePrefix;
             ClusterUserName = clusterUserName;
             ClusterPassword = clusterPassword;
@@ -149,6 +151,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterResourceGroup { get; set; }
+        /// <summary> HDInsight On-demand cluster resource group authentication type. </summary>
+        public HDInsightOnDemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType { get; set; }
         /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterNamePrefix { get; set; }
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>

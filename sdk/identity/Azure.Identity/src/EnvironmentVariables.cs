@@ -33,6 +33,11 @@ namespace Azure.Identity
 
         public static string AzureFederatedTokenFile => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE"));
 
+        public static string AzureKubernetesTokenProxy => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_KUBERNETES_TOKEN_PROXY"));
+        public static string AzureKubernetesCaFile => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_KUBERNETES_CA_FILE"));
+        public static string AzureKubernetesCaData => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_KUBERNETES_CA_DATA"));
+        public static string AzureKubernetesSniName => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_KUBERNETES_SNI_NAME"));
+
         public static string CredentialSelection => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"));
 
         private static string GetNonEmptyStringOrNull(string str)

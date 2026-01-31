@@ -6,87 +6,79 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableStorageMoverSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _storageMoverClientDiagnostics;
-        private StorageMoversRestOperations _storageMoverRestClient;
+        private ClientDiagnostics _storageMoversClientDiagnostics;
+        private StorageMovers _storageMoversRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageMoverSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageMoverSubscriptionResource for mocking. </summary>
         protected MockableStorageMoverSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageMoverSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageMoverSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageMoverSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics StorageMoverClientDiagnostics => _storageMoverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageMover", StorageMoverResource.ResourceType.Namespace, Diagnostics);
-        private StorageMoversRestOperations StorageMoverRestClient => _storageMoverRestClient ??= new StorageMoversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageMoverResource.ResourceType));
+        private ClientDiagnostics StorageMoversClientDiagnostics => _storageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageMover.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private StorageMovers StorageMoversRestClient => _storageMoversRestClient ??= new StorageMovers(StorageMoversClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageMover_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageMovers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageMoverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageMoverResource> GetStorageMoversAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageMoverRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "MockableStorageMoverSubscriptionResource.GetStorageMovers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionAsyncCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context), data => new StorageMoverResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageMover/storageMovers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageMover_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageMovers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageMoverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +86,11 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <returns> A collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageMoverResource> GetStorageMovers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageMoverRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageMoverResource(Client, StorageMoverData.DeserializeStorageMoverData(e)), StorageMoverClientDiagnostics, Pipeline, "MockableStorageMoverSubscriptionResource.GetStorageMovers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StorageMoverData, StorageMoverResource>(new StorageMoversGetBySubscriptionCollectionResultOfT(StorageMoversRestClient, Id.SubscriptionId, context), data => new StorageMoverResource(Client, data));
         }
     }
 }

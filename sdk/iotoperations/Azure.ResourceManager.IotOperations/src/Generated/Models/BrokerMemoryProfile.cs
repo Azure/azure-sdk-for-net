@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct BrokerMemoryProfile : IEquatable<BrokerMemoryProfile>
     {
         private readonly string _value;
+        /// <summary> Tiny memory profile. </summary>
+        private const string TinyValue = "Tiny";
+        /// <summary> Low memory profile. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium memory profile. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High memory profile. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="BrokerMemoryProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerMemoryProfile(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TinyValue = "Tiny";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Tiny memory profile. </summary>
         public static BrokerMemoryProfile Tiny { get; } = new BrokerMemoryProfile(TinyValue);
+
         /// <summary> Low memory profile. </summary>
         public static BrokerMemoryProfile Low { get; } = new BrokerMemoryProfile(LowValue);
+
         /// <summary> Medium memory profile. </summary>
         public static BrokerMemoryProfile Medium { get; } = new BrokerMemoryProfile(MediumValue);
+
         /// <summary> High memory profile. </summary>
         public static BrokerMemoryProfile High { get; } = new BrokerMemoryProfile(HighValue);
+
         /// <summary> Determines if two <see cref="BrokerMemoryProfile"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerMemoryProfile left, BrokerMemoryProfile right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BrokerMemoryProfile"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerMemoryProfile left, BrokerMemoryProfile right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerMemoryProfile"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BrokerMemoryProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BrokerMemoryProfile(string value) => new BrokerMemoryProfile(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BrokerMemoryProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BrokerMemoryProfile?(string value) => value == null ? null : new BrokerMemoryProfile(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerMemoryProfile other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BrokerMemoryProfile other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

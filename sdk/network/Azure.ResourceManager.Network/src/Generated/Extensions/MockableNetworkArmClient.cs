@@ -1175,6 +1175,18 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceGatewayResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceGatewayResource"/> object. </returns>
+        public virtual ServiceGatewayResource GetServiceGatewayResource(ResourceIdentifier id)
+        {
+            ServiceGatewayResource.ValidateResourceId(id);
+            return new ServiceGatewayResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1208,6 +1220,18 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VirtualNetworkPeeringResource.ValidateResourceId(id);
             return new VirtualNetworkPeeringResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkApplianceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkApplianceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkApplianceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkApplianceResource"/> object. </returns>
+        public virtual VirtualNetworkApplianceResource GetVirtualNetworkApplianceResource(ResourceIdentifier id)
+        {
+            VirtualNetworkApplianceResource.ValidateResourceId(id);
+            return new VirtualNetworkApplianceResource(Client, id);
         }
 
         /// <summary>

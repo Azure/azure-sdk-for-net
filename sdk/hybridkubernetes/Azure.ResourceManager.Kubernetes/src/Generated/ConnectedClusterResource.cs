@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -189,7 +189,27 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to update certain properties of the connected cluster resource. </summary>
+        /// <summary>
+        /// API to update certain properties of the connected cluster resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> Parameters supplied to update Connected Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -221,7 +241,27 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to update certain properties of the connected cluster resource. </summary>
+        /// <summary>
+        /// API to update certain properties of the connected cluster resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="patch"> Parameters supplied to update Connected Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -262,7 +302,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ConnectedClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +351,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ConnectedClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -360,7 +400,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetClusterUserCredential. </description>
+        /// <description> ConnectedClusters_ListClusterUserCredential. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,7 +452,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetClusterUserCredential. </description>
+        /// <description> ConnectedClusters_ListClusterUserCredential. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -492,7 +532,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -540,7 +580,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -583,7 +623,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -626,7 +666,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -672,7 +712,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -718,7 +758,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

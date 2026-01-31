@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class StoragePoolFinalizeAvsConnectionContent : IUtf8JsonSerializable, IJsonModel<StoragePoolFinalizeAvsConnectionContent>
+    /// <summary> FinalizeAvsConnection payload information, either encoded or explicit. </summary>
+    public partial class StoragePoolFinalizeAvsConnectionContent : IJsonModel<StoragePoolFinalizeAvsConnectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolFinalizeAvsConnectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StoragePoolFinalizeAvsConnectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StoragePoolFinalizeAvsConnectionContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ServiceInitializationDataEnc))
             {
                 writer.WritePropertyName("serviceInitializationDataEnc"u8);
@@ -44,15 +45,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("serviceInitializationData"u8);
                 writer.WriteObjectValue(ServiceInitializationData, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,59 +62,65 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        StoragePoolFinalizeAvsConnectionContent IJsonModel<StoragePoolFinalizeAvsConnectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StoragePoolFinalizeAvsConnectionContent IJsonModel<StoragePoolFinalizeAvsConnectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StoragePoolFinalizeAvsConnectionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StoragePoolFinalizeAvsConnectionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStoragePoolFinalizeAvsConnectionContent(document.RootElement, options);
         }
 
-        internal static StoragePoolFinalizeAvsConnectionContent DeserializeStoragePoolFinalizeAvsConnectionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StoragePoolFinalizeAvsConnectionContent DeserializeStoragePoolFinalizeAvsConnectionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string serviceInitializationDataEnc = default;
             ServiceInitializationInfo serviceInitializationData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceInitializationDataEnc"u8))
+                if (prop.NameEquals("serviceInitializationDataEnc"u8))
                 {
-                    serviceInitializationDataEnc = property.Value.GetString();
+                    serviceInitializationDataEnc = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceInitializationData"u8))
+                if (prop.NameEquals("serviceInitializationData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceInitializationData = ServiceInitializationInfo.DeserializeServiceInitializationInfo(property.Value, options);
+                    serviceInitializationData = ServiceInitializationInfo.DeserializeServiceInitializationInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new StoragePoolFinalizeAvsConnectionContent(serviceInitializationDataEnc, serviceInitializationData, serializedAdditionalRawData);
+            return new StoragePoolFinalizeAvsConnectionContent(serviceInitializationDataEnc, serviceInitializationData, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -123,15 +130,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        StoragePoolFinalizeAvsConnectionContent IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StoragePoolFinalizeAvsConnectionContent IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StoragePoolFinalizeAvsConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StoragePoolFinalizeAvsConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStoragePoolFinalizeAvsConnectionContent(document.RootElement, options);
                     }
                 default:
@@ -139,6 +151,19 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StoragePoolFinalizeAvsConnectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="storagePoolFinalizeAvsConnectionContent"> The <see cref="StoragePoolFinalizeAvsConnectionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StoragePoolFinalizeAvsConnectionContent storagePoolFinalizeAvsConnectionContent)
+        {
+            if (storagePoolFinalizeAvsConnectionContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(storagePoolFinalizeAvsConnectionContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

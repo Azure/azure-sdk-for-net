@@ -148,6 +148,11 @@
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OldModel"
+        }
+      },
       "properties": [
         {
           "$id": "16",
@@ -366,7 +371,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.RenamedFrom.oldOp",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.RenamedFrom"
           },
           "parameters": [
             {
@@ -504,6 +510,7 @@
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.RenamedFrom",
       "apiVersions": [
@@ -608,7 +615,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.newOpInNewInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.RenamedFrom"
               },
               "parameters": [
                 {
@@ -695,7 +703,7 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.endpoint"
             },
             {
               "$id": "52",
@@ -722,9 +730,10 @@
               "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface",
           "apiVersions": [
@@ -732,9 +741,11 @@
           ],
           "parent": {
             "$ref": "24"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

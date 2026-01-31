@@ -147,7 +147,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess",
-            "decorators": []
+            "decorators": [],
+            "namespace": "SpecialHeaders.Repeatability"
           },
           "parameters": [
             {
@@ -240,9 +241,11 @@
           "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "SpecialHeaders.Repeatability",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

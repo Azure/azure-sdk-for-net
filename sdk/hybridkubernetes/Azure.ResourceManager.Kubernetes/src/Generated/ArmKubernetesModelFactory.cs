@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kubernetes;
 using Azure.ResourceManager.Models;
@@ -63,13 +64,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="aadProfile"> AAD profile for the connected cluster. </param>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        /// <param name="securityProfile"> Security profile for the connected cluster. </param>
+        /// <param name="workloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
         /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, SecurityProfile securityProfile = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, bool? workloadIdentityEnabled = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                securityProfile,
+                workloadIdentityEnabled is null ? default : new SecurityProfile(new SecurityProfileWorkloadIdentity(workloadIdentityEnabled, null), null),
                 oidcIssuerProfile,
-                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, new Dictionary<string, BinaryData>()),
+                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, null),
                 arcAgentryConfigurations.ToList(),
                 miscellaneousProperties,
                 additionalBinaryDataProperties: null);

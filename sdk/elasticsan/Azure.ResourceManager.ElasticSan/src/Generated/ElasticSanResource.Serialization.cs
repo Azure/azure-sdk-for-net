@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ElasticSan
 {
+    /// <summary></summary>
     public partial class ElasticSanResource : IJsonModel<ElasticSanData>
     {
-        private static ElasticSanData s_dataDeserializationInstance;
-        private static ElasticSanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticSanData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticSanData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticSanData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)Data).Write(writer, options);
 
-        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

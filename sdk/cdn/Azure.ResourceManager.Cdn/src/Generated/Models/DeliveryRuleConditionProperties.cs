@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule match conditions
-    /// Serialized Name: DeliveryRuleConditionParameters
     /// Please note <see cref="DeliveryRuleConditionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ClientPortMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="HostNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="DeliveryRuleSslProtocolMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/> and <see cref="UriPathMatchCondition"/>.
     /// </summary>
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleConditionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeliveryRuleConditionProperties(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: DeliveryRuleConditionParameters.typeName. </summary>
+        /// <summary> Gets or sets the type name. </summary>
         internal DeliveryRuleConditionParametersType TypeName { get; set; }
     }
 }

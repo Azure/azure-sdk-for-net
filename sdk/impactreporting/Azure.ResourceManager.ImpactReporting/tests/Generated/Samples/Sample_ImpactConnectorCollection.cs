@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ImpactReporting.Samples
             string connectorName = "testconnector1";
             ImpactConnectorData data = new ImpactConnectorData
             {
-                Properties = new ImpactConnectorProperties(null, null, ImpactConnectorType.AzureMonitor, default),
+                Properties = new ImpactConnectorProperties(null, "", "", ImpactConnectorType.AzureMonitor, default, null),
             };
             ArmOperation<ImpactConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
             ImpactConnectorResource result = lro.Value;

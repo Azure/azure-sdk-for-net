@@ -85,6 +85,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilter");
                 }
             }
+            if (Optional.IsDefined(SensitivityLabel))
+            {
+                if (SensitivityLabel != null)
+                {
+                    writer.WritePropertyName("sensitivityLabel"u8);
+                    writer.WriteBooleanValue(SensitivityLabel.Value);
+                }
+                else
+                {
+                    writer.WriteNull("sensitivityLabel");
+                }
+            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
@@ -236,6 +248,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? sortable = default;
             bool? facetable = default;
             PermissionFilter? permissionFilter = default;
+            bool? sensitivityLabel = default;
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
@@ -330,6 +343,16 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     permissionFilter = new PermissionFilter(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sensitivityLabel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sensitivityLabel = null;
+                        continue;
+                    }
+                    sensitivityLabel = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("analyzer"u8))
@@ -447,6 +470,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 sortable,
                 facetable,
                 permissionFilter,
+                sensitivityLabel,
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,

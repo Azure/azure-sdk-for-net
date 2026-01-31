@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class DataflowEndpointMqtt : IUtf8JsonSerializable, IJsonModel<DataflowEndpointMqtt>
+    /// <summary> Broker endpoint properties. </summary>
+    public partial class DataflowEndpointMqtt : IJsonModel<DataflowEndpointMqtt>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointMqtt>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataflowEndpointMqtt"/> for deserialization. </summary>
+        internal DataflowEndpointMqtt()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowEndpointMqtt>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointMqtt)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("authentication"u8);
             writer.WriteObjectValue(Authentication, options);
             if (Optional.IsDefined(ClientIdPrefix))
@@ -86,15 +91,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("cloudEventAttributes"u8);
                 writer.WriteStringValue(CloudEventAttributes.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,22 +108,27 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointMqtt IJsonModel<DataflowEndpointMqtt>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointMqtt IJsonModel<DataflowEndpointMqtt>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointMqtt JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointMqtt)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowEndpointMqtt(document.RootElement, options);
         }
 
-        internal static DataflowEndpointMqtt DeserializeDataflowEndpointMqtt(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataflowEndpointMqtt DeserializeDataflowEndpointMqtt(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,103 +144,101 @@ namespace Azure.ResourceManager.IotOperations.Models
             int? sessionExpirySeconds = default;
             IotOperationsTlsProperties tls = default;
             CloudEventAttributeType? cloudEventAttributes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    authentication = DataflowEndpointMqttAuthentication.DeserializeDataflowEndpointMqttAuthentication(property.Value, options);
+                    authentication = DataflowEndpointMqttAuthentication.DeserializeDataflowEndpointMqttAuthentication(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("clientIdPrefix"u8))
+                if (prop.NameEquals("clientIdPrefix"u8))
                 {
-                    clientIdPrefix = property.Value.GetString();
+                    clientIdPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("host"u8))
                 {
-                    host = property.Value.GetString();
+                    host = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"u8))
+                if (prop.NameEquals("protocol"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protocol = new BrokerProtocolType(property.Value.GetString());
+                    protocol = new BrokerProtocolType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keepAliveSeconds"u8))
+                if (prop.NameEquals("keepAliveSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keepAliveSeconds = property.Value.GetInt32();
+                    keepAliveSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("retain"u8))
+                if (prop.NameEquals("retain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retain = new MqttRetainType(property.Value.GetString());
+                    retain = new MqttRetainType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxInflightMessages"u8))
+                if (prop.NameEquals("maxInflightMessages"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxInflightMessages = property.Value.GetInt32();
+                    maxInflightMessages = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("qos"u8))
+                if (prop.NameEquals("qos"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    qos = property.Value.GetInt32();
+                    qos = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sessionExpirySeconds"u8))
+                if (prop.NameEquals("sessionExpirySeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionExpirySeconds = property.Value.GetInt32();
+                    sessionExpirySeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tls"u8))
+                if (prop.NameEquals("tls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(property.Value, options);
+                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("cloudEventAttributes"u8))
+                if (prop.NameEquals("cloudEventAttributes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudEventAttributes = new CloudEventAttributeType(property.Value.GetString());
+                    cloudEventAttributes = new CloudEventAttributeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataflowEndpointMqtt(
                 authentication,
                 clientIdPrefix,
@@ -243,13 +251,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 sessionExpirySeconds,
                 tls,
                 cloudEventAttributes,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataflowEndpointMqtt>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataflowEndpointMqtt>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -259,15 +270,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        DataflowEndpointMqtt IPersistableModel<DataflowEndpointMqtt>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataflowEndpointMqtt IPersistableModel<DataflowEndpointMqtt>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataflowEndpointMqtt PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointMqtt>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataflowEndpointMqtt(document.RootElement, options);
                     }
                 default:
@@ -275,6 +291,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataflowEndpointMqtt>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

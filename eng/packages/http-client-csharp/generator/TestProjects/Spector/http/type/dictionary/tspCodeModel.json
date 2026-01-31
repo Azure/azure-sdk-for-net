@@ -366,6 +366,11 @@
       "usage": "Input,Output,Json",
       "doc": "Dictionary inner model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InnerModel"
+        }
+      },
       "properties": [
         {
           "$id": "46",
@@ -469,6 +474,7 @@
           "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Dictionary",
       "apiVersions": [],
@@ -547,7 +553,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -646,7 +653,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -721,15 +729,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Int32Value",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "72",
@@ -805,7 +815,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -904,7 +915,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -979,15 +991,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Int64Value",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "89",
@@ -1063,7 +1077,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1162,7 +1177,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1237,15 +1253,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "106",
@@ -1321,7 +1339,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.StringValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1420,7 +1439,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.StringValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1495,15 +1515,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.StringValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.StringValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "123",
@@ -1579,7 +1601,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1678,7 +1701,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1753,15 +1777,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.Float32Value",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "140",
@@ -1845,7 +1871,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -1944,7 +1971,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2019,15 +2047,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "158",
@@ -2111,7 +2141,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2210,7 +2241,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2285,15 +2317,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.DurationValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "176",
@@ -2369,7 +2403,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2468,7 +2503,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2543,15 +2579,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "193",
@@ -2611,7 +2649,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2710,7 +2749,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2785,15 +2825,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.ModelValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "207",
@@ -2853,7 +2895,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -2952,7 +2995,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -3027,15 +3071,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "221",
@@ -3116,7 +3162,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -3215,7 +3262,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Dictionary"
               },
               "parameters": [
                 {
@@ -3290,17 +3338,20 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue",
           "apiVersions": [],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

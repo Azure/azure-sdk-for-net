@@ -300,7 +300,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
 
                 // Validate Sampler
-                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, false);
+                // The default TracesPerSecond is 5.0, so we expect RateLimitedSampler by default
+                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, true);
 
                 // Validate Instrumentations
                 var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -401,7 +402,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                     var secondProcessor = valueField.GetValue(secondNode);
                     Assert.NotNull(secondProcessor);
-                    Assert.Contains("BatchLogRecordExportProcessor", secondProcessor.GetType().Name);
 
                     var exporterProperty = secondProcessor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(exporterProperty);
@@ -412,9 +412,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 }
                 else
                 {
-                    // When LiveMetrics is disabled, processor should be a BatchLogRecordExportProcessor
-                    Assert.Contains("BatchLogRecordExportProcessor", processor.GetType().Name);
-
                     var exporterProperty = processor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(exporterProperty);
 

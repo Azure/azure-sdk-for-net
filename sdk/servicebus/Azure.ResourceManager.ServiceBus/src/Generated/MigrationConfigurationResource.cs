@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,82 +350,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// This operation Completes Migration of entities by pointing the connection strings to Premium namespace and any entities created after the operation will be under Premium Namespace. CompleteMigration operation will fail when entity migration is in-progress.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MigrationConfigs_CompleteMigration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MigrationConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CompleteMigrationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationResource.CompleteMigration");
-            scope.Start();
-            try
-            {
-                var response = await _migrationConfigurationMigrationConfigsRestClient.CompleteMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation Completes Migration of entities by pointing the connection strings to Premium namespace and any entities created after the operation will be under Premium Namespace. CompleteMigration operation will fail when entity migration is in-progress.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}/upgrade</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MigrationConfigs_CompleteMigration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MigrationConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CompleteMigration(CancellationToken cancellationToken = default)
-        {
-            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationResource.CompleteMigration");
-            scope.Start();
-            try
-            {
-                var response = _migrationConfigurationMigrationConfigsRestClient.CompleteMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// This operation reverts Migration
         /// <list type="bullet">
         /// <item>
@@ -438,7 +362,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -476,7 +400,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -492,6 +416,82 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _migrationConfigurationMigrationConfigsRestClient.Revert(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation Completes Migration of entities by pointing the connection strings to Premium namespace and any entities created after the operation will be under Premium Namespace. CompleteMigration operation will fail when entity migration is in-progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_CompleteMigration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CompleteMigrationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationResource.CompleteMigration");
+            scope.Start();
+            try
+            {
+                var response = await _migrationConfigurationMigrationConfigsRestClient.CompleteMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation Completes Migration of entities by pointing the connection strings to Premium namespace and any entities created after the operation will be under Premium Namespace. CompleteMigration operation will fail when entity migration is in-progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_CompleteMigration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CompleteMigration(CancellationToken cancellationToken = default)
+        {
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationResource.CompleteMigration");
+            scope.Start();
+            try
+            {
+                var response = _migrationConfigurationMigrationConfigsRestClient.CompleteMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

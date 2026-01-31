@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
+    /// <summary>
+    /// AADProfile specifies attributes for Azure Active Directory integration. For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad).
+    /// Serialized Name: ManagedClusterAADProfile
+    /// </summary>
     public partial class ManagedClusterAadProfile
     {
         /// <summary>
@@ -52,13 +55,34 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
-        /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
-        /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="clientAppId"> (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </param>
-        /// <param name="serverAppId"> (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </param>
-        /// <param name="serverAppSecret"> (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy. </param>
-        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
+        /// <param name="isManagedAadEnabled">
+        /// Whether to enable managed AAD.
+        /// Serialized Name: ManagedClusterAADProfile.managed
+        /// </param>
+        /// <param name="isAzureRbacEnabled">
+        /// Whether to enable Azure RBAC for Kubernetes authorization.
+        /// Serialized Name: ManagedClusterAADProfile.enableAzureRBAC
+        /// </param>
+        /// <param name="adminGroupObjectIds">
+        /// The list of AAD group object IDs that will have admin role of the cluster.
+        /// Serialized Name: ManagedClusterAADProfile.adminGroupObjectIDs
+        /// </param>
+        /// <param name="clientAppId">
+        /// (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.clientAppID
+        /// </param>
+        /// <param name="serverAppId">
+        /// (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.serverAppID
+        /// </param>
+        /// <param name="serverAppSecret">
+        /// (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.serverAppSecret
+        /// </param>
+        /// <param name="tenantId">
+        /// The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription.
+        /// Serialized Name: ManagedClusterAADProfile.tenantID
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,25 +96,46 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable managed AAD. </summary>
+        /// <summary>
+        /// Whether to enable managed AAD.
+        /// Serialized Name: ManagedClusterAADProfile.managed
+        /// </summary>
         [WirePath("managed")]
         public bool? IsManagedAadEnabled { get; set; }
-        /// <summary> Whether to enable Azure RBAC for Kubernetes authorization. </summary>
+        /// <summary>
+        /// Whether to enable Azure RBAC for Kubernetes authorization.
+        /// Serialized Name: ManagedClusterAADProfile.enableAzureRBAC
+        /// </summary>
         [WirePath("enableAzureRBAC")]
         public bool? IsAzureRbacEnabled { get; set; }
-        /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
+        /// <summary>
+        /// The list of AAD group object IDs that will have admin role of the cluster.
+        /// Serialized Name: ManagedClusterAADProfile.adminGroupObjectIDs
+        /// </summary>
         [WirePath("adminGroupObjectIDs")]
         public IList<Guid> AdminGroupObjectIds { get; }
-        /// <summary> (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        /// <summary>
+        /// (DEPRECATED) The client AAD application ID. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.clientAppID
+        /// </summary>
         [WirePath("clientAppID")]
         public Guid? ClientAppId { get; set; }
-        /// <summary> (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        /// <summary>
+        /// (DEPRECATED) The server AAD application ID. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.serverAppID
+        /// </summary>
         [WirePath("serverAppID")]
         public Guid? ServerAppId { get; set; }
-        /// <summary> (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy. </summary>
+        /// <summary>
+        /// (DEPRECATED) The server AAD application secret. Learn more at https://aka.ms/aks/aad-legacy.
+        /// Serialized Name: ManagedClusterAADProfile.serverAppSecret
+        /// </summary>
         [WirePath("serverAppSecret")]
         public string ServerAppSecret { get; set; }
-        /// <summary> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </summary>
+        /// <summary>
+        /// The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription.
+        /// Serialized Name: ManagedClusterAADProfile.tenantID
+        /// </summary>
         [WirePath("tenantID")]
         public Guid? TenantId { get; set; }
     }

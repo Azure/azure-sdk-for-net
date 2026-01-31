@@ -94,10 +94,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
+            if (Optional.IsDefined(IsNetworkRuleBypassAllowedForTasks))
+            {
+                writer.WritePropertyName("networkRuleBypassAllowedForTasks"u8);
+                writer.WriteBooleanValue(IsNetworkRuleBypassAllowedForTasks.Value);
+            }
             if (Optional.IsDefined(IsAnonymousPullEnabled))
             {
                 writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
+            }
+            if (Optional.IsDefined(RoleAssignmentMode))
+            {
+                writer.WritePropertyName("roleAssignmentMode"u8);
+                writer.WriteStringValue(RoleAssignmentMode.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -147,7 +157,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             bool? dataEndpointEnabled = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
+            bool? networkRuleBypassAllowedForTasks = default;
             bool? anonymousPullEnabled = default;
+            ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,6 +268,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             networkRuleBypassOptions = new ContainerRegistryNetworkRuleBypassOption(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("networkRuleBypassAllowedForTasks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkRuleBypassAllowedForTasks = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("anonymousPullEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -263,6 +284,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                                 continue;
                             }
                             anonymousPullEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("roleAssignmentMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            roleAssignmentMode = new ContainerRegistryRoleAssignmentMode(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -285,7 +315,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 dataEndpointEnabled,
                 publicNetworkAccess,
                 networkRuleBypassOptions,
+                networkRuleBypassAllowedForTasks,
                 anonymousPullEnabled,
+                roleAssignmentMode,
                 serializedAdditionalRawData);
         }
 

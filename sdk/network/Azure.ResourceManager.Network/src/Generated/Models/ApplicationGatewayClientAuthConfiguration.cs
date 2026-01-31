@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         /// <param name="verifyClientCertIssuerDN"> Verify client certificate issuer name on the application gateway. </param>
         /// <param name="verifyClientRevocation"> Verify client certificate revocation status. </param>
+        /// <param name="verifyClientAuthMode"> Verify client Authentication mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation, ApplicationGatewayClientAuthVerificationMode? verifyClientAuthMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VerifyClientCertIssuerDN = verifyClientCertIssuerDN;
             VerifyClientRevocation = verifyClientRevocation;
+            VerifyClientAuthMode = verifyClientAuthMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Verify client certificate revocation status. </summary>
         [WirePath("verifyClientRevocation")]
         public ApplicationGatewayClientRevocationOption? VerifyClientRevocation { get; set; }
+        /// <summary> Verify client Authentication mode. </summary>
+        [WirePath("verifyClientAuthMode")]
+        public ApplicationGatewayClientAuthVerificationMode? VerifyClientAuthMode { get; set; }
     }
 }

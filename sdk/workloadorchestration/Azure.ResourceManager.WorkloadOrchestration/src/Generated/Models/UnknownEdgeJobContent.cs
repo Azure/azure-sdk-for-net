@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Unknown version of EdgeJobContent. </summary>
     internal partial class UnknownEdgeJobContent : EdgeJobContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEdgeJobContent"/>. </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEdgeJobContent(EdgeJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(jobType, serializedAdditionalRawData)
-        {
-            JobType = jobType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEdgeJobContent"/> for deserialization. </summary>
-        internal UnknownEdgeJobContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEdgeJobContent(EdgeJobType jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -121,6 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,6 +150,49 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateFooActionRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
+            uri.AppendPath(fooName, true);
+            uri.AppendPath("/exportDependencies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDependenciesRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
+            uri.AppendPath(fooName, true);
+            uri.AppendPath("/listDependencies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

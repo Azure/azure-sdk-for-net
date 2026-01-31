@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Subnet Configuration. </summary>
     public partial class VirtualEnclaveSubnetConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveSubnetConfiguration"/>. </summary>
         /// <param name="subnetName"> Subnet name. </param>
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="subnetDelegation"> Subnet delegation. </param>
         /// <param name="addressPrefix"> Address prefix. </param>
         /// <param name="networkSecurityGroupResourceId"> Network security group ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveSubnetConfiguration(string subnetName, ResourceIdentifier subnetResourceId, int networkPrefixSize, string subnetDelegation, string addressPrefix, ResourceIdentifier networkSecurityGroupResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveSubnetConfiguration(string subnetName, ResourceIdentifier subnetResourceId, int networkPrefixSize, string subnetDelegation, string addressPrefix, ResourceIdentifier networkSecurityGroupResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetName = subnetName;
             SubnetResourceId = subnetResourceId;
@@ -74,24 +46,24 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             SubnetDelegation = subnetDelegation;
             AddressPrefix = addressPrefix;
             NetworkSecurityGroupResourceId = networkSecurityGroupResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveSubnetConfiguration"/> for deserialization. </summary>
-        internal VirtualEnclaveSubnetConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Subnet name. </summary>
         public string SubnetName { get; set; }
+
         /// <summary> Subnet Resource ID. </summary>
         public ResourceIdentifier SubnetResourceId { get; }
+
         /// <summary> Network prefix size. </summary>
         public int NetworkPrefixSize { get; set; }
+
         /// <summary> Subnet delegation. </summary>
         public string SubnetDelegation { get; set; }
+
         /// <summary> Address prefix. </summary>
         public string AddressPrefix { get; }
+
         /// <summary> Network security group ID. </summary>
         public ResourceIdentifier NetworkSecurityGroupResourceId { get; }
     }

@@ -11,7 +11,10 @@ using System.Net;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> connect information from the AKS agent nodes to a single endpoint. </summary>
+    /// <summary>
+    /// connect information from the AKS agent nodes to a single endpoint.
+    /// Serialized Name: EndpointDetail
+    /// </summary>
     public partial class ContainerServiceEndpointDetail
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDetail"/>. </summary>
-        /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
-        /// <param name="port"> The port an endpoint is connected to. </param>
-        /// <param name="protocol"> The protocol used for connection. </param>
-        /// <param name="description"> Description of the detail. </param>
+        /// <param name="ipAddress">
+        /// An IP Address that Domain Name currently resolves to.
+        /// Serialized Name: EndpointDetail.ipAddress
+        /// </param>
+        /// <param name="port">
+        /// The port an endpoint is connected to.
+        /// Serialized Name: EndpointDetail.port
+        /// </param>
+        /// <param name="protocol">
+        /// The protocol used for connection
+        /// Serialized Name: EndpointDetail.protocol
+        /// </param>
+        /// <param name="description">
+        /// Description of the detail
+        /// Serialized Name: EndpointDetail.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceEndpointDetail(IPAddress ipAddress, int? port, string protocol, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An IP Address that Domain Name currently resolves to. </summary>
+        /// <summary>
+        /// An IP Address that Domain Name currently resolves to.
+        /// Serialized Name: EndpointDetail.ipAddress
+        /// </summary>
         [WirePath("ipAddress")]
         public IPAddress IPAddress { get; }
-        /// <summary> The port an endpoint is connected to. </summary>
+        /// <summary>
+        /// The port an endpoint is connected to.
+        /// Serialized Name: EndpointDetail.port
+        /// </summary>
         [WirePath("port")]
         public int? Port { get; }
-        /// <summary> The protocol used for connection. </summary>
+        /// <summary>
+        /// The protocol used for connection
+        /// Serialized Name: EndpointDetail.protocol
+        /// </summary>
         [WirePath("protocol")]
         public string Protocol { get; }
-        /// <summary> Description of the detail. </summary>
+        /// <summary>
+        /// Description of the detail
+        /// Serialized Name: EndpointDetail.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; }
     }

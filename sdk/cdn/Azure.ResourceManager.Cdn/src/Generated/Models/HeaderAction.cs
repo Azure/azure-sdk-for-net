@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Action to perform
-    /// Serialized Name: HeaderAction
-    /// </summary>
+    /// <summary> Action to perform. </summary>
     public readonly partial struct HeaderAction : IEquatable<HeaderAction>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OverwriteValue = "Overwrite";
         private const string DeleteValue = "Delete";
 
-        /// <summary>
-        /// Append
-        /// Serialized Name: HeaderAction.Append
-        /// </summary>
+        /// <summary> Append. </summary>
         public static HeaderAction Append { get; } = new HeaderAction(AppendValue);
-        /// <summary>
-        /// Overwrite
-        /// Serialized Name: HeaderAction.Overwrite
-        /// </summary>
+        /// <summary> Overwrite. </summary>
         public static HeaderAction Overwrite { get; } = new HeaderAction(OverwriteValue);
-        /// <summary>
-        /// Delete
-        /// Serialized Name: HeaderAction.Delete
-        /// </summary>
+        /// <summary> Delete. </summary>
         public static HeaderAction Delete { get; } = new HeaderAction(DeleteValue);
         /// <summary> Determines if two <see cref="HeaderAction"/> values are the same. </summary>
         public static bool operator ==(HeaderAction left, HeaderAction right) => left.Equals(right);

@@ -15,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
         public bool EnableLiveMetrics { get { throw null; } set { } }
+        public bool EnableTraceBasedLogsSampler { get { throw null; } set { } }
         public float SamplingRatio { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
         public double? TracesPerSecond { get { throw null; } set { } }
@@ -24,11 +25,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             v2_1 = 1,
         }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureMonitorOpenTelemetryExporterContext() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
     }
     public static partial class OpenTelemetryBuilderExtensions

@@ -98,6 +98,11 @@
       "crossLanguageDefinitionId": "Versioning.MadeOptional.TestModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "TestModel"
+        }
+      },
       "properties": [
         {
           "$id": "10",
@@ -273,7 +278,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.MadeOptional.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.MadeOptional"
           },
           "parameters": [
             {
@@ -411,12 +417,14 @@
           "crossLanguageDefinitionId": "Versioning.MadeOptional.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.MadeOptional",
       "apiVersions": [
         "v1",
         "v2"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

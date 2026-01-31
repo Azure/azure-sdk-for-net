@@ -14,23 +14,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public partial class DevOpsStatelessAgentProfile : DevOpsPoolAgentProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsStatelessAgentProfile"/>. </summary>
-        public DevOpsStatelessAgentProfile()
+        public DevOpsStatelessAgentProfile() : base("Stateless")
         {
-            Kind = "Stateless";
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsStatelessAgentProfile"/>. </summary>
         /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
         /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
-        /// <param name="resourcePredictionsProfile">
-        /// Defines how the pool buffer/stand-by agents is provided.
-        /// Please note <see cref="ResourcePredictionsProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsStatelessAgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsStatelessAgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, resourcePredictions, resourcePredictionsProfile, additionalBinaryDataProperties)
         {
-            Kind = kind ?? "Stateless";
         }
     }
 }

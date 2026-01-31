@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Chaos
 {
+    /// <summary></summary>
     public partial class ChaosTargetMetadataResource : IJsonModel<ChaosTargetMetadataData>
     {
-        private static ChaosTargetMetadataData s_dataDeserializationInstance;
-        private static ChaosTargetMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ChaosTargetMetadataData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ChaosTargetMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ChaosTargetMetadataData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosTargetMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetMetadataData>)Data).Write(writer, options);
 
-        ChaosTargetMetadataData IJsonModel<ChaosTargetMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetMetadataData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChaosTargetMetadataData IJsonModel<ChaosTargetMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ChaosTargetMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosTargetMetadataData>(Data, options, AzureResourceManagerChaosContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ChaosTargetMetadataData IPersistableModel<ChaosTargetMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosTargetMetadataData>(data, options, AzureResourceManagerChaosContext.Default);
 
-        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosTargetMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

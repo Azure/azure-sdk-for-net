@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> The desired properties of the frontend instances of the Broker. </summary>
     public partial class BrokerFrontend
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrokerFrontend"/>. </summary>
         /// <param name="replicas"> The desired number of frontend instances (pods). </param>
@@ -55,21 +26,17 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerFrontend"/>. </summary>
         /// <param name="replicas"> The desired number of frontend instances (pods). </param>
         /// <param name="workers"> Number of logical frontend workers per instance (pod). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerFrontend(int replicas, int? workers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerFrontend(int replicas, int? workers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Replicas = replicas;
             Workers = workers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BrokerFrontend"/> for deserialization. </summary>
-        internal BrokerFrontend()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired number of frontend instances (pods). </summary>
         public int Replicas { get; set; }
+
         /// <summary> Number of logical frontend workers per instance (pod). </summary>
         public int? Workers { get; set; }
     }

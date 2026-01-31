@@ -36,9 +36,25 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
 
         private ClientDiagnostics FileSystemsClientDiagnostics => _fileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dell.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2025-03-21-preview");
+        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2025-03-21");
 
-        /// <summary> List FileSystemResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List FileSystemResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Dell.Storage/filesystems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileSystems_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-21. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DellFileSystemResource> GetDellFileSystemsAsync(CancellationToken cancellationToken = default)
@@ -50,7 +66,23 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DellFileSystemResource(Client, data));
         }
 
-        /// <summary> List FileSystemResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List FileSystemResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Dell.Storage/filesystems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileSystems_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-21. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DellFileSystemResource> GetDellFileSystems(CancellationToken cancellationToken = default)

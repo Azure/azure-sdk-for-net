@@ -197,7 +197,7 @@ public partial class SiteSlotExtension : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotExtension.</param>
     public SiteSlotExtension(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/slots/extensions", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/extensions", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -206,6 +206,7 @@ public partial class SiteSlotExtension : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _connectionString = DefineProperty<string>("ConnectionString", ["properties", "connectionString"]);
         _dBType = DefineProperty<string>("DBType", ["properties", "dbType"]);
@@ -230,6 +231,11 @@ public partial class SiteSlotExtension : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

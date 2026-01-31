@@ -115,6 +115,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureEmbeddingModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureEmbeddingModel"
+        }
+      },
       "properties": [
         {
           "$id": "13",
@@ -190,6 +195,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model",
       "apiVersions": [
@@ -257,7 +263,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Model"
               },
               "parameters": [
                 {
@@ -361,7 +368,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Model"
               },
               "parameters": [
                 {
@@ -502,7 +510,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.post",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Model"
               },
               "parameters": [
                 {
@@ -599,9 +608,10 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector",
           "apiVersions": [
@@ -609,9 +619,11 @@
           ],
           "parent": {
             "$ref": "16"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

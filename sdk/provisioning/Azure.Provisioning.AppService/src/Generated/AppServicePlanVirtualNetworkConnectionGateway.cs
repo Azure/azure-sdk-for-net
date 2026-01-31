@@ -97,6 +97,7 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Provisionab
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _vnetName = DefineProperty<string>("VnetName", ["properties", "vnetName"]);

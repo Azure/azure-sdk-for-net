@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DisconnectedOperations
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// </summary>
     public partial class DisconnectedOperationCollection : ArmCollection, IEnumerable<DisconnectedOperationResource>, IAsyncEnumerable<DisconnectedOperationResource>
     {
-        private readonly ClientDiagnostics _disconnectedOperationClientDiagnostics;
-        private readonly DisconnectedRestOperations _disconnectedOperationRestClient;
+        private readonly ClientDiagnostics _disconnectedClientDiagnostics;
+        private readonly Disconnected _disconnectedRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DisconnectedOperationCollection for mocking. </summary>
         protected DisconnectedOperationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DisconnectedOperationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DisconnectedOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _disconnectedOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DisconnectedOperationResource.ResourceType, out string disconnectedOperationApiVersion);
-            _disconnectedOperationRestClient = new DisconnectedRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
+            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="name"> Name of the resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DisconnectedOperationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DisconnectedOperationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(new DisconnectedOperationOperationSource(Client), _disconnectedOperationClientDiagnostics, Pipeline, _disconnectedOperationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
+                    new DisconnectedOperationOperationSource(Client),
+                    _disconnectedClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Create a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="name"> Name of the resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DisconnectedOperationResource> CreateOrUpdate(WaitUntil waitUntil, string name, DisconnectedOperationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(new DisconnectedOperationOperationSource(Client), _disconnectedOperationClientDiagnostics, Pipeline, _disconnectedOperationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
+                    new DisconnectedOperationOperationSource(Client),
+                    _disconnectedClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DisconnectedOperationResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Get a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DisconnectedOperationResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// List DisconnectedOperation resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DisconnectedOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _disconnectedOperationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _disconnectedOperationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationResource(Client, DisconnectedOperationData.DeserializeDisconnectedOperationData(e)), _disconnectedOperationClientDiagnostics, Pipeline, "DisconnectedOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
         /// List DisconnectedOperation resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DisconnectedOperationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _disconnectedOperationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _disconnectedOperationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DisconnectedOperationResource(Client, DisconnectedOperationData.DeserializeDisconnectedOperationData(e)), _disconnectedOperationClientDiagnostics, Pipeline, "DisconnectedOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DisconnectedOperationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DisconnectedOperationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DisconnectedOperationResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _disconnectedOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DisconnectedOperationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DisconnectedOperationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisconnectedOperation_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DisconnectedOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DisconnectedOperationResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _disconnectedOperationClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _disconnectedOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DisconnectedOperationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DisconnectedOperationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DisconnectedOperationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DisconnectedOperationResource> IAsyncEnumerable<DisconnectedOperationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

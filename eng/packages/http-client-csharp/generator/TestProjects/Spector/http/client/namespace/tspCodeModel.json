@@ -79,6 +79,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "9",
@@ -115,6 +120,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -198,7 +208,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst",
-            "decorators": []
+            "decorators": [],
+            "namespace": "ClientNameSpaceClient"
           },
           "parameters": [
             {
@@ -259,12 +270,14 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "21",
@@ -323,7 +336,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond",
-            "decorators": []
+            "decorators": [],
+            "namespace": "client.clientnamespace.second"
           },
           "parameters": [
             {
@@ -384,12 +398,14 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

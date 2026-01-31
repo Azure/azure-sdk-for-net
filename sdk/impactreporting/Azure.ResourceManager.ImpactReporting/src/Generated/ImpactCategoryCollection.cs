@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ImpactReporting
@@ -19,73 +20,79 @@ namespace Azure.ResourceManager.ImpactReporting
     /// <summary>
     /// A class representing a collection of <see cref="ImpactCategoryResource"/> and their operations.
     /// Each <see cref="ImpactCategoryResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="ImpactCategoryCollection"/> instance call the GetImpactCategories method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ImpactCategoryCollection"/> instance call the GetImpactCategories method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ImpactCategoryCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _impactCategoryClientDiagnostics;
-        private readonly ImpactCategoriesRestOperations _impactCategoryRestClient;
+        private readonly ClientDiagnostics _impactCategoriesClientDiagnostics;
+        private readonly ImpactCategories _impactCategoriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactCategoryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ImpactCategoryCollection for mocking. </summary>
         protected ImpactCategoryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactCategoryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactCategoryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImpactCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _impactCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactCategoryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ImpactCategoryResource.ResourceType, out string impactCategoryApiVersion);
-            _impactCategoryRestClient = new ImpactCategoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, impactCategoryApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _impactCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ImpactCategoryResource.ResourceType.Namespace, Diagnostics);
+            _impactCategoriesRestClient = new ImpactCategories(_impactCategoriesClientDiagnostics, Pipeline, Endpoint, impactCategoryApiVersion ?? "2024-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ImpactCategory
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ImpactCategoryResource>> GetAsync(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.Get");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _impactCategoryRestClient.GetAsync(Id.SubscriptionId, impactCategoryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,38 +106,42 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get a ImpactCategory
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ImpactCategoryResource> Get(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.Get");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _impactCategoryRestClient.Get(Id.SubscriptionId, impactCategoryName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,106 +155,118 @@ namespace Azure.ResourceManager.ImpactReporting
         /// List ImpactCategory resources by subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> Filter by resource type. </param>
-        /// <param name="categoryName"> Filter by category name. </param>
+        /// <param name="categoryName"> Filter by category name . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ImpactCategoryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImpactCategoryResource> GetAllAsync(string resourceType, string categoryName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ImpactCategoryResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ImpactCategoryResource> GetAllAsync(string resourceType, string categoryName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _impactCategoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, resourceType, categoryName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _impactCategoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, resourceType, categoryName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImpactCategoryResource(Client, ImpactCategoryData.DeserializeImpactCategoryData(e)), _impactCategoryClientDiagnostics, Pipeline, "ImpactCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionAsyncCollectionResultOfT(_impactCategoriesRestClient, Id.SubscriptionId, resourceType, categoryName, context), data => new ImpactCategoryResource(Client, data));
         }
 
         /// <summary>
         /// List ImpactCategory resources by subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> Filter by resource type. </param>
-        /// <param name="categoryName"> Filter by category name. </param>
+        /// <param name="categoryName"> Filter by category name . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ImpactCategoryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImpactCategoryResource> GetAll(string resourceType, string categoryName = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ImpactCategoryResource> GetAll(string resourceType, string categoryName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _impactCategoryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, resourceType, categoryName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _impactCategoryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, resourceType, categoryName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImpactCategoryResource(Client, ImpactCategoryData.DeserializeImpactCategoryData(e)), _impactCategoryClientDiagnostics, Pipeline, "ImpactCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionCollectionResultOfT(_impactCategoriesRestClient, Id.SubscriptionId, resourceType, categoryName, context), data => new ImpactCategoryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.Exists");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _impactCategoryRestClient.GetAsync(Id.SubscriptionId, impactCategoryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImpactCategoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactCategoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,36 +280,50 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.Exists");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _impactCategoryRestClient.Get(Id.SubscriptionId, impactCategoryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImpactCategoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactCategoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,38 +337,54 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ImpactCategoryResource>> GetIfExistsAsync(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.GetIfExists");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _impactCategoryRestClient.GetAsync(Id.SubscriptionId, impactCategoryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImpactCategoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactCategoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImpactCategoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -345,38 +398,54 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImpactCategory_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImpactCategories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactCategoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactCategoryName"> Name of the impact category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactCategoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactCategoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ImpactCategoryResource> GetIfExists(string impactCategoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
 
-            using var scope = _impactCategoryClientDiagnostics.CreateScope("ImpactCategoryCollection.GetIfExists");
+            using DiagnosticScope scope = _impactCategoriesClientDiagnostics.CreateScope("ImpactCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _impactCategoryRestClient.Get(Id.SubscriptionId, impactCategoryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImpactCategoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImpactCategoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImpactCategoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -10,15 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerBackupAndExportResult : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupAndExportResult>
+    /// <summary> Represents BackupAndExportAPI Response. </summary>
+    public partial class MySqlFlexibleServerBackupAndExportResult : ResourceData, IJsonModel<MySqlFlexibleServerBackupAndExportResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupAndExportResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MySqlFlexibleServerBackupAndExportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,13 +34,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -62,192 +70,158 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DatasourceSizeInBytes))
-            {
-                writer.WritePropertyName("datasourceSizeInBytes"u8);
-                writer.WriteNumberValue(DatasourceSizeInBytes.Value);
-            }
-            if (Optional.IsDefined(DataTransferredInBytes))
-            {
-                writer.WritePropertyName("dataTransferredInBytes"u8);
-                writer.WriteNumberValue(DataTransferredInBytes.Value);
-            }
-            if (Optional.IsDefined(BackupMetadata))
-            {
-                writer.WritePropertyName("backupMetadata"u8);
-                writer.WriteStringValue(BackupMetadata);
-            }
-            writer.WriteEndObject();
         }
 
-        MySqlFlexibleServerBackupAndExportResult IJsonModel<MySqlFlexibleServerBackupAndExportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerBackupAndExportResult IJsonModel<MySqlFlexibleServerBackupAndExportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, options);
         }
 
-        internal static MySqlFlexibleServerBackupAndExportResult DeserializeMySqlFlexibleServerBackupAndExportResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MySqlFlexibleServerBackupAndExportResult DeserializeMySqlFlexibleServerBackupAndExportResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResponseError error = default;
-            MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            double? percentComplete = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            long? datasourceSizeInBytes = default;
-            long? dataTransferredInBytes = default;
-            string backupMetadata = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BackupAndExportResponseProperties properties = default;
+            ResponseError error = default;
+            MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
+            double? percentComplete = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToMySqlFlexibleServerBackupAndExportOperationStatus();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
-                if (property.NameEquals("endTime"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    properties = BackupAndExportResponseProperties.DeserializeBackupAndExportResponseProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("percentComplete"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetDouble();
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    status = prop.Value.GetString().ToMySqlFlexibleServerBackupAndExportOperationStatus();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    startOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("endTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("datasourceSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            datasourceSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataTransferredInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataTransferredInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("backupMetadata"u8))
-                        {
-                            backupMetadata = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    endOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("percentComplete"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    percentComplete = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerBackupAndExportResult(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
+                properties,
                 error,
                 status,
-                startTime,
-                endTime,
-                percentComplete,
-                datasourceSizeInBytes,
-                dataTransferredInBytes,
-                backupMetadata,
-                serializedAdditionalRawData);
+                startOn,
+                endOn,
+                percentComplete);
         }
 
-        BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -257,15 +231,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        MySqlFlexibleServerBackupAndExportResult IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerBackupAndExportResult IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (MySqlFlexibleServerBackupAndExportResult)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, options);
                     }
                 default:
@@ -273,6 +252,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerBackupAndExportResult"/> from. </param>
+        internal static MySqlFlexibleServerBackupAndExportResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

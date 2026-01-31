@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
-    /// A Class representing an EdgeOrderItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderItemResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrderItem method.
+    /// A class representing a EdgeOrderItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeOrderItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrderItems method.
     /// </summary>
     public partial class EdgeOrderItemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeOrderItemResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="orderItemName"> The orderItemName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string orderItemName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeOrderItemClientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _edgeOrderItemRestClient;
+        private readonly ClientDiagnostics _orderItemResourcesClientDiagnostics;
+        private readonly OrderItemResources _orderItemResourcesRestClient;
         private readonly EdgeOrderItemData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/orderItems";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderItemResource for mocking. </summary>
         protected EdgeOrderItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderItemResource(ArmClient client, EdgeOrderItemData data) : this(client, data.Id)
@@ -56,72 +46,93 @@ namespace Azure.ResourceManager.EdgeOrder
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeOrderItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeOrderItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string edgeOrderItemApiVersion);
-            _edgeOrderItemRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderItemApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _orderItemResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
+            _orderItemResourcesRestClient = new OrderItemResources(_orderItemResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderItemApiVersion ?? "2024-02-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeOrderItemData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="orderItemName"> The orderItemName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string orderItemName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
-        /// Gets an order item.
+        /// Get an order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EdgeOrderItemResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EdgeOrderItemResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Get");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,37 +143,45 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order item.
+        /// Get an order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EdgeOrderItemResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<EdgeOrderItemResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Get");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,23 +192,143 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Deletes an order item.
+        /// Update the properties of an existing order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeleteOrderItemByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Order item update parameters from request body. </param>
+        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<EdgeOrderItemResource>> UpdateAsync(WaitUntil waitUntil, EdgeOrderItemPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemPatch.ToRequestContent(patch), ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
+                    new EdgeOrderItemOperationSource(Client),
+                    _orderItemResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the properties of an existing order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Order item update parameters from request body. </param>
+        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<EdgeOrderItemResource> Update(WaitUntil waitUntil, EdgeOrderItemPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemPatch.ToRequestContent(patch), ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
+                    new EdgeOrderItemOperationSource(Client),
+                    _orderItemResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete an order item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,14 +336,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Delete");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Delete");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.DeleteOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation(_edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateDeleteOrderItemByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(_orderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,23 +361,23 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Deletes an order item.
+        /// Delete an order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeleteOrderItemByName</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,108 +385,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Delete");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Delete");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.DeleteOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EdgeOrderArmOperation(_edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateDeleteOrderItemByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(_orderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the properties of an existing order item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateOrderItem</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> order item update parameters from request body. </param>
-        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeOrderItemResource>> UpdateAsync(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _edgeOrderItemRestClient.UpdateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(new EdgeOrderItemOperationSource(Client), _edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the properties of an existing order item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdateOrderItem</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> order item update parameters from request body. </param>
-        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<EdgeOrderItemResource> Update(WaitUntil waitUntil, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _edgeOrderItemRestClient.UpdateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(new EdgeOrderItemOperationSource(Client), _edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateUpdateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -354,20 +413,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Cancel order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CancelOrderItem</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,11 +437,16 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.CancelOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -396,20 +460,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Cancel order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CancelOrderItem</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,11 +484,16 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Cancel");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.CancelOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationReason, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemCancellationReason.ToRequestContent(cancellationReason), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -438,39 +507,46 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Return order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReturnOrderItem</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_ReturnOrderItem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Return order item CurrentStatus. </param>
+        /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ReturnAsync(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.ReturnOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation(_edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateReturnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemReturnContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(_orderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -484,39 +560,46 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Return order item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}/return. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReturnOrderItem</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrderItemResources_ReturnOrderItem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeOrderItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Return order item CurrentStatus. </param>
+        /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Return(WaitUntil waitUntil, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.Return");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.ReturnOrderItem(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EdgeOrderArmOperation(_edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateReturnOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _orderItemResourcesRestClient.CreateReturnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemReturnContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeOrderArmOperation operation = new EdgeOrderArmOperation(_orderItemResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -526,27 +609,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -556,28 +619,34 @@ namespace Azure.ResourceManager.EdgeOrder
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeOrderItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeOrderItemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -588,27 +657,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -618,28 +667,34 @@ namespace Azure.ResourceManager.EdgeOrder
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeOrderItemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeOrderItemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -650,53 +705,39 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<EdgeOrderItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
+                    EdgeOrderItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeOrderItemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -707,53 +748,39 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<EdgeOrderItemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
+                    EdgeOrderItemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeOrderItemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -764,27 +791,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -792,28 +799,34 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeOrderItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeOrderItemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -824,27 +837,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeOrderItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -852,28 +845,34 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
+            using DiagnosticScope scope = _orderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new EdgeOrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeOrderItemPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeOrderItemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeOrderItemPatch patch = new EdgeOrderItemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeOrderItemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

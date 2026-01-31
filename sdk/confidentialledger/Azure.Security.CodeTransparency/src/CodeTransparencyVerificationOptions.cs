@@ -24,6 +24,7 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         RequireAll = 2
     }
+
     /// <summary>
     /// Specifies behaviors for receipts whose issuer domains are not contained in <see cref="CodeTransparencyVerificationOptions.AuthorizedDomains"/>.
     /// </summary>
@@ -41,6 +42,21 @@ namespace Azure.Security.CodeTransparency
         /// Fail verification immediately if any receipt exists whose issuer domain is not in the authorized list.
         /// </summary>
         FailIfPresent = 2
+    }
+
+    /// <summary>
+    /// Specifies behaviors for the use of offline keys contained in <see cref="CodeTransparencyVerificationOptions.OfflineKeys"/>.
+    /// </summary>
+    public enum OfflineKeysBehavior
+    {
+        /// <summary>
+        /// Use offline keys when available, but fall back to network retrieval if no offline key is found for a given ledger domain.
+        /// </summary>
+        FallbackToNetwork = 0,
+        /// <summary>
+        /// Use only offline keys. If no offline key is found for a given ledger domain, verification fails.
+        /// </summary>
+        NoFallbackToNetwork = 1
     }
 
     /// <summary>
@@ -63,7 +79,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary>
         /// Gets or sets the behavior for receipts whose issuer domain is not in <see cref="AuthorizedDomains"/>.
-        /// Defaults to <see cref="UnauthorizedReceiptBehavior.VerifyAll"/> to preserve current behavior.
+        /// Defaults to <see cref="UnauthorizedReceiptBehavior.FailIfPresent"/>.
         /// </summary>
         public UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get; set; } = UnauthorizedReceiptBehavior.FailIfPresent;
 
@@ -72,5 +88,17 @@ namespace Azure.Security.CodeTransparency
         /// Defaults to <see cref="AuthorizedReceiptBehavior.VerifyAllMatching"/>.
         /// </summary>
         public AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get; set; } = AuthorizedReceiptBehavior.VerifyAllMatching;
+
+        /// <summary>
+        /// Gets or sets a store mapping ledger domains to JWKS documents for offline verification.
+        /// When provided, will skip network calls and use the matching JWKS document from this store instead.
+        /// </summary>
+        public CodeTransparencyOfflineKeys OfflineKeys { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the behavior for using offline keys in <see cref="CodeTransparencyOfflineKeys"/>.
+        /// Defaults to <see cref="OfflineKeysBehavior.FallbackToNetwork"/>.
+        /// </summary>
+        public OfflineKeysBehavior OfflineKeysBehavior { get; set; } = OfflineKeysBehavior.FallbackToNetwork;
     }
 }

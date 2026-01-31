@@ -196,6 +196,11 @@
       "usage": "Input,Output,Json",
       "doc": "Details about a user.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "User"
+        }
+      },
       "properties": [
         {
           "$id": "23",
@@ -268,6 +273,11 @@
               "usage": "Input,Output,Json",
               "doc": "UserOrder for testing list with expand.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "UserOrder"
+                }
+              },
               "properties": [
                 {
                   "$id": "30",
@@ -412,6 +422,11 @@
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
       "properties": [
         {
           "$id": "40",
@@ -428,6 +443,11 @@
             "usage": "Json,Exception",
             "doc": "The error object.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Error"
+              }
+            },
             "properties": [
               {
                 "$id": "42",
@@ -551,6 +571,11 @@
                   "usage": "Json,Exception",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "InnerError"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "52",
@@ -673,6 +698,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of User items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CustomPage"
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -746,6 +776,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.UserList",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UserList"
+        }
+      },
       "properties": [
         {
           "$id": "64",
@@ -943,7 +978,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": false,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1196,7 +1232,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1396,7 +1433,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1682,7 +1720,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -1866,7 +1905,10 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         },
         {
@@ -1958,7 +2000,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -2122,7 +2165,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -2305,7 +2349,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.exportAllUsers",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Basic"
           },
           "parameters": [
             {
@@ -2389,13 +2434,46 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.endpoint"
+        },
+        {
+          "$id": "176",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "177",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "178",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2022-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic",
       "apiVersions": [
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

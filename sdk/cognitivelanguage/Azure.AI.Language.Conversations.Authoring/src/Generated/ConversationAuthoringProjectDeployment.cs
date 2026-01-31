@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="modelTrainingConfigVersion"/> or <paramref name="assignedResources"/> is null. </exception>
-        internal ConversationAuthoringProjectDeployment(string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IEnumerable<ConversationAuthoringDeploymentResource> assignedResources)
+        internal ConversationAuthoringProjectDeployment(string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IEnumerable<ConversationAuthoringAssignedProjectResource> assignedResources)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringProjectDeployment(string deploymentName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IReadOnlyList<ConversationAuthoringDeploymentResource> assignedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringProjectDeployment(string deploymentName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiredOn, string modelTrainingConfigVersion, IReadOnlyList<ConversationAuthoringAssignedProjectResource> assignedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentName = deploymentName;
             ModelId = modelId;
@@ -107,6 +107,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Represents model training config version. </summary>
         public string ModelTrainingConfigVersion { get; }
         /// <summary> Represents the metadata of the assigned Azure resources. </summary>
-        public IReadOnlyList<ConversationAuthoringDeploymentResource> AssignedResources { get; }
+        public IReadOnlyList<ConversationAuthoringAssignedProjectResource> AssignedResources { get; }
     }
 }

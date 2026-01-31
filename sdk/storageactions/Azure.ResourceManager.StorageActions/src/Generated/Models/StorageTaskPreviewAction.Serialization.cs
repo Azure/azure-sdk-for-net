@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeStorageTaskPreviewAction(document.RootElement, options);
                     }
@@ -154,11 +154,10 @@ namespace Azure.ResourceManager.StorageActions.Models
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskPreviewAction"/> from. </param>
-        internal static StorageTaskPreviewAction FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskPreviewAction"/> from. </param>
+        internal static StorageTaskPreviewAction FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStorageTaskPreviewAction(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

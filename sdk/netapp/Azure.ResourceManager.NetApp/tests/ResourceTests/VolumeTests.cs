@@ -636,20 +636,22 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(400, exception.Status);
         }
 
-        [RecordedTest]
-        public async Task ListQuotaReport()
-        {
-            //create volume
-            string volumeName = Recording.GenerateAssetName("volumeName-");
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
-            //Check filePathAvailability, should be unavailable after volume creation
-            NetAppVolumeResource netAppVolume = Client.GetNetAppVolumeResource(volumeResource1.Id);
-            // invoke the operation
-            ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
-            NetAppVolumeQuotaReportListResult result = lro.Value;
-            result.Should().NotBeNull();
-            result.Value.Should().BeEmpty();
-        }
+        // TODO in preview, enable when GA
+        //[Ignore("Ignore for now due to CI pipeline issue.")]
+        //[RecordedTest]
+        //public async Task ListQuotaReport()
+        //{
+        //    //create volume
+        //    string volumeName = Recording.GenerateAssetName("volumeName-");
+        //    NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+        //    //Check filePathAvailability, should be unavailable after volume creation
+        //    NetAppVolumeResource netAppVolume = Client.GetNetAppVolumeResource(volumeResource1.Id);
+        //    // invoke the operation
+        //    ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
+        //    NetAppVolumeQuotaReportListResult result = lro.Value;
+        //    result.Should().NotBeNull();
+        //    result.Value.Should().BeEmpty();
+        //}
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)
         {

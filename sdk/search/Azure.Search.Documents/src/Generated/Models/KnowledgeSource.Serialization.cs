@@ -103,7 +103,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 switch (discriminator.GetString())
                 {
                     case "azureBlob": return AzureBlobKnowledgeSource.DeserializeAzureBlobKnowledgeSource(element, options);
+                    case "indexedOneLake": return IndexedOneLakeKnowledgeSource.DeserializeIndexedOneLakeKnowledgeSource(element, options);
+                    case "indexedSharePoint": return IndexedSharePointKnowledgeSource.DeserializeIndexedSharePointKnowledgeSource(element, options);
+                    case "remoteSharePoint": return RemoteSharePointKnowledgeSource.DeserializeRemoteSharePointKnowledgeSource(element, options);
                     case "searchIndex": return SearchIndexKnowledgeSource.DeserializeSearchIndexKnowledgeSource(element, options);
+                    case "web": return WebKnowledgeSource.DeserializeWebKnowledgeSource(element, options);
                 }
             }
             return UnknownKnowledgeSource.DeserializeUnknownKnowledgeSource(element, options);

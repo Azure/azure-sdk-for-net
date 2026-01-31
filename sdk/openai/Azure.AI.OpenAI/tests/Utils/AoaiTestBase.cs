@@ -407,8 +407,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ImageClient):
                 clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
-            case nameof(OpenAIResponseClient):
-                clientObject = topLevelClient.GetOpenAIResponseClient(getDeployment());
+            case nameof(ResponsesClient):
+                clientObject = topLevelClient.GetResponsesClient(getDeployment());
                 break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();

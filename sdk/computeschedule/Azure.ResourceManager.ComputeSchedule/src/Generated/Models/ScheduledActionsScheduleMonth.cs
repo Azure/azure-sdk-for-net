@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionsScheduleMonth : IEquatable<ScheduledActionsScheduleMonth>
     {
         private readonly string _value;
+        /// <summary> The January month. </summary>
+        private const string JanuaryValue = "January";
+        /// <summary> The February month. </summary>
+        private const string FebruaryValue = "February";
+        /// <summary> The March month. </summary>
+        private const string MarchValue = "March";
+        /// <summary> The April month. </summary>
+        private const string AprilValue = "April";
+        /// <summary> The May month. </summary>
+        private const string MayValue = "May";
+        /// <summary> The June month. </summary>
+        private const string JuneValue = "June";
+        /// <summary> The July month. </summary>
+        private const string JulyValue = "July";
+        /// <summary> The August month. </summary>
+        private const string AugustValue = "August";
+        /// <summary> The September month. </summary>
+        private const string SeptemberValue = "September";
+        /// <summary> The October month. </summary>
+        private const string OctoberValue = "October";
+        /// <summary> The November month. </summary>
+        private const string NovemberValue = "November";
+        /// <summary> The December month. </summary>
+        private const string DecemberValue = "December";
+        /// <summary> All months. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsScheduleMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionsScheduleMonth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JanuaryValue = "January";
-        private const string FebruaryValue = "February";
-        private const string MarchValue = "March";
-        private const string AprilValue = "April";
-        private const string MayValue = "May";
-        private const string JuneValue = "June";
-        private const string JulyValue = "July";
-        private const string AugustValue = "August";
-        private const string SeptemberValue = "September";
-        private const string OctoberValue = "October";
-        private const string NovemberValue = "November";
-        private const string DecemberValue = "December";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> The January month. </summary>
         public static ScheduledActionsScheduleMonth January { get; } = new ScheduledActionsScheduleMonth(JanuaryValue);
+
         /// <summary> The February month. </summary>
         public static ScheduledActionsScheduleMonth February { get; } = new ScheduledActionsScheduleMonth(FebruaryValue);
+
         /// <summary> The March month. </summary>
         public static ScheduledActionsScheduleMonth March { get; } = new ScheduledActionsScheduleMonth(MarchValue);
+
         /// <summary> The April month. </summary>
         public static ScheduledActionsScheduleMonth April { get; } = new ScheduledActionsScheduleMonth(AprilValue);
+
         /// <summary> The May month. </summary>
         public static ScheduledActionsScheduleMonth May { get; } = new ScheduledActionsScheduleMonth(MayValue);
+
         /// <summary> The June month. </summary>
         public static ScheduledActionsScheduleMonth June { get; } = new ScheduledActionsScheduleMonth(JuneValue);
+
         /// <summary> The July month. </summary>
         public static ScheduledActionsScheduleMonth July { get; } = new ScheduledActionsScheduleMonth(JulyValue);
+
         /// <summary> The August month. </summary>
         public static ScheduledActionsScheduleMonth August { get; } = new ScheduledActionsScheduleMonth(AugustValue);
+
         /// <summary> The September month. </summary>
         public static ScheduledActionsScheduleMonth September { get; } = new ScheduledActionsScheduleMonth(SeptemberValue);
+
         /// <summary> The October month. </summary>
         public static ScheduledActionsScheduleMonth October { get; } = new ScheduledActionsScheduleMonth(OctoberValue);
+
         /// <summary> The November month. </summary>
         public static ScheduledActionsScheduleMonth November { get; } = new ScheduledActionsScheduleMonth(NovemberValue);
+
         /// <summary> The December month. </summary>
         public static ScheduledActionsScheduleMonth December { get; } = new ScheduledActionsScheduleMonth(DecemberValue);
+
         /// <summary> All months. </summary>
         public static ScheduledActionsScheduleMonth All { get; } = new ScheduledActionsScheduleMonth(AllValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionsScheduleMonth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionsScheduleMonth left, ScheduledActionsScheduleMonth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionsScheduleMonth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionsScheduleMonth left, ScheduledActionsScheduleMonth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionsScheduleMonth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionsScheduleMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionsScheduleMonth(string value) => new ScheduledActionsScheduleMonth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionsScheduleMonth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionsScheduleMonth?(string value) => value == null ? null : new ScheduledActionsScheduleMonth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionsScheduleMonth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionsScheduleMonth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of the application gateway. </param>
+        /// <param name="entraJwtValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, WritableSubResource entraJwtValidationConfig, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             RuleType = ruleType;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             RewriteRuleSet = rewriteRuleSet;
             RedirectConfiguration = redirectConfiguration;
             LoadDistributionPolicy = loadDistributionPolicy;
+            EntraJwtValidationConfig = entraJwtValidationConfig;
             ProvisioningState = provisioningState;
         }
 
@@ -162,6 +164,21 @@ namespace Azure.ResourceManager.Network.Models
                 if (LoadDistributionPolicy is null)
                     LoadDistributionPolicy = new WritableSubResource();
                 LoadDistributionPolicy.Id = value;
+            }
+        }
+
+        /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
+        internal WritableSubResource EntraJwtValidationConfig { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.entraJWTValidationConfig.id")]
+        public ResourceIdentifier EntraJwtValidationConfigId
+        {
+            get => EntraJwtValidationConfig is null ? default : EntraJwtValidationConfig.Id;
+            set
+            {
+                if (EntraJwtValidationConfig is null)
+                    EntraJwtValidationConfig = new WritableSubResource();
+                EntraJwtValidationConfig.Id = value;
             }
         }
 

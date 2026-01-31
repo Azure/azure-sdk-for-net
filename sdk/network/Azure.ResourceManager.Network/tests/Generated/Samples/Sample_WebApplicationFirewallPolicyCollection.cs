@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/WafPolicyCreateOrUpdate.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,6 +58,7 @@ State = ScrubbingRuleEntryState.Enabled,
 }},
                     },
                     JsChallengeCookieExpirationInMins = 100,
+                    CaptchaCookieExpirationInMins = 100,
                 },
                 CustomRules = {new WebApplicationFirewallCustomRule(1, WebApplicationFirewallRuleType.MatchRule, new MatchCondition[]
 {
@@ -130,6 +131,32 @@ Selector = "UserAgent",
 }, WebApplicationFirewallAction.JSChallenge)
 {
 Name = "Rule4",
+}, new WebApplicationFirewallCustomRule(5, WebApplicationFirewallRuleType.MatchRule, new MatchCondition[]
+{
+new MatchCondition(new MatchVariable[]
+{
+new MatchVariable(WebApplicationFirewallMatchVariable.RemoteAddr)
+{
+Selector = null,
+}
+}, WebApplicationFirewallOperator.IPMatch, new string[]{"192.168.2.0/24"})
+{
+NegationConditon = false,
+},
+new MatchCondition(new MatchVariable[]
+{
+new MatchVariable(WebApplicationFirewallMatchVariable.RequestHeaders)
+{
+Selector = "UserAgent",
+}
+}, WebApplicationFirewallOperator.Contains, new string[]{"Bot"})
+{
+NegationConditon = false,
+}
+}, WebApplicationFirewallAction.Captcha)
+{
+Name = "Rule5",
+State = WebApplicationFirewallState.Enabled,
 }},
                 ManagedRules = new ManagedRulesDefinition(new ManagedRuleSet[]
             {
@@ -156,6 +183,10 @@ Rules = {new ManagedRuleOverride("300700")
 {
 State = ManagedRuleEnabledState.Enabled,
 Action = RuleMatchActionType.JSChallenge,
+}, new ManagedRuleOverride("300600")
+{
+State = ManagedRuleEnabledState.Enabled,
+Action = RuleMatchActionType.Captcha,
 }},
 }},
 },
@@ -230,7 +261,7 @@ RuleGroups = {},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +294,7 @@ RuleGroups = {},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsAllWAFPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafListPolicies.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/WafListPolicies.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -298,7 +329,7 @@ RuleGroups = {},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -327,7 +358,7 @@ RuleGroups = {},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

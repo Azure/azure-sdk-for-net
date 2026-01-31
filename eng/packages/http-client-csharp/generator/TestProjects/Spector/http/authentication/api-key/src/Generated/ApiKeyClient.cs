@@ -19,6 +19,8 @@ namespace Authentication.ApiKey
 
         public ApiKeyClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new ApiKeyClientOptions()) => throw null;
 
+        public ApiKeyClient(AzureKeyCredential credential, ApiKeyClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+
         public ApiKeyClient(Uri endpoint, AzureKeyCredential credential, ApiKeyClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;

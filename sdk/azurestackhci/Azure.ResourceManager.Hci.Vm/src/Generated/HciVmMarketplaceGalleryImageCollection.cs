@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Hci.Vm
     /// </summary>
     public partial class HciVmMarketplaceGalleryImageCollection : ArmCollection, IEnumerable<HciVmMarketplaceGalleryImageResource>, IAsyncEnumerable<HciVmMarketplaceGalleryImageResource>
     {
-        private readonly ClientDiagnostics _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics;
-        private readonly MarketplaceGalleryImagesRestOperations _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient;
+        private readonly ClientDiagnostics _marketplaceGalleryImagesClientDiagnostics;
+        private readonly MarketplaceGalleryImages _marketplaceGalleryImagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmMarketplaceGalleryImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmMarketplaceGalleryImageCollection for mocking. </summary>
         protected HciVmMarketplaceGalleryImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmMarketplaceGalleryImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmMarketplaceGalleryImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmMarketplaceGalleryImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmMarketplaceGalleryImageResource.ResourceType, out string hciVmMarketplaceGalleryImageMarketplaceGalleryImagesApiVersion);
-            _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient = new MarketplaceGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmMarketplaceGalleryImageMarketplaceGalleryImagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmMarketplaceGalleryImageResource.ResourceType, out string hciVmMarketplaceGalleryImageApiVersion);
+            _marketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
+            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create or update a marketplace gallery image. Please note some properties can be set only during marketplace gallery image creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmMarketplaceGalleryImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(new HciVmMarketplaceGalleryImageOperationSource(Client), _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
+                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    _marketplaceGalleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Hci.Vm
         /// The operation to create or update a marketplace gallery image. Please note some properties can be set only during marketplace gallery image creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmMarketplaceGalleryImageResource> CreateOrUpdate(WaitUntil waitUntil, string marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(new HciVmMarketplaceGalleryImageOperationSource(Client), _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
+                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    _marketplaceGalleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a marketplace gallery image
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmMarketplaceGalleryImageResource>> GetAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Get");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmMarketplaceGalleryImageData> response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmMarketplaceGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a marketplace gallery image
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmMarketplaceGalleryImageResource> Get(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Get");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmMarketplaceGalleryImageData> response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmMarketplaceGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Lists all of the marketplace gallery images in the specified resource group. Use the nextLink property in the response to get the next page of marketplace gallery images.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmMarketplaceGalleryImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "HciVmMarketplaceGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetByResourceGroupAsyncCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the marketplace gallery images in the specified resource group. Use the nextLink property in the response to get the next page of marketplace gallery images.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmMarketplaceGalleryImageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "HciVmMarketplaceGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetByResourceGroupCollectionResultOfT(_marketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Exists");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmMarketplaceGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmMarketplaceGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Exists");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmMarketplaceGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmMarketplaceGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmMarketplaceGalleryImageResource>> GetIfExistsAsync(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmMarketplaceGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmMarketplaceGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmMarketplaceGalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmMarketplaceGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceGalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmMarketplaceGalleryImageResource> GetIfExists(string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(marketplaceGalleryImageName, nameof(marketplaceGalleryImageName));
 
-            using var scope = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _marketplaceGalleryImagesClientDiagnostics.CreateScope("HciVmMarketplaceGalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, marketplaceGalleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmMarketplaceGalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmMarketplaceGalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmMarketplaceGalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmMarketplaceGalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmMarketplaceGalleryImageResource> IAsyncEnumerable<HciVmMarketplaceGalleryImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

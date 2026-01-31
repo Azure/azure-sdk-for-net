@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
+    /// <summary></summary>
     public partial class DedicatedHsmResource : IJsonModel<DedicatedHsmData>
     {
-        private static DedicatedHsmData s_dataDeserializationInstance;
-        private static DedicatedHsmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DedicatedHsmData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DedicatedHsmData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DedicatedHsmData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHsmData>)Data).Write(writer, options);
 
-        DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHsmData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHsmData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DedicatedHsmData IPersistableModel<DedicatedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHsmData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        string IPersistableModel<DedicatedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedHsmData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

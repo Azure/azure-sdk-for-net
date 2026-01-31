@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01-preview";
+            _apiVersion = apiVersion ?? "2025-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Get the default and current subscription quota limit. </summary>
+        /// <summary> Get the default and current quota limit. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Get the default and current subscription quota limit. </summary>
+        /// <summary> Get the default and current quota limit. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>

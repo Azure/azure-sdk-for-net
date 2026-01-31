@@ -4,11 +4,10 @@
     <AssemblyTitle>Microsoft Azure.Identity.Broker Component</AssemblyTitle>
     <Version>1.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(RequiredTargetFrameworks);net462;net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Linux'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(TargetFrameworks);$(NetFxTargetFramework)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>

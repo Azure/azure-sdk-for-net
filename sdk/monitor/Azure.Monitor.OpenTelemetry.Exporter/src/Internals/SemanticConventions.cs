@@ -175,5 +175,69 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeDbQuerySummary = "db.query.summary";
         public const string AttributeDbQueryText = "db.query.text";
         public const string AttributeDbStoredProcedureName = "db.stored_procedure.name";
+
+        // Microsoft Application Insights Override Attributes
+        // These attributes allow explicit mapping from Application Insights fields to OpenTelemetry attributes
+        // When present, these override computed values from standard semantic conventions
+
+        /// <summary>
+        /// Override attribute for dependency data field.
+        /// When present, takes precedence over computed data from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyData = "microsoft.dependency.data";
+
+        /// <summary>
+        /// Override attribute for dependency name field.
+        /// When present, takes precedence over computed name from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyName = "microsoft.dependency.name";
+
+        /// <summary>
+        /// Override attribute for operation name field.
+        /// When present, takes precedence over computed operation name.
+        /// </summary>
+        public const string AttributeMicrosoftOperationName = "microsoft.operation_name";
+
+        /// <summary>
+        /// Override attribute for dependency result code field.
+        /// When present, takes precedence over computed result code from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyResultCode = "microsoft.dependency.resultCode";
+
+        /// <summary>
+        /// Override attribute for dependency target field.
+        /// When present, takes precedence over computed target from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyTarget = "microsoft.dependency.target";
+
+        /// <summary>
+        /// Override attribute for dependency type field.
+        /// When present, takes precedence over computed type from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftDependencyType = "microsoft.dependency.type";
+
+        /// <summary>
+        /// Override attribute for request name field.
+        /// When present, takes precedence over Activity.DisplayName.
+        /// </summary>
+        public const string AttributeMicrosoftRequestName = "microsoft.request.name";
+
+        /// <summary>
+        /// Override attribute for request URL field.
+        /// When present, takes precedence over computed URL from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestUrl = "microsoft.request.url";
+
+        /// <summary>
+        /// Override attribute for request source field.
+        /// When present, takes precedence over computed source from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestSource = "microsoft.request.source";
+
+        /// <summary>
+        /// Override attribute for request result code field.
+        /// When present, takes precedence over computed result code from semantic conventions.
+        /// </summary>
+        public const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
     }
 }

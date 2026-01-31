@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterClientCertificate : IUtf8JsonSerializable, IJsonModel<ManagedClusterClientCertificate>
+    /// <summary> Client certificate definition. </summary>
+    public partial class ManagedClusterClientCertificate : IJsonModel<ManagedClusterClientCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterClientCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterClientCertificate"/> for deserialization. </summary>
+        internal ManagedClusterClientCertificate()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterClientCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +34,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Thumbprint);
+                writer.WriteRawValue(Thumbprint);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Thumbprint, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -57,23 +62,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("issuerThumbprint"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(IssuerThumbprint);
+                writer.WriteRawValue(IssuerThumbprint);
 #else
-                using (JsonDocument document = JsonDocument.Parse(IssuerThumbprint, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(IssuerThumbprint))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +87,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        ManagedClusterClientCertificate IJsonModel<ManagedClusterClientCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterClientCertificate IJsonModel<ManagedClusterClientCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterClientCertificate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterClientCertificate(document.RootElement, options);
         }
 
-        internal static ManagedClusterClientCertificate DeserializeManagedClusterClientCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedClusterClientCertificate DeserializeManagedClusterClientCertificate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,51 +116,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             BinaryData thumbprint = default;
             string commonName = default;
             BinaryData issuerThumbprint = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isAdmin"u8))
+                if (prop.NameEquals("isAdmin"u8))
                 {
-                    isAdmin = property.Value.GetBoolean();
+                    isAdmin = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"u8))
+                if (prop.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("commonName"u8))
+                if (prop.NameEquals("commonName"u8))
                 {
-                    commonName = property.Value.GetString();
+                    commonName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuerThumbprint"u8))
+                if (prop.NameEquals("issuerThumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    issuerThumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    issuerThumbprint = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, serializedAdditionalRawData);
+            return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ManagedClusterClientCertificate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedClusterClientCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -160,15 +171,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        ManagedClusterClientCertificate IPersistableModel<ManagedClusterClientCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterClientCertificate IPersistableModel<ManagedClusterClientCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterClientCertificate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedClusterClientCertificate(document.RootElement, options);
                     }
                 default:
@@ -176,6 +192,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedClusterClientCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

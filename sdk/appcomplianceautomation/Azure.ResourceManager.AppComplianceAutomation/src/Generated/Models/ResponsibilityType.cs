@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ResponsibilityType : IEquatable<ResponsibilityType>
     {
         private readonly string _value;
+        /// <summary> The responsibility is automated. </summary>
+        private const string AutomatedValue = "Automated";
+        /// <summary> The responsibility is scoped manual. </summary>
+        private const string ScopedManualValue = "ScopedManual";
+        /// <summary> The responsibility is manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="ResponsibilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponsibilityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomatedValue = "Automated";
-        private const string ScopedManualValue = "ScopedManual";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> The responsibility is automated. </summary>
         public static ResponsibilityType Automated { get; } = new ResponsibilityType(AutomatedValue);
+
         /// <summary> The responsibility is scoped manual. </summary>
         public static ResponsibilityType ScopedManual { get; } = new ResponsibilityType(ScopedManualValue);
+
         /// <summary> The responsibility is manual. </summary>
         public static ResponsibilityType Manual { get; } = new ResponsibilityType(ManualValue);
+
         /// <summary> Determines if two <see cref="ResponsibilityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResponsibilityType left, ResponsibilityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResponsibilityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResponsibilityType left, ResponsibilityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResponsibilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResponsibilityType(string value) => new ResponsibilityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResponsibilityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsibilityType?(string value) => value == null ? null : new ResponsibilityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResponsibilityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResponsibilityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

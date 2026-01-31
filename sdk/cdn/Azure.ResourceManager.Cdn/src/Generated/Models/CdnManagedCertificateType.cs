@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Type of certificate used
-    /// Serialized Name: CertificateType
-    /// </summary>
+    /// <summary> Type of certificate used. </summary>
     public readonly partial struct CdnManagedCertificateType : IEquatable<CdnManagedCertificateType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string SharedValue = "Shared";
         private const string DedicatedValue = "Dedicated";
 
-        /// <summary>
-        /// Shared
-        /// Serialized Name: CertificateType.Shared
-        /// </summary>
+        /// <summary> Shared. </summary>
         public static CdnManagedCertificateType Shared { get; } = new CdnManagedCertificateType(SharedValue);
-        /// <summary>
-        /// Dedicated
-        /// Serialized Name: CertificateType.Dedicated
-        /// </summary>
+        /// <summary> Dedicated. </summary>
         public static CdnManagedCertificateType Dedicated { get; } = new CdnManagedCertificateType(DedicatedValue);
         /// <summary> Determines if two <see cref="CdnManagedCertificateType"/> values are the same. </summary>
         public static bool operator ==(CdnManagedCertificateType left, CdnManagedCertificateType right) => left.Equals(right);

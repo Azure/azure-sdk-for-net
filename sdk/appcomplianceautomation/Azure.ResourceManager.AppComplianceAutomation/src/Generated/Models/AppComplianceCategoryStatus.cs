@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct AppComplianceCategoryStatus : IEquatable<AppComplianceCategoryStatus>
     {
         private readonly string _value;
+        /// <summary> The category is passed. </summary>
+        private const string PassedValue = "Passed";
+        /// <summary> The category is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The category is not applicable. </summary>
+        private const string NotApplicableValue = "NotApplicable";
+        /// <summary> The category is pending for approval. </summary>
+        private const string PendingApprovalValue = "PendingApproval";
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceCategoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppComplianceCategoryStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PassedValue = "Passed";
-        private const string FailedValue = "Failed";
-        private const string NotApplicableValue = "NotApplicable";
-        private const string PendingApprovalValue = "PendingApproval";
+            _value = value;
+        }
 
         /// <summary> The category is passed. </summary>
         public static AppComplianceCategoryStatus Passed { get; } = new AppComplianceCategoryStatus(PassedValue);
+
         /// <summary> The category is failed. </summary>
         public static AppComplianceCategoryStatus Failed { get; } = new AppComplianceCategoryStatus(FailedValue);
+
         /// <summary> The category is not applicable. </summary>
         public static AppComplianceCategoryStatus NotApplicable { get; } = new AppComplianceCategoryStatus(NotApplicableValue);
+
         /// <summary> The category is pending for approval. </summary>
         public static AppComplianceCategoryStatus PendingApproval { get; } = new AppComplianceCategoryStatus(PendingApprovalValue);
+
         /// <summary> Determines if two <see cref="AppComplianceCategoryStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppComplianceCategoryStatus left, AppComplianceCategoryStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppComplianceCategoryStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppComplianceCategoryStatus left, AppComplianceCategoryStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceCategoryStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppComplianceCategoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppComplianceCategoryStatus(string value) => new AppComplianceCategoryStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppComplianceCategoryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppComplianceCategoryStatus?(string value) => value == null ? null : new AppComplianceCategoryStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppComplianceCategoryStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppComplianceCategoryStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

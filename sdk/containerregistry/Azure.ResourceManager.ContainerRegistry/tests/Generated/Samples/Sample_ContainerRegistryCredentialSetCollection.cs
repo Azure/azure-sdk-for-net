@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CredentialSetCreate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetCreate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetCreate.json
             // this example is just showing the usage of "CredentialSets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CredentialSetGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetGet.json
             // this example is just showing the usage of "CredentialSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CredentialSetList()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetList.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetList.json
             // this example is just showing the usage of "CredentialSets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CredentialSetGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetGet.json
             // this example is just showing the usage of "CredentialSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CredentialSetGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/CredentialSetGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/CredentialSetGet.json
             // this example is just showing the usage of "CredentialSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

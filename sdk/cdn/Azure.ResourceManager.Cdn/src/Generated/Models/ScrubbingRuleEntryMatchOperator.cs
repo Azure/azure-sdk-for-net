@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to.
-    /// Serialized Name: ScrubbingRuleEntryMatchOperator
-    /// </summary>
+    /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </summary>
     public readonly partial struct ScrubbingRuleEntryMatchOperator : IEquatable<ScrubbingRuleEntryMatchOperator>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EqualsAnyValue = "EqualsAny";
 
-        /// <summary>
-        /// EqualsAny
-        /// Serialized Name: ScrubbingRuleEntryMatchOperator.EqualsAny
-        /// </summary>
+        /// <summary> EqualsAny. </summary>
         public static ScrubbingRuleEntryMatchOperator EqualsAny { get; } = new ScrubbingRuleEntryMatchOperator(EqualsAnyValue);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are the same. </summary>
         public static bool operator ==(ScrubbingRuleEntryMatchOperator left, ScrubbingRuleEntryMatchOperator right) => left.Equals(right);

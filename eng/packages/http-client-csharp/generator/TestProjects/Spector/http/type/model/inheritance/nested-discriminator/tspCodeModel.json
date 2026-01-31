@@ -174,6 +174,11 @@
       "usage": "Input,Output,Json",
       "doc": "This is base model for polymorphic multiple levels inheritance with a discriminator.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Fish"
+        }
+      },
       "discriminatorProperty": {
         "$id": "22",
         "kind": "property",
@@ -241,6 +246,11 @@
           "doc": "The second level model in polymorphic multiple levels inheritance and it defines a new discriminator.",
           "discriminatorValue": "shark",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Shark"
+            }
+          },
           "discriminatorProperty": {
             "$id": "27",
             "kind": "property",
@@ -306,6 +316,11 @@
               "doc": "The third level model SawShark in polymorphic multiple levels inheritance.",
               "discriminatorValue": "saw",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "SawShark"
+                }
+              },
               "baseModel": {
                 "$ref": "26"
               },
@@ -343,6 +358,11 @@
               "doc": "The third level model GoblinShark in polymorphic multiple levels inheritance.",
               "discriminatorValue": "goblin",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "GoblinShark"
+                }
+              },
               "baseModel": {
                 "$ref": "26"
               },
@@ -382,6 +402,11 @@
           "doc": "The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances.",
           "discriminatorValue": "salmon",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Salmon"
+            }
+          },
           "baseModel": {
             "$ref": "21"
           },
@@ -565,7 +590,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -664,7 +690,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -760,7 +787,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -859,7 +887,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -955,7 +984,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -1037,7 +1067,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NestedDiscriminator"
           },
           "parameters": [
             {
@@ -1101,9 +1132,11 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

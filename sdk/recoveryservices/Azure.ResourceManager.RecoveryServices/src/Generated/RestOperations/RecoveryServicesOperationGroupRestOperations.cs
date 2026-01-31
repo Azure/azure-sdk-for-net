@@ -6,234 +6,81 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    internal partial class RecoveryServicesOperationGroupRestOperations
+    internal partial class RecoveryServicesOperationGroup
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of RecoveryServicesOperationGroupRestOperations. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesOperationGroup for mocking. </summary>
+        protected RecoveryServicesOperationGroup()
+        {
+        }
+
+        /// <summary> Initializes a new instance of RecoveryServicesOperationGroup. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RecoveryServicesOperationGroupRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal RecoveryServicesOperationGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-02-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateCheckRecoveryServicesNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateCheckRecoveryServicesNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RequestContent content, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCheckRecoveryServicesNameAvailabilityRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/checkNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary>
-        /// API to check for resource name availability.
-        /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Contains information about Resource type and Resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckRecoveryServicesNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecoveryServicesNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecoveryServicesNameAvailabilityResult.DeserializeRecoveryServicesNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary>
-        /// API to check for resource name availability.
-        /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Contains information about Resource type and Resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(string subscriptionId, string resourceGroupName, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckRecoveryServicesNameAvailabilityRequest(subscriptionId, resourceGroupName, location, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecoveryServicesNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecoveryServicesNameAvailabilityResult.DeserializeRecoveryServicesNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRecoveryServiceCapabilitiesRequestUri(string subscriptionId, AzureLocation location, ResourceCapabilities input)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/capabilities", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRecoveryServiceCapabilitiesRequest(string subscriptionId, AzureLocation location, ResourceCapabilities input)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/capabilities", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> API to get details about capabilities provided by Microsoft.RecoveryServices RP. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="input"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRecoveryServiceCapabilitiesRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var message = CreateGetRecoveryServiceCapabilitiesRequest(subscriptionId, location, input);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CapabilitiesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesResult.DeserializeCapabilitiesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> API to get details about capabilities provided by Microsoft.RecoveryServices RP. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="input"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesResult> GetRecoveryServiceCapabilities(string subscriptionId, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(input, nameof(input));
-
-            using var message = CreateGetRecoveryServiceCapabilitiesRequest(subscriptionId, location, input);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CapabilitiesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CapabilitiesResult.DeserializeCapabilitiesResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/capabilities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
     }
 }

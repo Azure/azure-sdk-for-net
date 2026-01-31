@@ -13,7 +13,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
-    internal partial class UnknownSanitizerAddition : IJsonModel<SanitizerAddition>
+    internal partial class UnknownSanitizerAddition : SanitizerAddition, IJsonModel<SanitizerAddition>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSanitizerAddition"/> for deserialization. </summary>
         internal UnknownSanitizerAddition()
@@ -111,7 +111,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSanitizerAddition(document.RootElement, options);
                     }

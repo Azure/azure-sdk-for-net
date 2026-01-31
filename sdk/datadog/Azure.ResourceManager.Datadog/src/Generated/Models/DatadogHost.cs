@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Initializes a new instance of <see cref="DatadogHost"/>. </summary>
         /// <param name="name"> The name of the host. </param>
-        /// <param name="aliases"> The aliases for the host. </param>
+        /// <param name="aliases"> The aliases for the host installed via the Datadog agent. </param>
         /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>
         /// <param name="meta"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> The name of the host. </summary>
         public string Name { get; }
-        /// <summary> The aliases for the host. </summary>
+        /// <summary> The aliases for the host installed via the Datadog agent. </summary>
         public IReadOnlyList<string> Aliases { get; }
         /// <summary> The Datadog integrations reporting metrics for the host. </summary>
         public IReadOnlyList<string> Apps { get; }

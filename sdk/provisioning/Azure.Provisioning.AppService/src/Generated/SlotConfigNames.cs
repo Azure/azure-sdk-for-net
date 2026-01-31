@@ -18,13 +18,6 @@ namespace Azure.Provisioning.AppService;
 /// </summary>
 public partial class SlotConfigNames : ProvisionableResource
 {
-    /// <summary>
-    /// Gets the Name.
-    /// </summary>
-    public BicepValue<string> Name 
-    {
-        get { Initialize(); return _name!; }
-    }
     private BicepValue<string>? _name;
 
     /// <summary>
@@ -96,6 +89,11 @@ public partial class SlotConfigNames : ProvisionableResource
     private ResourceReference<WebSite>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new SlotConfigNames.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -106,7 +104,7 @@ public partial class SlotConfigNames : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
     public SlotConfigNames(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -115,7 +113,8 @@ public partial class SlotConfigNames : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _appSettingNames = DefineListProperty<string>("AppSettingNames", ["properties", "appSettingNames"]);
         _azureStorageConfigNames = DefineListProperty<string>("AzureStorageConfigNames", ["properties", "azureStorageConfigNames"]);
         _connectionStringNames = DefineListProperty<string>("ConnectionStringNames", ["properties", "connectionStringNames"]);
@@ -130,6 +129,11 @@ public partial class SlotConfigNames : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

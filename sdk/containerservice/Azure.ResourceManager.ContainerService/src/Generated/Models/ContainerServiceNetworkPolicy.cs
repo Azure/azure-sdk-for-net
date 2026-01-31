@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Network policy used for building the Kubernetes network. </summary>
+    /// <summary>
+    /// Network policy used for building the Kubernetes network.
+    /// Serialized Name: NetworkPolicy
+    /// </summary>
     public readonly partial struct ContainerServiceNetworkPolicy : IEquatable<ContainerServiceNetworkPolicy>
     {
         private readonly string _value;
@@ -22,15 +25,30 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NoneValue = "none";
         private const string CalicoValue = "calico";
         private const string AzureValue = "azure";
         private const string CiliumValue = "cilium";
 
-        /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
+        /// <summary>
+        /// Network policies will not be enforced. This is the default value when NetworkPolicy is not specified.
+        /// Serialized Name: NetworkPolicy.none
+        /// </summary>
+        public static ContainerServiceNetworkPolicy None { get; } = new ContainerServiceNetworkPolicy(NoneValue);
+        /// <summary>
+        /// Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information.
+        /// Serialized Name: NetworkPolicy.calico
+        /// </summary>
         public static ContainerServiceNetworkPolicy Calico { get; } = new ContainerServiceNetworkPolicy(CalicoValue);
-        /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
+        /// <summary>
+        /// Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information.
+        /// Serialized Name: NetworkPolicy.azure
+        /// </summary>
         public static ContainerServiceNetworkPolicy Azure { get; } = new ContainerServiceNetworkPolicy(AzureValue);
-        /// <summary> Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'. </summary>
+        /// <summary>
+        /// Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'.
+        /// Serialized Name: NetworkPolicy.cilium
+        /// </summary>
         public static ContainerServiceNetworkPolicy Cilium { get; } = new ContainerServiceNetworkPolicy(CiliumValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPolicy left, ContainerServiceNetworkPolicy right) => left.Equals(right);

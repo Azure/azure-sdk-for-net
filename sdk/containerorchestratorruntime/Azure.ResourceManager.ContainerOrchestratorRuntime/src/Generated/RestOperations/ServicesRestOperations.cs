@@ -6,441 +6,119 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    internal partial class ServicesRestOperations
+    internal partial class Services
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ServicesRestOperations. </summary>
+        /// <summary> Initializes a new instance of Services for mocking. </summary>
+        protected Services()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Services. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ServicesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Services(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string serviceName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string resourceUri, string serviceName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string resourceUri, string serviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectedClusterServiceData>> GetAsync(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string serviceName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            using var message = CreateGetRequest(resourceUri, serviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectedClusterServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ConnectedClusterServiceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectedClusterServiceData> Get(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            using var message = CreateGetRequest(resourceUri, serviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectedClusterServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ConnectedClusterServiceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string serviceName, ConnectedClusterServiceData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string serviceName, ConnectedClusterServiceData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectedClusterServiceData>> CreateOrUpdateAsync(string resourceUri, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string resourceUri, string serviceName, RequestContext context)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(resourceUri, serviceName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ConnectedClusterServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectedClusterServiceData> CreateOrUpdate(string resourceUri, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(resourceUri, serviceName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ConnectedClusterServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string serviceName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string resourceUri, string serviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string resourceUri, RequestContext context)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            using var message = CreateDeleteRequest(resourceUri, serviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a ServiceResource. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="serviceName"> The name of the the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            using var message = CreateDeleteRequest(resourceUri, serviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string resourceUri)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.KubernetesRuntime/services", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List ServiceResource resources by parent. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<ServiceResourceListResult>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceUri, RequestContext context)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateListRequest(resourceUri);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceResourceListResult.DeserializeServiceResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ServiceResource resources by parent. </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<ServiceResourceListResult> List(string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateListRequest(resourceUri);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceResourceListResult.DeserializeServiceResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List ServiceResource resources by parent. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<ServiceResourceListResult>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateListNextPageRequest(nextLink, resourceUri);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceResourceListResult.DeserializeServiceResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ServiceResource resources by parent. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public Response<ServiceResourceListResult> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-
-            using var message = CreateListNextPageRequest(nextLink, resourceUri);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceResourceListResult.DeserializeServiceResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

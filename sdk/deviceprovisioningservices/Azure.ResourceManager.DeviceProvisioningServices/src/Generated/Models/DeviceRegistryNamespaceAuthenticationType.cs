@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceRegistryNamespaceAuthenticationType : IEquatable<DeviceRegistryNamespaceAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> User assigned authentication type. </summary>
+        private const string UserAssignedValue = "UserAssigned";
+        /// <summary> System assigned authentication type. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceRegistryNamespaceAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserAssignedValue = "UserAssigned";
-        private const string SystemAssignedValue = "SystemAssigned";
+            _value = value;
+        }
 
         /// <summary> User assigned authentication type. </summary>
         public static DeviceRegistryNamespaceAuthenticationType UserAssigned { get; } = new DeviceRegistryNamespaceAuthenticationType(UserAssignedValue);
+
         /// <summary> System assigned authentication type. </summary>
         public static DeviceRegistryNamespaceAuthenticationType SystemAssigned { get; } = new DeviceRegistryNamespaceAuthenticationType(SystemAssignedValue);
+
         /// <summary> Determines if two <see cref="DeviceRegistryNamespaceAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceRegistryNamespaceAuthenticationType left, DeviceRegistryNamespaceAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceRegistryNamespaceAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceRegistryNamespaceAuthenticationType left, DeviceRegistryNamespaceAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceRegistryNamespaceAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceRegistryNamespaceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceRegistryNamespaceAuthenticationType(string value) => new DeviceRegistryNamespaceAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceRegistryNamespaceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceRegistryNamespaceAuthenticationType?(string value) => value == null ? null : new DeviceRegistryNamespaceAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceRegistryNamespaceAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceRegistryNamespaceAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

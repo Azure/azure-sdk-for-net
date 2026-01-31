@@ -3846,7 +3846,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                filePropertySemantics: options?.PropertySemantics,
+                //filePropertySemantics: options?.PropertySemantics,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3905,7 +3905,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                filePropertySemantics: null,
+                //filePropertySemantics: null,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3953,7 +3953,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                filePropertySemantics: options?.PropertySemantics,
+                //filePropertySemantics: options?.PropertySemantics,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -4012,7 +4012,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: null,
                 posixProperties: null,
-                filePropertySemantics: null,
+                //filePropertySemantics: null,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -4245,7 +4245,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -4278,7 +4278,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -4310,7 +4310,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -4338,7 +4338,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync(ShareGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework;
@@ -43,13 +44,26 @@ public class ProxyTransport : PipelineTransport
         bool useFiddler = TestEnvironment.EnableFiddler;
         string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
         _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxyProcess.IpAddress;
-        var handler = new HttpClientHandler
+
+        if (innerTransport is HttpClientPipelineTransport _)
         {
-            ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
-            AllowAutoRedirect = false,
-            UseCookies = false
-        };
-        _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+            var httpClient = new HttpClient(handler)
+            {
+                // Timeouts are handled by the pipeline
+                Timeout = Timeout.InfiniteTimeSpan
+            };
+            _innerTransport = new HttpClientPipelineTransport(httpClient);
+        }
+        else // Use provided custom transport as-is when it's not an HttpClientPipelineTransport
+        {
+            _innerTransport = innerTransport;
+        }
     }
 
     /// <inheritdoc/>

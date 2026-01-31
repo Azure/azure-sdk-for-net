@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
 
         private Instances InstancesRestClient => _instancesRestClient ??= new Instances(InstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-18");
 
-        /// <summary> List InstanceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InstanceResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstancesAsync(CancellationToken cancellationToken = default)
@@ -50,7 +66,23 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionAsyncCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary> List InstanceResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List InstanceResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstances(CancellationToken cancellationToken = default)

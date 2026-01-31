@@ -58,11 +58,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="publishedOn"> The timestamp for when the gallery image version is published. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
+        /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
+        /// <param name="storageAccountStrategy"> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, StorageAccountStrategy? storageAccountStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetRegions = targetRegions;
             ReplicaCount = replicaCount;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             StorageAccountType = storageAccountType;
             ReplicationMode = replicationMode;
             TargetExtendedLocations = targetExtendedLocations;
+            StorageAccountStrategy = storageAccountStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,11 +87,13 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? PublishedOn { get; }
         /// <summary> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; set; }
-        /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
+        /// <summary> Specifies the storage account type to be used to store the image. Cannot be specified along with storageAccountStrategy. This property is not updatable. </summary>
         public ImageStorageAccountType? StorageAccountType { get; set; }
         /// <summary> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </summary>
         public GalleryReplicationMode? ReplicationMode { get; set; }
         /// <summary> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </summary>
         public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; }
+        /// <summary> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </summary>
+        public StorageAccountStrategy? StorageAccountStrategy { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public readonly partial struct PureStorageMarketplaceSubscriptionStatus : IEquatable<PureStorageMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
+        /// <summary> Marketplace subscription purchased but not yet activated. </summary>
+        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
+        /// <summary> Marketplace subscription activated. </summary>
+        private const string SubscribedValue = "Subscribed";
+        /// <summary> Marketplace subscription suspended due to missing customer payment. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Marketplace subscription cancelled. </summary>
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PureStorageMarketplaceSubscriptionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
-        private const string SubscribedValue = "Subscribed";
-        private const string SuspendedValue = "Suspended";
-        private const string UnsubscribedValue = "Unsubscribed";
+            _value = value;
+        }
 
         /// <summary> Marketplace subscription purchased but not yet activated. </summary>
         public static PureStorageMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new PureStorageMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+
         /// <summary> Marketplace subscription activated. </summary>
         public static PureStorageMarketplaceSubscriptionStatus Subscribed { get; } = new PureStorageMarketplaceSubscriptionStatus(SubscribedValue);
+
         /// <summary> Marketplace subscription suspended due to missing customer payment. </summary>
         public static PureStorageMarketplaceSubscriptionStatus Suspended { get; } = new PureStorageMarketplaceSubscriptionStatus(SuspendedValue);
+
         /// <summary> Marketplace subscription cancelled. </summary>
         public static PureStorageMarketplaceSubscriptionStatus Unsubscribed { get; } = new PureStorageMarketplaceSubscriptionStatus(UnsubscribedValue);
+
         /// <summary> Determines if two <see cref="PureStorageMarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PureStorageMarketplaceSubscriptionStatus left, PureStorageMarketplaceSubscriptionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PureStorageMarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PureStorageMarketplaceSubscriptionStatus left, PureStorageMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PureStorageMarketplaceSubscriptionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PureStorageMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PureStorageMarketplaceSubscriptionStatus(string value) => new PureStorageMarketplaceSubscriptionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PureStorageMarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PureStorageMarketplaceSubscriptionStatus?(string value) => value == null ? null : new PureStorageMarketplaceSubscriptionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PureStorageMarketplaceSubscriptionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PureStorageMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BazData : TrackedResourceData, IJsonModel<BazData>
     {
         /// <summary> Initializes a new instance of <see cref="BazData"/> for deserialization. </summary>
@@ -48,6 +48,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
         }
 
@@ -81,9 +97,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             BazProperties properties = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -118,6 +134,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -139,20 +169,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -164,9 +180,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -197,7 +213,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBazData(document.RootElement, options);
                     }
@@ -221,11 +237,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BazData"/> from. </param>
-        internal static BazData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BazData"/> from. </param>
+        internal static BazData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBazData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
