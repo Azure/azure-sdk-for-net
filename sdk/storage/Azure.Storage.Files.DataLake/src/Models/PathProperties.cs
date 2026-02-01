@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool AccessTierInferred { get; internal set; }
 
         /// <summary>
-        /// For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-coolrehydrate-pending-to-smart.
+        /// For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-cool/rehydrate-pending-to-cold/rehydrate-pending-to-smart.
         /// If the blob is being rehydrated and is not complete then this header is returned indicating that rehydrate is pending
         /// and also tells the destination tier.
         /// </summary>
