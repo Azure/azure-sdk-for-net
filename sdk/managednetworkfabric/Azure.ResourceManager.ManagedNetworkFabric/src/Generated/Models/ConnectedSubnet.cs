@@ -7,12 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Connected Subnet properties. </summary>
-    public partial class ConnectedSubnet : AnnotationResourceProperties
+    public partial class ConnectedSubnet
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
@@ -25,17 +29,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
-        internal ConnectedSubnet(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, string prefix) : base(annotation, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedSubnet(string annotation, string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Annotation = annotation;
             Prefix = prefix;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/> for deserialization. </summary>
-        internal ConnectedSubnet()
-        {
-        }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
 
         /// <summary> Prefix of the Connected Subnet. </summary>
         public string Prefix { get; set; }

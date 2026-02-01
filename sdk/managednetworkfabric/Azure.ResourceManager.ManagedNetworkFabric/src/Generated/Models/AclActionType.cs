@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,72 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct AclActionType : IEquatable<AclActionType>
     {
         private readonly string _value;
+        /// <summary> AclActionType Drop. </summary>
+        private const string DropValue = "Drop";
+        /// <summary> AclActionType Count. </summary>
+        private const string CountValue = "Count";
+        /// <summary> AclActionType Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> AclActionType Remark. </summary>
+        private const string RemarkValue = "Remark";
+        /// <summary> AclActionType PoliceRate. </summary>
+        private const string PoliceRateValue = "PoliceRate";
 
         /// <summary> Initializes a new instance of <see cref="AclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AclActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DropValue = "Drop";
-        private const string CountValue = "Count";
-        private const string LogValue = "Log";
-
-        /// <summary> Drop. </summary>
+        /// <summary> AclActionType Drop. </summary>
         public static AclActionType Drop { get; } = new AclActionType(DropValue);
-        /// <summary> Count. </summary>
+
+        /// <summary> AclActionType Count. </summary>
         public static AclActionType Count { get; } = new AclActionType(CountValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> AclActionType Log. </summary>
         public static AclActionType Log { get; } = new AclActionType(LogValue);
+
+        /// <summary> AclActionType Remark. </summary>
+        public static AclActionType Remark { get; } = new AclActionType(RemarkValue);
+
+        /// <summary> AclActionType PoliceRate. </summary>
+        public static AclActionType PoliceRate { get; } = new AclActionType(PoliceRateValue);
+
         /// <summary> Determines if two <see cref="AclActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AclActionType left, AclActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AclActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AclActionType left, AclActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AclActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AclActionType(string value) => new AclActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AclActionType?(string value) => value == null ? null : new AclActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AclActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AclActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

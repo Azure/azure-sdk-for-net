@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct Layer4Protocol : IEquatable<Layer4Protocol>
     {
         private readonly string _value;
+        /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
+        private const string UDPValue = "UDP";
+        /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
+        private const string SCTPValue = "SCTP";
 
         /// <summary> Initializes a new instance of <see cref="Layer4Protocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Layer4Protocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
+        /// <summary> TCP(Transmission Control Protocol) Protocol. </summary>
+        public static Layer4Protocol TCP { get; } = new Layer4Protocol(TCPValue);
 
-        /// <summary> TCP. </summary>
-        public static Layer4Protocol Tcp { get; } = new Layer4Protocol(TcpValue);
-        /// <summary> UDP. </summary>
-        public static Layer4Protocol Udp { get; } = new Layer4Protocol(UdpValue);
+        /// <summary> UDP(User Datagram Protocol) Protocol. </summary>
+        public static Layer4Protocol UDP { get; } = new Layer4Protocol(UDPValue);
+
+        /// <summary> SCTP(Streaming Control Transmission Protocol) Protocol. </summary>
+        public static Layer4Protocol SCTP { get; } = new Layer4Protocol(SCTPValue);
+
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Layer4Protocol left, Layer4Protocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Layer4Protocol left, Layer4Protocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Layer4Protocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="Layer4Protocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator Layer4Protocol(string value) => new Layer4Protocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="Layer4Protocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator Layer4Protocol?(string value) => value == null ? null : new Layer4Protocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Layer4Protocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(Layer4Protocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

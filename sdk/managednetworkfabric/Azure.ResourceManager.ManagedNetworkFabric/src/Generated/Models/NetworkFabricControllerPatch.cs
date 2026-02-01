@@ -7,33 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric Controller Patch payload definition. </summary>
-    public partial class NetworkFabricControllerPatch : NetworkRackPatch
+    public partial class NetworkFabricControllerPatch
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatch"/>. </summary>
         public NetworkFabricControllerPatch()
         {
-            InfrastructureExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
-            WorkloadExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
-        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
-        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections) : base(tags, serializedAdditionalRawData)
+        /// <param name="properties"> Network Fabric Controller patch properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, NetworkFabricControllerPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
-            WorkloadExpressRouteConnections = workloadExpressRouteConnections;
+            Tags = tags;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>
-        public IList<ExpressRouteConnectionInformation> InfrastructureExpressRouteConnections { get; }
-        /// <summary> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </summary>
-        public IList<ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Network Fabric Controller patch properties. </summary>
+        public NetworkFabricControllerPatchProperties Properties { get; set; }
     }
 }

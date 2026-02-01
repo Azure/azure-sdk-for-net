@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkDeviceRoleName : IEquatable<NetworkDeviceRoleName>
     {
         private readonly string _value;
+        /// <summary> NetworkDeviceRoleName-CE(Customer Edge). </summary>
+        private const string CEValue = "CE";
+        /// <summary> NetworkDeviceRoleName-ToR(top of rack). </summary>
+        private const string ToRValue = "ToR";
+        /// <summary> NetworkDeviceRoleName-NPB(Network Packet Broker). </summary>
+        private const string NPBValue = "NPB";
+        /// <summary> NetworkDeviceRoleName-TS(Terminal Server). </summary>
+        private const string TSValue = "TS";
+        /// <summary> NetworkDeviceRoleName-Management. </summary>
+        private const string ManagementValue = "Management";
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkDeviceRoleName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CEValue = "CE";
-        private const string ToRValue = "ToR";
-        private const string NpbValue = "NPB";
-        private const string TSValue = "TS";
-        private const string ManagementValue = "Management";
-
-        /// <summary> CE. </summary>
+        /// <summary> NetworkDeviceRoleName-CE(Customer Edge). </summary>
         public static NetworkDeviceRoleName CE { get; } = new NetworkDeviceRoleName(CEValue);
-        /// <summary> ToR. </summary>
+
+        /// <summary> NetworkDeviceRoleName-ToR(top of rack). </summary>
         public static NetworkDeviceRoleName ToR { get; } = new NetworkDeviceRoleName(ToRValue);
-        /// <summary> NPB. </summary>
-        public static NetworkDeviceRoleName Npb { get; } = new NetworkDeviceRoleName(NpbValue);
-        /// <summary> TS. </summary>
+
+        /// <summary> NetworkDeviceRoleName-NPB(Network Packet Broker). </summary>
+        public static NetworkDeviceRoleName NPB { get; } = new NetworkDeviceRoleName(NPBValue);
+
+        /// <summary> NetworkDeviceRoleName-TS(Terminal Server). </summary>
         public static NetworkDeviceRoleName TS { get; } = new NetworkDeviceRoleName(TSValue);
-        /// <summary> Management. </summary>
+
+        /// <summary> NetworkDeviceRoleName-Management. </summary>
         public static NetworkDeviceRoleName Management { get; } = new NetworkDeviceRoleName(ManagementValue);
+
         /// <summary> Determines if two <see cref="NetworkDeviceRoleName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkDeviceRoleName left, NetworkDeviceRoleName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkDeviceRoleName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkDeviceRoleName left, NetworkDeviceRoleName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceRoleName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkDeviceRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkDeviceRoleName(string value) => new NetworkDeviceRoleName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkDeviceRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkDeviceRoleName?(string value) => value == null ? null : new NetworkDeviceRoleName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkDeviceRoleName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkDeviceRoleName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

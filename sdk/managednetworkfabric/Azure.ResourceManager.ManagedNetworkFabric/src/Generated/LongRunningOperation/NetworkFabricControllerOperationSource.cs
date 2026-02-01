@@ -5,32 +5,41 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricControllerOperationSource : IOperationSource<NetworkFabricControllerResource>
+    /// <summary></summary>
+    internal partial class NetworkFabricControllerOperationSource : IOperationSource<NetworkFabricController>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkFabricControllerOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal NetworkFabricControllerOperationSource()
         {
-            _client = client;
         }
 
-        NetworkFabricControllerResource IOperationSource<NetworkFabricControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkFabricController IOperationSource<NetworkFabricController>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return new NetworkFabricControllerResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkFabricController result = NetworkFabricController.DeserializeNetworkFabricController(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
-        async ValueTask<NetworkFabricControllerResource> IOperationSource<NetworkFabricControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<NetworkFabricController> IOperationSource<NetworkFabricController>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricControllerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkFabricControllerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkFabricController result = NetworkFabricController.DeserializeNetworkFabricController(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

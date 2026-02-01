@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListMatchCondition : IUtf8JsonSerializable, IJsonModel<AccessControlListMatchCondition>
+    /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
+    public partial class AccessControlListMatchCondition : IJsonModel<AccessControlListMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AccessControlListMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,21 +27,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(ProtocolTypes))
+            {
+                writer.WritePropertyName("protocolTypes"u8);
+                writer.WriteStartArray();
+                foreach (string item in ProtocolTypes)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(VlanMatchCondition))
+            {
+                writer.WritePropertyName("vlanMatchCondition"u8);
+                writer.WriteObjectValue(VlanMatchCondition, options);
+            }
+            if (Optional.IsDefined(IpCondition))
+            {
+                writer.WritePropertyName("ipCondition"u8);
+                writer.WriteObjectValue(IpCondition, options);
+            }
             if (Optional.IsCollectionDefined(EtherTypes))
             {
                 writer.WritePropertyName("etherTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in EtherTypes)
+                foreach (string item in EtherTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -49,18 +78,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("fragments"u8);
                 writer.WriteStartArray();
-                foreach (var item in Fragments)
+                foreach (string item in Fragments)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPLengths))
+            if (Optional.IsCollectionDefined(IpLengths))
             {
                 writer.WritePropertyName("ipLengths"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPLengths)
+                foreach (string item in IpLengths)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -69,8 +108,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ttlValues"u8);
                 writer.WriteStartArray();
-                foreach (var item in TtlValues)
+                foreach (string item in TtlValues)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -79,8 +123,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("dscpMarkings"u8);
                 writer.WriteStartArray();
-                foreach (var item in DscpMarkings)
+                foreach (string item in DscpMarkings)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ProtocolNeighbors))
+            {
+                writer.WritePropertyName("protocolNeighbors"u8);
+                writer.WriteStartArray();
+                foreach (string item in ProtocolNeighbors)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -90,175 +154,277 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition, options);
             }
+            if (Optional.IsDefined(IcmpConfiguration))
+            {
+                writer.WritePropertyName("icmpConfiguration"u8);
+                writer.WriteObjectValue(IcmpConfiguration, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        AccessControlListMatchCondition IJsonModel<AccessControlListMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccessControlListMatchCondition IJsonModel<AccessControlListMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AccessControlListMatchCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccessControlListMatchCondition(document.RootElement, options);
         }
 
-        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IpMatchCondition ipCondition = default;
             IList<string> etherTypes = default;
             IList<string> fragments = default;
             IList<string> ipLengths = default;
             IList<string> ttlValues = default;
             IList<string> dscpMarkings = default;
+            IList<string> protocolNeighbors = default;
             AccessControlListPortCondition portCondition = default;
-            IList<string> protocolTypes = default;
-            VlanMatchCondition vlanMatchCondition = default;
-            IPMatchCondition ipCondition = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IcmpConfigurationProperties icmpConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etherTypes"u8))
+                if (prop.NameEquals("protocolTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
-                    }
-                    etherTypes = array;
-                    continue;
-                }
-                if (property.NameEquals("fragments"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    fragments = array;
-                    continue;
-                }
-                if (property.NameEquals("ipLengths"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    ipLengths = array;
-                    continue;
-                }
-                if (property.NameEquals("ttlValues"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    ttlValues = array;
-                    continue;
-                }
-                if (property.NameEquals("dscpMarkings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    dscpMarkings = array;
-                    continue;
-                }
-                if (property.NameEquals("portCondition"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("protocolTypes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     protocolTypes = array;
                     continue;
                 }
-                if (property.NameEquals("vlanMatchCondition"u8))
+                if (prop.NameEquals("vlanMatchCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ipCondition"u8))
+                if (prop.NameEquals("ipCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
+                    ipCondition = IpMatchCondition.DeserializeIpMatchCondition(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etherTypes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    etherTypes = array;
+                    continue;
+                }
+                if (prop.NameEquals("fragments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    fragments = array;
+                    continue;
+                }
+                if (prop.NameEquals("ipLengths"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    ipLengths = array;
+                    continue;
+                }
+                if (prop.NameEquals("ttlValues"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    ttlValues = array;
+                    continue;
+                }
+                if (prop.NameEquals("dscpMarkings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    dscpMarkings = array;
+                    continue;
+                }
+                if (prop.NameEquals("protocolNeighbors"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    protocolNeighbors = array;
+                    continue;
+                }
+                if (prop.NameEquals("portCondition"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("icmpConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    icmpConfiguration = IcmpConfigurationProperties.DeserializeIcmpConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AccessControlListMatchCondition(
                 protocolTypes ?? new ChangeTrackingList<string>(),
                 vlanMatchCondition,
                 ipCondition,
-                serializedAdditionalRawData,
                 etherTypes ?? new ChangeTrackingList<string>(),
                 fragments ?? new ChangeTrackingList<string>(),
                 ipLengths ?? new ChangeTrackingList<string>(),
                 ttlValues ?? new ChangeTrackingList<string>(),
                 dscpMarkings ?? new ChangeTrackingList<string>(),
-                portCondition);
+                protocolNeighbors ?? new ChangeTrackingList<string>(),
+                portCondition,
+                icmpConfiguration,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -268,15 +434,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        AccessControlListMatchCondition IPersistableModel<AccessControlListMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccessControlListMatchCondition IPersistableModel<AccessControlListMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AccessControlListMatchCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAccessControlListMatchCondition(document.RootElement, options);
                     }
                 default:
@@ -284,6 +455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AccessControlListMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

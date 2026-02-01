@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Neighbor Address properties. </summary>
     public partial class NeighborAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         public NeighborAddress()
@@ -52,18 +23,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         /// <param name="address"> IP Address. </param>
+        /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
+        /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeighborAddress(string address, BfdAdministrativeState? bfdAdministrativeState, BgpAdministrativeState? bgpAdministrativeState, ConfigurationState? configurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Address = address;
+            BfdAdministrativeState = bfdAdministrativeState;
+            BgpAdministrativeState = bgpAdministrativeState;
             ConfigurationState = configurationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address. </summary>
         public string Address { get; set; }
+
+        /// <summary> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </summary>
+        public BfdAdministrativeState? BfdAdministrativeState { get; }
+
+        /// <summary> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </summary>
+        public BgpAdministrativeState? BgpAdministrativeState { get; }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public ConfigurationState? ConfigurationState { get; }
     }
 }

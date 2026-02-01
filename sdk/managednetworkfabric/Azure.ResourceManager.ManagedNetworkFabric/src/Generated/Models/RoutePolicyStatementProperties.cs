@@ -7,12 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route Policy Statement properties. </summary>
-    public partial class RoutePolicyStatementProperties : AnnotationResourceProperties
+    public partial class RoutePolicyStatementProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
@@ -30,26 +34,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
         /// <param name="action"> Route policy action properties. </param>
-        internal RoutePolicyStatementProperties(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action) : base(annotation, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoutePolicyStatementProperties(string annotation, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Annotation = annotation;
             SequenceNumber = sequenceNumber;
             Condition = condition;
             Action = action;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/> for deserialization. </summary>
-        internal RoutePolicyStatementProperties()
-        {
-        }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
 
         /// <summary> Sequence to insert to/delete from existing route. </summary>
         public long SequenceNumber { get; set; }
+
         /// <summary> Route policy condition properties. </summary>
         public StatementConditionProperties Condition { get; set; }
+
         /// <summary> Route policy action properties. </summary>
         public StatementActionProperties Action { get; set; }
     }

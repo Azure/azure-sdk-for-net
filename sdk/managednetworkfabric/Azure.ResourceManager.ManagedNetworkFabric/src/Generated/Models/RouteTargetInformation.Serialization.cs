@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RouteTargetInformation : IUtf8JsonSerializable, IJsonModel<RouteTargetInformation>
+    /// <summary> Route Target Configuration. </summary>
+    public partial class RouteTargetInformation : IJsonModel<RouteTargetInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteTargetInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RouteTargetInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,61 +29,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RouteTargetInformation)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsCollectionDefined(ImportIPv4RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIpv4RouteTargets))
             {
                 writer.WritePropertyName("importIpv4RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (var item in ImportIPv4RouteTargets)
+                foreach (string item in ImportIpv4RouteTargets)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ImportIPv6RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIpv6RouteTargets))
             {
                 writer.WritePropertyName("importIpv6RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (var item in ImportIPv6RouteTargets)
+                foreach (string item in ImportIpv6RouteTargets)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExportIPv4RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIpv4RouteTargets))
             {
                 writer.WritePropertyName("exportIpv4RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExportIPv4RouteTargets)
+                foreach (string item in ExportIpv4RouteTargets)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExportIPv6RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIpv6RouteTargets))
             {
                 writer.WritePropertyName("exportIpv6RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExportIPv6RouteTargets)
+                foreach (string item in ExportIpv6RouteTargets)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,103 +111,137 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        RouteTargetInformation IJsonModel<RouteTargetInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RouteTargetInformation IJsonModel<RouteTargetInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RouteTargetInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RouteTargetInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRouteTargetInformation(document.RootElement, options);
         }
 
-        internal static RouteTargetInformation DeserializeRouteTargetInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RouteTargetInformation DeserializeRouteTargetInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> importIPv4RouteTargets = default;
-            IList<string> importIPv6RouteTargets = default;
-            IList<string> exportIPv4RouteTargets = default;
-            IList<string> exportIPv6RouteTargets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> importIpv4RouteTargets = default;
+            IList<string> importIpv6RouteTargets = default;
+            IList<string> exportIpv4RouteTargets = default;
+            IList<string> exportIpv6RouteTargets = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("importIpv4RouteTargets"u8))
+                if (prop.NameEquals("importIpv4RouteTargets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    importIPv4RouteTargets = array;
+                    importIpv4RouteTargets = array;
                     continue;
                 }
-                if (property.NameEquals("importIpv6RouteTargets"u8))
+                if (prop.NameEquals("importIpv6RouteTargets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    importIPv6RouteTargets = array;
+                    importIpv6RouteTargets = array;
                     continue;
                 }
-                if (property.NameEquals("exportIpv4RouteTargets"u8))
+                if (prop.NameEquals("exportIpv4RouteTargets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    exportIPv4RouteTargets = array;
+                    exportIpv4RouteTargets = array;
                     continue;
                 }
-                if (property.NameEquals("exportIpv6RouteTargets"u8))
+                if (prop.NameEquals("exportIpv6RouteTargets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    exportIPv6RouteTargets = array;
+                    exportIpv6RouteTargets = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RouteTargetInformation(importIPv4RouteTargets ?? new ChangeTrackingList<string>(), importIPv6RouteTargets ?? new ChangeTrackingList<string>(), exportIPv4RouteTargets ?? new ChangeTrackingList<string>(), exportIPv6RouteTargets ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RouteTargetInformation(importIpv4RouteTargets ?? new ChangeTrackingList<string>(), importIpv6RouteTargets ?? new ChangeTrackingList<string>(), exportIpv4RouteTargets ?? new ChangeTrackingList<string>(), exportIpv6RouteTargets ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<RouteTargetInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RouteTargetInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -197,15 +251,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        RouteTargetInformation IPersistableModel<RouteTargetInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RouteTargetInformation IPersistableModel<RouteTargetInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RouteTargetInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RouteTargetInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRouteTargetInformation(document.RootElement, options);
                     }
                 default:
@@ -213,6 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RouteTargetInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

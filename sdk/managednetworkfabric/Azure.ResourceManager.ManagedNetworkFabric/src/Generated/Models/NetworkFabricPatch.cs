@@ -7,55 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric resource definition. </summary>
-    public partial class NetworkFabricPatch : NetworkRackPatch
+    public partial class NetworkFabricPatch
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
-        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
-        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
-        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
-        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
-        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration) : base(tags, serializedAdditionalRawData)
+        /// <param name="properties"> Network Fabric Patch properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricPatch(IDictionary<string, string> tags, NetworkFabricPatchProperties properties, ManagedServiceIdentityPatch identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            RackCount = rackCount;
-            ServerCountPerRack = serverCountPerRack;
-            IPv4Prefix = ipv4Prefix;
-            IPv6Prefix = ipv6Prefix;
-            FabricAsn = fabricAsn;
-            TerminalServerConfiguration = terminalServerConfiguration;
-            ManagementNetworkConfiguration = managementNetworkConfiguration;
+            Tags = tags;
+            Properties = properties;
+            Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Number of compute racks associated to Network Fabric. </summary>
-        public int? RackCount { get; set; }
-        /// <summary> Number of servers.Possible values are from 1-16. </summary>
-        public int? ServerCountPerRack { get; set; }
-        /// <summary> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </summary>
-        public string IPv4Prefix { get; set; }
-        /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
-        public string IPv6Prefix { get; set; }
-        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricAsn { get; set; }
-        /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
-        /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Network Fabric Patch properties. </summary>
+        public NetworkFabricPatchProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentityPatch Identity { get; set; }
     }
 }

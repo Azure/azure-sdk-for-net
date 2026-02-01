@@ -7,37 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route policy statement condition properties. </summary>
-    public partial class StatementConditionProperties : IPCommunityIdList
+    public partial class StatementConditionProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         public StatementConditionProperties()
         {
-            IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+            IpCommunityIds = new ChangeTrackingList<string>();
+            IpExtendedCommunityIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="routePolicyConditionType"> Type of the condition used. </param>
-        /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId, IList<ResourceIdentifier> ipExtendedCommunityIds) : base(ipCommunityIds, serializedAdditionalRawData)
+        /// <param name="type"> Type of the condition used. </param>
+        /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StatementConditionProperties(IList<string> ipCommunityIds, IList<string> ipExtendedCommunityIds, RoutePolicyConditionType? @type, string ipPrefixId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RoutePolicyConditionType = routePolicyConditionType;
-            IPPrefixId = ipPrefixId;
-            IPExtendedCommunityIds = ipExtendedCommunityIds;
+            IpCommunityIds = ipCommunityIds;
+            IpExtendedCommunityIds = ipExtendedCommunityIds;
+            Type = @type;
+            IpPrefixId = ipPrefixId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Type of the condition used. </summary>
-        public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
-        /// <summary> Arm Resource Id of IpPrefix. </summary>
-        public ResourceIdentifier IPPrefixId { get; set; }
+        /// <summary> List of IP Community resource IDs. </summary>
+        public IList<string> IpCommunityIds { get; }
+
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
+        public IList<string> IpExtendedCommunityIds { get; }
+
+        /// <summary> Type of the condition used. </summary>
+        public RoutePolicyConditionType? Type { get; set; }
+
+        /// <summary> Arm Resource Id of IpPrefix. </summary>
+        public string IpPrefixId { get; set; }
     }
 }

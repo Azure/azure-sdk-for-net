@@ -5,32 +5,41 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkTapOperationSource : IOperationSource<NetworkTapResource>
+    /// <summary></summary>
+    internal partial class NetworkTapOperationSource : IOperationSource<NetworkTap>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkTapOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal NetworkTapOperationSource()
         {
-            _client = client;
         }
 
-        NetworkTapResource IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkTap IOperationSource<NetworkTap>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return new NetworkTapResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkTap result = NetworkTap.DeserializeNetworkTap(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
-        async ValueTask<NetworkTapResource> IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<NetworkTap> IOperationSource<NetworkTap>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkTapResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkTap result = NetworkTap.DeserializeNetworkTap(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

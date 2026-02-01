@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct BfdAdministrativeState : IEquatable<BfdAdministrativeState>
     {
         private readonly string _value;
+        /// <summary> Represents the enabled state of BFD administrative state. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Represents the disabled state of BFD administrative state. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Represents the MAT(Manual Action Taken) state of BFD administrative state. </summary>
+        private const string MATValue = "MAT";
+        /// <summary> Represents the RMA(Return Material Authorization) state of BFD administrative state. </summary>
+        private const string RMAValue = "RMA";
 
         /// <summary> Initializes a new instance of <see cref="BfdAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BfdAdministrativeState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string MatValue = "MAT";
-        private const string RmaValue = "RMA";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Represents the enabled state of BFD administrative state. </summary>
         public static BfdAdministrativeState Enabled { get; } = new BfdAdministrativeState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Represents the disabled state of BFD administrative state. </summary>
         public static BfdAdministrativeState Disabled { get; } = new BfdAdministrativeState(DisabledValue);
-        /// <summary> MAT. </summary>
-        public static BfdAdministrativeState Mat { get; } = new BfdAdministrativeState(MatValue);
-        /// <summary> RMA. </summary>
-        public static BfdAdministrativeState Rma { get; } = new BfdAdministrativeState(RmaValue);
+
+        /// <summary> Represents the MAT(Manual Action Taken) state of BFD administrative state. </summary>
+        public static BfdAdministrativeState MAT { get; } = new BfdAdministrativeState(MATValue);
+
+        /// <summary> Represents the RMA(Return Material Authorization) state of BFD administrative state. </summary>
+        public static BfdAdministrativeState RMA { get; } = new BfdAdministrativeState(RMAValue);
+
         /// <summary> Determines if two <see cref="BfdAdministrativeState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BfdAdministrativeState left, BfdAdministrativeState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BfdAdministrativeState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BfdAdministrativeState left, BfdAdministrativeState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BfdAdministrativeState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BfdAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BfdAdministrativeState(string value) => new BfdAdministrativeState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BfdAdministrativeState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BfdAdministrativeState?(string value) => value == null ? null : new BfdAdministrativeState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BfdAdministrativeState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BfdAdministrativeState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

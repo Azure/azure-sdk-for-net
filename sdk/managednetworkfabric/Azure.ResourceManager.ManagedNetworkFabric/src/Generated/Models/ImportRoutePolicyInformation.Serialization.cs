@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ImportRoutePolicyInformation : IUtf8JsonSerializable, IJsonModel<ImportRoutePolicyInformation>
+    /// <summary> Import Route Policy Configuration. </summary>
+    public partial class ImportRoutePolicyInformation : IJsonModel<ImportRoutePolicyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportRoutePolicyInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImportRoutePolicyInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +30,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImportRoutePolicyInformation)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ImportIPv4RoutePolicyId))
+            if (Optional.IsDefined(ImportIpv4RoutePolicyId))
             {
                 writer.WritePropertyName("importIpv4RoutePolicyId"u8);
-                writer.WriteStringValue(ImportIPv4RoutePolicyId);
+                writer.WriteStringValue(ImportIpv4RoutePolicyId);
             }
-            if (Optional.IsDefined(ImportIPv6RoutePolicyId))
+            if (Optional.IsDefined(ImportIpv6RoutePolicyId))
             {
                 writer.WritePropertyName("importIpv6RoutePolicyId"u8);
-                writer.WriteStringValue(ImportIPv6RoutePolicyId);
+                writer.WriteStringValue(ImportIpv6RoutePolicyId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,63 +62,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ImportRoutePolicyInformation IJsonModel<ImportRoutePolicyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImportRoutePolicyInformation IJsonModel<ImportRoutePolicyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImportRoutePolicyInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImportRoutePolicyInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImportRoutePolicyInformation(document.RootElement, options);
         }
 
-        internal static ImportRoutePolicyInformation DeserializeImportRoutePolicyInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ImportRoutePolicyInformation DeserializeImportRoutePolicyInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier importIPv4RoutePolicyId = default;
-            ResourceIdentifier importIPv6RoutePolicyId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceIdentifier importIpv4RoutePolicyId = default;
+            ResourceIdentifier importIpv6RoutePolicyId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("importIpv4RoutePolicyId"u8))
+                if (prop.NameEquals("importIpv4RoutePolicyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    importIPv4RoutePolicyId = new ResourceIdentifier(property.Value.GetString());
+                    importIpv4RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("importIpv6RoutePolicyId"u8))
+                if (prop.NameEquals("importIpv6RoutePolicyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    importIPv6RoutePolicyId = new ResourceIdentifier(property.Value.GetString());
+                    importIpv6RoutePolicyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ImportRoutePolicyInformation(importIPv4RoutePolicyId, importIPv6RoutePolicyId, serializedAdditionalRawData);
+            return new ImportRoutePolicyInformation(importIpv4RoutePolicyId, importIpv6RoutePolicyId, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ImportRoutePolicyInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImportRoutePolicyInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,15 +134,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ImportRoutePolicyInformation IPersistableModel<ImportRoutePolicyInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImportRoutePolicyInformation IPersistableModel<ImportRoutePolicyInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImportRoutePolicyInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeImportRoutePolicyInformation(document.RootElement, options);
                     }
                 default:
@@ -143,6 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ImportRoutePolicyInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

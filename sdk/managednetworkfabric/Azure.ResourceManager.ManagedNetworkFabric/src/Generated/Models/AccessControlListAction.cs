@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Action that need to performed. </summary>
     public partial class AccessControlListAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         public AccessControlListAction()
@@ -51,19 +22,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
-        /// <param name="aclActionType"> Type of actions that can be performed. </param>
+        /// <param name="type"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListAction(AclActionType? aclActionType, string counterName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="remarkComment"> Remark comment. </param>
+        /// <param name="policeRateConfiguration"> Police rate configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListAction(AclActionType? @type, string counterName, string remarkComment, PoliceRateConfigurationProperties policeRateConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AclActionType = aclActionType;
+            Type = @type;
             CounterName = counterName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            RemarkComment = remarkComment;
+            PoliceRateConfiguration = policeRateConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of actions that can be performed. </summary>
-        public AclActionType? AclActionType { get; set; }
+        public AclActionType? Type { get; set; }
+
         /// <summary> Name of the counter block to get match count information. </summary>
         public string CounterName { get; set; }
+
+        /// <summary> Remark comment. </summary>
+        public string RemarkComment { get; set; }
+
+        /// <summary> Police rate configuration. </summary>
+        public PoliceRateConfigurationProperties PoliceRateConfiguration { get; set; }
     }
 }

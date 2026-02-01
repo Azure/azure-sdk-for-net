@@ -7,33 +7,52 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
-    public partial class NetworkTapRuleMatchCondition : CommonMatchConditions
+    public partial class NetworkTapRuleMatchCondition
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleMatchCondition"/>. </summary>
         public NetworkTapRuleMatchCondition()
         {
+            ProtocolTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleMatchCondition"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkTapEncapsulationType? encapsulationType, NetworkFabricPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IpMatchCondition ipCondition, EncapsulationType? encapsulationType, PortCondition portCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ProtocolTypes = protocolTypes;
+            VlanMatchCondition = vlanMatchCondition;
+            IpCondition = ipCondition;
             EncapsulationType = encapsulationType;
             PortCondition = portCondition;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> List of the protocols that need to be matched. </summary>
+        public IList<string> ProtocolTypes { get; }
+
+        /// <summary> Vlan match condition that needs to be matched. </summary>
+        public VlanMatchCondition VlanMatchCondition { get; set; }
+
+        /// <summary> IP condition that needs to be matched. </summary>
+        public IpMatchCondition IpCondition { get; set; }
+
         /// <summary> Encapsulation Type that needs to be matched. </summary>
-        public NetworkTapEncapsulationType? EncapsulationType { get; set; }
+        public EncapsulationType? EncapsulationType { get; set; }
+
         /// <summary> Defines the port condition that needs to be matched. </summary>
-        public NetworkFabricPortCondition PortCondition { get; set; }
+        public PortCondition PortCondition { get; set; }
     }
 }

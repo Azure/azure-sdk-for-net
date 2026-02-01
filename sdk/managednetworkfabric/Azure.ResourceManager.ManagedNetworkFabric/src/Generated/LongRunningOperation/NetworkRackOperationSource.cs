@@ -5,32 +5,41 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkRackOperationSource : IOperationSource<NetworkRackResource>
+    /// <summary></summary>
+    internal partial class NetworkRackOperationSource : IOperationSource<NetworkRack>
     {
-        private readonly ArmClient _client;
-
-        internal NetworkRackOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal NetworkRackOperationSource()
         {
-            _client = client;
         }
 
-        NetworkRackResource IOperationSource<NetworkRackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkRack IOperationSource<NetworkRack>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkRackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return new NetworkRackResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkRack result = NetworkRack.DeserializeNetworkRack(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
-        async ValueTask<NetworkRackResource> IOperationSource<NetworkRackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<NetworkRack> IOperationSource<NetworkRack>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkRackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
-            return await Task.FromResult(new NetworkRackResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkRack result = NetworkRack.DeserializeNetworkRack(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

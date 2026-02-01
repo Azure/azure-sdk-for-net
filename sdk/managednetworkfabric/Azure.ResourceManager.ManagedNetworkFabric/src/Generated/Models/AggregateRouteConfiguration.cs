@@ -7,65 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
     public partial class AggregateRouteConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
         public AggregateRouteConfiguration()
         {
-            IPv4Routes = new ChangeTrackingList<AggregateRoute>();
-            IPv6Routes = new ChangeTrackingList<AggregateRoute>();
+            Ipv4Routes = new ChangeTrackingList<AggregateRoute>();
+            Ipv6Routes = new ChangeTrackingList<AggregateRoute>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
         /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
         /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPv4Routes = ipv4Routes;
-            IPv6Routes = ipv6Routes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Ipv4Routes = ipv4Routes;
+            Ipv6Routes = ipv6Routes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IPv4 Route prefixes. </summary>
-        public IList<AggregateRoute> IPv4Routes { get; }
+        public IList<AggregateRoute> Ipv4Routes { get; }
+
         /// <summary> List of Ipv6Routes prefixes. </summary>
-        public IList<AggregateRoute> IPv6Routes { get; }
+        public IList<AggregateRoute> Ipv6Routes { get; }
     }
 }
