@@ -7,41 +7,110 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Partial update of a Dev Box definition resource. </summary>
-    public partial class DevBoxDefinitionPatch : DevCenterTrackedResourceUpdate
+    public partial class DevBoxDefinitionPatch
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionPatch"/>. </summary>
         public DevBoxDefinitionPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="imageReference"> Image reference information. </param>
-        /// <param name="sku"> The SKU for Dev Boxes created using this definition. </param>
-        /// <param name="osStorageType"> The storage type used for the Operating System disk of Dev Boxes created using this definition. </param>
-        /// <param name="hibernateSupport"> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of a Dev Box definition to be updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, string location, DevBoxDefinitionUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImageReference = imageReference;
-            Sku = sku;
-            OSStorageType = osStorageType;
-            HibernateSupport = hibernateSupport;
+            Tags = tags;
+            Location = location;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; set; }
+
+        /// <summary> Properties of a Dev Box definition to be updated. </summary>
+        internal DevBoxDefinitionUpdateProperties Properties { get; set; }
+
         /// <summary> Image reference information. </summary>
-        public DevCenterImageReference ImageReference { get; set; }
+        public ImageReference ImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.ImageReference = value;
+            }
+        }
+
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>
-        public DevCenterSku Sku { get; set; }
+        public DevCenterSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
-        public string OSStorageType { get; set; }
+        public string OsStorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OsStorageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.OsStorageType = value;
+            }
+        }
+
         /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
-        public DevCenterHibernateSupport? HibernateSupport { get; set; }
+        public HibernateSupport? HibernateSupport
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HibernateSupport;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.HibernateSupport = value.Value;
+            }
+        }
     }
 }

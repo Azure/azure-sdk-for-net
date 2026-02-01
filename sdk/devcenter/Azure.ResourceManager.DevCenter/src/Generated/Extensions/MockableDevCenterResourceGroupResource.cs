@@ -8,33 +8,81 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevCenter.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDevCenterResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDevCenterResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _imagesClientDiagnostics;
+        private Images _imagesRestClient;
+        private ClientDiagnostics _attachedNetworksClientDiagnostics;
+        private AttachedNetworks _attachedNetworksRestClient;
+        private ClientDiagnostics _catalogsClientDiagnostics;
+        private Catalogs _catalogsRestClient;
+        private ClientDiagnostics _environmentDefinitionsClientDiagnostics;
+        private EnvironmentDefinitions _environmentDefinitionsRestClient;
+        private ClientDiagnostics _imageVersionsClientDiagnostics;
+        private ImageVersions _imageVersionsRestClient;
+        private ClientDiagnostics _devBoxDefinitionsClientDiagnostics;
+        private DevBoxDefinitions _devBoxDefinitionsRestClient;
+        private ClientDiagnostics _projectCatalogImageDefinitionsClientDiagnostics;
+        private ProjectCatalogImageDefinitions _projectCatalogImageDefinitionsRestClient;
+        private ClientDiagnostics _devCenterCatalogImageDefinitionBuildsClientDiagnostics;
+        private DevCenterCatalogImageDefinitionBuilds _devCenterCatalogImageDefinitionBuildsRestClient;
+
+        /// <summary> Initializes a new instance of MockableDevCenterResourceGroupResource for mocking. </summary>
         protected MockableDevCenterResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevCenterResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDevCenterResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDevCenterResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics ImagesClientDiagnostics => _imagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DevCenterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
+        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics AttachedNetworksClientDiagnostics => _attachedNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AttachedNetworks AttachedNetworksRestClient => _attachedNetworksRestClient ??= new AttachedNetworks(AttachedNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics CatalogsClientDiagnostics => _catalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Catalogs CatalogsRestClient => _catalogsRestClient ??= new Catalogs(CatalogsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics EnvironmentDefinitionsClientDiagnostics => _environmentDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EnvironmentDefinitions EnvironmentDefinitionsRestClient => _environmentDefinitionsRestClient ??= new EnvironmentDefinitions(EnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics ImageVersionsClientDiagnostics => _imageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ImageVersions ImageVersionsRestClient => _imageVersionsRestClient ??= new ImageVersions(ImageVersionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics DevBoxDefinitionsClientDiagnostics => _devBoxDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DevBoxDefinitions DevBoxDefinitionsRestClient => _devBoxDefinitionsRestClient ??= new DevBoxDefinitions(DevBoxDefinitionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics ProjectCatalogImageDefinitionsClientDiagnostics => _projectCatalogImageDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProjectCatalogImageDefinitions ProjectCatalogImageDefinitionsRestClient => _projectCatalogImageDefinitionsRestClient ??= new ProjectCatalogImageDefinitions(ProjectCatalogImageDefinitionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics DevCenterCatalogImageDefinitionBuildsClientDiagnostics => _devCenterCatalogImageDefinitionBuildsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DevCenterCatalogImageDefinitionBuilds DevCenterCatalogImageDefinitionBuildsRestClient => _devCenterCatalogImageDefinitionBuildsRestClient ??= new DevCenterCatalogImageDefinitionBuilds(DevCenterCatalogImageDefinitionBuildsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        /// <summary> Gets a collection of DevCenters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenters and their operations over a DevCenterResource. </returns>
         public virtual DevCenterCollection GetDevCenters()
         {
             return GetCachedClient(client => new DevCenterCollection(client, Id));
@@ -44,20 +92,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +112,8 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterResource>> GetDevCenterAsync(string devCenterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
             return await GetDevCenters().GetAsync(devCenterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +121,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,34 +141,32 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual Response<DevCenterResource> GetDevCenter(string devCenterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
             return GetDevCenters().Get(devCenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
-        public virtual DevCenterProjectCollection GetDevCenterProjects()
+        /// <summary> Gets a collection of Projects in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Projects and their operations over a ProjectResource. </returns>
+        public virtual ProjectCollection GetProjects()
         {
-            return GetCachedClient(client => new DevCenterProjectCollection(client, Id));
+            return GetCachedClient(client => new ProjectCollection(client, Id));
         }
 
         /// <summary>
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,29 +175,27 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            return await GetDevCenterProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,36 +204,34 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevCenterProjectResource> GetDevCenterProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
-            return GetDevCenterProjects().Get(projectName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return GetProjects().Get(projectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
-        public virtual DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections()
+        /// <summary> Gets a collection of NetworkConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkConnections and their operations over a NetworkConnectionResource. </returns>
+        public virtual NetworkConnectionCollection GetNetworkConnections()
         {
-            return GetCachedClient(client => new DevCenterNetworkConnectionCollection(client, Id));
+            return GetCachedClient(client => new NetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,29 +240,27 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(string networkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkConnectionResource>> GetNetworkConnectionAsync(string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            return await GetNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,9 +269,655 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(string networkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkConnectionResource> GetNetworkConnection(string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
+            return GetNetworkConnections().Get(networkConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists images for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ImageResource> GetImagesAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImageData, ImageResource>(new ImagesGetByProjectAsyncCollectionResultOfT(ImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, context), data => new ImageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists images for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ImageResource> GetImages(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImageData, ImageResource>(new ImagesGetByProjectCollectionResultOfT(ImagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, context), data => new ImageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the attached NetworkConnections for a DevCenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AttachedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AttachedNetworkResource> GetAttachedNetworksAsync(string devCenterName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AttachedNetworkConnectionData, AttachedNetworkResource>(new AttachedNetworksGetByDevCenterAsyncCollectionResultOfT(
+                AttachedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                top,
+                context), data => new AttachedNetworkResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the attached NetworkConnections for a DevCenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttachedNetworks_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AttachedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AttachedNetworkResource> GetAttachedNetworks(string devCenterName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AttachedNetworkConnectionData, AttachedNetworkResource>(new AttachedNetworksGetByDevCenterCollectionResultOfT(
+                AttachedNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                top,
+                context), data => new AttachedNetworkResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists catalogs for a devcenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CatalogResource> GetCatalogsAsync(string devCenterName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CatalogData, CatalogResource>(new CatalogsGetByDevCenterAsyncCollectionResultOfT(
+                CatalogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                top,
+                context), data => new CatalogResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists catalogs for a devcenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CatalogOperationGroup_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CatalogResource> GetCatalogs(string devCenterName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CatalogData, CatalogResource>(new CatalogsGetByDevCenterCollectionResultOfT(
+                CatalogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                top,
+                context), data => new CatalogResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the environment definitions in this project catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentDefinitions_ListByProjectCatalog. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EnvironmentDefinitionResource> GetEnvironmentDefinitionsAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EnvironmentDefinitionData, EnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogAsyncCollectionResultOfT(
+                EnvironmentDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                catalogName,
+                context), data => new EnvironmentDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the environment definitions in this project catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnvironmentDefinitions_ListByProjectCatalog. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EnvironmentDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EnvironmentDefinitionResource> GetEnvironmentDefinitions(string projectName, string catalogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EnvironmentDefinitionData, EnvironmentDefinitionResource>(new EnvironmentDefinitionsGetByProjectCatalogCollectionResultOfT(
+                EnvironmentDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                catalogName,
+                context), data => new EnvironmentDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists versions for an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ImageVersionResource> GetImageVersionsAsync(string projectName, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImageVersionData, ImageVersionResource>(new ImageVersionsGetByProjectAsyncCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                imageName,
+                context), data => new ImageVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists versions for an image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ImageVersionResource> GetImageVersions(string projectName, string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImageVersionData, ImageVersionResource>(new ImageVersionsGetByProjectCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                imageName,
+                context), data => new ImageVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Dev Box definitions configured for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitionOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevBoxDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevBoxDefinitionResource> GetDevBoxDefinitionsAsync(string projectName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevBoxDefinitionData, DevBoxDefinitionResource>(new DevBoxDefinitionsGetByProjectAsyncCollectionResultOfT(
+                DevBoxDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                top,
+                context), data => new DevBoxDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Dev Box definitions configured for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitionOperationGroup_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevBoxDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevBoxDefinitionResource> GetDevBoxDefinitions(string projectName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevBoxDefinitionData, DevBoxDefinitionResource>(new DevBoxDefinitionsGetByProjectCollectionResultOfT(
+                DevBoxDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                top,
+                context), data => new DevBoxDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Image Definitions in the catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/imageDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectCatalogImageDefinitions_ListByProjectCatalog. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProjectCatalogImageDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProjectCatalogImageDefinitionResource> GetProjectCatalogImageDefinitionsAsync(string projectName, string catalogName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ProjectCatalogImageDefinitionsGetByProjectCatalogAsyncCollectionResultOfT(
+                ProjectCatalogImageDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                catalogName,
+                top,
+                context), data => new ProjectCatalogImageDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Image Definitions in the catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/catalogs/{catalogName}/imageDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProjectCatalogImageDefinitions_ListByProjectCatalog. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProjectCatalogImageDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProjectCatalogImageDefinitionResource> GetProjectCatalogImageDefinitions(string projectName, string catalogName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImageDefinitionData, ProjectCatalogImageDefinitionResource>(new ProjectCatalogImageDefinitionsGetByProjectCatalogCollectionResultOfT(
+                ProjectCatalogImageDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                projectName,
+                catalogName,
+                top,
+                context), data => new ProjectCatalogImageDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists builds for a specified image definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}/builds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageDefinitionBuilds_ListByImageDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProjectCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProjectCatalogImageDefinitionBuildResource> GetDevCenterCatalogImageDefinitionBuildsAsync(string devCenterName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(imageDefinitionName, nameof(imageDefinitionName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionAsyncCollectionResultOfT(
+                DevCenterCatalogImageDefinitionBuildsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                catalogName,
+                imageDefinitionName,
+                context), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists builds for a specified image definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/catalogs/{catalogName}/imageDefinitions/{imageDefinitionName}/builds. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ImageDefinitionBuilds_ListByImageDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devCenterName"> The name of the devcenter. </param>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="imageDefinitionName"> The name of the Image Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devCenterName"/>, <paramref name="catalogName"/> or <paramref name="imageDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProjectCatalogImageDefinitionBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProjectCatalogImageDefinitionBuildResource> GetDevCenterCatalogImageDefinitionBuilds(string devCenterName, string catalogName, string imageDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(imageDefinitionName, nameof(imageDefinitionName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ImageDefinitionBuildData, ProjectCatalogImageDefinitionBuildResource>(new DevCenterCatalogImageDefinitionBuildsGetByImageDefinitionCollectionResultOfT(
+                DevCenterCatalogImageDefinitionBuildsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                devCenterName,
+                catalogName,
+                imageDefinitionName,
+                context), data => new ProjectCatalogImageDefinitionBuildResource(Client, data));
         }
     }
 }

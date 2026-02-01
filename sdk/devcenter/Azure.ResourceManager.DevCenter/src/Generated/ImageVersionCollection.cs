@@ -6,87 +6,96 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ImageVersionResource"/> and their operations.
-    /// Each <see cref="ImageVersionResource"/> in the collection will belong to the same instance of <see cref="DevCenterImageResource"/>.
-    /// To get an <see cref="ImageVersionCollection"/> instance call the GetImageVersions method from an instance of <see cref="DevCenterImageResource"/>.
+    /// Each <see cref="ImageVersionResource"/> in the collection will belong to the same instance of <see cref="ImageResource"/>.
+    /// To get a <see cref="ImageVersionCollection"/> instance call the GetImageVersions method from an instance of <see cref="ImageResource"/>.
     /// </summary>
-    public partial class ImageVersionCollection : ArmCollection, IEnumerable<ImageVersionResource>, IAsyncEnumerable<ImageVersionResource>
+    public partial class ImageVersionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _imageVersionClientDiagnostics;
-        private readonly ImageVersionsRestOperations _imageVersionRestClient;
+        private readonly ClientDiagnostics _imageVersionsClientDiagnostics;
+        private readonly ImageVersions _imageVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ImageVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ImageVersionCollection for mocking. </summary>
         protected ImageVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImageVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImageVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _imageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ImageVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ImageVersionResource.ResourceType, out string imageVersionApiVersion);
-            _imageVersionRestClient = new ImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, imageVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            this.TryGetApiVersion(ImageVersionResource.ResourceType, out string imageVersionApiVersion);
+            _imageVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ImageVersionResource.ResourceType.Namespace, Diagnostics);
+            _imageVersionsRestClient = new ImageVersions(_imageVersionsClientDiagnostics, Pipeline, Endpoint, imageVersionApiVersion ?? "2026-01-01-preview");
+            ImageVersionCollection.ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevCenterImageResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterImageResource.ResourceType), nameof(id));
+            if (id.ResourceType != ImageResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ImageResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets an image version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual async Task<Response<ImageVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ImageVersionResource>> GetAsync(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Get");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _imageVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImageVersionData> response = Response.FromValue(ImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +109,46 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets an image version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual Response<ImageVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ImageVersionResource> Get(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Get");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _imageVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImageVersionData> response = Response.FromValue(ImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -139,102 +156,60 @@ namespace Azure.ResourceManager.DevCenter
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists versions for an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImageVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists versions for an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImageVersionResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _imageVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImageVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImageVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImageVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +223,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _imageVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImageVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImageVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImageVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +284,58 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ImageVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ImageVersionResource>> GetIfExistsAsync(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _imageVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ImageVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImageVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImageVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImageVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +349,58 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersionOperationGroup_GetByProject. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="imageName"> The name of the image. </param>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public virtual NullableResponse<ImageVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="imageName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ImageVersionResource> GetIfExists(string projectName, string imageName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _imageVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, projectName, imageName, versionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ImageVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ImageVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ImageVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ImageVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,21 +408,6 @@ namespace Azure.ResourceManager.DevCenter
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ImageVersionResource> IEnumerable<ImageVersionResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ImageVersionResource> IAsyncEnumerable<ImageVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

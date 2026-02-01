@@ -7,52 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The resource model definition representing SKU. </summary>
-    public partial class DevCenterSku
+    /// <summary> The resource model definition representing SKU for DevCenter resources. </summary>
+    public partial class DevCenterSku : DevCenterSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DevCenterSku"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DevCenterSku(string name)
+        internal DevCenterSku(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
+            Locations = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<Capability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterSku"/>. </summary>
@@ -61,31 +28,24 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterSku(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="resourceType"> The name of the resource type. </param>
+        /// <param name="locations"> SKU supported locations. </param>
+        /// <param name="capabilities"> Collection of name/value pairs to describe the SKU capabilities. </param>
+        internal DevCenterSku(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties, string resourceType, IReadOnlyList<string> locations, IReadOnlyList<Capability> capabilities) : base(name, tier, size, family, capacity, additionalBinaryDataProperties)
         {
-            Name = name;
-            Tier = tier;
-            Size = size;
-            Family = family;
-            Capacity = capacity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ResourceType = resourceType;
+            Locations = locations;
+            Capabilities = capabilities;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterSku"/> for deserialization. </summary>
-        internal DevCenterSku()
-        {
-        }
+        /// <summary> The name of the resource type. </summary>
+        public string ResourceType { get; }
 
-        /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
-        public string Name { get; set; }
-        /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
-        public DevCenterSkuTier? Tier { get; set; }
-        /// <summary> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </summary>
-        public string Size { get; set; }
-        /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
-        public string Family { get; set; }
-        /// <summary> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </summary>
-        public int? Capacity { get; set; }
+        /// <summary> SKU supported locations. </summary>
+        public IReadOnlyList<string> Locations { get; }
+
+        /// <summary> Collection of name/value pairs to describe the SKU capabilities. </summary>
+        public IReadOnlyList<Capability> Capabilities { get; }
     }
 }

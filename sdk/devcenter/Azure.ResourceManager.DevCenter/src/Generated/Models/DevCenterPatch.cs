@@ -7,30 +7,133 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The devcenter resource for partial updates. Properties not provided in the update request will not be changed. </summary>
-    public partial class DevCenterPatch : DevCenterTrackedResourceUpdate
+    public partial class DevCenterPatch
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         public DevCenterPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of a Dev Center to be updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterPatch(IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, DevCenterUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Tags = tags;
+            Location = location;
             Identity = identity;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; set; }
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Properties of a Dev Center to be updated. </summary>
+        internal DevCenterUpdateProperties Properties { get; set; }
+
+        /// <summary> The display name of the devcenter. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Whether project catalogs associated with projects in this dev center can be configured to sync catalog items. </summary>
+        public CatalogItemSyncEnableStatus? CatalogItemSyncEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CatalogItemSyncEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.CatalogItemSyncEnableStatus = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether pools in this Dev Center can use Microsoft Hosted Networks. Defaults to Enabled if not set. </summary>
+        public MicrosoftHostedNetworkEnableStatus? MicrosoftHostedNetworkEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftHostedNetworkEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.MicrosoftHostedNetworkEnableStatus = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether to install the Azure Monitor Agent service on Dev Boxes that belong to this dev center. </summary>
+        public InstallAzureMonitorAgentEnableStatus? DevBoxProvisioningInstallAzureMonitorAgentEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxProvisioningInstallAzureMonitorAgentEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevCenterUpdateProperties();
+                }
+                Properties.DevBoxProvisioningInstallAzureMonitorAgentEnableStatus = value.Value;
+            }
+        }
     }
 }
