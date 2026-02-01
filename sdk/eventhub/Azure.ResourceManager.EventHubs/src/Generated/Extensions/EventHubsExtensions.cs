@@ -8,173 +8,80 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs.Mocking;
-using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager._EventHubs.Mocking;
+using Azure.ResourceManager._EventHubs.Models;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager._EventHubs
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.EventHubs. </summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager._EventHubs. </summary>
     public static partial class EventHubsExtensions
     {
+        /// <param name="client"></param>
         private static MockableEventHubsArmClient GetMockableEventHubsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableEventHubsArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableEventHubsArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableEventHubsResourceGroupResource GetMockableEventHubsResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableEventHubsResourceGroupResource GetMockableEventHubsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableEventHubsResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableEventHubsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableEventHubsSubscriptionResource GetMockableEventHubsSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableEventHubsSubscriptionResource GetMockableEventHubsSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableEventHubsSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableEventHubsSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsClusterResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsClusterResource"/> object. </returns>
-        public static EventHubsClusterResource GetEventHubsClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
+        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEventHubsArmClient(client).GetEventHubsClusterResource(id);
+            return GetMockableEventHubsArmClient(client).GetClusterResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsNamespaceResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DisasterRecoveryConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetDisasterRecoveryConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsNamespaceResource"/> object. </returns>
-        public static EventHubsNamespaceResource GetEventHubsNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryConfigResource"/> object. </returns>
+        public static DisasterRecoveryConfigResource GetDisasterRecoveryConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEventHubsArmClient(client).GetEventHubsNamespaceResource(id);
+            return GetMockableEventHubsArmClient(client).GetDisasterRecoveryConfigResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsNamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EventHubsDisasterRecoveryResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> object. </returns>
-        public static EventHubsNamespaceAuthorizationRuleResource GetEventHubsNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsNamespaceAuthorizationRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
-        public static EventHubsDisasterRecoveryAuthorizationRuleResource GetEventHubsDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsDisasterRecoveryAuthorizationRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource"/> object. </returns>
-        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubAuthorizationRuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubsNetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsNetworkRuleSetResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsNetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNetworkRuleSetResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
-        public static EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsNetworkRuleSetResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubsApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsApplicationGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource"/> object. </returns>
-        public static EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetEventHubsApplicationGroupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsDisasterRecoveryResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsDisasterRecoveryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EventHubsDisasterRecoveryResource"/> object. </returns>
@@ -186,14 +93,31 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AuthorizationRuleResource"/> object. </returns>
+        public static AuthorizationRuleResource GetAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetAuthorizationRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EventHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EventHubResource"/> object. </returns>
@@ -205,14 +129,67 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsConsumerGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsConsumerGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsConsumerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EventHubResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsConsumerGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubResource"/> object. </returns>
+        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EventHubsNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static EventHubsNetworkSecurityPerimeterConfigurationResource GetEventHubsNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsNetworkSecurityPerimeterConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EventHubsConsumerGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsConsumerGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EventHubsConsumerGroupResource"/> object. </returns>
@@ -224,33 +201,49 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EventHubsNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNamespaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventHubsPrivateEndpointConnectionResource"/> object. </returns>
-        public static EventHubsPrivateEndpointConnectionResource GetEventHubsPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubsNamespaceResource"/> object. </returns>
+        public static EventHubsNamespaceResource GetEventHubsNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEventHubsArmClient(client).GetEventHubsPrivateEndpointConnectionResource(id);
+            return GetMockableEventHubsArmClient(client).GetEventHubsNamespaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsSchemaGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsSchemaGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsSchemaGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EventHubsNetworkRuleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsSchemaGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNetworkRuleSetResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
+        public static EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsNetworkRuleSetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EventHubsSchemaGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsSchemaGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EventHubsSchemaGroupResource"/> object. </returns>
@@ -262,108 +255,88 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets a collection of EventHubsClusterResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="EventHubsApplicationGroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsClusters()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsApplicationGroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource"/> object. </returns>
+        public static EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsApplicationGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetClusters()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of EventHubsClusterResources and their operations over a EventHubsClusterResource. </returns>
-        public static EventHubsClusterCollection GetEventHubsClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
+        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetEventHubsClusters();
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetClusters();
         }
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetClusterAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventHubsClusterResource>> GetEventHubsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetEventHubsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsCluster(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetCluster(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventHubsClusterResource> GetEventHubsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetEventHubsCluster(clusterName, cancellationToken);
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of EventHubsNamespaceResources in the ResourceGroupResource.
+        /// Gets a collection of EventHubsNamespaces in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespaces()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespaces()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of EventHubsNamespaceResources and their operations over a EventHubsNamespaceResource. </returns>
+        /// <returns> An object representing collection of EventHubsNamespaces and their operations over a EventHubsNamespaceResource. </returns>
         public static EventHubsNamespaceCollection GetEventHubsNamespaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -373,34 +346,15 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the description of the specified namespace.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespaceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EventHubsNamespaceResource>> GetEventHubsNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
@@ -411,34 +365,15 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the description of the specified namespace.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespace(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsNamespace(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<EventHubsNamespaceResource> GetEventHubsNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
@@ -448,250 +383,132 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
-        /// <list type="bullet">
+        /// Gets a list of authorization rules for a Namespace.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListAvailableClusterRegion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetDisasterRecoveryConfigsAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AvailableCluster"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DisasterRecoveryConfigResource> GetDisasterRecoveryConfigsAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetAvailableClusterRegionClustersAsync(cancellationToken);
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetDisasterRecoveryConfigsAsync(namespaceName, @alias, cancellationToken);
         }
 
         /// <summary>
-        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
-        /// <list type="bullet">
+        /// Gets a list of authorization rules for a Namespace.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListAvailableClusterRegion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetDisasterRecoveryConfigs(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableCluster"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableCluster> GetAvailableClusterRegionClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DisasterRecoveryConfigResource> GetDisasterRecoveryConfigs(this ResourceGroupResource resourceGroupResource, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetAvailableClusterRegionClusters(cancellationToken);
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetDisasterRecoveryConfigs(namespaceName, @alias, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the available Event Hubs Clusters within an ARM resource group
-        /// <list type="bullet">
+        /// Gets the authorization rules for an Event Hub.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsClusters(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubsAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventHubsClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventHubsClusterResource> GetEventHubsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DisasterRecoveryConfigResource> GetEventHubsAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetEventHubsClustersAsync(cancellationToken);
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetEventHubsAsync(namespaceName, eventHubName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the authorization rules for an Event Hub.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsResourceGroupResource.GetEventHubs(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DisasterRecoveryConfigResource> GetEventHubs(this ResourceGroupResource resourceGroupResource, string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableEventHubsResourceGroupResource(resourceGroupResource).GetEventHubs(namespaceName, eventHubName, cancellationToken);
         }
 
         /// <summary>
         /// Lists the available Event Hubs Clusters within an ARM resource group
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsClusters(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetClustersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventHubsClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventHubsClusterResource> GetEventHubsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetEventHubsClusters(cancellationToken);
+            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetClustersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Check the give Namespace name availability.
-        /// <list type="bullet">
+        /// Lists the available Event Hubs Clusters within an ARM resource group
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability(EventHubsNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetClusters(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableEventHubsSubscriptionResource(subscriptionResource).CheckEventHubsNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check the give Namespace name availability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability(EventHubsNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(this SubscriptionResource subscriptionResource, EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableEventHubsSubscriptionResource(subscriptionResource).CheckEventHubsNamespaceNameAvailability(content, cancellationToken);
+            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetClusters(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsNamespaces(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsNamespacesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventHubsNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubsNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventHubsNamespaceResource> GetEventHubsNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -701,30 +518,12 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsNamespaces(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetEventHubsNamespaces(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EventHubsNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
@@ -733,6 +532,76 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetEventHubsNamespaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetAvailableClusterRegionAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AvailableClustersList>> GetAvailableClusterRegionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableEventHubsSubscriptionResource(subscriptionResource).GetAvailableClusterRegionAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.GetAvailableClusterRegion(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AvailableClustersList> GetAvailableClusterRegion(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEventHubsSubscriptionResource(subscriptionResource).GetAvailableClusterRegion(cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.CheckNameAvailabilityAsync(EventHubsNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="eventHubsNameAvailabilityContent"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<EventHubsNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, EventHubsNameAvailabilityContent eventHubsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableEventHubsSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(eventHubsNameAvailabilityContent, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the give Namespace name availability.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsSubscriptionResource.CheckNameAvailability(EventHubsNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="eventHubsNameAvailabilityContent"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<EventHubsNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, EventHubsNameAvailabilityContent eventHubsNameAvailabilityContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableEventHubsSubscriptionResource(subscriptionResource).CheckNameAvailability(eventHubsNameAvailabilityContent, cancellationToken);
         }
     }
 }

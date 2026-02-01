@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager._EventHubs.Models
 {
     /// <summary> Specifies the reason for the unavailability of the service. </summary>
     public enum EventHubsNameUnavailableReason

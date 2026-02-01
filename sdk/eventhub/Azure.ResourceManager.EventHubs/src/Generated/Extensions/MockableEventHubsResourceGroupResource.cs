@@ -8,56 +8,64 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager._EventHubs;
 
-namespace Azure.ResourceManager.EventHubs.Mocking
+namespace Azure.ResourceManager._EventHubs.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEventHubsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEventHubsResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _disasterRecoveryConfigsClientDiagnostics;
+        private DisasterRecoveryConfigs _disasterRecoveryConfigsRestClient;
+        private ClientDiagnostics _eventHubsClientDiagnostics;
+        private EventHubs _eventHubsRestClient;
+
+        /// <summary> Initializes a new instance of MockableEventHubsResourceGroupResource for mocking. </summary>
         protected MockableEventHubsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEventHubsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEventHubsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEventHubsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics DisasterRecoveryConfigsClientDiagnostics => _disasterRecoveryConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager._EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of EventHubsClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventHubsClusterResources and their operations over a EventHubsClusterResource. </returns>
-        public virtual EventHubsClusterCollection GetEventHubsClusters()
+        private DisasterRecoveryConfigs DisasterRecoveryConfigsRestClient => _disasterRecoveryConfigsRestClient ??= new DisasterRecoveryConfigs(DisasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        private ClientDiagnostics EventHubsClientDiagnostics => _eventHubsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager._EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EventHubs EventHubsRestClient => _eventHubsRestClient ??= new EventHubs(EventHubsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
+        public virtual ClusterCollection GetClusters()
         {
-            return GetCachedClient(client => new EventHubsClusterCollection(client, Id));
+            return GetCachedClient(client => new ClusterCollection(client, Id));
         }
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +74,27 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsClusterResource>> GetEventHubsClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetEventHubsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,13 +103,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventHubsClusterResource> GetEventHubsCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetEventHubsClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return GetClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventHubsNamespaceResources and their operations over a EventHubsNamespaceResource. </returns>
+        /// <summary> Gets a collection of EventHubsNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventHubsNamespaces and their operations over a EventHubsNamespaceResource. </returns>
         public virtual EventHubsNamespaceCollection GetEventHubsNamespaces()
         {
             return GetCachedClient(client => new EventHubsNamespaceCollection(client, Id));
@@ -113,20 +121,16 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EHNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +141,8 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsNamespaceResource>> GetEventHubsNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return await GetEventHubsNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +150,16 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EHNamespaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +170,173 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual Response<EventHubsNamespaceResource> GetEventHubsNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
             return GetEventHubsNamespaces().Get(namespaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of authorization rules for a Namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DisasterRecoveryConfigs_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DisasterRecoveryConfigResource> GetDisasterRecoveryConfigsAsync(string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, DisasterRecoveryConfigResource>(new DisasterRecoveryConfigsGetAuthorizationRulesAsyncCollectionResultOfT(
+                DisasterRecoveryConfigsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                @alias,
+                context), data => new DisasterRecoveryConfigResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of authorization rules for a Namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DisasterRecoveryConfigs_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DisasterRecoveryConfigResource> GetDisasterRecoveryConfigs(string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EventHubsAuthorizationRuleData, DisasterRecoveryConfigResource>(new DisasterRecoveryConfigsGetAuthorizationRulesCollectionResultOfT(
+                DisasterRecoveryConfigsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                @alias,
+                context), data => new DisasterRecoveryConfigResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the authorization rules for an Event Hub.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventHubs_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DisasterRecoveryConfigResource> GetEventHubsAsync(string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, DisasterRecoveryConfigResource>(new EventHubsGetAuthorizationRulesAsyncCollectionResultOfT(
+                EventHubsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                eventHubName,
+                context), data => new DisasterRecoveryConfigResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the authorization rules for an Event Hub.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventHubs_ListAuthorizationRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The Namespace name. </param>
+        /// <param name="eventHubName"> The Event Hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DisasterRecoveryConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DisasterRecoveryConfigResource> GetEventHubs(string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EventHubsAuthorizationRuleData, DisasterRecoveryConfigResource>(new EventHubsGetAuthorizationRulesCollectionResultOfT(
+                EventHubsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                namespaceName,
+                eventHubName,
+                context), data => new DisasterRecoveryConfigResource(Client, data));
         }
     }
 }

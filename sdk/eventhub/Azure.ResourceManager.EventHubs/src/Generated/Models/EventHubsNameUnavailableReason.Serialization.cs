@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager._EventHubs.Models
 {
     internal static partial class EventHubsNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EventHubsNameUnavailableReason value) => value switch
         {
             EventHubsNameUnavailableReason.None => "None",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.EventHubs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static EventHubsNameUnavailableReason ToEventHubsNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return EventHubsNameUnavailableReason.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName")) return EventHubsNameUnavailableReason.InvalidName;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled")) return EventHubsNameUnavailableReason.SubscriptionIsDisabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse")) return EventHubsNameUnavailableReason.NameInUse;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown")) return EventHubsNameUnavailableReason.NameInLockdown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription")) return EventHubsNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return EventHubsNameUnavailableReason.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName"))
+            {
+                return EventHubsNameUnavailableReason.InvalidName;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled"))
+            {
+                return EventHubsNameUnavailableReason.SubscriptionIsDisabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse"))
+            {
+                return EventHubsNameUnavailableReason.NameInUse;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown"))
+            {
+                return EventHubsNameUnavailableReason.NameInLockdown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription"))
+            {
+                return EventHubsNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsNameUnavailableReason value.");
         }
     }

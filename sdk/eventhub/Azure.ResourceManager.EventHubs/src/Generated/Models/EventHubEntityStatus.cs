@@ -5,13 +5,11 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager._EventHubs.Models
 {
     /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
     public enum EventHubEntityStatus
     {
-        /// <summary> Unknown. </summary>
-        Unknown,
         /// <summary> Active. </summary>
         Active,
         /// <summary> Disabled. </summary>
@@ -27,6 +25,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Deleting. </summary>
         Deleting,
         /// <summary> Renaming. </summary>
-        Renaming
+        Renaming,
+        /// <summary> Unknown. </summary>
+        Unknown
     }
 }

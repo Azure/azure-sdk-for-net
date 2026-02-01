@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.EventHubs.Models
+namespace Azure.ResourceManager._EventHubs.Models
 {
     /// <summary> Type of Azure Active Directory Managed Identity. </summary>
     public enum EventHubsCaptureIdentityType
