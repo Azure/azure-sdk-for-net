@@ -6,7 +6,6 @@ parameters:
 steps:
   - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
     parameters:
-      InstallDirectory: $(Agent.TempDirectory)
       SourceRootPath: ${{ parameters.SourceRootPath }}
 
   - task: AzureCLI@2
