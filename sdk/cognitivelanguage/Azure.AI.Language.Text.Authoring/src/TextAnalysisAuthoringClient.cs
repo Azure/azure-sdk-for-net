@@ -6,10 +6,11 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    [CodeGenClient("AuthoringClient")]
+    [CodeGenType("AuthoringClient")]
     [CodeGenSuppress("GetTextAuthoringDeploymentClient", typeof(string))]
     [CodeGenSuppress("GetTextAuthoringProjectClient", typeof(string))]
     [CodeGenSuppress("GetTextAuthoringExportedModelClient", typeof(string))]
@@ -40,7 +41,7 @@ namespace Azure.AI.Language.Text.Authoring
             _apiVersion = options.Version; // Store version from options
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
 
@@ -52,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
+            return new TextAuthoringDeployment(ClientDiagnostics, Pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, deploymentName);
         }
 
         /// <summary> Initializes a new instance of TextAuthoringProject. </summary>
@@ -61,7 +62,7 @@ namespace Azure.AI.Language.Text.Authoring
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new TextAuthoringProject(ClientDiagnostics, Pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of TextAuthoringExportedModel. </summary>
@@ -72,7 +73,7 @@ namespace Azure.AI.Language.Text.Authoring
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, exportedModelName);
+            return new TextAuthoringExportedModel(ClientDiagnostics, Pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, exportedModelName);
         }
 
         /// <summary> Initializes a new instance of TextAuthoringTrainedModel. </summary>
@@ -83,7 +84,7 @@ namespace Azure.AI.Language.Text.Authoring
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TextAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, trainedModelLabel);
+            return new TextAuthoringTrainedModel(ClientDiagnostics, Pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName, trainedModelLabel);
         }
     }
 }

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionDocumentEvalResult))]
@@ -54,6 +55,17 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(ExportedModelManifest))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassEvalSummary))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassificationEvalSummary))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringAssignedDeploymentResource))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringDocumentEvaluationResult))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringExportedTrainedModel))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringPrebuiltEntity))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectDeployment))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectMetadata))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectTrainedModel))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringSupportedLanguage))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringTrainingConfigVersion))]
+    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringTrainingJobState))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SentimentEvalSummary))]
     [ModelReaderWriterBuildable(typeof(SingleLabelClassEvalSummary))]

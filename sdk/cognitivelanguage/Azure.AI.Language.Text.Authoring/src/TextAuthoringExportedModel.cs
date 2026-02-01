@@ -6,7 +6,7 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text.Authoring
 {
@@ -28,6 +28,8 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetExportedModelManifest", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteExportedModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteExportedModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
 
     //[CodeGenSuppress("GetExportedModelsAsync", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     //[CodeGenSuppress("GetExportedModels", typeof(string), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
@@ -48,9 +50,7 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringExportedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName, string exportedModelName)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _keyCredential = keyCredential;
-            _tokenCredential = tokenCredential;
+            Pipeline = pipeline;
             _endpoint = endpoint;
             _apiVersion = apiVersion;
             _projectName = projectName;
@@ -65,9 +65,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetExportedModelAsync(context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportedTrainedModel)response, response);
         }
 
         /// <summary> Gets the details of an exported model. </summary>
@@ -78,9 +78,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetExportedModel(context);
-            return Response.FromValue(TextAuthoringExportedTrainedModel.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportedTrainedModel)response, response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
@@ -94,9 +94,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetExportedModelJobStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringExportedModelState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportedModelState)response, response);
         }
 
         /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
@@ -110,9 +110,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetExportedModelJobStatus(jobId, context);
-            return Response.FromValue(TextAuthoringExportedModelState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringExportedModelState)response, response);
         }
 
         /// <summary> Creates a new exported model or replaces an existing one. </summary>
@@ -128,8 +128,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await CreateOrUpdateExportedModelAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -146,8 +146,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return CreateOrUpdateExportedModel(waitUntil, content, context);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await DeleteExportedModelAsync(waitUntil, context).ConfigureAwait(false);
         }
 
@@ -175,7 +175,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeleteExportedModel(waitUntil, context);
         }
 
@@ -206,7 +206,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelRequest(_projectName, _exportedModelName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelRequest(_projectName, _exportedModelName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelJobStatusRequest(_projectName, _exportedModelName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -320,7 +320,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelJobStatusRequest(_projectName, _exportedModelName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -360,7 +360,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(_projectName, _exportedModelName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringModel.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -400,7 +400,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(_projectName, _exportedModelName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringModel.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringModel.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -416,9 +416,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetExportedModelManifestAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ExportedModelManifest.FromResponse(response), response);
+            return Response.FromValue((ExportedModelManifest)response, response);
         }
 
         /// <summary> Gets the details and URL needed to download the exported model. </summary>
@@ -428,9 +428,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_exportedModelName, nameof(_exportedModelName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetExportedModelManifest(context);
-            return Response.FromValue(ExportedModelManifest.FromResponse(response), response);
+            return Response.FromValue((ExportedModelManifest)response, response);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelManifestRequest(_projectName, _exportedModelName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -498,7 +498,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetExportedModelManifestRequest(_projectName, _exportedModelName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -532,7 +532,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(_projectName, _exportedModelName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringExportedModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringExportedModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -566,7 +566,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(_projectName, _exportedModelName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringExportedModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringExportedModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
