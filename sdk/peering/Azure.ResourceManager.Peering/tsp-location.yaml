@@ -1,0 +1,4 @@
+directory: specification/peering/resource-manager/Microsoft.Peering/Peering
+commit: f6de094d051fa5238262f67aea2f230206867184
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
