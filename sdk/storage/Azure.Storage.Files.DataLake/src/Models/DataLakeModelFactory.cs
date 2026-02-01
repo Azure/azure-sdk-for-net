@@ -603,7 +603,8 @@ namespace Azure.Storage.Files.DataLake.Models
             string group,
             string permissions,
             IList<PathAccessControlItem> accessControlList,
-            string smartAccessTier)
+            string smartAccessTier,
+            bool accessTierInferred)
             => new PathProperties()
             {
                 LastModified = lastModified,
@@ -639,7 +640,8 @@ namespace Azure.Storage.Files.DataLake.Models
                 Group = group,
                 Permissions = permissions,
                 AccessControlList = accessControlList,
-                SmartAccessTier = smartAccessTier
+                SmartAccessTier = smartAccessTier,
+                AccessTierInferred = accessTierInferred
             };
 
         /// <summary>
