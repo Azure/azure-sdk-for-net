@@ -25,7 +25,10 @@ namespace Azure.Core
         protected internal DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
         { }
 
-        internal DiagnosticsOptions(IConfigurationSection section)
+        /// <summary>
+        /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
+        /// </summary>
+        protected internal DiagnosticsOptions(IConfigurationSection section)
         {
             if (section is null || !section.Exists())
             {
