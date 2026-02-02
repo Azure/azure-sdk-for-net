@@ -17,8 +17,9 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         // ===== Core Service Configuration =====
 
         /// <summary>
-        /// Voice Live Service endpoint URL.
-        /// Example: https://my-resource.cognitiveservices.azure.com
+        /// Voice Live Service endpoint URL from Bicep template.
+        /// Maps to Bicep output: AI_SERVICES_ENDPOINT
+        /// Example: https://my-resource.services.ai.azure.com
         /// </summary>
         public string Endpoint => GetVariable("AI_SERVICES_ENDPOINT");
 
@@ -28,7 +29,14 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// </summary>
         public string ApiKey => GetOptionalVariable("AI_SERVICES_KEY");
 
-        public string ModelName => GetVariable("MODEL_DEPLOYMENT_NAME");
+        /// <summary>
+        /// Model deployment name from Bicep template.
+        /// Maps to Bicep parameter: modelName (default: "gpt-4o")
+        /// Fallback handles both Bicep and legacy configurations.
+        /// </summary>
+        public string ModelName => GetOptionalVariable("MODEL_DEPLOYMENT_NAME") ??
+                                  GetOptionalVariable("MODEL_NAME") ??
+                                  "gpt-4o";
 
         // ===== Model Configuration =====
 
@@ -105,6 +113,34 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         /// AI Agent connection string.
         /// </summary>
         public string AgentConnectionString => GetOptionalVariable("VOICELIVE_AGENT_CONNECTION") ?? string.Empty;
+
+        // ===== Foundry Agent Configuration =====
+
+        /// <summary>
+        /// Foundry Agent Name from Azure AI Foundry portal.
+        /// </summary>
+        public string FoundryAgentName => GetOptionalVariable("FOUNDRY_AGENT_NAME") ?? string.Empty;
+
+        /// <summary>
+        /// Foundry Agent ID (Client ID) from Azure AI Foundry portal.
+        /// </summary>
+        public string FoundryAgentId => GetOptionalVariable("FOUNDRY_AGENT_ID") ?? string.Empty;
+
+        /// <summary>
+        /// Foundry Project Name from Bicep template.
+        /// Maps to Bicep output: FOUNDRY_PROJECT_NAME
+        /// Default: "rg-test-resources-ai-defaultproject"
+        /// </summary>
+        public string FoundryProjectName => GetOptionalVariable("FOUNDRY_PROJECT_NAME") ??
+                                           GetOptionalVariable("DEFAULT_PROJECT_NAME") ??
+                                           "rg-test-resources-ai-defaultproject";
+
+        /// <summary>
+        /// Foundry Project Endpoint from Bicep template.
+        /// Maps to Bicep output: FOUNDRY_PROJECT_ENDPOINT
+        /// This is the direct endpoint for the Foundry project.
+        /// </summary>
+        public string FoundryProjectEndpoint => GetOptionalVariable("FOUNDRY_PROJECT_ENDPOINT") ?? string.Empty;
 
         /// <summary>
         /// AI Agent thread ID for conversation continuity.

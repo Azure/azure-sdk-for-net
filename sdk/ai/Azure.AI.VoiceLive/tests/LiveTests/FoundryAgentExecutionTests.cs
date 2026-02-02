@@ -86,7 +86,6 @@ namespace Azure.AI.VoiceLive.Tests
                 projectName: TestConstants.TestFoundryProjectName)
             {
                 AgentVersion = TestConstants.TestFoundryAgentVersion,
-                ClientId = TestConstants.TestFoundryClientId,
                 Description = TestConstants.TestFoundryAgentDescription,
                 AgentContextType = FoundryAgentContextType.AgentContext,
                 ReturnAgentResponseDirectly = false

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
@@ -37,58 +38,51 @@ namespace Azure.AI.VoiceLive.Tests
         [OneTimeSetUp]
         public async Task SetupTestAgent()
         {
-            // Try to find an existing agent with our test class name
+            // V2 FOUNDRY AGENTS: Voice Live only works with V2 (new Foundry) agents
             var agentName = $"{AgentNamePrefix}-{DateTime.UtcNow:yyyyMMdd}";
+            _testAgentName = agentName;
+            _testAgentId = string.Empty; // Use environment or test constants
 
-            try
-            {
-                _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                if (string.IsNullOrEmpty(_testAgentId))
-                {
-                    // Agent doesn't exist, create it
-                    TestContext.WriteLine($"Creating test agent: {agentName}");
-                    await TestAgent.CreateAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    // Find the newly created agent to get its ID
-                    _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    if (!string.IsNullOrEmpty(_testAgentId))
-                    {
-                        TestContext.WriteLine($"Created test agent with ID: {_testAgentId}");
-                    }
-                }
-                else
-                {
-                    TestContext.WriteLine($"Found existing test agent with ID: {_testAgentId}");
-                }
-
-                _testAgentName = agentName;
-            }
-            catch (Exception ex)
-            {
-                TestContext.WriteLine($"Warning: Could not setup test agent: {ex.Message}");
-                throw;
-            }
+            await Task.CompletedTask;
         }
 
         private VoiceLiveFoundryAgentDefinition CreateTestFoundryAgent()
         {
-            // Use the dynamically created/found agent ID if available, otherwise fall back to constants
-            var agentName = !string.IsNullOrEmpty(_testAgentName)
-                ? _testAgentName
-                : TestConstants.TestFoundryAgentName;
+            // Use environment variables if available, fallback to test constants
+            var agentName = !string.IsNullOrEmpty(TestEnvironment.FoundryAgentName)
+                ? TestEnvironment.FoundryAgentName
+                : (!string.IsNullOrEmpty(_testAgentName)
+                    ? _testAgentName
+                    : TestConstants.TestFoundryAgentName);
+
+            var projectName = !string.IsNullOrEmpty(TestEnvironment.FoundryProjectName)
+                ? TestEnvironment.FoundryProjectName
+                : TestConstants.TestFoundryProjectName;
 
             return new VoiceLiveFoundryAgentDefinition(
                 agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
+                projectName: projectName)
             {
                 AgentVersion = TestConstants.TestFoundryAgentVersion,
-                ClientId = TestConstants.TestFoundryClientId,
                 Description = TestConstants.TestFoundryAgentDescription,
                 AgentContextType = FoundryAgentContextType.AgentContext,
                 ReturnAgentResponseDirectly = false
             };
+        }
+
+        [Test]
+        public async Task TestBasicConnection_NoAgent()
+        {
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            var options = new VoiceLiveSessionOptions
+            {
+                Model = "gpt-4o"
+                // NO AGENT/TOOLS
+            };
+
+            await using var session = await client.StartSessionAsync(options, TimeoutToken);
+            Assert.IsTrue(session.IsConnected);
         }
 
         [LiveOnly]
@@ -97,7 +91,6 @@ namespace Azure.AI.VoiceLive.Tests
         {
             // This test verifies that a session can be established with a Foundry agent configured
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
-
             var foundryAgent = CreateTestFoundryAgent();
 
             var options = new VoiceLiveSessionOptions
@@ -107,7 +100,6 @@ namespace Azure.AI.VoiceLive.Tests
             options.Tools.Add(foundryAgent);
 
             await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
-
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
 
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
@@ -119,13 +111,20 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
-        public async Task ShouldReceiveSessionUpdatedWithFoundryAgent()
+        public async Task ShouldReceiveSessionUpdatedWithFoundryAgent_DynamicAgent()
         {
-            // This test verifies that the session updated event includes the Foundry agent in the tools list
+            // This test verifies that the session updated event includes the dynamically generated test agent
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var foundryAgent = CreateTestFoundryAgent();
+            var foundryAgent = new VoiceLiveFoundryAgentDefinition(
+                agentName: _testAgentName,  // Use the dynamic agent name from setup
+                projectName: TestConstants.TestFoundryProjectName)
+            {
+                AgentVersion = TestConstants.TestFoundryAgentVersion,
+                Description = TestConstants.TestFoundryAgentDescription,
+                AgentContextType = FoundryAgentContextType.AgentContext,
+                ReturnAgentResponseDirectly = false
+            };
 
             var options = new VoiceLiveSessionOptions
             {
@@ -148,18 +147,53 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(agentTool, "Expected to find a Foundry agent tool in the session configuration");
 
             var agentDef = agentTool as VoiceLiveFoundryAgentDefinition;
-            var expectedAgentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-            Assert.AreEqual(expectedAgentName, agentDef?.AgentName);
+            Assert.AreEqual(_testAgentName, agentDef?.AgentName);  // Test the dynamic agent name
             Assert.AreEqual(TestConstants.TestFoundryProjectName, agentDef?.ProjectName);
 
-            TestContext.WriteLine($"✓ Foundry agent '{agentDef?.AgentName}' found in session configuration");
+            TestContext.WriteLine($"✓ Dynamic test agent '{agentDef?.AgentName}' found in session configuration");
         }
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
+        public async Task ShouldReceiveSessionUpdatedWithFoundryAgent_EnvironmentAgent()
+        {
+            // This test verifies that the session updated event includes the environment-configured agent
+            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
+
+            var foundryAgent = CreateTestFoundryAgent();  // Uses environment or constants
+
+            var options = new VoiceLiveSessionOptions
+            {
+                Model = "gpt-4o"
+            };
+            options.Tools.Add(foundryAgent);
+
+            await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
+
+            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
+
+            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
+            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            Assert.IsNotNull(sessionUpdated.Session);
+            Assert.IsNotNull(sessionUpdated.Session.Tools);
+            Assert.IsTrue(sessionUpdated.Session.Tools.Count > 0);
+
+            var agentTool = sessionUpdated.Session.Tools.FirstOrDefault(t => t is VoiceLiveFoundryAgentDefinition);
+            Assert.IsNotNull(agentTool, "Expected to find a Foundry agent tool in the session configuration");
+
+            var agentDef = agentTool as VoiceLiveFoundryAgentDefinition;
+            var expectedAgentName = !string.IsNullOrEmpty(TestEnvironment.FoundryAgentName)
+                ? TestEnvironment.FoundryAgentName
+                : TestConstants.TestFoundryAgentName;
+            Assert.AreEqual(expectedAgentName, agentDef?.AgentName);  // Test environment/constant agent
+            Assert.AreEqual(TestConstants.TestFoundryProjectName, agentDef?.ProjectName);
+
+            TestContext.WriteLine($"✓ Environment agent '{agentDef?.AgentName}' found in session configuration");
+        }
+
+        [LiveOnly]
+        [TestCase]
         public async Task ShouldVerifyAgentConfigurationOptions()
         {
             // This test verifies that all configuration options are properly set on the agent
@@ -174,7 +208,6 @@ namespace Azure.AI.VoiceLive.Tests
                 projectName: TestConstants.TestFoundryProjectName)
             {
                 AgentVersion = TestConstants.TestFoundryAgentVersion,
-                ClientId = TestConstants.TestFoundryClientId,
                 Description = TestConstants.TestFoundryAgentDescription,
                 AgentContextType = FoundryAgentContextType.NoContext,
                 ReturnAgentResponseDirectly = true
@@ -201,7 +234,6 @@ namespace Azure.AI.VoiceLive.Tests
                 Assert.AreEqual(agentName, agentTool.AgentName);
                 Assert.AreEqual(TestConstants.TestFoundryProjectName, agentTool.ProjectName);
                 Assert.AreEqual(TestConstants.TestFoundryAgentVersion, agentTool.AgentVersion);
-                Assert.AreEqual(TestConstants.TestFoundryClientId, agentTool.ClientId);
                 Assert.AreEqual(TestConstants.TestFoundryAgentDescription, agentTool.Description);
                 Assert.AreEqual(FoundryAgentContextType.NoContext, agentTool.AgentContextType);
                 Assert.AreEqual(true, agentTool.ReturnAgentResponseDirectly);
@@ -211,7 +243,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldHandleInvalidAgentNameGracefully()
         {
             // This test verifies that the SDK handles invalid agent names gracefully
@@ -231,51 +262,38 @@ namespace Azure.AI.VoiceLive.Tests
 
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
 
-            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+            // Manually get session.created without auto-failing on errors
+            var moved1 = await updatesEnum.MoveNextAsync().ConfigureAwait(false);
+            Assert.IsTrue(moved1, "Expected to receive session.created");
+            var sessionCreatedUpdate = updatesEnum.Current;
+            Assert.IsNotNull(sessionCreatedUpdate);
+            Assert.IsTrue(sessionCreatedUpdate is SessionUpdateSessionCreated, $"Expected SessionUpdateSessionCreated, got: {sessionCreatedUpdate.GetType().Name}");
 
-            // Session should still be connected even if agent doesn't exist
-            Assert.IsTrue(session.IsConnected);
+            // The error should come next
+            var moved2 = await updatesEnum.MoveNextAsync().ConfigureAwait(false);
+            Assert.IsTrue(moved2, "Expected to receive an error after session created");
+            var errorUpdate = updatesEnum.Current;
+            Assert.IsNotNull(errorUpdate);
 
-            // Try to trigger agent call - it should fail gracefully
-            var userMessage = new UserMessageItem(new InputTextContentPart("Use the agent to help me."));
-            await session.AddItemAsync(userMessage, TimeoutToken).ConfigureAwait(false);
-            await GetNextUpdate<SessionUpdateConversationItemCreated>(updatesEnum).ConfigureAwait(false);
-
-            await session.StartResponseAsync(TimeoutToken).ConfigureAwait(false);
-
-            using var cts = CancellationTokenSource.CreateLinkedTokenSource(TimeoutToken);
-            cts.CancelAfter(TestConstants.StandardTimeout);
-
-            bool foundFailure = false;
-            try
+            // This should be an error message about the invalid agent
+            if (errorUpdate is SessionUpdateError error)
             {
-                SessionUpdate update;
-                do
-                {
-                    update = await GetNextUpdate(updatesEnum, checkEventId: true).ConfigureAwait(false);
-
-                    if (update is SessionUpdateResponseFoundryAgentCallFailed failedUpdate)
-                    {
-                        foundFailure = true;
-                        TestContext.WriteLine($"✓ Agent call failed gracefully for item: {failedUpdate.ItemId}");
-                        break;
-                    }
-                } while (update is not SessionUpdateResponseDone && !cts.Token.IsCancellationRequested);
+                TestContext.WriteLine($"✓ Received expected error for invalid agent: {error.Error.Message}");
+                Assert.That(error.Error.Message, Does.Contain("not found").Or.Contain("nonexistent-agent-xyz123"));
+                Assert.AreEqual("agent_not_found", error.Error.Code);
             }
-            catch (OperationCanceledException)
+            else
             {
-                // Timeout is acceptable - the key validation is that session remained stable
+                Assert.Fail($"Expected SessionUpdateError for invalid agent, but got: {errorUpdate.GetType().Name}");
             }
-            Assert.IsTrue(foundFailure);
-            // Session should remain connected even after agent failure
+
+            // Session should still be connected even after agent error
             Assert.IsTrue(session.IsConnected);
-            TestContext.WriteLine("✓ Session remained stable after invalid agent configuration");
+            TestContext.WriteLine("✓ Session remained stable after invalid agent error");
         }
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldSupportMultipleAgentsInSameSession()
         {
             // This test verifies that multiple Foundry agents can be configured in a single session
@@ -323,7 +341,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldVerifyAgentContextTypeNoContext()
         {
             // This test verifies that NoContext mode works correctly
@@ -362,7 +379,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldVerifyAgentContextTypeAgentContext()
         {
             // This test verifies that AgentContext mode works correctly
