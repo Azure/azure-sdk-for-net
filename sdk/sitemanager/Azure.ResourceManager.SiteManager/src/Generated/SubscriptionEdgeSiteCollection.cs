@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.SiteManager
     /// Each <see cref="SubscriptionEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="SubscriptionEdgeSiteCollection"/> instance call the GetSubscriptionEdgeSites method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class SubscriptionEdgeSiteCollection : ArmCollection
+    public partial class SubscriptionEdgeSiteCollection : ArmCollection, IEnumerable<SubscriptionEdgeSiteResource>, IAsyncEnumerable<SubscriptionEdgeSiteResource>
     {
         private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
         private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
@@ -268,6 +270,62 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
+        /// List Site resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionEdgeSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new SubscriptionEdgeSiteGetAllAsyncCollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SubscriptionEdgeSiteResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Site resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionEdgeSiteResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeSiteData, SubscriptionEdgeSiteResource>(new SubscriptionEdgeSiteGetAllCollectionResultOfT(_subscriptionEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SubscriptionEdgeSiteResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -501,6 +559,22 @@ namespace Azure.ResourceManager.SiteManager
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SubscriptionEdgeSiteResource> IEnumerable<SubscriptionEdgeSiteResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SubscriptionEdgeSiteResource> IAsyncEnumerable<SubscriptionEdgeSiteResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

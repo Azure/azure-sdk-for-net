@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.SiteManager
     {
         private readonly ClientDiagnostics _resourceGroupEdgeSiteClientDiagnostics;
         private readonly ResourceGroupEdgeSite _resourceGroupEdgeSiteRestClient;
-        private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
-        private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
-        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
-        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
 
         /// <summary> Initializes a new instance of ResourceGroupEdgeSiteCollection for mocking. </summary>
         protected ResourceGroupEdgeSiteCollection()
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.SiteManager
             TryGetApiVersion(ResourceGroupEdgeSiteResource.ResourceType, out string resourceGroupEdgeSiteApiVersion);
             _resourceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
             _resourceGroupEdgeSiteRestClient = new ResourceGroupEdgeSite(_resourceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

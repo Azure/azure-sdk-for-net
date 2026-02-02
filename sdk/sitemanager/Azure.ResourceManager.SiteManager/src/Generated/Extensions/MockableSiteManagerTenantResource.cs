@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SiteManager;
@@ -20,9 +19,6 @@ namespace Azure.ResourceManager.SiteManager.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSiteManagerTenantResource : ArmResource
     {
-        private ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
-        private ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
-
         /// <summary> Initializes a new instance of MockableSiteManagerTenantResource for mocking. </summary>
         protected MockableSiteManagerTenantResource()
         {
@@ -35,15 +31,12 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
         }
 
-        private ClientDiagnostics ServiceGroupEdgeSiteClientDiagnostics => _serviceGroupEdgeSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SiteManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ServiceGroupEdgeSite ServiceGroupEdgeSiteRestClient => _serviceGroupEdgeSiteRestClient ??= new ServiceGroupEdgeSite(ServiceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
-
         /// <summary> Gets a collection of ServiceGroupEdgeSites in the <see cref="TenantResource"/>. </summary>
+        /// <param name="servicegroupName"> The servicegroupName for the resource. </param>
         /// <returns> An object representing collection of ServiceGroupEdgeSites and their operations over a ServiceGroupEdgeSiteResource. </returns>
-        public virtual ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites()
+        public virtual ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(string servicegroupName)
         {
-            return GetCachedClient(client => new ServiceGroupEdgeSiteCollection(client, Id));
+            return GetCachedClient(client => new ServiceGroupEdgeSiteCollection(client, Id, servicegroupName));
         }
 
         /// <summary>
@@ -63,18 +56,17 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="servicegroupName"> The servicegroupName for the resource. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return await GetServiceGroupEdgeSites().GetAsync(servicegroupName, siteName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceGroupEdgeSites(servicegroupName).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -94,84 +86,17 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="servicegroupName"> The servicegroupName for the resource. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return GetServiceGroupEdgeSites().Get(servicegroupName, siteName, cancellationToken);
-        }
-
-        /// <summary>
-        /// list Site at SG scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSitesAsync(string servicegroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupAsyncCollectionResultOfT(ServiceGroupEdgeSiteRestClient, servicegroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
-        }
-
-        /// <summary>
-        /// list Site at SG scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ResourceGroupEdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupEdgeSiteResource> GetResourceGroupEdgeSites(string servicegroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupCollectionResultOfT(ServiceGroupEdgeSiteRestClient, servicegroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
+            return GetServiceGroupEdgeSites(servicegroupName).Get(siteName, cancellationToken);
         }
     }
 }

@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.SiteManager
     {
         private readonly ClientDiagnostics _resourceGroupEdgeSiteClientDiagnostics;
         private readonly ResourceGroupEdgeSite _resourceGroupEdgeSiteRestClient;
-        private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
-        private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
-        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
-        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
         private readonly EdgeSiteData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/sites";
@@ -57,10 +53,6 @@ namespace Azure.ResourceManager.SiteManager
             TryGetApiVersion(ResourceType, out string resourceGroupEdgeSiteApiVersion);
             _resourceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
             _resourceGroupEdgeSiteRestClient = new ResourceGroupEdgeSite(_resourceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, resourceGroupEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

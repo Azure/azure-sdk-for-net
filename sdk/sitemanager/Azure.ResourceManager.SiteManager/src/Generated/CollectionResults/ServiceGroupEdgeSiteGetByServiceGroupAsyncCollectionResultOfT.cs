@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SiteManager
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByServiceGroupRequest(nextLink, _servicegroupName, _context) : _client.CreateGetByServiceGroupRequest(_servicegroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSiteManagerTenantResource.GetResourceGroupEdgeSites");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceGroupEdgeSiteCollection.GetAll");
             scope.Start();
             try
             {
