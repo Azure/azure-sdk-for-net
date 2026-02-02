@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using Azure;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Text.Authoring
@@ -41,59 +39,5 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TextAuthoringDocumentEvalResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(
-                this,
-                projectName,
-                trainedModelLabel,
-                stringIndexType.ToString(),
-                maxCount,
-                skip,
-                maxpagesize,
-                cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TextAuthoringDocumentEvalResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(
-                this,
-                projectName,
-                trainedModelLabel,
-                stringIndexType.ToString(),
-                maxCount,
-                skip,
-                maxpagesize,
-                cancellationToken.ToRequestContext());
-        }
     }
 }

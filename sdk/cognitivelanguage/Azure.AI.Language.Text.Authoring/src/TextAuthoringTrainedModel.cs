@@ -18,8 +18,8 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("GetModelTextAuthoringEvalSummary", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetLoadSnapshotStatusAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetLoadSnapshotStatus", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetModelEvaluationResultsAsync", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
-    //[CodeGenSuppress("GetModelEvaluationResults", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetModelEvaluationResultsAsync", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetModelEvaluationResults", typeof(string), typeof(string), typeof(StringIndexType), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     [CodeGenSuppress("EvaluateModelAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringEvaluationDetails), typeof(CancellationToken))]
     [CodeGenSuppress("EvaluateModel", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringEvaluationDetails), typeof(CancellationToken))]
     [CodeGenSuppress("GetExportedModelAsync", typeof(string), typeof(string), typeof(CancellationToken))]
@@ -623,72 +623,59 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        // Commented out - GeneratorPageableHelpers pattern replaced with CollectionResult. Uncomment after regeneration.
-        // /// <summary>
-        // /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
-        // /// <list type="bullet">
-        // /// <item>
-        // /// <description>
-        // /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        // /// </description>
-        // /// </item>
-        // /// <item>
-        // /// <description>
-        // /// Please try the simpler <see cref="GetModelEvaluationResultsAsync(StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        // /// </description>
-        // /// </item>
-        // /// </list>
-        // /// </summary>
-        // /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
-        // /// <param name="maxCount"> The number of result items to return. </param>
-        // /// <param name="skip"> The number of result items to skip. </param>
-        // /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        // /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        // /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        // /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        // public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-        // {
-        //     Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-        //     Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
-        //     Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
-        //
-        //     HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-        //     HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-        //     return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, Pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
-        // }
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationResultsAsync(StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(this,  _projectName,  _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+        }
 
-        // /// <summary>
-        // /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
-        // /// <list type="bullet">
-        // /// <item>
-        // /// <description>
-        // /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        // /// </description>
-        // /// </item>
-        // /// <item>
-        // /// <description>
-        // /// Please try the simpler <see cref="GetModelEvaluationResults(StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        // /// </description>
-        // /// </item>
-        // /// </list>
-        // /// </summary>
-        // /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
-        // /// <param name="maxCount"> The number of result items to return. </param>
-        // /// <param name="skip"> The number of result items to skip. </param>
-        // /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        // /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        // /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        // /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        // public virtual Pageable<BinaryData> GetModelEvaluationResults(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
-        // {
-        //     Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-        //     Argument.AssertNotNullOrEmpty(_trainedModelLabel, nameof(_trainedModelLabel));
-        //     Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
-        //
-        //     HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-        //     HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, _projectName, _trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-        //     return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, Pipeline, "TextAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
-        // }
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationResults(StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            return new TextAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(this,  _projectName,  _trainedModelLabel, stringIndexType, maxCount, skip, maxpagesize, context);
+        }
 
         /// <summary>
         /// [Protocol Method] Triggers evaluation operation on a trained model.

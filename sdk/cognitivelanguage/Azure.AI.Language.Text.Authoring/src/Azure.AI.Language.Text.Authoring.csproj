@@ -5,7 +5,8 @@
     <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure Authoring</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource></PropertyGroup>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
