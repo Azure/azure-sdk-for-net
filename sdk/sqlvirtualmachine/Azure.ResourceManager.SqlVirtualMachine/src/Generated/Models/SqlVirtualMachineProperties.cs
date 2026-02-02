@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="virtualMachineIdentitySettings"> Virtual Machine Identity details used for Sql IaaS extension configurations. </param>
         /// <param name="osType"> Operating System of the current SQL Virtual Machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, LeastPrivilegeMode? leastPrivilegeMode, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmTroubleshootingStatus troubleshootingStatus, SqlVmAssessmentSettings assessmentSettings, bool? enableAutomaticUpgrade, SqlVmAdditionalOsPatch? additionalVmPatch, SqlVmIdentity virtualMachineIdentitySettings, SqlVmOsType? osType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlVmLeastPrivilegeMode? leastPrivilegeMode, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmTroubleshootingStatus troubleshootingStatus, SqlVmAssessmentSettings assessmentSettings, bool? enableAutomaticUpgrade, SqlVmAdditionalOsPatch? additionalVmPatch, SqlVmIdentity virtualMachineIdentitySettings, SqlVmOsType? osType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineResourceId = virtualMachineResourceId;
             ProvisioningState = provisioningState;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public SqlManagementMode? SqlManagement { get; set; }
 
         /// <summary> SQL IaaS Agent least privilege mode. </summary>
-        public LeastPrivilegeMode? LeastPrivilegeMode { get; set; }
+        public SqlVmLeastPrivilegeMode? LeastPrivilegeMode { get; set; }
 
         /// <summary> SQL Server edition type. </summary>
         public SqlImageSku? SqlImageSku { get; set; }

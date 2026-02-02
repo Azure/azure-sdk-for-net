@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> SQL IaaS Agent least privilege mode. </summary>
-        public LeastPrivilegeMode? LeastPrivilegeMode
+        public SqlVmLeastPrivilegeMode? LeastPrivilegeMode
         {
             get
             {

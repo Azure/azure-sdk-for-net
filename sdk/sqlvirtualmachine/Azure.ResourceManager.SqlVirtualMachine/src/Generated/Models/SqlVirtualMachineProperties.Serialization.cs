@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             string sqlImageOffer = default;
             SqlServerLicenseType? sqlServerLicenseType = default;
             SqlManagementMode? sqlManagement = default;
-            LeastPrivilegeMode? leastPrivilegeMode = default;
+            SqlVmLeastPrivilegeMode? leastPrivilegeMode = default;
             SqlImageSku? sqlImageSku = default;
             ResourceIdentifier sqlVmGroupResourceId = default;
             WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    leastPrivilegeMode = new LeastPrivilegeMode(prop.Value.GetString());
+                    leastPrivilegeMode = new SqlVmLeastPrivilegeMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sqlImageSku"u8))

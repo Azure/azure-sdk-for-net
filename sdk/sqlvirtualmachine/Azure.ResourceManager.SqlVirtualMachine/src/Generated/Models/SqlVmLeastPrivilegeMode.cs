@@ -12,16 +12,16 @@ using Azure.ResourceManager.SqlVirtualMachine;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> SQL IaaS Agent least privilege mode. </summary>
-    public readonly partial struct LeastPrivilegeMode : IEquatable<LeastPrivilegeMode>
+    public readonly partial struct SqlVmLeastPrivilegeMode : IEquatable<SqlVmLeastPrivilegeMode>
     {
         private readonly string _value;
         private const string EnabledValue = "Enabled";
         private const string NotSetValue = "NotSet";
 
-        /// <summary> Initializes a new instance of <see cref="LeastPrivilegeMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmLeastPrivilegeMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LeastPrivilegeMode(string value)
+        public SqlVmLeastPrivilegeMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Gets the Enabled. </summary>
-        public static LeastPrivilegeMode Enabled { get; } = new LeastPrivilegeMode(EnabledValue);
+        public static SqlVmLeastPrivilegeMode Enabled { get; } = new SqlVmLeastPrivilegeMode(EnabledValue);
 
         /// <summary> Gets the NotSet. </summary>
-        public static LeastPrivilegeMode NotSet { get; } = new LeastPrivilegeMode(NotSetValue);
+        public static SqlVmLeastPrivilegeMode NotSet { get; } = new SqlVmLeastPrivilegeMode(NotSetValue);
 
-        /// <summary> Determines if two <see cref="LeastPrivilegeMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmLeastPrivilegeMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LeastPrivilegeMode left, LeastPrivilegeMode right) => left.Equals(right);
+        public static bool operator ==(SqlVmLeastPrivilegeMode left, SqlVmLeastPrivilegeMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LeastPrivilegeMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SqlVmLeastPrivilegeMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LeastPrivilegeMode left, LeastPrivilegeMode right) => !left.Equals(right);
+        public static bool operator !=(SqlVmLeastPrivilegeMode left, SqlVmLeastPrivilegeMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LeastPrivilegeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmLeastPrivilegeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LeastPrivilegeMode(string value) => new LeastPrivilegeMode(value);
+        public static implicit operator SqlVmLeastPrivilegeMode(string value) => new SqlVmLeastPrivilegeMode(value);
 
-        /// <summary> Converts a string to a <see cref="LeastPrivilegeMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SqlVmLeastPrivilegeMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LeastPrivilegeMode?(string value) => value == null ? null : new LeastPrivilegeMode(value);
+        public static implicit operator SqlVmLeastPrivilegeMode?(string value) => value == null ? null : new SqlVmLeastPrivilegeMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LeastPrivilegeMode other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlVmLeastPrivilegeMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LeastPrivilegeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlVmLeastPrivilegeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
