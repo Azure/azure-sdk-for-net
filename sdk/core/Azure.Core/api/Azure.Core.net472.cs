@@ -378,7 +378,6 @@ namespace Azure.Core
     {
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
-        protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section, Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }

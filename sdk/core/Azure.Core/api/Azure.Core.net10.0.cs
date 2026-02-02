@@ -388,8 +388,6 @@ namespace Azure.Core
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-        protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section, Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }

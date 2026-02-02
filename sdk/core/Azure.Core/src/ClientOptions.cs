@@ -74,16 +74,6 @@ namespace Azure.Core
         /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="IConfigurationSection"/>.
         /// </summary>
         /// <param name="section">The <see cref="IConfigurationSection"/> to read from.</param>
-        [Experimental("SCME0002")]
-        protected ClientOptions(IConfigurationSection section)
-            :this(section, null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="ClientOptions"/> with the specified <see cref="IConfigurationSection"/>.
-        /// </summary>
-        /// <param name="section">The <see cref="IConfigurationSection"/> to read from.</param>
         /// <param name="diagnostics"><see cref="DiagnosticsOptions"/> to be used for <see cref="Diagnostics"/>.</param>
         [Experimental("SCME0002")]
         protected ClientOptions(IConfigurationSection section, DiagnosticsOptions? diagnostics)
