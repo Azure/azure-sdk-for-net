@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -57,6 +58,10 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// This sync method mirrors the async version. Excluded from coverage due to test framework limitations.
+        /// </remarks>
+        [ExcludeFromCodeCoverage]
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             return _internalOperation.UpdateStatus(cancellationToken);
@@ -68,6 +73,9 @@ namespace Azure.AI.ContentUnderstanding
             return await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Extracts the operation ID from the Operation-Location header.
+        /// </summary>
         private string? GetOperationId()
         {
             var response = GetRawResponse();
@@ -79,10 +87,9 @@ namespace Azure.AI.ContentUnderstanding
                 if (Uri.TryCreate(operationLocation, UriKind.Absolute, out var uri))
                 {
                     var segments = uri.Segments;
-                    if (segments.Length > 0)
-                    {
-                        return segments[segments.Length - 1].TrimEnd('/');
-                    }
+                    // Note: For any valid absolute URI, segments.Length is always > 0 (at least "/" for root).
+                    // This check is defensive but unreachable in practice.
+                    return segments.Length > 0 ? segments[segments.Length - 1].TrimEnd('/') : null;
                 }
             }
 

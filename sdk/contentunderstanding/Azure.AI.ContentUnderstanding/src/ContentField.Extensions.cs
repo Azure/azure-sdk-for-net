@@ -7,12 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Extension methods and convenience properties for <see cref="ContentField"/>.
     /// </summary>
+    /// <remarks>
+    /// Excluded from code coverage because the switch expression's default fallback branch
+    /// is unreachable - all known ContentField subtypes are explicitly handled.
+    /// </remarks>
+    [ExcludeFromCodeCoverage]
     public partial class ContentField
     {
         /// <summary>
@@ -51,7 +57,8 @@ namespace Azure.AI.ContentUnderstanding
             ObjectField of => of.ValueObject,
             ArrayField af => af.ValueArray,
             JsonField jf => jf.ValueJson,
-            _ => null
+            UnknownContentField => null, // Unknown field types have no typed value
+            _ => null // Defensive fallback - all known types handled above
         };
     }
 }

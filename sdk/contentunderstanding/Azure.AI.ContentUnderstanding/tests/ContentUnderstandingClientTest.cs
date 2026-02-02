@@ -1203,8 +1203,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         /// <summary>
-        /// Tests deleting an analyzer.
-        /// Verifies that an analyzer can be deleted successfully.
+        /// Tests deleting an analyzer and verifying that operations on the deleted analyzer fail with 404.
+        /// This is a real-world scenario: users may attempt to use an analyzer that has been deleted.
         /// </summary>
         [RecordedTest]
         public async Task DeleteAnalyzerAsync()
@@ -1240,18 +1240,32 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Delete the analyzer
             await client.DeleteAnalyzerAsync(analyzerId);
 
-            // Verify the analyzer was deleted (should throw 404 or similar)
-            try
+            // Verify GetAnalyzer returns 404 for deleted analyzer
+            var getEx = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                var deletedResponse = await client.GetAnalyzerAsync(analyzerId);
-                // If we get here, the analyzer still exists (unexpected)
-                Assert.Fail("Analyzer should have been deleted, but GetAnalyzerAsync succeeded");
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
+                await client.GetAnalyzerAsync(analyzerId);
+            });
+            Assert.AreEqual(404, getEx!.Status, "GetAnalyzer should return 404 for deleted analyzer");
+
+            // Verify AnalyzeAsync returns 404 for deleted analyzer (real scenario: user tries to use deleted analyzer)
+            var analyzeEx = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                // Expected: analyzer not found after deletion
-                Assert.Pass("Analyzer was successfully deleted (404 as expected)");
-            }
+                await client.AnalyzeAsync(
+                    WaitUntil.Completed,
+                    analyzerId,
+                    inputs: new[] { new AnalyzeInput { Url = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf") } });
+            });
+            Assert.AreEqual(404, analyzeEx!.Status, "AnalyzeAsync should return 404 for deleted analyzer");
+
+            // Verify AnalyzeBinaryAsync returns 404 for deleted analyzer
+            var analyzeBinaryEx = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.AnalyzeBinaryAsync(
+                    WaitUntil.Completed,
+                    analyzerId,
+                    BinaryData.FromBytes(new byte[] { 0x25, 0x50, 0x44, 0x46 })); // PDF header
+            });
+            Assert.AreEqual(404, analyzeBinaryEx!.Status, "AnalyzeBinaryAsync should return 404 for deleted analyzer");
         }
 
         /// <summary>
