@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List Site resources by subscription ID
+        /// List Site resources by scope
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetResourceGroupEdgeSitesAsync(CancellationToken)"/> instead. </description>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List Site resources by subscription ID
+        /// List Site resources by scope
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerSubscriptionResource.GetResourceGroupEdgeSites(CancellationToken)"/> instead. </description>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetServiceGroupEdgeSiteAsync(string, string, CancellationToken)"/> instead. </description>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetServiceGroupEdgeSite(string, string, CancellationToken)"/> instead. </description>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetResourceGroupEdgeSitesAsync(string, CancellationToken)"/> instead. </description>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerTenantResource.GetResourceGroupEdgeSites(string, CancellationToken)"/> instead. </description>

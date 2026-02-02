@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// update Site at SG scope
+        /// Update a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ServiceGroupEdgeSiteResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// update Site at SG scope
+        /// Update a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ServiceGroupEdgeSiteResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// delete Site at SG scope
+        /// Delete a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// delete Site at SG scope
+        /// Delete a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

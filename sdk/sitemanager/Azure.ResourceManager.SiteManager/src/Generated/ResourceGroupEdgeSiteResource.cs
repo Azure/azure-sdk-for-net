@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ResourceGroupEdgeSiteResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ResourceGroupEdgeSiteResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)

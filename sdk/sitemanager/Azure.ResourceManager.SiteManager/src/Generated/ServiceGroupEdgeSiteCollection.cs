@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// create or update Site at SG scope
+        /// Create a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// create or update Site at SG scope
+        /// Create a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

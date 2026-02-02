@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
+        /// <description> SitesByServiceGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
+        /// <description> SitesByServiceGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
