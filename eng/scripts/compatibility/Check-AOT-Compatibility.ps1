@@ -24,6 +24,12 @@ if ($PSCmdlet.ParameterSetName -eq 'ByNameAndDirectory') {
 
 Write-Host "Path: $PackagePath"
 
+# Skip AOT compatibility check for tools service directory (analyzers, etc.)
+if ($PackagePath -like "sdk/tools/*" -or $PackagePath -like "sdk\tools\*") {
+    Write-Host "Skipping AOT compatibility check for tools service directory."
+    exit 0
+}
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $ProjectPath = Join-Path $RepoRoot $PackagePath
 $PackageNameFromPath = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
