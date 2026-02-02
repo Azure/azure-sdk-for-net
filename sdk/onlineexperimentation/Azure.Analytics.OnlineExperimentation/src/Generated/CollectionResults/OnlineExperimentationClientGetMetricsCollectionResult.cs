@@ -17,21 +17,21 @@ namespace Azure.Analytics.OnlineExperimentation
     internal partial class OnlineExperimentationClientGetMetricsCollectionResult : Pageable<BinaryData>
     {
         private readonly OnlineExperimentationClient _client;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of OnlineExperimentationClientGetMetricsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The OnlineExperimentationClient client used to send requests. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OnlineExperimentationClientGetMetricsCollectionResult(OnlineExperimentationClient client, int? top, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public OnlineExperimentationClientGetMetricsCollectionResult(OnlineExperimentationClient client, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
@@ -72,7 +72,7 @@ namespace Azure.Analytics.OnlineExperimentation
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, pageSize, _context) : _client.CreateGetMetricsRequest(_top, _skip, pageSize, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, pageSize, _context) : _client.CreateGetMetricsRequest(_maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OnlineExperimentationClient.GetMetrics");
             scope.Start();
             try
