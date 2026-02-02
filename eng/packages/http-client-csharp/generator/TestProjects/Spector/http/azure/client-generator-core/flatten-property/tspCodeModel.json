@@ -78,6 +78,11 @@
       "usage": "Input,Output,Json",
       "doc": "This is the model with one level of flattening.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FlattenModel"
+        }
+      },
       "properties": [
         {
           "$id": "10",
@@ -118,6 +123,11 @@
             "usage": "Input,Output,Json",
             "doc": "This is the child model to be flattened.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ChildModel"
+              }
+            },
             "properties": [
               {
                 "$id": "14",
@@ -198,6 +208,11 @@
       "usage": "Input,Output,Json",
       "doc": "This is the model with two levels of flattening.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NestedFlattenModel"
+        }
+      },
       "properties": [
         {
           "$id": "19",
@@ -238,6 +253,11 @@
             "usage": "Input,Output,Json",
             "doc": "This is the child model to be flattened. And it has flattened property as well.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ChildFlattenModel"
+              }
+            },
             "properties": [
               {
                 "$id": "23",
@@ -404,7 +424,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty"
           },
           "parameters": [
             {
@@ -560,7 +581,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty"
           },
           "parameters": [
             {

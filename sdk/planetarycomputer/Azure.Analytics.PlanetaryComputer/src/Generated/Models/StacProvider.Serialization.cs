@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#provider-object
-    /// 
     /// Represents information about a data provider for STAC collections and items.
     /// </summary>
     public partial class StacProvider : IJsonModel<StacProvider>

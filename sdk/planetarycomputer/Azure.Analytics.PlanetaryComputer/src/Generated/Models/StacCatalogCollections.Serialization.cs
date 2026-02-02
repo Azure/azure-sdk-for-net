@@ -15,7 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
-    /// 
     /// Represents a collection of STAC collections with links.
     /// </summary>
     public partial class StacCatalogCollections : IJsonModel<StacCatalogCollections>

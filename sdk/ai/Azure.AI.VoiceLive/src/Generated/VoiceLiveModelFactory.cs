@@ -51,10 +51,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        /// 
-        /// - For pcm16: 8000, 16000, 24000
-        /// 
-        /// - For g711_alaw/g711_ulaw: 8000
+        /// <list type="bullet"><item><description>For pcm16: 8000, 16000, 24000</description></item></list>
+        /// <list type="bullet"><item><description>For g711_alaw/g711_ulaw: 8000</description></item></list>
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -110,7 +108,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// OpenAI voice configuration with explicit type field.
-        /// 
         /// This provides a unified interface for OpenAI voices, complementing the
         /// existing string-based OAIVoice for backward compatibility.
         /// </summary>
@@ -711,7 +708,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response.
-        /// 
         /// One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
@@ -1220,13 +1216,13 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Returned when a conversation item is created. There are several scenarios that produce this event:
-        /// - The server is generating a Response, which if successful will produce
+        /// <list type="bullet"><item><description>The server is generating a Response, which if successful will produce</description></item></list>
         /// either one or two Items, which will be of type `message`
         /// (role `assistant`) or type `function_call`.
-        /// - The input audio buffer has been committed, either by the client or the
+        /// <list type="bullet"><item><description>The input audio buffer has been committed, either by the client or the</description></item></list>
         /// server (in `server_vad` mode). The server will take the content of the
         /// input audio buffer and add it to a new user message Item.
-        /// - The client has sent a `conversation.item.create` event to add a new Item
+        /// <list type="bullet"><item><description>The client has sent a `conversation.item.create` event to add a new Item</description></item></list>
         /// to the Conversation.
         /// </summary>
         /// <param name="eventId"></param>

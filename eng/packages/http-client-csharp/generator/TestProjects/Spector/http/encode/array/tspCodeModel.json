@@ -141,6 +141,11 @@
       "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CommaDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -172,7 +177,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "commaDelimited"
         }
       ]
     },
@@ -184,6 +190,11 @@
       "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpaceDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -204,7 +215,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "spaceDelimited"
         }
       ]
     },
@@ -216,6 +228,11 @@
       "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PipeDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "24",
@@ -236,7 +253,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "pipeDelimited"
         }
       ]
     },
@@ -248,6 +266,11 @@
       "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewlineDelimitedArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -268,7 +291,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "newlineDelimited"
         }
       ]
     }
@@ -414,7 +438,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.commaDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -570,7 +595,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.spaceDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -726,7 +752,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.pipeDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {
@@ -882,7 +909,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Encode.Array.Property.newlineDelimited",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Encode.Array.Property"
               },
               "parameters": [
                 {

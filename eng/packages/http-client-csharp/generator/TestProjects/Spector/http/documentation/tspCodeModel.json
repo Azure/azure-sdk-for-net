@@ -94,6 +94,11 @@
       "usage": "Input,Json",
       "doc": "This tests:\n- Simple bullet point. This bullet point is going to be very long to test how text wrapping is handled in bullet points within documentation comments. It should properly indent the wrapped lines.\n- Another bullet point with **bold text**. This bullet point is also intentionally long to see how the formatting is preserved when the text wraps onto multiple lines in the generated documentation.\n- Third bullet point with *italic text*. Similar to the previous points, this one is extended to ensure that the wrapping and formatting are correctly applied in the output.\n- Complex bullet point with **bold** and *italic* combined. This bullet point combines both bold and italic formatting and is long enough to test the wrapping behavior in such cases.\n- **Bold bullet point**: A bullet point that is entirely bolded. This point is also made lengthy to observe how the bold formatting is maintained across wrapped lines.\n- *Italic bullet point*: A bullet point that is entirely italicized. This final point is extended to verify that italic formatting is correctly applied even when the text spans multiple lines.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BulletPointsModel"
+        }
+      },
       "properties": [
         {
           "$id": "9",
@@ -127,6 +132,11 @@
       "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.Request.anonymous",
       "usage": "Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "11",
@@ -233,7 +243,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsOp",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.Lists"
               },
               "parameters": [],
               "response": {},
@@ -310,7 +321,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.Lists"
               },
               "parameters": [
                 {
@@ -385,7 +397,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.Lists.numbered",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.Lists"
               },
               "parameters": [],
               "response": {},
@@ -472,7 +485,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.TextFormatting.boldText",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.TextFormatting"
               },
               "parameters": [],
               "response": {},
@@ -511,7 +525,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.TextFormatting.italicText",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.TextFormatting"
               },
               "parameters": [],
               "response": {},
@@ -550,7 +565,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Documentation.TextFormatting.combinedFormatting",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Documentation.TextFormatting"
               },
               "parameters": [],
               "response": {},

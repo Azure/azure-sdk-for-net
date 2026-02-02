@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/stac-extensions/item-assets
-    /// 
     /// Represents a STAC item asset, which describes the assets available under any item in the collection.
     /// </summary>
     public partial class StacItemAsset : IJsonModel<StacItemAsset>
