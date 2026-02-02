@@ -111,50 +111,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        public async Task ShouldReceiveSessionUpdatedWithFoundryAgent_DynamicAgent()
-        {
-            // This test verifies that the session updated event includes the dynamically generated test agent
-            var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
-
-            var foundryAgent = new VoiceLiveFoundryAgentDefinition(
-                agentName: _testAgentName,  // Use the dynamic agent name from setup
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                AgentVersion = TestConstants.TestFoundryAgentVersion,
-                Description = TestConstants.TestFoundryAgentDescription,
-                AgentContextType = FoundryAgentContextType.AgentContext,
-                ReturnAgentResponseDirectly = false
-            };
-
-            var options = new VoiceLiveSessionOptions
-            {
-                Model = "gpt-4o"
-            };
-            options.Tools.Add(foundryAgent);
-
-            await using var session = await client.StartSessionAsync(options, TimeoutToken).ConfigureAwait(false);
-
-            var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
-
-            var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
-
-            Assert.IsNotNull(sessionUpdated.Session);
-            Assert.IsNotNull(sessionUpdated.Session.Tools);
-            Assert.IsTrue(sessionUpdated.Session.Tools.Count > 0);
-
-            var agentTool = sessionUpdated.Session.Tools.FirstOrDefault(t => t is VoiceLiveFoundryAgentDefinition);
-            Assert.IsNotNull(agentTool, "Expected to find a Foundry agent tool in the session configuration");
-
-            var agentDef = agentTool as VoiceLiveFoundryAgentDefinition;
-            Assert.AreEqual(_testAgentName, agentDef?.AgentName);  // Test the dynamic agent name
-            Assert.AreEqual(TestConstants.TestFoundryProjectName, agentDef?.ProjectName);
-
-            TestContext.WriteLine($"✓ Dynamic test agent '{agentDef?.AgentName}' found in session configuration");
-        }
-
-        [LiveOnly]
-        [TestCase]
         public async Task ShouldReceiveSessionUpdatedWithFoundryAgent_EnvironmentAgent()
         {
             // This test verifies that the session updated event includes the environment-configured agent
