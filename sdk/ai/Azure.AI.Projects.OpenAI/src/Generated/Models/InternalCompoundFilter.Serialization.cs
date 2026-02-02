@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalCompoundFilter : IJsonModel<InternalCompoundFilter>
     {
@@ -36,7 +35,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
             foreach (BinaryData item in Filters)
@@ -105,7 +104,7 @@ namespace OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CompoundFilterType(prop.Value.GetString());
+                    @type = prop.Value.GetString().ToCompoundFilterType();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

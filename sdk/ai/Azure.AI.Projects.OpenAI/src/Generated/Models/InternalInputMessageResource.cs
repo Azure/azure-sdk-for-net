@@ -4,51 +4,104 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 
 namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalInputMessageResource : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalInputMessageResource"/>. </summary>
-        /// <param name="role"> The role of the message input. One of `user`, `system`, or `developer`. </param>
-        /// <param name="content"></param>
-        internal InternalInputMessageResource(MessageRole role, IEnumerable<InputContent> content) : base(AgentResponseItemKind.Message)
+        /// <param name="role">
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </param>
+        /// <param name="content">
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
+        /// </param>
+        internal InternalInputMessageResource(MessageRole role, BinaryData content) : base(AgentResponseItemKind.Message)
         {
             Role = role;
-            Content = content.ToList();
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalInputMessageResource"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="role"> The role of the message input. One of `user`, `system`, or `developer`. </param>
+        /// <param name="role">
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </param>
+        /// <param name="content">
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
+        /// </param>
         /// <param name="status">
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <param name="content"></param>
-        internal InternalInputMessageResource(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, InputMessageResourceStatus? status, IList<InputContent> content) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalInputMessageResource(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, BinaryData content, InputMessageResourceStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Role = role;
-            Status = status;
             Content = content;
+            Status = status;
         }
 
-        /// <summary> The role of the message input. One of `user`, `system`, or `developer`. </summary>
+        /// <summary>
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </summary>
         public MessageRole Role { get; }
+
+        /// <summary>
+        /// Text, image, or audio input to the model, used to generate a response.
+        ///   Can also contain previous assistant responses.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputContent"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Content { get; }
 
         /// <summary>
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
         public InputMessageResourceStatus? Status { get; }
-
-        /// <summary> Gets the Content. </summary>
-        public IList<InputContent> Content { get; }
     }
 }

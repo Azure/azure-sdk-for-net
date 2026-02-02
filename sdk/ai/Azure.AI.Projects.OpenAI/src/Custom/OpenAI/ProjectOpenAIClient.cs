@@ -155,7 +155,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             return options;
         }
-        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai";
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1";
         if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
             throw new InvalidOperationException(

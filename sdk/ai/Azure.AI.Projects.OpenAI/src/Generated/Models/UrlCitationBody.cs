@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> URL citation. </summary>
-    internal partial class UrlCitationBody : InternalAnnotation
+    internal partial class UrlCitationBody : Annotation
     {
         /// <summary> Initializes a new instance of <see cref="UrlCitationBody"/>. </summary>
         /// <param name="url"> The URL of the web resource. </param>

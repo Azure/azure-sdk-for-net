@@ -37,18 +37,20 @@ namespace Azure.AI.Projects.OpenAI
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
+            writer.WritePropertyName("content"u8);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Content);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Content))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            writer.WritePropertyName("content"u8);
-            writer.WriteStartArray();
-            foreach (InputContent item in Content)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -78,13 +80,12 @@ namespace Azure.AI.Projects.OpenAI
             }
             AgentResponseItemKind @type = default;
             string id = default;
-            AgentItemSource itemSource = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MessageRole role = default;
+            BinaryData content = default;
             InputMessageResourceStatus? status = default;
-            IList<InputContent> content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -95,15 +96,6 @@ namespace Azure.AI.Projects.OpenAI
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -125,6 +117,11 @@ namespace Azure.AI.Projects.OpenAI
                     role = prop.Value.GetString().ToMessageRole();
                     continue;
                 }
+                if (prop.NameEquals("content"u8))
+                {
+                    content = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -132,16 +129,6 @@ namespace Azure.AI.Projects.OpenAI
                         continue;
                     }
                     status = prop.Value.GetString().ToInputMessageResourceStatus();
-                    continue;
-                }
-                if (prop.NameEquals("content"u8))
-                {
-                    List<InputContent> array = new List<InputContent>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(InputContent.DeserializeInputContent(item, options));
-                    }
-                    content = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,13 +139,12 @@ namespace Azure.AI.Projects.OpenAI
             return new InternalInputMessageResource(
                 @type,
                 id,
-                itemSource,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
                 role,
-                status,
-                content);
+                content,
+                status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

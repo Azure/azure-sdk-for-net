@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The OutputMessageContent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentRefusalContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
     internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.OpenAI
                 switch (discriminator.GetString())
                 {
                     case "output_text":
-                        return OutputMessageContentOutputTextContent.DeserializeOutputMessageContentOutputTextContent(element, options);
+                        return InternalOutputMessageContentOutputTextContent.DeserializeInternalOutputMessageContentOutputTextContent(element, options);
                     case "refusal":
                         return OutputMessageContentRefusalContent.DeserializeOutputMessageContentRefusalContent(element, options);
                 }

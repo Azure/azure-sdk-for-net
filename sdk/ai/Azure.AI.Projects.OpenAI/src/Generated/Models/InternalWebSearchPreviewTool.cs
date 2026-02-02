@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalWebSearchPreviewTool : AgentTool
     {
@@ -20,14 +19,14 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
+        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApproximateLocation userLocation, SearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
         }
 
         /// <summary> Gets or sets the UserLocation. </summary>
-        public InternalApproximateLocation UserLocation { get; set; }
+        public ApproximateLocation UserLocation { get; set; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public SearchContextSize? SearchContextSize { get; set; }

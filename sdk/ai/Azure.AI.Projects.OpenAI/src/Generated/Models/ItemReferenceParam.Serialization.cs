@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Item reference. </summary>
-    internal partial class ItemReferenceParam : InputItem, IJsonModel<ItemReferenceParam>
+    internal partial class ItemReferenceParam : Item, IJsonModel<ItemReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/> for deserialization. </summary>
         internal ItemReferenceParam()
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -65,14 +65,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            InputItemType @type = default;
+            ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new InputItemType(prop.Value.GetString());
+                    @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.AI.Projects.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemReferenceParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

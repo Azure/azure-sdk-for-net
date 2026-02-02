@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The OutputContent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ReasoningTextContent"/>, <see cref="OutputContentOutputTextContent"/>, and <see cref="OutputContentRefusalContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ReasoningTextContent"/> and <see cref="OutputContentRefusalContent"/>.
     /// </summary>
     internal abstract partial class OutputContent
     {

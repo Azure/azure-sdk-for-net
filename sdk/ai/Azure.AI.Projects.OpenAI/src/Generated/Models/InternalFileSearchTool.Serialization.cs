@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalFileSearchTool : AgentTool, IJsonModel<InternalFileSearchTool>
     {
@@ -101,7 +100,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> vectorStoreIds = default;
             long? maxNumResults = default;
-            InternalRankingOptions rankingOptions = default;
+            RankingOptions rankingOptions = default;
             BinaryData filters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +141,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    rankingOptions = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptions = RankingOptions.DeserializeRankingOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

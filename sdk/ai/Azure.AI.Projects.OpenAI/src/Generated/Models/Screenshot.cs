@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Screenshot. </summary>
-    internal partial class Screenshot : InternalComputerAction
+    internal partial class Screenshot : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="Screenshot"/>. </summary>
         public Screenshot() : base(ComputerActionType.Screenshot)

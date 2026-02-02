@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalImageGenTool : AgentTool, IJsonModel<InternalImageGenTool>
     {
@@ -39,17 +38,17 @@ namespace OpenAI
             if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
-                writer.WriteStringValue(Quality.Value.ToString());
+                writer.WriteStringValue(Quality.Value.ToSerialString());
             }
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
-                writer.WriteStringValue(Size.Value.ToString());
+                writer.WriteStringValue(Size.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputFormat))
             {
                 writer.WritePropertyName("output_format"u8);
-                writer.WriteStringValue(OutputFormat.Value.ToString());
+                writer.WriteStringValue(OutputFormat.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputCompression))
             {
@@ -59,12 +58,12 @@ namespace OpenAI
             if (Optional.IsDefined(Moderation))
             {
                 writer.WritePropertyName("moderation"u8);
-                writer.WriteStringValue(Moderation.Value.ToString());
+                writer.WriteStringValue(Moderation.Value.ToSerialString());
             }
             if (Optional.IsDefined(Background))
             {
                 writer.WritePropertyName("background"u8);
-                writer.WriteStringValue(Background.Value.ToString());
+                writer.WriteStringValue(Background.Value.ToSerialString());
             }
             if (Optional.IsDefined(InputFidelity))
             {
@@ -118,7 +117,7 @@ namespace OpenAI
             ImageGenToolModeration? moderation = default;
             ImageGenToolBackground? background = default;
             InputFidelity? inputFidelity = default;
-            InternalImageGenToolInputImageMask inputImageMask = default;
+            ImageGenToolInputImageMask inputImageMask = default;
             long? partialImages = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +141,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    quality = new ImageGenToolQuality(prop.Value.GetString());
+                    quality = prop.Value.GetString().ToImageGenToolQuality();
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -151,7 +150,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    size = new ImageGenToolSize(prop.Value.GetString());
+                    size = prop.Value.GetString().ToImageGenToolSize();
                     continue;
                 }
                 if (prop.NameEquals("output_format"u8))
@@ -160,7 +159,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    outputFormat = new ImageGenToolOutputFormat(prop.Value.GetString());
+                    outputFormat = prop.Value.GetString().ToImageGenToolOutputFormat();
                     continue;
                 }
                 if (prop.NameEquals("output_compression"u8))
@@ -178,7 +177,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    moderation = new ImageGenToolModeration(prop.Value.GetString());
+                    moderation = prop.Value.GetString().ToImageGenToolModeration();
                     continue;
                 }
                 if (prop.NameEquals("background"u8))
@@ -187,7 +186,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    background = new ImageGenToolBackground(prop.Value.GetString());
+                    background = prop.Value.GetString().ToImageGenToolBackground();
                     continue;
                 }
                 if (prop.NameEquals("input_fidelity"u8))
@@ -206,7 +205,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    inputImageMask = InternalImageGenToolInputImageMask.DeserializeInternalImageGenToolInputImageMask(prop.Value, options);
+                    inputImageMask = ImageGenToolInputImageMask.DeserializeImageGenToolInputImageMask(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("partial_images"u8))

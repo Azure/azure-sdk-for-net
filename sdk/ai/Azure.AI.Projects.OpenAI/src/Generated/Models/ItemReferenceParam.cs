@@ -8,12 +8,12 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Item reference. </summary>
-    internal partial class ItemReferenceParam : InputItem
+    internal partial class ItemReferenceParam : Item
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>
         /// <param name="id"> The ID of the item to reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ItemReferenceParam(string id) : base(InputItemType.ItemReference)
+        public ItemReferenceParam(string id) : base(ItemType.ItemReference)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the item to reference. </param>
-        internal ItemReferenceParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type, additionalBinaryDataProperties)
+        internal ItemReferenceParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
         }

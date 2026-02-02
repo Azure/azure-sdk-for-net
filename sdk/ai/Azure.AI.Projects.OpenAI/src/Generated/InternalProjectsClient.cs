@@ -23,7 +23,6 @@ namespace Azure.AI.Projects
                 { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -48,7 +47,6 @@ namespace Azure.AI.Projects
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

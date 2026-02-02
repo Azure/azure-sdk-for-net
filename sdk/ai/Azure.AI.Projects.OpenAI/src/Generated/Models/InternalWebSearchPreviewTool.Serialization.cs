@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalWebSearchPreviewTool : AgentTool, IJsonModel<InternalWebSearchPreviewTool>
     {
@@ -70,7 +69,7 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            InternalApproximateLocation userLocation = default;
+            ApproximateLocation userLocation = default;
             SearchContextSize? searchContextSize = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -86,7 +85,7 @@ namespace OpenAI
                         userLocation = null;
                         continue;
                     }
-                    userLocation = InternalApproximateLocation.DeserializeInternalApproximateLocation(prop.Value, options);
+                    userLocation = ApproximateLocation.DeserializeApproximateLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
