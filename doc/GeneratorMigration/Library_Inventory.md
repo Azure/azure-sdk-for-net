@@ -13,25 +13,25 @@
 
 ## Summary
 
-- Total libraries: 402
+- Total libraries: 403
 - Management Plane (MPG): 227
   - Autorest/Swagger: 147
   - New Emitter (TypeSpec): 79
   - Old TypeSpec: 1
-- Data Plane (DPG): 144
+- Data Plane (DPG): 145
   - Autorest/Swagger: 59
-  - New Emitter (TypeSpec): 28
-  - Old TypeSpec: 10
+  - New Emitter (TypeSpec): 29
+  - Old TypeSpec: 9
 - Provisioning: 31
   - Custom reflection-based generator: 31
-- No generator: 47
+- No generator: 48
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 28 / 38 (73.7%)
+**Migration Status**: 29 / 38 (76.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -432,7 +432,7 @@ Total: 31
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 48
 
 | Service | Library |
 | ------- | ------- |
@@ -482,4 +482,5 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | storage | Azure.Storage.DataMovement.Files.Shares |
 | storage | Azure.Storage.Internal.Avro |
 | synapse | Azure.Analytics.Synapse.Shared |
+| tools | Azure.SdkAnalyzers |
 | webpubsub | Azure.Messaging.WebPubSub.Client |
