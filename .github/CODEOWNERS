@@ -822,7 +822,7 @@
 # PRLabel: %Service Bus
 /sdk/servicebus/                                                   @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
 
-# PRLabel: %Service Bus %Functions
+# PRLabel: %Functions %Service Bus
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
 
 # AzureSdkOwners:                                                  @jsquire
