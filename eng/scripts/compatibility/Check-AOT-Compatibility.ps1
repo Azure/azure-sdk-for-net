@@ -24,8 +24,10 @@ if ($PSCmdlet.ParameterSetName -eq 'ByNameAndDirectory') {
 
 Write-Host "Path: $PackagePath"
 
+$normalizedPackagePath = $PackagePath.Replace('\', '/')
+
 # Skip AOT compatibility check for tools service directory (analyzers, etc.)
-if ($PackagePath -like "sdk/tools/*" -or $PackagePath -like "sdk\tools\*") {
+if ($normalizedPackagePath -like "sdk/tools/*") {
     Write-Host "Skipping AOT compatibility check for tools service directory."
     exit 0
 }
