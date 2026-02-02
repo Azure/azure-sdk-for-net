@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         private readonly int _dummyPrimitive;
         public CapacitySkuTier(string value) { throw null; }
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier AutoPremiumHost { get { throw null; } }
-        public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier PBIEAzure { get { throw null; } }
+        public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier PbieAzure { get { throw null; } }
         public static Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PowerBIDedicated.Models.CapacitySkuTier other) { throw null; }
         public override bool Equals(object obj) { throw null; }
