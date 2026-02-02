@@ -839,7 +839,21 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
 
 /**
  * Checks if a model or any of its base models has the @customAzureResource decorator.
- * This is used to detect custom ARM resources that don't use standard ARM templates.
+ *
+ * The @customAzureResource decorator (Azure.ResourceManager.Legacy.@customAzureResource) is used
+ * for ARM resources that don't follow standard ARM resource templates. This is commonly used for:
+ * - Legacy services that were converted from Swagger to TypeSpec (e.g., TrafficManager)
+ * - Services with custom resource hierarchies that don't fit standard ARM patterns
+ *
+ * Unlike standard ARM resources that use TrackedResource<T> or ProxyResource<T> templates
+ * (which automatically get @armResourceInternal decorator), custom resources define their own
+ * base Resource model with this decorator.
+ *
+ * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+ * @see https://github.com/Azure/azure-sdk-for-net/issues/53208
+ *
+ * @param model - The model to check for @customAzureResource decorator
+ * @returns true if the model or any ancestor has @customAzureResource decorator
  */
 function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
   let current: InputModelType | undefined = model;
@@ -854,10 +868,32 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
   return false;
 }
 
+/**
+ * Collects all models that represent ARM resources from the code model.
+ *
+ * ARM resources are detected in two ways:
+ *
+ * 1. **Standard ARM resources**: Models that use standard ARM templates like TrackedResource<T>
+ *    or ProxyResource<T>. These models have @armResourceInternal or @armResourceWithParameter
+ *    decorators applied automatically by the typespec-azure-resource-manager library.
+ *
+ * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
+ *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
+ *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
+ *    See: https://github.com/Azure/azure-sdk-for-net/issues/53208
+ *
+ * TODO: The generator needs to be updated to determine the appropriate C# base type
+ * (ResourceData or TrackedResourceData) for custom resources based on the model's properties
+ * (presence of location and tags indicates TrackedResourceData).
+ *
+ * @param codeModel - The code model containing all models
+ * @returns Array of models that represent ARM resources
+ */
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
-    // Check for standard ARM resource decorators
+    // 1. Standard ARM resources: Models using TrackedResource<T>, ProxyResource<T>, etc.
+    //    These templates automatically apply @armResourceInternal decorator
     if (
       model.decorators?.some(
         (d) =>
@@ -866,11 +902,13 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     ) {
       resourceModels.push(model);
     }
-    // Check for custom Azure resources using @customAzureResource decorator
-    // These are resources that extend a custom base Resource model (like TrafficManager)
+    // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
+    //    Used by legacy services like TrafficManager that don't use standard ARM templates
     else if (hasCustomAzureResourceInHierarchy(model)) {
-      // Only include if the model has properties (indicating it's an actual resource, not the base Resource model)
-      // and doesn't already have the internal decorator
+      // Only include models that have properties defined.
+      // This filters out completely empty models. Note that the base CustomResource model
+      // also has properties (id, name, type), but it won't become a resource in the final schema
+      // because only models with defined operations become actual resources.
       if (model.properties && model.properties.length > 0) {
         resourceModels.push(model);
       }
