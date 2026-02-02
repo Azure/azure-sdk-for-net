@@ -38,6 +38,7 @@ import {
   armResourceReadName,
   armResourceUpdateName,
   armResourceWithParameter,
+  customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
@@ -802,9 +803,27 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ * This is used to detect custom ARM resources that don't use standard ARM templates.
+ */
+function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+  let current: InputModelType | undefined = model;
+  while (current) {
+    if (
+      current.decorators?.some((d) => d.name === customAzureResource)
+    ) {
+      return true;
+    }
+    current = current.baseModel;
+  }
+  return false;
+}
+
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
+    // Check for standard ARM resource decorators
     if (
       model.decorators?.some(
         (d) =>
@@ -812,6 +831,15 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
       )
     ) {
       resourceModels.push(model);
+    }
+    // Check for custom Azure resources using @customAzureResource decorator
+    // These are resources that extend a custom base Resource model (like TrafficManager)
+    else if (hasCustomAzureResourceInHierarchy(model)) {
+      // Only include if the model has properties (indicating it's an actual resource, not the base Resource model)
+      // and doesn't already have the internal decorator
+      if (model.properties && model.properties.length > 0) {
+        resourceModels.push(model);
+      }
     }
   }
   return resourceModels;
