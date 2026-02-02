@@ -6,58 +6,491 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager;
+using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableTrafficManagerResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _endpointsClientDiagnostics;
+        private Endpoints _endpointsRestClient;
+        private ClientDiagnostics _profilesClientDiagnostics;
+        private Profiles _profilesRestClient;
+        private ClientDiagnostics _heatMapClientDiagnostics;
+        private HeatMap _heatMapRestClient;
+
+        /// <summary> Initializes a new instance of MockableTrafficManagerResourceGroupResource for mocking. </summary>
         protected MockableTrafficManagerResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrafficManagerResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrafficManagerResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private ClientDiagnostics EndpointsClientDiagnostics => _endpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Endpoints EndpointsRestClient => _endpointsRestClient ??= new Endpoints(EndpointsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+
+        private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+
+        private ClientDiagnostics HeatMapClientDiagnostics => _heatMapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private HeatMap HeatMapRestClient => _heatMapRestClient ??= new HeatMap(HeatMapClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+
+        /// <summary>
+        /// Gets a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Endpoint>> GetAsync(string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets a collection of TrafficManagerProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
-        public virtual TrafficManagerProfileCollection GetTrafficManagerProfiles()
+        /// <summary>
+        /// Gets a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Endpoint> Get(string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new TrafficManagerProfileCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Endpoint>> CreateOrUpdateAsync(string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, Models.Endpoint.ToRequestContent(endpoint), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Endpoint> CreateOrUpdate(string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, Models.Endpoint.ToRequestContent(endpoint), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Endpoint>> UpdateAsync(string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, Models.Endpoint.ToRequestContent(endpoint), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="endpoint"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/>, <paramref name="endpointName"/> or <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Endpoint> Update(string profileName, EndpointType endpointType, string endpointName, Endpoint endpoint, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, Models.Endpoint.ToRequestContent(endpoint), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Endpoint> response = Response.FromValue(Models.Endpoint.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeleteOperationResult>> DeleteAsync(string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Traffic Manager endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Endpoints_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeleteOperationResult> Delete(string profileName, EndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using DiagnosticScope scope = EndpointsClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = EndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, endpointType.ToString(), endpointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,30 +498,48 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(string profileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Profile>> GetAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            return await GetTrafficManagerProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -96,10 +547,494 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TrafficManagerProfileResource> GetTrafficManagerProfile(string profileName, CancellationToken cancellationToken = default)
+        public virtual Response<Profile> Get(string profileName, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerProfiles().Get(profileName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="profile"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Profile>> CreateOrUpdateAsync(string profileName, Profile profile, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(profile, nameof(profile));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, Profile.ToRequestContent(profile), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="profile"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Profile> CreateOrUpdate(string profileName, Profile profile, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(profile, nameof(profile));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, Profile.ToRequestContent(profile), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="profile"> The Traffic Manager profile parameters supplied to the Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Profile>> UpdateAsync(string profileName, Profile profile, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(profile, nameof(profile));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, Profile.ToRequestContent(profile), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="profile"> The Traffic Manager profile parameters supplied to the Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> or <paramref name="profile"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Profile> Update(string profileName, Profile profile, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNull(profile, nameof(profile));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, Profile.ToRequestContent(profile), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Profile> response = Response.FromValue(Profile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeleteOperationResult>> DeleteAsync(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeleteOperationResult> Delete(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeleteOperationResult> response = Response.FromValue(DeleteOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets latest heatmap for Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HeatMapModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TrafficManagerHeatMap>> GetAsync(string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = HeatMapClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HeatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, heatMapType.ToString(), topLeft, botRight, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrafficManagerHeatMap> response = Response.FromValue(TrafficManagerHeatMap.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets latest heatmap for Traffic Manager profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HeatMapModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TrafficManagerHeatMap> Get(string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using DiagnosticScope scope = HeatMapClientDiagnostics.CreateScope("MockableTrafficManagerResourceGroupResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HeatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, heatMapType.ToString(), topLeft, botRight, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrafficManagerHeatMap> response = Response.FromValue(TrafficManagerHeatMap.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all Traffic Manager profiles within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Profile> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProfilesGetByResourceGroupAsyncCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context);
+        }
+
+        /// <summary>
+        /// Lists all Traffic Manager profiles within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="Profile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Profile> GetByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProfilesGetByResourceGroupCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context);
         }
     }
 }
