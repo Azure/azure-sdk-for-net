@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         }
 
         [RecordedTest]
-        [Ignore("TODO: re-record this test")]
         public async Task NodeTypesActions()
         {
             // CreateOrUpdate

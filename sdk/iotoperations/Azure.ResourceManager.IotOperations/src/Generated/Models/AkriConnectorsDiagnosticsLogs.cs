@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorsDiagnostic Log properties. </summary>
-    public partial class AkriConnectorsDiagnosticsLogs
+    internal partial class AkriConnectorsDiagnosticsLogs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

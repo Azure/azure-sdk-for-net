@@ -279,7 +279,6 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsExportable { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
@@ -1547,9 +1546,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName Primary { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName left, Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName (string value) { throw null; }
@@ -1750,9 +1747,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationAccountState Suspended { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationAccountState Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationAccountState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationAccountState left, Azure.ResourceManager.Automation.Models.AutomationAccountState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationAccountState (string value) { throw null; }
@@ -1879,7 +1874,6 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description { get { throw null; } set { } }
         public bool? IsExportable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
@@ -2003,9 +1997,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationContentSourceType EmbeddedContent { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationContentSourceType Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationContentSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationContentSourceType left, Azure.ResourceManager.Automation.Models.AutomationContentSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationContentSourceType (string value) { throw null; }
@@ -2021,9 +2013,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationCountType NodeConfiguration { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationCountType Status { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationCountType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationCountType left, Azure.ResourceManager.Automation.Models.AutomationCountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationCountType (string value) { throw null; }
@@ -2072,9 +2062,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationDayOfWeek left, Azure.ResourceManager.Automation.Models.AutomationDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationDayOfWeek (string value) { throw null; }
@@ -2148,9 +2136,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode UpgradeRequired { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode UseProxy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode left, Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode (string value) { throw null; }
@@ -2223,9 +2209,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationJobStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationJobStatus Suspending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationJobStatus left, Azure.ResourceManager.Automation.Models.AutomationJobStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationJobStatus (string value) { throw null; }
@@ -2263,9 +2247,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationJobStreamType Verbose { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationJobStreamType Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationJobStreamType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationJobStreamType left, Azure.ResourceManager.Automation.Models.AutomationJobStreamType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationJobStreamType (string value) { throw null; }
@@ -2294,9 +2276,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationKeyName Primary { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationKeyName Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationKeyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationKeyName left, Azure.ResourceManager.Automation.Models.AutomationKeyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationKeyName (string value) { throw null; }
@@ -2312,9 +2292,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationKeyPermission Full { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationKeyPermission Read { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationKeyPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationKeyPermission left, Azure.ResourceManager.Automation.Models.AutomationKeyPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationKeyPermission (string value) { throw null; }
@@ -2474,9 +2452,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Python3 { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationRunbookType Script { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationRunbookType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationRunbookType left, Azure.ResourceManager.Automation.Models.AutomationRunbookType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationRunbookType (string value) { throw null; }
@@ -2514,9 +2490,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency OneTime { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency Week { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency left, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency (string value) { throw null; }
@@ -2558,9 +2532,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationSkuName Basic { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.AutomationSkuName Free { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.AutomationSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationSkuName left, Azure.ResourceManager.Automation.Models.AutomationSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.AutomationSkuName (string value) { throw null; }
@@ -2823,9 +2795,7 @@ namespace Azure.ResourceManager.Automation.Models
         public DscConfigurationProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState left, Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState (string value) { throw null; }
@@ -2842,9 +2812,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.DscConfigurationState New { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.DscConfigurationState Published { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.DscConfigurationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.DscConfigurationState left, Azure.ResourceManager.Automation.Models.DscConfigurationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.DscConfigurationState (string value) { throw null; }
@@ -3021,9 +2989,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.GraphRunbookType GraphPowerShell { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.GraphRunbookType GraphPowerShellWorkflow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.GraphRunbookType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.GraphRunbookType left, Azure.ResourceManager.Automation.Models.GraphRunbookType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.GraphRunbookType (string value) { throw null; }
@@ -3074,9 +3040,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.HybridWorkerGroup System { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.HybridWorkerGroup User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.HybridWorkerGroup other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.HybridWorkerGroup left, Azure.ResourceManager.Automation.Models.HybridWorkerGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.HybridWorkerGroup (string value) { throw null; }
@@ -3092,9 +3056,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.HybridWorkerType HybridV1 { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.HybridWorkerType HybridV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.HybridWorkerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.HybridWorkerType left, Azure.ResourceManager.Automation.Models.HybridWorkerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.HybridWorkerType (string value) { throw null; }
@@ -3112,9 +3074,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.JobProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.JobProvisioningState Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.JobProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.JobProvisioningState left, Azure.ResourceManager.Automation.Models.JobProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.JobProvisioningState (string value) { throw null; }
@@ -3132,9 +3092,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.LinuxUpdateClassification Security { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.LinuxUpdateClassification Unclassified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.LinuxUpdateClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.LinuxUpdateClassification left, Azure.ResourceManager.Automation.Models.LinuxUpdateClassification right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.LinuxUpdateClassification (string value) { throw null; }
@@ -3261,9 +3219,7 @@ namespace Azure.ResourceManager.Automation.Models
         public RunbookProvisioningState(string value) { throw null; }
         public static Azure.ResourceManager.Automation.Models.RunbookProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.RunbookProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.RunbookProvisioningState left, Azure.ResourceManager.Automation.Models.RunbookProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.RunbookProvisioningState (string value) { throw null; }
@@ -3280,9 +3236,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.RunbookState New { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.RunbookState Published { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.RunbookState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.RunbookState left, Azure.ResourceManager.Automation.Models.RunbookState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.RunbookState (string value) { throw null; }
@@ -3523,9 +3477,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlProvisioningState Running { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.SourceControlProvisioningState left, Azure.ResourceManager.Automation.Models.SourceControlProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.SourceControlProvisioningState (string value) { throw null; }
@@ -3555,9 +3507,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlSourceType VsoGit { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlSourceType VsoTfvc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.SourceControlSourceType left, Azure.ResourceManager.Automation.Models.SourceControlSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.SourceControlSourceType (string value) { throw null; }
@@ -3573,9 +3523,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlStreamType Error { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlStreamType Output { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlStreamType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.SourceControlStreamType left, Azure.ResourceManager.Automation.Models.SourceControlStreamType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.SourceControlStreamType (string value) { throw null; }
@@ -3668,9 +3616,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlSyncType FullSync { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlSyncType PartialSync { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlSyncType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.SourceControlSyncType left, Azure.ResourceManager.Automation.Models.SourceControlSyncType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.SourceControlSyncType (string value) { throw null; }
@@ -3686,9 +3632,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlTokenType OAuth { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.SourceControlTokenType PersonalAccessToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.SourceControlTokenType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.SourceControlTokenType left, Azure.ResourceManager.Automation.Models.SourceControlTokenType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.SourceControlTokenType (string value) { throw null; }
@@ -3711,9 +3655,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.WindowsUpdateClassification UpdateRollup { get { throw null; } }
         public static Azure.ResourceManager.Automation.Models.WindowsUpdateClassification Updates { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Automation.Models.WindowsUpdateClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Automation.Models.WindowsUpdateClassification left, Azure.ResourceManager.Automation.Models.WindowsUpdateClassification right) { throw null; }
         public static implicit operator Azure.ResourceManager.Automation.Models.WindowsUpdateClassification (string value) { throw null; }

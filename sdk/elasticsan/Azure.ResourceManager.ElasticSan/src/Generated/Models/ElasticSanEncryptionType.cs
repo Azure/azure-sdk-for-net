@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public readonly partial struct ElasticSanEncryptionType : IEquatable<ElasticSanEncryptionType>
     {
         private readonly string _value;
+        /// <summary> Volume is encrypted at rest with Platform managed key. It is the default encryption type. </summary>
+        private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
+        /// <summary> Volume is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
+        private const string EncryptionAtRestWithCustomerManagedKeyValue = "EncryptionAtRestWithCustomerManagedKey";
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticSanEncryptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EncryptionAtRestWithPlatformKeyValue = "EncryptionAtRestWithPlatformKey";
-        private const string EncryptionAtRestWithCustomerManagedKeyValue = "EncryptionAtRestWithCustomerManagedKey";
+            _value = value;
+        }
 
         /// <summary> Volume is encrypted at rest with Platform managed key. It is the default encryption type. </summary>
         public static ElasticSanEncryptionType EncryptionAtRestWithPlatformKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithPlatformKeyValue);
+
         /// <summary> Volume is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
         public static ElasticSanEncryptionType EncryptionAtRestWithCustomerManagedKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithCustomerManagedKeyValue);
+
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticSanEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticSanEncryptionType(string value) => new ElasticSanEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticSanEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticSanEncryptionType?(string value) => value == null ? null : new ElasticSanEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticSanEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticSanEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

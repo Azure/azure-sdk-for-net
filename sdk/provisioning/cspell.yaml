@@ -31,3 +31,4 @@ overrides:
       - snat
       - vnets
       - vxlan
+      - quic

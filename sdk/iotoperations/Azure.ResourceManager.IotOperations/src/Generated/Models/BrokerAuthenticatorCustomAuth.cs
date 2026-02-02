@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,16 +15,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
-        /// <param name="x509"> X509 Custom Auth type details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="x509"/> is null. </exception>
-        public BrokerAuthenticatorCustomAuth(BrokerX509ManualCertificate x509)
-        {
-            Argument.AssertNotNull(x509, nameof(x509));
-
-            X509 = x509;
-        }
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="x509"> X509 Custom Auth type details. </param>

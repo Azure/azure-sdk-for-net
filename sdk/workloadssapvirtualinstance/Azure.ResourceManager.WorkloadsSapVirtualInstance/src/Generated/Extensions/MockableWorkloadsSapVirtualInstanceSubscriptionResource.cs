@@ -96,7 +96,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
         }
 
-        /// <summary> Gets the sizing recommendations. </summary>
+        /// <summary>
+        /// Gets the sizing recommendations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSizingRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +145,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Gets the sizing recommendations. </summary>
+        /// <summary>
+        /// Gets the sizing recommendations.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSizingRecommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,7 +194,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get a list of SAP supported SKUs for ASCS, Application and Database tier. </summary>
+        /// <summary>
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSapSupportedSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +243,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get a list of SAP supported SKUs for ASCS, Application and Database tier. </summary>
+        /// <summary>
+        /// Get a list of SAP supported SKUs for ASCS, Application and Database tier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetSapSupportedSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -228,7 +292,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get the SAP Disk Configuration Layout prod/non-prod SAP System. </summary>
+        /// <summary>
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetDiskConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,7 +341,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get the SAP Disk Configuration Layout prod/non-prod SAP System. </summary>
+        /// <summary>
+        /// Get the SAP Disk Configuration Layout prod/non-prod SAP System.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetDiskConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,7 +390,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get the recommended SAP Availability Zone Pair Details for your region. </summary>
+        /// <summary>
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetAvailabilityZoneDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -327,7 +439,23 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             }
         }
 
-        /// <summary> Get the recommended SAP Availability Zone Pair Details for your region. </summary>
+        /// <summary>
+        /// Get the recommended SAP Availability Zone Pair Details for your region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_GetAvailabilityZoneDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

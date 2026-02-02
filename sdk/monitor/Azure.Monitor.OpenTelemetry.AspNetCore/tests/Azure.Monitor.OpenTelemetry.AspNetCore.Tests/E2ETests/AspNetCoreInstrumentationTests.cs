@@ -71,6 +71,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                             {
                                 x.EnableLiveMetrics = false;
                                 x.ConnectionString = testConnectionString;
+                                x.SamplingRatio = 1.0f; // Ensure 100% sampling for tests
+                                x.TracesPerSecond = null; // Disable rate limited sampler
                             })
                             .WithTracing(x => x.AddInMemoryExporter(activities))
                             // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.

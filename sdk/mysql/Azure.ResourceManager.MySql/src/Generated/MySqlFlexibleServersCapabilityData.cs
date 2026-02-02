@@ -13,79 +13,62 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the MySqlFlexibleServersCapability data model.
-    /// Represents a location capability set.
-    /// </summary>
+    /// <summary> Represents a location capability set. </summary>
     public partial class MySqlFlexibleServersCapabilityData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
-        public MySqlFlexibleServersCapabilityData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a location capability set. </param>
+        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapabilityPropertiesV2 properties) : base(id, name, resourceType, systemData)
         {
-            SupportedGeoBackupRegions = new ChangeTrackingList<string>();
-            SupportedFlexibleServerEditions = new ChangeTrackingList<ServerEditionCapabilityV2>();
-            SupportedServerVersions = new ChangeTrackingList<ServerVersionCapabilityV2>();
-            SupportedFeatures = new ChangeTrackingList<MySqlFlexibleServerFeatureProperty>();
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
-        /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
-        /// <param name="supportedServerVersions"> A list of supported server versions. </param>
-        /// <param name="supportedFeatures"> A list of supported features. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions, IReadOnlyList<MySqlFlexibleServerFeatureProperty> supportedFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            SupportedGeoBackupRegions = supportedGeoBackupRegions;
-            SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
-            SupportedServerVersions = supportedServerVersions;
-            SupportedFeatures = supportedFeatures;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The properties of a location capability set. </summary>
+        internal CapabilityPropertiesV2 Properties { get; }
 
         /// <summary> supported geo backup regions. </summary>
-        public IReadOnlyList<string> SupportedGeoBackupRegions { get; }
+        public IReadOnlyList<string> SupportedGeoBackupRegions
+        {
+            get
+            {
+                return Properties.SupportedGeoBackupRegions;
+            }
+        }
+
         /// <summary> A list of supported flexible server editions. </summary>
-        public IReadOnlyList<ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get; }
+        public IReadOnlyList<ServerEditionCapabilityV2> SupportedFlexibleServerEditions
+        {
+            get
+            {
+                return Properties.SupportedFlexibleServerEditions;
+            }
+        }
+
         /// <summary> A list of supported server versions. </summary>
-        public IReadOnlyList<ServerVersionCapabilityV2> SupportedServerVersions { get; }
+        public IReadOnlyList<ServerVersionCapabilityV2> SupportedServerVersions
+        {
+            get
+            {
+                return Properties.SupportedServerVersions;
+            }
+        }
+
         /// <summary> A list of supported features. </summary>
-        public IReadOnlyList<MySqlFlexibleServerFeatureProperty> SupportedFeatures { get; }
+        public IReadOnlyList<MySqlFlexibleServerFeatureProperty> SupportedFeatures
+        {
+            get
+            {
+                return Properties.SupportedFeatures;
+            }
+        }
     }
 }

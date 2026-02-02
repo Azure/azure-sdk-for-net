@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
         /// <param name="publicNetworkAccess">
         /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
-        /// - Enabled: The resource can be accessed from the public internet.
-        /// - Disabled: The resource can only be accessed from a private endpoint.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OnlineExperimentationWorkspacePatchProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceEncryptionConfiguration encryption, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -52,8 +51,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary>
         /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
-        /// - Enabled: The resource can be accessed from the public internet.
-        /// - Disabled: The resource can only be accessed from a private endpoint.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
         /// </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
 

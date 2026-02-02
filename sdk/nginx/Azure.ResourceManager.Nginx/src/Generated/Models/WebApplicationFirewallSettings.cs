@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
-    public partial class WebApplicationFirewallSettings
+    internal partial class WebApplicationFirewallSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

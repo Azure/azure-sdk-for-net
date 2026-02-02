@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="BestPracticeResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
     /// To get a <see cref="BestPracticeCollection"/> instance call the GetBestPractices method from an instance of <see cref="TenantResource"/>.
     /// </summary>
-    public partial class BestPracticeCollection : ArmCollection
+    public partial class BestPracticeCollection : ArmCollection, IEnumerable<BestPracticeResource>, IAsyncEnumerable<BestPracticeResource>
     {
         private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
         private readonly BestPractices _bestPracticesRestClient;
@@ -262,6 +264,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPractices_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllAsyncCollectionResultOfT(_bestPracticesRestClient, context), data => new BestPracticeResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a BestPractice
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/MgmtTypeSpec/bestPractices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BestPractices_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BestPracticeData, BestPracticeResource>(new BestPracticesGetAllCollectionResultOfT(_bestPracticesRestClient, context), data => new BestPracticeResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -495,6 +553,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<BestPracticeResource> IEnumerable<BestPracticeResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<BestPracticeResource> IAsyncEnumerable<BestPracticeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

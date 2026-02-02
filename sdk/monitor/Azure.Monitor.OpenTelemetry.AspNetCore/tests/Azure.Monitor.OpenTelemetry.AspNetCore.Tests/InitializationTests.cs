@@ -300,7 +300,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
 
                 // Validate Sampler
-                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, false);
+                // The default TracesPerSecond is 5.0, so we expect RateLimitedSampler by default
+                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, true);
 
                 // Validate Instrumentations
                 var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);

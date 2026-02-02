@@ -16,6 +16,7 @@ namespace Azure.AI.VoiceLive
         private readonly string _value;
         private const string InputTextValue = "input_text";
         private const string InputAudioValue = "input_audio";
+        private const string InputImageValue = "input_image";
         private const string TextValue = "text";
         private const string AudioValue = "audio";
 
@@ -34,6 +35,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the InputAudio. </summary>
         public static ContentPartType InputAudio { get; } = new ContentPartType(InputAudioValue);
+
+        /// <summary> Gets the InputImage. </summary>
+        public static ContentPartType InputImage { get; } = new ContentPartType(InputImageValue);
 
         /// <summary> Gets the Text. </summary>
         public static ContentPartType Text { get; } = new ContentPartType(TextValue);

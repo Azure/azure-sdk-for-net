@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public readonly partial struct PublicCloudResourceProvisioningState : IEquatable<PublicCloudResourceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicCloudResourceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static PublicCloudResourceProvisioningState Succeeded { get; } = new PublicCloudResourceProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static PublicCloudResourceProvisioningState Failed { get; } = new PublicCloudResourceProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static PublicCloudResourceProvisioningState Canceled { get; } = new PublicCloudResourceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="PublicCloudResourceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicCloudResourceProvisioningState left, PublicCloudResourceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PublicCloudResourceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicCloudResourceProvisioningState left, PublicCloudResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicCloudResourceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PublicCloudResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PublicCloudResourceProvisioningState(string value) => new PublicCloudResourceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PublicCloudResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PublicCloudResourceProvisioningState?(string value) => value == null ? null : new PublicCloudResourceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicCloudResourceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PublicCloudResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

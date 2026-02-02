@@ -14,7 +14,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The leaf certificate configuration. </summary>
-    public partial class LeafCertificateConfiguration : IJsonModel<LeafCertificateConfiguration>
+    internal partial class LeafCertificateConfiguration : IJsonModel<LeafCertificateConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="LeafCertificateConfiguration"/> for deserialization. </summary>
         internal LeafCertificateConfiguration()

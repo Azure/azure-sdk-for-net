@@ -178,19 +178,11 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareSnapshotProperties(snapshotTime, initiatorId, metadata, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response structure for file shares usage in the specified subscription/location. </summary>
-        /// <param name="properties"> The properties of the file share usage data. </param>
-        /// <returns> A new <see cref="Models.FileShareUsageDataResult"/> instance for mocking. </returns>
-        public static FileShareUsageDataResult FileShareUsageDataResult(FileShareUsageDataProperties properties = default)
-        {
-            return new FileShareUsageDataResult(properties, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="liveSharesFileShareCount"> The number of active file shares. </param>
-        /// <returns> A new <see cref="Models.FileShareUsageDataProperties"/> instance for mocking. </returns>
-        public static FileShareUsageDataProperties FileShareUsageDataProperties(int? liveSharesFileShareCount = default)
+        /// <returns> A new <see cref="Models.FileShareUsageDataResult"/> instance for mocking. </returns>
+        public static FileShareUsageDataResult FileShareUsageDataResult(int? liveSharesFileShareCount = default)
         {
-            return new FileShareUsageDataProperties(liveSharesFileShareCount is null ? default : new LiveSharesUsageData(liveSharesFileShareCount.Value, null), additionalBinaryDataProperties: null);
+            return new FileShareUsageDataResult(liveSharesFileShareCount is null ? default : new FileShareUsageDataProperties(new LiveSharesUsageData(liveSharesFileShareCount.Value, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response structure for file share limits API. </summary>
@@ -254,14 +246,6 @@ namespace Azure.ResourceManager.FileShares.Models
         public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int? fileShareProvisioningRecommendationInputProvisionedStorageInGiB = default)
         {
             return new FileShareProvisioningRecommendationContent(fileShareProvisioningRecommendationInputProvisionedStorageInGiB is null ? default : new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB.Value, null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-        /// <param name="provisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
-        /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationInputProperties"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationInputProperties FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB = default)
-        {
-            return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>

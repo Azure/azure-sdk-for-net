@@ -96,7 +96,23 @@ namespace Azure.ResourceManager.StorageActions.Mocking
             return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetBySubscriptionCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageTaskResource(Client, data));
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasksOperationGroup_PreviewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"></param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +145,23 @@ namespace Azure.ResourceManager.StorageActions.Mocking
             }
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageTasksOperationGroup_PreviewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"></param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -20,9 +20,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.AggregationType Percentile9999 { get { throw null; } }
         public static Azure.Developer.LoadTesting.AggregationType Total { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.AggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.AggregationType left, Azure.Developer.LoadTesting.AggregationType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.AggregationType (string value) { throw null; }
@@ -76,9 +74,7 @@ namespace Azure.Developer.LoadTesting
         public CertificateType(string value) { throw null; }
         public static Azure.Developer.LoadTesting.CertificateType KeyVaultCertificateUri { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.CertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.CertificateType left, Azure.Developer.LoadTesting.CertificateType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.CertificateType (string value) { throw null; }
@@ -97,9 +93,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.CreatedByType ScheduledTrigger { get { throw null; } }
         public static Azure.Developer.LoadTesting.CreatedByType User { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.CreatedByType left, Azure.Developer.LoadTesting.CreatedByType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.CreatedByType (string value) { throw null; }
@@ -191,9 +185,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.FileValidationStatus ValidationNotRequired { get { throw null; } }
         public static Azure.Developer.LoadTesting.FileValidationStatus ValidationSuccess { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.FileValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.FileValidationStatus left, Azure.Developer.LoadTesting.FileValidationStatus right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.FileValidationStatus (string value) { throw null; }
@@ -445,9 +437,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.LoadTestingFileType UserProperties { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingFileType ZippedArtifacts { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.LoadTestingFileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.LoadTestingFileType left, Azure.Developer.LoadTesting.LoadTestingFileType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.LoadTestingFileType (string value) { throw null; }
@@ -464,9 +454,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.LoadTestingManagedIdentityType SystemAssigned { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestingManagedIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.LoadTestingManagedIdentityType left, Azure.Developer.LoadTesting.LoadTestingManagedIdentityType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.LoadTestingManagedIdentityType (string value) { throw null; }
@@ -591,9 +579,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.LoadTestKind Locust { get { throw null; } }
         public static Azure.Developer.LoadTesting.LoadTestKind Url { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.LoadTestKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.LoadTestKind left, Azure.Developer.LoadTesting.LoadTestKind right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.LoadTestKind (string value) { throw null; }
@@ -720,17 +706,13 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestRunFileInfo> GetTestRunFile(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTestRunFileAsync(string testRunId, string fileName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Developer.LoadTesting.TestRunFileInfo>> GetTestRunFileAsync(string testRunId, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, System.Collections.Generic.IEnumerable<string> createdByTypes, System.Collections.Generic.IEnumerable<string> testIds, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Collections.Generic.IEnumerable<string> createdByTypes = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, int? maxpagesize, System.Collections.Generic.IEnumerable<string> createdByTypes, System.Collections.Generic.IEnumerable<string> testIds, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, System.DateTimeOffset? executionFrom = default(System.DateTimeOffset?), System.DateTimeOffset? executionTo = default(System.DateTimeOffset?), string status = null, int? maxpagesize = default(int?), System.Collections.Generic.IEnumerable<string> createdByTypes = null, System.Collections.Generic.IEnumerable<string> testIds = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.AsyncPageable<Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string orderby, string search, string testId, System.DateTimeOffset? executionFrom, System.DateTimeOffset? executionTo, string status, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response StopTestProfileRun(string testProfileRunId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Developer.LoadTesting.TestProfileRun> StopTestProfileRun(string testProfileRunId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -851,9 +833,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.MetricUnit Percent { get { throw null; } }
         public static Azure.Developer.LoadTesting.MetricUnit Seconds { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.MetricUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.MetricUnit left, Azure.Developer.LoadTesting.MetricUnit right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.MetricUnit (string value) { throw null; }
@@ -952,9 +932,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.OperationKind CloneTest { get { throw null; } }
         public static Azure.Developer.LoadTesting.OperationKind GenerateTestRunInsights { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.OperationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.OperationKind left, Azure.Developer.LoadTesting.OperationKind right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.OperationKind (string value) { throw null; }
@@ -974,9 +952,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.OperationState Running { get { throw null; } }
         public static Azure.Developer.LoadTesting.OperationState Succeeded { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.OperationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.OperationState left, Azure.Developer.LoadTesting.OperationState right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.OperationState (string value) { throw null; }
@@ -1030,9 +1006,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.PassFailAction Continue { get { throw null; } }
         public static Azure.Developer.LoadTesting.PassFailAction Stop { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.PassFailAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.PassFailAction left, Azure.Developer.LoadTesting.PassFailAction right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.PassFailAction (string value) { throw null; }
@@ -1062,9 +1036,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.PassFailAggregationFunction Percentile999 { get { throw null; } }
         public static Azure.Developer.LoadTesting.PassFailAggregationFunction Percentile9999 { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.PassFailAggregationFunction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.PassFailAggregationFunction left, Azure.Developer.LoadTesting.PassFailAggregationFunction right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.PassFailAggregationFunction (string value) { throw null; }
@@ -1118,9 +1090,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.PassFailResult Passed { get { throw null; } }
         public static Azure.Developer.LoadTesting.PassFailResult Undetermined { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.PassFailResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.PassFailResult left, Azure.Developer.LoadTesting.PassFailResult right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.PassFailResult (string value) { throw null; }
@@ -1160,9 +1130,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.PassFailTestResult NOTAPPLICABLE { get { throw null; } }
         public static Azure.Developer.LoadTesting.PassFailTestResult PASSED { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.PassFailTestResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.PassFailTestResult left, Azure.Developer.LoadTesting.PassFailTestResult right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.PassFailTestResult (string value) { throw null; }
@@ -1182,9 +1150,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.PfMetrics RequestsPerSecond { get { throw null; } }
         public static Azure.Developer.LoadTesting.PfMetrics ResponseTimeInMilliseconds { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.PfMetrics other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.PfMetrics left, Azure.Developer.LoadTesting.PfMetrics right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.PfMetrics (string value) { throw null; }
@@ -1201,9 +1167,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.RecommendationCategory CostOptimized { get { throw null; } }
         public static Azure.Developer.LoadTesting.RecommendationCategory ThroughputOptimized { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.RecommendationCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.RecommendationCategory left, Azure.Developer.LoadTesting.RecommendationCategory right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.RecommendationCategory (string value) { throw null; }
@@ -1279,9 +1243,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.RequestDataLevel ERRORS { get { throw null; } }
         public static Azure.Developer.LoadTesting.RequestDataLevel NONE { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.RequestDataLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.RequestDataLevel left, Azure.Developer.LoadTesting.RequestDataLevel right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.RequestDataLevel (string value) { throw null; }
@@ -1336,9 +1298,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.SecretType KeyVaultSecretUri { get { throw null; } }
         public static Azure.Developer.LoadTesting.SecretType SecretValue { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.SecretType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.SecretType left, Azure.Developer.LoadTesting.SecretType right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.SecretType (string value) { throw null; }
@@ -1544,9 +1504,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TestProfileRunStatus Failed { get { throw null; } }
         public static Azure.Developer.LoadTesting.TestProfileRunStatus NotStarted { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.TestProfileRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.TestProfileRunStatus left, Azure.Developer.LoadTesting.TestProfileRunStatus right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.TestProfileRunStatus (string value) { throw null; }
@@ -1824,9 +1782,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TestRunStatus ValidationFailure { get { throw null; } }
         public static Azure.Developer.LoadTesting.TestRunStatus ValidationSuccess { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.TestRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.TestRunStatus left, Azure.Developer.LoadTesting.TestRunStatus right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.TestRunStatus (string value) { throw null; }
@@ -1909,9 +1865,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TimeGrain OneMinute { get { throw null; } }
         public static Azure.Developer.LoadTesting.TimeGrain TenSeconds { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.TimeGrain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.TimeGrain left, Azure.Developer.LoadTesting.TimeGrain right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.TimeGrain (string value) { throw null; }
@@ -1971,9 +1925,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.TriggerState Disabled { get { throw null; } }
         public static Azure.Developer.LoadTesting.TriggerState Paused { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.TriggerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.TriggerState left, Azure.Developer.LoadTesting.TriggerState right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.TriggerState (string value) { throw null; }
@@ -1995,9 +1947,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.WeekDays Tuesday { get { throw null; } }
         public static Azure.Developer.LoadTesting.WeekDays Wednesday { get { throw null; } }
         public bool Equals(Azure.Developer.LoadTesting.WeekDays other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Developer.LoadTesting.WeekDays left, Azure.Developer.LoadTesting.WeekDays right) { throw null; }
         public static implicit operator Azure.Developer.LoadTesting.WeekDays (string value) { throw null; }

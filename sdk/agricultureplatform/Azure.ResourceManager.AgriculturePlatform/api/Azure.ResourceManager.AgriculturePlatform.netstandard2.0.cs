@@ -113,9 +113,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState left, Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AgriculturePlatformProvisioningState (string value) { throw null; }
@@ -258,9 +256,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public static Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind ApiKeyAuthCredentials { get { throw null; } }
         public static Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind OAuthClientCredentials { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind left, Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.AgriculturePlatform.Models.AuthCredentialsKind (string value) { throw null; }

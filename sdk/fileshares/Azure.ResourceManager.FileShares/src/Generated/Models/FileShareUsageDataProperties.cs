@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File shares usage result. </summary>
-    public partial class FileShareUsageDataProperties
+    internal partial class FileShareUsageDataProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

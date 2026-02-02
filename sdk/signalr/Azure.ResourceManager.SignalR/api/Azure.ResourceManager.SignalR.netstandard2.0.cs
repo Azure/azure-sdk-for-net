@@ -378,9 +378,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus left, Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -436,9 +434,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag EnableMessagingLogs { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag ServiceMode { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag left, Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag (string value) { throw null; }
@@ -469,9 +465,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRKeyType Salt { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRKeyType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRKeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRKeyType left, Azure.ResourceManager.SignalR.Models.SignalRKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRKeyType (string value) { throw null; }
@@ -548,9 +542,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction Allow { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction left, Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction (string value) { throw null; }
@@ -624,9 +616,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRProvisioningState Unknown { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRProvisioningState left, Azure.ResourceManager.SignalR.Models.SignalRProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRProvisioningState (string value) { throw null; }
@@ -655,9 +645,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRRequestType ServerConnection { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRRequestType Trace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRRequestType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRRequestType left, Azure.ResourceManager.SignalR.Models.SignalRRequestType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRRequestType (string value) { throw null; }
@@ -701,9 +689,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRScaleType left, Azure.ResourceManager.SignalR.Models.SignalRScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRScaleType (string value) { throw null; }
@@ -719,9 +705,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRServiceKind RawWebSockets { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRServiceKind SignalR { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRServiceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRServiceKind left, Azure.ResourceManager.SignalR.Models.SignalRServiceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRServiceKind (string value) { throw null; }
@@ -740,9 +724,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus Rejected { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus Timeout { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus left, Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus (string value) { throw null; }
@@ -788,9 +770,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRSkuTier Premium { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRSkuTier left, Azure.ResourceManager.SignalR.Models.SignalRSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRSkuTier (string value) { throw null; }
@@ -818,9 +798,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType ManagedIdentity { get { throw null; } }
         public static Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType left, Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType (string value) { throw null; }

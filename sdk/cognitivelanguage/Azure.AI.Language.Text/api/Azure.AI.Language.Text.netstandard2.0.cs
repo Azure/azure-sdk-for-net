@@ -119,9 +119,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.AgeUnit Week { get { throw null; } }
         public static Azure.AI.Language.Text.AgeUnit Year { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.AgeUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.AgeUnit left, Azure.AI.Language.Text.AgeUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.AgeUnit (string value) { throw null; }
@@ -200,9 +198,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.AnalyzeTextErrorCode Unauthorized { get { throw null; } }
         public static Azure.AI.Language.Text.AnalyzeTextErrorCode Warning { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.AnalyzeTextErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.AnalyzeTextErrorCode left, Azure.AI.Language.Text.AnalyzeTextErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.AnalyzeTextErrorCode (string value) { throw null; }
@@ -349,9 +345,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.AreaUnit SquareYard { get { throw null; } }
         public static Azure.AI.Language.Text.AreaUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.AreaUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.AreaUnit left, Azure.AI.Language.Text.AreaUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.AreaUnit (string value) { throw null; }
@@ -854,9 +848,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.EntityCategory Volume { get { throw null; } }
         public static Azure.AI.Language.Text.EntityCategory Weight { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.EntityCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.EntityCategory left, Azure.AI.Language.Text.EntityCategory right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.EntityCategory (string value) { throw null; }
@@ -1109,9 +1101,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria Offset { get { throw null; } }
         public static Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria Rank { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria left, Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria (string value) { throw null; }
@@ -1137,9 +1127,7 @@ namespace Azure.AI.Language.Text
         public FhirVersion(string value) { throw null; }
         public static Azure.AI.Language.Text.FhirVersion _401 { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.FhirVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.FhirVersion left, Azure.AI.Language.Text.FhirVersion right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.FhirVersion (string value) { throw null; }
@@ -1232,9 +1220,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.HealthcareDocumentType ProcedureNote { get { throw null; } }
         public static Azure.AI.Language.Text.HealthcareDocumentType ProgressNote { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.HealthcareDocumentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.HealthcareDocumentType left, Azure.AI.Language.Text.HealthcareDocumentType right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.HealthcareDocumentType (string value) { throw null; }
@@ -1303,9 +1289,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.HealthcareEntityCategory TreatmentName { get { throw null; } }
         public static Azure.AI.Language.Text.HealthcareEntityCategory Variant { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.HealthcareEntityCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.HealthcareEntityCategory left, Azure.AI.Language.Text.HealthcareEntityCategory right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.HealthcareEntityCategory (string value) { throw null; }
@@ -1417,9 +1401,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.InformationUnit Terabyte { get { throw null; } }
         public static Azure.AI.Language.Text.InformationUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.InformationUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.InformationUnit left, Azure.AI.Language.Text.InformationUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.InformationUnit (string value) { throw null; }
@@ -1447,9 +1429,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.InnerErrorCode ModelVersionIncorrect { get { throw null; } }
         public static Azure.AI.Language.Text.InnerErrorCode UnsupportedLanguageCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.InnerErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.InnerErrorCode left, Azure.AI.Language.Text.InnerErrorCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.InnerErrorCode (string value) { throw null; }
@@ -1634,9 +1614,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.LengthUnit Unspecified { get { throw null; } }
         public static Azure.AI.Language.Text.LengthUnit Yard { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.LengthUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.LengthUnit left, Azure.AI.Language.Text.LengthUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.LengthUnit (string value) { throw null; }
@@ -1752,9 +1730,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.NumberKind Power { get { throw null; } }
         public static Azure.AI.Language.Text.NumberKind Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.NumberKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.NumberKind left, Azure.AI.Language.Text.NumberKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.NumberKind (string value) { throw null; }
@@ -2041,9 +2017,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude ZaIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.PiiCategoriesExclude other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.PiiCategoriesExclude left, Azure.AI.Language.Text.PiiCategoriesExclude right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.PiiCategoriesExclude (string value) { throw null; }
@@ -2256,9 +2230,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory ZaIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.PiiCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.PiiCategory left, Azure.AI.Language.Text.PiiCategory right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.PiiCategory (string value) { throw null; }
@@ -2274,9 +2246,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiDomain None { get { throw null; } }
         public static Azure.AI.Language.Text.PiiDomain Phi { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.PiiDomain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.PiiDomain left, Azure.AI.Language.Text.PiiDomain right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.PiiDomain (string value) { throw null; }
@@ -2351,9 +2321,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.RangeInclusivity NoneInclusive { get { throw null; } }
         public static Azure.AI.Language.Text.RangeInclusivity RightInclusive { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.RangeInclusivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.RangeInclusivity left, Azure.AI.Language.Text.RangeInclusivity right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.RangeInclusivity (string value) { throw null; }
@@ -2377,9 +2345,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.RangeKind Volume { get { throw null; } }
         public static Azure.AI.Language.Text.RangeKind Weight { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.RangeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.RangeKind left, Azure.AI.Language.Text.RangeKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.RangeKind (string value) { throw null; }
@@ -2407,9 +2373,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.RedactionCharacter Tilde { get { throw null; } }
         public static Azure.AI.Language.Text.RedactionCharacter Underscore { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.RedactionCharacter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.RedactionCharacter left, Azure.AI.Language.Text.RedactionCharacter right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.RedactionCharacter (string value) { throw null; }
@@ -2458,9 +2422,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.RelationType ValueOfExamination { get { throw null; } }
         public static Azure.AI.Language.Text.RelationType VariantOfGene { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.RelationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.RelationType left, Azure.AI.Language.Text.RelationType right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.RelationType (string value) { throw null; }
@@ -2477,9 +2439,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.RelativeTo End { get { throw null; } }
         public static Azure.AI.Language.Text.RelativeTo Start { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.RelativeTo other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.RelativeTo left, Azure.AI.Language.Text.RelativeTo right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.RelativeTo (string value) { throw null; }
@@ -2541,9 +2501,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptCode Thai { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Tibt { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.ScriptCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.ScriptCode left, Azure.AI.Language.Text.ScriptCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.ScriptCode (string value) { throw null; }
@@ -2591,9 +2549,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptKind Tibetan { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind UnifiedCanadianAboriginalSyllabics { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.ScriptKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.ScriptKind left, Azure.AI.Language.Text.ScriptKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.ScriptKind (string value) { throw null; }
@@ -2768,9 +2724,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.SpeedUnit YardsPerMinute { get { throw null; } }
         public static Azure.AI.Language.Text.SpeedUnit YardsPerSecond { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.SpeedUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.SpeedUnit left, Azure.AI.Language.Text.SpeedUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.SpeedUnit (string value) { throw null; }
@@ -2787,9 +2741,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.StringIndexType UnicodeCodePoint { get { throw null; } }
         public static Azure.AI.Language.Text.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.StringIndexType left, Azure.AI.Language.Text.StringIndexType right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.StringIndexType (string value) { throw null; }
@@ -2818,9 +2770,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.SummaryLengthBucket Medium { get { throw null; } }
         public static Azure.AI.Language.Text.SummaryLengthBucket Short { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.SummaryLengthBucket other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.SummaryLengthBucket left, Azure.AI.Language.Text.SummaryLengthBucket right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.SummaryLengthBucket (string value) { throw null; }
@@ -2891,9 +2841,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.TemperatureUnit Rankine { get { throw null; } }
         public static Azure.AI.Language.Text.TemperatureUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.TemperatureUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.TemperatureUnit left, Azure.AI.Language.Text.TemperatureUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.TemperatureUnit (string value) { throw null; }
@@ -2925,9 +2873,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.TemporalModifier Start { get { throw null; } }
         public static Azure.AI.Language.Text.TemporalModifier Until { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.TemporalModifier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.TemporalModifier left, Azure.AI.Language.Text.TemporalModifier right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.TemporalModifier (string value) { throw null; }
@@ -3000,9 +2946,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.TextActionState Running { get { throw null; } }
         public static Azure.AI.Language.Text.TextActionState Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.TextActionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.TextActionState left, Azure.AI.Language.Text.TextActionState right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.TextActionState (string value) { throw null; }
@@ -3305,9 +3249,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.VolumeUnit Teaspoon { get { throw null; } }
         public static Azure.AI.Language.Text.VolumeUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.VolumeUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.VolumeUnit left, Azure.AI.Language.Text.VolumeUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.VolumeUnit (string value) { throw null; }
@@ -3323,9 +3265,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.WarningCode DocumentTruncated { get { throw null; } }
         public static Azure.AI.Language.Text.WarningCode LongWordsInDocument { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.WarningCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.WarningCode left, Azure.AI.Language.Text.WarningCode right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.WarningCode (string value) { throw null; }
@@ -3367,9 +3307,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.WeightUnit Ton { get { throw null; } }
         public static Azure.AI.Language.Text.WeightUnit Unspecified { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.WeightUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.Text.WeightUnit left, Azure.AI.Language.Text.WeightUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Text.WeightUnit (string value) { throw null; }

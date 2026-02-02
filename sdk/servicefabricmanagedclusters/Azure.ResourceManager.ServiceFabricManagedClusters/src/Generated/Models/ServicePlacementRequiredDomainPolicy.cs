@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequiredDomainPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public ServicePlacementRequiredDomainPolicy(string domainName)
+        public ServicePlacementRequiredDomainPolicy(string domainName) : base(ServicePlacementPolicyType.RequiredDomain)
         {
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            Type = ServicePlacementPolicyType.RequiredDomain;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementRequiredDomainPolicy"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
+        internal ServicePlacementRequiredDomainPolicy(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string domainName) : base(@type, additionalBinaryDataProperties)
         {
             DomainName = domainName;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequiredDomainPolicy"/> for deserialization. </summary>
-        internal ServicePlacementRequiredDomainPolicy()
-        {
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>

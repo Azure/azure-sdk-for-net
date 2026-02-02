@@ -19,20 +19,24 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="CachedTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of cached text tokens. </param>
         /// <param name="audioTokens"> Number of cached audio tokens. </param>
-        internal CachedTokenDetails(int textTokens, int audioTokens)
+        /// <param name="imageTokens"> Number of cached image tokens. </param>
+        internal CachedTokenDetails(int textTokens, int audioTokens, int imageTokens)
         {
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            ImageTokens = imageTokens;
         }
 
         /// <summary> Initializes a new instance of <see cref="CachedTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of cached text tokens. </param>
         /// <param name="audioTokens"> Number of cached audio tokens. </param>
+        /// <param name="imageTokens"> Number of cached image tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CachedTokenDetails(int textTokens, int audioTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CachedTokenDetails(int textTokens, int audioTokens, int imageTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            ImageTokens = imageTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +45,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Number of cached audio tokens. </summary>
         public int AudioTokens { get; }
+
+        /// <summary> Number of cached image tokens. </summary>
+        public int ImageTokens { get; }
     }
 }

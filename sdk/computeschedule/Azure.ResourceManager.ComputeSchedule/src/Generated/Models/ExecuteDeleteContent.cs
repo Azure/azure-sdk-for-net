@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -17,19 +16,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
-        {
-            Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
-
-            ExecutionParameters = executionParameters;
-            Resources = resources;
-        }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>

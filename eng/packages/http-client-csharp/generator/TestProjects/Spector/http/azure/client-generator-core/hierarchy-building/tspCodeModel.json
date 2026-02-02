@@ -205,6 +205,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Animal",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Animal"
+        }
+      },
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -272,6 +277,11 @@
           "usage": "Input,Output,Json",
           "discriminatorValue": "pet",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Pet"
+            }
+          },
           "discriminatorProperty": {
             "$id": "31",
             "kind": "property",
@@ -337,6 +347,11 @@
               "usage": "Input,Output,Json",
               "discriminatorValue": "dog",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "Dog"
+                }
+              },
               "baseModel": {
                 "$ref": "30"
               },
@@ -547,7 +562,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -705,7 +721,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -801,7 +818,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -810,7 +827,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "62",
@@ -910,7 +928,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1068,7 +1087,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1164,7 +1184,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1173,7 +1193,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "82",
@@ -1273,7 +1294,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
               },
               "parameters": [
                 {
@@ -1369,7 +1391,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1378,9 +1400,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

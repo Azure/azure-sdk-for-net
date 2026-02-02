@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowEndpoint Authentication X509 properties. </summary>
-    public partial class DataflowEndpointAuthenticationX509 : IJsonModel<DataflowEndpointAuthenticationX509>
+    internal partial class DataflowEndpointAuthenticationX509 : IJsonModel<DataflowEndpointAuthenticationX509>
     {
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointAuthenticationX509"/> for deserialization. </summary>
         internal DataflowEndpointAuthenticationX509()

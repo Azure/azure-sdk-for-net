@@ -6718,19 +6718,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTaskFile(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
                 Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -6774,19 +6774,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTaskFileAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
                 Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -6882,19 +6882,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -6928,19 +6928,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -9348,19 +9348,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetNodeFile(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
                 Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -9404,19 +9404,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetNodeFileAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
                 Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -9512,19 +9512,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -9558,19 +9558,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

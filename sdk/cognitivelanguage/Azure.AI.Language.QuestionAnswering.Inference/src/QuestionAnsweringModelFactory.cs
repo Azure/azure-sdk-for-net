@@ -1,10 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    [CodeGenType("AILanguageQuestionAnsweringInferenceModelFactory")]
-    public static partial class QuestionAnsweringModelFactory { }
+    [CodeGenType("LanguageQuestionAnsweringInferenceModelFactory")]
+    public partial class QuestionAnsweringModelFactory
+    {
+    }
 }

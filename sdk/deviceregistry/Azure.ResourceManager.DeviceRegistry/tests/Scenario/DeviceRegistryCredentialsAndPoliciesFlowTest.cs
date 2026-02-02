@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 var leafCertificateConfig = new LeafCertificateConfiguration(validityPeriodInDays: 90);
                 var certificateConfig = new CertificateConfiguration(
                     certificateAuthorityConfig,
-                    leafCertificateConfig);
+                    leafCertificateConfig.ValidityPeriodInDays);
 
                 // Create policy data with certificate configuration
                 var policyData = new PolicyData(_region)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 Certificate = new CertificateConfiguration(
                     policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration,  // Reuse existing config
-                    new LeafCertificateConfiguration(validityPeriodInDays: 60)
+                    60
                 )
             };
 

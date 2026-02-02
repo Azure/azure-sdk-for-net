@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridConnectivity
@@ -25,69 +26,75 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// </summary>
     public partial class PublicCloudConnectorSolutionTypeCollection : ArmCollection, IEnumerable<PublicCloudConnectorSolutionTypeResource>, IAsyncEnumerable<PublicCloudConnectorSolutionTypeResource>
     {
-        private readonly ClientDiagnostics _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics;
-        private readonly SolutionTypesRestOperations _publicCloudConnectorSolutionTypeSolutionTypesRestClient;
+        private readonly ClientDiagnostics _solutionTypesClientDiagnostics;
+        private readonly SolutionTypes _solutionTypesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudConnectorSolutionTypeCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublicCloudConnectorSolutionTypeCollection for mocking. </summary>
         protected PublicCloudConnectorSolutionTypeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicCloudConnectorSolutionTypeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionTypeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicCloudConnectorSolutionTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionTypeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PublicCloudConnectorSolutionTypeResource.ResourceType, out string publicCloudConnectorSolutionTypeSolutionTypesApiVersion);
-            _publicCloudConnectorSolutionTypeSolutionTypesRestClient = new SolutionTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorSolutionTypeSolutionTypesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PublicCloudConnectorSolutionTypeResource.ResourceType, out string publicCloudConnectorSolutionTypeApiVersion);
+            _solutionTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudConnectorSolutionTypeResource.ResourceType.Namespace, Diagnostics);
+            _solutionTypesRestClient = new SolutionTypes(_solutionTypesClientDiagnostics, Pipeline, Endpoint, publicCloudConnectorSolutionTypeApiVersion ?? "2024-12-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a SolutionTypeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PublicCloudConnectorSolutionTypeResource>> GetAsync(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Get");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionTypeSolutionTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicCloudConnectorSolutionTypeData> response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Get a SolutionTypeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PublicCloudConnectorSolutionTypeResource> Get(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Get");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionTypeSolutionTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicCloudConnectorSolutionTypeData> response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,50 +157,44 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// List SolutionTypeResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicCloudConnectorSolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicCloudConnectorSolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicCloudConnectorSolutionTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudConnectorSolutionTypeSolutionTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudConnectorSolutionTypeSolutionTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorSolutionTypeResource(Client, PublicCloudConnectorSolutionTypeData.DeserializePublicCloudConnectorSolutionTypeData(e)), _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics, Pipeline, "PublicCloudConnectorSolutionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetByResourceGroupAsyncCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>
         /// List SolutionTypeResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +202,61 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> A collection of <see cref="PublicCloudConnectorSolutionTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicCloudConnectorSolutionTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publicCloudConnectorSolutionTypeSolutionTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publicCloudConnectorSolutionTypeSolutionTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicCloudConnectorSolutionTypeResource(Client, PublicCloudConnectorSolutionTypeData.DeserializePublicCloudConnectorSolutionTypeData(e)), _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics, Pipeline, "PublicCloudConnectorSolutionTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublicCloudConnectorSolutionTypeData, PublicCloudConnectorSolutionTypeResource>(new SolutionTypesGetByResourceGroupCollectionResultOfT(_solutionTypesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PublicCloudConnectorSolutionTypeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Exists");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionTypeSolutionTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +270,50 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Exists");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionTypeSolutionTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +327,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PublicCloudConnectorSolutionTypeResource>> GetIfExistsAsync(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _publicCloudConnectorSolutionTypeSolutionTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudConnectorSolutionTypeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +388,54 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTypeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionType"> Solution Type resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PublicCloudConnectorSolutionTypeResource> GetIfExists(string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
 
-            using var scope = _publicCloudConnectorSolutionTypeSolutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.GetIfExists");
+            using DiagnosticScope scope = _solutionTypesClientDiagnostics.CreateScope("PublicCloudConnectorSolutionTypeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _publicCloudConnectorSolutionTypeSolutionTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, solutionType, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionType, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublicCloudConnectorSolutionTypeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublicCloudConnectorSolutionTypeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublicCloudConnectorSolutionTypeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicCloudConnectorSolutionTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +455,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PublicCloudConnectorSolutionTypeResource> IAsyncEnumerable<PublicCloudConnectorSolutionTypeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

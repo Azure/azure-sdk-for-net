@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             return new TagList
             {
                 { "language", "dotnet" },
-                { "version", SdkVersionUtils.ExtensionsVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
+                { "version", SdkVersionUtils.ExtensionVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength) },
                 { "computeType", GetComputeType() },
                 { "telemetry_type", telemetryType }
             };

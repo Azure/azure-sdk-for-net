@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class AvsHostResource : IJsonModel<AvsHostData>
     {
-        private static AvsHostData s_dataDeserializationInstance;
-        private static AvsHostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvsHostData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvsHostData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvsHostData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsHostData>)Data).Write(writer, options);
 
-        AvsHostData IJsonModel<AvsHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsHostData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsHostData IJsonModel<AvsHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AvsHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsHostData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AvsHostData IPersistableModel<AvsHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsHostData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsHostData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Marketplace SAAS Info of the resource. </summary>
     public partial class MarketplaceSaaSInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSaaSInfo"/>. </summary>
         internal MarketplaceSaaSInfo()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceSaaSInfo(MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSubscription = marketplaceSubscription;
             MarketplaceName = marketplaceName;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.Elastic.Models
             MarketplaceStatus = marketplaceStatus;
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
             IsSubscribed = isSubscribed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace Subscription. </summary>
         public MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get; }
+
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
         public string MarketplaceName { get; }
+
         /// <summary> Marketplace Subscription Details: Resource URI. </summary>
         public string MarketplaceResourceId { get; }
+
         /// <summary> Marketplace Subscription Details: SaaS Subscription Status. </summary>
         public string MarketplaceStatus { get; }
+
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         public string BilledAzureSubscriptionId { get; }
+
         /// <summary> Flag specifying if the Marketplace status is subscribed or not. </summary>
         public bool? IsSubscribed { get; }
     }

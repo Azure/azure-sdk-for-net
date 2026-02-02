@@ -75,10 +75,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType Obj { get { throw null; } }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType Ply { get { throw null; } }
         public bool Equals(Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public static Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType FromFilePath(string assetFilePath) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType left, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType right) { throw null; }
         public static bool operator !=(Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType left, Azure.MixedReality.ObjectAnchors.Conversion.AssetFileType right) { throw null; }
@@ -131,9 +129,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode ZeroFaces { get { throw null; } }
         public static Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode ZeroTrajectoriesGenerated { get { throw null; } }
         public bool Equals(Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode left, Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode right) { throw null; }
         public static implicit operator Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode (string value) { throw null; }
@@ -183,9 +179,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public System.Numerics.Quaternion Rotation { get { throw null; } }
         public System.Numerics.Vector3 Translation { get { throw null; } }
         public bool Equals(Azure.MixedReality.ObjectAnchors.Conversion.TrajectoryPose other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
 }

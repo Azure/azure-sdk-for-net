@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs.Test
                         ContentHash = new byte[] { 1, 2, 3 },
                         LastModified = DateTimeOffset.Now,
                         Metadata = new Dictionary<string, string>() { { "meta", "data" } },
-                        ContentRange = $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}",
+                        ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/{_length}",
                         ETag = s_etag,
                         ContentEncoding = "test",
                         CacheControl = "test",

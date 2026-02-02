@@ -95,6 +95,17 @@ public partial class PrivateEndpoint : ProvisionableResource
     private BicepList<PrivateEndpointIPConfiguration>? _iPConfigurations;
 
     /// <summary>
+    /// Specifies the IP version type for the private IPs of the private
+    /// endpoint. If not defined, this defaults to IPv4.
+    /// </summary>
+    public BicepValue<PrivateEndpointIPVersionType> IPVersionType 
+    {
+        get { Initialize(); return _iPVersionType!; }
+        set { Initialize(); _iPVersionType!.Assign(value); }
+    }
+    private BicepValue<PrivateEndpointIPVersionType>? _iPVersionType;
+
+    /// <summary>
     /// Resource location.
     /// </summary>
     public BicepValue<AzureLocation> Location 
@@ -185,7 +196,7 @@ public partial class PrivateEndpoint : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PrivateEndpoint.</param>
     public PrivateEndpoint(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/privateEndpoints", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.Network/privateEndpoints", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -202,6 +213,7 @@ public partial class PrivateEndpoint : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _iPConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
+        _iPVersionType = DefineProperty<PrivateEndpointIPVersionType>("IPVersionType", ["properties", "ipVersionType"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
@@ -217,6 +229,16 @@ public partial class PrivateEndpoint : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

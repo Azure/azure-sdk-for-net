@@ -42,6 +42,8 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(TextTokens);
             writer.WritePropertyName("audio_tokens"u8);
             writer.WriteNumberValue(AudioTokens);
+            writer.WritePropertyName("image_tokens"u8);
+            writer.WriteNumberValue(ImageTokens);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -86,6 +88,7 @@ namespace Azure.AI.VoiceLive
             }
             int textTokens = default;
             int audioTokens = default;
+            int imageTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -99,12 +102,17 @@ namespace Azure.AI.VoiceLive
                     audioTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("image_tokens"u8))
+                {
+                    imageTokens = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CachedTokenDetails(textTokens, audioTokens, additionalBinaryDataProperties);
+            return new CachedTokenDetails(textTokens, audioTokens, imageTokens, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

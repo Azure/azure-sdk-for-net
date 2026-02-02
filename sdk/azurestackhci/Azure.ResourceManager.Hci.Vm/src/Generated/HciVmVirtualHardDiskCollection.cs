@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Hci.Vm
     /// </summary>
     public partial class HciVmVirtualHardDiskCollection : ArmCollection, IEnumerable<HciVmVirtualHardDiskResource>, IAsyncEnumerable<HciVmVirtualHardDiskResource>
     {
-        private readonly ClientDiagnostics _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics;
-        private readonly VirtualHardDisksRestOperations _hciVmVirtualHardDiskVirtualHardDisksRestClient;
+        private readonly ClientDiagnostics _virtualHardDisksClientDiagnostics;
+        private readonly VirtualHardDisks _virtualHardDisksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmVirtualHardDiskCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmVirtualHardDiskCollection for mocking. </summary>
         protected HciVmVirtualHardDiskCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmVirtualHardDiskCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmVirtualHardDiskCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmVirtualHardDiskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmVirtualHardDiskResource.ResourceType, out string hciVmVirtualHardDiskVirtualHardDisksApiVersion);
-            _hciVmVirtualHardDiskVirtualHardDisksRestClient = new VirtualHardDisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualHardDiskVirtualHardDisksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmVirtualHardDiskResource.ResourceType, out string hciVmVirtualHardDiskApiVersion);
+            _virtualHardDisksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
+            _virtualHardDisksRestClient = new VirtualHardDisks(_virtualHardDisksClientDiagnostics, Pipeline, Endpoint, hciVmVirtualHardDiskApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create or update a virtual hard disk. Please note some properties can be set only during virtual hard disk creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmVirtualHardDiskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualHardDiskName, HciVmVirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmVirtualHardDiskResource>(new HciVmVirtualHardDiskOperationSource(Client), _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
+                    new HciVmVirtualHardDiskOperationSource(Client),
+                    _virtualHardDisksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Hci.Vm
         /// The operation to create or update a virtual hard disk. Please note some properties can be set only during virtual hard disk creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmVirtualHardDiskResource> CreateOrUpdate(WaitUntil waitUntil, string virtualHardDiskName, HciVmVirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmVirtualHardDiskResource>(new HciVmVirtualHardDiskOperationSource(Client), _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
+                    new HciVmVirtualHardDiskOperationSource(Client),
+                    _virtualHardDisksClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a virtual hard disk
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmVirtualHardDiskResource>> GetAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Get");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmVirtualHardDiskVirtualHardDisksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets a virtual hard disk
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmVirtualHardDiskResource> Get(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Get");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmVirtualHardDiskVirtualHardDisksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Lists all of the virtual hard disks in the specified resource group. Use the nextLink property in the response to get the next page of virtual hard disks.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmVirtualHardDiskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "HciVmVirtualHardDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupAsyncCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the virtual hard disks in the specified resource group. Use the nextLink property in the response to get the next page of virtual hard disks.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmVirtualHardDiskResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "HciVmVirtualHardDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Exists");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmVirtualHardDiskVirtualHardDisksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmVirtualHardDiskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmVirtualHardDiskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Exists");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmVirtualHardDiskVirtualHardDisksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmVirtualHardDiskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmVirtualHardDiskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmVirtualHardDiskResource>> GetIfExistsAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmVirtualHardDiskVirtualHardDisksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmVirtualHardDiskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmVirtualHardDiskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmVirtualHardDiskResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHardDisks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmVirtualHardDiskResource> GetIfExists(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
-            using var scope = _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualHardDisksClientDiagnostics.CreateScope("HciVmVirtualHardDiskCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmVirtualHardDiskVirtualHardDisksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualHardDiskName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmVirtualHardDiskData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmVirtualHardDiskData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmVirtualHardDiskResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmVirtualHardDiskResource> IAsyncEnumerable<HciVmVirtualHardDiskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
