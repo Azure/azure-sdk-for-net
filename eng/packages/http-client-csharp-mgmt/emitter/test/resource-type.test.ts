@@ -129,7 +129,7 @@ describe("Operation Scope Detection", () => {
     strictEqual(scope, ResourceScope.Extension);
   });
 
-  it("extension scope for nested extension resources", async () => {
+  it("resource group scope takes priority over nested extension resources", async () => {
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = getOperationScopeFromPath(path);
