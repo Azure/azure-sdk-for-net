@@ -15,7 +15,7 @@ using Azure.ResourceManager.PowerBIDedicated;
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
-    public partial class SkuEnumerationForExistingResourceResult : IJsonModel<SkuEnumerationForExistingResourceResult>
+    internal partial class SkuEnumerationForExistingResourceResult : IJsonModel<SkuEnumerationForExistingResourceResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

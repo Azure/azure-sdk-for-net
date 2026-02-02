@@ -1,4 +1,4 @@
 directory: specification/powerbidedicated/resource-manager/Microsoft.PowerBIdedicated/PowerBIDedicated
-commit: 758761795e658fd108a63fdc3d3b8beea5d25c2e
+commit: 825636cd4dd6473a0c7cb5be25396f576c40fd58
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

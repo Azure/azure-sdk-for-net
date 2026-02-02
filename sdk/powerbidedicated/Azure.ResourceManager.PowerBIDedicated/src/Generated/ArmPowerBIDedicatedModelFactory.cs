@@ -80,16 +80,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new DedicatedCapacityPatch(sku, tags, mode is null && tenantId is null && friendlyName is null && administrationMembers is null ? default : new DedicatedCapacityMutableProperties(new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), mode, tenantId, friendlyName, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
-        /// <param name="value"> The collection of available SKUs for existing resources. </param>
-        /// <returns> A new <see cref="Models.SkuEnumerationForExistingResourceResult"/> instance for mocking. </returns>
-        public static SkuEnumerationForExistingResourceResult SkuEnumerationForExistingResourceResult(IEnumerable<SkuDetails> value = default)
-        {
-            value ??= new ChangeTrackingList<SkuDetails>();
-
-            return new SkuEnumerationForExistingResourceResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> An object that represents SKU details for existing resources. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
@@ -97,16 +87,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static SkuDetails SkuDetails(string resourceType = default, CapacitySku sku = default)
         {
             return new SkuDetails(resourceType, sku, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An object that represents enumerating SKUs for new resources. </summary>
-        /// <param name="value"> The collection of available SKUs for new resources. </param>
-        /// <returns> A new <see cref="Models.SkuEnumerationForNewResourceResult"/> instance for mocking. </returns>
-        public static SkuEnumerationForNewResourceResult SkuEnumerationForNewResourceResult(IEnumerable<CapacitySku> value = default)
-        {
-            value ??= new ChangeTrackingList<CapacitySku>();
-
-            return new SkuEnumerationForNewResourceResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The checking result of capacity name availability. </summary>

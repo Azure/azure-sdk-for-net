@@ -12,7 +12,7 @@ using Azure.ResourceManager.PowerBIDedicated;
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
-    public partial class SkuEnumerationForExistingResourceResult
+    internal partial class SkuEnumerationForExistingResourceResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

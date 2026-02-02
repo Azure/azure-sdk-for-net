@@ -176,30 +176,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuEnumerationForNewResourceResult>> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CapacitiesRestClient.CreateGetSkusCapacitiesRequest(Id.SubscriptionId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SkuEnumerationForNewResourceResult> response = Response.FromValue(SkuEnumerationForNewResourceResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusCapacitiesAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -220,30 +204,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuEnumerationForNewResourceResult> GetSkusCapacities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CapacitiesRestClient.CreateGetSkusCapacitiesRequest(Id.SubscriptionId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SkuEnumerationForNewResourceResult> response = Response.FromValue(SkuEnumerationForNewResourceResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusCapacitiesCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>

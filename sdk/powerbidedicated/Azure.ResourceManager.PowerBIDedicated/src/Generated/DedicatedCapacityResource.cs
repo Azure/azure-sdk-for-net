@@ -427,30 +427,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuEnumerationForExistingResourceResult>> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SkuDetails> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capacitiesClientDiagnostics.CreateScope("DedicatedCapacityResource.GetSkusForCapacity");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capacitiesRestClient.CreateGetSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SkuEnumerationForExistingResourceResult> response = Response.FromValue(SkuEnumerationForExistingResourceResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusForCapacityAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -475,30 +459,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuEnumerationForExistingResourceResult> GetSkusForCapacity(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SkuDetails> GetSkusForCapacity(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capacitiesClientDiagnostics.CreateScope("DedicatedCapacityResource.GetSkusForCapacity");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capacitiesRestClient.CreateGetSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SkuEnumerationForExistingResourceResult> response = Response.FromValue(SkuEnumerationForExistingResourceResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusForCapacityCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
