@@ -389,6 +389,8 @@ namespace Azure.Core
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        protected ClientOptions(Microsoft.Extensions.Configuration.IConfigurationSection section, Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -435,6 +437,7 @@ namespace Azure.Core
     public partial class DiagnosticsOptions
     {
         protected internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
