@@ -43,9 +43,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AgentCommunicationMethod ActivityProtocol { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentCommunicationMethod Responses { get { throw null; } }
         public bool Equals(Azure.AI.Projects.OpenAI.AgentCommunicationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.OpenAI.AgentCommunicationMethod left, Azure.AI.Projects.OpenAI.AgentCommunicationMethod right) { throw null; }
         public static implicit operator Azure.AI.Projects.OpenAI.AgentCommunicationMethod (string value) { throw null; }
@@ -203,9 +201,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind WebSearchCall { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentResponseItemKind WorkflowAction { get { throw null; } }
         public bool Equals(Azure.AI.Projects.OpenAI.AgentResponseItemKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.OpenAI.AgentResponseItemKind left, Azure.AI.Projects.OpenAI.AgentResponseItemKind right) { throw null; }
         public static implicit operator Azure.AI.Projects.OpenAI.AgentResponseItemKind (string value) { throw null; }
@@ -299,9 +295,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus Failed { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus InProgress { get { throw null; } }
         public bool Equals(Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus left, Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus right) { throw null; }
         public static implicit operator Azure.AI.Projects.OpenAI.AgentWorkflowActionStatus (string value) { throw null; }
@@ -330,9 +324,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.AzureAISearchQueryType VectorSemanticHybrid { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.AzureAISearchQueryType VectorSimpleHybrid { get { throw null; } }
         public bool Equals(Azure.AI.Projects.OpenAI.AzureAISearchQueryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.OpenAI.AzureAISearchQueryType left, Azure.AI.Projects.OpenAI.AzureAISearchQueryType right) { throw null; }
         public static implicit operator Azure.AI.Projects.OpenAI.AzureAISearchQueryType (string value) { throw null; }
@@ -902,9 +894,7 @@ namespace Azure.AI.Projects.OpenAI
         public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus InProgress { get { throw null; } }
         public static Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus Searching { get { throw null; } }
         public bool Equals(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus left, Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus right) { throw null; }
         public static implicit operator Azure.AI.Projects.OpenAI.MemorySearchToolCallStatus (string value) { throw null; }
@@ -1172,9 +1162,7 @@ namespace Azure.AI.Projects.OpenAI
         public virtual Azure.AI.Projects.OpenAI.ProjectFilesClient Files { get { throw null; } }
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient Responses { get { throw null; } }
         public virtual Azure.AI.Projects.OpenAI.ProjectVectorStoresClient VectorStores { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
@@ -1182,7 +1170,6 @@ namespace Azure.AI.Projects.OpenAI
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Projects.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectVectorStoresClient GetProjectVectorStoresClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Responses.ResponsesClient GetResponsesClient(string defaultModel) { throw null; }
     }
     public partial class ProjectOpenAIClientOptions : OpenAI.OpenAIClientOptions
