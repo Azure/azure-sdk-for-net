@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             AttestationProviderResource attestationProvider = client.GetAttestationProviderResource(attestationProviderResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AttestationPrivateLinkResource item in attestationProvider.GetByProviderAsync())
+            await foreach (AttestationPrivateLinkResource item in attestationProvider.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

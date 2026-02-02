@@ -422,13 +422,13 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AttestationPrivateLinkResource> GetByProviderAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.Attestation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AttestationPrivateLinkResource> GetByProvider(CancellationToken cancellationToken = default)
+        public virtual Pageable<AttestationPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByProviderCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

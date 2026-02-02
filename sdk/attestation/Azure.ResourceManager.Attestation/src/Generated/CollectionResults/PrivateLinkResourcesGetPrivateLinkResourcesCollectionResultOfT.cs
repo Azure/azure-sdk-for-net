@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.Attestation.Models;
 
 namespace Azure.ResourceManager.Attestation
 {
-    internal partial class PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT : AsyncPageable<AttestationPrivateLinkResource>
+    internal partial class PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT : Pageable<AttestationPrivateLinkResource>
     {
         private readonly PrivateLinkResources _client;
         private readonly string _subscriptionId;
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.Attestation
         private readonly string _providerName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="providerName"> Name of the attestation provider. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT(PrivateLinkResources client, string subscriptionId, string resourceGroupName, string providerName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(PrivateLinkResources client, string subscriptionId, string resourceGroupName, string providerName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,13 +37,13 @@ namespace Azure.ResourceManager.Attestation
             _context = context;
         }
 
-        /// <summary> Gets the pages of PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PrivateLinkResourcesGetByProviderAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AttestationPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<AttestationPrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            Response response = GetNextResponse(pageSizeHint, null);
             AttestationPrivateLinkResourceListResult result = AttestationPrivateLinkResourceListResult.FromResponse(response);
             yield return Page<AttestationPrivateLinkResource>.FromValues((IReadOnlyList<AttestationPrivateLinkResource>)result.Value, null, response);
         }
@@ -52,14 +51,14 @@ namespace Azure.ResourceManager.Attestation
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateGetByProviderRequest(_subscriptionId, _resourceGroupName, _providerName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationProviderResource.GetByProvider");
+            HttpMessage message = _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _providerName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AttestationProviderResource.GetPrivateLinkResources");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
