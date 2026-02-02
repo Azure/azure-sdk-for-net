@@ -22,7 +22,12 @@ namespace Azure.SdkAnalyzers
             // Detect path separator from the entire path
             char pathSeparator = filePath.IndexOf('/') >= 0 ? '/' : '\\';
 
-            int generatedIndex = filePath.IndexOf([.."Generated", pathSeparator], StringComparison.Ordinal);
+            int generatedIndex = filePath.IndexOf("Generated", StringComparison.Ordinal);
+            if (filePath.Length < generatedIndex + GeneratedLength || filePath[generatedIndex + GeneratedLength - 1] != pathSeparator)
+            {
+                // This is a directory like GeneratedStuff
+                return default;
+            }
             if (generatedIndex > 0 && filePath[generatedIndex - 1] != pathSeparator)
             {
                 // This is a directory like PrefixGenerated

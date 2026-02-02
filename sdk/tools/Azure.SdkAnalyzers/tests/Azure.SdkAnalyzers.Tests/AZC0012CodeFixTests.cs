@@ -486,7 +486,9 @@ namespace Azure.Data.Tables
 {
     /// <summary> Represents a foo. </summary>
     [CodeGenType(""Foo"")]
-    public partial class TablesFoo { }
+    public partial class TablesFoo
+    {
+    }
 }
 ";
 
@@ -532,7 +534,9 @@ namespace Azure.Data.Tables.Models
 {
     /// <summary> A model representing a foo. </summary>
     [CodeGenType(""Foo"")]
-    public partial class ModelsFoo { }
+    public partial class ModelsFoo
+    {
+    }
 }
 ";
 
@@ -578,7 +582,9 @@ namespace Azure.Data.Tables.Models.Requests
 {
     /// <summary> A request model for foo operations. </summary>
     [CodeGenType(""Foo"")]
-    public partial class RequestsFoo { }
+    public partial class RequestsFoo
+    {
+    }
 }
 ";
 
@@ -624,7 +630,9 @@ namespace Azure.Data.Tables.Internal
 {
     /// <summary> Internal foo implementation. </summary>
     [CodeGenType(""Foo"")]
-    public partial class InternalFoo { }
+    public partial class InternalFoo
+    {
+    }
 }
 ";
 
@@ -670,7 +678,9 @@ namespace Azure.Data.Tables.Models
 {
     /// <summary> A model representing a foo. </summary>
     [CodeGenType(""Foo"")]
-    public partial class TablesFoo { }
+    public partial class TablesFoo
+    {
+    }
 }
 ";
 
@@ -716,7 +726,9 @@ namespace Azure.Data.Tables.Models
 {
     /// <summary> A model representing a foo. </summary>
     [CodeGenType(""Foo"")]
-    public partial class DataFoo { }
+    public partial class DataFoo
+    {
+    }
 }
 ";
 
@@ -762,7 +774,9 @@ namespace Azure.Data.Tables
 {
     /// <summary> Represents an image resource. </summary>
     [CodeGenType(""Image"")]
-    public partial class TablesImage { }
+    public partial class TablesImage
+    {
+    }
 }
 ";
 
@@ -808,7 +822,9 @@ namespace Azure.Data.Tables
 {
     /// <summary> Represents an indigo color configuration. </summary>
     [CodeGenType(""Indigo"")]
-    public partial class TablesIndigo { }
+    public partial class TablesIndigo
+    {
+    }
 }
 ";
 
@@ -854,7 +870,9 @@ namespace Azure.Data.Networking.Models
 {
     /// <summary> Represents an IPv4 address configuration. </summary>
     [CodeGenType(""IPv4"")]
-    public partial class ModelsIPv4 { }
+    public partial class ModelsIPv4
+    {
+    }
 }
 ";
 
@@ -900,7 +918,9 @@ namespace Azure.Data.Networking.Models
 {
     /// <summary> Represents an IPv6 address configuration. </summary>
     [CodeGenType(""IPv6"")]
-    public partial class ModelsIPv6 { }
+    public partial class ModelsIPv6
+    {
+    }
 }
 ";
 
@@ -946,7 +966,9 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents a search index. </summary>
     [CodeGenType(""Index"")]
-    public partial class ModelsIndex { }
+    public partial class ModelsIndex
+    {
+    }
 }
 ";
 
@@ -992,7 +1014,9 @@ namespace Azure.Compute.Models
 {
     /// <summary> Represents an operating system configuration. </summary>
     [CodeGenType(""OS"")]
-    public partial class ModelsOS { }
+    public partial class ModelsOS
+    {
+    }
 }
 ";
 
@@ -1038,7 +1062,9 @@ namespace Azure.Data.Networking
 {
     /// <summary> Represents an IP address. </summary>
     [CodeGenType(""IP"")]
-    public partial class NetworkingIP { }
+    public partial class NetworkingIP
+    {
+    }
 }
 ";
 
@@ -1096,7 +1122,9 @@ namespace Azure.Data.Tables.Models
     /// Use with caution in production environments.
     /// </remarks>
     [CodeGenType(""Config"")]
-    public partial class ModelsConfig { }
+    public partial class ModelsConfig
+    {
+    }
 }
 ";
 
