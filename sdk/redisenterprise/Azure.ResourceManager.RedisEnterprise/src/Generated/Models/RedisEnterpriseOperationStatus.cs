@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> The status of a long-running operation. </summary>
     public partial class RedisEnterpriseOperationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseOperationStatus"/>. </summary>
         internal RedisEnterpriseOperationStatus()
@@ -54,44 +26,47 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseOperationStatus"/>. </summary>
         /// <param name="id"> The operation's unique id. </param>
         /// <param name="name"> The operation's name. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startTime"> The start time of the operation. </param>
+        /// <param name="endTime"> The end time of the operation. </param>
         /// <param name="status"> The current status of the operation. </param>
         /// <param name="errorResponse"> Error response describing why the operation failed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, string startTime, string endTime, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartTime = startTime;
+            EndTime = endTime;
             Status = status;
             ErrorResponse = errorResponse;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation's unique id. </summary>
-        [WirePath("id")]
         public ResourceIdentifier Id { get; }
+
         /// <summary> The operation's name. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The start time of the operation. </summary>
-        [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public string StartTime { get; }
+
         /// <summary> The end time of the operation. </summary>
-        [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public string EndTime { get; }
+
         /// <summary> The current status of the operation. </summary>
-        [WirePath("status")]
         public string Status { get; }
+
         /// <summary> Error response describing why the operation failed. </summary>
         internal ErrorResponse ErrorResponse { get; }
+
         /// <summary> The error object. </summary>
-        [WirePath("error.error")]
         public ResponseError Error
         {
-            get => ErrorResponse?.Error;
+            get
+            {
+                return ErrorResponse.Error;
+            }
         }
     }
 }

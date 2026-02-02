@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class ForceUnlinkRedisEnterpriseDatabaseContent : IUtf8JsonSerializable, IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>
+    /// <summary> Parameters for a Redis Enterprise Active Geo Replication Force Unlink operation. </summary>
+    public partial class ForceUnlinkRedisEnterpriseDatabaseContent : IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/> for deserialization. </summary>
+        internal ForceUnlinkRedisEnterpriseDatabaseContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,33 +35,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForceUnlinkRedisEnterpriseDatabaseContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("ids"u8);
-            writer.WriteStartArray();
-            foreach (var item in Ids)
+            writer.WriteStringValue(Ids);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,61 +59,55 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        ForceUnlinkRedisEnterpriseDatabaseContent IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ForceUnlinkRedisEnterpriseDatabaseContent IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ForceUnlinkRedisEnterpriseDatabaseContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForceUnlinkRedisEnterpriseDatabaseContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeForceUnlinkRedisEnterpriseDatabaseContent(document.RootElement, options);
         }
 
-        internal static ForceUnlinkRedisEnterpriseDatabaseContent DeserializeForceUnlinkRedisEnterpriseDatabaseContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ForceUnlinkRedisEnterpriseDatabaseContent DeserializeForceUnlinkRedisEnterpriseDatabaseContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceIdentifier> ids = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceIdentifier ids = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ids"u8))
+                if (prop.NameEquals("ids"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    ids = array;
+                    ids = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ForceUnlinkRedisEnterpriseDatabaseContent(ids, serializedAdditionalRawData);
+            return new ForceUnlinkRedisEnterpriseDatabaseContent(ids, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -127,15 +117,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        ForceUnlinkRedisEnterpriseDatabaseContent IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ForceUnlinkRedisEnterpriseDatabaseContent IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ForceUnlinkRedisEnterpriseDatabaseContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeForceUnlinkRedisEnterpriseDatabaseContent(document.RootElement, options);
                     }
                 default:
@@ -143,6 +138,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="forceUnlinkRedisEnterpriseDatabaseContent"> The <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ForceUnlinkRedisEnterpriseDatabaseContent forceUnlinkRedisEnterpriseDatabaseContent)
+        {
+            if (forceUnlinkRedisEnterpriseDatabaseContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(forceUnlinkRedisEnterpriseDatabaseContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

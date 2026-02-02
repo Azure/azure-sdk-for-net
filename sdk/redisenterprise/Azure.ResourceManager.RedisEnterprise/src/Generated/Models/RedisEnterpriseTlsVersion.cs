@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,34 +15,62 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseTlsVersion : IEquatable<RedisEnterpriseTlsVersion>
     {
         private readonly string _value;
+        /// <summary> 1.0. </summary>
+        private const string Tls10Value = "1.0";
+        /// <summary> 1.1. </summary>
+        private const string Tls11Value = "1.1";
+        /// <summary> 1.2. </summary>
+        private const string Tls12Value = "1.2";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseTlsVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls1_0Value = "1.0";
-        private const string Tls1_1Value = "1.1";
-        private const string Tls1_2Value = "1.2";
+        /// <summary> 1.0. </summary>
+        public static RedisEnterpriseTlsVersion Tls10 { get; } = new RedisEnterpriseTlsVersion(Tls10Value);
+
+        /// <summary> 1.1. </summary>
+        public static RedisEnterpriseTlsVersion Tls11 { get; } = new RedisEnterpriseTlsVersion(Tls11Value);
+
+        /// <summary> 1.2. </summary>
+        public static RedisEnterpriseTlsVersion Tls12 { get; } = new RedisEnterpriseTlsVersion(Tls12Value);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseTlsVersion left, RedisEnterpriseTlsVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseTlsVersion left, RedisEnterpriseTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseTlsVersion(string value) => new RedisEnterpriseTlsVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseTlsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseTlsVersion?(string value) => value == null ? null : new RedisEnterpriseTlsVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseTlsVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
