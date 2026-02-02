@@ -3522,6 +3522,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "FooPreviewAction"
+        }
+      },
       "properties": [
         {
           "$id": "402",
@@ -3591,6 +3596,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
       "properties": [
         {
           "$id": "407",
@@ -3612,6 +3622,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
             "properties": [
               {
                 "$id": "409",
@@ -3744,6 +3759,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "420",
@@ -3852,6 +3872,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "OperationListResult"
+        }
+      },
       "properties": [
         {
           "$id": "425",
@@ -3878,6 +3903,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "Operation"
+                }
+              },
               "properties": [
                 {
                   "$id": "428",
@@ -3951,6 +3981,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "OperationDisplay"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "434",
@@ -4188,6 +4223,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "448",
@@ -4217,6 +4257,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "PrivateLink"
+                }
+              },
               "baseModel": {
                 "$id": "451",
                 "kind": "model",
@@ -4232,6 +4277,11 @@
                     "arguments": {}
                   }
                 ],
+                "serializationOptions": {
+                  "json": {
+                    "name": "ProxyResource"
+                  }
+                },
                 "baseModel": {
                   "$id": "452",
                   "kind": "model",
@@ -4247,6 +4297,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "Resource"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "453",
@@ -4360,6 +4415,11 @@
                             "arguments": {}
                           }
                         ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "SystemData"
+                          }
+                        },
                         "properties": [
                           {
                             "$id": "463",
@@ -4565,6 +4625,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "PrivateLinkResourceProperties"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "477",
@@ -4708,6 +4773,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ManagedServiceIdentity"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "487",
@@ -4830,6 +4900,11 @@
                                   "arguments": {}
                                 }
                               ],
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "UserAssignedIdentity"
+                                }
+                              },
                               "properties": [
                                 {
                                   "$id": "499",
@@ -5030,6 +5105,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "PrivateEndpointConnection"
+        }
+      },
       "baseModel": {
         "$ref": "452"
       },
@@ -5054,6 +5134,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "PrivateEndpointConnectionProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "511",
@@ -5096,6 +5181,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "SubResource"
+                    }
+                  },
                   "properties": []
                 },
                 "optional": true,
@@ -5131,6 +5221,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "PrivateLinkServiceConnectionState"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "516",
@@ -5283,6 +5378,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ArmOperationStatus"
+        }
+      },
       "properties": [
         {
           "$id": "523",
@@ -5494,6 +5594,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "StorageSyncService"
+        }
+      },
       "baseModel": {
         "$id": "538",
         "kind": "model",
@@ -5509,6 +5614,11 @@
             "arguments": {}
           }
         ],
+        "serializationOptions": {
+          "json": {
+            "name": "TrackedResource"
+          }
+        },
         "baseModel": {
           "$ref": "452"
         },
@@ -5606,6 +5716,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "StorageSyncServiceProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "548",
@@ -5722,6 +5837,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "Foo"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -5751,6 +5871,11 @@
                 }
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "FooProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "556",
@@ -5949,6 +6074,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "NestedFooModel"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "571",
@@ -6004,6 +6134,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "SafeFlattenModel"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "574",
@@ -6060,6 +6195,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "VmProfile"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "577",
@@ -6080,6 +6220,11 @@
                             "arguments": {}
                           }
                         ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "ApplicationProfile"
+                          }
+                        },
                         "properties": [
                           {
                             "$id": "579",
@@ -6185,6 +6330,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "WritableSubResource"
+                    }
+                  },
                   "properties": []
                 },
                 "optional": true,
@@ -6219,6 +6369,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "ComputeFleetVmProfile"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "587",
@@ -6238,6 +6393,11 @@
                             "arguments": {}
                           }
                         ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "CapacityReservationProfile"
+                          }
+                        },
                         "properties": [
                           {
                             "$id": "589",
@@ -6257,6 +6417,11 @@
                                   "arguments": {}
                                 }
                               ],
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "TestSubResource"
+                                }
+                              },
                               "properties": [
                                 {
                                   "$id": "591",
@@ -6400,6 +6565,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ExtendedLocation"
+              }
+            },
             "properties": [
               {
                 "$id": "598",
@@ -6484,6 +6654,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ManagedServiceIdentityV4"
+              }
+            },
             "properties": [
               {
                 "$id": "603",
@@ -6642,6 +6817,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "Plan"
+              }
+            },
             "properties": [
               {
                 "$id": "615",
@@ -6840,6 +7020,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "626",
@@ -6918,6 +7103,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "FooActionRequest"
+        }
+      },
       "properties": [
         {
           "$id": "632",
@@ -6959,6 +7149,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "FooActionResult"
+        }
+      },
       "properties": [
         {
           "$id": "635",
@@ -7021,6 +7216,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "FooDependency"
+        }
+      },
       "properties": [
         {
           "$id": "639",
@@ -7096,6 +7296,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "FooSettings"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -7120,6 +7325,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "FooSettingsProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "646",
@@ -7141,6 +7351,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "MarketplaceDetails"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "648",
@@ -7210,6 +7425,11 @@
                             "arguments": {}
                           }
                         ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "OfferDetails"
+                          }
+                        },
                         "properties": [
                           {
                             "$id": "653",
@@ -7473,6 +7693,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "UserDetails"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "671",
@@ -7691,6 +7916,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "FooSettingsPropertiesMetaData"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "687",
@@ -7800,6 +8030,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceUpdateModel"
+        }
+      },
       "properties": [
         {
           "$id": "691",
@@ -7821,6 +8056,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ResourceUpdateModelProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "693",
@@ -7925,6 +8165,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "698",
@@ -7958,6 +8203,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "Bar"
+                }
+              },
               "baseModel": {
                 "$ref": "538"
               },
@@ -7981,6 +8231,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "BarProperties"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "703",
@@ -8240,6 +8495,11 @@
           }
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "BarSettingsResource"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -8263,6 +8523,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "BarSettingsProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "721",
@@ -8370,6 +8635,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "BarQuotaProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "728",
@@ -8451,6 +8721,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "BarNestedQuotaProperties"
+              }
+            },
             "baseModel": {
               "$id": "733",
               "kind": "model",
@@ -8464,6 +8739,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "BarMiddleNestedQuotaProperties"
+                }
+              },
               "baseModel": {
                 "$id": "734",
                 "kind": "model",
@@ -8477,6 +8757,11 @@
                     "arguments": {}
                   }
                 ],
+                "serializationOptions": {
+                  "json": {
+                    "name": "BarDeeplyNestedQuotaProperties"
+                  }
+                },
                 "properties": [
                   {
                     "$id": "735",
@@ -8664,6 +8949,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "optionalFlattenPropertyType"
+              }
+            },
             "properties": [
               {
                 "$id": "747",
@@ -8720,6 +9010,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "LimitJsonObject"
+              }
+            },
             "discriminatorProperty": {
               "$id": "750",
               "kind": "property",
@@ -8806,6 +9101,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "BarQuotaResource"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -8870,6 +9170,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "755",
@@ -8903,6 +9208,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "Employee"
+                }
+              },
               "baseModel": {
                 "$ref": "538"
               },
@@ -8927,6 +9237,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "EmployeeProperties"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "760",
@@ -9098,6 +9413,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "Baz"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -9121,6 +9441,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "BazProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "772",
@@ -9287,6 +9612,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "783",
@@ -9370,6 +9700,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "Zoo"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -9399,6 +9734,11 @@
                 }
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ZooProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "791",
@@ -9507,6 +9847,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceUpdateModel"
+        }
+      },
       "properties": [
         {
           "$id": "797",
@@ -9550,6 +9895,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ResourceUpdateModelProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "800",
@@ -9611,6 +9961,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "803",
@@ -9690,6 +10045,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ZooAddressListListResult"
+        }
+      },
       "properties": [
         {
           "$id": "809",
@@ -9773,6 +10133,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "EndpointResource"
+        }
+      },
       "baseModel": {
         "$id": "815",
         "kind": "model",
@@ -9787,6 +10152,11 @@
             "arguments": {}
           }
         ],
+        "serializationOptions": {
+          "json": {
+            "name": "ExtensionResource"
+          }
+        },
         "baseModel": {
           "$ref": "452"
         },
@@ -9812,6 +10182,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "EndpointProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "818",
@@ -9901,6 +10276,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "823",
@@ -9984,6 +10364,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SelfHelpResource"
+        }
+      },
       "baseModel": {
         "$ref": "815"
       },
@@ -10007,6 +10392,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "SelfHelpResourceProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "831",
@@ -10093,6 +10483,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "CheckNameAvailabilityRequest"
+        }
+      },
       "properties": [
         {
           "$id": "836",
@@ -10161,6 +10556,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "CheckNameAvailabilityResponse"
+        }
+      },
       "properties": [
         {
           "$id": "841",
@@ -10261,6 +10661,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "PlaywrightQuota"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -10285,6 +10690,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "PlaywrightQuotaProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "850",
@@ -10394,6 +10804,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "856",
@@ -10477,6 +10892,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "JobResource"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -10500,6 +10920,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "JobProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "864",
@@ -10585,6 +11010,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "JobResourceUpdateParameter"
+        }
+      },
       "properties": [
         {
           "$id": "869",
@@ -10654,6 +11084,11 @@
           }
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "HciVmInstance"
+        }
+      },
       "baseModel": {
         "$ref": "815"
       },
@@ -10677,6 +11112,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "HciVmInstanceProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "874",
@@ -10767,6 +11207,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "GroupQuotaSubscriptionRequestStatus"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -10790,6 +11235,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "GroupQuotaLimitProperties"
+              }
+            },
             "baseModel": {
               "$id": "881",
               "kind": "model",
@@ -10804,6 +11254,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "GroupQuotaDetails"
+                }
+              },
               "properties": [
                 {
                   "$id": "882",
@@ -10955,6 +11410,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "AllocatedQuotaToSubscriptionList"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "894",
@@ -10980,6 +11440,11 @@
                                 "arguments": {}
                               }
                             ],
+                            "serializationOptions": {
+                              "json": {
+                                "name": "AllocatedToSubscription"
+                              }
+                            },
                             "properties": [
                               {
                                 "$id": "897",
@@ -11141,6 +11606,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "GroupQuotaLimitList"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -11164,6 +11634,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "GroupQuotaLimitListProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "906",
@@ -11250,6 +11725,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "GroupQuotaListPatch"
+        }
+      },
       "properties": [
         {
           "$id": "911",
@@ -11296,6 +11776,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SubscriptionQuotaAllocationsList"
+        }
+      },
       "baseModel": {
         "$ref": "815"
       },
@@ -11319,6 +11804,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "SubscriptionQuotaAllocationsListProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "916",
@@ -11428,6 +11918,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "QueryNetworkSiblingSetRequest"
+        }
+      },
       "properties": [
         {
           "$id": "922",
@@ -11497,6 +11992,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "NetworkSiblingSet"
+        }
+      },
       "properties": [
         {
           "$id": "927",
@@ -11596,6 +12096,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "NetworkSiblingSetProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "935",
@@ -11621,6 +12126,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "NetworkSibling"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "938",
@@ -11785,6 +12295,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "Joo"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -11808,6 +12323,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "JooProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "949",
@@ -11852,6 +12372,11 @@
                       "arguments": {}
                     }
                   ],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "Prediction"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "953",
@@ -11871,6 +12396,11 @@
                             "arguments": {}
                           }
                         ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "PredictionInput"
+                          }
+                        },
                         "properties": [
                           {
                             "$id": "955",
@@ -12004,6 +12534,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SAPVirtualInstance"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -12027,6 +12562,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "SAPVirtualInstanceProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "963",
@@ -12112,6 +12652,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SAPAvailabilityZoneDetailsRequest"
+        }
+      },
       "properties": [
         {
           "$id": "968",
@@ -12154,6 +12699,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SAPAvailabilityZoneDetailsResult"
+        }
+      },
       "properties": [
         {
           "$id": "971",
@@ -12205,6 +12755,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "BestPractice"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -12229,6 +12784,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "BestPracticeProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "976",
@@ -12338,6 +12898,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ExtendedLocationOptional"
+              }
+            },
             "properties": [
               {
                 "$id": "983",
@@ -12424,6 +12989,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceUpdateModel"
+        }
+      },
       "properties": [
         {
           "$id": "987",
@@ -12445,6 +13015,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ResourceUpdateModelProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "989",
@@ -12506,6 +13081,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "992",
@@ -12589,6 +13169,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceTypeTestResource"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -12613,6 +13198,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "ResourceTypeTestProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "1000",
@@ -12737,6 +13327,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "SampleData"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -12760,6 +13355,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "SampleDataProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "1010",
@@ -12873,6 +13473,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1017",
@@ -12952,6 +13557,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1023",
@@ -12981,6 +13591,11 @@
                   "arguments": {}
                 }
               ],
+              "serializationOptions": {
+                "json": {
+                  "name": "ScheduledActionResources"
+                }
+              },
               "baseModel": {
                 "$ref": "815"
               },
@@ -13005,6 +13620,11 @@
                         "arguments": {}
                       }
                     ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ScheduledActionsExtensionProperties"
+                      }
+                    },
                     "properties": [
                       {
                         "$id": "1028",
@@ -13176,6 +13796,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "WorkloadNetworks"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -13199,6 +13824,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "WorkloadNetworksProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "1040",
@@ -13312,6 +13942,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1047",
@@ -13395,6 +14030,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "WorkloadNetworkVmGroup"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -13418,6 +14058,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "WorkloadNetworkVmGroupProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "1055",
@@ -13553,6 +14198,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1063",
@@ -13636,6 +14286,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "WorkloadNetworkSegment"
+        }
+      },
       "baseModel": {
         "$ref": "538"
       },
@@ -13659,6 +14314,11 @@
                 "arguments": {}
               }
             ],
+            "serializationOptions": {
+              "json": {
+                "name": "WorkloadNetworkSegmentProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "1071",
@@ -13824,6 +14484,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1082",
@@ -13907,6 +14572,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "Target"
+        }
+      },
       "baseModel": {
         "$ref": "451"
       },
@@ -14024,6 +14694,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "TargetListResult"
+        }
+      },
       "properties": [
         {
           "$id": "1098",
@@ -14102,6 +14777,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "ZooRecommendation"
+        }
+      },
       "properties": [
         {
           "$id": "1104",

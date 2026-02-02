@@ -29,6 +29,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.DurationModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DurationModel"
+        }
+      },
       "properties": [
         {
           "$id": "4",

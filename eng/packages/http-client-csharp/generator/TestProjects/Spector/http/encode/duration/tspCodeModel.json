@@ -461,6 +461,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.DefaultDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DefaultDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -505,6 +510,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.ISO8601DurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ISO8601DurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "62",
@@ -549,6 +559,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32SecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "66",
@@ -593,6 +608,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "70",
@@ -637,6 +657,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64SecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Float64SecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "74",
@@ -681,6 +706,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32MillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "78",
@@ -725,6 +755,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "82",
@@ -769,6 +804,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Float64MillisecondsDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "86",
@@ -813,6 +853,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsDurationArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "90",
@@ -879,6 +924,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsDurationArrayProperty"
+        }
+      },
       "properties": [
         {
           "$id": "97",
@@ -945,6 +995,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32SecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "104",
@@ -989,6 +1044,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatSecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "108",
@@ -1033,6 +1093,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Int32MillisecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "112",
@@ -1077,6 +1142,11 @@
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FloatMillisecondsLargerUnitDurationProperty"
+        }
+      },
       "properties": [
         {
           "$id": "116",
