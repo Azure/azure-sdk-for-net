@@ -177,7 +177,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "commaDelimited"
         }
       ]
     },
@@ -214,7 +215,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "spaceDelimited"
         }
       ]
     },
@@ -251,7 +253,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "pipeDelimited"
         }
       ]
     },
@@ -288,7 +291,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "encode": "newlineDelimited"
         }
       ]
     }
