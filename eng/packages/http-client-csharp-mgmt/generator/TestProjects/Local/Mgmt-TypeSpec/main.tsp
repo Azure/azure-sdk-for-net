@@ -21,7 +21,6 @@ import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
-import "./testcluster.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -59,7 +58,6 @@ namespace MgmtTypeSpec {
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
-  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(TestCluster.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
