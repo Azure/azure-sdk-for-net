@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     public readonly partial struct CapacitySkuTier : IEquatable<CapacitySkuTier>
     {
         private readonly string _value;
-        private const string PBIEAzureValue = "PBIE_Azure";
+        private const string PbieAzureValue = "PBIE_Azure";
         private const string PremiumValue = "Premium";
         private const string AutoPremiumHostValue = "AutoPremiumHost";
 
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             _value = value;
         }
 
-        /// <summary> Gets the PBIEAzure. </summary>
-        public static CapacitySkuTier PBIEAzure { get; } = new CapacitySkuTier(PBIEAzureValue);
+        /// <summary> Gets the PbieAzure. </summary>
+        public static CapacitySkuTier PbieAzure { get; } = new CapacitySkuTier(PbieAzureValue);
 
         /// <summary> Gets the Premium. </summary>
         public static CapacitySkuTier Premium { get; } = new CapacitySkuTier(PremiumValue);
