@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesCertificateResource>, IAsyncEnumerable<DeviceProvisioningServicesCertificateResource>
     {
-        private readonly ClientDiagnostics _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics;
-        private readonly CertificateResponsesRestOperations _deviceProvisioningServicesCertificateCertificateResponsesRestClient;
+        private readonly ClientDiagnostics _certificateResponsesClientDiagnostics;
+        private readonly CertificateResponses _certificateResponsesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateCollection for mocking. </summary>
         protected DeviceProvisioningServicesCertificateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServicesCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesCertificateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceProvisioningServicesCertificateResource.ResourceType, out string deviceProvisioningServicesCertificateCertificateResponsesApiVersion);
-            _deviceProvisioningServicesCertificateCertificateResponsesRestClient = new CertificateResponsesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesCertificateCertificateResponsesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DeviceProvisioningServicesCertificateResource.ResourceType, out string deviceProvisioningServicesCertificateApiVersion);
+            _certificateResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesCertificateResource.ResourceType.Namespace, Diagnostics);
+            _certificateResponsesRestClient = new CertificateResponses(_certificateResponsesClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesCertificateApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DeviceProvisioningServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Add new certificate or update an existing certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, DeviceProvisioningServicesCertificateData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Add new certificate or update an existing certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, DeviceProvisioningServicesCertificateData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken);
-                var uri = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, DeviceProvisioningServicesCertificateData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,39 +170,43 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the certificate from the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> GetAsync(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,39 +220,43 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the certificate from the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual Response<DeviceProvisioningServicesCertificateResource> Get(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeviceProvisioningServicesCertificateResource> Get(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesCertificateData> response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,49 +270,44 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get all the certificates tied to the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllAsyncCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>
         /// Get all the certificates tied to the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,45 +315,62 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateCertificateResponsesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeviceProvisioningServicesCertificateData, DeviceProvisioningServicesCertificateResource>(new CertificateResponsesGetAllCollectionResultOfT(_certificateResponsesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesCertificateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,37 +384,51 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual Response<bool> Exists(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,39 +442,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DeviceProvisioningServicesCertificateResource>> GetIfExistsAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DeviceProvisioningServicesCertificateResource>> GetIfExistsAsync(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesCertificateCertificateResponsesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceProvisioningServicesCertificateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,39 +504,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateResponse_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual NullableResponse<DeviceProvisioningServicesCertificateResource> GetIfExists(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DeviceProvisioningServicesCertificateResource> GetIfExists(string certificateName, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _deviceProvisioningServicesCertificateCertificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
+            using DiagnosticScope scope = _certificateResponsesClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesCertificateCertificateResponsesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificateResponsesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesCertificateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesCertificateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesCertificateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceProvisioningServicesCertificateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -495,6 +572,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DeviceProvisioningServicesCertificateResource> IAsyncEnumerable<DeviceProvisioningServicesCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

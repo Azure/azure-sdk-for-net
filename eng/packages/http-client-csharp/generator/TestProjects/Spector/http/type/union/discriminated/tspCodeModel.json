@@ -205,6 +205,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Cat"
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -266,6 +271,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Dog"
+        }
+      },
       "properties": [
         {
           "$id": "31",

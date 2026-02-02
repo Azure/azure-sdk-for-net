@@ -149,6 +149,11 @@
       "usage": "Output,Json",
       "doc": "Sample Model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "User"
+        }
+      },
       "properties": [
         {
           "$id": "15",
@@ -213,6 +218,11 @@
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
       "properties": [
         {
           "$id": "20",
@@ -229,6 +239,11 @@
             "usage": "Json,Exception",
             "doc": "The error object.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Error"
+              }
+            },
             "properties": [
               {
                 "$id": "22",
@@ -352,6 +367,11 @@
                   "usage": "Json,Exception",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "InnerError"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "32",
@@ -474,6 +494,11 @@
       "usage": "Input,Json",
       "doc": "User action param",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UserActionParam"
+        }
+      },
       "properties": [
         {
           "$id": "38",
@@ -512,6 +537,11 @@
       "usage": "Output,Json",
       "doc": "User action response",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "UserActionResponse"
+        }
+      },
       "properties": [
         {
           "$id": "41",

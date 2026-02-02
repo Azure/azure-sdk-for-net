@@ -13,15 +13,15 @@
 
 ## Summary
 
-- Total libraries: 403
-- Management Plane (MPG): 229
-  - Autorest/Swagger: 150
-  - New Emitter (TypeSpec): 76
-  - Old TypeSpec: 3
+- Total libraries: 401
+- Management Plane (MPG): 227
+  - Autorest/Swagger: 147
+  - New Emitter (TypeSpec): 79
+  - Old TypeSpec: 1
 - Data Plane (DPG): 143
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 27
-  - Old TypeSpec: 11
+  - New Emitter (TypeSpec): 28
+  - Old TypeSpec: 10
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 47
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 27 / 38 (71.1%)
+**Migration Status**: 28 / 38 (73.7%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -46,7 +46,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |
 | cognitivelanguage | Azure.AI.Language.Text |  |
-| cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |
 | communication | Azure.Communication.JobRouter |  |
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity |  |
@@ -145,12 +145,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 76 / 79 (96.2%)
+**Migration Status**: 79 / 80 (98.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
@@ -169,7 +170,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | databox | Azure.ResourceManager.DataBox | ✅ |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
-| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices |  |
+| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | ✅ |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
@@ -208,7 +209,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
-| recoveryservices | Azure.ResourceManager.RecoveryServices |  |
+| recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
@@ -232,17 +233,15 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 150
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 147
 
 | Service | Library |
 | ------- | ------- |
 | agrifood | Azure.ResourceManager.AgFoodPlatform |
 | alertsmanagement | Azure.ResourceManager.AlertsManagement |
 | analysisservices | Azure.ResourceManager.Analysis |
-| anyscale | Azure.ResourceManager.Anyscale |
 | apicenter | Azure.ResourceManager.ApiCenter |
 | apimanagement | Azure.ResourceManager.ApiManagement |
-| appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation |
 | appconfiguration | Azure.ResourceManager.AppConfiguration |
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | appplatform | Azure.ResourceManager.AppPlatform |
@@ -300,7 +299,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |

@@ -573,6 +573,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.and",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "and"
+        }
+      },
       "properties": [
         {
           "$id": "72",
@@ -609,6 +614,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.as",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "as"
+        }
+      },
       "properties": [
         {
           "$id": "75",
@@ -645,6 +655,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.assert",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "assert"
+        }
+      },
       "properties": [
         {
           "$id": "78",
@@ -681,6 +696,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.async",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "async"
+        }
+      },
       "properties": [
         {
           "$id": "81",
@@ -717,6 +737,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.await",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "await"
+        }
+      },
       "properties": [
         {
           "$id": "84",
@@ -753,6 +778,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.break",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "break"
+        }
+      },
       "properties": [
         {
           "$id": "87",
@@ -789,6 +819,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.class",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "class"
+        }
+      },
       "properties": [
         {
           "$id": "90",
@@ -825,6 +860,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.constructor",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "constructor"
+        }
+      },
       "properties": [
         {
           "$id": "93",
@@ -861,6 +901,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.continue",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "continue"
+        }
+      },
       "properties": [
         {
           "$id": "96",
@@ -897,6 +942,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.def",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "def"
+        }
+      },
       "properties": [
         {
           "$id": "99",
@@ -933,6 +983,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.del",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "del"
+        }
+      },
       "properties": [
         {
           "$id": "102",
@@ -969,6 +1024,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.elif",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "elif"
+        }
+      },
       "properties": [
         {
           "$id": "105",
@@ -1005,6 +1065,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.else",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "else"
+        }
+      },
       "properties": [
         {
           "$id": "108",
@@ -1041,6 +1106,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.except",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "except"
+        }
+      },
       "properties": [
         {
           "$id": "111",
@@ -1077,6 +1147,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.exec",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "exec"
+        }
+      },
       "properties": [
         {
           "$id": "114",
@@ -1113,6 +1188,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.finally",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "finally"
+        }
+      },
       "properties": [
         {
           "$id": "117",
@@ -1149,6 +1229,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.for",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "for"
+        }
+      },
       "properties": [
         {
           "$id": "120",
@@ -1185,6 +1270,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.from",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "from"
+        }
+      },
       "properties": [
         {
           "$id": "123",
@@ -1221,6 +1311,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.global",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "global"
+        }
+      },
       "properties": [
         {
           "$id": "126",
@@ -1257,6 +1352,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.if",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "if"
+        }
+      },
       "properties": [
         {
           "$id": "129",
@@ -1293,6 +1393,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.import",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "import"
+        }
+      },
       "properties": [
         {
           "$id": "132",
@@ -1329,6 +1434,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.in",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "in"
+        }
+      },
       "properties": [
         {
           "$id": "135",
@@ -1365,6 +1475,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.is",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "is"
+        }
+      },
       "properties": [
         {
           "$id": "138",
@@ -1401,6 +1516,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.lambda",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "lambda"
+        }
+      },
       "properties": [
         {
           "$id": "141",
@@ -1437,6 +1557,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.not",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "not"
+        }
+      },
       "properties": [
         {
           "$id": "144",
@@ -1473,6 +1598,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.or",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "or"
+        }
+      },
       "properties": [
         {
           "$id": "147",
@@ -1509,6 +1639,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.pass",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "pass"
+        }
+      },
       "properties": [
         {
           "$id": "150",
@@ -1545,6 +1680,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.raise",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "raise"
+        }
+      },
       "properties": [
         {
           "$id": "153",
@@ -1581,6 +1721,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.return",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "return"
+        }
+      },
       "properties": [
         {
           "$id": "156",
@@ -1617,6 +1762,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.try",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "try"
+        }
+      },
       "properties": [
         {
           "$id": "159",
@@ -1653,6 +1803,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.while",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "while"
+        }
+      },
       "properties": [
         {
           "$id": "162",
@@ -1689,6 +1844,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.with",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "with"
+        }
+      },
       "properties": [
         {
           "$id": "165",
@@ -1725,6 +1885,11 @@
       "crossLanguageDefinitionId": "SpecialWords.Models.yield",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "yield"
+        }
+      },
       "properties": [
         {
           "$id": "168",
@@ -1761,6 +1926,11 @@
       "crossLanguageDefinitionId": "SpecialWords.ModelProperties.SameAsModel",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SameAsModel"
+        }
+      },
       "properties": [
         {
           "$id": "171",
@@ -1797,6 +1967,11 @@
       "crossLanguageDefinitionId": "SpecialWords.ModelProperties.DictMethods",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DictMethods"
+        }
+      },
       "properties": [
         {
           "$id": "174",
