@@ -2,6 +2,8 @@
 
 The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
 
+**Note:** This feature is in the preview.
+
 ## Create a connection to A2A agent
 
 The connection to A2A service can be created in two ways. In classic Microsoft Foundry, we need to create Custom keys connection, however in the new version of Microsoft Foundry we can create the specialized A2A connection.
@@ -30,7 +32,7 @@ If we are using the Agent2agent connection, we do not need to provide the endpoi
 
 ## Run the sample
 
-To enable your Agent communication to the A2A endpoint, use `A2ATool`.
+To enable your Agent communication to the A2A endpoint, use `A2APreviewTool`.
 
 1. First, create an Agent client and read the environment variables, which will be used in the next steps.
 
@@ -43,7 +45,7 @@ var a2aBaseUri = System.Environment.GetEnvironmentVariable("A2A_BASE_URI");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Create the `A2ATool` and provide it with the A2A connection ID. We also need to provide the service endpoint as a `baseUri` parameter if the connection is not of a `RemoteA2A` type.
+2. Create the `A2APreviewTool` and provide it with the A2A connection ID. We also need to provide the service endpoint as a `baseUri` parameter if the connection is not of a `RemoteA2A` type.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Sync

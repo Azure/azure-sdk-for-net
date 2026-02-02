@@ -1,6 +1,8 @@
 # Sample for use of Agents with Custom Bing search in Azure.AI.Projects.OpenAI.
 
-To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchAgentTool`.
+To enable your Agent to use Custom Bing search, we need to use `BingCustomSearchPreviewTool`.
+
+**Note:** This feature is in the preview.
 
 1. First, we need to read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_CustomBingSearch
@@ -11,7 +13,7 @@ var customInstanceName = System.Environment.GetEnvironmentVariable("BING_CUSTOM_
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. `BingCustomSearchAgentTool` requires an ID of Grounding with Bing Custom Search connection. In this example we will use the name of this connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `PromptAgentDefinition` object.
+2. `BingCustomSearchPreviewTool` requires an ID of Grounding with Bing Custom Search connection. In this example we will use the name of this connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `PromptAgentDefinition` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Sync
