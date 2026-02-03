@@ -29,7 +29,7 @@ This skill pushes test session recordings to the Azure SDK Assets repository.
 cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 
 # Push recordings to assets repo
-.github\skills\sdk-push-recordings\scripts\push-recordings.ps1
+.github\skills\sdkinternal-dotnet-test-push-recordings\scripts\push-recordings.ps1
 ```
 
 ### Bash (Linux/macOS)
@@ -38,7 +38,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Push recordings to assets repo
-.github/skills/sdk-push-recordings/scripts/push-recordings.sh
+.github/skills/sdkinternal-dotnet-test-push-recordings/scripts/push-recordings.sh
 ```
 
 ## Options
@@ -47,7 +47,7 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 ```powershell
 # Preview what would be pushed without actually pushing
-.github\skills\sdk-push-recordings\scripts\push-recordings.ps1 -DryRun
+.github\skills\sdkinternal-dotnet-test-push-recordings\scripts\push-recordings.ps1 -DryRun
 ```
 
 ## Important Notes
@@ -58,9 +58,9 @@ Push requires write access to `Azure/azure-sdk-assets` repository.
 
 ### Recording Workflow
 
-1. Run tests in RECORD mode (`sdk-test-record`)
-2. Verify tests pass in PLAYBACK mode (`sdk-test-playback`)
-3. Push recordings (`sdk-push-recordings`)
+1. Run tests in RECORD mode (`sdkinternal-dotnet-test-record`)
+2. Verify tests pass in PLAYBACK mode (`sdkinternal-dotnet-test-playback`)
+3. Push recordings (`sdkinternal-dotnet-test-push-recordings`)
 4. Commit updated `assets.json`
 
 ### Assets Repository

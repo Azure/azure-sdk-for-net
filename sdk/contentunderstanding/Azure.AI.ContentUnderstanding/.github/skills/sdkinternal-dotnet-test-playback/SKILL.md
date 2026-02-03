@@ -37,7 +37,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Run tests in PLAYBACK mode
-.github/skills/sdk-test-playback/scripts/test-playback.sh
+.github/skills/sdkinternal-dotnet-test-playback/scripts/test-playback.sh
 ```
 
 ## Test Options

@@ -1,6 +1,6 @@
 ---
 name: sdkinternal-dotnet-sdk-compile
-description: Compile Azure SDK source code. This skill helps you build SDK modules locally, verify compilation before testing, and resolve dependency issues. Supports dotnet (C#), Maven (Java), pip (Python), npm (JavaScript).
+description: Compile Azure SDK .NET source code. This skill helps you build .NET SDK modules locally, verify compilation before testing, and resolve dependency issues.
 ---
 
 # SDK Compile
@@ -9,7 +9,7 @@ This skill compiles Azure SDK source code for local development and testing.
 
 ## What This Skill Does
 
-1. Detects the SDK language and build system
+1. Detects the .NET SDK build system
 2. Compiles source code with appropriate flags
 3. Reports compilation errors with context
 
@@ -28,7 +28,7 @@ This skill compiles Azure SDK source code for local development and testing.
 cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 
 # Build
-.github\skills\sdk-compile\scripts\compile.ps1
+.github\skills\sdkinternal-dotnet-sdk-compile\scripts\compile.ps1
 ```
 
 ### Bash (Linux/macOS)
@@ -38,7 +38,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Build
-.github/skills/sdk-compile/scripts/compile.sh
+.github/skills/sdkinternal-dotnet-sdk-compile/scripts/compile.sh
 ```
 
 ## .NET-Specific Notes

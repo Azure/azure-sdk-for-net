@@ -37,7 +37,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Run all samples
-.github/skills/sdk-run-all-samples/scripts/run-all-samples.sh
+.github/skills/sdkinternal-dotnet-sample-run-all-samples/scripts/run-all-samples.sh
 ```
 
 ## Options

@@ -42,10 +42,10 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Load environment first
-source .github/skills/sdk-setup-env/scripts/load-env.sh
+source .github/skills/sdkinternal-dotnet-env-setup/scripts/load-env.sh
 
 # Run tests in RECORD mode
-.github/skills/sdk-test-record/scripts/test-record.sh
+.github/skills/sdkinternal-dotnet-test-record/scripts/test-record.sh
 ```
 
 ## Test Options
