@@ -98,7 +98,8 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
-  const resourceModels = getAllResourceModels(codeModel);
+  const { models: resourceModels, customResourceIds } =
+    getAllResourceModels(codeModel);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
@@ -260,6 +261,7 @@ export function buildArmProviderSchema(
           resourcePathToClientName.set(metadataKey, client.name);
         }
 
+        const isCustom = customResourceIds.has(modelId);
         entry = {
           resourceIdPattern: "", // this will be populated later
           resourceType: "", // this will be populated later
@@ -273,6 +275,10 @@ export function buildArmProviderSchema(
           // Use model name as default; will be updated later if multiple paths exist
           resourceName: model?.name ?? "Unknown"
         } as ResourceMetadata;
+        // Only set isCustomResource when true to keep output clean for standard resources
+        if (isCustom) {
+          entry.isCustomResource = true;
+        }
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
 
@@ -881,10 +887,15 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
  *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
  *
  * @param codeModel - The code model containing all models
- * @returns Array of models that represent ARM resources
+ * @returns Object containing array of resource models and set of custom resource model IDs
  */
-function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
+function getAllResourceModels(codeModel: CodeModel): {
+  models: InputModelType[];
+  customResourceIds: Set<string>;
+} {
   const resourceModels: InputModelType[] = [];
+  const customResourceIds = new Set<string>();
+
   for (const model of codeModel.models) {
     // 1. Standard ARM resources: Models using TrackedResource<T>, ProxyResource<T>, etc.
     //    These templates automatically apply @armResourceInternal decorator
@@ -905,10 +916,11 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
       // because only models with defined operations become actual resources.
       if (model.properties && model.properties.length > 0) {
         resourceModels.push(model);
+        customResourceIds.add(model.crossLanguageDefinitionId);
       }
     }
   }
-  return resourceModels;
+  return { models: resourceModels, customResourceIds };
 }
 
 function getSingletonResource(

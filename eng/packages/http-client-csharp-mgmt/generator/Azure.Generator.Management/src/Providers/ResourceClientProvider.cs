@@ -253,7 +253,7 @@ namespace Azure.Generator.Management.Providers
             // For custom Azure resources (using @customAzureResource), data.Id is string
             // and needs to be wrapped with new ResourceIdentifier(data.Id).
             ValueExpression idExpression = dataParameter.Property("Id");
-            if (!InheritsFromSystemResourceData(ResourceData))
+            if (_resourceMetadata.IsCustomResource)
             {
                 idExpression = New.Instance(typeof(ResourceIdentifier), idExpression);
             }
@@ -274,25 +274,6 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new ConstructorProvider(signature, bodyStatements, this);
-        }
-
-        /// <summary>
-        /// Checks if the model inherits from a system resource data type (ResourceData or TrackedResourceData).
-        /// Standard ARM resources inherit from InheritableSystemObjectModelProvider which maps to these system types.
-        /// Custom Azure resources using @customAzureResource do not inherit from these system types.
-        /// </summary>
-        private static bool InheritsFromSystemResourceData(ModelProvider model)
-        {
-            var baseModel = model.BaseModelProvider;
-            while (baseModel != null)
-            {
-                if (baseModel is InheritableSystemObjectModelProvider)
-                {
-                    return true;
-                }
-                baseModel = baseModel.BaseModelProvider;
-            }
-            return false;
         }
 
         private ConstructorProvider BuildResourceIdentifierConstructor()

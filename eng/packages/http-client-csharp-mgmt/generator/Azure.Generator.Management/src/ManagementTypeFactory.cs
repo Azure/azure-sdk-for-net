@@ -76,8 +76,6 @@ namespace Azure.Generator.Management
             return base.CreateCSharpTypeCore(inputType);
         }
 
-        private const string CustomAzureResourceDecorator = "Azure.ResourceManager.Legacy.@customAzureResource";
-
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
@@ -91,24 +89,6 @@ namespace Azure.Generator.Management
             }
 
             return base.CreateModelCore(model);
-        }
-
-        /// <summary>
-        /// Checks if a model or any of its base models has the @customAzureResource decorator.
-        /// This is used to detect custom ARM resources that don't use standard ARM templates.
-        /// </summary>
-        internal static bool HasCustomAzureResourceInHierarchy(InputModelType model)
-        {
-            var current = model;
-            while (current != null)
-            {
-                if (current.Decorators.Any(d => d.Name == CustomAzureResourceDecorator))
-                {
-                    return true;
-                }
-                current = current.BaseModel;
-            }
-            return false;
         }
 
         /// <inheritdoc/>

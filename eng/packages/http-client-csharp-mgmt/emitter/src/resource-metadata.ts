@@ -49,12 +49,14 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** Indicates if this resource uses @customAzureResource decorator (legacy pattern) */
+  isCustomResource?: boolean;
 }
 
 export function convertResourceMetadataToArguments(
   metadata: ResourceMetadata
 ): Record<string, any> {
-  return {
+  const result: Record<string, any> = {
     resourceIdPattern: metadata.resourceIdPattern,
     resourceType: metadata.resourceType,
     methods: metadata.methods,
@@ -63,6 +65,13 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
+
+  // Only include isCustomResource when true to keep output clean for standard resources
+  if (metadata.isCustomResource) {
+    result.isCustomResource = true;
+  }
+
+  return result;
 }
 
 export interface NonResourceMethod {

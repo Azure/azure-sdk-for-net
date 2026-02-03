@@ -24,7 +24,7 @@
  * allowing gradual migration to the standardized API.
  */
 
-import { Program, Operation } from "@typespec/compiler";
+import { Program, Operation, Model } from "@typespec/compiler";
 import {
   ResolvedResource,
   ResourceType,
@@ -45,6 +45,7 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
+import { customAzureResource } from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -355,7 +356,10 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  return {
+  // Check if this is a custom resource (uses @customAzureResource decorator)
+  const isCustom = hasCustomAzureResourceInHierarchy(resolvedResource.type);
+
+  const metadata: ResourceMetadata = {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
     resourceType,
@@ -370,6 +374,13 @@ function convertResolvedResourceToMetadata(
     ),
     resourceName: resolvedResource.resourceName
   };
+
+  // Only include isCustomResource when true to keep output clean
+  if (isCustom) {
+    metadata.isCustomResource = true;
+  }
+
+  return metadata;
 }
 
 /**
@@ -495,4 +506,26 @@ function calculateResourceScope(
   }
 
   return undefined;
+}
+
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ * This indicates a legacy/custom ARM resource that doesn't use standard ARM templates.
+ */
+function hasCustomAzureResourceInHierarchy(model: Model): boolean {
+  let current: Model | undefined = model;
+  while (current) {
+    const decorators = current.decorators;
+    if (decorators) {
+      for (const dec of decorators) {
+        // Check for the @customAzureResource decorator by name
+        const fullName = dec.decorator?.name;
+        if (fullName === "$customAzureResource") {
+          return true;
+        }
+      }
+    }
+    current = current.baseModel;
+  }
+  return false;
 }
