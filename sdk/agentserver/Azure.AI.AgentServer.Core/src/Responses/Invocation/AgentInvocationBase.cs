@@ -8,6 +8,7 @@ using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
+using Microsoft.Extensions.Azure;
 
 namespace Azure.AI.AgentServer.Responses.Invocation;
 
@@ -23,8 +24,10 @@ public abstract class AgentInvocationBase : IAgentInvocation
     /// The agent run context containing the request, user information, tools, and ID generation.
     /// </param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>A stream event generator for the response.</returns>
-    protected abstract INestedStreamEventGenerator<Contracts.Generated.Responses.Response> DoInvokeStreamAsync(
+    /// <returns>
+    /// A tuple containing the stream event generator for the response and an action to perform after invocation.
+    /// </returns>
+    protected abstract Task<(INestedStreamEventGenerator<Contracts.Generated.Responses.Response> Generator, Func<CancellationToken, Task> PostInvoke)> DoInvokeStreamAsync(
         AgentRunContext context,
         CancellationToken cancellationToken);
 
@@ -52,7 +55,7 @@ public abstract class AgentInvocationBase : IAgentInvocation
         AgentRunContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var generator = DoInvokeStreamAsync(context, cancellationToken);
+        var (generator, postInvoke) = await DoInvokeStreamAsync(context, cancellationToken).ConfigureAwait(false);
         await foreach (var group in generator.Generate().WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             await foreach (var e in group.Events.WithCancellation(cancellationToken).ConfigureAwait(false))
@@ -60,5 +63,6 @@ public abstract class AgentInvocationBase : IAgentInvocation
                 yield return e;
             }
         }
+        await postInvoke(cancellationToken).ConfigureAwait(false);
     }
 }

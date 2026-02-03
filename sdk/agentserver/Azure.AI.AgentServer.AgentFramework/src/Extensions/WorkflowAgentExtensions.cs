@@ -1,61 +1,67 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.AgentFramework.Persistence;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Responses.Invocation;
 
-using Microsoft.Agents.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.AgentFramework.Extensions;
 
 /// <summary>
-/// Provides extension methods for running AI agents in the agent server framework.
+/// Provides extension methods for running workflow-based AI agents in the agent server framework.
 /// </summary>
-public static class AIAgentExtensions
+public static class WorkflowAgentExtensions
 {
     /// <summary>
-    /// Runs an AI agent asynchronously using the provided service provider.
+    /// Runs a workflow-based AI agent asynchronously using the provided service provider.
     /// </summary>
-    /// <param name="agent">The AI agent to run.</param>
-    /// <param name="sp">The service provider for dependency injection.</param>
-    /// <param name="telemetrySourceName">The name of the telemetry source. Defaults to "Agents".</param>
-    /// <param name="threadRepository">Optional agent thread repository for managing agent threads.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    public static Task RunAIAgentAsync(this AIAgent agent, IServiceProvider sp, string telemetrySourceName = "Agents",
+    /// <param name="workflowAgentFactory">the workflow agent factory</param>
+    /// <param name="sp">the service provider</param>
+    /// <param name="telemetrySourceName">the telemetry source name</param>
+    /// <param name="threadRepository">Optional thread repository for managing agent threads</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public static Task RunWorkflowAgentAsync(
+        this WorkflowAgentFactory workflowAgentFactory,
+        IServiceProvider sp, string telemetrySourceName = "Agents",
         IAgentThreadRepository? threadRepository = null)
     {
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
-                services.AddSingleton(agent)
-                    .AddSingleton<IAgentInvocation, AIAgentInvocation>();
+                services.AddSingleton(workflowAgentFactory)
+                    .AddSingleton<IAgentInvocation, WorkflowAgentInvocation>();
                 if (threadRepository != null)
                 {
                     services.AddSingleton<IAgentThreadRepository>(threadRepository);
                 }
             },
             LoggerFactory: GetLoggerFactory(sp),
-            TelemetrySourceName: telemetrySourceName));
+            TelemetrySourceName: telemetrySourceName)
+            );
     }
 
     /// <summary>
-    /// Runs an AI agent asynchronously with an optional logger factory.
+    /// Runs a workflow-based AI agent asynchronously using the provided service provider.
     /// </summary>
-    /// <param name="agent">The AI agent to run.</param>
+    /// <param name="workflowAgentFactory">the workflow agent factory.</param>
     /// <param name="loggerFactory">Optional logger factory for creating loggers.</param>
     /// <param name="telemetrySourceName">The name of the telemetry source. Defaults to "Agents".</param>
-    /// <param name="threadRepository">Optional agent thread repository for managing agent threads.</param>
+    /// <param name="threadRepository">Optional thread repository for managing agent threads</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public static Task RunAIAgentAsync(this AIAgent agent, ILoggerFactory? loggerFactory = null,
-        string telemetrySourceName = "Agents", IAgentThreadRepository? threadRepository = null)
+    public static Task RunWorkflowAgentAsync(
+        this WorkflowAgentFactory workflowAgentFactory,
+        ILoggerFactory? loggerFactory = null,
+        string telemetrySourceName = "Agents",
+        IAgentThreadRepository? threadRepository = null)
     {
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
-                services.AddSingleton(agent).AddSingleton<IAgentInvocation, AIAgentInvocation>();
+                services.AddSingleton(workflowAgentFactory)
+                    .AddSingleton<IAgentInvocation, WorkflowAgentInvocation>();
                 if (threadRepository != null)
                 {
                     services.AddSingleton<IAgentThreadRepository>(threadRepository);
@@ -66,22 +72,25 @@ public static class AIAgentExtensions
     }
 
     /// <summary>
-    /// Runs an AI agent asynchronously using the service provider's dependencies.
+    /// Runs a workflow-based AI agent asynchronously using the provided service provider.
     /// </summary>
     /// <param name="sp">The service provider for dependency injection.</param>
-    /// <param name="agent">Optional AI agent to run. If null, retrieves from service provider.</param>
+    /// <param name="workflowAgentFactory">Optional IWorkflowAgentFactory. If null, retrieves from service provider.</param>
     /// <param name="telemetrySourceName">The name of the telemetry source. Defaults to "Agents".</param>
-    /// <param name="threadRepository">Optional agent thread repository for managing agent threads.</param>
+    /// <param name="threadRepository">Optional thread repository for managing agent threads</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public static Task RunAIAgentAsync(this IServiceProvider sp, AIAgent? agent = null,
-        string telemetrySourceName = "Agents", IAgentThreadRepository? threadRepository = null)
+    public static Task RunWorkflowAgentAsync(
+            this IServiceProvider sp,
+            WorkflowAgentFactory? workflowAgentFactory = null,
+            string telemetrySourceName = "Agents",
+            IAgentThreadRepository? threadRepository = null)
     {
         return AgentServerApplication.RunAsync(new ApplicationOptions(
             ConfigureServices: services =>
             {
                 if (sp.GetService<IAgentInvocation>() == null)
                 {
-                    services.AddSingleton(agent ?? sp.GetRequiredService<AIAgent>()).AddSingleton<AIAgentInvocation>();
+                    services.AddSingleton(workflowAgentFactory ?? sp.GetRequiredService<WorkflowAgentFactory>()).AddSingleton<WorkflowAgentInvocation>();
                 }
                 else
                 {
