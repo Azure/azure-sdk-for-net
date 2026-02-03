@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> List of SKUS available to scale up or scale down. </summary>
+        [WirePath("skus")]
         public IReadOnlyList<RedisEnterpriseSkuDetails> Skus { get; }
     }
 }

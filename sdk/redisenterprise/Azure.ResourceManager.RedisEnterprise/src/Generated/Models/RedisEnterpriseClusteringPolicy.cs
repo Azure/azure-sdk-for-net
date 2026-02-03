@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
         private const string EnterpriseClusterValue = "EnterpriseCluster";
         /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
-        private const string OSSClusterValue = "OSSCluster";
+        private const string OssClusterValue = "OSSCluster";
         /// <summary> The NoCluster policy is used for non-clustered Redis instances that do not require clustering features. </summary>
         private const string NoClusterValue = "NoCluster";
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
 
         /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
-        public static RedisEnterpriseClusteringPolicy OSSCluster { get; } = new RedisEnterpriseClusteringPolicy(OSSClusterValue);
+        public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
 
         /// <summary> The NoCluster policy is used for non-clustered Redis instances that do not require clustering features. </summary>
         public static RedisEnterpriseClusteringPolicy NoCluster { get; } = new RedisEnterpriseClusteringPolicy(NoClusterValue);

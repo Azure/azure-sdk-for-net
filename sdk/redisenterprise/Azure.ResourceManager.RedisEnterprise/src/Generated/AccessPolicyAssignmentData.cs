@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Properties of the access policy assignment. </summary>
+        [WirePath("properties")]
         internal AccessPolicyAssignmentProperties Properties { get; set; }
 
         /// <summary> Current provisioning status of the access policy assignment. </summary>
+        [WirePath("properties.provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </summary>
+        [WirePath("properties.accessPolicyName")]
         public string AccessPolicyName
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> The object ID of the user. </summary>
+        [WirePath("properties.user.objectId")]
         public Guid? UserObjectId
         {
             get

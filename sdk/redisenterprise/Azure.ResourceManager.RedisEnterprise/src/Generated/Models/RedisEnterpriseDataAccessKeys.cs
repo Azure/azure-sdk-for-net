@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The current primary key that clients can use to authenticate. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
 
         /// <summary> The current secondary key that clients can use to authenticate. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }
 }

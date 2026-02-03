@@ -48,12 +48,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </summary>
+        [WirePath("sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
 
         /// <summary> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </summary>
+        [WirePath("switchDns")]
         public bool SwitchDns { get; set; }
 
         /// <summary> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </summary>
+        [WirePath("skipDataMigration")]
         public bool SkipDataMigration { get; set; }
     }
 }

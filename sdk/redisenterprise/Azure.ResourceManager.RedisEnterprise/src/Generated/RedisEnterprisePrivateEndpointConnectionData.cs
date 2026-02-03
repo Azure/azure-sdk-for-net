@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The group ids for the private endpoint resource. </summary>
+        [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds
         {
             get
@@ -50,11 +52,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public RedisEnterprisePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public RedisEnterprisePrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -62,11 +65,12 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public RedisEnterprisePrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

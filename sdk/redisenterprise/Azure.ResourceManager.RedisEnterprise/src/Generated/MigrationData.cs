@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary> Properties of the migration operation. </summary>
+        [WirePath("properties")]
         public MigrationProperties Properties { get; set; }
     }
 }

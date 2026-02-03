@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise databases, as opposed to general resource properties like location, tags. </summary>
-    public partial class DatabaseProperties
+    internal partial class DatabaseProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -55,39 +55,51 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </summary>
+        [WirePath("clientProtocol")]
         public RedisEnterpriseClientProtocol? ClientProtocol { get; set; }
 
         /// <summary> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
 
         /// <summary> Current provisioning status of the database. </summary>
+        [WirePath("provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
 
         /// <summary> Current resource status of the database. </summary>
+        [WirePath("resourceState")]
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
 
         /// <summary> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </summary>
+        [WirePath("clusteringPolicy")]
         public RedisEnterpriseClusteringPolicy? ClusteringPolicy { get; set; }
 
         /// <summary> Redis eviction policy - default is VolatileLRU. </summary>
+        [WirePath("evictionPolicy")]
         public RedisEnterpriseEvictionPolicy? EvictionPolicy { get; set; }
 
         /// <summary> Persistence settings. </summary>
+        [WirePath("persistence")]
         public RedisPersistenceSettings Persistence { get; set; }
 
         /// <summary> Optional set of redis modules to enable in this database - modules can only be added at creation time. </summary>
-        public IList<RedisEnterpriseModule> Modules { get; }
+        [WirePath("modules")]
+        public IList<RedisEnterpriseModule> Modules { get; } = new ChangeTrackingList<RedisEnterpriseModule>();
 
         /// <summary> Optional set of properties to configure geo replication for this database. </summary>
+        [WirePath("geoReplication")]
         public RedisEnterpriseDatabaseGeoReplication GeoReplication { get; set; }
 
         /// <summary> Version of Redis the database is running on, e.g. '6.0'. </summary>
+        [WirePath("redisVersion")]
         public string RedisVersion { get; }
 
         /// <summary> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </summary>
+        [WirePath("deferUpgrade")]
         public DeferUpgradeSetting? DeferUpgrade { get; set; }
 
         /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </summary>
+        [WirePath("accessKeysAuthentication")]
         public virtual AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
     }
 }

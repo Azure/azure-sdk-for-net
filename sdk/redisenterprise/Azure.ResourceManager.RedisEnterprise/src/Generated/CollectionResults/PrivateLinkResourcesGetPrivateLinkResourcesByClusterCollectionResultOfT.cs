@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    internal partial class PrivateLinkResourcesGetByClusterCollectionResultOfT : Pageable<RedisEnterprisePrivateLinkResource>
+    internal partial class PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT : Pageable<RedisEnterprisePrivateLinkResource>
     {
         private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.RedisEnterprise
         private readonly string _clusterName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByClusterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetByClusterCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RedisEnterprise
             _context = context;
         }
 
-        /// <summary> Gets the pages of PrivateLinkResourcesGetByClusterCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PrivateLinkResourcesGetByClusterCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<RedisEnterprisePrivateLinkResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetByClusterRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetByCluster");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinkResourcesByClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetPrivateLinkResourcesByClusterRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster");
             scope.Start();
             try
             {

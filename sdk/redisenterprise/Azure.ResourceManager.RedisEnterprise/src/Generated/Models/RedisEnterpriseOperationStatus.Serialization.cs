@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Status))
             {
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             string status = default;
             ErrorResponse errorResponse = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,12 +133,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -163,8 +171,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseOperationStatus(
                 id,
                 name,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 status,
                 errorResponse,
                 additionalBinaryDataProperties);

@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Cluster-level maintenance configuration. </summary>
-    internal partial class MaintenanceConfiguration : IJsonModel<MaintenanceConfiguration>
+    public partial class MaintenanceConfiguration : IJsonModel<MaintenanceConfiguration>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

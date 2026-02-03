@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The Database items on this page. </summary>
+        [WirePath("value")]
         public IList<RedisEnterpriseDatabaseData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

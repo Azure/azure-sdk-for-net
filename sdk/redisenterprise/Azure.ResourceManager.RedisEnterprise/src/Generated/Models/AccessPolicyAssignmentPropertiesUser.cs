@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The object ID of the user. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
     }
 }

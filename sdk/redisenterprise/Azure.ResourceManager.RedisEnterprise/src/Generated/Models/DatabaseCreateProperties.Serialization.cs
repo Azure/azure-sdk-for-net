@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties for creating Redis Enterprise databases. </summary>
-    public partial class DatabaseCreateProperties : DatabaseProperties, IJsonModel<DatabaseCreateProperties>
+    internal partial class DatabaseCreateProperties : DatabaseProperties, IJsonModel<DatabaseCreateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

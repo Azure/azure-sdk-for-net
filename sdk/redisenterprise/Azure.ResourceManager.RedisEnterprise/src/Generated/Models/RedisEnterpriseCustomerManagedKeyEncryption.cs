@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseCustomerManagedKeyEncryption(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, string keyEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseCustomerManagedKeyEncryption(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+        [WirePath("keyEncryptionKeyIdentity")]
         public RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
 
         /// <summary> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </summary>
-        public string KeyEncryptionKeyUri { get; set; }
+        [WirePath("keyEncryptionKeyUrl")]
+        public Uri KeyEncryptionKeyUri { get; set; }
     }
 }

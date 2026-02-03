@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties for updating Redis Enterprise databases. </summary>
-    public partial class DatabaseUpdateProperties : DatabaseProperties
+    internal partial class DatabaseUpdateProperties : DatabaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseUpdateProperties"/>. </summary>
         public DatabaseUpdateProperties()
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. Default is Disabled. </summary>
+        [WirePath("accessKeysAuthentication")]
         public override AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
     }
 }

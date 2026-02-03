@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

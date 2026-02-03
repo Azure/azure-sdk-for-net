@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
-            RedisEnterprisePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RedisEnterprisePrivateLinkServiceConnectionState connectionState = default;
             RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = RedisEnterprisePrivateLinkServiceConnectionState.DeserializeRedisEnterprisePrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = RedisEnterprisePrivateLinkServiceConnectionState.DeserializeRedisEnterprisePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

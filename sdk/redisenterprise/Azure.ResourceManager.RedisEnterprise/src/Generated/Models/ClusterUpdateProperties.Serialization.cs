@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise clusters for update operations. </summary>
-    public partial class ClusterUpdateProperties : ClusterProperties, IJsonModel<ClusterUpdateProperties>
+    internal partial class ClusterUpdateProperties : ClusterProperties, IJsonModel<ClusterUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

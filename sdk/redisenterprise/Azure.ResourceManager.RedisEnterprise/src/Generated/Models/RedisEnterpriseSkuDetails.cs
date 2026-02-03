@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The cache size in GB. </summary>
+        [WirePath("sizeInGB")]
         public float? SizeInGB { get; }
     }
 }

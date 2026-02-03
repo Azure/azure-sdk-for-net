@@ -41,7 +41,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ForceUnlinkRedisEnterpriseDatabaseContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ids"u8);
-            writer.WriteStringValue(Ids);
+            writer.WriteStartArray();
+            foreach (ResourceIdentifier item in Ids)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,13 +94,25 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            ResourceIdentifier ids = default;
+            IList<ResourceIdentifier> ids = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ids"u8))
                 {
-                    ids = new ResourceIdentifier(prop.Value.GetString());
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    ids = array;
                     continue;
                 }
                 if (options.Format != "W")

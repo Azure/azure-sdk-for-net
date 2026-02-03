@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -31,6 +32,213 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Properties of the database. </summary>
-        public DatabaseUpdateProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal DatabaseUpdateProperties Properties { get; set; }
+
+        /// <summary> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </summary>
+        [WirePath("properties.clientProtocol")]
+        public RedisEnterpriseClientProtocol? ClientProtocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientProtocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.ClientProtocol = value.Value;
+            }
+        }
+
+        /// <summary> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </summary>
+        [WirePath("properties.port")]
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.Port = value.Value;
+            }
+        }
+
+        /// <summary> Current provisioning status of the database. </summary>
+        [WirePath("properties.provisioningState")]
+        public RedisEnterpriseProvisioningStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Current resource status of the database. </summary>
+        [WirePath("properties.resourceState")]
+        public RedisEnterpriseClusterResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </summary>
+        [WirePath("properties.clusteringPolicy")]
+        public RedisEnterpriseClusteringPolicy? ClusteringPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusteringPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.ClusteringPolicy = value.Value;
+            }
+        }
+
+        /// <summary> Redis eviction policy - default is VolatileLRU. </summary>
+        [WirePath("properties.evictionPolicy")]
+        public RedisEnterpriseEvictionPolicy? EvictionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EvictionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.EvictionPolicy = value.Value;
+            }
+        }
+
+        /// <summary> Persistence settings. </summary>
+        [WirePath("properties.persistence")]
+        public RedisPersistenceSettings Persistence
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Persistence;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.Persistence = value;
+            }
+        }
+
+        /// <summary> Optional set of redis modules to enable in this database - modules can only be added at creation time. </summary>
+        [WirePath("properties.modules")]
+        public IList<RedisEnterpriseModule> Modules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                return Properties.Modules;
+            }
+        }
+
+        /// <summary> Optional set of properties to configure geo replication for this database. </summary>
+        [WirePath("properties.geoReplication")]
+        public RedisEnterpriseDatabaseGeoReplication GeoReplication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoReplication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.GeoReplication = value;
+            }
+        }
+
+        /// <summary> Version of Redis the database is running on, e.g. '6.0'. </summary>
+        [WirePath("properties.redisVersion")]
+        public string RedisVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisVersion;
+            }
+        }
+
+        /// <summary> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </summary>
+        [WirePath("properties.deferUpgrade")]
+        public DeferUpgradeSetting? DeferUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeferUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.DeferUpgrade = value.Value;
+            }
+        }
+
+        /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </summary>
+        [WirePath("properties.accessKeysAuthentication")]
+        public virtual AccessKeysAuthentication? AccessKeysAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessKeysAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.AccessKeysAuthentication = value.Value;
+            }
+        }
+
+        /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. Default is Disabled. </summary>
+        [WirePath("properties.accessKeysAuthentication")]
+        public override AccessKeysAuthentication? AccessKeysAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessKeysAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.AccessKeysAuthentication = value.Value;
+            }
+        }
     }
 }

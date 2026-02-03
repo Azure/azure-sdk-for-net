@@ -40,15 +40,169 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>
+        [WirePath("sku")]
         public RedisEnterpriseSku Sku { get; set; }
 
         /// <summary> Other properties of the cluster. </summary>
-        public ClusterUpdateProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal ClusterUpdateProperties Properties { get; set; }
 
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </summary>
+        [WirePath("properties.highAvailability")]
+        public RedisEnterpriseHighAvailability? HighAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                Properties.HighAvailability = value.Value;
+            }
+        }
+
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </summary>
+        [WirePath("properties.minimumTlsVersion")]
+        public RedisEnterpriseTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
+        /// <summary> DNS name of the cluster endpoint. </summary>
+        [WirePath("properties.hostName")]
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+        }
+
+        /// <summary> Current provisioning status of the cluster. </summary>
+        [WirePath("properties.provisioningState")]
+        public RedisEnterpriseProvisioningStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </summary>
+        [WirePath("properties.redundancyMode")]
+        public RedisEnterpriseRedundancyMode? RedundancyMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedundancyMode;
+            }
+        }
+
+        /// <summary> Current resource status of the cluster. </summary>
+        [WirePath("properties.resourceState")]
+        public RedisEnterpriseClusterResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
+        [WirePath("properties.redisVersion")]
+        public string RedisVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisVersion;
+            }
+        }
+
+        /// <summary> List of private endpoint connections associated with the specified Redis Enterprise cluster. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("properties.encryption.customerManagedKeyEncryption")]
+        public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                Properties.CustomerManagedKeyEncryption = value;
+            }
+        }
+
+        /// <summary> Custom maintenance windows that apply to the cluster. </summary>
+        [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
+        public IList<MaintenanceWindow> MaintenanceWindows
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                return Properties.MaintenanceWindows;
+            }
+        }
+
+        /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

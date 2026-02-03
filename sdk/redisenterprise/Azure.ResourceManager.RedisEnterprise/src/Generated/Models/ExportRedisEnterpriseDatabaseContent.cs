@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="ExportRedisEnterpriseDatabaseContent"/>. </summary>
         /// <param name="sasUri"> SAS URI for the target directory to export to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
-        public ExportRedisEnterpriseDatabaseContent(string sasUri)
+        public ExportRedisEnterpriseDatabaseContent(Uri sasUri)
         {
             Argument.AssertNotNull(sasUri, nameof(sasUri));
 
@@ -30,13 +30,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="ExportRedisEnterpriseDatabaseContent"/>. </summary>
         /// <param name="sasUri"> SAS URI for the target directory to export to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRedisEnterpriseDatabaseContent(string sasUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportRedisEnterpriseDatabaseContent(Uri sasUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SasUri = sasUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SAS URI for the target directory to export to. </summary>
-        public string SasUri { get; }
+        [WirePath("sasUri")]
+        public Uri SasUri { get; }
     }
 }

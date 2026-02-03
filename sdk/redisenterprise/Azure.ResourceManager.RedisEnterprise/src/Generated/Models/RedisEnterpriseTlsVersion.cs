@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         private readonly string _value;
         /// <summary> 1.0. </summary>
-        private const string Tls10Value = "1.0";
+        private const string One0Value = "1.0";
         /// <summary> 1.1. </summary>
-        private const string Tls11Value = "1.1";
+        private const string One1Value = "1.1";
         /// <summary> 1.2. </summary>
-        private const string Tls12Value = "1.2";
+        private const string One2Value = "1.2";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,15 +31,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
             _value = value;
         }
-
-        /// <summary> 1.0. </summary>
-        public static RedisEnterpriseTlsVersion Tls10 { get; } = new RedisEnterpriseTlsVersion(Tls10Value);
-
-        /// <summary> 1.1. </summary>
-        public static RedisEnterpriseTlsVersion Tls11 { get; } = new RedisEnterpriseTlsVersion(Tls11Value);
-
-        /// <summary> 1.2. </summary>
-        public static RedisEnterpriseTlsVersion Tls12 { get; } = new RedisEnterpriseTlsVersion(Tls12Value);
 
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

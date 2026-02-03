@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Which access key to regenerate. </summary>
+        [WirePath("keyType")]
         public RedisEnterpriseAccessKeyType KeyType { get; }
     }
 }

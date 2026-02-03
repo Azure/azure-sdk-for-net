@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByClusterRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinkResourcesByClusterRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,10 +61,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             return message;
         }
 
-        internal HttpMessage CreateNextGetByClusterRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateNextGetPrivateLinkResourcesByClusterRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

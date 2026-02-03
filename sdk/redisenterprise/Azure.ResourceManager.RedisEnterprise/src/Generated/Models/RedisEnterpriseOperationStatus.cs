@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -26,41 +27,48 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseOperationStatus"/>. </summary>
         /// <param name="id"> The operation's unique id. </param>
         /// <param name="name"> The operation's name. </param>
-        /// <param name="startTime"> The start time of the operation. </param>
-        /// <param name="endTime"> The end time of the operation. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="status"> The current status of the operation. </param>
         /// <param name="errorResponse"> Error response describing why the operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, string startTime, string endTime, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseOperationStatus(ResourceIdentifier id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Status = status;
             ErrorResponse = errorResponse;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation's unique id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> The operation's name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The start time of the operation. </summary>
-        public string StartTime { get; }
+        [WirePath("startTime")]
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time of the operation. </summary>
-        public string EndTime { get; }
+        [WirePath("endTime")]
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> The current status of the operation. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> Error response describing why the operation failed. </summary>
+        [WirePath("error")]
         internal ErrorResponse ErrorResponse { get; }
 
         /// <summary> The error object. </summary>
+        [WirePath("error.error")]
         public ResponseError Error
         {
             get

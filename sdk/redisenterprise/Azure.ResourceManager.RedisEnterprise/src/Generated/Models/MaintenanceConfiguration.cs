@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Cluster-level maintenance configuration. </summary>
-    internal partial class MaintenanceConfiguration
+    public partial class MaintenanceConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Custom maintenance windows that apply to the cluster. </summary>
+        [WirePath("maintenanceWindows")]
         public IList<MaintenanceWindow> MaintenanceWindows { get; }
     }
 }

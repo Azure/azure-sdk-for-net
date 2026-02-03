@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         private readonly string _value;
         /// <summary> AllKeysLFU. </summary>
-        private const string AllKeysLFUValue = "AllKeysLFU";
+        private const string AllKeysLfuValue = "AllKeysLFU";
         /// <summary> AllKeysLRU. </summary>
-        private const string AllKeysLRUValue = "AllKeysLRU";
+        private const string AllKeysLruValue = "AllKeysLRU";
         /// <summary> AllKeysRandom. </summary>
         private const string AllKeysRandomValue = "AllKeysRandom";
         /// <summary> VolatileLRU. </summary>
-        private const string VolatileLRUValue = "VolatileLRU";
+        private const string VolatileLfuValue = "VolatileLRU";
         /// <summary> VolatileLFU. </summary>
-        private const string VolatileLFUValue = "VolatileLFU";
+        private const string VolatileLruValue = "VolatileLFU";
         /// <summary> VolatileTTL. </summary>
-        private const string VolatileTTLValue = "VolatileTTL";
+        private const string VolatileTtlValue = "VolatileTTL";
         /// <summary> VolatileRandom. </summary>
         private const string VolatileRandomValue = "VolatileRandom";
         /// <summary> NoEviction. </summary>
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> AllKeysLFU. </summary>
-        public static RedisEnterpriseEvictionPolicy AllKeysLFU { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLFUValue);
+        public static RedisEnterpriseEvictionPolicy AllKeysLfu { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLfuValue);
 
         /// <summary> AllKeysLRU. </summary>
-        public static RedisEnterpriseEvictionPolicy AllKeysLRU { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLRUValue);
+        public static RedisEnterpriseEvictionPolicy AllKeysLru { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLruValue);
 
         /// <summary> AllKeysRandom. </summary>
         public static RedisEnterpriseEvictionPolicy AllKeysRandom { get; } = new RedisEnterpriseEvictionPolicy(AllKeysRandomValue);
 
         /// <summary> VolatileLRU. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileLRU { get; } = new RedisEnterpriseEvictionPolicy(VolatileLRUValue);
+        public static RedisEnterpriseEvictionPolicy VolatileLfu { get; } = new RedisEnterpriseEvictionPolicy(VolatileLfuValue);
 
         /// <summary> VolatileLFU. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileLFU { get; } = new RedisEnterpriseEvictionPolicy(VolatileLFUValue);
+        public static RedisEnterpriseEvictionPolicy VolatileLru { get; } = new RedisEnterpriseEvictionPolicy(VolatileLruValue);
 
         /// <summary> VolatileTTL. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileTTL { get; } = new RedisEnterpriseEvictionPolicy(VolatileTTLValue);
+        public static RedisEnterpriseEvictionPolicy VolatileTtl { get; } = new RedisEnterpriseEvictionPolicy(VolatileTtlValue);
 
         /// <summary> VolatileRandom. </summary>
         public static RedisEnterpriseEvictionPolicy VolatileRandom { get; } = new RedisEnterpriseEvictionPolicy(VolatileRandomValue);

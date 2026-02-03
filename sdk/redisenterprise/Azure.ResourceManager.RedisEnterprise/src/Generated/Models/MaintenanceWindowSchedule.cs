@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
+        [WirePath("dayOfWeek")]
         public MaintenanceDayOfWeek? DayOfWeek { get; set; }
     }
 }

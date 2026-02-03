@@ -432,13 +432,13 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetByClusterAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinkResourcesGetPrivateLinkResourcesByClusterAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -464,13 +464,13 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisEnterprisePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisEnterprisePrivateLinkResource> GetByCluster(CancellationToken cancellationToken = default)
+        public virtual Pageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByClusterCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new PrivateLinkResourcesGetPrivateLinkResourcesByClusterCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>

@@ -47,18 +47,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Maintenance window type. </summary>
+        [WirePath("type")]
         public MaintenanceWindowType Type { get; set; }
 
         /// <summary> Duration in ISO-8601 format, for example 'PT5H'. </summary>
+        [WirePath("duration")]
         public string Duration { get; set; }
 
         /// <summary> Start hour (0-23) in UTC when the maintenance window begins. </summary>
+        [WirePath("startHourUtc")]
         public int StartHourUtc { get; set; }
 
         /// <summary> Recurring schedule for the maintenance window. </summary>
+        [WirePath("schedule")]
         internal MaintenanceWindowSchedule Schedule { get; set; }
 
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
+        [WirePath("schedule.dayOfWeek")]
         public MaintenanceDayOfWeek? ScheduleDayOfWeek
         {
             get

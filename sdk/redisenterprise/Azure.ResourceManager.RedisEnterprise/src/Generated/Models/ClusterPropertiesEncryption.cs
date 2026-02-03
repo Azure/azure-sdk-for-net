@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Encryption-at-rest configuration for the cluster. </summary>
-    internal partial class ClusterPropertiesEncryption
+    public partial class ClusterPropertiesEncryption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("customerManagedKeyEncryption")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
     }
 }

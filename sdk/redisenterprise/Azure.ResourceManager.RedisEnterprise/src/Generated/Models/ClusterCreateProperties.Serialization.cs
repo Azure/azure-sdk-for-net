@@ -14,7 +14,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise clusters for create operations. </summary>
-    public partial class ClusterCreateProperties : ClusterProperties, IJsonModel<ClusterCreateProperties>
+    internal partial class ClusterCreateProperties : ClusterProperties, IJsonModel<ClusterCreateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ClusterCreateProperties"/> for deserialization. </summary>
         internal ClusterCreateProperties()

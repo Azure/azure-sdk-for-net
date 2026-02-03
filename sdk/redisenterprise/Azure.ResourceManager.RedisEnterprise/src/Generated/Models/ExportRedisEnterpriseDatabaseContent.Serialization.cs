@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ExportRedisEnterpriseDatabaseContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sasUri"u8);
-            writer.WriteStringValue(SasUri);
+            writer.WriteStringValue(SasUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            string sasUri = default;
+            Uri sasUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sasUri"u8))
                 {
-                    sasUri = prop.Value.GetString();
+                    sasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

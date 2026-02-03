@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise clusters for create operations. </summary>
-    public partial class ClusterCreateProperties : ClusterProperties
+    internal partial class ClusterCreateProperties : ClusterProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClusterCreateProperties"/>. </summary>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
+        [WirePath("publicNetworkAccess")]
         public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

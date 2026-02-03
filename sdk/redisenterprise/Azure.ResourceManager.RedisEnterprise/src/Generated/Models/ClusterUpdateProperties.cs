@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise clusters for update operations. </summary>
-    public partial class ClusterUpdateProperties : ClusterProperties
+    internal partial class ClusterUpdateProperties : ClusterProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateProperties"/>. </summary>
         public ClusterUpdateProperties()
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </summary>
+        [WirePath("publicNetworkAccess")]
         public RedisEnterprisePublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

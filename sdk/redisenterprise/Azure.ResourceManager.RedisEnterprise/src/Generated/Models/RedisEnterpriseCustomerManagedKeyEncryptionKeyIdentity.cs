@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/&lt;sub uuid&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </summary>
+        [WirePath("userAssignedIdentityResourceId")]
         public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }
 
         /// <summary> Only userAssignedIdentity is supported in this API version; other types may be supported in the future. </summary>
+        [WirePath("identityType")]
         public RedisEnterpriseCustomerManagedKeyIdentityType? IdentityType { get; set; }
     }
 }

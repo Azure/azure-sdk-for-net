@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -47,21 +48,27 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Describes the source of the migration operation. </summary>
+        [WirePath("sourceType")]
         internal SourceType SourceType { get; set; }
 
         /// <summary> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
 
         /// <summary> Current provisioning status of the migration. </summary>
+        [WirePath("provisioningState")]
         public MigrationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Additional details about the migration operation's status in free text format. </summary>
+        [WirePath("statusDetails")]
         public string StatusDetails { get; }
 
         /// <summary> The timestamp when the migration operation was created. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp when the migration operation was last updated. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

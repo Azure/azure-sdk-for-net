@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
-                writer.WriteStringValue(KeyEncryptionKeyUri);
+                writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
-            string keyEncryptionKeyUri = default;
+            Uri keyEncryptionKeyUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -102,7 +102,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("keyEncryptionKeyUrl"u8))
                 {
-                    keyEncryptionKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyEncryptionKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

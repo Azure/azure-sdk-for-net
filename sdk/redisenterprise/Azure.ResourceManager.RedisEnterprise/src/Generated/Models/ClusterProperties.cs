@@ -12,7 +12,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties of Redis Enterprise clusters, as opposed to general resource properties like location, tags. </summary>
-    public partial class ClusterProperties
+    internal partial class ClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -51,36 +51,47 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </summary>
+        [WirePath("highAvailability")]
         public RedisEnterpriseHighAvailability? HighAvailability { get; set; }
 
         /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </summary>
+        [WirePath("minimumTlsVersion")]
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
 
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
+        [WirePath("encryption")]
         internal ClusterPropertiesEncryption Encryption { get; set; }
 
         /// <summary> Cluster-level maintenance configuration. </summary>
+        [WirePath("maintenanceConfiguration")]
         internal MaintenanceConfiguration MaintenanceConfiguration { get; set; }
 
         /// <summary> DNS name of the cluster endpoint. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
 
         /// <summary> Current provisioning status of the cluster. </summary>
+        [WirePath("provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
 
         /// <summary> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </summary>
+        [WirePath("redundancyMode")]
         public RedisEnterpriseRedundancyMode? RedundancyMode { get; }
 
         /// <summary> Current resource status of the cluster. </summary>
+        [WirePath("resourceState")]
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
 
         /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
+        [WirePath("redisVersion")]
         public string RedisVersion { get; }
 
         /// <summary> List of private endpoint connections associated with the specified Redis Enterprise cluster. </summary>
-        public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        [WirePath("privateEndpointConnections")]
+        public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("encryption.customerManagedKeyEncryption")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get
@@ -98,6 +109,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Custom maintenance windows that apply to the cluster. </summary>
+        [WirePath("maintenanceConfiguration.maintenanceWindows")]
         public IList<MaintenanceWindow> MaintenanceWindows
         {
             get

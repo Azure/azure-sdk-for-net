@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IList<RedisEnterprisePrivateLinkResource> Value { get; }
 
         /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

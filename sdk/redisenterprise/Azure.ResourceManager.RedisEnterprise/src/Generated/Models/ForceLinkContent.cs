@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Properties to configure geo replication for this database. </summary>
+        [WirePath("geoReplication")]
         public ForceLinkParametersGeoReplication GeoReplication { get; }
     }
 }
