@@ -956,13 +956,10 @@ namespace Azure.AI.Projects
         /// <param name="clusters"> List of clusters identified in the insights. </param>
         /// <param name="coordinates">
         ///   Optional mapping of IDs to 2D coordinates used by the UX for visualization.
-        /// 
         ///   The map keys are string identifiers (for example, a cluster id or a sample id)
         ///   and the values are the coordinates and visual size for rendering on a 2D chart.
-        /// 
         ///   This property is omitted unless the client requests coordinates (for example,
         ///   by passing `includeCoordinates=true` as a query parameter).
-        /// 
         ///   Example:
         ///   ```
         ///   {
@@ -970,7 +967,6 @@ namespace Azure.AI.Projects
         ///     "sample-123": { "x": 18, "y": 22, "size": 4 }
         ///   }
         ///   ```
-        /// 
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.
         /// </param>
@@ -1492,7 +1488,6 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>
@@ -1754,7 +1749,6 @@ namespace Azure.AI.Projects
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
         /// format, and querying for objects via API or the dashboard.
-        /// 
         /// Keys are strings with a maximum length of 64 characters. Values are strings
         /// with a maximum length of 512 characters.
         /// </param>

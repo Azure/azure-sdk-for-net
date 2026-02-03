@@ -1561,8 +1561,8 @@ agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
-    agentName: "myAgent2",
+AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
 
