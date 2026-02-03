@@ -123,7 +123,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         // Remove properties that have the same name as properties in the base model
         var basePropertyNames = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
-        var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name));
+        var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name)).ToArray();
 
         model.Update(properties: properties);
 
