@@ -1077,6 +1077,96 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 location);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.ClusterData"/> instance for mocking. </returns>
+        public static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ClusterProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
+        /// <param name="customerManagedKeyEncryption"> Gets or sets the CustomerManagedKeyEncryption. </param>
+        /// <param name="maintenanceWindows"> Gets the MaintenanceWindows. </param>
+        /// <param name="hostName"> DNS name of the cluster endpoint. </param>
+        /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
+        /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster. </param>
+        /// <param name="resourceState"> Current resource status of the cluster. </param>
+        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <returns> A new <see cref="Models.ClusterProperties"/> instance for mocking. </returns>
+        public static ClusterProperties ClusterProperties(HighAvailability? highAvailability = default, TlsVersion? minimumTlsVersion = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, string hostName = default, ProvisioningState? provisioningState = default, RedundancyMode? redundancyMode = default, ResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisPrivateEndpointConnection> privateEndpointConnections = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<RedisPrivateEndpointConnection>();
+
+            return new ClusterProperties(
+                highAvailability,
+                minimumTlsVersion,
+                customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, null),
+                maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), null),
+                hostName,
+                provisioningState,
+                redundancyMode,
+                resourceState,
+                redisVersion,
+                privateEndpointConnections.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.RedisPrivateEndpointConnection"/> instance for mocking. </returns>
+        public static RedisPrivateEndpointConnection RedisPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisPrivateEndpointConnectionProperties properties = default)
+        {
+            return new RedisPrivateEndpointConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="privateEndpointId"> Gets the Id. </param>
+        /// <param name="privateLinkServiceConnectionState"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.RedisPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static RedisPrivateEndpointConnectionProperties RedisPrivateEndpointConnectionProperties(string privateEndpointId = default, RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ProvisioningState? provisioningState = default)
+        {
+            return new RedisPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new RedisPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RedisPrivateLinkServiceConnectionState. </summary>
+        /// <param name="status"></param>
+        /// <param name="description"></param>
+        /// <param name="actionsRequired"></param>
+        /// <returns> A new <see cref="Models.RedisPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState(Models.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new RedisPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

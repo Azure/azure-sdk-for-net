@@ -13,12 +13,12 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState : IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>
+    /// <summary> The RedisPrivateLinkServiceConnectionState. </summary>
+    public partial class RedisPrivateLinkServiceConnectionState : IJsonModel<RedisPrivateLinkServiceConnectionState>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,15 +29,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -68,24 +68,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState IJsonModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RedisPrivateLinkServiceConnectionState IJsonModel<RedisPrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RedisPrivateLinkServiceConnectionState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(document.RootElement, options);
+            return DeserializeRedisPrivateLinkServiceConnectionState(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options)
+        internal static RedisPrivateLinkServiceConnectionState DeserializeRedisPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    status = new Models.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToAzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -121,47 +121,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties);
+            return new RedisPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RedisPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RedisPrivateLinkServiceConnectionState IPersistableModel<RedisPrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RedisPrivateLinkServiceConnectionState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState(document.RootElement, options);
+                        return DeserializeRedisPrivateLinkServiceConnectionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisPrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
