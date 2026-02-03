@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run a single Azure SDK sample
-# Usage: ./run-sample.sh -s "Sample01_AnalyzeBinary" [--live] [--list]
+# Usage: ./run-sample.sh -s "AnalyzeBinaryAsync" [--live] [--list]
 
 SAMPLE_NAME=""
 LIVE=false

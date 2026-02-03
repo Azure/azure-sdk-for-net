@@ -1,5 +1,5 @@
 # Run a single Azure SDK sample
-# Usage: .\run-sample.ps1 -SampleName "Sample01_AnalyzeBinary" [-Live] [-List]
+# Usage: .\run-sample.ps1 -SampleName "AnalyzeBinaryAsync" [-Live] [-List]
 
 param(
     [string]$SampleName = "",
@@ -47,8 +47,8 @@ if ($List) {
 # Validate sample name
 if ([string]::IsNullOrEmpty($SampleName)) {
     Write-ColorOutput "Error: Sample name is required" "Red"
-    Write-ColorOutput "Usage: .\run-sample.ps1 -SampleName `"Sample01_AnalyzeBinary`"" "Yellow"
-    Write-ColorOutput "Use -List to see available samples" "Yellow"
+    Write-ColorOutput "Usage: .\run-sample.ps1 -SampleName `"AnalyzeBinaryAsync`"" "Yellow"
+    Write-ColorOutput "Use -List to see available sample methods" "Yellow"
     exit 1
 }
 
