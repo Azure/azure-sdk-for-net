@@ -33941,8 +33941,8 @@
                   {
                     "$id": "2466",
                     "kind": "body",
-                    "name": "resource",
-                    "serializedName": "resource",
+                    "name": "parameters",
+                    "serializedName": "parameters",
                     "doc": "Resource create parameters.",
                     "type": {
                       "$ref": "958"
@@ -34053,8 +34053,8 @@
                 {
                   "$id": "2471",
                   "kind": "method",
-                  "name": "resource",
-                  "serializedName": "resource",
+                  "name": "parameters",
+                  "serializedName": "parameters",
                   "doc": "Resource create parameters.",
                   "type": {
                     "$ref": "958"
