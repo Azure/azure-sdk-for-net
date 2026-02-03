@@ -272,7 +272,10 @@ namespace Azure.Data.AppConfiguration
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", contentType);
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", contentType);
+            }
             if (syncToken != null)
             {
                 request.Headers.SetValue("Sync-Token", syncToken);

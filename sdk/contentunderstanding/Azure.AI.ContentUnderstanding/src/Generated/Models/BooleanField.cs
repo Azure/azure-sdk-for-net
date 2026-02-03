@@ -24,16 +24,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of predicting the field value. </param>
         /// <param name="source"> Encoded source that identifies the position of the field value in the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fieldType"> Semantic data type of the field value. </param>
         /// <param name="valueBoolean"> Boolean field value. </param>
-        internal BooleanField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContentFieldType fieldType, bool? valueBoolean) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
+        internal BooleanField(ContentFieldType @type, IList<ContentSpan> spans, float? confidence, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? valueBoolean) : base(@type, spans, confidence, source, additionalBinaryDataProperties)
         {
-            FieldType = fieldType;
             ValueBoolean = valueBoolean;
         }
-
-        /// <summary> Semantic data type of the field value. </summary>
-        internal ContentFieldType FieldType { get; set; } = "boolean";
 
         /// <summary> Boolean field value. </summary>
         public bool? ValueBoolean { get; }
