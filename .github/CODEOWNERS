@@ -609,9 +609,6 @@
 # ServiceLabel: %Marketplace Ordering
 # ServiceOwners:                                                   @prbansa
 
-# PRLabel: %Media Services
-/sdk/mediaservices/                                                @naiteeks @bennage @giakas
-
 # ServiceLabel: %Media Services
 # ServiceOwners:                                                   @naiteeks @bennage @giakas
 
