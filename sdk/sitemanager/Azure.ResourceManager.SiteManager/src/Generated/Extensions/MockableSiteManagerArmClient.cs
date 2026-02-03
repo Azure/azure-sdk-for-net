@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             return new ServiceGroupEdgeSiteCollection(Client, scope);
         }
 
-        /// <summary> Get Site at SG scope. </summary>
+        /// <summary> Get a Site. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             return GetServiceGroupEdgeSites(scope).Get(siteName, cancellationToken);
         }
 
-        /// <summary> Get Site at SG scope. </summary>
+        /// <summary> Get a Site. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

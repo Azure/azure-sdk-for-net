@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List Site resources by subscription ID
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List Site resources by subscription ID
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

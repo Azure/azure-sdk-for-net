@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List a Site
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_ListByResourceGroup. </description>
+        /// <description> Sites_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// List a Site
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Sites_ListByResourceGroup. </description>
+        /// <description> Sites_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

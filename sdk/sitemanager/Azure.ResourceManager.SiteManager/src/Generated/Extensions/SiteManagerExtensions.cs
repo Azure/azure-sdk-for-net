@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSite(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableSiteManagerArmClient.GetServiceGroupEdgeSiteAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>

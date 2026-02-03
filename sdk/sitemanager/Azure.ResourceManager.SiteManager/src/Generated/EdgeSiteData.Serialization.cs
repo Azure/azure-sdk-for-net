@@ -17,7 +17,7 @@ using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    /// <summary> Site as ARM Resource. </summary>
+    /// <summary> Site as Extension Resource. </summary>
     public partial class EdgeSiteData : ResourceData, IJsonModel<EdgeSiteData>
     {
         /// <param name="writer"> The JSON writer. </param>

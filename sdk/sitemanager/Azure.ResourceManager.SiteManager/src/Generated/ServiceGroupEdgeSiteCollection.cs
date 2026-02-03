@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.SiteManager
     {
         private readonly ClientDiagnostics _serviceGroupEdgeSiteClientDiagnostics;
         private readonly ServiceGroupEdgeSite _serviceGroupEdgeSiteRestClient;
-        /// <summary> The servicegroupName. </summary>
-        private readonly string _servicegroupName;
 
         /// <summary> Initializes a new instance of ServiceGroupEdgeSiteCollection for mocking. </summary>
         protected ServiceGroupEdgeSiteCollection()
@@ -37,17 +35,15 @@ namespace Azure.ResourceManager.SiteManager
         /// <summary> Initializes a new instance of <see cref="ServiceGroupEdgeSiteCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="servicegroupName"> The servicegroupName for the resource. </param>
-        internal ServiceGroupEdgeSiteCollection(ArmClient client, ResourceIdentifier id, string servicegroupName) : base(client, id)
+        internal ServiceGroupEdgeSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceGroupEdgeSiteResource.ResourceType, out string serviceGroupEdgeSiteApiVersion);
-            _servicegroupName = servicegroupName;
             _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ServiceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
             _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
         }
 
         /// <summary>
-        /// create or update Site at SG scope
+        /// Create a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -82,7 +78,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(_servicegroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
                     new ServiceGroupEdgeSiteOperationSource(Client),
@@ -105,7 +101,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// create or update Site at SG scope
+        /// Create a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +136,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(_servicegroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
                     new ServiceGroupEdgeSiteOperationSource(Client),
@@ -163,7 +159,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,7 +208,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// Get Site at SG scope
+        /// Get a Site
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -244,7 +240,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +257,7 @@ namespace Azure.ResourceManager.SiteManager
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -269,7 +265,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
+        /// <description> SitesByServiceGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -285,11 +281,11 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupEdgeSiteRestClient, _servicegroupName, context), data => new ServiceGroupEdgeSiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context), data => new ServiceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
-        /// list Site at SG scope
+        /// List Site resources by scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -297,7 +293,7 @@ namespace Azure.ResourceManager.SiteManager
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SitesByServiceGroup_ListByServiceGroup. </description>
+        /// <description> SitesByServiceGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -313,7 +309,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupCollectionResultOfT(_serviceGroupEdgeSiteRestClient, _servicegroupName, context), data => new ServiceGroupEdgeSiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, ServiceGroupEdgeSiteResource>(new ServiceGroupEdgeSiteGetByServiceGroupCollectionResultOfT(_serviceGroupEdgeSiteRestClient, Id.Name, context), data => new ServiceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +345,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -406,7 +402,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -463,7 +459,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -524,7 +520,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(_servicegroupName, siteName, context);
+                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
