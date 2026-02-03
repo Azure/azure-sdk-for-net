@@ -52,8 +52,8 @@ if [[ "$LIST" == true ]]; then
         if [[ -f "$sample" ]]; then
             filename=$(basename "$sample" .cs)
             # Extract method names with [RecordedTest] or [Test] attribute
-            grep -Pzo '\[(RecordedTest|Test)\][^\{]*public\s+async\s+Task\s+(\w+)\s*\(' "$sample" | \
-            grep -Po 'public\s+async\s+Task\s+\K\w+' | while read -r method; do
+            # Use perl for better multiline regex support
+            perl -0777 -ne 'while (/\[(RecordedTest|Test)\][^\{]*public\s+async\s+Task\s+(\w+)\s*\(/g) { print "$2\n"; }' "$sample" | while read -r method; do
                 echo -e "\033[36m  $method\033[0m \033[90m($filename)\033[0m"
             done
         fi
