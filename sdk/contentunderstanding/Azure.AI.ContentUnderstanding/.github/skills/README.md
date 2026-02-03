@@ -30,26 +30,26 @@ Skills should define **what to do**, not **how to do it**:
 
 | Skill | Description | Priority |
 |-------|-------------|----------|
-| [`sdkinternal-dotnet-env-setup`](sdkinternal-dotnet-env-setup/) | Load environment variables from .env file | P0 |
-| [`sdkinternal-dotnet-sdk-compile`](sdkinternal-dotnet-sdk-compile/) | Compile SDK source code | P0 |
-| [`sdkinternal-dotnet-test-record`](sdkinternal-dotnet-test-record/) | Run tests in RECORD mode | P0 |
-| [`sdkinternal-dotnet-test-playback`](sdkinternal-dotnet-test-playback/) | Run tests in PLAYBACK mode | P0 |
-| [`sdkinternal-dotnet-test-coverage`](sdkinternal-dotnet-test-coverage/) | Run tests with code coverage collection | P1 |
-| [`sdkinternal-dotnet-test-push-recordings`](sdkinternal-dotnet-test-push-recordings/) | Push session recordings to assets repo | P1 |
-| [`sdkinternal-dotnet-sample-run`](sdkinternal-dotnet-sample-run/) | Run a single sample | P1 |
-| [`sdkinternal-dotnet-sample-run-all-samples`](sdkinternal-dotnet-sample-run-all-samples/) | Run all samples | P2 |
+| [`sdkinternal-dotnet-env-setup`](sdkinternal-dotnet-env-setup/SKILL.md) | Load environment variables from .env file | P0 |
+| [`sdkinternal-dotnet-sdk-compile`](sdkinternal-dotnet-sdk-compile/SKILL.md) | Compile SDK source code | P0 |
+| [`sdkinternal-dotnet-test-record`](sdkinternal-dotnet-test-record/SKILL.md) | Run tests in RECORD mode | P0 |
+| [`sdkinternal-dotnet-test-playback`](sdkinternal-dotnet-test-playback/SKILL.md) | Run tests in PLAYBACK mode | P0 |
+| [`sdkinternal-dotnet-test-coverage`](sdkinternal-dotnet-test-coverage/SKILL.md) | Run tests with code coverage collection | P1 |
+| [`sdkinternal-dotnet-test-push-recordings`](sdkinternal-dotnet-test-push-recordings/SKILL.md) | Push session recordings to assets repo | P1 |
+| [`sdkinternal-dotnet-sample-run`](sdkinternal-dotnet-sample-run/SKILL.md) | Run a single sample | P1 |
+| [`sdkinternal-dotnet-sample-run-all-samples`](sdkinternal-dotnet-sample-run-all-samples/SKILL.md) | Run all samples | P2 |
 
 ### Workflow Skills
 
 | Skill | Description | Steps |
 |-------|-------------|-------|
-| [`sdkinternal-dotnet-workflow-record-push`](sdkinternal-dotnet-workflow-record-push/) | Complete RECORD and PUSH workflow | setup → compile → record → push → playback |
+| [`sdkinternal-dotnet-workflow-record-push`](sdkinternal-dotnet-workflow-record-push/SKILL.md) | Complete RECORD and PUSH workflow | setup → compile → record → push → playback |
 
 ### Review Skills
 
 | Skill | Description |
 |-------|-------------|
-| [`sdkinternal-dotnet-workflow-review-sample-quality`](sdkinternal-dotnet-workflow-review-sample-quality/) | Review sample code quality |
+| [`sdkinternal-dotnet-workflow-review-sample-quality`](sdkinternal-dotnet-workflow-review-sample-quality/SKILL.md) | Review sample code quality |
 
 ## Quick Start
 
@@ -97,7 +97,7 @@ Skills should define **what to do**, not **how to do it**:
 
 When creating new skills:
 
-1. **Follow naming convention**: `sdkinternal-{language}-{action}[-{qualifier}]`
+1. **Follow naming convention**: `sdk-{action}[-{qualifier}]`
 2. **Include SKILL.md**: With YAML front matter (name, description)
 3. **Keep description under 1024 chars**: Copilot uses it for relevance matching
 4. **Single responsibility**: One skill does one thing
