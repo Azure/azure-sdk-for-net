@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skip,
                 context), data => new DisconnectedOperationsImageResource(Client, data));
         }
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skip,
                 context), data => new DisconnectedOperationsImageResource(Client, data));
         }
