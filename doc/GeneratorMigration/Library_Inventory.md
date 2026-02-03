@@ -207,6 +207,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
+| quantum | Azure.ResourceManager.Quantum | ✅ |
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
@@ -345,7 +346,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | privatedns | Azure.ResourceManager.PrivateDns |
 | providerhub | Azure.ResourceManager.ProviderHub |
 | purview | Azure.ResourceManager.Purview |
-| quantum | Azure.ResourceManager.Quantum |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis |
