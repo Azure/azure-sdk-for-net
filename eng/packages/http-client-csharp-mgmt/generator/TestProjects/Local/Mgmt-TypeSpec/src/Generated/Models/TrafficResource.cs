@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
@@ -27,7 +28,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficResource(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficResource(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -37,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets or sets the Id. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]

@@ -249,16 +249,7 @@ namespace Azure.Generator.Management.Providers
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
             var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", ResourceData.Type);
 
-            // For standard ARM resources, data.Id is already ResourceIdentifier.
-            // For custom Azure resources (using @customAzureResource), data.Id is string
-            // and needs to be wrapped with new ResourceIdentifier(data.Id).
-            ValueExpression idExpression = dataParameter.Property("Id");
-            if (_resourceMetadata.IsCustomResource)
-            {
-                idExpression = New.Instance(typeof(ResourceIdentifier), idExpression);
-            }
-
-            var initializer = new ConstructorInitializer(false, [clientParameter, idExpression]);
+            var initializer = new ConstructorInitializer(false, [clientParameter, dataParameter.Property("Id")]);
             var signature = new ConstructorSignature(
                 Type,
                 $"Initializes a new instance of {Type:C} class.",

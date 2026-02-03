@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficProxyResource(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal TrafficProxyResource(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, additionalBinaryDataProperties)
         {
         }
     }

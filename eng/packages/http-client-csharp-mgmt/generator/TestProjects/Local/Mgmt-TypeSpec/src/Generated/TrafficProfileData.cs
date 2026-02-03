@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
@@ -27,7 +28,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"></param>
         /// <param name="tags"></param>
         /// <param name="properties"></param>
-        internal TrafficProfileData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, TrafficProfileProperties properties) : base(id, name, @type, additionalBinaryDataProperties, location, tags)
+        internal TrafficProfileData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, TrafficProfileProperties properties) : base(id, name, @type, additionalBinaryDataProperties, location, tags)
         {
             Properties = properties;
         }

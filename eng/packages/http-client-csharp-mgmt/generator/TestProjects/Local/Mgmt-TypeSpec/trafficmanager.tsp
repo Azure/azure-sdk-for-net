@@ -15,7 +15,7 @@ namespace MgmtTypeSpec;
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
 @customAzureResource
 model TrafficResource {
-  id?: string;
+  id?: Azure.Core.armResourceIdentifier;
   name?: string;
   type?: string;
 }

@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="TrafficProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TrafficProfileResource(ArmClient client, TrafficProfileData data) : this(client, new ResourceIdentifier(data.Id))
+        internal TrafficProfileResource(ArmClient client, TrafficProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

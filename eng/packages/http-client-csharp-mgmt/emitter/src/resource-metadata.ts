@@ -203,22 +203,29 @@ export function convertArmProviderSchemaToArguments(
   schema: ArmProviderSchema
 ): Record<string, any> {
   return {
-    resources: schema.resources.map((r) => ({
-      resourceModelId: r.resourceModelId,
-      resourceIdPattern: r.metadata.resourceIdPattern,
-      resourceType: r.metadata.resourceType,
-      methods: r.metadata.methods.map((m) => ({
-        methodId: m.methodId,
-        kind: m.kind,
-        operationPath: m.operationPath,
-        operationScope: m.operationScope,
-        resourceScope: m.resourceScope
-      })),
-      resourceScope: r.metadata.resourceScope,
-      parentResourceId: r.metadata.parentResourceId,
-      singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
-    })),
+    resources: schema.resources.map((r) => {
+      const resource: Record<string, any> = {
+        resourceModelId: r.resourceModelId,
+        resourceIdPattern: r.metadata.resourceIdPattern,
+        resourceType: r.metadata.resourceType,
+        methods: r.metadata.methods.map((m) => ({
+          methodId: m.methodId,
+          kind: m.kind,
+          operationPath: m.operationPath,
+          operationScope: m.operationScope,
+          resourceScope: m.resourceScope
+        })),
+        resourceScope: r.metadata.resourceScope,
+        parentResourceId: r.metadata.parentResourceId,
+        singletonResourceName: r.metadata.singletonResourceName,
+        resourceName: r.metadata.resourceName
+      };
+      // Only include isCustomResource when true to keep output clean
+      if (r.metadata.isCustomResource) {
+        resource.isCustomResource = true;
+      }
+      return resource;
+    }),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,
