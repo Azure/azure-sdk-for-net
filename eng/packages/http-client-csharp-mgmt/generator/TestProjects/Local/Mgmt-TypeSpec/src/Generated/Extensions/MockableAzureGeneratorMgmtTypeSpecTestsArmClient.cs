@@ -368,6 +368,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TestPropertyOverrideResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TestPropertyOverrideResource"/> object. </returns>
+        public virtual TestPropertyOverrideResource GetTestPropertyOverrideResource(ResourceIdentifier id)
+        {
+            TestPropertyOverrideResource.ValidateResourceId(id);
+            return new TestPropertyOverrideResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ServiceGroupSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceGroupSiteResource"/> object. </returns>
