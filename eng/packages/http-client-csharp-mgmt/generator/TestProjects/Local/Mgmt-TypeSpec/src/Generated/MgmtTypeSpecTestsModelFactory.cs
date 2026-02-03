@@ -1077,6 +1077,48 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 location);
         }
 
+        /// <summary> The TrafficProfileData. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="location"></param>
+        /// <param name="tags"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Tests.TrafficProfileData"/> instance for mocking. </returns>
+        public static TrafficProfileData TrafficProfileData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, TrafficProfileProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TrafficProfileData(
+                id,
+                name,
+                @type,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                properties);
+        }
+
+        /// <summary> The TrafficTrackedResource. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="location"></param>
+        /// <param name="tags"></param>
+        /// <returns> A new <see cref="Models.TrafficTrackedResource"/> instance for mocking. </returns>
+        public static TrafficTrackedResource TrafficTrackedResource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TrafficTrackedResource(
+                id,
+                name,
+                @type,
+                additionalBinaryDataProperties: null,
+                location,
+                tags);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

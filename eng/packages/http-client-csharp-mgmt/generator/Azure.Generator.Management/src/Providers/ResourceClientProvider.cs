@@ -249,7 +249,17 @@ namespace Azure.Generator.Management.Providers
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
             var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", ResourceData.Type);
 
-            var initializer = new ConstructorInitializer(false, [clientParameter, dataParameter.Property("Id")]);
+            // For standard ARM resources, data.Id is already ResourceIdentifier.
+            // For custom Azure resources (using @customAzureResource), data.Id is string
+            // and needs to be wrapped with new ResourceIdentifier(data.Id).
+            // See: https://github.com/Azure/azure-sdk-for-net/issues/53208
+            ValueExpression idExpression = dataParameter.Property("Id");
+            if (!InheritsFromSystemResourceData(ResourceData))
+            {
+                idExpression = New.Instance(typeof(ResourceIdentifier), idExpression);
+            }
+
+            var initializer = new ConstructorInitializer(false, [clientParameter, idExpression]);
             var signature = new ConstructorSignature(
                 Type,
                 $"Initializes a new instance of {Type:C} class.",
@@ -265,6 +275,25 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new ConstructorProvider(signature, bodyStatements, this);
+        }
+
+        /// <summary>
+        /// Checks if the model inherits from a system resource data type (ResourceData or TrackedResourceData).
+        /// Standard ARM resources inherit from InheritableSystemObjectModelProvider which maps to these system types.
+        /// Custom Azure resources using @customAzureResource do not inherit from these system types.
+        /// </summary>
+        private static bool InheritsFromSystemResourceData(ModelProvider model)
+        {
+            var baseModel = model.BaseModelProvider;
+            while (baseModel != null)
+            {
+                if (baseModel is InheritableSystemObjectModelProvider)
+                {
+                    return true;
+                }
+                baseModel = baseModel.BaseModelProvider;
+            }
+            return false;
         }
 
         private ConstructorProvider BuildResourceIdentifierConstructor()

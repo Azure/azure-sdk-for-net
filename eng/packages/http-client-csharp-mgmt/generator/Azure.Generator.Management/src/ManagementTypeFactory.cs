@@ -19,6 +19,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -75,6 +76,8 @@ namespace Azure.Generator.Management
             return base.CreateCSharpTypeCore(inputType);
         }
 
+        private const string CustomAzureResourceDecorator = "Azure.ResourceManager.Legacy.@customAzureResource";
+
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
@@ -86,7 +89,32 @@ namespace Azure.Generator.Management
             {
                 return null;
             }
+
+            // TODO: For custom Azure resources (using @customAzureResource decorator),
+            // we need to determine the appropriate base type (ResourceData or TrackedResourceData)
+            // based on the model's properties. This is tracked in issue #53208.
+            // The current implementation handles the Id property conversion in ResourceClientProvider.
+
             return base.CreateModelCore(model);
+        }
+
+        /// <summary>
+        /// Checks if a model or any of its base models has the @customAzureResource decorator.
+        /// This is used to detect custom ARM resources that don't use standard ARM templates.
+        /// See: https://github.com/Azure/azure-sdk-for-net/issues/53208
+        /// </summary>
+        internal static bool HasCustomAzureResourceInHierarchy(InputModelType model)
+        {
+            var current = model;
+            while (current != null)
+            {
+                if (current.Decorators.Any(d => d.Name == CustomAzureResourceDecorator))
+                {
+                    return true;
+                }
+                current = current.BaseModel;
+            }
+            return false;
         }
 
         /// <inheritdoc/>

@@ -368,6 +368,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TrafficProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrafficProfileResource"/> object. </returns>
+        public virtual TrafficProfileResource GetTrafficProfileResource(ResourceIdentifier id)
+        {
+            TrafficProfileResource.ValidateResourceId(id);
+            return new TrafficProfileResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TrafficEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrafficEndpointResource"/> object. </returns>
+        public virtual TrafficEndpointResource GetTrafficEndpointResource(ResourceIdentifier id)
+        {
+            TrafficEndpointResource.ValidateResourceId(id);
+            return new TrafficEndpointResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">
