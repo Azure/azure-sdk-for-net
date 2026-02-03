@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets or sets the Encryption. </summary>
         [WirePath("encryption")]
-        public ClusterPropertiesEncryption Encryption { get; set; }
+        internal ClusterPropertiesEncryption Encryption { get; set; }
 
         /// <summary> Gets or sets the HostName. </summary>
         [WirePath("properties.hostName")]
@@ -56,6 +56,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     Properties = new ClusterCreateProperties();
                 }
                 Properties.HostName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [WirePath("encryption.customerManagedKeyEncryption")]
+        public RedisCustomerManagedKeyEncryption CustomerManagedKeyEncryption
+        {
+            get
+            {
+                return Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            }
+            set
+            {
+                if (Encryption is null)
+                {
+                    Encryption = new ClusterPropertiesEncryption();
+                }
+                Encryption.CustomerManagedKeyEncryption = value;
             }
         }
     }

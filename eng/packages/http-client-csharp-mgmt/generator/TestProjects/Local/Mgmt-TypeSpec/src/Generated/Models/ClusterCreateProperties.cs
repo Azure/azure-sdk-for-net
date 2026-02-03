@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ClusterCreateProperties. </summary>
-    public partial class ClusterCreateProperties
+    internal partial class ClusterCreateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

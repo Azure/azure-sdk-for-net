@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ClusterPropertiesEncryption. </summary>
-    public partial class ClusterPropertiesEncryption : ClusterCreateProperties
+    internal partial class ClusterPropertiesEncryption : ClusterCreateProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClusterPropertiesEncryption"/>. </summary>
         public ClusterPropertiesEncryption()

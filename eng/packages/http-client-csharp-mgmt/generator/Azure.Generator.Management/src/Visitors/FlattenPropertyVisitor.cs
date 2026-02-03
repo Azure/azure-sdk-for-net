@@ -387,7 +387,9 @@ namespace Azure.Generator.Management.Visitors
                 else
                 {
                     // only safe flatten single public property
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                    // Count only properties defined on this model, not inherited properties
+                    var ownProperties = modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
+                    var publicPropertyCount = ownProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -491,8 +493,9 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            // Get the single public property from the model's own properties (not inherited)
+            var ownProperties = modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
+            var innerProperty = ownProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property
