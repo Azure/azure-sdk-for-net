@@ -21,6 +21,7 @@ import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
+import "./sitemanager.tsp";
 import "./trafficmanager.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;

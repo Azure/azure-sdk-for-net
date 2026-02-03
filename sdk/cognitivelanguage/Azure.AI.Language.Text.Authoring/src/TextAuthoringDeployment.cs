@@ -6,7 +6,7 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text.Authoring
 {
@@ -20,6 +20,8 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("DeleteDeploymentFromResources", typeof(WaitUntil), typeof(string), typeof(string), typeof(TextAuthoringDeleteDeploymentDetails), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteDeploymentAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteDeployment", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteDeploymentAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteDeployment", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDeploymentAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetDeployment", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetDeploymentDeleteFromResourcesStatusAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
@@ -60,9 +62,7 @@ namespace Azure.AI.Language.Text.Authoring
         internal TextAuthoringDeployment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName, string deploymentName)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _keyCredential = keyCredential;
-            _tokenCredential = tokenCredential;
+            Pipeline = pipeline;
             _endpoint = endpoint;
             _apiVersion = apiVersion;
             _projectName = projectName;
@@ -76,9 +76,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetDeploymentAsync(context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringProjectDeployment)response, response);
         }
 
         /// <summary> Gets the details of a deployment. </summary>
@@ -88,9 +88,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetDeployment(context);
-            return Response.FromValue(TextAuthoringProjectDeployment.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringProjectDeployment)response, response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
@@ -103,9 +103,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetDeploymentDeleteFromResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentDeleteFromResourcesState)response, response);
         }
 
         /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
@@ -118,9 +118,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetDeploymentDeleteFromResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentDeleteFromResourcesState)response, response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
@@ -133,9 +133,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetDeploymentStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringDeploymentState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentState)response, response);
         }
 
         /// <summary> Gets the status of an existing deployment job. </summary>
@@ -148,9 +148,9 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetDeploymentStatus(jobId, context);
-            return Response.FromValue(TextAuthoringDeploymentState.FromResponse(response), response);
+            return Response.FromValue((TextAuthoringDeploymentState)response, response);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
@@ -166,8 +166,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await DeployProjectAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -184,8 +184,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeployProject(waitUntil, content, context);
         }
 
@@ -202,8 +202,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return await DeleteDeploymentFromResourcesAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -220,8 +220,8 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
             Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = details;
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeleteDeploymentFromResources(waitUntil, content, context);
         }
 
@@ -235,7 +235,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return await DeleteDeploymentAsync(waitUntil, context).ConfigureAwait(false);
         }
 
@@ -249,7 +249,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             return DeleteDeployment(waitUntil, context);
         }
 
@@ -281,7 +281,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentRequest(_projectName, _deploymentName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -318,7 +318,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentRequest(_projectName, _deploymentName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -357,7 +357,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(_projectName, _deploymentName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -396,7 +396,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(_projectName, _deploymentName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -435,7 +435,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentStatusRequest(_projectName, _deploymentName, jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -474,7 +474,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateGetDeploymentStatusRequest(_projectName, _deploymentName, jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -515,7 +515,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(_projectName, _deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(_projectName, _deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -595,7 +595,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(_projectName, _deploymentName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -635,7 +635,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(_projectName, _deploymentName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -669,7 +669,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(_projectName, _deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -703,7 +703,7 @@ namespace Azure.AI.Language.Text.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteDeploymentRequest(_projectName, _deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(Pipeline, message, ClientDiagnostics, "TextAuthoringDeployment.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
