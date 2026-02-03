@@ -351,6 +351,31 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestConversationNoInput()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "TestPromptAgentFromDotnet",
+            options: new(agentDefinition));
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
+            {
+                Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
+            });
+
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId:conversation.Id);
+
+        ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
+        Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
+    [RecordedTest]
     public async Task ErrorsGiveGoodExceptionMessages()
     {
         AIProjectClient projectClient = GetTestProjectClient();
