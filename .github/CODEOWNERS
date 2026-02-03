@@ -621,15 +621,6 @@
 # ServiceLabel: %Migrate
 # ServiceOwners:                                                   @shijojoy
 
-# PRLabel: %Mixed Reality
-/sdk/mixedreality/                                                 @crtreasu @rgarcia
-
-# PRLabel: %Mixed Reality
-/sdk/objectanchors/                                                @crtreasu @rgarcia
-
-# ServiceLabel: %Mixed Reality
-# ServiceOwners:                                                   @crtreasu @rgarcia
-
 # ServiceLabel: %Mobile Engagement
 # ServiceOwners:                                                   @kpiteira
 
