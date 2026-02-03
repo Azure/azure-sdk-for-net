@@ -323,7 +323,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | maps | Azure.ResourceManager.Maps |
 | marketplace | Azure.ResourceManager.Marketplace |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
-| mediaservices | Azure.ResourceManager.Media |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | mixedreality | Azure.ResourceManager.MixedReality |
