@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (2026-02-02)
+## 1.6.0-beta.2 (2026-02-03)
 
 ### Features Added
 
