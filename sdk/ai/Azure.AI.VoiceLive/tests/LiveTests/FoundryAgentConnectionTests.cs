@@ -314,7 +314,8 @@ namespace Azure.AI.VoiceLive.Tests
                 agentName: agentName,
                 projectName: TestConstants.TestFoundryProjectName)
             {
-                AgentContextType = FoundryAgentContextType.NoContext
+                AgentContextType = FoundryAgentContextType.NoContext,
+                Description = TestConstants.TestFoundryAgentDescription
             };
 
             var options = new VoiceLiveSessionOptions
@@ -352,7 +353,8 @@ namespace Azure.AI.VoiceLive.Tests
                 agentName: agentName,
                 projectName: TestConstants.TestFoundryProjectName)
             {
-                AgentContextType = FoundryAgentContextType.AgentContext
+                AgentContextType = FoundryAgentContextType.AgentContext,
+                Description = TestConstants.TestFoundryAgentDescription
             };
 
             var options = new VoiceLiveSessionOptions
