@@ -28,7 +28,7 @@ This skill runs a single Azure SDK sample to verify functionality.
 cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 
 # Run specific sample
-.github\skills\sdk-run-sample\scripts\run-sample.ps1 -SampleName "Sample01_AnalyzeBinary"
+.github\skills\sdkinternal-dotnet-sample-run\scripts\run-sample.ps1 -SampleName "AnalyzeBinaryAsync"
 ```
 
 ### Bash (Linux/macOS)
@@ -46,13 +46,13 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 ```powershell
 # Requires Azure credentials
-.github\skills\sdk-run-sample\scripts\run-sample.ps1 -SampleName "Sample01_AnalyzeBinary" -Live
+.github\skills\sdkinternal-dotnet-sample-run\scripts\run-sample.ps1 -SampleName "AnalyzeBinaryAsync" -Live
 ```
 
 ### List Available Samples
 
 ```powershell
-.github\skills\sdk-run-sample\scripts\run-sample.ps1 -List
+.github\skills\sdkinternal-dotnet-sample-run\scripts\run-sample.ps1 -List
 ```
 
 ## Important Notes
