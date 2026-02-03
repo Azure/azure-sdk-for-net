@@ -32,14 +32,7 @@ namespace OpenAI
         ///   `server_url` or `connector_id` must be provided. Learn more about service
         ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
-        ///   - Dropbox: `connector_dropbox`
-        ///   - Gmail: `connector_gmail`
-        ///   - Google Calendar: `connector_googlecalendar`
-        ///   - Google Drive: `connector_googledrive`
-        ///   - Microsoft Teams: `connector_microsoftteams`
-        ///   - Outlook Calendar: `connector_outlookcalendar`
-        ///   - Outlook Email: `connector_outlookemail`
-        ///   - SharePoint: `connector_sharepoint`
+        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -78,14 +71,7 @@ namespace OpenAI
         ///   `server_url` or `connector_id` must be provided. Learn more about service
         ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
-        ///   - Dropbox: `connector_dropbox`
-        ///   - Gmail: `connector_gmail`
-        ///   - Google Calendar: `connector_googlecalendar`
-        ///   - Google Drive: `connector_googledrive`
-        ///   - Microsoft Teams: `connector_microsoftteams`
-        ///   - Outlook Calendar: `connector_outlookcalendar`
-        ///   - Outlook Email: `connector_outlookemail`
-        ///   - SharePoint: `connector_sharepoint`
+        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
         public MCPToolConnectorId? ConnectorId { get; set; }
 
