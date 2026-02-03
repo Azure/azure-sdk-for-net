@@ -368,6 +368,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TargetResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
+        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
+        {
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">
