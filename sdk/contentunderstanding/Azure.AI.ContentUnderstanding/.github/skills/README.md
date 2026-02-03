@@ -97,7 +97,7 @@ Skills should define **what to do**, not **how to do it**:
 
 When creating new skills:
 
-1. **Follow naming convention**: `sdk-{action}[-{qualifier}]`
+1. **Follow naming convention**: `sdkinternal-{language}-{action}[-{qualifier}]`
 2. **Include SKILL.md**: With YAML front matter (name, description)
 3. **Keep description under 1024 chars**: Copilot uses it for relevance matching
 4. **Single responsibility**: One skill does one thing

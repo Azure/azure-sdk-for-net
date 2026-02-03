@@ -30,7 +30,7 @@ This workflow skill combines recording tests and pushing to the Azure SDK Assets
 cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 
 # Run complete workflow
-.github\skills\sdk-workflow-record-push\scripts\run-workflow.ps1
+.github\skills\sdkinternal-dotnet-workflow-record-push\scripts\run-workflow.ps1
 ```
 
 ### Bash (Linux/macOS)
@@ -39,7 +39,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Run complete workflow
-.github/skills/sdk-workflow-record-push/scripts/run-workflow.sh
+.github/skills/sdkinternal-dotnet-workflow-record-push/scripts/run-workflow.sh
 ```
 
 ## Options
@@ -48,29 +48,29 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 ```powershell
 # Skip compilation (if already built)
-.github\skills\sdk-workflow-record-push\scripts\run-workflow.ps1 -SkipCompile
+.github\skills\sdkinternal-dotnet-workflow-record-push\scripts\run-workflow.ps1 -SkipCompile
 
 # Skip playback verification
-.github\skills\sdk-workflow-record-push\scripts\run-workflow.ps1 -SkipVerify
+.github\skills\sdkinternal-dotnet-workflow-record-push\scripts\run-workflow.ps1 -SkipVerify
 ```
 
 ### Filter Tests
 
 ```powershell
 # Only record specific tests
-.github\skills\sdk-workflow-record-push\scripts\run-workflow.ps1 -Filter "Sample01"
+.github\skills\sdkinternal-dotnet-workflow-record-push\scripts\run-workflow.ps1 -Filter "Sample01"
 ```
 
 ## Workflow Steps Detail
 
 ### Step 1: Setup Environment
 ```powershell
-. .github\skills\sdk-setup-env\scripts\load-env.ps1
+. .github\skills\sdkinternal-dotnet-env-setup\scripts\load-env.ps1
 ```
 
 ### Step 2: Compile SDK
 ```powershell
-.github\skills\sdk-compile\scripts\compile.ps1
+.github\skills\sdkinternal-dotnet-sdk-compile\scripts\compile.ps1
 ```
 
 ### Step 3: Record Tests

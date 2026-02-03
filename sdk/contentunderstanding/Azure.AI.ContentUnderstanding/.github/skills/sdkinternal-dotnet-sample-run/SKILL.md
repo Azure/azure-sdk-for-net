@@ -37,7 +37,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Run specific sample
-.github/skills/sdk-run-sample/scripts/run-sample.sh -s "Sample01_AnalyzeBinary"
+.github/skills/sdkinternal-dotnet-sample-run/scripts/run-sample.sh -s "AnalyzeBinaryAsync"
 ```
 
 ## Options

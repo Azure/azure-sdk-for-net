@@ -27,7 +27,7 @@ if (-not (Test-Path $EnvFile)) {
 if (-not (Test-Path $EnvFile)) {
     Write-ColorOutput "Error: .env file not found" "Red"
     Write-ColorOutput "Create a .env file with your Azure credentials"
-    exit 1
+    return 1
 }
 
 Write-ColorOutput "Loading environment from: $EnvFile" "Yellow"

@@ -47,7 +47,7 @@ echo -e "\033[90mStarted at: $(date)\033[0m"
 
 # Step 1: Setup Environment
 write_step 1 "Setup Environment"
-ENV_SCRIPT="$SKILLS_DIR/sdk-setup-env/scripts/load-env.sh"
+ENV_SCRIPT="$SKILLS_DIR/sdkinternal-dotnet-env-setup/scripts/load-env.sh"
 if [[ -f "$ENV_SCRIPT" ]]; then
     source "$ENV_SCRIPT"
 else
@@ -57,7 +57,7 @@ fi
 # Step 2: Compile SDK
 if [[ "$SKIP_COMPILE" != true ]]; then
     write_step 2 "Compile SDK"
-    COMPILE_SCRIPT="$SKILLS_DIR/sdk-compile/scripts/compile.sh"
+    COMPILE_SCRIPT="$SKILLS_DIR/sdkinternal-dotnet-sdk-compile/scripts/compile.sh"
     if [[ -f "$COMPILE_SCRIPT" ]]; then
         bash "$COMPILE_SCRIPT"
         if [[ $? -ne 0 ]]; then

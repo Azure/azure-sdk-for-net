@@ -17,7 +17,7 @@ This skill performs comprehensive quality review of Content Understanding SDK sa
 ## Prerequisites
 
 1. **Clean working directory**: The skill requires an empty git change list before starting
-2. **SDK compiled**: Samples require the SDK to be compiled (`sdk-compile`)
+2. **SDK compiled**: Samples require the SDK to be compiled (`sdkinternal-dotnet-sdk-compile`)
 3. **Test recordings**: For PLAYBACK mode, recordings must be available
 
 ## Workflow
@@ -177,18 +177,18 @@ For each sample, verify:
 
 ## Related Skills
 
-- **`sdk-compile`**: Compiles SDK. Required before running samples.
-- **`sdk-run-sample`**: Runs a single sample for testing.
-- **`sdk-run-all-samples`**: Runs all samples for comprehensive testing.
-- **`sdk-test-playback`**: Runs samples with recorded responses.
+- **`sdkinternal-dotnet-sdk-compile`**: Compiles SDK. Required before running samples.
+- **`sdkinternal-dotnet-sample-run`**: Runs a single sample for testing.
+- **`sdkinternal-dotnet-sample-run-all-samples`**: Runs all samples for comprehensive testing.
+- **`sdkinternal-dotnet-test-playback`**: Runs samples with recorded responses.
 
 ## Example Workflow
 
 ```
 1. Check git status → Clean
 2. Enumerate samples → Found 12 samples
-3. Run sdk-compile → Build successful
-4. Run sdk-run-all-samples → All passed
+3. Run sdkinternal-dotnet-sdk-compile → Build successful
+4. Run sdkinternal-dotnet-sample-run-all-samples → All passed
 5. Review Sample01_AnalyzeBinary.cs
    - Code review
    - Output verification

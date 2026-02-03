@@ -44,10 +44,18 @@ fi
 
 # List available samples
 if [[ "$LIST" == true ]]; then
-    echo -e "\033[33mAvailable samples:\033[0m"
+    echo -e "\033[33mAvailable sample methods:\033[0m"
+    echo -e "\033[90m(Use these names with -s)\033[0m"
+    
+    # List test methods from sample files
     for sample in "$SAMPLES_DIR"/Sample*.cs; do
         if [[ -f "$sample" ]]; then
-            echo -e "\033[36m  $(basename "$sample" .cs)\033[0m"
+            filename=$(basename "$sample" .cs)
+            # Extract method names with [RecordedTest] or [Test] attribute
+            # Use perl for better multiline regex support
+            perl -0777 -ne 'while (/\[(RecordedTest|Test)\][^\{]*public\s+async\s+Task\s+(\w+)\s*\(/g) { print "$2\n"; }' "$sample" | while read -r method; do
+                echo -e "\033[36m  $method\033[0m \033[90m($filename)\033[0m"
+            done
         fi
     done
     exit 0
@@ -56,8 +64,8 @@ fi
 # Validate sample name
 if [[ -z "$SAMPLE_NAME" ]]; then
     echo -e "\033[31mError: Sample name is required\033[0m"
-    echo -e "\033[33mUsage: ./run-sample.sh -s \"Sample01_AnalyzeBinary\"\033[0m"
-    echo -e "\033[33mUse --list to see available samples\033[0m"
+    echo -e "\033[33mUsage: ./run-sample.sh -s \"AnalyzeBinaryAsync\"\033[0m"
+    echo -e "\033[33mUse --list to see available sample methods\033[0m"
     exit 1
 fi
 

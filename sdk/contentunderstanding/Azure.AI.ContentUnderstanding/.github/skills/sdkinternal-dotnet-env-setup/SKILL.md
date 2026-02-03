@@ -37,7 +37,7 @@ cd sdk\contentunderstanding\Azure.AI.ContentUnderstanding
 cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 
 # Load environment variables
-source .github/skills/sdk-setup-env/scripts/load-env.sh
+source .github/skills/sdkinternal-dotnet-env-setup/scripts/load-env.sh
 ```
 
 ## Required Environment Variables
