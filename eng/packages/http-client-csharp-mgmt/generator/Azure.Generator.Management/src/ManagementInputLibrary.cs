@@ -173,12 +173,12 @@ namespace Azure.Generator.Management
             return result;
         }
 
-        private static readonly HashSet<string> StandardResourceProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> StandardResourceDataProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             "id", "name", "type", "systemData"
         };
 
-        private static readonly HashSet<string> StandardTrackedResourceProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> StandardTrackedResourceDataProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             "id", "name", "type", "systemData", "location", "tags"
         };
@@ -197,7 +197,7 @@ namespace Azure.Generator.Management
                     while (current != null)
                     {
                         // Check if this model only has standard ARM properties
-                        if (HasOnlyStandardProperties(current))
+                        if (TryGetMatchingBaseType(current, out _))
                         {
                             result.Add(current.CrossLanguageDefinitionId);
                         }
@@ -209,8 +209,17 @@ namespace Azure.Generator.Management
             return result;
         }
 
-        private static bool HasOnlyStandardProperties(InputModelType model)
+        /// <summary>
+        /// Determines if a model's properties match standard ARM resource properties
+        /// and returns the appropriate base type.
+        /// </summary>
+        /// <param name="model">The model to check</param>
+        /// <param name="baseType">The matching base type (ResourceData or TrackedResourceData)</param>
+        /// <returns>True if the model only has standard ARM properties</returns>
+        private static bool TryGetMatchingBaseType(InputModelType model, [MaybeNullWhen(false)] out Type baseType)
         {
+            baseType = null;
+
             // Get all properties including inherited ones
             var allProperties = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var current = model;
@@ -223,8 +232,21 @@ namespace Azure.Generator.Management
                 current = current.BaseModel;
             }
 
-            // Check if all properties are standard ARM properties
-            return allProperties.All(p => StandardTrackedResourceProperties.Contains(p));
+            // Check if properties match ResourceData (id, name, type, systemData)
+            if (allProperties.All(p => StandardResourceDataProperties.Contains(p)))
+            {
+                baseType = typeof(Azure.ResourceManager.Models.ResourceData);
+                return true;
+            }
+
+            // Check if properties match TrackedResourceData (id, name, type, systemData, location, tags)
+            if (allProperties.All(p => StandardTrackedResourceDataProperties.Contains(p)))
+            {
+                baseType = typeof(Azure.ResourceManager.Models.TrackedResourceData);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -240,14 +262,7 @@ namespace Azure.Generator.Management
                 return false;
             }
 
-            // Check if the model has location property, which indicates TrackedResourceData
-            bool hasLocation = HasPropertyInHierarchy(model, "location");
-
-            replacementType = hasLocation
-                ? typeof(Azure.ResourceManager.Models.TrackedResourceData)
-                : typeof(Azure.ResourceManager.Models.ResourceData);
-
-            return true;
+            return TryGetMatchingBaseType(model, out replacementType);
         }
 
         /// <summary>
@@ -272,28 +287,8 @@ namespace Azure.Generator.Management
                 }
             }
 
-            // Check if the model (or its base) has location property, which indicates TrackedResourceData
-            bool hasLocation = HasPropertyInHierarchy(model, "location");
-
-            baseType = hasLocation
-                ? typeof(Azure.ResourceManager.Models.TrackedResourceData)
-                : typeof(Azure.ResourceManager.Models.ResourceData);
-
-            return true;
-        }
-
-        private static bool HasPropertyInHierarchy(InputModelType model, string propertyName)
-        {
-            var current = model;
-            while (current != null)
-            {
-                if (current.Properties.Any(p => string.Equals(p.Name, propertyName, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return true;
-                }
-                current = current.BaseModel;
-            }
-            return false;
+            // Determine base type by checking properties of the model and its hierarchy
+            return TryGetMatchingBaseType(model, out baseType);
         }
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);

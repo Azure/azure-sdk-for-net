@@ -45,7 +45,6 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import { isVariableSegment, isPrefix } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
-import { customAzureResource } from "./sdk-context-options.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
