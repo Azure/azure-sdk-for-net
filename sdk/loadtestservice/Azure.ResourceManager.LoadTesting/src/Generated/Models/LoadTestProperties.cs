@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> LoadTest resource properties. </summary>
-    public partial class LoadTestProperties
+    internal partial class LoadTestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="LoadTestProperties"/>. </summary>
         /// <param name="description"> Description of the resource. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="dataPlaneURI"> Resource data plane URI. </param>
+        /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestProperties(string description, LoadTestingProvisioningState? provisioningState, string dataPlaneURI, LoadTestingCmkEncryptionProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestProperties(string description, LoadTestingProvisioningState? provisioningState, string dataPlaneUri, LoadTestingCmkEncryptionProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
-            DataPlaneURI = dataPlaneURI;
+            DataPlaneUri = dataPlaneUri;
             Encryption = encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource data plane URI. </summary>
-        public string DataPlaneURI { get; }
+        public string DataPlaneUri { get; }
 
         /// <summary> CMK Encryption property. </summary>
         public LoadTestingCmkEncryptionProperties Encryption { get; set; }

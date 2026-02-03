@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Quota bucket resource properties. </summary>
-    public partial class QuotaResourceProperties
+    internal partial class QuotaResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaResourceProperties"/>. </summary>
-        internal QuotaResourceProperties()
+        public QuotaResourceProperties()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> Current quota limit of the quota bucket. </summary>
-        public int? Limit { get; }
+        public int? Limit { get; set; }
 
         /// <summary> Current quota usage of the quota bucket. </summary>
-        public int? Usage { get; }
+        public int? Usage { get; set; }
 
         /// <summary> Resource provisioning state. </summary>
         public LoadTestingProvisioningState? ProvisioningState { get; }

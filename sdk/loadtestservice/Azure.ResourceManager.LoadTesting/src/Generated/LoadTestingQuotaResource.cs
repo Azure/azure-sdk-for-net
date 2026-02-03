@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a LoadTestingQuota along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadTestingQuotaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLoadTestingQuotas method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllLoadTestingQuota method.
     /// </summary>
     public partial class LoadTestingQuotaResource : ArmResource
     {

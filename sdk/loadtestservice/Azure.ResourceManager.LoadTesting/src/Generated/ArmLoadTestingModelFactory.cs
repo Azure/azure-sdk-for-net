@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -19,55 +18,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmLoadTestingModelFactory
     {
-
-        /// <summary> LoadTest details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
-        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LoadTestProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LoadTestingResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                identity);
-        }
-
-        /// <summary> LoadTest resource properties. </summary>
-        /// <param name="description"> Description of the resource. </param>
-        /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="dataPlaneURI"> Resource data plane URI. </param>
-        /// <param name="encryption"> CMK Encryption property. </param>
-        /// <returns> A new <see cref="Models.LoadTestProperties"/> instance for mocking. </returns>
-        public static LoadTestProperties LoadTestProperties(string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneURI = default, LoadTestingCmkEncryptionProperties encryption = default)
-        {
-            return new LoadTestProperties(description, provisioningState, dataPlaneURI, encryption, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The type used for update operations of the LoadTestResource. </summary>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.LoadTestingResourcePatch"/> instance for mocking. </returns>
-        public static LoadTestingResourcePatch LoadTestingResourcePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, LoadTestResourceUpdateProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LoadTestingResourcePatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
 
         /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
         /// <param name="category"> The type of service that Azure Load Testing connects to. </param>
@@ -100,61 +50,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingEndpointDetail(port, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Quota bucket details object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingQuotaData"/> instance for mocking. </returns>
-        public static LoadTestingQuotaData LoadTestingQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaResourceProperties properties = default)
-        {
-            return new LoadTestingQuotaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Quota bucket resource properties. </summary>
         /// <param name="limit"> Current quota limit of the quota bucket. </param>
         /// <param name="usage"> Current quota usage of the quota bucket. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <returns> A new <see cref="Models.QuotaResourceProperties"/> instance for mocking. </returns>
-        public static QuotaResourceProperties QuotaResourceProperties(int? limit = default, int? usage = default, LoadTestingProvisioningState? provisioningState = default)
-        {
-            return new QuotaResourceProperties(limit, usage, provisioningState, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="isAvailable"> True/False indicating whether the quota request be granted based on availability. </param>
-        /// <param name="availabilityStatus"> Message indicating additional details to add to quota support request. </param>
-        /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResult"/> instance for mocking. </returns>
-        public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(string id = default, string @type = default, SystemData systemData = default, string name = default, bool? isAvailable = default, string availabilityStatus = default)
-        {
-            return new LoadTestingQuotaAvailabilityResult(
-                id,
-                @type,
-                systemData,
-                name,
-                isAvailable is null && availabilityStatus is null ? default : new CheckQuotaAvailabilityResponseProperties(isAvailable, availabilityStatus, null),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="limit"></param>
-        /// <param name="usage"></param>
-        /// <param name="provisioningState"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadTestingQuotaData LoadTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? limit, int? usage, LoadTestingProvisioningState? provisioningState)
+        /// <returns> A new <see cref="LoadTesting.LoadTestingQuotaData"/> instance for mocking. </returns>
+        public static LoadTestingQuotaData LoadTestingQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? limit = default, int? usage = default, LoadTestingProvisioningState? provisioningState = default)
         {
             return new LoadTestingQuotaData(
                 id,
@@ -162,39 +66,45 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                limit is null && usage is null && provisioningState is null ? default : new QuotaResourceProperties(limit, usage, provisioningState, null));
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="currentUsage"></param>
-        /// <param name="currentQuota"></param>
-        /// <param name="newQuota"></param>
-        /// <param name="dimensions"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadTestingQuotaBucketContent LoadTestingQuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? currentUsage, int? currentQuota, int? newQuota, LoadTestingQuotaBucketDimensions dimensions)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="currentUsage"> Current quota usage of the quota bucket. </param>
+        /// <param name="currentQuota"> Current quota limit of the quota bucket. </param>
+        /// <param name="newQuota"> New quota limit of the quota bucket. </param>
+        /// <param name="dimensions"> Dimensions for new quota request. </param>
+        /// <returns> A new <see cref="Models.LoadTestingQuotaBucketContent"/> instance for mocking. </returns>
+        public static LoadTestingQuotaBucketContent LoadTestingQuotaBucketContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? currentUsage = default, int? currentQuota = default, int? newQuota = default, LoadTestingQuotaBucketDimensions dimensions = default)
         {
-            return new LoadTestingQuotaBucketContent(default, additionalBinaryDataProperties: null);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                currentUsage is null && currentQuota is null && newQuota is null && dimensions is null ? default : new QuotaBucketRequestProperties(currentUsage, currentQuota, newQuota, dimensions, null));
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="isAvailable"></param>
-        /// <param name="availabilityStatus"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAvailable, string availabilityStatus)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isAvailable"> True/False indicating whether the quota request be granted based on availability. </param>
+        /// <param name="availabilityStatus"> Message indicating additional details to add to quota support request. </param>
+        /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResult"/> instance for mocking. </returns>
+        public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isAvailable = default, string availabilityStatus = default)
         {
             return new LoadTestingQuotaAvailabilityResult(
                 id,
-                default,
-                systemData,
                 name,
-                default,
-                additionalBinaryDataProperties: null);
+                resourceType,
+                additionalBinaryDataProperties: null,
+                systemData,
+                isAvailable is null && availabilityStatus is null ? default : new CheckQuotaAvailabilityResponseProperties(isAvailable, availabilityStatus, null));
         }
 
         /// <param name="id"></param>
@@ -208,8 +118,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="provisioningState"></param>
         /// <param name="dataPlaneUri"></param>
         /// <param name="encryption"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, LoadTestingProvisioningState? provisioningState, string dataPlaneUri, LoadTestingCmkEncryptionProperties encryption)
+        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneUri = default, LoadTestingCmkEncryptionProperties encryption = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, LoadTestingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LoadTestingResource>> UpdateAsync(WaitUntil waitUntil, LoadTestingResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -228,10 +228,16 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMgmtClientRestClient.CreateUpdateLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestMgmtClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
+                    new LoadTestingResourceOperationSource(Client),
+                    _loadTestMgmtClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -267,7 +273,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, LoadTestingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LoadTestingResource> Update(WaitUntil waitUntil, LoadTestingResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -281,10 +287,16 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMgmtClientRestClient.CreateUpdateLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestMgmtClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
+                    new LoadTestingResourceOperationSource(Client),
+                    _loadTestMgmtClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -494,7 +506,7 @@ namespace Azure.ResourceManager.LoadTesting
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<LoadTestingResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -542,7 +554,7 @@ namespace Azure.ResourceManager.LoadTesting
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<LoadTestingResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -585,7 +597,7 @@ namespace Azure.ResourceManager.LoadTesting
                     LoadTestingResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     LoadTestingResourcePatch patch = new LoadTestingResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<LoadTestingResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -628,7 +640,7 @@ namespace Azure.ResourceManager.LoadTesting
                     LoadTestingResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     LoadTestingResourcePatch patch = new LoadTestingResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<LoadTestingResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -674,7 +686,7 @@ namespace Azure.ResourceManager.LoadTesting
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<LoadTestingResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -720,7 +732,7 @@ namespace Azure.ResourceManager.LoadTesting
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<LoadTestingResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

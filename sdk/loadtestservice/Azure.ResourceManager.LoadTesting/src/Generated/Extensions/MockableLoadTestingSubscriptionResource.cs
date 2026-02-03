@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
 
         private LoadTestMgmtClient LoadTestMgmtClientRestClient => _loadTestMgmtClientRestClient ??= new LoadTestMgmtClient(LoadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, "2024-12-01-preview");
 
-        /// <summary> Gets a collection of LoadTestingQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of LoadTestingQuotas and their operations over a LoadTestingQuotaResource. </returns>
-        public virtual LoadTestingQuotaCollection GetLoadTestingQuotas(AzureLocation location)
+        /// <returns> An object representing collection of LoadTestingQuota and their operations over a LoadTestingQuotaResource. </returns>
+        public virtual LoadTestingQuotaCollection GetAllLoadTestingQuota(AzureLocation location)
         {
             return GetCachedClient(client => new LoadTestingQuotaCollection(client, Id, location));
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            return await GetLoadTestingQuotas(location).GetAsync(quotaBucketName, cancellationToken).ConfigureAwait(false);
+            return await GetAllLoadTestingQuota(location).GetAsync(quotaBucketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         {
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
-            return GetLoadTestingQuotas(location).Get(quotaBucketName, cancellationToken);
+            return GetAllLoadTestingQuota(location).Get(quotaBucketName, cancellationToken);
         }
 
         /// <summary>

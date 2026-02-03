@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="subscriptionId"> Subscription Id dimension for new quota request of the quota bucket. </param>
         /// <param name="location"> Location dimension for new quota request of the quota bucket. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaBucketDimensions(string subscriptionId, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestingQuotaBucketDimensions(string subscriptionId, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             Location = location;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public string SubscriptionId { get; set; }
 
         /// <summary> Location dimension for new quota request of the quota bucket. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

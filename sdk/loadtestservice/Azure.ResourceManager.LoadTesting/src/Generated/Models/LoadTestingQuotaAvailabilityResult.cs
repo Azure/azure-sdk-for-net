@@ -7,59 +7,52 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Check quota availability response object. </summary>
-    public partial class LoadTestingQuotaAvailabilityResult
+    public partial class LoadTestingQuotaAvailabilityResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
-        internal LoadTestingQuotaAvailabilityResult()
+        public LoadTestingQuotaAvailabilityResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaAvailabilityResult"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="properties"> Check quota availability response properties. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaAvailabilityResult(string id, string @type, SystemData systemData, string name, CheckQuotaAvailabilityResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Check quota availability response properties. </param>
+        internal LoadTestingQuotaAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SystemData systemData, CheckQuotaAvailabilityResponseProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Type = @type;
-            SystemData = systemData;
-            Name = name;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string Id { get; }
-
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        public string Type { get; }
-
-        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
-
-        /// <summary> The name of the resource. </summary>
-        public string Name { get; }
-
         /// <summary> Check quota availability response properties. </summary>
-        internal CheckQuotaAvailabilityResponseProperties Properties { get; }
+        internal CheckQuotaAvailabilityResponseProperties Properties { get; set; }
 
         /// <summary> True/False indicating whether the quota request be granted based on availability. </summary>
         public bool? IsAvailable
         {
             get
             {
-                return Properties.IsAvailable;
+                return Properties is null ? default : Properties.IsAvailable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CheckQuotaAvailabilityResponseProperties();
+                }
+                Properties.IsAvailable = value.Value;
             }
         }
 
@@ -68,7 +61,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             get
             {
-                return Properties.AvailabilityStatus;
+                return Properties is null ? default : Properties.AvailabilityStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CheckQuotaAvailabilityResponseProperties();
+                }
+                Properties.AvailabilityStatus = value;
             }
         }
     }

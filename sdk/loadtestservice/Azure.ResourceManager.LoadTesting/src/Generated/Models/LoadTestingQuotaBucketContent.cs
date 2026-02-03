@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Request object of new quota for a quota bucket. </summary>
-    public partial class LoadTestingQuotaBucketContent
+    public partial class LoadTestingQuotaBucketContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,12 +24,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
-        /// <param name="properties"> Request object of new quota for a quota bucket. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaBucketContent(QuotaBucketRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> Request object of new quota for a quota bucket. </param>
+        internal LoadTestingQuotaBucketContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuotaBucketRequestProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Request object of new quota for a quota bucket. </summary>

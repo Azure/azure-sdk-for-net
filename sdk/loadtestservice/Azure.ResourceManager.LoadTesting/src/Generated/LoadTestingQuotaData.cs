@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaData"/>. </summary>
-        internal LoadTestingQuotaData()
+        public LoadTestingQuotaData()
         {
         }
 
@@ -38,6 +38,49 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public QuotaResourceProperties Properties { get; }
+        internal QuotaResourceProperties Properties { get; set; }
+
+        /// <summary> Current quota limit of the quota bucket. </summary>
+        public int? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaResourceProperties();
+                }
+                Properties.Limit = value.Value;
+            }
+        }
+
+        /// <summary> Current quota usage of the quota bucket. </summary>
+        public int? Usage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Usage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaResourceProperties();
+                }
+                Properties.Usage = value.Value;
+            }
+        }
+
+        /// <summary> Resource provisioning state. </summary>
+        public LoadTestingProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

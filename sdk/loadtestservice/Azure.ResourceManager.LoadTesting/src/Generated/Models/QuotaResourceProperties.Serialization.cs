@@ -14,7 +14,7 @@ using Azure.ResourceManager.LoadTesting;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Quota bucket resource properties. </summary>
-    public partial class QuotaResourceProperties : IJsonModel<QuotaResourceProperties>
+    internal partial class QuotaResourceProperties : IJsonModel<QuotaResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

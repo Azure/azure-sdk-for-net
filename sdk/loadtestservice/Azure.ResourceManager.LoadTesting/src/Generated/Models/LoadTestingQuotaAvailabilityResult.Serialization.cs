@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Check quota availability response object. </summary>
-    public partial class LoadTestingQuotaAvailabilityResult : IJsonModel<LoadTestingQuotaAvailabilityResult>
+    public partial class LoadTestingQuotaAvailabilityResult : ResourceData, IJsonModel<LoadTestingQuotaAvailabilityResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -30,62 +31,33 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingQuotaAvailabilityResult IJsonModel<LoadTestingQuotaAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LoadTestingQuotaAvailabilityResult IJsonModel<LoadTestingQuotaAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LoadTestingQuotaAvailabilityResult)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingQuotaAvailabilityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -104,22 +76,35 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            string id = default;
-            string @type = default;
-            SystemData systemData = default;
+            ResourceIdentifier id = default;
             string name = default;
-            CheckQuotaAvailabilityResponseProperties properties = default;
+            ResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SystemData systemData = default;
+            CheckQuotaAvailabilityResponseProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -129,11 +114,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerLoadTestingContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -152,11 +132,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             return new LoadTestingQuotaAvailabilityResult(
                 id,
-                @type,
-                systemData,
                 name,
-                properties,
-                additionalBinaryDataProperties);
+                resourceType,
+                additionalBinaryDataProperties,
+                systemData,
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -177,11 +157,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingQuotaAvailabilityResult IPersistableModel<LoadTestingQuotaAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LoadTestingQuotaAvailabilityResult IPersistableModel<LoadTestingQuotaAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (LoadTestingQuotaAvailabilityResult)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingQuotaAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

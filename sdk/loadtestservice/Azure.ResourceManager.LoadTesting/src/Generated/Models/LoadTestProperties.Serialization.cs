@@ -14,7 +14,7 @@ using Azure.ResourceManager.LoadTesting;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> LoadTest resource properties. </summary>
-    public partial class LoadTestProperties : IJsonModel<LoadTestProperties>
+    internal partial class LoadTestProperties : IJsonModel<LoadTestProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPlaneURI))
+            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
             {
                 writer.WritePropertyName("dataPlaneURI"u8);
-                writer.WriteStringValue(DataPlaneURI);
+                writer.WriteStringValue(DataPlaneUri);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             string description = default;
             LoadTestingProvisioningState? provisioningState = default;
-            string dataPlaneURI = default;
+            string dataPlaneUri = default;
             LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
                 if (prop.NameEquals("dataPlaneURI"u8))
                 {
-                    dataPlaneURI = prop.Value.GetString();
+                    dataPlaneUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LoadTestProperties(description, provisioningState, dataPlaneURI, encryption, additionalBinaryDataProperties);
+            return new LoadTestProperties(description, provisioningState, dataPlaneUri, encryption, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

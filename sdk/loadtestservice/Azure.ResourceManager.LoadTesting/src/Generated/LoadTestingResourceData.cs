@@ -43,9 +43,61 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public LoadTestProperties Properties { get; set; }
+        internal LoadTestProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Description of the resource. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadTestProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Resource provisioning state. </summary>
+        public LoadTestingProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource data plane URI. </summary>
+        public string DataPlaneUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataPlaneUri;
+            }
+        }
+
+        /// <summary> CMK Encryption property. </summary>
+        public LoadTestingCmkEncryptionProperties Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadTestProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
     }
 }

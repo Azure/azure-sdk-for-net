@@ -129,21 +129,21 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Gets a collection of LoadTestingQuotas in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetLoadTestingQuotas(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetAllLoadTestingQuota(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of LoadTestingQuotas and their operations over a LoadTestingQuotaResource. </returns>
-        public static LoadTestingQuotaCollection GetLoadTestingQuotas(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of LoadTestingQuota and their operations over a LoadTestingQuotaResource. </returns>
+        public static LoadTestingQuotaCollection GetAllLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingQuotas(location);
+            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetAllLoadTestingQuota(location);
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CheckQuotaAvailabilityResponseProperties"/>. </summary>
-        internal CheckQuotaAvailabilityResponseProperties()
+        public CheckQuotaAvailabilityResponseProperties()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> True/False indicating whether the quota request be granted based on availability. </summary>
-        public bool? IsAvailable { get; }
+        public bool? IsAvailable { get; set; }
 
         /// <summary> Message indicating additional details to add to quota support request. </summary>
-        public string AvailabilityStatus { get; }
+        public string AvailabilityStatus { get; set; }
     }
 }

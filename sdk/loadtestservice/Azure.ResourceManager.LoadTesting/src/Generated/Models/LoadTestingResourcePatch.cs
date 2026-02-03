@@ -40,9 +40,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
         /// <summary> The resource-specific properties for this resource. </summary>
         public LoadTestResourceUpdateProperties Properties { get; set; }
     }
