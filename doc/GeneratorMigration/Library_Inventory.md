@@ -15,13 +15,13 @@
 
 - Total libraries: 402
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 147
-  - New Emitter (TypeSpec): 79
+  - Autorest/Swagger: 145
+  - New Emitter (TypeSpec): 81
   - Old TypeSpec: 1
 - Data Plane (DPG): 144
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 29
-  - Old TypeSpec: 9
+  - New Emitter (TypeSpec): 30
+  - Old TypeSpec: 8
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 48
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 29 / 38 (76.3%)
+**Migration Status**: 30 / 38 (78.9%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -51,7 +51,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity | ✅ |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |
-| contentsafety | Azure.AI.ContentSafety |  |
+| contentsafety | Azure.AI.ContentSafety | ✅ |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |
 | devcenter | Azure.Developer.DevCenter | ✅ |
 | documentintelligence | Azure.AI.DocumentIntelligence | ✅ |
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 79 / 80 (98.8%)
+**Migration Status**: 81 / 82 (98.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -206,6 +206,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
+| powerbidedicated | Azure.ResourceManager.PowerBIDedicated | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
 | quantum | Azure.ResourceManager.Quantum | ✅ |
 | qumulo | Azure.ResourceManager.Qumulo | ✅ |
@@ -234,7 +235,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 147
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 145
 
 | Service | Library |
 | ------- | ------- |
@@ -342,7 +343,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | peering | Azure.ResourceManager.Peering |
 | policyinsights | Azure.ResourceManager.PolicyInsights |
 | postgresql | Azure.ResourceManager.PostgreSql |
-| powerbidedicated | Azure.ResourceManager.PowerBIDedicated |
 | privatedns | Azure.ResourceManager.PrivateDns |
 | providerhub | Azure.ResourceManager.ProviderHub |
 | purview | Azure.ResourceManager.Purview |
