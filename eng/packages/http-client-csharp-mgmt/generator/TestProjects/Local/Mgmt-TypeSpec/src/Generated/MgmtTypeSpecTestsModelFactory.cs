@@ -1077,28 +1077,32 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 location);
         }
 
-        /// <summary> Test resource to reproduce property override issue. </summary>
+        /// <summary> Site at ServiceGroup scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.TestPropertyOverrideData"/> instance for mocking. </returns>
-        public static TestPropertyOverrideData TestPropertyOverrideData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, TestPropertyOverrideProperties properties = default)
+        /// <returns> A new <see cref="Tests.ServiceGroupSiteData"/> instance for mocking. </returns>
+        public static ServiceGroupSiteData ServiceGroupSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupSiteProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TestPropertyOverrideData(
+            return new ServiceGroupSiteData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
-                location,
                 properties);
+        }
+
+        /// <summary> Site properties. </summary>
+        /// <param name="displayName"> displayName of Site resource. </param>
+        /// <param name="description"> Description of Site resource. </param>
+        /// <param name="provisioningState"> Provisioning state of last operation. </param>
+        /// <returns> A new <see cref="Models.ServiceGroupSiteProperties"/> instance for mocking. </returns>
+        public static ServiceGroupSiteProperties ServiceGroupSiteProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new ServiceGroupSiteProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>
