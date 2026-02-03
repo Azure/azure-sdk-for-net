@@ -15190,31 +15190,6 @@
           {
             "$id": "1141",
             "kind": "property",
-            "name": "location",
-            "serializedName": "location",
-            "type": {
-              "$id": "1142",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "optional": true,
-            "readOnly": false,
-            "discriminator": false,
-            "flatten": false,
-            "decorators": [],
-            "crossLanguageDefinitionId": "MgmtTypeSpec.TrafficTrackedResource.location",
-            "serializationOptions": {
-              "json": {
-                "name": "location"
-              }
-            },
-            "isHttpMetadata": false
-          },
-          {
-            "$id": "1143",
-            "kind": "property",
             "name": "tags",
             "serializedName": "tags",
             "type": {
@@ -15229,6 +15204,31 @@
             "serializationOptions": {
               "json": {
                 "name": "tags"
+              }
+            },
+            "isHttpMetadata": false
+          },
+          {
+            "$id": "1142",
+            "kind": "property",
+            "name": "location",
+            "serializedName": "location",
+            "type": {
+              "$id": "1143",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtTypeSpec.TrafficTrackedResource.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
               }
             },
             "isHttpMetadata": false

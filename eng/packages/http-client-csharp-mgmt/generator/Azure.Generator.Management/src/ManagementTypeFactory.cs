@@ -79,6 +79,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
+            // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
@@ -88,6 +89,20 @@ namespace Azure.Generator.Management
                 return null;
             }
 
+            var library = ManagementClientGenerator.Instance.InputLibrary;
+
+            // Check for custom Azure resource intermediate models that should be replaced
+            // by ResourceData/TrackedResourceData (e.g., TrafficProxyResource, TrafficTrackedResource)
+            // These become InheritableSystemObjectModelProvider so child models inherit correctly
+            if (library.TryGetCustomResourceReplacementType(model, out var replacementType))
+            {
+                return new InheritableSystemObjectModelProvider(replacementType, model);
+            }
+
+            // For all other models (including resource data models like TrafficEndpoint),
+            // let the base implementation create a regular ModelProvider.
+            // The InheritableSystemObjectModelVisitor will then update them to inherit
+            // from ResourceData/TrackedResourceData if their base is an InheritableSystemObjectModelProvider.
             return base.CreateModelCore(model);
         }
 

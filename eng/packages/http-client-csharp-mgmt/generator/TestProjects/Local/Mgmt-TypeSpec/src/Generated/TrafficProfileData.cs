@@ -9,12 +9,16 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The TrafficProfileData. </summary>
-    public partial class TrafficProfileData : TrafficTrackedResource
+    public partial class TrafficProfileData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TrafficProfileData"/>. </summary>
         public TrafficProfileData()
         {
@@ -25,11 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"></param>
         /// <param name="tags"></param>
+        /// <param name="location"></param>
         /// <param name="properties"></param>
-        internal TrafficProfileData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, TrafficProfileProperties properties) : base(id, name, @type, additionalBinaryDataProperties, location, tags)
+        internal TrafficProfileData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, TrafficProfileProperties properties) : base(id, name, @type, null, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

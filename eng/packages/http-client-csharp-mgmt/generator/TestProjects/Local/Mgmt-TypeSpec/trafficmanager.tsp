@@ -34,10 +34,10 @@ model TrafficProxyResource extends TrafficResource {}
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
 model TrafficTrackedResource extends TrafficResource {
-  @visibility(Lifecycle.Create, Lifecycle.Read)
-  location?: string;
   @visibility(Lifecycle.Create, Lifecycle.Read, Lifecycle.Update)
   tags?: Record<string>;
+  @visibility(Lifecycle.Create, Lifecycle.Read)
+  location?: string;
 }
 
 // Traffic Profile - a tracked resource (parent)

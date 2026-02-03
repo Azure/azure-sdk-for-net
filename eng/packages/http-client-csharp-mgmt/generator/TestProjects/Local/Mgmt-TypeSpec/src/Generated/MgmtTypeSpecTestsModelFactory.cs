@@ -1081,11 +1081,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        /// <param name="location"></param>
         /// <param name="tags"></param>
+        /// <param name="location"></param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Tests.TrafficProfileData"/> instance for mocking. </returns>
-        public static TrafficProfileData TrafficProfileData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, TrafficProfileProperties properties = default)
+        public static TrafficProfileData TrafficProfileData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string location = default, TrafficProfileProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1094,29 +1094,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 @type,
                 additionalBinaryDataProperties: null,
-                location,
                 tags,
-                properties);
-        }
-
-        /// <summary> The TrafficTrackedResource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <param name="location"></param>
-        /// <param name="tags"></param>
-        /// <returns> A new <see cref="Models.TrafficTrackedResource"/> instance for mocking. </returns>
-        public static TrafficTrackedResource TrafficTrackedResource(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TrafficTrackedResource(
-                id,
-                name,
-                @type,
-                additionalBinaryDataProperties: null,
                 location,
-                tags);
+                properties);
         }
 
         /// <summary> The ZooRecommendation. </summary>

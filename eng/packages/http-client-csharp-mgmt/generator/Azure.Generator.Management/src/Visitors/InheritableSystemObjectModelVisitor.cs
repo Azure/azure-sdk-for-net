@@ -89,7 +89,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var rawDataField = CreateRawDataField(model);
         UpdateSerialization(model);
 
-        UpdateFullConstructor(model, rawDataField);
+        UpdateFullConstructor(model, rawDataField, baseSystemType);
 
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = model.Properties.Where(prop => !baseSystemPropertyNames.Contains(prop.Name));
@@ -117,13 +117,32 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
     }
 
-    private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField)
+    private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField, InheritableSystemObjectModelProvider baseSystemType)
     {
         var signature = model.FullConstructor.Signature;
         var initializer = signature.Initializer;
         if (initializer is not null)
         {
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToArray());
+            var args = initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToList();
+
+            // For custom resources inheriting from ResourceData/TrackedResourceData,
+            // we need to add null for systemData if the model doesn't have it.
+            // ResourceData constructor: (ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
+            // TrackedResourceData constructor: (ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location)
+            bool hasSystemData = signature.Parameters.Any(p => string.Equals(p.Name, "systemData", StringComparison.OrdinalIgnoreCase));
+            bool isResourceDataBase = baseSystemType._type == typeof(Azure.ResourceManager.Models.ResourceData) ||
+                                      baseSystemType._type == typeof(Azure.ResourceManager.Models.TrackedResourceData);
+
+            if (isResourceDataBase && !hasSystemData)
+            {
+                // Insert null for systemData at position 3 (after id, name, resourceType)
+                if (args.Count >= 3)
+                {
+                    args.Insert(3, Snippet.Null);
+                }
+            }
+
+            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, [.. args]);
             var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
             model.FullConstructor.Update(signature: updatedSignature);
         }

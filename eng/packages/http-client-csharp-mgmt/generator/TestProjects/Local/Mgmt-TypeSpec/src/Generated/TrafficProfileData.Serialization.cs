@@ -12,11 +12,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The TrafficProfileData. </summary>
-    public partial class TrafficProfileData : TrafficTrackedResource, IJsonModel<TrafficProfileData>
+    public partial class TrafficProfileData : TrackedResourceData, IJsonModel<TrafficProfileData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -50,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrafficResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -73,8 +74,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string location = default;
             IDictionary<string, string> tags = default;
+            string location = default;
             TrafficProfileProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -95,11 +96,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 if (prop.NameEquals("type"u8))
                 {
                     @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -123,6 +119,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -142,8 +143,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 name,
                 @type,
                 additionalBinaryDataProperties,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties);
         }
 
@@ -151,7 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         BinaryData IPersistableModel<TrafficProfileData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -169,7 +170,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TrafficResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TrafficProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
