@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            Models.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status = default;
+            AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    status = new Models.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
+                    status = new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
