@@ -72,6 +72,7 @@ The models shown below (`gpt-4.1`, `gpt-4.1-mini`, and `text-embedding-3-large`)
 The `UpdateDefaultsAsync()` method will take the mapping in the dictionary and update your Microsoft Foundry resource to provide the default deployment for each specific model required by analyzers. Currently, Content Understanding uses OpenAI GPT models:
 
 ```C# Snippet:ContentUnderstandingUpdateDefaults
+// Step 2: Configure model deployments
 // Map your deployed models to the models required by prebuilt analyzers
 var modelDeployments = new Dictionary<string, string>
 {
@@ -80,10 +81,12 @@ var modelDeployments = new Dictionary<string, string>
     ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>"
 };
 
-var response = await client.UpdateDefaultsAsync(modelDeployments);
-ContentUnderstandingDefaults updatedDefaults = response.Value;
+Console.WriteLine("\nUpdating default configuration...");
+var updateResponse = await client.UpdateDefaultsAsync(modelDeployments);
+ContentUnderstandingDefaults updatedDefaults = updateResponse.Value;
 
-Console.WriteLine("Model deployments configured successfully!");
+Console.WriteLine("Defaults updated successfully.");
+Console.WriteLine("Updated model deployments:");
 foreach (var kvp in updatedDefaults.ModelDeployments)
 {
     Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
@@ -95,21 +98,12 @@ foreach (var kvp in updatedDefaults.ModelDeployments)
 You can retrieve the current default model deployment configuration:
 
 ```C# Snippet:ContentUnderstandingGetDefaults
+// Step 1: Get current defaults to see what's configured
+Console.WriteLine("Getting current default configuration...");
 var getResponse = await client.GetDefaultsAsync();
-ContentUnderstandingDefaults defaults = getResponse.Value;
-
-Console.WriteLine("Current model deployment mappings:");
-if (defaults.ModelDeployments != null && defaults.ModelDeployments.Count > 0)
-{
-    foreach (var kvp in defaults.ModelDeployments)
-    {
-        Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
-    }
-}
-else
-{
-    Console.WriteLine("  No model deployments configured yet.");
-}
+ContentUnderstandingDefaults currentDefaults = getResponse.Value;
+Console.WriteLine("Current defaults retrieved successfully.");
+Console.WriteLine($"Current model deployments: {currentDefaults.ModelDeployments?.Count ?? 0} configured");
 ```
 
 ## Troubleshooting
