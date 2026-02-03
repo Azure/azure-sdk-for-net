@@ -1,4 +1,5 @@
-﻿using Azure.AI.AgentServer.AgentFramework.Extensions;
+﻿using Azure.AI.AgentServer.AgentFramework;
+using Azure.AI.AgentServer.AgentFramework.Extensions;
 using Azure.AI.OpenAI;
 using Azure.Identity;
 using Microsoft.Agents.AI;
@@ -59,14 +60,18 @@ public class Program
         var spanishAgent = GetTranslationAgent("Spanish", chatClient);
         var englishAgent = GetTranslationAgent("English", chatClient);
 
-        // Build the workflow by adding executors and connecting them
-        WorkflowBuilder builder = new(frenchAgent);
-        builder.AddEdge(frenchAgent, spanishAgent);
-        builder.AddEdge(spanishAgent, englishAgent);
-        var agent = builder.Build().AsAgent();
+        // Create a workflow agent factory and create adapter with it.
+        WorkflowAgentFactory factory = () =>
+        {
+            WorkflowBuilder builder = new(frenchAgent);
+            builder.AddEdge(frenchAgent, spanishAgent);
+            builder.AddEdge(spanishAgent, englishAgent);
+            var agent = builder.Build().AsAgent();
+            return Task.FromResult(agent);
+        };
 
         // Run container agent adapter
-        await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+        await factory.RunWorkflowAgentAsync(telemetrySourceName: "Agents");
     }
 
     /// <summary>

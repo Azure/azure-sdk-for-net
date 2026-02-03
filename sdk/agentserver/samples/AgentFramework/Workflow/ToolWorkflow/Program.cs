@@ -5,6 +5,7 @@ using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
 using Azure.AI.AgentServer.Core.Tools.Models;
+using Azure.AI.AgentServer.AgentFramework;
 
 namespace ToolWorkflow;
 
@@ -70,11 +71,17 @@ public class Program
 
 
         // Build the workflow by adding executors and connecting them
-        WorkflowBuilder builder = new(testAgent);
-        var agent = builder.Build().AsAgent();
+        WorkflowAgentFactory factory = () =>
+        {
+            // Build the workflow and turn it into an agent
+            AIAgent agent = new WorkflowBuilder(testAgent)
+                .Build()
+                .AsAgent();
+            return Task.FromResult(agent);
+        };
 
         // Run container agent adapter
-        await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+        await factory.RunWorkflowAgentAsync(telemetrySourceName: "Agents");
 
         // await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
         // tools: new List<ToolDefinition>
