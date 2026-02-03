@@ -252,7 +252,6 @@ namespace Azure.Generator.Management.Providers
             // For standard ARM resources, data.Id is already ResourceIdentifier.
             // For custom Azure resources (using @customAzureResource), data.Id is string
             // and needs to be wrapped with new ResourceIdentifier(data.Id).
-            // See: https://github.com/Azure/azure-sdk-for-net/issues/53208
             ValueExpression idExpression = dataParameter.Property("Id");
             if (!InheritsFromSystemResourceData(ResourceData))
             {

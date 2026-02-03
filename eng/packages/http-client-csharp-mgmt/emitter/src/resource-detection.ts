@@ -850,7 +850,6 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
  * base Resource model with this decorator.
  *
  * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
- * @see https://github.com/Azure/azure-sdk-for-net/issues/53208
  *
  * @param model - The model to check for @customAzureResource decorator
  * @returns true if the model or any ancestor has @customAzureResource decorator
@@ -880,11 +879,6 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
  * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
  *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
  *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
- *    See: https://github.com/Azure/azure-sdk-for-net/issues/53208
- *
- * TODO: The generator needs to be updated to determine the appropriate C# base type
- * (ResourceData or TrackedResourceData) for custom resources based on the model's properties
- * (presence of location and tags indicates TrackedResourceData).
  *
  * @param codeModel - The code model containing all models
  * @returns Array of models that represent ARM resources

@@ -76,9 +76,6 @@ const armResourceInternalRegex =
 // Custom Azure resource decorator for legacy/converted specs.
 // Used by services like TrafficManager that were converted from Swagger to TypeSpec
 // and don't use standard ARM resource templates (TrackedResource<T>, ProxyResource<T>).
-// TODO: The generator needs to determine the appropriate C# base type (ResourceData or
-// TrackedResourceData) based on the model's properties (presence of location/tags).
-// See: https://github.com/Azure/azure-sdk-for-net/issues/53208
 // Docs: https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
 export const customAzureResource =
   "Azure.ResourceManager.Legacy.@customAzureResource";
