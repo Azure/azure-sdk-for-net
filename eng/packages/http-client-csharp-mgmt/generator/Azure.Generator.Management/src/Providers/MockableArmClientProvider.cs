@@ -6,10 +6,8 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,28 +99,6 @@ namespace Azure.Generator.Management.Providers
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
-
-            // Get the extra path parameters from the collection that need to be extracted from the scope
-            var collection = resource.ResourceCollection!;
-            var pathParameters = collection.PathParameters;
-
-            // Build expressions to extract path parameter values from the scope ResourceIdentifier
-            // For extension resources, the scope is the parent resource identifier, and we need to extract
-            // values like servicegroupName from scope.Name()
-            var scopeAsResourceId = scopeParameter.As<ResourceIdentifier>();
-            var pathParameterExpressions = new List<ValueExpression>();
-            for (int i = 0; i < pathParameters.Count; i++)
-            {
-                // For each path parameter, we need to navigate up the parent hierarchy
-                // The first parameter corresponds to the innermost (scope.Name()), subsequent ones to parents
-                var idExpression = scopeAsResourceId;
-                for (int j = 0; j < i; j++)
-                {
-                    idExpression = idExpression.Parent();
-                }
-                pathParameterExpressions.Add(idExpression.Name());
-            }
-
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
                 $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
@@ -135,12 +111,12 @@ namespace Azure.Generator.Management.Providers
                 Return(New.Instance(resource.ResourceCollection!.Type,
                     [
                         This.As<ArmResource>().Client(),
-                        scopeParameter,
-                        .. pathParameterExpressions
+                        scopeParameter
                     ]))
             };
             result.Add(new MethodProvider(signature, body, this));
 
+            var collection = resource.ResourceCollection!;
             var getMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
             var getAsyncMethod = collection.Methods.FirstOrDefault(m => m.Signature.Name == "GetAsync");
             if (getMethod is not null)
