@@ -29,6 +29,7 @@ namespace Azure.AI.VoiceLive.Tests
     {
         private string _testAgentId = string.Empty;
         private const string AgentNamePrefix = "FoundryAgentExecutionTests";
+        private string _testAgentName = string.Empty;
 
         public FoundryAgentExecutionTests() : base(true)
         {
@@ -41,49 +42,30 @@ namespace Azure.AI.VoiceLive.Tests
         [OneTimeSetUp]
         public async Task SetupTestAgent()
         {
-            // Try to find an existing agent with our test class name
+            // V2 FOUNDRY AGENTS: Voice Live only works with V2 (new Foundry) agents
             var agentName = $"{AgentNamePrefix}-{DateTime.UtcNow:yyyyMMdd}";
+            _testAgentName = agentName;
+            _testAgentId = string.Empty; // Use environment or test constants
 
-            try
-            {
-                _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                if (string.IsNullOrEmpty(_testAgentId))
-                {
-                    // Agent doesn't exist, create it
-                    TestContext.WriteLine($"Creating test agent: {agentName}");
-                    await TestAgent.CreateAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    // Find the newly created agent to get its ID
-                    _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    if (!string.IsNullOrEmpty(_testAgentId))
-                    {
-                        TestContext.WriteLine($"Created test agent with ID: {_testAgentId}");
-                    }
-                }
-                else
-                {
-                    TestContext.WriteLine($"Found existing test agent with ID: {_testAgentId}");
-                }
-            }
-            catch (Exception ex)
-            {
-                TestContext.WriteLine($"Warning: Could not setup test agent: {ex.Message}");
-                TestContext.WriteLine("Tests will use configured constants instead.");
-            }
+            await Task.CompletedTask;
         }
 
         private VoiceLiveFoundryAgentDefinition CreateTestFoundryAgent()
         {
-            // Use the dynamically created/found agent ID if available, otherwise fall back to constants
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
+            // Use environment variables if available, fallback to test constants
+            var agentName = !string.IsNullOrEmpty(TestEnvironment.FoundryAgentName)
+                ? TestEnvironment.FoundryAgentName
+                : (!string.IsNullOrEmpty(_testAgentName)
+                    ? _testAgentName
+                    : TestConstants.TestFoundryAgentName);
+
+            var projectName = !string.IsNullOrEmpty(TestEnvironment.FoundryProjectName)
+                ? TestEnvironment.FoundryProjectName
+                : TestConstants.TestFoundryProjectName;
 
             return new VoiceLiveFoundryAgentDefinition(
                 agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
+                projectName: projectName)
             {
                 AgentVersion = TestConstants.TestFoundryAgentVersion,
                 Description = TestConstants.TestFoundryAgentDescription,
