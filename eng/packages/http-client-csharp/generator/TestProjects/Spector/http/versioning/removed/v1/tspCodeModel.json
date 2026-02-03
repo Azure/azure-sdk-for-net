@@ -304,6 +304,11 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
       "properties": [
         {
           "$id": "32",
@@ -402,6 +407,11 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV2",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV2"
+        }
+      },
       "properties": [
         {
           "$id": "40",
@@ -539,6 +549,11 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV3",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV3"
+        }
+      },
       "properties": [
         {
           "$id": "52",

@@ -158,6 +158,11 @@
       "usage": "Input,Output,Json",
       "doc": "Output model with visibility properties.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "VisibilityModel"
+        }
+      },
       "properties": [
         {
           "$id": "20",
@@ -314,6 +319,11 @@
       "usage": "Input,Output,Json",
       "doc": "RoundTrip model with readonly optional properties.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ReadOnlyModel"
+        }
+      },
       "properties": [
         {
           "$id": "33",

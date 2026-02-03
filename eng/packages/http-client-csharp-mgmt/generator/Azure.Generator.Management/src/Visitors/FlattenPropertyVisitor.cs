@@ -478,7 +478,8 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.IsNullable || internalPropertyWireInfo.IsNullable,
                 innerPropertyWireInfo.IsDiscriminator,
                 innerPropertyWireInfo.SerializedName,
-                innerPropertyWireInfo.IsHttpMetadata);
+                innerPropertyWireInfo.IsHttpMetadata,
+                innerPropertyWireInfo.IsApiVersion);
         }
 
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)

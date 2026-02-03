@@ -30,6 +30,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of User items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "4",
@@ -50,6 +55,11 @@
               "usage": "Output,Json",
               "doc": "User model",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "User"
+                }
+              },
               "properties": [
                 {
                   "$id": "7",

@@ -79,6 +79,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "9",
@@ -115,6 +120,11 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondClientResult"
+        }
+      },
       "properties": [
         {
           "$id": "12",

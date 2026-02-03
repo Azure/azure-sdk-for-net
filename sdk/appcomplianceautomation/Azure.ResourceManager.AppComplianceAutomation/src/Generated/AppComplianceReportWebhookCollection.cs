@@ -8,68 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppComplianceReportWebhookResource"/> and their operations.
     /// Each <see cref="AppComplianceReportWebhookResource"/> in the collection will belong to the same instance of <see cref="AppComplianceReportResource"/>.
-    /// To get an <see cref="AppComplianceReportWebhookCollection"/> instance call the GetAppComplianceReportWebhooks method from an instance of <see cref="AppComplianceReportResource"/>.
+    /// To get a <see cref="AppComplianceReportWebhookCollection"/> instance call the GetAppComplianceReportWebhooks method from an instance of <see cref="AppComplianceReportResource"/>.
     /// </summary>
     public partial class AppComplianceReportWebhookCollection : ArmCollection, IEnumerable<AppComplianceReportWebhookResource>, IAsyncEnumerable<AppComplianceReportWebhookResource>
     {
-        private readonly ClientDiagnostics _appComplianceReportWebhookWebhookClientDiagnostics;
-        private readonly WebhookRestOperations _appComplianceReportWebhookWebhookRestClient;
+        private readonly ClientDiagnostics _webhookClientDiagnostics;
+        private readonly Webhook _webhookRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportWebhookCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppComplianceReportWebhookCollection for mocking. </summary>
         protected AppComplianceReportWebhookCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportWebhookCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportWebhookCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppComplianceReportWebhookCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appComplianceReportWebhookWebhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportWebhookResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AppComplianceReportWebhookResource.ResourceType, out string appComplianceReportWebhookWebhookApiVersion);
-            _appComplianceReportWebhookWebhookRestClient = new WebhookRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportWebhookWebhookApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AppComplianceReportWebhookResource.ResourceType, out string appComplianceReportWebhookApiVersion);
+            _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportWebhookResource.ResourceType.Namespace, Diagnostics);
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, appComplianceReportWebhookApiVersion ?? "2024-06-27");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppComplianceReportResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a new AppComplianceAutomation webhook or update an exiting AppComplianceAutomation webhook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +75,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AppComplianceReportWebhookResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string webhookName, AppComplianceReportWebhookData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportWebhookWebhookRestClient.CreateOrUpdateAsync(Id.Name, webhookName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _appComplianceReportWebhookWebhookRestClient.CreateCreateOrUpdateRequestUri(Id.Name, webhookName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource>(Response.FromValue(new AppComplianceReportWebhookResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource>(Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +113,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Create a new AppComplianceAutomation webhook or update an exiting AppComplianceAutomation webhook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +130,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="data"> Parameters for the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AppComplianceReportWebhookResource> CreateOrUpdate(WaitUntil waitUntil, string webhookName, AppComplianceReportWebhookData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appComplianceReportWebhookWebhookRestClient.CreateOrUpdate(Id.Name, webhookName, data, cancellationToken);
-                var uri = _appComplianceReportWebhookWebhookRestClient.CreateCreateOrUpdateRequestUri(Id.Name, webhookName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource>(Response.FromValue(new AppComplianceReportWebhookResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportWebhookResource>(Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +168,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation webhook and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AppComplianceReportWebhookResource>> GetAsync(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Get");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportWebhookWebhookRestClient.GetAsync(Id.Name, webhookName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +217,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation webhook and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AppComplianceReportWebhookResource> Get(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Get");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Get");
             scope.Start();
             try
             {
-                var response = _appComplianceReportWebhookWebhookRestClient.Get(Id.Name, webhookName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,102 +266,140 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation webhook list.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppComplianceReportWebhookResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppComplianceReportWebhookResource> GetAllAsync(AppComplianceReportWebhookCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppComplianceReportWebhookResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppComplianceReportWebhookResource> GetAllAsync(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AppComplianceReportWebhookCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportWebhookWebhookRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportWebhookWebhookRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportWebhookResource(Client, AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(e)), _appComplianceReportWebhookWebhookClientDiagnostics, Pipeline, "AppComplianceReportWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllAsyncCollectionResultOfT(
+                _webhookRestClient,
+                Id.Name,
+                skipToken,
+                top,
+                @select,
+                filter,
+                @orderby,
+                offerGuid,
+                reportCreatorTenantId,
+                context), data => new AppComplianceReportWebhookResource(Client, data));
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation webhook list.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppComplianceReportWebhookResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppComplianceReportWebhookResource> GetAll(AppComplianceReportWebhookCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppComplianceReportWebhookResource> GetAll(string skipToken = default, int? top = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
         {
-            options ??= new AppComplianceReportWebhookCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportWebhookWebhookRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportWebhookWebhookRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportWebhookResource(Client, AppComplianceReportWebhookData.DeserializeAppComplianceReportWebhookData(e)), _appComplianceReportWebhookWebhookClientDiagnostics, Pipeline, "AppComplianceReportWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppComplianceReportWebhookData, AppComplianceReportWebhookResource>(new WebhookGetAllCollectionResultOfT(
+                _webhookRestClient,
+                Id.Name,
+                skipToken,
+                top,
+                @select,
+                filter,
+                @orderby,
+                offerGuid,
+                reportCreatorTenantId,
+                context), data => new AppComplianceReportWebhookResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Exists");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportWebhookWebhookRestClient.GetAsync(Id.Name, webhookName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppComplianceReportWebhookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportWebhookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -357,36 +413,50 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Exists");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appComplianceReportWebhookWebhookRestClient.Get(Id.Name, webhookName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppComplianceReportWebhookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportWebhookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -400,38 +470,54 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AppComplianceReportWebhookResource>> GetIfExistsAsync(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.GetIfExists");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appComplianceReportWebhookWebhookRestClient.GetAsync(Id.Name, webhookName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppComplianceReportWebhookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportWebhookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppComplianceReportWebhookResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,38 +531,54 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/webhooks/{webhookName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Webhook_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-27</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppComplianceReportWebhookResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> Webhook Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AppComplianceReportWebhookResource> GetIfExists(string webhookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
-            using var scope = _appComplianceReportWebhookWebhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.GetIfExists");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AppComplianceReportWebhookCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appComplianceReportWebhookWebhookRestClient.Get(Id.Name, webhookName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppComplianceReportWebhookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppComplianceReportWebhookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppComplianceReportWebhookResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppComplianceReportWebhookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -488,17 +590,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<AppComplianceReportWebhookResource> IEnumerable<AppComplianceReportWebhookResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AppComplianceReportWebhookResource> IAsyncEnumerable<AppComplianceReportWebhookResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
