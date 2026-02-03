@@ -347,6 +347,15 @@ namespace Azure.Generator.Management.Visitors
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
+
+        /// <summary>
+        /// Gets the properties defined directly on the model (not inherited from base classes).
+        /// </summary>
+        private static IEnumerable<PropertyProvider> GetOwnProperties(ModelProvider modelProvider)
+        {
+            return modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
+        }
+
         private void FlattenModel(ModelProvider model)
         {
             if (_visitedModelTypes.Contains(model.Type))
@@ -388,7 +397,7 @@ namespace Azure.Generator.Management.Visitors
                 {
                     // only safe flatten single public property
                     // Count only properties defined on this model, not inherited properties
-                    var ownProperties = modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
+                    var ownProperties = GetOwnProperties(modelProvider);
                     var publicPropertyCount = ownProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     if (publicPropertyCount != 1)
                     {
@@ -494,7 +503,7 @@ namespace Azure.Generator.Management.Visitors
         {
             bool isFlattened;
             // Get the single public property from the model's own properties (not inherited)
-            var ownProperties = modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
+            var ownProperties = GetOwnProperties(modelProvider);
             var innerProperty = ownProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             isFlattened = true;
 
