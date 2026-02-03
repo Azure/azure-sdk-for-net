@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> ContentSafety client options. </summary>
-    [CodeGenModel("AzureAIContentSafetyClientOptions")]
+    [CodeGenType("AzureAIContentSafetyClientOptions")]
     public partial class ContentSafetyClientOptions
     {
     }
