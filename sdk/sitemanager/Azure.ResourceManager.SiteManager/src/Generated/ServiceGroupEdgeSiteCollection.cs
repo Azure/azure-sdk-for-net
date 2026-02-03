@@ -8,21 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceGroupEdgeSiteResource"/> and their operations.
-    /// Each <see cref="ServiceGroupEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="ServiceGroupEdgeSiteCollection"/> instance call the GetServiceGroupEdgeSites method from an instance of <see cref="TenantResource"/>.
+    /// Each <see cref="ServiceGroupEdgeSiteResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ServiceGroupEdgeSiteCollection"/> instance call the GetServiceGroupEdgeSites method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ServiceGroupEdgeSiteCollection : ArmCollection, IEnumerable<ServiceGroupEdgeSiteResource>, IAsyncEnumerable<ServiceGroupEdgeSiteResource>
     {
@@ -46,17 +44,6 @@ namespace Azure.ResourceManager.SiteManager
             _servicegroupName = servicegroupName;
             _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ServiceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
             _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != TenantResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
-            }
         }
 
         /// <summary>

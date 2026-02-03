@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.SiteManager;
@@ -51,6 +55,42 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         {
             ServiceGroupEdgeSiteResource.ValidateResourceId(id);
             return new ServiceGroupEdgeSiteResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ServiceGroupEdgeSiteCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ServiceGroupEdgeSiteResource"/> objects. </returns>
+        public virtual ServiceGroupEdgeSiteCollection GetServiceGroupEdgeSites(ResourceIdentifier scope)
+        {
+            return new ServiceGroupEdgeSiteCollection(Client, scope);
+        }
+
+        /// <summary> Get Site at SG scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGroupEdgeSiteResource> GetServiceGroupEdgeSite(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return GetServiceGroupEdgeSites(scope).Get(siteName, cancellationToken);
+        }
+
+        /// <summary> Get Site at SG scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGroupEdgeSiteResource>> GetServiceGroupEdgeSiteAsync(ResourceIdentifier scope, string siteName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+
+            return await GetServiceGroupEdgeSites(scope).GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
     }
 }
