@@ -58,6 +58,9 @@ model FooProperties {
 
   /** Test case for multi-layer safe flatten */
   computeFleetVmProfile?: ComputeFleetVmProfile;
+
+  /** Test case for nested inheritance flattening */
+  redisClusterTest?: RedisClusterTest;
 }
 
 model WritableSubResourceProp {
@@ -95,6 +98,27 @@ model CapacityReservationProfile {
 
 model ComputeFleetVmProfile {
   capacityReservation?: CapacityReservationProfile;
+}
+
+// Test case for nested inheritance flattening issue (RedisEnterprise scenario)
+// Scenario: ClusterPropertiesEncryption extends a base but has only 1 property of its own
+// Expected: customerManagedKeyEncryption should be flattened even though EncryptionSettings has a base class
+model ClusterCreateProperties {
+  hostName?: string;
+}
+
+model ClusterPropertiesEncryption extends ClusterCreateProperties {
+  customerManagedKeyEncryption?: RedisCustomerManagedKeyEncryption;
+}
+
+model RedisCustomerManagedKeyEncryption {
+  keyIdentity?: string;
+  keyUri?: url;
+}
+
+model RedisClusterTest {
+  properties?: ClusterCreateProperties;
+  encryption?: ClusterPropertiesEncryption;
 }
 
 @armResourceOperations

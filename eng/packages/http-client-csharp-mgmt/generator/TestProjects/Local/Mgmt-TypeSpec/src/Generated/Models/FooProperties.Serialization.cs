@@ -116,6 +116,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("computeFleetVmProfile"u8);
                 writer.WriteObjectValue(ComputeFleetVmProfile, options);
             }
+            if (Optional.IsDefined(RedisClusterTest))
+            {
+                writer.WritePropertyName("redisClusterTest"u8);
+                writer.WriteObjectValue(RedisClusterTest, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -171,6 +176,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ETag? eTag = default;
             WritableSubResource writableSubResourceProp = default;
             ComputeFleetVmProfile computeFleetVmProfile = default;
+            RedisClusterTest redisClusterTest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -296,6 +302,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("redisClusterTest"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redisClusterTest = RedisClusterTest.DeserializeRedisClusterTest(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -315,6 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 eTag,
                 writableSubResourceProp,
                 computeFleetVmProfile,
+                redisClusterTest,
                 additionalBinaryDataProperties);
         }
 

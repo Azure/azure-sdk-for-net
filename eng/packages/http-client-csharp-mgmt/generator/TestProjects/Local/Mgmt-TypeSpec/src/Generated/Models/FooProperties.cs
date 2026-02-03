@@ -53,8 +53,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmProfile"> Test case for multi-layer safe flatten. </param>
+        /// <param name="redisClusterTest"> Test case for nested inheritance flattening. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, RedisClusterTest redisClusterTest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -69,6 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ETag = eTag;
             WritableSubResourceProp = writableSubResourceProp;
             ComputeFleetVmProfile = computeFleetVmProfile;
+            RedisClusterTest = redisClusterTest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -123,6 +125,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Test case for multi-layer safe flatten. </summary>
         [WirePath("computeFleetVmProfile")]
         internal ComputeFleetVmProfile ComputeFleetVmProfile { get; set; }
+
+        /// <summary> Test case for nested inheritance flattening. </summary>
+        [WirePath("redisClusterTest")]
+        public RedisClusterTest RedisClusterTest { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("nestedProperty.properties")]

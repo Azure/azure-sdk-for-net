@@ -227,6 +227,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Test case for nested inheritance flattening. </summary>
+        [WirePath("properties.redisClusterTest")]
+        public RedisClusterTest RedisClusterTest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedisClusterTest;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.RedisClusterTest = value;
+            }
+        }
+
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties.nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
