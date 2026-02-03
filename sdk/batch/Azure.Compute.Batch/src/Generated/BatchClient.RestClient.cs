@@ -863,7 +863,10 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             if (requestConditions != null)
             {
                 request.Headers.Add(requestConditions, "R");
@@ -2036,7 +2039,10 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2092,7 +2098,10 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2121,7 +2130,10 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
@@ -2150,7 +2162,10 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, SerializationFormat.DateTime_RFC7231));
             }
-            request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
+            }
             request.Content = content;
             request.Headers.SetValue("return-client-request-id", "true");
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
