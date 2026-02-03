@@ -290,9 +290,13 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(sessionUpdated.Session.Tools);
 
             var agentTools = sessionUpdated.Session.Tools.Where(t => t is VoiceLiveFoundryAgentDefinition).ToList();
-            Assert.IsTrue(agentTools.Count >= 2, $"Expected at least 2 Foundry agent tools, found {agentTools.Count}");
+            Assert.AreEqual(2, agentTools.Count, $"Expected exactly 2 Foundry agent tools, found {agentTools.Count}");
 
-            TestContext.WriteLine($"✓ Session configured with {agentTools.Count} Foundry agents");
+            var agentNames = agentTools.Cast<VoiceLiveFoundryAgentDefinition>().Select(a => a.AgentName).ToList();
+            Assert.Contains(agentName, agentNames, "First agent not found in session tools");
+            Assert.Contains(agentName + "-2", agentNames, "Second agent not found in session tools");
+
+            TestContext.WriteLine($"✓ Session configured with {agentTools.Count} Foundry agents: {string.Join(", ", agentNames)}");
         }
 
         [LiveOnly]
