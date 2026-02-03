@@ -217,11 +217,9 @@ namespace Azure.AI.Projects
         /// or a JSON-formatted log entry, depending on the type of container log being streamed.
         /// Clients should treat each chunk as opaque text and, if needed, attempt
         /// to parse it as JSON based on their logging requirements.
-        /// 
         /// For system logs, the format is JSON with the following structure:
         /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
         /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// 
         /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
         /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
         /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
@@ -259,11 +257,9 @@ namespace Azure.AI.Projects
         /// or a JSON-formatted log entry, depending on the type of container log being streamed.
         /// Clients should treat each chunk as opaque text and, if needed, attempt
         /// to parse it as JSON based on their logging requirements.
-        /// 
         /// For system logs, the format is JSON with the following structure:
         /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
         /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// 
         /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
         /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
         /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
@@ -301,11 +297,9 @@ namespace Azure.AI.Projects
         /// or a JSON-formatted log entry, depending on the type of container log being streamed.
         /// Clients should treat each chunk as opaque text and, if needed, attempt
         /// to parse it as JSON based on their logging requirements.
-        /// 
         /// For system logs, the format is JSON with the following structure:
         /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
         /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// 
         /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
         /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
         /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']
@@ -336,11 +330,9 @@ namespace Azure.AI.Projects
         /// or a JSON-formatted log entry, depending on the type of container log being streamed.
         /// Clients should treat each chunk as opaque text and, if needed, attempt
         /// to parse it as JSON based on their logging requirements.
-        /// 
         /// For system logs, the format is JSON with the following structure:
         /// {"TimeStamp":"2025-12-15T16:51:33Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Connecting to the events collector...","Reason":"StartingGettingEvents","EventSource":"ContainerAppController","Count":1}
         /// {"TimeStamp":"2025-12-15T16:51:34Z","Type":"Normal","ContainerAppName":null,"RevisionName":null,"ReplicaName":null,"Msg":"Successfully connected to events server","Reason":"ConnectedToEventsServer","EventSource":"ContainerAppController","Count":1}
-        /// 
         /// For console logs, the format is plain text as emitted by the container's stdout/stderr.
         /// 2025-12-15T08:43:48.72656  Connecting to the container 'agent-container'...
         /// 2025-12-15T08:43:48.75451  Successfully Connected to container: 'agent-container' [Revision: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b', Replica: 'je90fe655aa742ef9a188b9fd14d6764--7tca06b-6898b9c89f-mpkjc']

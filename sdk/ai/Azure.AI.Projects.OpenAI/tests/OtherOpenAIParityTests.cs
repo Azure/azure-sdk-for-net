@@ -56,7 +56,8 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientMode.UseExternalOpenAI)]
+    // TODO: uncomment and record the test with actual OpenAI token.
+    //[TestCase(OpenAIClientMode.UseExternalOpenAI)]
     [TestCase(OpenAIClientMode.UseFDPOpenAI)]
     public async Task VectorStorePdfIndexingWorksWithFileSearch(OpenAIClientMode clientMode)
     {
