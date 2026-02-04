@@ -76,7 +76,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        //[Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldReceiveAgentCallArgumentsDelta()
         {
             // This test verifies that agent call arguments are streamed via delta events
@@ -531,7 +530,6 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldHandleAgentCallFailure()
         {
             // This test verifies that agent call failures are handled gracefully
@@ -553,7 +551,25 @@ namespace Azure.AI.VoiceLive.Tests
             var updatesEnum = session.GetUpdatesAsync(TimeoutToken).GetAsyncEnumerator();
 
             var sessionCreated = await GetNextUpdate<SessionUpdateSessionCreated>(updatesEnum).ConfigureAwait(false);
-            var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
+
+            // When using invalid agent, we might get an error instead of session.updated
+            // Use raw enumerator to avoid base class error assertion
+            var moved = await updatesEnum.MoveNextAsync().ConfigureAwait(false);
+            Assert.IsTrue(moved, "Failed to get next update after session created");
+            var nextUpdate = updatesEnum.Current;
+            Assert.IsNotNull(nextUpdate);
+
+            if (nextUpdate is SessionUpdateError errorUpdate)
+            {
+                TestContext.WriteLine($"✓ Received expected error for invalid agent: {errorUpdate.Error?.Message}");
+                Assert.IsTrue(session.IsConnected, "Session should remain connected even after agent configuration error");
+                TestContext.WriteLine("✓ Session remained stable after invalid agent configuration");
+                return;
+            }
+            else if (nextUpdate is SessionUpdateSessionUpdated)
+            {
+                TestContext.WriteLine("✓ Session updated successfully, continuing with agent call test");
+            }
 
             var userMessage = new UserMessageItem(new InputTextContentPart("Use the agent to help me."));
             await session.AddItemAsync(userMessage, TimeoutToken).ConfigureAwait(false);
