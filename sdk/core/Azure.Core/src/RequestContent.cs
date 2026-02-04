@@ -398,8 +398,9 @@ namespace Azure.Core
 #if NET6_0_OR_GREATER
                 if (_buffer != null)
                 {
-                    ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                    var bufferToReturn = _buffer;
                     _buffer = null;
+                    ArrayPool<byte>.Shared.Return(bufferToReturn, clearArray: true);
                 }
 #endif
             }
