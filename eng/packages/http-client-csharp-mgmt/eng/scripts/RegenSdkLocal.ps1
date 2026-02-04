@@ -46,30 +46,30 @@ if (-not (Test-Path $sdkRoot)) {
     throw "SDK folder not found: $sdkRoot"
 }
 
-Write-Output "=== Local Mgmt SDK Regeneration ==="
-Write-Output "Mgmt Generator: $mgmtPackageRoot"
-Write-Output "SDK Root: $sdkRepoRoot"
+Write-Host "=== Local Mgmt SDK Regeneration ==="
+Write-Host "Mgmt Generator: $mgmtPackageRoot"
+Write-Host "SDK Root: $sdkRepoRoot"
 
 # Step 1: Build generator
-Write-Output "`n[1/3] Building Mgmt generator..."
+Write-Host "`n[1/3] Building Mgmt generator..."
 Push-Location $mgmtPackageRoot
 try {
     if (-not (Test-Path "node_modules")) {
-        Write-Output "  npm install..."
+        Write-Host "  npm install..."
         npm install 2>&1 | Out-Null
     }
-    Write-Output "  npm run build:emitter..."
+    Write-Host "  npm run build:emitter..."
     npm run build:emitter 2>&1 | Out-Null
-    Write-Output "  dotnet build..."
+    Write-Host "  dotnet build..."
     dotnet build ./generator/Azure.Generator.Management/src -c Debug --verbosity quiet 2>&1 | Out-Null
-    Write-Output "  Build complete."
+    Write-Host "  Build complete."
 }
 finally {
     Pop-Location
 }
 
 # Step 2: Find mgmt SDK folders
-Write-Output "`n[2/3] Scanning for mgmt SDKs..."
+Write-Host "`n[2/3] Scanning for mgmt SDKs..."
 $mgmtSdkFolders = @()
 $tspFiles = Get-ChildItem -Path $sdkRoot -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue
 
@@ -84,7 +84,7 @@ foreach ($tspFile in $tspFiles) {
     }
 }
 
-Write-Output "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
+Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
 # Apply filter or services list
 if ($Services -and $Services.Count -gt 0) {
@@ -92,24 +92,24 @@ if ($Services -and $Services.Count -gt 0) {
         $folder = $_
         $Services | Where-Object { $folder.Library -like "*$_*" -or $folder.Service -like "*$_*" }
     })
-    Write-Output "Selected $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
+    Write-Host "Selected $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
 elseif ($Filter) {
     $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { $_.Library -like "*$Filter*" -or $_.Service -like "*$Filter*" })
-    Write-Output "Filtered to $($mgmtSdkFolders.Count) matching '$Filter'"
+    Write-Host "Filtered to $($mgmtSdkFolders.Count) matching '$Filter'"
 }
 
 if ($mgmtSdkFolders.Count -eq 0) {
-    Write-Output "No matching SDK folders found."
+    Write-Host "No matching SDK folders found."
     exit 0
 }
 
 # If no filter/services specified, regenerate all by default
 $selectedFolders = $mgmtSdkFolders
-Write-Output "Selected $($selectedFolders.Count) SDKs for regeneration"
+Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 
 # Step 3: Regenerate
-Write-Output "`n[3/3] Regenerating ($Parallel parallel jobs)..."
+Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -194,9 +194,9 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         
         # Output progress
         if ($result.Success) {
-            Write-Output "  $($result.Library): OK ($($result.Elapsed)s)"
+            Write-Host "  $($result.Library): OK ($($result.Elapsed)s)"
         } else {
-            Write-Output "  $($result.Library): FAILED - $($result.Error)"
+            Write-Host "  $($result.Library): FAILED - $($result.Error)"
         }
         
         $result
@@ -204,7 +204,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
 } else {
     $results = @()
     foreach ($folder in $selectedFolders) {
-        Write-Output "`n  $($folder.Library)..."
+        Write-Host "`n  $($folder.Library)..."
         
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
@@ -281,9 +281,9 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         }
         
         if ($result.Success) {
-            Write-Output "    OK ($($result.Elapsed)s)"
+            Write-Host "    OK ($($result.Elapsed)s)"
         } else {
-            Write-Output "    FAILED: $($result.Error)"
+            Write-Host "    FAILED: $($result.Error)"
         }
         $results += $result
     }
@@ -292,6 +292,6 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
 # Summary
 $passed = @($results | Where-Object { $_.Success -eq $true }).Count
 $failed = @($results | Where-Object { $_.Success -ne $true }).Count
-Write-Output "`n=== Summary: $passed passed, $failed failed ==="
+Write-Host "`n=== Summary: $passed passed, $failed failed ==="
 
 if ($failed -gt 0) { exit 1 }
