@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // There is a race condition in which ARM has created the new Event Hub but it is not yet visible to the Event Hubs
             // service.  Introduce a short delay to allow for the service to get access to the new resource.
 
-            await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+            await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(false);
 
             // The default consumer group is always present; include it as part of the scope.
 
