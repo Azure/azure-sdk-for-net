@@ -56,11 +56,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
             }
-            if (Optional.IsDefined(StorageAccountType))
-            {
-                writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -107,7 +102,6 @@ namespace Azure.Compute.Batch
             CachingType? caching = default;
             int diskSizeGb = default;
             ManagedDisk managedDisk = default;
-            StorageAccountType? storageAccountType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,15 +133,6 @@ namespace Azure.Compute.Batch
                     managedDisk = ManagedDisk.DeserializeManagedDisk(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("storageAccountType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAccountType = new StorageAccountType(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -158,7 +143,6 @@ namespace Azure.Compute.Batch
                 caching,
                 diskSizeGb,
                 managedDisk,
-                storageAccountType,
                 additionalBinaryDataProperties);
         }
 
