@@ -3,7 +3,6 @@ This is a minimal console application that demonstrates how to use the Agent Fra
 
 ## Prerequisites
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
-- Access to github packages for nightly builds, see [FAQs](../../README.md#faqs) below.
 
 ## Getting Started
 ```csharp

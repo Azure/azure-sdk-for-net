@@ -69,8 +69,6 @@ public class Program
               .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
               .Build();
 
-
-        // Build the workflow by adding executors and connecting them
         WorkflowAgentFactory factory = () =>
         {
             // Build the workflow and turn it into an agent
