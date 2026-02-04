@@ -9,13 +9,13 @@ namespace Azure.AI.Projects.OpenAI;
 public partial class ProjectConversationUpdateOptions
 {
     [CodeGenMember("Metadata")]
-    private global::OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
+    private global::Azure.AI.Projects.OpenAI.InternalMetadataContainer InternalMetadata { get; set; }
 
     public IDictionary<string, string> Metadata => InternalMetadata.AdditionalProperties;
 
     /// <summary> Initializes a new instance of <see cref="ProjectConversationUpdateOptions"/>. </summary>
     public ProjectConversationUpdateOptions()
     {
-        InternalMetadata = new global::OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
+        InternalMetadata = new global::Azure.AI.Projects.OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
     }
 }

@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The Prediction. </summary>
-    public partial class Prediction : IJsonModel<Prediction>
+    internal partial class Prediction : IJsonModel<Prediction>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

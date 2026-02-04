@@ -42,6 +42,8 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Using custom prompt-based evaluator](#using-custom-prompt-based-evaluator)
     - [Using custom code-based evaluator](#using-custom-code-based-evaluator)
     - [Evaluation with Application Insights](#evaluation-with-application-insights)
+    - [Evaluating responses](#evaluating-responses)
+    - [Evaluation rules](#evaluation-rules)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -87,7 +89,7 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ### Performing Classic Agent operations
 
-The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
+The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
@@ -1116,6 +1118,101 @@ BinaryData runData = BinaryData.FromObjectAsJson(
 using BinaryContent runDataContent = BinaryContent.Create(runData);
 ```
 
+#### Evaluating responses
+
+The evaluation may be done on the OpenAI response items, received from the Agent. To use this data structure,
+the data source configuration `scenario` has to be set to "responses".
+
+```C# Snippet:Sample_CreateData_EvaluationsAgent
+private static BinaryData GetEvaluationConfig(string modelDeploymentName)
+{
+    object[] testingCriteria = [
+        new {
+            type = "azure_ai_evaluator",
+            name = "violence_detection",
+            evaluator_name = "builtin.violence",
+        },
+    ];
+    object dataSourceConfig = new
+    {
+        type = "azure_ai_source",
+        scenario = "responses"
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            name = "Agent Response Evaluation",
+            data_source_config = dataSourceConfig,
+            testing_criteria = testingCriteria
+        }
+    );
+}
+```
+
+The data source needs to have section `item_generation_params`, having `response_retrieval`  type.
+This section informs service to get the data from the response with the given ID.
+
+```C# Snippet:Sample_CreateDataSource_EvaluationsAgent
+private static BinaryData GetRunData(string agentName, string responseId, string evaluationId)
+{
+    object dataSource = new
+    {
+        type = "azure_ai_responses",
+        item_generation_params = new {
+            type = "response_retrieval",
+            data_mapping = new { response_id = "{{item.resp_id}}" },
+            source = new
+            {
+                type = "file_content",
+                content = new[]
+                {
+                    new
+                    {
+                        item = new { resp_id =  responseId}
+                    }
+                }
+            }
+        },
+    };
+    return BinaryData.FromObjectAsJson(
+        new
+        {
+            eval_id = evaluationId,
+            name = $"Evaluation Run for Agent {agentName}",
+            data_source = dataSource
+        }
+    );
+}
+```
+
+#### Evaluation rules
+
+Evaluation rules allow subscribing the evaluation to a specific event.
+In the example below we create evaluation rule, which launches evaluation each time the Agent sends the response.
+
+```C# Snippet:Sample_CreateRule_EvaluationRules
+ContinuousEvaluationRuleAction continuousAction = new(evaluationId)
+{
+    MaxHourlyRuns = 100,
+};
+EvaluationRule continuousRule = new(
+    action: continuousAction, eventType: EvaluationRuleEventType.ResponseCompleted, enabled: true)
+{
+    Filter = new EvaluationRuleFilter(agentName: agentVersion.Name),
+    DisplayName = "Continuous evaluation rule."
+};
+```
+
+Apply the rule.
+
+```C# Snippet:Sample_CreateRuleOnAzure_EvaluationRules_Async
+EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOrUpdateAsync(
+    id: "my-continuous-eval-rule",
+    evaluationRule: continuousRule
+);
+Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
+```
+
 ## Troubleshooting
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
@@ -1154,11 +1251,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
+[samples]: https://aka.ms/azsdk/Azure.AI.Projects/net/samples
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-v1
 [nuget]: https://www.nuget.org/packages/Azure.AI.Projects
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects
-[product_doc]: https://learn.microsoft.com/azure/ai-studio/
+[source_code]: https://aka.ms/azsdk/Azure.AI.Projects/net/code
+[product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md

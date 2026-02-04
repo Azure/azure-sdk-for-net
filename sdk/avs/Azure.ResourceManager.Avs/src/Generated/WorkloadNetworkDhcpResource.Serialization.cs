@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class WorkloadNetworkDhcpResource : IJsonModel<WorkloadNetworkDhcpData>
     {
-        private static WorkloadNetworkDhcpData s_dataDeserializationInstance;
-        private static WorkloadNetworkDhcpData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkloadNetworkDhcpData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkloadNetworkDhcpData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkloadNetworkDhcpData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadNetworkDhcpData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)Data).Write(writer, options);
 
-        WorkloadNetworkDhcpData IJsonModel<WorkloadNetworkDhcpData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadNetworkDhcpData IJsonModel<WorkloadNetworkDhcpData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkDhcpData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkDhcpData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDhcpData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

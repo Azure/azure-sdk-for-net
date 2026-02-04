@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         /// <param name="fileData"></param>
         /// <param name="fileUrl"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, string fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;
@@ -48,6 +48,6 @@ namespace Azure.AI.Projects
         public string FileData { get; set; }
 
         /// <summary> Gets or sets the FileUrl. </summary>
-        public string FileUrl { get; set; }
+        public Uri FileUrl { get; set; }
     }
 }

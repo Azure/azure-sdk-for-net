@@ -35,7 +35,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_AgentToAgent_Async
         AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-        A2ATool a2aTool = new()
+        A2APreviewTool a2aTool = new()
         {
             ProjectConnectionId = a2aConnection.Id
         };
@@ -100,7 +100,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateAgent_AgentToAgent_Sync
         AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-        A2ATool a2aTool = new()
+        A2APreviewTool a2aTool = new()
         {
             ProjectConnectionId = a2aConnection.Id
         };

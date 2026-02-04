@@ -18,11 +18,8 @@ namespace Azure.Provisioning.AppContainers
         public static Azure.Provisioning.AppContainers.AppContainersBuiltInRole Owner { get { throw null; } }
         public static Azure.Provisioning.AppContainers.AppContainersBuiltInRole Reader { get { throw null; } }
         public bool Equals(Azure.Provisioning.AppContainers.AppContainersBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.AppContainers.AppContainersBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.AppContainers.AppContainersBuiltInRole left, Azure.Provisioning.AppContainers.AppContainersBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.AppContainers.AppContainersBuiltInRole (string value) { throw null; }
@@ -55,7 +52,6 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppContainers.ContainerApp FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

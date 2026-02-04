@@ -108,27 +108,27 @@ namespace Azure.AI.Projects
                     case "apply_patch":
                         return ApplyPatchToolParam.DeserializeApplyPatchToolParam(element, options);
                     case "bing_grounding":
-                        return BingGroundingAgentTool.DeserializeBingGroundingAgentTool(element, options);
+                        return BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
-                        return MicrosoftFabricAgentTool.DeserializeMicrosoftFabricAgentTool(element, options);
+                        return MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
                     case "sharepoint_grounding_preview":
-                        return SharepointAgentTool.DeserializeSharepointAgentTool(element, options);
+                        return SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
                     case "azure_ai_search":
-                        return AzureAISearchAgentTool.DeserializeAzureAISearchAgentTool(element, options);
+                        return AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
                     case "openapi":
-                        return OpenApiAgentTool.DeserializeOpenApiAgentTool(element, options);
+                        return OpenApiTool.DeserializeOpenApiTool(element, options);
                     case "bing_custom_search_preview":
-                        return BingCustomSearchAgentTool.DeserializeBingCustomSearchAgentTool(element, options);
+                        return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
                     case "browser_automation_preview":
-                        return BrowserAutomationAgentTool.DeserializeBrowserAutomationAgentTool(element, options);
+                        return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
                     case "azure_function":
-                        return AzureFunctionAgentTool.DeserializeAzureFunctionAgentTool(element, options);
+                        return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
                     case "capture_structured_outputs":
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
-                        return A2ATool.DeserializeA2ATool(element, options);
+                        return A2APreviewTool.DeserializeA2APreviewTool(element, options);
                     case "memory_search":
-                        return MemorySearchTool.DeserializeMemorySearchTool(element, options);
+                        return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

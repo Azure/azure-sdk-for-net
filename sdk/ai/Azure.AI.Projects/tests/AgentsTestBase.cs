@@ -309,7 +309,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         return tool;
     }
 
-    private OpenAPIAgentTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private OpenAPITool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
         OpenAPIAuthenticationDetails auth;
         string filePath;
@@ -334,16 +334,16 @@ public class AgentsTestBase : ProjectsClientTestBase
         return new(functionDefinition);
     }
 
-    private SharepointAgentTool GetSharepointTool(AIProjectClient projectClient)
+    private SharepointPreviewTool GetSharepointTool(AIProjectClient projectClient)
     {
         SharePointGroundingToolOptions sharepointToolOption = new()
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
-        return new SharepointAgentTool(sharepointToolOption);
+        return new SharepointPreviewTool(sharepointToolOption);
     }
 
-    private MicrosoftFabricAgentTool GetMicrosoftFabricAgentTool()
+    private MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()
     {
         FabricDataAgentToolOptions fabricToolOption = new()
         {
@@ -352,9 +352,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         return new(fabricToolOption);
     }
 
-    private A2ATool GetA2ATool(bool useRemoteA2AConnection)
+    private A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
     {
-        A2ATool a2aTool = new()
+        A2APreviewTool a2aTool = new()
         {
             ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.REMOTE_A2A_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
         };
@@ -420,12 +420,12 @@ public class AgentsTestBase : ProjectsClientTestBase
                 size: ImageGenerationToolSize.W1024xH1024
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
-            ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
-            ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
-            ToolType.BingGrounding => new BingGroundingAgentTool(new BingGroundingSearchToolOptions(
+            ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
+            ToolType.AzureAISearch => new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
+            ToolType.BingGrounding => new BingGroundingTool(new BingGroundingSearchToolOptions(
                 searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
-            ToolType.BingGroundingCustom => new BingCustomSearchAgentTool(new BingCustomSearchToolParameters(
+            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new BingCustomSearchToolParameters(
                 searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
@@ -437,7 +437,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
-            ToolType.BrowserAutomation => new BrowserAutomationAgentTool(
+            ToolType.BrowserAutomation => new BrowserAutomationPreviewTool(
             new BrowserAutomationToolParameters(
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),

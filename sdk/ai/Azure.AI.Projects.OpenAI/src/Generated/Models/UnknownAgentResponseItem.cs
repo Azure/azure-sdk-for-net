@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class UnknownAgentResponseItem : AgentResponseItem
     {
@@ -14,8 +13,10 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, itemSource, additionalBinaryDataProperties)
+        internal UnknownAgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
         }
     }

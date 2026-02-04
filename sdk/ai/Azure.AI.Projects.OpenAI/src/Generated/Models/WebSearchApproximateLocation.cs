@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Web search approximate location. </summary>
     internal partial class WebSearchApproximateLocation

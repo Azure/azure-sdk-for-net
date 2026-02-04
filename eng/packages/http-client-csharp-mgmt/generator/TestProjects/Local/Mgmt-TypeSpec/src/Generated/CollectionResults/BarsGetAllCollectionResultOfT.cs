@@ -19,21 +19,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Bars _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _fooName;
+        private readonly string _name;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of BarsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Bars client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="name"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BarsGetAllCollectionResultOfT(Bars client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BarsGetAllCollectionResultOfT(Bars client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _fooName = fooName;
+            _name = name;
             _context = context;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BarCollection.GetAll");
             scope.Start();
             try

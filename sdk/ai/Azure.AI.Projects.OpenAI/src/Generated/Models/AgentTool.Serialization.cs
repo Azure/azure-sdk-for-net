@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingAgentTool"/>, <see cref="MicrosoftFabricAgentTool"/>, <see cref="SharepointAgentTool"/>, <see cref="AzureAISearchAgentTool"/>, <see cref="OpenAPIAgentTool"/>, <see cref="BingCustomSearchAgentTool"/>, <see cref="BrowserAutomationAgentTool"/>, <see cref="AzureFunctionAgentTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2ATool"/>, and <see cref="MemorySearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class AgentTool : IJsonModel<AgentTool>
@@ -87,6 +87,28 @@ namespace Azure.AI.Projects.OpenAI
             {
                 switch (discriminator.GetString())
                 {
+                    case "bing_grounding":
+                        return BingGroundingTool.DeserializeBingGroundingTool(element, options);
+                    case "fabric_dataagent_preview":
+                        return MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool(element, options);
+                    case "sharepoint_grounding_preview":
+                        return SharepointPreviewTool.DeserializeSharepointPreviewTool(element, options);
+                    case "azure_ai_search":
+                        return AzureAISearchTool.DeserializeAzureAISearchTool(element, options);
+                    case "openapi":
+                        return OpenAPITool.DeserializeOpenAPITool(element, options);
+                    case "bing_custom_search_preview":
+                        return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
+                    case "browser_automation_preview":
+                        return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
+                    case "azure_function":
+                        return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
+                    case "capture_structured_outputs":
+                        return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
+                    case "a2a_preview":
+                        return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "memory_search":
+                        return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
@@ -111,28 +133,6 @@ namespace Azure.AI.Projects.OpenAI
                         return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
                         return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
-                    case "bing_grounding":
-                        return BingGroundingAgentTool.DeserializeBingGroundingAgentTool(element, options);
-                    case "fabric_dataagent_preview":
-                        return MicrosoftFabricAgentTool.DeserializeMicrosoftFabricAgentTool(element, options);
-                    case "sharepoint_grounding_preview":
-                        return SharepointAgentTool.DeserializeSharepointAgentTool(element, options);
-                    case "azure_ai_search":
-                        return AzureAISearchAgentTool.DeserializeAzureAISearchAgentTool(element, options);
-                    case "openapi":
-                        return OpenAPIAgentTool.DeserializeOpenAPIAgentTool(element, options);
-                    case "bing_custom_search_preview":
-                        return BingCustomSearchAgentTool.DeserializeBingCustomSearchAgentTool(element, options);
-                    case "browser_automation_preview":
-                        return BrowserAutomationAgentTool.DeserializeBrowserAutomationAgentTool(element, options);
-                    case "azure_function":
-                        return AzureFunctionAgentTool.DeserializeAzureFunctionAgentTool(element, options);
-                    case "capture_structured_outputs":
-                        return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
-                    case "a2a_preview":
-                        return A2ATool.DeserializeA2ATool(element, options);
-                    case "memory_search":
-                        return MemorySearchTool.DeserializeMemorySearchTool(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

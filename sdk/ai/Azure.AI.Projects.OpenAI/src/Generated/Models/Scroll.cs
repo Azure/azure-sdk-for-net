@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Scroll. </summary>
     internal partial class Scroll : InternalComputerAction
@@ -15,7 +16,7 @@ namespace OpenAI
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal Scroll(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
+        public Scroll(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
         {
             X = x;
             Y = y;

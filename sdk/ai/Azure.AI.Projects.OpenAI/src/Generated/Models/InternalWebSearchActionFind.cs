@@ -15,7 +15,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        internal InternalWebSearchActionFind(Uri url, string pattern)
+        public InternalWebSearchActionFind(Uri url, string pattern)
         {
             Url = url;
             Pattern = pattern;
@@ -35,7 +35,7 @@ namespace OpenAI
         }
 
         /// <summary> The action type. </summary>
-        internal string Type { get; } = "find";
+        internal string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
         public Uri Url { get; }

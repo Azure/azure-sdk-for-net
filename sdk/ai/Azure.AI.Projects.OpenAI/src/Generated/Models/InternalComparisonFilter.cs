@@ -16,14 +16,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
-        ///   - `eq`: equals
-        ///   - `ne`: not equal
-        ///   - `gt`: greater than
-        ///   - `gte`: greater than or equal
-        ///   - `lt`: less than
-        ///   - `lte`: less than or equal
-        ///   - `in`: in
-        ///   - `nin`: not in
+        /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </param>
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
@@ -37,14 +30,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/>. </summary>
         /// <param name="type">
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
-        ///   - `eq`: equals
-        ///   - `ne`: not equal
-        ///   - `gt`: greater than
-        ///   - `gte`: greater than or equal
-        ///   - `lt`: less than
-        ///   - `lte`: less than or equal
-        ///   - `in`: in
-        ///   - `nin`: not in
+        /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </param>
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
@@ -59,14 +45,7 @@ namespace OpenAI
 
         /// <summary>
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
-        ///   - `eq`: equals
-        ///   - `ne`: not equal
-        ///   - `gt`: greater than
-        ///   - `gte`: greater than or equal
-        ///   - `lt`: less than
-        ///   - `lte`: less than or equal
-        ///   - `in`: in
-        ///   - `nin`: not in
+        /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </summary>
         public ComparisonFilterType Type { get; set; }
 

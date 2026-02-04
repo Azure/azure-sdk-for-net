@@ -99,6 +99,14 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "hosted":
+                        return ImageBasedHostedAgentDefinition.DeserializeImageBasedHostedAgentDefinition(element, options);
+                }
+            }
             return UnknownHostedAgentDefinition.DeserializeUnknownHostedAgentDefinition(element, options);
         }
 

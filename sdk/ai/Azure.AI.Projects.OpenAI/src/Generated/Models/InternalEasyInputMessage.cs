@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.OpenAI;
 
 namespace OpenAI
 {
@@ -36,10 +37,15 @@ namespace OpenAI
         /// Text, image, or audio input to the model, used to generate a response.
         ///   Can also contain previous assistant responses.
         /// </param>
-        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content) : base(@type, additionalBinaryDataProperties)
+        /// <param name="status">
+        /// The status of item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </param>
+        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content, EasyInputMessageStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
+            Status = status;
         }
 
         /// <summary>
@@ -89,5 +95,11 @@ namespace OpenAI
         /// </para>
         /// </summary>
         public BinaryData Content { get; }
+
+        /// <summary>
+        /// The status of item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </summary>
+        public EasyInputMessageStatus? Status { get; set; }
     }
 }

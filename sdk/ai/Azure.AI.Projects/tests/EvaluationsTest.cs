@@ -16,6 +16,7 @@ using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Evals;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -150,7 +151,6 @@ public class EvaluationsTest : ProjectsClientTestBase
     public async Task TestEvaluatorsCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         EvaluatorVersion eval = GetCustomEvaluatorVersion(CustomEvaluatorType.PromptBased);
         //Create
         EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
@@ -160,21 +160,29 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(string.IsNullOrEmpty(promptEvaluator.Id), Is.False);
         string id = promptEvaluator.Id;
         // Update
-        // The update returns 400 Error when parsing request; unable to deserialize request body
-        //promptEvaluator.Description = "New updated description";
-        //using var stream = new MemoryStream();
-        //using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions());
-        //((IJsonModel<EvaluatorVersion>)promptEvaluator).Write(writer, ModelReaderWriterOptions.Json);
-        //writer.Flush();
-        //stream.Position = 0;
-        //BinaryContent content = BinaryContent.Create(BinaryData.FromStream(stream));
-        //ClientResult result = await projectClient.Evaluators.UpdateVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version, content: content);
-        //promptEvaluator = ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
-        //Assert.That(promptEvaluator.Description, Is.EqualTo(eval.Description));
+        BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+            new
+            {
+                categories = new[] { EvaluatorCategory.Quality.ToString() },
+                display_name = "my_custom_evaluator_updated",
+                description = "Custom evaluator description changed"
+            }
+        );
+        using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+        ClientResult response = await projectClient.Evaluators.UpdateVersionAsync(
+            name: promptEvaluator.Name,
+            version: promptEvaluator.Version,
+            content: evalustorVersionUpdateContent
+        );
+        EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
+        Assert.That(updatedEvaluator.Id, Is.EqualTo(id));
+        Assert.That(updatedEvaluator.Description, Is.EqualTo("Custom evaluator description changed"));
+        Assert.That(updatedEvaluator.DisplayName, Is.EqualTo("my_custom_evaluator_updated"));
         // Get
         promptEvaluator = await projectClient.Evaluators.GetVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
         Assert.That(promptEvaluator.Id, Is.EqualTo(id));
         // List
+        // List all
         bool found = false;
         await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetVersionsAsync(name: promptEvaluator.Name))
         {
@@ -185,16 +193,11 @@ public class EvaluationsTest : ProjectsClientTestBase
             }
         }
         Assert.That(found, Is.True);
-        found = false;
-        await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync())
-        {
-            found = ver.Id == id;
-            if (found)
-            {
-                break;
-            }
-        }
+        await ValidateLatestList(projectClient, id, true, $"The {id} was not found in All evaluator list.");
+        await ValidateLatestList(projectClient, id, true, $"The {id} was not found in custom evaluator list.", ListVersionsRequestType.Custom);
+        await ValidateLatestList(projectClient, id, false, $"The {id} was unexpectedly found in built-in evaluator list.", ListVersionsRequestType.BuiltIn);
         Assert.That(found, Is.True);
+        // List custom
         // Delete
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
         found = false;
@@ -207,6 +210,35 @@ public class EvaluationsTest : ProjectsClientTestBase
             }
         }
         Assert.That(found, Is.False);
+    }
+
+    private async Task ValidateLatestList(AIProjectClient projectClient, string id, bool mustPresent, string errorText, ListVersionsRequestType? type=null)
+    {
+        bool found = false;
+        await foreach (EvaluatorVersion ver in projectClient.Evaluators.GetLatestVersionsAsync(type: type))
+        {
+            found = ver.Id == id;
+            if (found)
+            {
+                break;
+            }
+        }
+        if (mustPresent)
+        {
+            Assert.That(found, Is.True, errorText);
+        }
+        else
+        {
+            Assert.That(found, Is.False, errorText);
+        }
+    }
+
+    [RecordedTest]
+    public async Task TestBuiltInEvaluators()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        IList<EvaluatorVersion> builtInEvaluators = await projectClient.Evaluators.GetLatestVersionsAsync(type: ListVersionsRequestType.BuiltIn).ToListAsync();
+        Assert.That(builtInEvaluators.Count, Is.GreaterThan(0), "No built-in evaluators were found.");
     }
 
     [RecordedTest]
@@ -330,6 +362,129 @@ public class EvaluationsTest : ProjectsClientTestBase
         List<string> evaluationResults = await GetResultsListAsync(client: evaluationClient, evaluationId: evaluationId, evaluationRunId: runId);
         await evaluationClient.DeleteEvaluationAsync(evaluationId, new RequestOptions());
         await projectClient.Evaluators.DeleteVersionAsync(name: promptEvaluator.Name, version: promptEvaluator.Version);
+    }
+
+    [RecordedTest]
+    public async Task TestEvaluationRule()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+
+        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a prompt agent."
+        };
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(agentDefinition));
+        object[] testingCriteria = [
+            new {
+                type = "azure_ai_evaluator",
+                name = "violence_detection",
+                evaluator_name = "builtin.violence",
+            },
+        ];
+        object dataSourceConfig = new
+        {
+            type = "azure_ai_source",
+            scenario = "responses"
+        };
+        BinaryData evaluationConfig = BinaryData.FromObjectAsJson(
+            new
+            {
+                name = EVALUATION_NAME,
+                data_source_config = dataSourceConfig,
+                testing_criteria = testingCriteria
+            }
+        );
+        using BinaryContent evaluationDataContent = BinaryContent.Create(evaluationConfig);
+        ClientResult evaluation = await evaluationClient.CreateEvaluationAsync(evaluationDataContent);
+        Dictionary<string, string> fields = ParseClientResult<string>(evaluation, ["name", "id"]);
+        string evaluationName = fields["name"];
+        string evaluationId = fields["id"];
+        // Evaluation rule CRUD
+        //Create
+        ContinuousEvaluationRuleAction continuousAction = new(evaluationId)
+        {
+            MaxHourlyRuns = 100,
+        };
+        EvaluationRule continuousRule = new(
+            action: continuousAction, eventType: EvaluationRuleEventType.ResponseCompleted, enabled: true)
+        {
+            Filter = new EvaluationRuleFilter(agentName: agentVersion.Name),
+            DisplayName = "Continuous evaluation rule."
+        };
+        // Remove the evaluation in case we already have it
+        try
+        {
+            await projectClient.EvaluationRules.DeleteAsync("my-continuous-eval-rule");
+        }
+        catch (Exception)
+        {
+            // Nothing here.
+        }
+        EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOrUpdateAsync(
+            id: "my-continuous-eval-rule",
+            evaluationRule: continuousRule
+        );
+        string newDisplayName = "Updated display name";
+        Assert.That(continuousEvalRule.DisplayName, Is.EqualTo("Continuous evaluation rule."));
+        continuousRule.DisplayName = newDisplayName;
+        // Update
+        continuousEvalRule = await projectClient.EvaluationRules.CreateOrUpdateAsync(
+            id: "my-continuous-eval-rule",
+            evaluationRule: continuousRule
+        );
+        Assert.That(continuousEvalRule.DisplayName, Is.EqualTo(newDisplayName));
+        // Get
+        continuousEvalRule = await projectClient.EvaluationRules.GetAsync(
+            id: "my-continuous-eval-rule"
+        );
+        Assert.That(continuousEvalRule.DisplayName, Is.EqualTo(newDisplayName));
+        // List
+        HashSet<string> ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
+        Assert.That(ruleIds, Contains.Item("my-continuous-eval-rule"));
+        // Run the evaluation
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        string[] countries = ["France", "Italy"];
+        HashSet<string> allRuns = [];
+        foreach (string country in countries)
+        {
+            ResponseResult response = await responseClient.CreateResponseAsync($"What is the capital of {country}");
+            Console.WriteLine($"Response output: {response.GetOutputText()}.");
+            await Delay(10000);
+        }
+        int completed = 0;
+        Dictionary<string, (string, string)> evaluationRunIds;
+        do
+        {
+            await Delay();
+            evaluationRunIds = await GetRunIDsAsync(evaluationClient, evaluationId);
+            Assert.That(evaluationRunIds.Count, Is.EqualTo(2), $"Incorrect number of runs: {evaluationRunIds.Count}");
+            completed = 0;
+            foreach (string runId in evaluationRunIds.Keys)
+            {
+                (string Uri, string runStatus) = evaluationRunIds[runId];
+                completed += string.Equals(runStatus, "completed") ? 1 : 0;
+                if (string.Equals(runStatus, "failed"))
+                {
+                    ClientResult failedRun = evaluationClient.GetEvaluationRun(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+                    Assert.Fail($"The run {runId} failed: {GetErrorMessageOrEmpty(failedRun)}");
+                }
+            }
+        }
+        while (completed == 2);
+        // Delete rule
+        await projectClient.EvaluationRules.DeleteAsync(id: continuousEvalRule.Id);
+        ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
+        Assert.That(ruleIds.Contains(continuousEvalRule.Id), Is.False, $"The evaluation rule {continuousEvalRule.Id} was not deleted.");
+        foreach (string runId in evaluationRunIds.Keys)
+        {
+            await evaluationClient.DeleteEvaluationRunAsync(evaluationId: evaluationId, evaluationRunId: runId, options: new());
+        }
+        evaluationRunIds = await GetRunIDsAsync(evaluationClient, evaluationId);
+        Assert.That(evaluationRunIds.Count, Is.EqualTo(0));
+        await evaluationClient.DeleteEvaluationAsync(evaluationId: evaluationId, options: new());
     }
 
     #region Helpers
@@ -569,6 +724,68 @@ public class EvaluationsTest : ProjectsClientTestBase
         eval.Description = "Description for e2e evaluator.";
         return eval;
     }
+
+    private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus = default)
+    {
+        Dictionary<string, (string, string)> runIDs = [];
+        bool hasMore = false;
+        string lastId = default;
+        do
+        {
+            ClientResult resultList = await client.GetEvaluationRunsAsync(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
+            Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
+            JsonDocument document = JsonDocument.ParseValue(ref reader);
+
+            foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
+            {
+                if (topProperty.NameEquals("has_more"u8))
+                {
+                    hasMore = topProperty.Value.GetBoolean();
+                }
+                else if (topProperty.NameEquals("last_id"u8))
+                {
+                    lastId = topProperty.Value.GetString();
+                }
+                else if (topProperty.NameEquals("data"u8))
+                {
+                    if (topProperty.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
+                        {
+                            string runId = default, runUri = default, runStatus = default;
+                            foreach (JsonProperty runProperty in dataElement.EnumerateObject())
+                            {
+                                if (runProperty.Value.ValueKind == JsonValueKind.String)
+                                {
+                                    if (runProperty.NameEquals("id"u8))
+                                    {
+                                        runId = runProperty.Value.GetString();
+                                    }
+                                    else if (runProperty.NameEquals("report_url"u8))
+                                    {
+                                        runUri = runProperty.Value.GetString();
+                                    }
+                                    else if (runProperty.NameEquals("status"u8))
+                                    {
+                                        runStatus = runProperty.Value.GetString();
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(runId) && !string.IsNullOrEmpty(runUri) && !string.IsNullOrEmpty(runStatus))
+                                {
+                                    break;
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(runId))
+                            {
+                                runIDs[runId] = (runUri, runStatus);
+                            }
+                        }
+                    }
+                }
+            }
+        } while (hasMore);
+        return runIDs;
+    }
     #endregion
 
     #region Cleanup
@@ -604,12 +821,33 @@ public class EvaluationsTest : ProjectsClientTestBase
                     {
                         foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
                         {
+                            string name = default, id = default;
                             foreach (JsonProperty evaluation in dataElement.EnumerateObject())
                             {
                                 if (evaluation.NameEquals("id"u8))
                                 {
-                                    await evalClient.DeleteEvaluationAsync(evaluationId: evaluation.Value.GetString(), options: new());
+                                    id = evaluation.Value.GetString();
                                 }
+                                else if (evaluation.NameEquals("name"u8))
+                                {
+                                    name = evaluation.Value.GetString();
+                                }
+                                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(name))
+                                {
+                                    break;
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(id) && string.Equals(name, EVALUATION_NAME))
+                            {
+                                // Delete all runs for the evaluation
+                                Dictionary<string, (string, string)> evaluationRunIds = await GetRunIDsAsync(evalClient, id);
+                                foreach (string runId in evaluationRunIds.Keys)
+                                {
+                                    await evalClient.DeleteEvaluationRunAsync(evaluationId: id, evaluationRunId: runId, options: new());
+                                }
+                                // Delete evaluation itself.
+                                await evalClient.DeleteEvaluationAsync(evaluationId: id, options: new());
+                                break;
                             }
                         }
                     }

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell exec action. </summary>
     internal partial class FunctionShellAction

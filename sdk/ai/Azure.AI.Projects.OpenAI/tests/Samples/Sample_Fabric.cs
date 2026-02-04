@@ -38,7 +38,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new MicrosoftFabricAgentTool(fabricToolOption), }
+            Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -89,7 +89,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new MicrosoftFabricAgentTool(fabricToolOption), }
+            Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
         AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",

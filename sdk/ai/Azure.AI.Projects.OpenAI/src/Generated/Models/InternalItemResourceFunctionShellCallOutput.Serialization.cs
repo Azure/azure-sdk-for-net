@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceFunctionShellCallOutput : AgentResponseItem, IJsonModel<InternalItemResourceFunctionShellCallOutput>
     {
@@ -84,6 +83,8 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             IList<FunctionShellCallOutputContent> output = default;
@@ -107,6 +108,20 @@ namespace OpenAI
                         continue;
                     }
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("call_id"u8))
@@ -143,6 +158,8 @@ namespace OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 callId,
                 output,

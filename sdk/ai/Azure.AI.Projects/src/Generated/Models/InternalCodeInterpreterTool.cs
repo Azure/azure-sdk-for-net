@@ -12,14 +12,8 @@ namespace OpenAI
     internal partial class InternalCodeInterpreterTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
-        /// <param name="container">
-        /// The code interpreter container. Can be a container ID or an object that
-        ///   specifies uploaded file IDs to make available to your code, along with an
-        ///   optional `memory_limit` setting.
-        /// </param>
-        public InternalCodeInterpreterTool(BinaryData container) : base(ToolType.CodeInterpreter)
+        public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
         {
-            Container = container;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
@@ -27,8 +21,9 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="container">
         /// The code interpreter container. Can be a container ID or an object that
-        ///   specifies uploaded file IDs to make available to your code, along with an
-        ///   optional `memory_limit` setting.
+        /// specifies uploaded file IDs to make available to your code, along with an
+        /// optional `memory_limit` setting.
+        /// If not provided, the service assumes auto.
         /// </param>
         internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
@@ -37,8 +32,9 @@ namespace OpenAI
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that
-        ///   specifies uploaded file IDs to make available to your code, along with an
-        ///   optional `memory_limit` setting.
+        /// specifies uploaded file IDs to make available to your code, along with an
+        /// optional `memory_limit` setting.
+        /// If not provided, the service assumes auto.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

@@ -25,13 +25,15 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status">
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal MemorySearchToolCallResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallStatus status, IList<MemorySearchItem> results) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;

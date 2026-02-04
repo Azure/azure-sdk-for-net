@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Advisor.Mocking;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
@@ -18,465 +20,647 @@ namespace Azure.ResourceManager.Advisor
     /// <summary> A class to add extension methods to Azure.ResourceManager.Advisor. </summary>
     public static partial class AdvisorExtensions
     {
+        /// <param name="client"></param>
         private static MockableAdvisorArmClient GetMockableAdvisorArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableAdvisorArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableAdvisorArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableAdvisorResourceGroupResource GetMockableAdvisorResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableAdvisorResourceGroupResource GetMockableAdvisorResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableAdvisorResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableAdvisorResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableAdvisorSubscriptionResource GetMockableAdvisorSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableAdvisorSubscriptionResource GetMockableAdvisorSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableAdvisorSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableAdvisorSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        private static MockableAdvisorTenantResource GetMockableAdvisorTenantResource(ArmResource resource)
+        /// <param name="tenantResource"></param>
+        private static MockableAdvisorTenantResource GetMockableAdvisorTenantResource(TenantResource tenantResource)
         {
-            return resource.GetCachedClient(client => new MockableAdvisorTenantResource(client, resource.Id));
+            return tenantResource.GetCachedClient(client => new MockableAdvisorTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets a collection of ResourceRecommendationBaseResources in the ArmClient.
+        /// Gets an object representing a <see cref="AdvisorMetadataEntityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBases(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorMetadataEntityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceRecommendationBaseResources and their operations over a ResourceRecommendationBaseResource. </returns>
-        public static ResourceRecommendationBaseCollection GetResourceRecommendationBases(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="AdvisorMetadataEntityResource"/> object. </returns>
+        public static AdvisorMetadataEntityResource GetAdvisorMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBases(scope);
+            return GetMockableAdvisorArmClient(client).GetAdvisorMetadataEntityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorRecommendationResource"/> object. </returns>
+        public static AdvisorRecommendationResource GetAdvisorRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendationResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="AdvisorRecommendationCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendations(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="AdvisorRecommendationResource"/> objects. </returns>
+        public static AdvisorRecommendationCollection GetAdvisorRecommendations(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendations(scope);
         }
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBaseAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendation(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        public static Response<AdvisorRecommendationResource> GetAdvisorRecommendation(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAdvisorArmClient(client).GetResourceRecommendationBaseAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
+            return GetMockableAdvisorArmClient(client).GetAdvisorRecommendation(scope, recommendationId, cancellationToken);
         }
 
         /// <summary>
         /// Obtains details of a cached recommendation.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBase(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorRecommendationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="recommendationId"> The recommendation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="recommendationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceRecommendationBaseResource> GetResourceRecommendationBase(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AdvisorRecommendationResource>> GetAdvisorRecommendationAsync(this ArmClient client, ResourceIdentifier scope, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBase(scope, recommendationId, cancellationToken);
+            return await GetMockableAdvisorArmClient(client).GetAdvisorRecommendationAsync(scope, recommendationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="MetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AdvisorSuppressionContractResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetMetadataEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorSuppressionContractResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MetadataEntityResource"/> object. </returns>
-        public static MetadataEntityResource GetMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdvisorSuppressionContractResource"/> object. </returns>
+        public static AdvisorSuppressionContractResource GetAdvisorSuppressionContractResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetMetadataEntityResource(id);
+            return GetMockableAdvisorArmClient(client).GetAdvisorSuppressionContractResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceRecommendationBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceRecommendationBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceRecommendationBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of <see cref="AdvisorSuppressionContractCollection"/> objects within the specified scope.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetResourceRecommendationBaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorSuppressionContracts(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceRecommendationBaseResource"/> object. </returns>
-        public static ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a collection of <see cref="AdvisorSuppressionContractResource"/> objects. </returns>
+        public static AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetResourceRecommendationBaseResource(id);
+            return GetMockableAdvisorArmClient(client).GetAdvisorSuppressionContracts(scope);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SuppressionContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionContractResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Obtains the details of a suppression.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorArmClient.GetSuppressionContractResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorSuppressionContract(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the suppression. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SuppressionContractResource"/> object. </returns>
-        public static SuppressionContractResource GetSuppressionContractResource(this ArmClient client, ResourceIdentifier id)
+        [ForwardsClientCalls]
+        public static Response<AdvisorSuppressionContractResource> GetAdvisorSuppressionContract(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAdvisorArmClient(client).GetSuppressionContractResource(id);
+            return GetMockableAdvisorArmClient(client).GetAdvisorSuppressionContract(scope, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Obtains the details of a suppression.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorSuppressionContractAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The name of the suppression. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AdvisorSuppressionContractResource>> GetAdvisorSuppressionContractAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableAdvisorArmClient(client).GetAdvisorSuppressionContractAsync(scope, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorScoreEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorScoreEntityResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorScoreEntityResource"/> object. </returns>
+        public static AdvisorScoreEntityResource GetAdvisorScoreEntityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorScoreEntityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorAssessmentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorAssessmentResource"/> object. </returns>
+        public static AdvisorAssessmentResource GetAdvisorAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorAssessmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorResiliencyReviewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorResiliencyReviewResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorResiliencyReviewResource"/> object. </returns>
+        public static AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorResiliencyReviewResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorTriageRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorTriageRecommendationResource"/> object. </returns>
+        public static AdvisorTriageRecommendationResource GetAdvisorTriageRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorTriageRecommendationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AdvisorTriageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorArmClient.GetAdvisorTriageResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvisorTriageResource"/> object. </returns>
+        public static AdvisorTriageResource GetAdvisorTriageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAdvisorArmClient(client).GetAdvisorTriageResource(id);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.GetConfigurations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroupAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigData> GetConfigurationsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).GetConfigurationsAsync(cancellationToken);
+            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).GetAdvisorConfigurationsByResourceGroupAsync(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.GetConfigurations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroup(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigData> GetConfigurations(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorConfigurationData> GetAdvisorConfigurationsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).GetConfigurations(cancellationToken);
+            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).GetAdvisorConfigurationsByResourceGroup(cancellationToken);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.CreateConfiguration(ConfigurationName,ConfigData,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.CreateAdvisorConfigurationInResourceGroupAsync(AdvisorConfigurationName, AdvisorConfigurationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ConfigData>> CreateConfigurationAsync(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AdvisorConfigurationData>> CreateAdvisorConfigurationInResourceGroupAsync(this ResourceGroupResource resourceGroupResource, AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAdvisorResourceGroupResource(resourceGroupResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAdvisorResourceGroupResource(resourceGroupResource).CreateAdvisorConfigurationInResourceGroupAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.CreateConfiguration(ConfigurationName,ConfigData,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorResourceGroupResource.CreateAdvisorConfigurationInResourceGroup(AdvisorConfigurationName, AdvisorConfigurationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
-        public static Response<ConfigData> CreateConfiguration(this ResourceGroupResource resourceGroupResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AdvisorConfigurationData> CreateAdvisorConfigurationInResourceGroup(this ResourceGroupResource resourceGroupResource, AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).CreateConfiguration(configurationName, data, cancellationToken);
+            return GetMockableAdvisorResourceGroupResource(resourceGroupResource).CreateAdvisorConfigurationInResourceGroup(configurationName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AdvisorScoreEntities in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorScoreEntities()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of AdvisorScoreEntities and their operations over a AdvisorScoreEntityResource. </returns>
+        public static AdvisorScoreEntityCollection GetAdvisorScoreEntities(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorScoreEntities();
+        }
+
+        /// <summary>
+        /// Gets the advisor score.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorScoreEntityAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="name"> The scope of Advisor score entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AdvisorScoreEntityResource>> GetAdvisorScoreEntityAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorScoreEntityAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the advisor score.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorScoreEntity(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="name"> The scope of Advisor score entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AdvisorScoreEntityResource> GetAdvisorScoreEntity(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorScoreEntity(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AdvisorAssessments in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorAssessments()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of AdvisorAssessments and their operations over a AdvisorAssessmentResource. </returns>
+        public static AdvisorAssessmentCollection GetAdvisorAssessments(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorAssessments();
+        }
+
+        /// <summary>
+        /// Get an existing Azure Advisor assessment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorAssessmentAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="assessmentName"> Advisor assessment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AdvisorAssessmentResource>> GetAdvisorAssessmentAsync(this SubscriptionResource subscriptionResource, string assessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorAssessmentAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an existing Azure Advisor assessment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorAssessment(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="assessmentName"> Advisor assessment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AdvisorAssessmentResource> GetAdvisorAssessment(this SubscriptionResource subscriptionResource, string assessmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorAssessment(assessmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AdvisorResiliencyReviews in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorResiliencyReviews()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of AdvisorResiliencyReviews and their operations over a AdvisorResiliencyReviewResource. </returns>
+        public static AdvisorResiliencyReviewCollection GetAdvisorResiliencyReviews(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorResiliencyReviews();
+        }
+
+        /// <summary>
+        /// Get existing Azure Advisor resiliency review by id.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorResiliencyReviewAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AdvisorResiliencyReviewResource>> GetAdvisorResiliencyReviewAsync(this SubscriptionResource subscriptionResource, string reviewId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorResiliencyReviewAsync(reviewId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get existing Azure Advisor resiliency review by id.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorResiliencyReview(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AdvisorResiliencyReviewResource> GetAdvisorResiliencyReview(this SubscriptionResource subscriptionResource, string reviewId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorResiliencyReview(reviewId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.AdvisorPredictAsync(AdvisorPredictionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AdvisorPredictionResult>> AdvisorPredictAsync(this SubscriptionResource subscriptionResource, AdvisorPredictionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).AdvisorPredictAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Predicts a recommendation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.AdvisorPredict(AdvisorPredictionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AdvisorPredictionResult> AdvisorPredict(this SubscriptionResource subscriptionResource, AdvisorPredictionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).AdvisorPredict(content, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetConfigurations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscriptionAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigData> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorConfigurationData> GetAdvisorConfigurationsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetConfigurationsAsync(cancellationToken);
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorConfigurationsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations and also retrieve configurations of contained resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetConfigurations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscription(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigData> GetConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorConfigurationData> GetAdvisorConfigurationsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetConfigurations(cancellationToken);
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorConfigurationsBySubscription(cancellationToken);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.CreateConfiguration(ConfigurationName,ConfigData,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.CreateAdvisorConfigurationInSubscriptionAsync(AdvisorConfigurationName, AdvisorConfigurationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ConfigData>> CreateConfigurationAsync(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AdvisorConfigurationData>> CreateAdvisorConfigurationInSubscriptionAsync(this SubscriptionResource subscriptionResource, AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).CreateConfigurationAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAdvisorSubscriptionResource(subscriptionResource).CreateAdvisorConfigurationInSubscriptionAsync(configurationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration and also delete all configurations of contained resource groups.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.CreateConfiguration(ConfigurationName,ConfigData,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.CreateAdvisorConfigurationInSubscription(AdvisorConfigurationName, AdvisorConfigurationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="data"/> is null. </exception>
-        public static Response<ConfigData> CreateConfiguration(this SubscriptionResource subscriptionResource, ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AdvisorConfigurationData> CreateAdvisorConfigurationInSubscription(this SubscriptionResource subscriptionResource, AdvisorConfigurationName configurationName, AdvisorConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).CreateConfiguration(configurationName, data, cancellationToken);
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).CreateAdvisorConfigurationInSubscription(configurationName, data, cancellationToken);
         }
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GenerateRecommendation(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GenerateRecommendationAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response> GenerateRecommendationAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
@@ -488,30 +672,12 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Initiates the recommendation generation or computation process for a subscription. This operation is asynchronous. The generated recommendations are stored in a cache in the Advisor service.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_Generate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GenerateRecommendation(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GenerateRecommendation(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response GenerateRecommendation(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
@@ -523,30 +689,12 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation(Guid,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendationAsync(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -559,30 +707,12 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the status of the recommendation computation or generation process. Invoke this API after calling the generation recommendation. The URI of this API is returned in the Location field of the response header.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetGenerateStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation(Guid,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetGenerateStatusRecommendation(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -595,171 +725,169 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetSuppressionContracts(int?,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContractsAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SuppressionContractResource> GetSuppressionContractsAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContractsAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetSuppressionContractsAsync(top, skipToken, cancellationToken);
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContractsAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the list of snoozed or dismissed suppressions for a subscription. The snoozed or dismissed attribute of a recommendation is referred to as a suppression.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Suppressions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetSuppressionContracts(int?,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorSuppressionContracts(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SuppressionContractResource> GetSuppressionContracts(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorSuppressionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorSuppressionContractResource> GetAdvisorSuppressionContracts(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetSuppressionContracts(top, skipToken, cancellationToken);
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorSuppressionContracts(top, skipToken, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of MetadataEntityResources in the TenantResource.
+        /// Get list of Azure Advisor assessment types.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetMetadataEntities()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorAssessmentType> GetAdvisorAssessmentTypesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorAssessmentTypesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get list of Azure Advisor assessment types.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorAssessmentType"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorAssessmentType> GetAdvisorAssessmentTypes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorAssessmentTypes(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get list of Workloads.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorWorkloadsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AdvisorWorkload> GetAdvisorWorkloadsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorWorkloadsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get list of Workloads.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorSubscriptionResource.GetAdvisorWorkloads(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AdvisorWorkload"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AdvisorWorkload> GetAdvisorWorkloads(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAdvisorSubscriptionResource(subscriptionResource).GetAdvisorWorkloads(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AdvisorMetadataEntities in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetAdvisorMetadataEntities()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
-        public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AdvisorMetadataEntities and their operations over a AdvisorMetadataEntityResource. </returns>
+        public static AdvisorMetadataEntityCollection GetAdvisorMetadataEntities(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAdvisorTenantResource(tenantResource).GetMetadataEntities();
+            return GetMockableAdvisorTenantResource(tenantResource).GetAdvisorMetadataEntities();
         }
 
         /// <summary>
         /// Gets the metadata entity.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetadataEntityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetMetadataEntityAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetAdvisorMetadataEntityAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AdvisorMetadataEntityResource>> GetAdvisorMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAdvisorTenantResource(tenantResource).GetMetadataEntityAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAdvisorTenantResource(tenantResource).GetAdvisorMetadataEntityAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the metadata entity.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecommendationMetadata_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetadataEntityResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetMetadataEntity(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAdvisorTenantResource.GetAdvisorMetadataEntity(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="name"> Name of metadata entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MetadataEntityResource> GetMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static Response<AdvisorMetadataEntityResource> GetAdvisorMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAdvisorTenantResource(tenantResource).GetMetadataEntity(name, cancellationToken);
+            return GetMockableAdvisorTenantResource(tenantResource).GetAdvisorMetadataEntity(name, cancellationToken);
         }
     }
 }

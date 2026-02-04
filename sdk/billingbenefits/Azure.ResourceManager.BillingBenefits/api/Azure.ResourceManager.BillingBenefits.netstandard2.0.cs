@@ -328,9 +328,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType Shared { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeType (string value) { throw null; }
@@ -345,9 +343,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsBillingPlan(string value) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan P1M { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsBillingPlan (string value) { throw null; }
@@ -373,9 +369,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitmentGrain(string value) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain Hourly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain (string value) { throw null; }
@@ -403,9 +397,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility Off { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility (string value) { throw null; }
@@ -423,9 +415,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus (string value) { throw null; }
@@ -459,9 +449,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState PendingBilling { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsProvisioningState (string value) { throw null; }
@@ -544,9 +532,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType VirtualMachineSoftware { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType VMwareCloudSimple { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservedResourceType (string value) { throw null; }
@@ -641,9 +627,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm P3Y { get { throw null; } }
         public static Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm P5Y { get { throw null; } }
         public bool Equals(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm left, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm right) { throw null; }
         public static implicit operator Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm (string value) { throw null; }

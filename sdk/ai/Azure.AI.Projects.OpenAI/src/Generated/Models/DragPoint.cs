@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Coordinate. </summary>
     internal partial class DragPoint
@@ -16,7 +16,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="DragPoint"/>. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
-        internal DragPoint(long x, long y)
+        public DragPoint(long x, long y)
         {
             X = x;
             Y = y;

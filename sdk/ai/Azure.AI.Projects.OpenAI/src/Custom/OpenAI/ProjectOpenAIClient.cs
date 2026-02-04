@@ -126,16 +126,20 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         options ??= new ProjectOpenAIClientOptions();
 
-        TelemetryDetails telemetryDetails = new(typeof(ProjectOpenAIClient).Assembly, options?.UserAgentApplicationId);
-
+        TelemetryDetails telemetryDetails = new(typeof(OpenAIClient).Assembly, default);
+        string prefix = "AIProjectClient";
+        if (!string.IsNullOrEmpty(options.UserAgentApplicationId))
+        {
+            prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
+        }
         PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", telemetryDetails.UserAgent.ToString());
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
-        return ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { authenticationPolicy }, Array.Empty<PipelinePolicy>());
+        return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authenticationPolicy], beforeTransportPolicies: []);
     }
 
     internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)

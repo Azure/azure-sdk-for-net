@@ -12,11 +12,6 @@ namespace OpenAI
 {
     internal partial class InternalCodeInterpreterTool : AgentTool, IJsonModel<InternalCodeInterpreterTool>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/> for deserialization. </summary>
-        internal InternalCodeInterpreterTool()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalCodeInterpreterTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -36,15 +31,18 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalCodeInterpreterTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("container"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Container);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Container))
+            if (Optional.IsDefined(Container))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName("container"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Container);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Container))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -84,6 +82,10 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("container"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     container = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }

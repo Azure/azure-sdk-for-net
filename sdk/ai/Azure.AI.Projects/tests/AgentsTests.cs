@@ -329,9 +329,11 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task SimplePromptAgentWithoutConversation()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task SimplePromptAgentWithoutConversation(bool useDefaultEndpoint)
     {
-        AIProjectClient projectClient = GetTestProjectClient();
+        AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: useDefaultEndpoint);
 
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
@@ -345,6 +347,31 @@ public class AgentsTests : AgentsTestBase
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
+        Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestConversationNoInput()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "TestPromptAgentFromDotnet",
+            options: new(agentDefinition));
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
+            {
+                Items = { ResponseItem.CreateUserMessageItem("Please greet me and tell me what would be good to wear outside today.") },
+            });
+
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId:conversation.Id);
+
+        ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }
 
@@ -1359,7 +1386,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(agentDefinition));
-        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("UnknownHostedAgentDefinition"));
+        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("ImageBasedHostedAgentDefinition"));
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version));
     }

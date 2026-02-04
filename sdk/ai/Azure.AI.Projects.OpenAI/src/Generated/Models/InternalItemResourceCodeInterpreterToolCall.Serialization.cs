@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceCodeInterpreterToolCall : AgentResponseItem, IJsonModel<InternalItemResourceCodeInterpreterToolCall>
     {
@@ -105,8 +104,10 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OutputItemCodeInterpreterToolCallStatus status = default;
+            ItemResourceCodeInterpreterToolCallStatus status = default;
             string containerId = default;
             string code = default;
             IList<BinaryData> outputs = default;
@@ -131,9 +132,23 @@ namespace OpenAI
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemCodeInterpreterToolCallStatus();
+                    status = prop.Value.GetString().ToItemResourceCodeInterpreterToolCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("container_id"u8))
@@ -182,6 +197,8 @@ namespace OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 status,
                 containerId,

@@ -82,6 +82,8 @@ namespace Azure.AI.Projects.OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string kind = default;
             string actionId = default;
@@ -107,6 +109,20 @@ namespace Azure.AI.Projects.OpenAI
                         continue;
                     }
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -143,6 +159,8 @@ namespace Azure.AI.Projects.OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 kind,
                 actionId,

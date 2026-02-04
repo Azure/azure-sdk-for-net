@@ -686,7 +686,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.DnsResolverPolicyData DnsResolverPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?), System.Guid? resourceGuid = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DnsResolver.DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DnsResolver.DnsSecurityRuleData DnsSecurityRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), int priority = 0, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType? actionType = default(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResolverDomainLists = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.Models.ManagedDomainList> managedDomainLists = null, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState? dnsSecurityRuleState = default(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState?), Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DnsResolver.DnsSecurityRuleData DnsSecurityRuleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, int priority, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType? actionType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResolverDomainLists, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState? dnsSecurityRuleState, Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier virtualNetworkLinkId = null) { throw null; }
     }
@@ -735,9 +734,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState Disabled { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState left, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsForwardingRuleState (string value) { throw null; }
@@ -765,9 +762,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction Download { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction Upload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction left, Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsResolverDomainListBulkAction (string value) { throw null; }
@@ -854,9 +849,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState left, Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState (string value) { throw null; }
@@ -872,9 +865,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverState Connected { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsResolverState Disconnected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsResolverState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsResolverState left, Azure.ResourceManager.DnsResolver.Models.DnsResolverState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsResolverState (string value) { throw null; }
@@ -902,9 +893,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType Allow { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType Block { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType left, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType (string value) { throw null; }
@@ -936,9 +925,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState Disabled { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState left, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState (string value) { throw null; }
@@ -954,9 +941,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod left, Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod (string value) { throw null; }
@@ -984,9 +969,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public ManagedDomainList(string value) { throw null; }
         public static Azure.ResourceManager.DnsResolver.Models.ManagedDomainList AzureDnsThreatIntel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DnsResolver.Models.ManagedDomainList other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DnsResolver.Models.ManagedDomainList left, Azure.ResourceManager.DnsResolver.Models.ManagedDomainList right) { throw null; }
         public static implicit operator Azure.ResourceManager.DnsResolver.Models.ManagedDomainList (string value) { throw null; }

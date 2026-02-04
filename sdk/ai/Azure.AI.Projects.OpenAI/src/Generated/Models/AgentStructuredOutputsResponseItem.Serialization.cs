@@ -75,6 +75,8 @@ namespace Azure.AI.Projects.OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BinaryData output = default;
             foreach (var prop in element.EnumerateObject())
@@ -98,6 +100,20 @@ namespace Azure.AI.Projects.OpenAI
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("output"u8))
                 {
                     output = BinaryData.FromString(prop.Value.GetRawText());
@@ -108,7 +124,14 @@ namespace Azure.AI.Projects.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentStructuredOutputsResponseItem(@type, id, itemSource, additionalBinaryDataProperties, output);
+            return new AgentStructuredOutputsResponseItem(
+                @type,
+                id,
+                itemSource,
+                agentReference,
+                responseId,
+                additionalBinaryDataProperties,
+                output);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

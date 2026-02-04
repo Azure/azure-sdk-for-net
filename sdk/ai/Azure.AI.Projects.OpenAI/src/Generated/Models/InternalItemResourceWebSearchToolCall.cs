@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceWebSearchToolCall : AgentResponseItem
     {
@@ -17,7 +17,7 @@ namespace OpenAI
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find).
         /// </param>
-        internal InternalItemResourceWebSearchToolCall(OutputItemWebSearchToolCallStatus status, BinaryData action) : base(AgentResponseItemKind.WebSearchCall)
+        internal InternalItemResourceWebSearchToolCall(ItemResourceWebSearchToolCallStatus status, BinaryData action) : base(AgentResponseItemKind.WebSearchCall)
         {
             Status = status;
             Action = action;
@@ -27,20 +27,22 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find).
         /// </param>
-        internal InternalItemResourceWebSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceWebSearchToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ItemResourceWebSearchToolCallStatus status, BinaryData action) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;
         }
 
         /// <summary> The status of the web search tool call. </summary>
-        public OutputItemWebSearchToolCallStatus Status { get; }
+        public ItemResourceWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.

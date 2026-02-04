@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceOutputMessage : AgentResponseItem, IJsonModel<InternalItemResourceOutputMessage>
     {
@@ -77,10 +76,12 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             string id = default;
             AgentItemSource itemSource = default;
+            AgentReference agentReference = default;
+            string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string role = default;
             IList<OutputMessageContent> content = default;
-            OutputItemOutputMessageStatus status = default;
+            ItemResourceOutputMessageStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -102,6 +103,20 @@ namespace OpenAI
                     itemSource = AgentItemSource.DeserializeAgentItemSource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_reference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("role"u8))
                 {
                     role = prop.Value.GetString();
@@ -119,7 +134,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemOutputMessageStatus();
+                    status = prop.Value.GetString().ToItemResourceOutputMessageStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,6 +146,8 @@ namespace OpenAI
                 @type,
                 id,
                 itemSource,
+                agentReference,
+                responseId,
                 additionalBinaryDataProperties,
                 role,
                 content,

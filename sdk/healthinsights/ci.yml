@@ -9,17 +9,6 @@ trigger:
     include:
       - sdk/healthinsights/
 
-pr:
-  branches:
-    include:
-      - main
-      - feature/*
-      - hotfix/*
-      - release/*
-  paths:
-    include:
-      - sdk/healthinsights/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies the gallery application that should be made available to the underlying VMSS. </summary>
     public partial class ServiceFabricManagedVmApplication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedVmApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <param name="vmGalleryTags"> Optional, Specifies a passthrough value for more generic context. Accepts a JSON-formatted string e.g. '{"Tag1":"Value1","Tag2":"Value2"}'. </param>
         /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedVmApplication(Uri configurationReference, bool? enableAutomaticUpgrade, int? order, ResourceIdentifier packageReferenceId, string vmGalleryTags, bool? treatFailureAsDeploymentFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedVmApplication(Uri configurationReference, bool? enableAutomaticUpgrade, int? order, ResourceIdentifier packageReferenceId, string vmGalleryTags, bool? treatFailureAsDeploymentFailure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationReference = configurationReference;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
@@ -72,24 +44,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             PackageReferenceId = packageReferenceId;
             VmGalleryTags = vmGalleryTags;
             TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedVmApplication"/> for deserialization. </summary>
-        internal ServiceFabricManagedVmApplication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </summary>
         public Uri ConfigurationReference { get; set; }
+
         /// <summary> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the underlying VMSS. </summary>
         public bool? EnableAutomaticUpgrade { get; set; }
+
         /// <summary> Optional, Specifies the order in which the packages have to be installed. </summary>
         public int? Order { get; set; }
+
         /// <summary> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </summary>
         public ResourceIdentifier PackageReferenceId { get; set; }
+
         /// <summary> Optional, Specifies a passthrough value for more generic context. Accepts a JSON-formatted string e.g. '{"Tag1":"Value1","Tag2":"Value2"}'. </summary>
         public string VmGalleryTags { get; set; }
+
         /// <summary> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </summary>
         public bool? TreatFailureAsDeploymentFailure { get; set; }
     }

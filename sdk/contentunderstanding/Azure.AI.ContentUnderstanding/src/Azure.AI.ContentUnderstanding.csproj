@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Azure.AI.ContentUnderstanding client library for Azure Cognitive Services Content Understanding, a multimodal AI service that extracts semantic content from documents, audio, and video files</Description>
     <AssemblyTitle>SDK Code Generation Azure.AI.ContentUnderstanding</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure.AI.ContentUnderstanding</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>

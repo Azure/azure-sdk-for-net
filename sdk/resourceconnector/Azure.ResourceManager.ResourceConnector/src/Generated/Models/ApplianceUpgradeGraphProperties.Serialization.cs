@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    public partial class ApplianceUpgradeGraphProperties : IUtf8JsonSerializable, IJsonModel<ApplianceUpgradeGraphProperties>
+    /// <summary> The Upgrade Graph Properties for appliance. </summary>
+    public partial class ApplianceUpgradeGraphProperties : IJsonModel<ApplianceUpgradeGraphProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceUpgradeGraphProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplianceUpgradeGraphProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ApplianceVersion))
             {
                 writer.WritePropertyName("applianceVersion"u8);
@@ -43,21 +43,21 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedVersions)
+                foreach (ApplianceSupportedVersion item in SupportedVersions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,45 +66,49 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
-        ApplianceUpgradeGraphProperties IJsonModel<ApplianceUpgradeGraphProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplianceUpgradeGraphProperties IJsonModel<ApplianceUpgradeGraphProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplianceUpgradeGraphProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
         }
 
-        internal static ApplianceUpgradeGraphProperties DeserializeApplianceUpgradeGraphProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplianceUpgradeGraphProperties DeserializeApplianceUpgradeGraphProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string applianceVersion = default;
             IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("applianceVersion"u8))
+                if (prop.NameEquals("applianceVersion"u8))
                 {
-                    applianceVersion = property.Value.GetString();
+                    applianceVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedVersions"u8))
+                if (prop.NameEquals("supportedVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item, options));
                     }
@@ -113,17 +117,19 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -133,15 +139,20 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
-        ApplianceUpgradeGraphProperties IPersistableModel<ApplianceUpgradeGraphProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplianceUpgradeGraphProperties IPersistableModel<ApplianceUpgradeGraphProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplianceUpgradeGraphProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
                     }
                 default:
@@ -149,6 +160,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ApplianceUpgradeGraphProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

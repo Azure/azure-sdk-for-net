@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceLocalShellToolCallOutput : AgentResponseItem
     {
@@ -21,10 +20,12 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
         /// <param name="status"></param>
-        internal InternalItemResourceLocalShellToolCallOutput(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output, ItemResourceLocalShellToolCallOutputStatus? status) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceLocalShellToolCallOutput(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string output, ItemResourceLocalShellToolCallOutputStatus? status) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             Output = output;
             Status = status;

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AppComplianceReportPatchProperties : IUtf8JsonSerializable, IJsonModel<AppComplianceReportPatchProperties>
+    /// <summary> Patch Report's properties. </summary>
+    public partial class AppComplianceReportPatchProperties : IJsonModel<AppComplianceReportPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComplianceReportPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceReportPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportPatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TriggerOn))
             {
                 writer.WritePropertyName("triggerTime"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (var item in Resources)
+                foreach (ReportResourceMetadata item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,8 +63,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Errors)
+                foreach (string item in Errors)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -93,8 +98,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Subscriptions)
+                foreach (string item in Subscriptions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -113,7 +123,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 writer.WritePropertyName("certRecords"u8);
                 writer.WriteStartArray();
-                foreach (var item in CertRecords)
+                foreach (CertSyncRecord item in CertRecords)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -124,15 +134,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,210 +151,230 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceReportPatchProperties IJsonModel<AppComplianceReportPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportPatchProperties IJsonModel<AppComplianceReportPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceReportPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportPatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppComplianceReportPatchProperties(document.RootElement, options);
         }
 
-        internal static AppComplianceReportPatchProperties DeserializeAppComplianceReportPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppComplianceReportPatchProperties DeserializeAppComplianceReportPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? triggerTime = default;
+            DateTimeOffset? triggerOn = default;
             string timeZone = default;
             IList<ReportResourceMetadata> resources = default;
             AppComplianceReportStatus? status = default;
             IReadOnlyList<string> errors = default;
             Guid? tenantId = default;
             string offerGuid = default;
-            DateTimeOffset? nextTriggerTime = default;
-            DateTimeOffset? lastTriggerTime = default;
+            DateTimeOffset? nextTriggerOn = default;
+            DateTimeOffset? lastTriggerOn = default;
             IReadOnlyList<string> subscriptions = default;
             ReportComplianceStatus complianceStatus = default;
             ReportStorageInfo storageInfo = default;
             IReadOnlyList<CertSyncRecord> certRecords = default;
             AppComplianceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("triggerTime"u8))
+                if (prop.NameEquals("triggerTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    triggerTime = property.Value.GetDateTimeOffset("O");
+                    triggerOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeZone"u8))
+                if (prop.NameEquals("timeZone"u8))
                 {
-                    timeZone = property.Value.GetString();
+                    timeZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resources"u8))
+                if (prop.NameEquals("resources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReportResourceMetadata> array = new List<ReportResourceMetadata>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReportResourceMetadata.DeserializeReportResourceMetadata(item, options));
                     }
                     resources = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new AppComplianceReportStatus(property.Value.GetString());
+                    status = new AppComplianceReportStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("offerGuid"u8))
+                if (prop.NameEquals("offerGuid"u8))
                 {
-                    offerGuid = property.Value.GetString();
+                    offerGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextTriggerTime"u8))
+                if (prop.NameEquals("nextTriggerTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextTriggerTime = property.Value.GetDateTimeOffset("O");
+                    nextTriggerOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTriggerTime"u8))
+                if (prop.NameEquals("lastTriggerTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastTriggerTime = property.Value.GetDateTimeOffset("O");
+                    lastTriggerOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subscriptions"u8))
+                if (prop.NameEquals("subscriptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("complianceStatus"u8))
+                if (prop.NameEquals("complianceStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
+                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageInfo"u8))
+                if (prop.NameEquals("storageInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageInfo = ReportStorageInfo.DeserializeReportStorageInfo(property.Value, options);
+                    storageInfo = ReportStorageInfo.DeserializeReportStorageInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certRecords"u8))
+                if (prop.NameEquals("certRecords"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CertSyncRecord> array = new List<CertSyncRecord>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CertSyncRecord.DeserializeCertSyncRecord(item, options));
                     }
                     certRecords = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new AppComplianceProvisioningState(property.Value.GetString());
+                    provisioningState = new AppComplianceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AppComplianceReportPatchProperties(
-                triggerTime,
+                triggerOn,
                 timeZone,
                 resources ?? new ChangeTrackingList<ReportResourceMetadata>(),
                 status,
                 errors ?? new ChangeTrackingList<string>(),
                 tenantId,
                 offerGuid,
-                nextTriggerTime,
-                lastTriggerTime,
+                nextTriggerOn,
+                lastTriggerOn,
                 subscriptions ?? new ChangeTrackingList<string>(),
                 complianceStatus,
                 storageInfo,
                 certRecords ?? new ChangeTrackingList<CertSyncRecord>(),
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AppComplianceReportPatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppComplianceReportPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -354,15 +384,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        AppComplianceReportPatchProperties IPersistableModel<AppComplianceReportPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppComplianceReportPatchProperties IPersistableModel<AppComplianceReportPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppComplianceReportPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppComplianceReportPatchProperties(document.RootElement, options);
                     }
                 default:
@@ -370,6 +405,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AppComplianceReportPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

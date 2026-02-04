@@ -205,6 +205,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Cat",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Cat"
+        }
+      },
       "properties": [
         {
           "$id": "26",
@@ -266,6 +271,11 @@
       "crossLanguageDefinitionId": "Type.Union.Discriminated.Dog",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Dog"
+        }
+      },
       "properties": [
         {
           "$id": "31",
@@ -400,7 +410,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -446,7 +456,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -546,7 +556,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -688,7 +699,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -784,7 +796,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.Default.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -793,7 +805,8 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "43"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 },
                 {
                   "$id": "68",
@@ -884,7 +897,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.get",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -1026,7 +1040,8 @@
                         "generateProtocolMethod": true,
                         "generateConvenienceMethod": true,
                         "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.put",
-                        "decorators": []
+                        "decorators": [],
+                        "namespace": "Type.Union.Discriminated.Envelope.Object"
                       },
                       "parameters": [
                         {
@@ -1122,7 +1137,7 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                      "crossLanguageDefinitionId": "Type.Union.Discriminated.Envelope.Object.CustomProperties.endpoint"
                     }
                   ],
                   "initializedBy": 0,
@@ -1131,11 +1146,14 @@
                   "apiVersions": [],
                   "parent": {
                     "$ref": "43"
-                  }
+                  },
+                  "isMultiServiceClient": false
                 }
-              ]
+              ],
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         },
         {
           "$id": "89",
@@ -1172,7 +1190,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -1272,7 +1290,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1414,7 +1433,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1510,7 +1530,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.Default.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1519,7 +1539,8 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "89"
-              }
+              },
+              "isMultiServiceClient": false
             },
             {
               "$id": "114",
@@ -1610,7 +1631,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.get",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1752,7 +1774,8 @@
                     "generateProtocolMethod": true,
                     "generateConvenienceMethod": true,
                     "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.put",
-                    "decorators": []
+                    "decorators": [],
+                    "namespace": "Type.Union.Discriminated.NoEnvelope"
                   },
                   "parameters": [
                     {
@@ -1848,7 +1871,7 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Type.Union.Discriminated.endpoint"
+                  "crossLanguageDefinitionId": "Type.Union.Discriminated.NoEnvelope.CustomDiscriminator.endpoint"
                 }
               ],
               "initializedBy": 0,
@@ -1857,11 +1880,14 @@
               "apiVersions": [],
               "parent": {
                 "$ref": "89"
-              }
+              },
+              "isMultiServiceClient": false
             }
-          ]
+          ],
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

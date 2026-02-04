@@ -23,10 +23,12 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        internal OAuthConsentRequestResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string consentLink, string serverLabel) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal OAuthConsentRequestResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string consentLink, string serverLabel) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             ConsentLink = consentLink;
             ServerLabel = serverLabel;

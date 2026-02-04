@@ -595,7 +595,6 @@ namespace Azure.ResourceManager.MobileNetwork
         public int? RfspIndex { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> SiteProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration> SliceConfigurations { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.MobileNetwork.Models.Ambr UeAmbr { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.Ambr UEAmbr { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -798,7 +797,6 @@ namespace Azure.ResourceManager.MobileNetwork
         public Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration Signaling { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Sites { get { throw null; } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku Sku { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? UeMtu { get { throw null; } set { } }
         public int? UEMtu { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity UserAssignedIdentity { get { throw null; } set { } }
@@ -1066,12 +1064,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileDataNetworkData MobileDataNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), string description = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning MobileNetworkCertificateProvisioning(Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState? state = default(Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState?), string reason = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkData MobileNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity identity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId publicLandMobileNetworkIdentifier = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.PublicLandMobileNetwork> publicLandMobileNetworks = null, string serviceKey = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkData MobileNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlmnId publicLandMobileNetworkIdentifier, string serviceKey) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageData MobileNetworkDiagnosticsPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkHttpsServerCertificate MobileNetworkHttpsServerCertificate(System.Uri certificateUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCertificateProvisioning provisioning = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation MobileNetworkInstallation(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState? desiredState = default(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState? state = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired? reinstallRequired = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason> reasons = null, Azure.Core.ResourceIdentifier operationId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status, string reason, System.DateTimeOffset? captureStartOn, System.Collections.Generic.IEnumerable<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus? status = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus?), string reason = null, System.DateTimeOffset? captureStartOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), System.Collections.Generic.IEnumerable<string> outputFiles = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration MobileNetworkPlatformConfiguration(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType platformType = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType), Azure.Core.ResourceIdentifier azureStackEdgeDeviceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> azureStackEdgeDevices = null, Azure.Core.ResourceIdentifier azureStackHciClusterId = null, Azure.Core.ResourceIdentifier connectedClusterId = null, Azure.Core.ResourceIdentifier customLocationId = null) { throw null; }
@@ -1082,15 +1078,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSimPolicyData MobileNetworkSimPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> siteProvisioningState = null, Azure.ResourceManager.MobileNetwork.Models.Ambr ueAmbr = null, Azure.Core.ResourceIdentifier defaultSliceId = null, int? rfspIndex = default(int?), int? registrationTimer = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSliceConfiguration> sliceConfigurations = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSiteData MobileNetworkSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> networkFunctions = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.MobileNetworkSliceData MobileNetworkSliceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.Snssai snssai = null, string description = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku, int? ueMtu, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, System.Uri diagnosticsUploadStorageAccountContainerUri, System.BinaryData interopSettings) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, Azure.ResourceManager.MobileNetwork.Models.PacketCoreSignalingConfiguration signaling = null, System.BinaryData interopSettings = null, Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = default(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState?), bool? allowSupportTelemetryAccess = default(bool?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = default(int?), System.BinaryData interopSettings = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData PacketCoreControlPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentity userAssignedIdentity = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallation installation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> sites = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformConfiguration platform = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType? coreNetworkTechnology = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkCoreNetworkType?), string version = null, string installedVersion = null, string rollbackVersion = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku sku = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku), int? ueMtu = default(int?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, System.Uri diagnosticsUploadStorageAccountContainerUri = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = default(int?), System.BinaryData interopSettings = null, Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = default(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatform> platforms = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData PacketCoreDataPlaneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData PacketCoreDataPlaneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInterfaceProperties userPlaneAccessInterface = null, System.Collections.Generic.IEnumerable<string> userPlaneAccessVirtualIPv4Addresses = null) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.SimNameAndEncryptedProperties SimNameAndEncryptedProperties(string name = null, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState?), Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState? simState = default(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, Azure.Core.ResourceIdentifier simPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string encryptedCredentials = null) { throw null; }
@@ -1126,9 +1118,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState NotProvisioned { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState Provisioned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState left, Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.CertificateProvisioningState (string value) { throw null; }
@@ -1164,9 +1154,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState Installed { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState Uninstalled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState left, Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.DesiredInstallationState (string value) { throw null; }
@@ -1222,9 +1210,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState NotProvisioned { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState Provisioned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState left, Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.HomeNetworkPrivateKeysProvisioningState (string value) { throw null; }
@@ -1252,9 +1238,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType Aad { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType Password { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkAuthenticationType (string value) { throw null; }
@@ -1273,9 +1257,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku G2 { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku G5 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkBillingSku (string value) { throw null; }
@@ -1311,9 +1293,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus Error { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus NotStarted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkDiagnosticsPackageStatus (string value) { throw null; }
@@ -1375,9 +1355,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason UserPlaneAccessVirtualIPv4AddressesHasChanged { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason UserPlaneDataInterfaceHasChanged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationReason (string value) { throw null; }
@@ -1400,9 +1378,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState Updating { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkInstallationState (string value) { throw null; }
@@ -1483,9 +1459,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType None { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkManagedServiceIdentityType (string value) { throw null; }
@@ -1502,9 +1476,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType NEA1EEA1 { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType NEA2EEA2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkNasEncryptionType (string value) { throw null; }
@@ -1520,9 +1492,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion NotObsolete { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion Obsolete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkObsoleteVersion (string value) { throw null; }
@@ -1540,9 +1510,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus Running { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus Stopped { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPacketCaptureStatus (string value) { throw null; }
@@ -1558,9 +1526,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType IPv4 { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPduSessionType (string value) { throw null; }
@@ -1606,16 +1572,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MobileNetworkPlatformType(string value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType AKSHCI { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType AksHci { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType ThreePAzureStackHCI { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType ThreePAzureStackHci { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType (string value) { throw null; }
@@ -1667,9 +1629,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability MayPreempt { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability NotPreempt { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionCapability (string value) { throw null; }
@@ -1685,9 +1645,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability NotPreemptable { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability Preemptable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPreemptionVulnerability (string value) { throw null; }
@@ -1708,9 +1666,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkProvisioningState (string value) { throw null; }
@@ -1741,9 +1697,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion NotRecommended { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion Recommended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkRecommendedVersion (string value) { throw null; }
@@ -1759,9 +1713,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired NotRequired { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired Required { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkReinstallRequired (string value) { throw null; }
@@ -1790,9 +1742,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS Downlink { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS Uplink { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSdfDirectionS (string value) { throw null; }
@@ -1824,9 +1774,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState Enabled { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSimState (string value) { throw null; }
@@ -1846,9 +1794,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState Provisioned { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkSiteProvisioningState (string value) { throw null; }
@@ -1888,9 +1834,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission Blocked { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkTrafficControlPermission (string value) { throw null; }
@@ -1910,9 +1854,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState Validating { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState ValidationFailed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState left, Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.MobileNetworkVersionState (string value) { throw null; }
@@ -1943,9 +1885,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.NaptState Disabled { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.NaptState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.NaptState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.NaptState left, Azure.ResourceManager.MobileNetwork.Models.NaptState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.NaptState (string value) { throw null; }
@@ -2009,9 +1949,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public PdnType(string value) { throw null; }
         public static Azure.ResourceManager.MobileNetwork.Models.PdnType IPV4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.PdnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.PdnType left, Azure.ResourceManager.MobileNetwork.Models.PdnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.PdnType (string value) { throw null; }
@@ -2063,9 +2001,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.RatType FiveG { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.RatType FourG { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.RatType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.RatType left, Azure.ResourceManager.MobileNetwork.Models.RatType right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.RatType (string value) { throw null; }
@@ -2085,9 +2021,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause MobileTerminatedSignaling { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause Sms { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause left, Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.RrcEstablishmentCause (string value) { throw null; }
@@ -2379,9 +2313,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.UEState Idle { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.UEState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.UEState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.UEState left, Azure.ResourceManager.MobileNetwork.Models.UEState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.UEState (string value) { throw null; }
@@ -2397,9 +2329,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting DataCentric { get { throw null; } }
         public static Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting VoiceCentric { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting left, Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting right) { throw null; }
         public static implicit operator Azure.ResourceManager.MobileNetwork.Models.UEUsageSetting (string value) { throw null; }

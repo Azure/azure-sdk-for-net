@@ -1,4 +1,0 @@
-﻿Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed convallis
-quam. In interdum lobortis eros, at faucibus nunc faucibus at. Proin quis
-porttitor nibh, in semper tortor. Proin vel pretium orci. Proin dictum metus
-nulla, at congue risus viverra.

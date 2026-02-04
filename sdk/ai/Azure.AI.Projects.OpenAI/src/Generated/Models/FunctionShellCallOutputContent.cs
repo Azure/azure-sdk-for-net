@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Shell call output content. </summary>
     internal partial class FunctionShellCallOutputContent
@@ -14,8 +14,8 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputContent"/>. </summary>
-        /// <param name="stdout"></param>
-        /// <param name="stderr"></param>
+        /// <param name="stdout"> The standard output that was captured. </param>
+        /// <param name="stderr"> The standard error output that was captured. </param>
         /// <param name="outcome"> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </param>
         internal FunctionShellCallOutputContent(string stdout, string stderr, FunctionShellCallOutputOutcome outcome)
         {
@@ -25,10 +25,10 @@ namespace OpenAI
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputContent"/>. </summary>
-        /// <param name="stdout"></param>
-        /// <param name="stderr"></param>
+        /// <param name="stdout"> The standard output that was captured. </param>
+        /// <param name="stderr"> The standard error output that was captured. </param>
         /// <param name="outcome"> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </param>
-        /// <param name="createdBy"></param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FunctionShellCallOutputContent(string stdout, string stderr, FunctionShellCallOutputOutcome outcome, string createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -39,16 +39,16 @@ namespace OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Stdout. </summary>
+        /// <summary> The standard output that was captured. </summary>
         public string Stdout { get; }
 
-        /// <summary> Gets the Stderr. </summary>
+        /// <summary> The standard error output that was captured. </summary>
         public string Stderr { get; }
 
         /// <summary> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </summary>
         public FunctionShellCallOutputOutcome Outcome { get; }
 
-        /// <summary> Gets the CreatedBy. </summary>
+        /// <summary> The identifier of the actor that created the item. </summary>
         public string CreatedBy { get; }
     }
 }

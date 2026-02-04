@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DevBox))]
     [ModelReaderWriterBuildable(typeof(DevBoxAction))]
@@ -30,6 +31,16 @@ namespace Azure.Developer.DevCenter
     [ModelReaderWriterBuildable(typeof(EnvironmentDefinition))]
     [ModelReaderWriterBuildable(typeof(EnvironmentDefinitionParameter))]
     [ModelReaderWriterBuildable(typeof(OSDisk))]
+    [ModelReaderWriterBuildable(typeof(PagedCatalog))]
+    [ModelReaderWriterBuildable(typeof(PagedDevBox))]
+    [ModelReaderWriterBuildable(typeof(PagedDevBoxAction))]
+    [ModelReaderWriterBuildable(typeof(PagedDevBoxActionDelayResult))]
+    [ModelReaderWriterBuildable(typeof(PagedEnvironment))]
+    [ModelReaderWriterBuildable(typeof(PagedEnvironmentDefinition))]
+    [ModelReaderWriterBuildable(typeof(PagedEnvironmentType))]
+    [ModelReaderWriterBuildable(typeof(PagedPool))]
+    [ModelReaderWriterBuildable(typeof(PagedProject))]
+    [ModelReaderWriterBuildable(typeof(PagedSchedule))]
     [ModelReaderWriterBuildable(typeof(RemoteConnection))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]

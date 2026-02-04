@@ -98,7 +98,7 @@ namespace OpenAI
                     case "scroll":
                         return Scroll.DeserializeScroll(element, options);
                     case "type":
-                        return OpenAI.Type.DeserializeType(element, options);
+                        return Azure.AI.Projects.OpenAI.Type.DeserializeType(element, options);
                     case "wait":
                         return Wait.DeserializeWait(element, options);
                 }

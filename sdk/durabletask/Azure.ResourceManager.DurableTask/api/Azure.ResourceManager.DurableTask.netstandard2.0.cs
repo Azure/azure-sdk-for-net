@@ -230,9 +230,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState left, Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState (string value) { throw null; }
@@ -251,9 +249,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Failed { get { throw null; } }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Terminated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState (string value) { throw null; }
@@ -270,9 +266,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState None { get { throw null; } }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState Zone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState (string value) { throw null; }
@@ -384,9 +378,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName Consumption { get { throw null; } }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName Dedicated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName left, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuName (string value) { throw null; }

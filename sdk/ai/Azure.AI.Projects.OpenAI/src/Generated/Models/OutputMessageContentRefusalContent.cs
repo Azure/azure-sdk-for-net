@@ -5,15 +5,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Refusal. </summary>
     internal partial class OutputMessageContentRefusalContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
-        internal OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
+        /// <exception cref="ArgumentNullException"> <paramref name="refusal"/> is null. </exception>
+        public OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
         {
+            Argument.AssertNotNull(refusal, nameof(refusal));
+
             Refusal = refusal;
         }
 

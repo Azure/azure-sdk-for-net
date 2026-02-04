@@ -4,9 +4,8 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects.OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary></summary>
     internal readonly partial struct ApplyPatchFileOperationType : IEquatable<ApplyPatchFileOperationType>

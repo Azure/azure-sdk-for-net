@@ -18,7 +18,7 @@ namespace OpenAI
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
         /// <param name="topLogprobs"></param>
-        internal InternalLogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<InternalTopLogProb> topLogprobs)
+        public InternalLogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<InternalTopLogProb> topLogprobs)
         {
             Token = token;
             Logprob = logprob;

@@ -93,6 +93,11 @@
       "crossLanguageDefinitionId": "Service.Input",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Input"
+        }
+      },
       "properties": [
         {
           "$id": "12",
@@ -129,6 +134,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.withBody.Request.anonymous",
       "usage": "Input,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "15",
@@ -166,6 +176,11 @@
       "usage": "Output,Json",
       "doc": "Properties of a blob",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BlobProperties"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -355,7 +370,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.HeaderParam.withQuery",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -474,7 +490,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.HeaderParam.withBody",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -549,7 +566,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.HeaderParam.endpoint"
         },
         {
           "$id": "47",
@@ -577,7 +594,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.HeaderParam",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "49",
@@ -674,7 +692,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MultipleParams.withQuery",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -813,7 +832,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MultipleParams.withBody",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -888,7 +908,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MultipleParams.endpoint"
         },
         {
           "$id": "73",
@@ -938,7 +958,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MultipleParams",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "77",
@@ -1035,7 +1056,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MixedParams.withQuery",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -1195,7 +1217,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MixedParams.withBody",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -1291,7 +1314,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MixedParams.endpoint"
         },
         {
           "$id": "105",
@@ -1319,7 +1342,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.MixedParams",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "107",
@@ -1399,7 +1423,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam.withQuery",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -1504,7 +1529,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam.getStandalone",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [
             {
@@ -1587,7 +1613,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam.deleteStandalone",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [],
           "response": {},
@@ -1626,7 +1653,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam.endpoint"
         },
         {
           "$id": "129",
@@ -1654,7 +1681,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.PathParam",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "131",
@@ -1714,7 +1742,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParamAlias.withAliasedName",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [],
           "response": {},
@@ -1775,7 +1804,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParamAlias.withOriginalName",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"
           },
           "parameters": [],
           "response": {},
@@ -1814,7 +1844,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParamAlias.endpoint"
         },
         {
           "$id": "143",
@@ -1842,7 +1872,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParamAlias",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "145",
@@ -1879,7 +1910,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Service.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.endpoint"
         }
       ],
       "initializedBy": 1,
@@ -1965,7 +1996,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.ChildClient.withQuery",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient"
               },
               "parameters": [
                 {
@@ -2070,7 +2102,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.ChildClient.getStandalone",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient"
               },
               "parameters": [
                 {
@@ -2153,7 +2186,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.ChildClient.deleteStandalone",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient"
               },
               "parameters": [],
               "response": {},
@@ -2192,7 +2226,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Service.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.ParentClient.ChildClient.endpoint"
             },
             {
               "$ref": "129"
@@ -2204,9 +2238,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "145"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

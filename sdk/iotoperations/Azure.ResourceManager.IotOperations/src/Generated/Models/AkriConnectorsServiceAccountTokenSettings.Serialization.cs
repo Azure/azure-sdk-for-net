@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorsServiceAccountTokenSettings properties. </summary>
-    public partial class AkriConnectorsServiceAccountTokenSettings : IJsonModel<AkriConnectorsServiceAccountTokenSettings>
+    internal partial class AkriConnectorsServiceAccountTokenSettings : IJsonModel<AkriConnectorsServiceAccountTokenSettings>
     {
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsServiceAccountTokenSettings"/> for deserialization. </summary>
         internal AkriConnectorsServiceAccountTokenSettings()

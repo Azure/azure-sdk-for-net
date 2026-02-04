@@ -1837,9 +1837,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus NotStarted { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobStatus (string value) { throw null; }
@@ -1891,9 +1889,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType ExternalValidation { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType Staging { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeJobType (string value) { throw null; }
@@ -1910,9 +1906,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeResourceState (string value) { throw null; }
@@ -1929,9 +1923,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType Application { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType Common { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationModelType (string value) { throw null; }
@@ -1948,9 +1940,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType Hierarchy { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType Shared { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeSchemaConfigurationType (string value) { throw null; }
@@ -2386,9 +2376,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType Minor { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType Patch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType left, Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.EdgeUpdateType (string value) { throw null; }
@@ -2516,9 +2504,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceActiveState (string value) { throw null; }
@@ -2550,9 +2536,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState Active { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState left, Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.InstanceReconciliationState (string value) { throw null; }
@@ -2621,9 +2605,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState Undeployed { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState UpgradeInReview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceState (string value) { throw null; }
@@ -2640,9 +2622,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus Invalid { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionInstanceValidationStatus (string value) { throw null; }
@@ -2658,9 +2638,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public SolutionVersionOrchestratorType(string value) { throw null; }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType TO { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType left, Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.SolutionVersionOrchestratorType (string value) { throw null; }
@@ -2723,9 +2701,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType StopOnAnyFailure { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType StopOnNFailures { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType left, Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.TaskErrorActionModeType (string value) { throw null; }
@@ -2778,9 +2754,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState Inprogress { get { throw null; } }
         public static Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState left, Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WorkloadOrchestration.Models.WorkloadOrchestrationProvisioningState (string value) { throw null; }

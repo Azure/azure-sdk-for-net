@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Move. </summary>
     internal partial class Move : InternalComputerAction
@@ -13,7 +14,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="Move"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        internal Move(long x, long y) : base(ComputerActionType.Move)
+        public Move(long x, long y) : base(ComputerActionType.Move)
         {
             X = x;
             Y = y;

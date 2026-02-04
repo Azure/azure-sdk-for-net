@@ -42,6 +42,8 @@ interface Bars {
   update is ArmCustomPatchSync<Bar, Bar>;
 }
 
+@@Azure.ResourceManager.Legacy.renamePathParameter(Bars.list, "fooName", "name");
+
 @singleton("current")
 @parentResource(Bar)
 model BarSettingsResource is ProxyResource<BarSettingsProperties> {

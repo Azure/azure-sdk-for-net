@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceComputerToolCall : AgentResponseItem
     {
@@ -19,7 +19,7 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalItemResourceComputerToolCall(string callId, InternalComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(AgentResponseItemKind.ComputerCall)
+        internal InternalItemResourceComputerToolCall(string callId, InternalComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemResourceComputerToolCallStatus status) : base(AgentResponseItemKind.ComputerCall)
         {
             CallId = callId;
             Action = action;
@@ -31,6 +31,8 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="action"></param>
@@ -39,7 +41,7 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalItemResourceComputerToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceComputerToolCall(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemResourceComputerToolCallStatus status) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Action = action;
@@ -60,6 +62,6 @@ namespace OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemComputerToolCallStatus Status { get; }
+        public ItemResourceComputerToolCallStatus Status { get; }
     }
 }

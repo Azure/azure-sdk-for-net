@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowGraph DataflowGraphNode Connection Output. </summary>
-    public partial class DataflowGraphConnectionOutput : IJsonModel<DataflowGraphConnectionOutput>
+    internal partial class DataflowGraphConnectionOutput : IJsonModel<DataflowGraphConnectionOutput>
     {
         /// <summary> Initializes a new instance of <see cref="DataflowGraphConnectionOutput"/> for deserialization. </summary>
         internal DataflowGraphConnectionOutput()

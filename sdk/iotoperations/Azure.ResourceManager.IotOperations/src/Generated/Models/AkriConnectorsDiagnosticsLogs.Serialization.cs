@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorsDiagnostic Log properties. </summary>
-    public partial class AkriConnectorsDiagnosticsLogs : IJsonModel<AkriConnectorsDiagnosticsLogs>
+    internal partial class AkriConnectorsDiagnosticsLogs : IJsonModel<AkriConnectorsDiagnosticsLogs>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

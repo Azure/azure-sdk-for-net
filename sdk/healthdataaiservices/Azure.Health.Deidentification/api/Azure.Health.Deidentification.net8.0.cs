@@ -188,9 +188,7 @@ namespace Azure.Health.Deidentification
         public static Azure.Health.Deidentification.DeidentificationOperationType SurrogateOnly { get { throw null; } }
         public static Azure.Health.Deidentification.DeidentificationOperationType Tag { get { throw null; } }
         public bool Equals(Azure.Health.Deidentification.DeidentificationOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.DeidentificationOperationType left, Azure.Health.Deidentification.DeidentificationOperationType right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.DeidentificationOperationType (string value) { throw null; }
@@ -216,7 +214,6 @@ namespace Azure.Health.Deidentification
     }
     public static partial class HealthDeidentificationModelFactory
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Health.Deidentification.DeidentificationContent DeidentificationContent(string inputText, Azure.Health.Deidentification.DeidentificationOperationType? operationType, Azure.Health.Deidentification.DeidentificationCustomizationOptions customizations) { throw null; }
         public static Azure.Health.Deidentification.DeidentificationContent DeidentificationContent(string inputText = null, Azure.Health.Deidentification.DeidentificationOperationType? operationType = default(Azure.Health.Deidentification.DeidentificationOperationType?), Azure.Health.Deidentification.TaggedPhiEntities taggedEntities = null, Azure.Health.Deidentification.DeidentificationCustomizationOptions customizations = null) { throw null; }
         public static Azure.Health.Deidentification.DeidentificationCustomizationOptions DeidentificationCustomizationOptions(string redactionFormat = null, string surrogateLocale = null, string inputLocale = null) { throw null; }
@@ -246,9 +243,7 @@ namespace Azure.Health.Deidentification
         public static Azure.Health.Deidentification.OperationStatus Running { get { throw null; } }
         public static Azure.Health.Deidentification.OperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.Health.Deidentification.OperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.OperationStatus left, Azure.Health.Deidentification.OperationStatus right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.OperationStatus (string value) { throw null; }
@@ -292,9 +287,7 @@ namespace Azure.Health.Deidentification
         public static Azure.Health.Deidentification.PhiCategory Vehicle { get { throw null; } }
         public static Azure.Health.Deidentification.PhiCategory Zip { get { throw null; } }
         public bool Equals(Azure.Health.Deidentification.PhiCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.PhiCategory left, Azure.Health.Deidentification.PhiCategory right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.PhiCategory (string value) { throw null; }
@@ -424,9 +417,7 @@ namespace Azure.Health.Deidentification
         public static Azure.Health.Deidentification.TextEncodingType Utf16 { get { throw null; } }
         public static Azure.Health.Deidentification.TextEncodingType Utf8 { get { throw null; } }
         public bool Equals(Azure.Health.Deidentification.TextEncodingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.TextEncodingType left, Azure.Health.Deidentification.TextEncodingType right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.TextEncodingType (string value) { throw null; }

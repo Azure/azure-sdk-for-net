@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Apply patch update file operation. </summary>
     internal partial class ApplyPatchUpdateFileOperation : InternalApplyPatchFileOperation

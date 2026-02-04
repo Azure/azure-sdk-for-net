@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string JSChallengeValue = "JSChallenge";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> AnomalyScoring. </summary>
         public static RuleMatchActionType AnomalyScoring { get; } = new RuleMatchActionType(AnomalyScoringValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Network.Models
         public static RuleMatchActionType Log { get; } = new RuleMatchActionType(LogValue);
         /// <summary> JSChallenge. </summary>
         public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
+        /// <summary> CAPTCHA. </summary>
+        public static RuleMatchActionType Captcha { get; } = new RuleMatchActionType(CaptchaValue);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>

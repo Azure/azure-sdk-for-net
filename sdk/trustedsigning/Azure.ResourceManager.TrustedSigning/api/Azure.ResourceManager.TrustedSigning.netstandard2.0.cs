@@ -187,9 +187,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileStatus (string value) { throw null; }
@@ -209,9 +207,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType PublicTrustTest { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType VbsEnclave { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType left, Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateProfileType (string value) { throw null; }
@@ -229,9 +225,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus left, Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.CertificateRevocationStatus (string value) { throw null; }
@@ -297,9 +291,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason AccountNameInvalid { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason AlreadyExists { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameUnavailabilityReason (string value) { throw null; }
@@ -358,9 +350,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus Expired { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificateStatus (string value) { throw null; }
@@ -381,9 +371,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningProvisioningState (string value) { throw null; }
@@ -400,9 +388,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName Basic { get { throw null; } }
         public static Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName left, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrustedSigning.Models.TrustedSigningSkuName (string value) { throw null; }

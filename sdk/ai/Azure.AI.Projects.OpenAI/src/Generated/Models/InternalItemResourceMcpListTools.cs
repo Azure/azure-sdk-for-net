@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.OpenAI;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalItemResourceMcpListTools : AgentResponseItem
     {
@@ -24,11 +24,13 @@ namespace OpenAI
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="itemSource"> The information about the creator of the item. </param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InternalItemResourceMcpListTools(AgentResponseItemKind @type, string id, AgentItemSource itemSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, itemSource, additionalBinaryDataProperties)
+        internal InternalItemResourceMcpListTools(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             Tools = tools;

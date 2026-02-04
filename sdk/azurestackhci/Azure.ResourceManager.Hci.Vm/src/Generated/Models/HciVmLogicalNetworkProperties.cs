@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Properties under the logical network resource. </summary>
     public partial class HciVmLogicalNetworkProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmLogicalNetworkProperties"/>. </summary>
         public HciVmLogicalNetworkProperties()
@@ -53,45 +26,74 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="HciVmLogicalNetworkProperties"/>. </summary>
         /// <param name="dhcpOptions"> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </param>
+        /// <param name="fabricNetworkConfiguration"> Managed network fabric l2/l3 ISD for this logical network. If set empty, the logical network remains entirely local. </param>
         /// <param name="subnets"> Subnet - list of subnets under the logical network. </param>
         /// <param name="provisioningState"> Provisioning state of the logical network. </param>
         /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
         /// <param name="status"> The observed state of logical networks. </param>
         /// <param name="networkType"> Type of the Logical Network. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmLogicalNetworkProperties(HciVmLogicalNetworkDhcpOptions dhcpOptions, IList<HciVmNetworkingSubnet> subnets, HciVmProvisioningState? provisioningState, string vmSwitchName, HciVmLogicalNetworkStatus status, HciVmLogicalNetworkType? networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmLogicalNetworkProperties(HciVmLogicalNetworkDhcpOptions dhcpOptions, ManagedNetworkFabricArmReference fabricNetworkConfiguration, IList<HciVmNetworkingSubnet> subnets, HciVmProvisioningState? provisioningState, string vmSwitchName, HciVmLogicalNetworkStatus status, HciVmLogicalNetworkType? networkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DhcpOptions = dhcpOptions;
+            FabricNetworkConfiguration = fabricNetworkConfiguration;
             Subnets = subnets;
             ProvisioningState = provisioningState;
             VmSwitchName = vmSwitchName;
             Status = status;
             NetworkType = networkType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </summary>
         internal HciVmLogicalNetworkDhcpOptions DhcpOptions { get; set; }
+
+        /// <summary> Managed network fabric l2/l3 ISD for this logical network. If set empty, the logical network remains entirely local. </summary>
+        internal ManagedNetworkFabricArmReference FabricNetworkConfiguration { get; set; }
+
+        /// <summary> Subnet - list of subnets under the logical network. </summary>
+        public IList<HciVmNetworkingSubnet> Subnets { get; }
+
+        /// <summary> Provisioning state of the logical network. </summary>
+        public HciVmProvisioningState? ProvisioningState { get; }
+
+        /// <summary> name of the network switch to be used for VMs. </summary>
+        public string VmSwitchName { get; set; }
+
+        /// <summary> The observed state of logical networks. </summary>
+        public HciVmLogicalNetworkStatus Status { get; }
+
+        /// <summary> Type of the Logical Network. </summary>
+        public HciVmLogicalNetworkType? NetworkType { get; }
+
         /// <summary> The list of DNS servers IP addresses. </summary>
         public IList<string> DhcpOptionsDnsServers
         {
             get
             {
                 if (DhcpOptions is null)
+                {
                     DhcpOptions = new HciVmLogicalNetworkDhcpOptions();
+                }
                 return DhcpOptions.DnsServers;
             }
         }
 
-        /// <summary> Subnet - list of subnets under the logical network. </summary>
-        public IList<HciVmNetworkingSubnet> Subnets { get; }
-        /// <summary> Provisioning state of the logical network. </summary>
-        public HciVmProvisioningState? ProvisioningState { get; }
-        /// <summary> name of the network switch to be used for VMs. </summary>
-        public string VmSwitchName { get; set; }
-        /// <summary> The observed state of logical networks. </summary>
-        public HciVmLogicalNetworkStatus Status { get; }
-        /// <summary> Type of the Logical Network. </summary>
-        public HciVmLogicalNetworkType? NetworkType { get; }
+        /// <summary> The Azure Resource ID for a Managed Network Fabric L2ISD or L3ISD internal network. </summary>
+        public ResourceIdentifier FabricNetworkResourceId
+        {
+            get
+            {
+                return FabricNetworkConfiguration is null ? default : FabricNetworkConfiguration.ResourceId;
+            }
+            set
+            {
+                if (FabricNetworkConfiguration is null)
+                {
+                    FabricNetworkConfiguration = new ManagedNetworkFabricArmReference();
+                }
+                FabricNetworkConfiguration.ResourceId = value;
+            }
+        }
     }
 }

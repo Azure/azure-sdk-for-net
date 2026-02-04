@@ -20,11 +20,12 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
-- [Examples]
+- [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
     - [Agents](#agents)
     - [Responses](#responses)
     - [Conversations](#conversations)
+    - [Logging](#logging)
   - [Published Agents](#published-agents)
   - [Container App](#container-app)
   - [Hosted Agents](#hosted-agents)
@@ -43,18 +44,19 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
     - [Using Browser automation tool](#using-browser-automation-tool)
-  - [SharePoint tool](#sharepoint-tool)
-  - [Fabric Data Agent tool](#fabric-data-agent-tool)
+  - [SharePoint tool](#sharepoint)
+  - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
     - [Create a Lakehouse data repository](#create-a-lakehouse-data-repository)
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
-  - [A2ATool](#a2atool)
+  - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
       - [New Microsoft Foundry](#new-microsoft-foundry)
     - [Using A2A Tool](#using-a2a-tool)
+  - [Memory search tool](#memory-search-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -142,7 +144,7 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
-In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples) for both synchronous and asynchronous code.
+In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples][samples] for both synchronous and asynchronous code.
 
 ## Examples
 
@@ -316,6 +318,109 @@ CreateResponseOptions responseOptions = new()
 
 List<ResponseItem> items = [];
 ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+```
+
+### Logging
+
+Logging ofservice requests and responses may be a useful tool for troubleshooting of the issues.
+It can be implemented through custom policy. In the example bwlow we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
+This class implements two methods `Process` and `ProcessAsync`. The Azure pipeline calls the chain of policies, where the preceding
+one calls the next policy, hence by placing calls to `ProcessMessage` method before and after `ProcessNext` we can print request
+and response. The `ProcessMessage` method contains logic to show the contents of web request and response along with headers and URI paths.
+
+```C# Snippet:Sample_LoggingPolicy_AgentsLogging
+public class LoggingPolicy : PipelinePolicy
+{
+    private static void ProcessMessage(PipelineMessage message)
+    {
+        if (message.Request is not null && message.Response is null)
+        {
+            Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+            Console.WriteLine($"--- New request ---");
+            IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Request headers:{headers}");
+            if (message.Request?.Content != null)
+            {
+                string contentType = "Unknown Content Type";
+                if (message.Request.Headers?.TryGetValue("Content-Type", out contentType) == true
+                    && contentType == "application/json")
+                {
+                    using MemoryStream stream = new();
+                    message.Request.Content.WriteTo(stream, default);
+                    stream.Position = 0;
+                    using StreamReader reader = new(stream);
+                    string requestDump = reader.ReadToEnd();
+                    stream.Position = 0;
+                    requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
+                    // Make sure JSON string is properly formatted.
+                    JsonSerializerOptions jsonOptions = new()
+                    {
+                        WriteIndented = true,
+                    };
+                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(requestDump);
+                    Console.WriteLine("--- Begin request content ---");
+                    Console.WriteLine(JsonSerializer.Serialize(jsonElement, jsonOptions));
+                    Console.WriteLine("--- End request content ---");
+                }
+                else
+                {
+                    string length = message.Request.Content.TryComputeLength(out long numberLength)
+                        ? $"{numberLength} bytes"
+                        : "unknown length";
+                    Console.WriteLine($"<< Non-JSON content: {contentType} >> {length}");
+                }
+            }
+        }
+        if (message.Response != null)
+        {
+            IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"\n    {header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+            string headers = string.Join("", headerPairs);
+            Console.WriteLine($"Response headers:{headers}");
+            if (message.BufferResponse)
+            {
+                message.Response.BufferContent();
+                Console.WriteLine("--- Begin response content ---");
+                Console.WriteLine(message.Response.Content?.ToString());
+                Console.WriteLine("--- End of response content ---");
+            }
+            else
+            {
+                Console.WriteLine("--- Response (unbuffered, content not rendered) ---");
+            }
+        }
+    }
+
+    public LoggingPolicy(){}
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        ProcessMessage(message); // for request
+        ProcessNext(message, pipeline, currentIndex);
+        ProcessMessage(message); // for response
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        ProcessMessage(message); // for request
+        await ProcessNextAsync(message, pipeline, currentIndex);
+        ProcessMessage(message); // for response
+    }
+}
+```
+
+To apply the policy to the pipeline, we create `AIProjectClientOptions` object
+containing  `LoggingPolicy`, inform the pipeline to execute this policy by call
+and set the option while instantiating `AIProjectClient` that we will consequently use.
+
+```C# Snippet:Sample_CreateClient_AgentsLogging
+string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
+string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+AIProjectClientOptions options = new();
+options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
+AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
 ### Published Agents
@@ -828,7 +933,7 @@ AzureAISearchToolIndex index = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -931,11 +1036,11 @@ Console.WriteLine($"{text}{annotation}");
 ### Bing Grounding
 
 To support the response returned by the Agent, Bing grounding can be used. To implement it,
-create the `BingGroundingAgentTool` and use it in `PromptAgentDefinition` object.
+create the `BingGroundingTool` and use it in `PromptAgentDefinition` object.
 
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-BingGroundingAgentTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
@@ -994,17 +1099,17 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 Console.WriteLine($"{text}{annotation}");
 ```
 
-### Bing Custom Search
+### Bing Custom Search (preview)<a id="bing-custom-search"></a>
 
 Along with bing grounding, Agents can use the custom search. To implement it,
-create the `BingCustomSearchAgentTool` and use it in `PromptAgentDefinition` object. The
+create the `BingCustomSearchPreviewTool` and use it in `PromptAgentDefinition` object. The
 use of this tool is like Bing Grounding, however it requires ID of Grounding with Bing
 Custom Search and the name of a search configuration. In this scenario, we use Bing to search
 en.wikipedia.org. This configuration is called "wikipedia" its search URL is configured through Azure.
 
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
@@ -1107,7 +1212,7 @@ handled the same way as described in the MCP tool section.
 
 ### OpenAPI tool
 OpenAPI tool allows Agent to get information from Web services using [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification).
-To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPIAgentTool` contains a `Description` property, serving as a hint when this tool should be used.
+To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPITool` contains a `Description` property, serving as a hint when this tool should be used.
 
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Async
 string filePath = GetFile();
@@ -1117,7 +1222,7 @@ OpenAPIFunctionDefinition toolDefinition = new(
     auth: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
-OpenAPIAgentTool openapiTool = new(toolDefinition);
+OpenAPITool openapiTool = new(toolDefinition);
 
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1157,7 +1262,7 @@ OpenAPIFunctionDefinition toolDefinition = new(
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPIAgentTool openapiTool = new(toolDefinition);
+OpenAPITool openapiTool = new(toolDefinition);
 
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1187,7 +1292,7 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-### Browser automation
+### Browser automation (preview)<a id="browser-automation"></a>
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
 
@@ -1224,7 +1329,7 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationAgentTool playwrightTool = new(
+BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolParameters(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
@@ -1265,8 +1370,8 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-### SharePoint tool
-`SharepointAgentTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointAgentTool`.
+### SharePoint tool (preview)<a id="sharepoint"></a>
+`SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.
 
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Async
 AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
@@ -1277,7 +1382,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointAgentTool(sharepointToolOption), }
+    Tools = { new SharepointPreviewTool(sharepointToolOption), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1328,7 +1433,7 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 ```
 
-### Fabric Data Agent tool
+### Fabric Data Agent tool (preview) <a id="fabric"></a>
 
 As a prerequisite to this example, we will need to create Microsoft Fabric with Lakehouse data repository. Please see the end-to end tutorials on using Microsoft Fabric [here](https://learn.microsoft.com/fabric/fundamentals/end-to-end-tutorials) for more information.
 
@@ -1369,7 +1474,7 @@ After we have created the Fabric data Agent, we can connect fabric to our Micros
 
 #### Using Microsoft Fabric tool
 
-To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricAgentTool` into `PromptAgentDefinition`.
+To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricPreviewTool` into `PromptAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_Fabric_Async
 AIProjectConnection fabricConnection = await projectClient.Connections.GetConnectionAsync(fabricConnectionName);
@@ -1380,14 +1485,14 @@ FabricDataAgentToolOptions fabricToolOption = new()
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new MicrosoftFabricAgentTool(fabricToolOption), }
+    Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
 
-### A2ATool
+### A2APreviewTool (preview)<a id="a2atool"></a>
 
 The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
 
@@ -1419,11 +1524,11 @@ If we are using the Agent2agent connection, we do not need to provide the endpoi
 
 #### Using A2A Tool
 
-To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDefinition`.
+To use the Agent with A2A tool, we need to include `A2APreviewTool` into `PromptAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-A2ATool a2aTool = new()
+A2APreviewTool a2aTool = new()
 {
     ProjectConnectionId = a2aConnection.Id
 };
@@ -1442,6 +1547,22 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Memory search tool (preview)<a id="memory-search-tool"></a>
+
+Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
+Agents can use Memory Stores by defining `MemorySearchPreviewTool` in `PromptAgentDefinition`.
+
+```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
+agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent capable to access memorized conversation.",
+};
+agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
+AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "agentWithMemory",
     options: new(agentDefinition));
 ```
 
@@ -1524,7 +1645,7 @@ To further diagnose and troubleshoot issues, you can enable logging following th
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples)
+Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples][samples]
 
 ## Contributing
 
@@ -1538,15 +1659,11 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
-<!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
-<!-- remove "Persistent" -->
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
-<!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
-[nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
-<!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
-[product_doc]: https://learn.microsoft.com//azure/ai-foundry/
+[samples]: https://aka.ms/azsdk/Azure.AI.Projects.OpenAI/net/samples
+[api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
+[nuget]: https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/
+[source_code]: https://aka.ms/azsdk/Azure.AI.Projects.OpenAI/net/code
+[product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md

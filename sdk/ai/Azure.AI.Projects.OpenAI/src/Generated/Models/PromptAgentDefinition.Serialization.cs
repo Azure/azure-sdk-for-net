@@ -69,6 +69,18 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(ToolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(TextOptions))
             {
                 writer.WritePropertyName("text"u8);
@@ -121,6 +133,7 @@ namespace Azure.AI.Projects.OpenAI
             float? topP = default;
             global::OpenAI.Responses.ResponseReasoningOptions reasoningOptions = default;
             IList<global::OpenAI.Responses.ResponseTool> tools = default;
+            BinaryData toolChoice = default;
             global::OpenAI.Responses.ResponseTextOptions textOptions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
@@ -184,6 +197,15 @@ namespace Azure.AI.Projects.OpenAI
                     DeserializeToolsValue(prop, ref tools);
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (prop.NameEquals("text"u8))
                 {
                     DeserializeTextValue(prop, ref textOptions);
@@ -218,6 +240,7 @@ namespace Azure.AI.Projects.OpenAI
                 topP,
                 reasoningOptions,
                 tools ?? new ChangeTrackingList<global::OpenAI.Responses.ResponseTool>(),
+                toolChoice,
                 textOptions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
         }

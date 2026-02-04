@@ -14,7 +14,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> Security Profile specifies attributes for cluster security features. </summary>
-    public partial class SecurityProfile : IJsonModel<SecurityProfile>
+    internal partial class SecurityProfile : IJsonModel<SecurityProfile>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

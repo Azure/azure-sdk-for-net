@@ -112,15 +112,6 @@ namespace Azure.Generator.Management.Providers
                 Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
 
-            foreach (var p in methodSignature.Parameters)
-            {
-                var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                if (normalizedName != null)
-                {
-                    p.Update(name: normalizedName);
-                }
-            }
-
             var method = new MethodProvider(methodSignature, body, this);
 
             // Add mocking documentation

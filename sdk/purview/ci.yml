@@ -11,19 +11,6 @@ trigger:
     exclude:
     - sdk/purview/Azure.ResourceManager.Purview/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/purview/
-    exclude:
-    - sdk/purview/Azure.ResourceManager.Purview/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

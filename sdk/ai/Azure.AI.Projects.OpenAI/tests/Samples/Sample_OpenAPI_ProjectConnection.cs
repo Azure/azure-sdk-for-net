@@ -49,7 +49,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
             ))
         );
         toolDefinition.Description = "Trip Advisor API to get travel information.";
-        OpenAPIAgentTool openapiTool = new(toolDefinition);
+        OpenAPITool openapiTool = new(toolDefinition);
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -104,7 +104,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
             ))
         );
         toolDefinition.Description = "Trip Advisor API to get travel information.";
-        OpenAPIAgentTool openapiTool = new(toolDefinition);
+        OpenAPITool openapiTool = new(toolDefinition);
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

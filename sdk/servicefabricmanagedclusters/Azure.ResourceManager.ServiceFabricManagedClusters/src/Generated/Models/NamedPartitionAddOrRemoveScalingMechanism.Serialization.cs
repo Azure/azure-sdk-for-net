@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NamedPartitionAddOrRemoveScalingMechanism : IUtf8JsonSerializable, IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>
+    /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format '0','1'...'N-1'. </summary>
+    public partial class NamedPartitionAddOrRemoveScalingMechanism : ManagedServiceScalingMechanism, IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> for deserialization. </summary>
+        internal NamedPartitionAddOrRemoveScalingMechanism()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamedPartitionAddOrRemoveScalingMechanism)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("minPartitionCount"u8);
             writer.WriteNumberValue(MinPartitionCount);
@@ -43,67 +48,73 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(ScaleIncrement);
         }
 
-        NamedPartitionAddOrRemoveScalingMechanism IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamedPartitionAddOrRemoveScalingMechanism IJsonModel<NamedPartitionAddOrRemoveScalingMechanism>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NamedPartitionAddOrRemoveScalingMechanism)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServiceScalingMechanism JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamedPartitionAddOrRemoveScalingMechanism)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNamedPartitionAddOrRemoveScalingMechanism(document.RootElement, options);
         }
 
-        internal static NamedPartitionAddOrRemoveScalingMechanism DeserializeNamedPartitionAddOrRemoveScalingMechanism(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NamedPartitionAddOrRemoveScalingMechanism DeserializeNamedPartitionAddOrRemoveScalingMechanism(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ServiceScalingMechanismKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int minPartitionCount = default;
             int maxPartitionCount = default;
             int scaleIncrement = default;
-            ServiceScalingMechanismKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("minPartitionCount"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    minPartitionCount = property.Value.GetInt32();
+                    kind = new ServiceScalingMechanismKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maxPartitionCount"u8))
+                if (prop.NameEquals("minPartitionCount"u8))
                 {
-                    maxPartitionCount = property.Value.GetInt32();
+                    minPartitionCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scaleIncrement"u8))
+                if (prop.NameEquals("maxPartitionCount"u8))
                 {
-                    scaleIncrement = property.Value.GetInt32();
+                    maxPartitionCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("scaleIncrement"u8))
                 {
-                    kind = new ServiceScalingMechanismKind(property.Value.GetString());
+                    scaleIncrement = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NamedPartitionAddOrRemoveScalingMechanism(kind, serializedAdditionalRawData, minPartitionCount, maxPartitionCount, scaleIncrement);
+            return new NamedPartitionAddOrRemoveScalingMechanism(kind, additionalBinaryDataProperties, minPartitionCount, maxPartitionCount, scaleIncrement);
         }
 
-        BinaryData IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -113,15 +124,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        NamedPartitionAddOrRemoveScalingMechanism IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamedPartitionAddOrRemoveScalingMechanism IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>.Create(BinaryData data, ModelReaderWriterOptions options) => (NamedPartitionAddOrRemoveScalingMechanism)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedServiceScalingMechanism PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNamedPartitionAddOrRemoveScalingMechanism(document.RootElement, options);
                     }
                 default:
@@ -129,6 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NamedPartitionAddOrRemoveScalingMechanism>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

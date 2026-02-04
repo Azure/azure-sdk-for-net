@@ -406,9 +406,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory MonitorLogs { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory left, Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory (string value) { throw null; }
@@ -490,9 +488,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus left, Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus (string value) { throw null; }
@@ -567,9 +563,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus left, Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogMonitorStatus (string value) { throw null; }
@@ -585,9 +579,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction Exclude { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction Include { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction left, Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogMonitorTagAction (string value) { throw null; }
@@ -606,9 +598,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogOperation DeleteBegin { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogOperation DeleteComplete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogOperation left, Azure.ResourceManager.Datadog.Models.DatadogOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogOperation (string value) { throw null; }
@@ -651,9 +641,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState left, Azure.ResourceManager.Datadog.Models.DatadogProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogProvisioningState (string value) { throw null; }
@@ -696,9 +684,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState Existing { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState left, Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState (string value) { throw null; }
@@ -779,9 +765,7 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus (string value) { throw null; }

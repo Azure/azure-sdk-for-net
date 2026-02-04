@@ -96,7 +96,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withoutApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -166,7 +167,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -239,7 +241,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withPathApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -309,7 +312,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryOldApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.Versioned"
           },
           "parameters": [],
           "response": {},
@@ -378,7 +382,8 @@
       "apiVersions": [
         "2021-01-01-preview",
         "2022-12-01-preview"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

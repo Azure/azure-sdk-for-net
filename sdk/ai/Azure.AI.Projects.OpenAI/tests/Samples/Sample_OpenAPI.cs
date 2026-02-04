@@ -46,7 +46,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             auth: new OpenAPIAnonymousAuthenticationDetails()
         );
         toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPIAgentTool openapiTool = new(toolDefinition);
+        OpenAPITool openapiTool = new(toolDefinition);
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -91,7 +91,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             auth: new OpenAPIAnonymousAuthenticationDetails()
         );
         toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPIAgentTool openapiTool = new(toolDefinition);
+        OpenAPITool openapiTool = new(toolDefinition);
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

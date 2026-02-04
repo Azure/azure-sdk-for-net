@@ -4,13 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingAgentTool"/>, <see cref="MicrosoftFabricAgentTool"/>, <see cref="SharepointAgentTool"/>, <see cref="AzureAISearchAgentTool"/>, <see cref="OpenAPIAgentTool"/>, <see cref="BingCustomSearchAgentTool"/>, <see cref="BrowserAutomationAgentTool"/>, <see cref="AzureFunctionAgentTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2ATool"/>, and <see cref="MemorySearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
     /// </summary>
     public abstract partial class AgentTool
     {

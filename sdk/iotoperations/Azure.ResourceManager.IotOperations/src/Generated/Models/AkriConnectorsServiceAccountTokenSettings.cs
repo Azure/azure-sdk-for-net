@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotOperations;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorsServiceAccountTokenSettings properties. </summary>
-    public partial class AkriConnectorsServiceAccountTokenSettings
+    internal partial class AkriConnectorsServiceAccountTokenSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
