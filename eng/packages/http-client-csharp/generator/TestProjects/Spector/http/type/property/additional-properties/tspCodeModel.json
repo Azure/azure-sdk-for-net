@@ -1086,6 +1086,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<unknown> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsUnknownAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "136",
         "kind": "unknown",
@@ -1131,6 +1136,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a type that extends from Record<unknown>.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsUnknownAdditionalPropertiesDerived"
+        }
+      },
       "baseModel": {
         "$ref": "135"
       },
@@ -1198,6 +1208,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<unknown> with a discriminator.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsUnknownAdditionalPropertiesDiscriminated"
+        }
+      },
       "additionalProperties": {
         "$ref": "136"
       },
@@ -1269,6 +1284,11 @@
           "doc": "The derived discriminated type",
           "discriminatorValue": "derived",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "ExtendsUnknownAdditionalPropertiesDiscriminatedDerived"
+            }
+          },
           "baseModel": {
             "$ref": "144"
           },
@@ -1362,6 +1382,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is from Record<unknown> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsUnknownAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "156",
         "kind": "unknown",
@@ -1407,6 +1432,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a type that is Record<unknown> type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsUnknownAdditionalPropertiesDerived"
+        }
+      },
       "baseModel": {
         "$ref": "155"
       },
@@ -1474,6 +1504,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is Record<unknown> with a discriminator.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsUnknownAdditionalPropertiesDiscriminated"
+        }
+      },
       "additionalProperties": {
         "$id": "165",
         "kind": "unknown",
@@ -1549,6 +1584,11 @@
           "doc": "The derived discriminated type",
           "discriminatorValue": "derived",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "IsUnknownAdditionalPropertiesDiscriminatedDerived"
+            }
+          },
           "baseModel": {
             "$ref": "164"
           },
@@ -1642,6 +1682,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<string> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsStringAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "177",
         "kind": "string",
@@ -1687,6 +1732,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is from Record<string> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsStringAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "181",
         "kind": "string",
@@ -1732,6 +1782,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<string> with the same known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadStringRecord"
+        }
+      },
       "additionalProperties": {
         "$id": "185",
         "kind": "string",
@@ -1777,6 +1832,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<float32> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsFloatAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "189",
         "kind": "float32",
@@ -1822,6 +1882,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is from Record<float32> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsFloatAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "193",
         "kind": "float32",
@@ -1867,6 +1932,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<float32> with the same known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadFloatRecord"
+        }
+      },
       "additionalProperties": {
         "$id": "197",
         "kind": "float32",
@@ -1912,6 +1982,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<ModelForRecord> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsModelAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "201",
         "kind": "model",
@@ -1921,6 +1996,11 @@
         "usage": "Input,Output,Json",
         "doc": "model for record",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "ModelForRecord"
+          }
+        },
         "properties": [
           {
             "$id": "202",
@@ -1986,6 +2066,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is from Record<ModelForRecord> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsModelAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$ref": "201"
       },
@@ -2022,6 +2107,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<ModelForRecord> with the same known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadModelRecord"
+        }
+      },
       "additionalProperties": {
         "$ref": "201"
       },
@@ -2058,6 +2148,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from Record<ModelForRecord[]> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ExtendsModelArrayAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$id": "210",
         "kind": "array",
@@ -2101,6 +2196,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model is from Record<ModelForRecord[]> type.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "IsModelArrayAdditionalProperties"
+        }
+      },
       "additionalProperties": {
         "$ref": "210"
       },
@@ -2136,6 +2236,11 @@
       "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArrayRecord",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadModelArrayRecord"
+        }
+      },
       "additionalProperties": {
         "$ref": "210"
       },
@@ -2172,6 +2277,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<string> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadStringRecord"
+        }
+      },
       "additionalProperties": {
         "$id": "217",
         "kind": "string",
@@ -2217,6 +2327,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<float32> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadFloatRecord"
+        }
+      },
       "additionalProperties": {
         "$id": "221",
         "kind": "float32",
@@ -2262,6 +2377,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<ModelForRecord> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadModelRecord"
+        }
+      },
       "additionalProperties": {
         "$ref": "201"
       },
@@ -2302,6 +2422,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<ModelForRecord[]> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadModelArrayRecord"
+        }
+      },
       "additionalProperties": {
         "$ref": "210"
       },
@@ -2342,6 +2467,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a model that spread Record<string> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadStringDerived"
+        }
+      },
       "baseModel": {
         "$ref": "216"
       },
@@ -2383,6 +2513,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a model that spread Record<float32> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadFloatDerived"
+        }
+      },
       "baseModel": {
         "$ref": "220"
       },
@@ -2424,6 +2559,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a model that spread Record<ModelForRecord> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadModelDerived"
+        }
+      },
       "baseModel": {
         "$ref": "224"
       },
@@ -2461,6 +2601,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model extends from a model that spread Record<ModelForRecord[]> with the different known property type",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DifferentSpreadModelArrayDerived"
+        }
+      },
       "baseModel": {
         "$ref": "227"
       },
@@ -2498,6 +2643,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<string> and Record<float32>",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "MultipleSpreadRecord"
+        }
+      },
       "additionalProperties": {
         "$id": "241",
         "kind": "union",
@@ -2559,6 +2709,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<string | float32>",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadRecordForUnion"
+        }
+      },
       "additionalProperties": {
         "$id": "247",
         "kind": "union",
@@ -2620,6 +2775,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<WidgetData0 | WidgetData1>",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadRecordForNonDiscriminatedUnion"
+        }
+      },
       "additionalProperties": {
         "$id": "253",
         "kind": "union",
@@ -2633,6 +2793,11 @@
             "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.WidgetData0",
             "usage": "Input,Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "WidgetData0"
+              }
+            },
             "properties": [
               {
                 "$id": "255",
@@ -2690,6 +2855,11 @@
             "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.WidgetData1",
             "usage": "Input,Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "WidgetData1"
+              }
+            },
             "properties": [
               {
                 "$id": "259",
@@ -2828,6 +2998,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<WidgetData2 | WidgetData1>",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadRecordForNonDiscriminatedUnion2"
+        }
+      },
       "additionalProperties": {
         "$id": "269",
         "kind": "union",
@@ -2841,6 +3016,11 @@
             "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.WidgetData2",
             "usage": "Input,Output,Json",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "WidgetData2"
+              }
+            },
             "properties": [
               {
                 "$id": "271",
@@ -2938,6 +3118,11 @@
       "usage": "Input,Output,Json",
       "doc": "The model spread Record<WidgetData2[] | WidgetData1>",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SpreadRecordForNonDiscriminatedUnion3"
+        }
+      },
       "additionalProperties": {
         "$id": "277",
         "kind": "union",

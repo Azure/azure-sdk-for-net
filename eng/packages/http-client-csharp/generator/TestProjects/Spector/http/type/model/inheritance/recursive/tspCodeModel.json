@@ -46,6 +46,11 @@
       "usage": "Input,Output,Json",
       "doc": "extension",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Extension"
+        }
+      },
       "baseModel": {
         "$id": "6",
         "kind": "model",
@@ -55,6 +60,11 @@
         "usage": "Input,Output,Json",
         "doc": "element",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "Element"
+          }
+        },
         "properties": [
           {
             "$id": "7",

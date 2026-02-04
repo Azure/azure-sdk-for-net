@@ -163,6 +163,11 @@
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NewModel"
+        }
+      },
       "properties": [
         {
           "$id": "17",

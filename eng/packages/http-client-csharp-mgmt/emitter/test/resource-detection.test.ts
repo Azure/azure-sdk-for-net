@@ -11,7 +11,7 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ResourceScope } from "../src/resource-metadata.js";
+import { ArmResourceSchema, ResourceScope } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -1244,7 +1244,10 @@ interface ScheduledActionExtension {
       getPostgresVersionsEntry,
       "getPostgresVersions should be in non-resource methods"
     );
-    strictEqual(getPostgresVersionsEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(
+      getPostgresVersionsEntry.operationScope,
+      ResourceScope.ResourceGroup
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1499,7 +1502,9 @@ interface NoGetResources {
     // Verify the list operation for NoGetResource is in parent's methods as Action
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources") && m.operationPath.endsWith("/noGetResources")
+        m.kind === "Action" &&
+        m.operationPath.includes("noGetResources") &&
+        m.operationPath.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
@@ -1508,8 +1513,7 @@ interface NoGetResources {
 
     // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
-      (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
@@ -1518,8 +1522,7 @@ interface NoGetResources {
 
     // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
-      (m) =>
-        m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
@@ -1541,6 +1544,143 @@ interface NoGetResources {
       noGetMethods.length,
       0,
       "Should have no NoGetResource operations in non-resource methods"
+    );
+  });
+
+  it("multi-scope resource with same model at different scopes", async () => {
+    // This test validates the fix for the scenario where the same model is used by multiple
+    // resource interfaces at different scopes (ResourceGroup, Subscription, and ServiceGroup/Tenant).
+    // Each List operation should be correctly assigned to its corresponding resource.
+    const program = await typeSpecCompile(
+      `
+/** Site properties */
+model SiteProperties {
+  /** Display name of Site */
+  displayName?: string;
+  /** Description of Site */
+  description?: string;
+}
+
+/** Site as Extension Resource */
+model Site is ExtensionResource<SiteProperties> {
+  ...ResourceNameParameter<
+    Resource = Site,
+    KeyName = "siteName",
+    SegmentName = "sites",
+    NamePattern = "^[a-zA-Z0-9][a-zA-Z0-9-_]{2,22}[a-zA-Z0-9]$"
+  >;
+}
+
+/** Site operations as base operations which will be extended for each scope */
+interface SiteOps<Scope extends Azure.ResourceManager.Foundations.SimpleResource> {
+  list is Extension.ListByTarget<Scope, Site>;
+  get is Extension.Read<Scope, Site>;
+  createOrUpdate is Extension.CreateOrUpdateAsync<Scope, Site>;
+  delete is Extension.DeleteSync<Scope, Site>;
+}
+
+@armResourceOperations
+interface Sites extends SiteOps<Extension.ResourceGroup> {}
+
+@armResourceOperations
+interface SitesBySubscription extends SiteOps<Extension.Subscription> {}
+
+alias ServiceGroup = Extension.ExternalResource<
+  TargetNamespace = "Microsoft.Management",
+  ResourceType = "serviceGroups",
+  ResourceParameterName = "servicegroupName",
+  NamePattern = "^[a-zA-Z0-9][a-zA-Z0-9-_]{2,22}[a-zA-Z0-9]$",
+  Description = "The name of the service group",
+  ParentType = "Tenant"
+>;
+
+@armResourceOperations
+interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have 3 resources for the Site model (one for each scope)
+    const siteModel = root.models.find((m) => m.name === "Site");
+    ok(siteModel, "Site model should exist");
+
+    const siteModelId = siteModel.crossLanguageDefinitionId;
+    const siteResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === siteModelId
+    );
+    strictEqual(
+      siteResources.length,
+      3,
+      "Should have 3 resources for the Site model"
+    );
+
+    // Verify each resource exists with the correct resource ID pattern
+    const rgSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
+    );
+    ok(rgSite, "Should have ResourceGroup-scoped Site");
+
+    const subSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
+    );
+    ok(subSite, "Should have Subscription-scoped Site");
+
+    const sgSite = siteResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
+    );
+    ok(sgSite, "Should have ServiceGroup-scoped Site");
+
+    // This is the critical assertion: each resource should have exactly 1 List method
+    // and the List operation path should match the resource's scope
+    for (const resource of siteResources) {
+      const listMethods = resource.metadata.methods.filter(
+        (m) => m.kind === "List"
+      );
+      strictEqual(
+        listMethods.length,
+        1,
+        `Resource ${resource.metadata.resourceIdPattern} should have exactly 1 List method`
+      );
+    }
+
+    // Validate using resolveArmResources API and compare using deepStrictEqual
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
+    // - Legacy detection (buildArmProviderSchema): uses Tenant scope
+    // - resolveArmResources: uses Extension scope
+    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    const serviceGroupResourcePattern =
+      "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
+    const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
+      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
+        (resource.metadata as { resourceScope: unknown }).resourceScope =
+          "<normalized>";
+        for (const method of resource.metadata.methods) {
+          (method as { operationScope: unknown }).operationScope =
+            "<normalized>";
+        }
+      }
+    };
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
+      normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
     );
   });
 });

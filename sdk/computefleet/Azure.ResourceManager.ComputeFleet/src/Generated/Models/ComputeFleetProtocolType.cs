@@ -12,8 +12,8 @@ using Azure.ResourceManager.ComputeFleet;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
-    /// Specifies the protocol of WinRM listener. Possible values are: **http,**
-    /// **https.**
+    /// Specifies the protocol of WinRM listener. Possible values are: <b>http,</b>
+    /// <b>https.</b>
     /// </summary>
     public readonly partial struct ComputeFleetProtocolType : IEquatable<ComputeFleetProtocolType>
     {
