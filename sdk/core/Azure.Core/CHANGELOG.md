@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added two new APIs two enable Azure.Identity support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Update the APIs for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection to enable Azure.Identity use cases.
 
 ## 1.51.0 (2026-01-29)
 
