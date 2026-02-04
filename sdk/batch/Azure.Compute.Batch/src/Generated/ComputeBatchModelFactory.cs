@@ -225,12 +225,7 @@ namespace Azure.Compute.Batch
         /// <returns> A new <see cref="Batch.DataDisk"/> instance for mocking. </returns>
         public static DataDisk DataDisk(int logicalUnitNumber = default, CachingType? caching = default, int diskSizeGb = default, ManagedDisk managedDisk = default)
         {
-            return new DataDisk(
-                logicalUnitNumber,
-                caching,
-                diskSizeGb,
-                managedDisk,
-                additionalBinaryDataProperties: null);
+            return new DataDisk(logicalUnitNumber, caching, diskSizeGb, managedDisk, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The managed disk parameters. </summary>

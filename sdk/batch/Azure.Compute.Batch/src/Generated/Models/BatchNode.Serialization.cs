@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration, options);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(NodeAgentInfo))
             {
                 writer.WritePropertyName("nodeAgentInfo"u8);
                 writer.WriteObjectValue(NodeAgentInfo, options);
@@ -385,6 +385,10 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("nodeAgentInfo"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(prop.Value, options);
                     continue;
                 }

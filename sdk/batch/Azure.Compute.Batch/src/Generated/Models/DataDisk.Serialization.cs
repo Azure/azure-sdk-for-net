@@ -138,12 +138,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataDisk(
-                logicalUnitNumber,
-                caching,
-                diskSizeGb,
-                managedDisk,
-                additionalBinaryDataProperties);
+            return new DataDisk(logicalUnitNumber, caching, diskSizeGb, managedDisk, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
