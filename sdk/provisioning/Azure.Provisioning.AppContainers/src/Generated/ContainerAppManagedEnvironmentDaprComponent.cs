@@ -109,6 +109,15 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
     private BicepValue<string>? _version;
 
     /// <summary>
+    /// Any errors that occurred during deployment or deployment validation.
+    /// </summary>
+    public BicepValue<string> DeploymentErrors 
+    {
+        get { Initialize(); return _deploymentErrors!; }
+    }
+    private BicepValue<string>? _deploymentErrors;
+
+    /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
@@ -116,6 +125,15 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
         get { Initialize(); return _id!; }
     }
     private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// Provisioning state of the Dapr Component.
+    /// </summary>
+    public BicepValue<DaprComponentProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<DaprComponentProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
@@ -148,7 +166,7 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
     public ContainerAppManagedEnvironmentDaprComponent(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -158,6 +176,7 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _componentType = DefineProperty<string>("ComponentType", ["properties", "componentType"]);
         _ignoreErrors = DefineProperty<bool>("IgnoreErrors", ["properties", "ignoreErrors"]);
@@ -167,7 +186,9 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
         _secrets = DefineListProperty<ContainerAppWritableSecret>("Secrets", ["properties", "secrets"]);
         _secretStoreComponent = DefineProperty<string>("SecretStoreComponent", ["properties", "secretStoreComponent"]);
         _version = DefineProperty<string>("Version", ["properties", "version"]);
+        _deploymentErrors = DefineProperty<string>("DeploymentErrors", ["properties", "deploymentErrors"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<DaprComponentProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
     }
@@ -177,6 +198,16 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Provisionable
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

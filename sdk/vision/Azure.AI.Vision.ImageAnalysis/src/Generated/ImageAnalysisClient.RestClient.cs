@@ -16,7 +16,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateAnalyzeFromImageDataRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {

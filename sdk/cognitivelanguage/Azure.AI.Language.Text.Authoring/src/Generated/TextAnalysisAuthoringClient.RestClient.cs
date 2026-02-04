@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Text.Authoring
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
