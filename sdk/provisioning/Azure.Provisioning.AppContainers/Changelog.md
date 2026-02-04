@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-02-05)
 
 ### Features Added
 
@@ -8,12 +8,6 @@
 - Added new resource versions including `V2025_07_01` and `V2026_01_01`.
 - Added `Auto` value to `ContainerAppCustomDomainBindingType` enum for automatic certificate binding.
 - Added new resources: `ContainerAppHttpRouteConfig`, `ContainerAppMaintenanceConfiguration`, `ContainerAppPrivateEndpointConnection`, and `LogicApp`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2025-06-16)
 
