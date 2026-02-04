@@ -7,29 +7,26 @@
 .DESCRIPTION
     Builds the mgmt generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
-    By default, regenerates ALL mgmt SDKs. Use -Filter or -Services to limit scope.
-
-.PARAMETER Filter
-    Filter SDK folders by name pattern (e.g., "KeyVault").
+    By default, regenerates ALL mgmt SDKs. Use -Services to limit scope.
 
 .PARAMETER Services
-    Array of service names to regenerate (e.g., "KeyVault", "Compute").
+    One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
+    Supports wildcards. Case-insensitive.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4). Set to 1 for sequential execution.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Filter "KeyVault"
+    .\RegenSdkLocal.ps1 -Services "KeyVault"
 
 .EXAMPLE
     .\RegenSdkLocal.ps1 -Services "KeyVault","Compute","Network"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Parallel 8
+    .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
 #>
 
 param(
-    [string]$Filter,
     [string[]]$Services,
     [int]$Parallel = 4
 )
@@ -86,17 +83,13 @@ foreach ($tspFile in $tspFiles) {
 
 Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
-# Apply filter or services list
+# Apply services filter
 if ($Services -and $Services.Count -gt 0) {
     $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { 
         $folder = $_
         $Services | Where-Object { $folder.Library -like "*$_*" -or $folder.Service -like "*$_*" }
     })
-    Write-Host "Selected $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
-}
-elseif ($Filter) {
-    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { $_.Library -like "*$Filter*" -or $_.Service -like "*$Filter*" })
-    Write-Host "Filtered to $($mgmtSdkFolders.Count) matching '$Filter'"
+    Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
 
 if ($mgmtSdkFolders.Count -eq 0) {
@@ -104,7 +97,7 @@ if ($mgmtSdkFolders.Count -eq 0) {
     exit 0
 }
 
-# If no filter/services specified, regenerate all by default
+# If no filter specified, regenerate all by default
 $selectedFolders = $mgmtSdkFolders
 Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 
