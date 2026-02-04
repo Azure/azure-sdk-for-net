@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
@@ -13,12 +14,13 @@ using System;
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// ContainerAppManagedEnvironmentStorage.
+/// ContainerAppPrivateEndpointConnection.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResource
+public partial class ContainerAppPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
-    /// Name of the storage.
+    /// The name of the private endpoint connection associated with the Azure
+    /// resource.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -28,24 +30,24 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Azure file properties.
+    /// A collection of information about the state of the connection between
+    /// service consumer and provider.
     /// </summary>
-    public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile 
+    public ContainerAppPrivateLinkServiceConnectionState ConnectionState 
     {
-        get { Initialize(); return _managedEnvironmentStorageAzureFile!; }
-        set { Initialize(); AssignOrReplace(ref _managedEnvironmentStorageAzureFile, value); }
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
     }
-    private ContainerAppAzureFileProperties? _managedEnvironmentStorageAzureFile;
+    private ContainerAppPrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
-    /// Storage properties.
+    /// The group ids for the private endpoint resource.
     /// </summary>
-    public ManagedEnvironmentStorageProperties Properties 
+    public BicepList<string> GroupIds 
     {
-        get { Initialize(); return _properties!; }
-        set { Initialize(); AssignOrReplace(ref _properties, value); }
+        get { Initialize(); return _groupIds!; }
     }
-    private ManagedEnvironmentStorageProperties? _properties;
+    private BicepList<string>? _groupIds;
 
     /// <summary>
     /// Gets the Id.
@@ -55,6 +57,24 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
         get { Initialize(); return _id!; }
     }
     private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// Gets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
+
+    /// <summary>
+    /// The provisioning state of the private endpoint connection resource.
+    /// </summary>
+    public BicepValue<ContainerAppPrivateEndpointConnectionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerAppPrivateEndpointConnectionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
@@ -76,37 +96,39 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     private ResourceReference<ContainerAppManagedEnvironment>? _parent;
 
     /// <summary>
-    /// Creates a new ContainerAppManagedEnvironmentStorage.
+    /// Creates a new ContainerAppPrivateEndpointConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// ContainerAppManagedEnvironmentStorage resource.  This can be used to
+    /// ContainerAppPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
-    public ContainerAppManagedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/storages", resourceVersion ?? "2026-01-01")
+    /// <param name="resourceVersion">Version of the ContainerAppPrivateEndpointConnection.</param>
+    public ContainerAppPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/privateEndpointConnections", resourceVersion ?? "2026-01-01")
     {
     }
 
     /// <summary>
     /// Define all the provisionable properties of
-    /// ContainerAppManagedEnvironmentStorage.
+    /// ContainerAppPrivateEndpointConnection.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _managedEnvironmentStorageAzureFile = DefineModelProperty<ContainerAppAzureFileProperties>("ManagedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
-        _properties = DefineModelProperty<ManagedEnvironmentStorageProperties>("Properties", ["properties"]);
+        _connectionState = DefineModelProperty<ContainerAppPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _groupIds = DefineListProperty<string>("GroupIds", ["properties", "groupIds"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerAppPrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ContainerAppManagedEnvironmentStorage resource versions.
+    /// Supported ContainerAppPrivateEndpointConnection resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -148,16 +170,16 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
 
     /// <summary>
     /// Creates a reference to an existing
-    /// ContainerAppManagedEnvironmentStorage.
+    /// ContainerAppPrivateEndpointConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// ContainerAppManagedEnvironmentStorage resource.  This can be used to
+    /// ContainerAppPrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
-    /// <returns>The existing ContainerAppManagedEnvironmentStorage resource.</returns>
-    public static ContainerAppManagedEnvironmentStorage FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ContainerAppPrivateEndpointConnection.</param>
+    /// <returns>The existing ContainerAppPrivateEndpointConnection resource.</returns>
+    public static ContainerAppPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

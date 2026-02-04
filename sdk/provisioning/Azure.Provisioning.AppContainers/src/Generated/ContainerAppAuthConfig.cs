@@ -134,7 +134,7 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
     public ContainerAppAuthConfig(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -143,6 +143,7 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _encryptionSettings = DefineModelProperty<EncryptionSettings>("EncryptionSettings", ["properties", "encryptionSettings"]);
         _globalValidation = DefineModelProperty<ContainerAppGlobalValidation>("GlobalValidation", ["properties", "globalValidation"]);
@@ -160,6 +161,16 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

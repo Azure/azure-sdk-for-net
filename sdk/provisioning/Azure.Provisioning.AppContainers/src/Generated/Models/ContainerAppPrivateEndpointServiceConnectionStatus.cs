@@ -6,22 +6,27 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Custom Domain binding type.
+/// The private endpoint connection status.
 /// </summary>
-public enum ContainerAppCustomDomainBindingType
+public enum ContainerAppPrivateEndpointServiceConnectionStatus
 {
     /// <summary>
-    /// Disabled.
+    /// Pending.
     /// </summary>
-    Disabled,
+    Pending,
 
     /// <summary>
-    /// SniEnabled.
+    /// Approved.
     /// </summary>
-    SniEnabled,
+    Approved,
 
     /// <summary>
-    /// Auto.
+    /// Rejected.
     /// </summary>
-    Auto,
+    Rejected,
+
+    /// <summary>
+    /// Disconnected.
+    /// </summary>
+    Disconnected,
 }

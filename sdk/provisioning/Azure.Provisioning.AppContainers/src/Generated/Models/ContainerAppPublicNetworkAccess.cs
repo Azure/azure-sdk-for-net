@@ -6,22 +6,18 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Custom Domain binding type.
+/// Property to allow or block all public traffic. Allowed Values:
+/// &apos;Enabled&apos;, &apos;Disabled&apos;.
 /// </summary>
-public enum ContainerAppCustomDomainBindingType
+public enum ContainerAppPublicNetworkAccess
 {
+    /// <summary>
+    /// Enabled.
+    /// </summary>
+    Enabled,
+
     /// <summary>
     /// Disabled.
     /// </summary>
     Disabled,
-
-    /// <summary>
-    /// SniEnabled.
-    /// </summary>
-    SniEnabled,
-
-    /// <summary>
-    /// Auto.
-    /// </summary>
-    Auto,
 }

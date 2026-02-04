@@ -6,37 +6,42 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Provisioning state of the certificate.
+/// Day of the week when a managed environment can be patched.
 /// </summary>
-public enum ContainerAppCertificateProvisioningState
+public enum ManagedEnvironmentWeekDay
 {
     /// <summary>
-    /// Succeeded.
+    /// Monday.
     /// </summary>
-    Succeeded,
+    Monday,
 
     /// <summary>
-    /// Failed.
+    /// Tuesday.
     /// </summary>
-    Failed,
+    Tuesday,
 
     /// <summary>
-    /// Canceled.
+    /// Wednesday.
     /// </summary>
-    Canceled,
+    Wednesday,
 
     /// <summary>
-    /// DeleteFailed.
+    /// Thursday.
     /// </summary>
-    DeleteFailed,
+    Thursday,
 
     /// <summary>
-    /// Pending.
+    /// Friday.
     /// </summary>
-    Pending,
+    Friday,
 
     /// <summary>
-    /// Deleting.
+    /// Saturday.
     /// </summary>
-    Deleting,
+    Saturday,
+
+    /// <summary>
+    /// Sunday.
+    /// </summary>
+    Sunday,
 }
