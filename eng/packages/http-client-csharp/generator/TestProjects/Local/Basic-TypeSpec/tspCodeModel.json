@@ -1490,6 +1490,11 @@
       "usage": "Input,Output,Spread,Json",
       "doc": "A model with a few properties of literal types",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ThingModel"
+        }
+      },
       "properties": [
         {
           "$id": "162",
@@ -1856,6 +1861,11 @@
           "arguments": {}
         }
       ],
+      "serializationOptions": {
+        "json": {
+          "name": "RoundTripModel"
+        }
+      },
       "properties": [
         {
           "$id": "187",
@@ -2435,6 +2445,11 @@
             "usage": "Input,Output,Json",
             "doc": "A model with a few required nullable properties",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ModelWithRequiredNullableProperties"
+              }
+            },
             "properties": [
               {
                 "$id": "225",
@@ -2577,6 +2592,11 @@
       "usage": "Output,Spread,Json",
       "doc": "this is not a friendly model but with a friendly name",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "NotFriend"
+        }
+      },
       "properties": [
         {
           "$id": "235",
@@ -2615,6 +2635,11 @@
       "usage": "Output,Spread,Json",
       "doc": "this is a model with a client name",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithClientName"
+        }
+      },
       "properties": [
         {
           "$id": "238",
@@ -2652,6 +2677,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.returnsAnonymousModel.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": []
     },
     {
@@ -2662,6 +2692,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithNextLink.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "242",
@@ -2726,6 +2761,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithStringNextLink.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "247",
@@ -2783,6 +2823,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithHeaderNextLink.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "251",
@@ -2815,6 +2860,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithHeaderNextLinkWithMaxPage.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "253",
@@ -2847,6 +2897,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationToken.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "255",
@@ -2904,6 +2959,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationTokenWithMaxPage.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "259",
@@ -2961,6 +3021,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.ListWithContinuationTokenHeaderResponse.Response.anonymous",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
       "properties": [
         {
           "$id": "263",
@@ -2993,6 +3058,11 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.Page",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "265",
@@ -3025,6 +3095,7 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.MultipartRequest.Request.anonymous",
       "usage": "Input,MultipartFormData",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "267",
@@ -3068,6 +3139,11 @@
       "usage": "Input,Output,Json,External",
       "doc": "Model with DataFactoryElement properties",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DataFactoryElementModel"
+        }
+      },
       "properties": [
         {
           "$id": "270",

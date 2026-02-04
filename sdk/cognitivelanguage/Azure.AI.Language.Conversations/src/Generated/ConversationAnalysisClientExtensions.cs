@@ -13,35 +13,42 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ConversationAnalysisClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class ConversationAnalysisClientExtensions
     {
-        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>((options) => new ConversationAnalysisClient(endpoint, credential, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>(options => new ConversationAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>((options, cred) => new ConversationAnalysisClient(endpoint, cred, options));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>((options, credential) => new ConversationAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ConversationAnalysisClient, ConversationsClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ConversationAnalysisClient, ConversationsClientOptions>(configuration);
         }

@@ -57,8 +57,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
         /// <param name="publicNetworkAccess">
         /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
-        /// - Enabled: The resource can be accessed from the public internet.
-        /// - Disabled: The resource can only be accessed from a private endpoint.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
         /// </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections associated with the online experimentation workspace resource. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceProperties"/> instance for mocking. </returns>

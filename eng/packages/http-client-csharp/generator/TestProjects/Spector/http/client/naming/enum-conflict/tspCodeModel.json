@@ -176,6 +176,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstModel"
+        }
+      },
       "properties": [
         {
           "$id": "18",
@@ -235,6 +240,11 @@
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondModel"
+        }
+      },
       "properties": [
         {
           "$id": "22",

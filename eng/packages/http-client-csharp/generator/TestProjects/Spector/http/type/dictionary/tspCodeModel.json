@@ -366,6 +366,11 @@
       "usage": "Input,Output,Json",
       "doc": "Dictionary inner model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InnerModel"
+        }
+      },
       "properties": [
         {
           "$id": "46",

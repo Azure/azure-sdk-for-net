@@ -213,6 +213,11 @@
       "usage": "Input,Output,Json",
       "doc": "Test extensible enum type for discriminator",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Dog"
+        }
+      },
       "discriminatorProperty": {
         "$id": "24",
         "kind": "property",
@@ -277,6 +282,11 @@
           "doc": "Golden dog model",
           "discriminatorValue": "golden",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Golden"
+            }
+          },
           "baseModel": {
             "$ref": "23"
           },
@@ -368,6 +378,11 @@
       "usage": "Input,Output,Json",
       "doc": "Test fixed enum type for discriminator",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Snake"
+        }
+      },
       "discriminatorProperty": {
         "$id": "34",
         "kind": "property",
@@ -432,6 +447,11 @@
           "doc": "Cobra model",
           "discriminatorValue": "cobra",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Cobra"
+            }
+          },
           "baseModel": {
             "$ref": "33"
           },

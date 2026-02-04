@@ -77,6 +77,11 @@
       "crossLanguageDefinitionId": "Parameters.BodyOptionality.BodyModel",
       "usage": "Input,Spread,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BodyModel"
+        }
+      },
       "properties": [
         {
           "$id": "10",
