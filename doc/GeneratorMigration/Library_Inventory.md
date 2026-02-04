@@ -16,8 +16,8 @@
 - Total libraries: 402
 - Management Plane (MPG): 227
   - Autorest/Swagger: 145
-  - New Emitter (TypeSpec): 81
-  - Old TypeSpec: 1
+  - New Emitter (TypeSpec): 82
+  - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 58
   - New Emitter (TypeSpec): 30
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 81 / 82 (98.8%)
+**Migration Status**: 82 / 82 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
