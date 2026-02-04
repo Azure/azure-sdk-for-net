@@ -38,6 +38,16 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     private ContainerAppAzureFileProperties? _connectedEnvironmentStorageAzureFile;
 
     /// <summary>
+    /// Storage properties.
+    /// </summary>
+    public ConnectedEnvironmentStorageProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private ConnectedEnvironmentStorageProperties? _properties;
+
+    /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
@@ -76,7 +86,7 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentStorage.</param>
     public ContainerAppConnectedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/storages", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/storages", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -86,8 +96,10 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectedEnvironmentStorageAzureFile = DefineModelProperty<ContainerAppAzureFileProperties>("ConnectedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
+        _properties = DefineModelProperty<ConnectedEnvironmentStorageProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerAppConnectedEnvironment>("Parent", ["parent"], isRequired: true);
@@ -98,6 +110,16 @@ public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableReso
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

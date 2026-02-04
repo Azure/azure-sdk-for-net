@@ -14,12 +14,12 @@ using System;
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// ContainerAppManagedEnvironmentCertificate.
+/// ContainerAppMaintenanceConfiguration.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableResource
+public partial class ContainerAppMaintenanceConfiguration : ProvisionableResource
 {
     /// <summary>
-    /// Name of the Certificate.
+    /// The name of the maintenance configuration.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -29,34 +29,14 @@ public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableRe
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Gets or sets the Location.
+    /// List of maintenance schedules for a managed environment.
     /// </summary>
-    public BicepValue<AzureLocation> Location 
+    public BicepList<ManagedEnvironmentScheduledEntry> ScheduledEntries 
     {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
+        get { Initialize(); return _scheduledEntries!; }
+        set { Initialize(); _scheduledEntries!.Assign(value); }
     }
-    private BicepValue<AzureLocation>? _location;
-
-    /// <summary>
-    /// Certificate resource specific properties.
-    /// </summary>
-    public ContainerAppCertificateProperties Properties 
-    {
-        get { Initialize(); return _properties!; }
-        set { Initialize(); AssignOrReplace(ref _properties, value); }
-    }
-    private ContainerAppCertificateProperties? _properties;
-
-    /// <summary>
-    /// Gets or sets the Tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
+    private BicepList<ManagedEnvironmentScheduledEntry>? _scheduledEntries;
 
     /// <summary>
     /// Gets the Id.
@@ -87,39 +67,36 @@ public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableRe
     private ResourceReference<ContainerAppManagedEnvironment>? _parent;
 
     /// <summary>
-    /// Creates a new ContainerAppManagedEnvironmentCertificate.
+    /// Creates a new ContainerAppMaintenanceConfiguration.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// ContainerAppManagedEnvironmentCertificate resource.  This can be used
-    /// to refer to the resource in expressions, but is not the Azure name of
-    /// the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// ContainerAppMaintenanceConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentCertificate.</param>
-    public ContainerAppManagedEnvironmentCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/certificates", resourceVersion ?? "2026-01-01")
+    /// <param name="resourceVersion">Version of the ContainerAppMaintenanceConfiguration.</param>
+    public ContainerAppMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/maintenanceConfigurations", resourceVersion ?? "2026-01-01")
     {
     }
 
     /// <summary>
     /// Define all the provisionable properties of
-    /// ContainerAppManagedEnvironmentCertificate.
+    /// ContainerAppMaintenanceConfiguration.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-        _properties = DefineModelProperty<ContainerAppCertificateProperties>("Properties", ["properties"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _scheduledEntries = DefineListProperty<ManagedEnvironmentScheduledEntry>("ScheduledEntries", ["properties", "scheduledEntries"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ContainerAppManagedEnvironmentCertificate resource versions.
+    /// Supported ContainerAppMaintenanceConfiguration resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -160,18 +137,16 @@ public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableRe
     }
 
     /// <summary>
-    /// Creates a reference to an existing
-    /// ContainerAppManagedEnvironmentCertificate.
+    /// Creates a reference to an existing ContainerAppMaintenanceConfiguration.
     /// </summary>
     /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
-    /// ContainerAppManagedEnvironmentCertificate resource.  This can be used
-    /// to refer to the resource in expressions, but is not the Azure name of
-    /// the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// ContainerAppMaintenanceConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentCertificate.</param>
-    /// <returns>The existing ContainerAppManagedEnvironmentCertificate resource.</returns>
-    public static ContainerAppManagedEnvironmentCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ContainerAppMaintenanceConfiguration.</param>
+    /// <returns>The existing ContainerAppMaintenanceConfiguration resource.</returns>
+    public static ContainerAppMaintenanceConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

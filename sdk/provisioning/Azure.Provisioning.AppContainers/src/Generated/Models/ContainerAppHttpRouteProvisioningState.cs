@@ -6,9 +6,9 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Provisioning state of the certificate.
+/// The current provisioning state.
 /// </summary>
-public enum ContainerAppCertificateProvisioningState
+public enum ContainerAppHttpRouteProvisioningState
 {
     /// <summary>
     /// Succeeded.
@@ -26,17 +26,22 @@ public enum ContainerAppCertificateProvisioningState
     Canceled,
 
     /// <summary>
-    /// DeleteFailed.
+    /// Waiting.
     /// </summary>
-    DeleteFailed,
+    Waiting,
 
     /// <summary>
-    /// Pending.
+    /// Updating.
     /// </summary>
-    Pending,
+    Updating,
 
     /// <summary>
     /// Deleting.
     /// </summary>
     Deleting,
+
+    /// <summary>
+    /// Pending.
+    /// </summary>
+    Pending,
 }

@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
@@ -13,12 +14,12 @@ using System;
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// ContainerAppSourceControl.
+/// ContainerAppHttpRouteConfig.
 /// </summary>
-public partial class ContainerAppSourceControl : ProvisionableResource
+public partial class ContainerAppHttpRouteConfig : ProvisionableResource
 {
     /// <summary>
-    /// Name of the Container App SourceControl.
+    /// Name of the Http Route Config Resource.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -28,36 +29,14 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The branch which will trigger the auto deployment.
+    /// Http Route Config properties.
     /// </summary>
-    public BicepValue<string> Branch 
+    public ContainerAppHttpRouteConfigProperties Properties 
     {
-        get { Initialize(); return _branch!; }
-        set { Initialize(); _branch!.Assign(value); }
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
     }
-    private BicepValue<string>? _branch;
-
-    /// <summary>
-    /// Container App Revision Template with all possible settings and the
-    /// defaults if user did not provide them. The defaults are
-    /// populated             as they were at the creation time
-    /// </summary>
-    public ContainerAppGitHubActionConfiguration GitHubActionConfiguration 
-    {
-        get { Initialize(); return _gitHubActionConfiguration!; }
-        set { Initialize(); AssignOrReplace(ref _gitHubActionConfiguration, value); }
-    }
-    private ContainerAppGitHubActionConfiguration? _gitHubActionConfiguration;
-
-    /// <summary>
-    /// The repo url which will be integrated to ContainerApp.
-    /// </summary>
-    public BicepValue<Uri> RepoUri 
-    {
-        get { Initialize(); return _repoUri!; }
-        set { Initialize(); _repoUri!.Assign(value); }
-    }
-    private BicepValue<Uri>? _repoUri;
+    private ContainerAppHttpRouteConfigProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
@@ -69,15 +48,6 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Current provisioning State of the operation.
-    /// </summary>
-    public BicepValue<ContainerAppSourceControlOperationState> OperationState 
-    {
-        get { Initialize(); return _operationState!; }
-    }
-    private BicepValue<ContainerAppSourceControlOperationState>? _operationState;
-
-    /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData 
@@ -87,48 +57,45 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// Gets or sets a reference to the parent ContainerApp.
+    /// Gets or sets a reference to the parent ContainerAppManagedEnvironment.
     /// </summary>
-    public ContainerApp? Parent
+    public ContainerAppManagedEnvironment? Parent
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<ContainerApp>? _parent;
+    private ResourceReference<ContainerAppManagedEnvironment>? _parent;
 
     /// <summary>
-    /// Creates a new ContainerAppSourceControl.
+    /// Creates a new ContainerAppHttpRouteConfig.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// The the Bicep identifier name of the ContainerAppHttpRouteConfig
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    public ContainerAppSourceControl(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2026-01-01")
+    /// <param name="resourceVersion">Version of the ContainerAppHttpRouteConfig.</param>
+    public ContainerAppHttpRouteConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/httpRouteConfigs", resourceVersion ?? "2026-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of ContainerAppSourceControl.
+    /// Define all the provisionable properties of ContainerAppHttpRouteConfig.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
-        _gitHubActionConfiguration = DefineModelProperty<ContainerAppGitHubActionConfiguration>("GitHubActionConfiguration", ["properties", "githubActionConfiguration"]);
-        _repoUri = DefineProperty<Uri>("RepoUri", ["properties", "repoUrl"]);
+        _properties = DefineModelProperty<ContainerAppHttpRouteConfigProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _operationState = DefineProperty<ContainerAppSourceControlOperationState>("OperationState", ["properties", "operationState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<ContainerApp>("Parent", ["parent"], isRequired: true);
+        _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ContainerAppSourceControl resource versions.
+    /// Supported ContainerAppHttpRouteConfig resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -169,16 +136,16 @@ public partial class ContainerAppSourceControl : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing ContainerAppSourceControl.
+    /// Creates a reference to an existing ContainerAppHttpRouteConfig.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// The the Bicep identifier name of the ContainerAppHttpRouteConfig
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    /// <returns>The existing ContainerAppSourceControl resource.</returns>
-    public static ContainerAppSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ContainerAppHttpRouteConfig.</param>
+    /// <returns>The existing ContainerAppHttpRouteConfig resource.</returns>
+    public static ContainerAppHttpRouteConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

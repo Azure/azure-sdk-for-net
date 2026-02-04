@@ -329,7 +329,7 @@ public partial class DeploymentStack : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the DeploymentStack.</param>
     public DeploymentStack(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Resources/deploymentStacks", resourceVersion ?? "2024-03-01")
+        : base(bicepIdentifier, "Microsoft.Resources/deploymentStacks", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -371,6 +371,11 @@ public partial class DeploymentStack : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2024-03-01.
         /// </summary>
