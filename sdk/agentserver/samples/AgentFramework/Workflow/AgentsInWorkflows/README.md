@@ -1,4 +1,4 @@
-**IMPORTANT!** All samples and other resources made available in this GitHub repository ("samples") are designed to assist in accelerating development of agents, solutions, and agent workflows for various scenarios. Review all provided resources and carefully test output behavior in the context of your use case. AI responses may be inaccurate and AI actions should be monitored with human oversight. Learn more in the transparency documents for [Agent Service](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/agents/transparency-note) and [Agent Framework](https://github.com/microsoft/agent-framework/blob/main/TRANSPARENCY_FAQ.md).
+**IMPORTANT!** All samples and other resources made available in this GitHub repository ("samples") are designed to assist in accelerating development of agents, solutions, and agent workflows for various scenarios. Review all provided resources and carefully test output behavior in the context of your use case. AI responses may be inaccurate and AI actions should be monitored with human oversight. Learn more in the transparency documents for [Agent Service](https://learn.microsoft.com/azure/ai-foundry/responsible-ai/agents/transparency-note) and [Agent Framework](https://github.com/microsoft/agent-framework/blob/main/TRANSPARENCY_FAQ.md).
  
 Agents, solutions, or other output you create may be subject to legal and regulatory requirements, may require licenses, or may not be suitable for all industries, scenarios, or use cases. By using any sample, you are acknowledging that any output created using those samples are solely your responsibility, and that you will comply with all applicable laws, regulations, and relevant safety standards, terms of service, and codes of conduct.
  
@@ -9,7 +9,7 @@ Microsoft has no responsibility to you or others with respect to any of these sa
 # What this sample demonstrates
 
 This sample demonstrates how to use AI agents as executors within a workflow, hosted using 
-[Azure AI AgentServer SDK](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.agentserver.agentframework-readme) and 
+[Azure AI AgentServer SDK](https://learn.microsoft.com/dotnet/api/overview/azure/ai.agentserver.agentframework-readme) and 
 deploy it to Microsoft Foundry using the Azure Developer CLI [ai agent](https://aka.ms/azdaiagent/docs) extension.
 
 ## How It Works
@@ -29,7 +29,7 @@ The agents are connected sequentially in a workflow, creating a translation chai
 
 ### Agent Hosting
 
-The agent workflow is hosted using the [Azure AI AgentServer SDK](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.agentserver.agentframework-readme),
+The agent workflow is hosted using the [Azure AI AgentServer SDK](https://learn.microsoft.com/dotnet/api/overview/azure/ai.agentserver.agentframework-readme),
 which provisions a REST API endpoint compatible with the OpenAI Responses protocol. This allows interaction with the agent workflow using OpenAI Responses compatible clients.
 
 ### Agent Deployment
