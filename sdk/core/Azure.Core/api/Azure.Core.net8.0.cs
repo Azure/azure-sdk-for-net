@@ -435,6 +435,7 @@ namespace Azure.Core
     public partial class DiagnosticsOptions
     {
         protected internal DiagnosticsOptions() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected internal DiagnosticsOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }

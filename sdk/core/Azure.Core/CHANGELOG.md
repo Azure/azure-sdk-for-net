@@ -1,14 +1,10 @@
 # Release History
 
-## 1.52.0-beta.1 (Unreleased)
+## 1.51.1 (2026-02-04)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added two new APIs two enable Azure.Identity support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
 
 ## 1.51.0 (2026-01-29)
 

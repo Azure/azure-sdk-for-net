@@ -28,6 +28,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
         /// </summary>
+        [Experimental("SCME0002")]
         protected internal DiagnosticsOptions(IConfigurationSection section)
         {
             if (section is null || !section.Exists())
