@@ -4,6 +4,7 @@
 // Three translation agents are connected sequentially to create a translation chain:
 // English → French → Spanish → English, showing how agents can be composed as workflow executors.
 
+using Azure.AI.AgentServer.AgentFramework;
 using Azure.AI.AgentServer.AgentFramework.Extensions;
 using Azure.AI.OpenAI;
 using Azure.Identity;
@@ -24,14 +25,18 @@ AIAgent frenchAgent = GetTranslationAgent("French", chatClient);
 AIAgent spanishAgent = GetTranslationAgent("Spanish", chatClient);
 AIAgent englishAgent = GetTranslationAgent("English", chatClient);
 
-// Build the workflow and turn it into an agent
-AIAgent agent = new WorkflowBuilder(frenchAgent)
-    .AddEdge(frenchAgent, spanishAgent)
-    .AddEdge(spanishAgent, englishAgent)
-    .Build()
-    .AsAgent();
+WorkflowAgentFactory factory = () =>
+{
+    // Build the workflow and turn it into an agent
+    AIAgent agent = new WorkflowBuilder(frenchAgent)
+        .AddEdge(frenchAgent, spanishAgent)
+        .AddEdge(spanishAgent, englishAgent)
+        .Build()
+        .AsAgent();
+    return Task.FromResult(agent);
+};
 
-await agent.RunAIAgentAsync();
+await factory.RunWorkflowAgentAsync(telemetrySourceName: "Agents");
 
 static ChatClientAgent GetTranslationAgent(string targetLanguage, IChatClient chatClient) =>
     new(chatClient, $"You are a translation assistant that translates the provided text to {targetLanguage}.");

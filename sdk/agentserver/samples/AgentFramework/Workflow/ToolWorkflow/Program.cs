@@ -82,11 +82,5 @@ public class Program
 
         // Run container agent adapter
         await factory.RunWorkflowAgentAsync(telemetrySourceName: "Agents");
-
-        // await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
-        // tools: new List<ToolDefinition>
-        // {
-        //     ToolDefinition.Mcp(toolConnectionId)
-        // });
     }
 }
