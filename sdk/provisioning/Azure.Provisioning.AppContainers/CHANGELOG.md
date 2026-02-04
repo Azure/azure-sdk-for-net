@@ -4,7 +4,6 @@
 
 ### Features Added
 
-- Upgraded dependency on `Azure.ResourceManager.AppContainers` to version 1.5.0.
 - Added new resource versions including `V2025_07_01` and `V2026_01_01`.
 - Added `Auto` value to `ContainerAppCustomDomainBindingType` enum for automatic certificate binding.
 - Added new resources: `ContainerAppHttpRouteConfig`, `ContainerAppMaintenanceConfiguration`, `ContainerAppPrivateEndpointConnection`, and `LogicApp`.
