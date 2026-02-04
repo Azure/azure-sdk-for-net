@@ -286,9 +286,6 @@
 # ServiceLabel: %Container Registry
 # ServiceOwners:                                                   @Azure/azure-sdk-write-acr
 
-# ServiceLabel: %Cosmos
-/sdk/cosmosdb/                                                     @anfeldma-ms @kushagraThapar @MehaKaushik @pjohari-ms @shurd @zfoster
-
 # PRLabel: %Datadog
 /sdk/datadog/Azure.ResourceManager.*/                              @ArcturusZhang @ArthurMa1978 @jbhanuchand
 
@@ -363,10 +360,10 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @dargilco @rhurey
 
-# PRLabel: %Iot
+# PRLabel: %IoT
 /sdk/iot*/                                                         @davidemontanari @ethanann-ms @marcodalessandro @riteshrao @vighatke
 
-# PRLabel: %Iot
+# PRLabel: %IoT
 /sdk/modelsrepository/                                             @abhipsaMisra @andyk-ms @brycewang-microsoft @digimaun @timtay-microsoft @tmahmood-microsoft
 
 # ServiceLabel: %IoT
