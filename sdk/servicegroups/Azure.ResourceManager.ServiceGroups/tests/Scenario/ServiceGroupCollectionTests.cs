@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
         public async Task ServiceGroupCollectionApiTests()
         {
             var tenantCollection = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            var tenant = tenantCollection.Find(t => t.Data.TenantId.ToString().Equals(TestEnvironment.TenantId));
+            var tenant = tenantCollection.FirstOrDefault();
+            Assert.IsNotNull(tenant, "No tenant found");
             var serviceGroupCollection = tenant.GetServiceGroups();
 
             // 1. Create Collection
             string serviceGroupName = Recording.GenerateAssetName("testsg-");
+            string tenantId = TestEnvironment.TenantId;
 
             ServiceGroupData data = new ServiceGroupData
             {
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
                     DisplayName = $"Test ServiceGroup {serviceGroupName}",
                     Parent = new ParentServiceGroupProperties
                     {
-                        ResourceId = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{tenant.Data.TenantId}"),
+                        ResourceId = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{tenantId}"),
                     }
                 },
             };
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
                     DisplayName = $"Updated ServiceGroup {serviceGroupName}",
                     Parent = new ParentServiceGroupProperties
                     {
-                        ResourceId = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{tenant.Data.TenantId}"),
+                        ResourceId = new ResourceIdentifier($"/providers/Microsoft.Management/serviceGroups/{tenantId}"),
                     }
                 },
             };
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.IsNotNull(updatedServiceGroup);
             Assert.AreEqual(serviceGroupName, updatedServiceGroup.Data.Name);
             Assert.AreEqual(updatedData.Properties.DisplayName, updatedServiceGroup.Data.Properties.DisplayName);
-            Assert.AreEqual(TestEnvironment.TenantId, updatedServiceGroup.Data.Properties.Parent.ResourceId.Name);
+            Assert.AreEqual(tenantId, updatedServiceGroup.Data.Properties.Parent.ResourceId.Name);
 
             // 4. List Ancestors Collection
             var serviceGroupName2 = Recording.GenerateAssetName("testsg-");
@@ -117,7 +119,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName)));
             Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName2)));
             Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(serviceGroupName3)));
-            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(tenant.Data.TenantId.ToString())));
+            Assert.IsTrue(ancestors.Any(ancestor => ancestor.Data.Name.Equals(tenantId)));
             Assert.AreEqual(4, ancestors.Count);
 
             // 5. Exists

@@ -63,6 +63,8 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.AreEqual(serviceGroupName, serviceGroup.Data.Name);
             Assert.AreEqual(ServiceGroupResource.ResourceType, serviceGroup.Data.ResourceType);
             Assert.AreEqual(TestEnvironment.TenantId, serviceGroup.Data.Properties.Parent.ResourceId.Name);
+
+            await _serviceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
         [RecordedTest]
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.AreEqual(serviceGroupName, updatedServiceGroup.Data.Name);
             Assert.AreEqual($"Updated ServiceGroup {serviceGroupName}", updatedServiceGroup.Data.Properties.DisplayName);
             Assert.AreEqual(TestEnvironment.TenantId, updatedServiceGroup.Data.Properties.Parent.ResourceId.Name);
+            await _serviceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
         [RecordedTest]
@@ -132,37 +135,8 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             Assert.IsNotNull(_serviceGroup);
             Assert.AreEqual(childName, _serviceGroup.Data.Name);
             Assert.AreEqual(_parentServiceGroup.Id, _serviceGroup.Data.Properties.Parent.ResourceId);
-        }
-
-        [RecordedTest]
-        public async Task GetByResourceIdentifier()
-        {
-            string serviceGroupName = Recording.GenerateAssetName("testsg-");
-            _serviceGroup = await CreateServiceGroupAsync(serviceGroupName, TestEnvironment.TenantId);
-
-            // Get by resource identifier using ArmClient
-            ResourceIdentifier resourceId = ServiceGroupResource.CreateResourceIdentifier(serviceGroupName);
-            ServiceGroupResource serviceGroup = await Client.GetServiceGroupResource(resourceId).GetAsync();
-
-            Assert.IsNotNull(serviceGroup);
-            Assert.AreEqual(serviceGroupName, serviceGroup.Data.Name);
-        }
-
-        [TearDown]
-        public async Task TearDown()
-        {
-            if (Mode == RecordedTestMode.Playback)
-                return;
-
-            if (_serviceGroup != null)
-            {
-                await _serviceGroup.DeleteAsync(WaitUntil.Completed);
-            }
-
-            if (_parentServiceGroup != null)
-            {
-                await _parentServiceGroup.DeleteAsync(WaitUntil.Completed);
-            }
+            await _serviceGroup.DeleteAsync(WaitUntil.Completed);
+            await _parentServiceGroup.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

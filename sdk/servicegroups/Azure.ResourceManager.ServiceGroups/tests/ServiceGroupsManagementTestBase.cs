@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.ServiceGroups.Tests
     public class ServiceGroupsManagementTestBase : ManagementRecordedTestBase<ServiceGroupsManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected ServiceGroupsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -26,18 +25,15 @@ namespace Azure.ResourceManager.ServiceGroups.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected string GetTenantId()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            // Use recorded variable to ensure consistency between Record and Playback modes
+            return TestEnvironment.TenantId;
         }
     }
 }
