@@ -182,6 +182,7 @@ function Sync-TypeSpecFiles {
 
 # Step 3: Regenerate
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
+$totalStart = Get-Date
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -417,8 +418,9 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
 }
 
 # Summary
+$totalElapsed = [math]::Round(((Get-Date) - $totalStart).TotalSeconds, 1)
 $passed = @($results | Where-Object { $_.Success -eq $true }).Count
 $failed = @($results | Where-Object { $_.Success -ne $true }).Count
-Write-Host "`n=== Summary: $passed passed, $failed failed ==="
+Write-Host "`n=== Summary: $passed passed, $failed failed (${totalElapsed}s total) ==="
 
 if ($failed -gt 0) { exit 1 }
