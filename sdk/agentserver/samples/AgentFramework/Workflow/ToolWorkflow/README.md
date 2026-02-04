@@ -4,5 +4,4 @@ This sample introduces the use of AI agents as executors within a workflow, then
 
 ## Prerequisites
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or later
-- Access to github packages for nightly builds, see [FAQs](../../../README.md#faqs) below.
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
