@@ -23,7 +23,7 @@
 .PARAMETER SaveInputs
     When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
 
-.PARAMETER Debug
+.PARAMETER DebugGenerator
     When specified, passes debug=true to the emitter to enable attaching a debugger to the generator process.
 
 .NOTES
@@ -45,7 +45,7 @@ param(
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
     [switch]$SaveInputs,
-    [switch]$Debug
+    [switch]$DebugGenerator
 )
 
 $ErrorActionPreference = 'Stop'
@@ -158,13 +158,13 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $sdkRepo = $using:sdkRepoRoot
         $worker = $using:workerScript
         $saveInputsFlag = $using:SaveInputs
-        $debugFlag = $using:Debug
+        $debugFlag = $using:DebugGenerator
         
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
         
         try {
-            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo -SaveInputs:$saveInputsFlag -Debug:$debugFlag 2>&1
+            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo -SaveInputs:$saveInputsFlag -DebugGenerator:$debugFlag 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json
@@ -198,7 +198,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot -SaveInputs:$SaveInputs -Debug:$Debug 2>&1
+            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot -SaveInputs:$SaveInputs -DebugGenerator:$DebugGenerator 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json

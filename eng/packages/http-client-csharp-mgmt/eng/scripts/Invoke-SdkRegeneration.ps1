@@ -30,7 +30,7 @@ param(
     
     [switch]$SaveInputs,
     
-    [switch]$Debug
+    [switch]$DebugGenerator
 )
 
 $ErrorActionPreference = 'Stop'
@@ -149,7 +149,7 @@ try {
         if ($SaveInputs) {
             $tspOptions += " --option `"@azure-typespec/http-client-csharp-mgmt.save-inputs=true`""
         }
-        if ($Debug) {
+        if ($DebugGenerator) {
             $tspOptions += " --option `"@azure-typespec/http-client-csharp-mgmt.debug=true`""
         }
         $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
