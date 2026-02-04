@@ -68,21 +68,30 @@ try {
     try {
         # Initialize sparse clone with forward slashes
         $gitRemote = "https://github.com/$repo.git"
-        git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1 | Out-Null
-        git sparse-checkout init --cone 2>&1 | Out-Null
-        git sparse-checkout set $directoryForGit 2>&1 | Out-Null
+        $gitOutput = git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git clone failed: $gitOutput" }
+        
+        $gitOutput = git sparse-checkout init --cone 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout init failed: $gitOutput" }
+        
+        $gitOutput = git sparse-checkout set $directoryForGit 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout set failed: $gitOutput" }
         
         # Add additional directories if any
         if ($additionalDirs) {
             foreach ($addDir in $additionalDirs) {
                 $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
-                git sparse-checkout add $addDirForGit 2>&1 | Out-Null
+                $gitOutput = git sparse-checkout add $addDirForGit 2>&1
+                if ($LASTEXITCODE -ne 0) { throw "git sparse-checkout add failed: $gitOutput" }
             }
         }
         
         # Checkout the specific commit
-        git fetch --depth 1 origin $commit 2>&1 | Out-Null
-        git checkout $commit 2>&1 | Out-Null
+        $gitOutput = git fetch --depth 1 origin $commit 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git fetch failed: $gitOutput" }
+        
+        $gitOutput = git checkout $commit 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "git checkout failed: $gitOutput" }
     }
     finally {
         Pop-Location

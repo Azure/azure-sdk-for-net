@@ -8,13 +8,21 @@
     Builds the mgmt generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
     By default, regenerates ALL mgmt SDKs. Use -Services to limit scope.
+    
+    Pattern matching: The -Services parameter uses substring matching.
+    For example, "Key" matches both "KeyVault" and "MyKeyService".
+    Use wildcards for more precise matching (e.g., "KeyVault*").
 
 .PARAMETER Services
     One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
-    Supports wildcards. Case-insensitive.
+    Supports wildcards. Case-insensitive. Uses substring matching.
 
 .PARAMETER Parallel
-    Number of parallel jobs (default: 4). Set to 1 for sequential execution.
+    Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
+
+.NOTES
+    Prerequisites: git, npm, dotnet, and npx must be installed and in PATH.
+    The powershell-yaml module will be auto-installed if not present.
 
 .EXAMPLE
     .\RegenSdkLocal.ps1 -Services "KeyVault"
@@ -28,10 +36,23 @@
 
 param(
     [string[]]$Services,
+    [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Check prerequisites
+function Test-Prerequisite {
+    param([string]$Command, [string]$Name)
+    if (-not (Get-Command $Command -ErrorAction SilentlyContinue)) {
+        throw "$Name is required but not found in PATH. Please install $Name and try again."
+    }
+}
+
+Test-Prerequisite "git" "Git"
+Test-Prerequisite "npm" "npm (Node.js)"
+Test-Prerequisite "dotnet" ".NET SDK"
 
 # Resolve paths
 $mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
@@ -53,12 +74,27 @@ Push-Location $mgmtPackageRoot
 try {
     if (-not (Test-Path "node_modules")) {
         Write-Host "  npm install..."
-        npm install 2>&1 | Out-Null
+        $output = npm install 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  ERROR: npm install failed:" -ForegroundColor Red
+            $output | ForEach-Object { Write-Host "    $_" }
+            throw "npm install failed with exit code $LASTEXITCODE"
+        }
     }
     Write-Host "  npm run build:emitter..."
-    npm run build:emitter 2>&1 | Out-Null
+    $output = npm run build:emitter 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  ERROR: npm run build:emitter failed:" -ForegroundColor Red
+        $output | ForEach-Object { Write-Host "    $_" }
+        throw "npm run build:emitter failed with exit code $LASTEXITCODE"
+    }
     Write-Host "  dotnet build..."
-    dotnet build ./generator/Azure.Generator.Management/src -c Debug --verbosity quiet 2>&1 | Out-Null
+    $output = dotnet build ./generator/Azure.Generator.Management/src -c Debug --verbosity quiet 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  ERROR: dotnet build failed:" -ForegroundColor Red
+        $output | ForEach-Object { Write-Host "    $_" }
+        throw "dotnet build failed with exit code $LASTEXITCODE"
+    }
     Write-Host "  Build complete."
 }
 finally {
