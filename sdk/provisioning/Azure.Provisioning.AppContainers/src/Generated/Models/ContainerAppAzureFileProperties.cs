@@ -36,6 +36,16 @@ public partial class ContainerAppAzureFileProperties : ProvisionableConstruct
     private BicepValue<string>? _accountKey;
 
     /// <summary>
+    /// Storage account key stored as an Azure Key Vault secret.
+    /// </summary>
+    public ContainerAppSecretKeyVaultProperties AccountKeyVaultProperties 
+    {
+        get { Initialize(); return _accountKeyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _accountKeyVaultProperties, value); }
+    }
+    private ContainerAppSecretKeyVaultProperties? _accountKeyVaultProperties;
+
+    /// <summary>
     /// Access mode for storage.
     /// </summary>
     public BicepValue<ContainerAppAccessMode> AccessMode 
@@ -71,6 +81,7 @@ public partial class ContainerAppAzureFileProperties : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _accountName = DefineProperty<string>("AccountName", ["accountName"]);
         _accountKey = DefineProperty<string>("AccountKey", ["accountKey"]);
+        _accountKeyVaultProperties = DefineModelProperty<ContainerAppSecretKeyVaultProperties>("AccountKeyVaultProperties", ["accountKeyVaultProperties"]);
         _accessMode = DefineProperty<ContainerAppAccessMode>("AccessMode", ["accessMode"]);
         _shareName = DefineProperty<string>("ShareName", ["shareName"]);
     }
