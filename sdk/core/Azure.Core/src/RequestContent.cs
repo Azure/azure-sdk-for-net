@@ -186,6 +186,8 @@ namespace Azure.Core
 
             private readonly long _origin;
 
+            private bool _disposed;
+
             public StreamContent(Stream stream)
             {
                 if (!stream.CanSeek)
@@ -233,7 +235,11 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                _stream.Dispose();
+                if (!_disposed)
+                {
+                    _stream.Dispose();
+                    _disposed = true;
+                }
             }
         }
 
@@ -347,7 +353,7 @@ namespace Azure.Core
 
         private sealed class CustomStringContent : RequestContent
         {
-            private readonly byte[] _buffer;
+            private byte[]? _buffer;
             private readonly int _actualByteCount;
 
             public CustomStringContent(string value, Encoding? encoding = null)
@@ -390,7 +396,11 @@ namespace Azure.Core
             public override void Dispose()
             {
 #if NET6_0_OR_GREATER
-                ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                if (_buffer != null)
+                {
+                    ArrayPool<byte>.Shared.Return(_buffer, clearArray: true);
+                    _buffer = null;
+                }
 #endif
             }
         }
@@ -398,12 +408,17 @@ namespace Azure.Core
         private sealed class DynamicDataContent : RequestContent
         {
             private readonly DynamicData _data;
+            private bool _disposed;
 
             public DynamicDataContent(DynamicData data) => _data = data;
 
             public override void Dispose()
             {
-                _data.Dispose();
+                if (!_disposed)
+                {
+                    _data.Dispose();
+                    _disposed = true;
+                }
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
@@ -427,6 +442,7 @@ namespace Azure.Core
         private sealed class PersistableModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
         {
             private readonly BinaryContent _binaryContent;
+            private bool _disposed;
 
             public PersistableModelRequestContent(T model, ModelReaderWriterOptions? options)
             {
@@ -435,7 +451,11 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                _binaryContent.Dispose();
+                if (!_disposed)
+                {
+                    _binaryContent.Dispose();
+                    _disposed = true;
+                }
             }
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
