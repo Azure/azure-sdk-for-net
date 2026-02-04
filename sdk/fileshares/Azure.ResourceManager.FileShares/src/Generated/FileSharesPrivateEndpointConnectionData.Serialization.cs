@@ -10,18 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.FileShares;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.FileShares.Models
+namespace Azure.ResourceManager.FileShares
 {
     /// <summary> The private endpoint connection resource. </summary>
-    public partial class FileSharePrivateEndpointConnection : ResourceData, IJsonModel<FileSharePrivateEndpointConnection>
+    public partial class FileSharesPrivateEndpointConnectionData : ResourceData, IJsonModel<FileSharesPrivateEndpointConnectionData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FileSharePrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileSharesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +33,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSharePrivateEndpointConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSharesPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -47,24 +48,24 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileSharePrivateEndpointConnection IJsonModel<FileSharePrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FileSharePrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
+        FileSharesPrivateEndpointConnectionData IJsonModel<FileSharesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FileSharesPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSharePrivateEndpointConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSharesPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileSharePrivateEndpointConnection(document.RootElement, options);
+            return DeserializeFileSharesPrivateEndpointConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FileSharePrivateEndpointConnection DeserializeFileSharePrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileSharesPrivateEndpointConnectionData DeserializeFileSharesPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileSharePrivateEndpointConnection(
+            return new FileSharesPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -134,43 +135,62 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileSharePrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FileSharesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FileSharePrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSharesPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FileSharePrivateEndpointConnection IPersistableModel<FileSharePrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (FileSharePrivateEndpointConnection)PersistableModelCreateCore(data, options);
+        FileSharesPrivateEndpointConnectionData IPersistableModel<FileSharesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FileSharesPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileSharePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileSharesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFileSharePrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeFileSharesPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileSharePrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSharesPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileSharePrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileSharesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="fileSharesPrivateEndpointConnectionData"> The <see cref="FileSharesPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FileSharesPrivateEndpointConnectionData fileSharesPrivateEndpointConnectionData)
+        {
+            if (fileSharesPrivateEndpointConnectionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(fileSharesPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FileSharesPrivateEndpointConnectionData"/> from. </param>
+        internal static FileSharesPrivateEndpointConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFileSharesPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

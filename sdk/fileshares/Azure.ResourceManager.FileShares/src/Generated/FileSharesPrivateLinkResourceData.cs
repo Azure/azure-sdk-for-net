@@ -8,35 +8,36 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.FileShares.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.FileShares.Models
+namespace Azure.ResourceManager.FileShares
 {
-    /// <summary> The private endpoint connection resource. </summary>
-    public partial class FileSharePrivateEndpointConnection : ResourceData
+    /// <summary> A private link resource. </summary>
+    public partial class FileSharesPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileSharePrivateEndpointConnection"/>. </summary>
-        internal FileSharePrivateEndpointConnection()
+        /// <summary> Initializes a new instance of <see cref="FileSharesPrivateLinkResourceData"/>. </summary>
+        internal FileSharesPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSharePrivateEndpointConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSharesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
-        internal FileSharePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileSharePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Resource properties. </param>
+        internal FileSharesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileSharesPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
-        /// <summary> The private endpoint connection properties. </summary>
-        public FileSharePrivateEndpointConnectionProperties Properties { get; }
+        /// <summary> Resource properties. </summary>
+        public FileSharesPrivateLinkResourceProperties Properties { get; }
     }
 }
