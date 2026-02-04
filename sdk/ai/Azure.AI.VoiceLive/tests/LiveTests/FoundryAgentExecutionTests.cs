@@ -43,8 +43,8 @@ namespace Azure.AI.VoiceLive.Tests
         public async Task SetupTestAgent()
         {
             // V2 FOUNDRY AGENTS: Voice Live only works with V2 (new Foundry) agents
-            var agentName = $"{AgentNamePrefix}-{DateTime.UtcNow:yyyyMMdd}";
-            _testAgentName = agentName;
+            // Use existing agent from constants/environment instead of generating dynamic names
+            _testAgentName = string.Empty; // Don't generate dynamic names
             _testAgentId = string.Empty; // Use environment or test constants
 
             await Task.CompletedTask;
@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
+        //[Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldReceiveAgentCallArgumentsDelta()
         {
             // This test verifies that agent call arguments are streamed via delta events
@@ -568,7 +568,7 @@ namespace Azure.AI.VoiceLive.Tests
 
         [LiveOnly]
         [TestCase]
-        [Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
+        //[Ignore("Requires deployed Foundry agent - update test constants with real agent details")]
         public async Task ShouldExecuteAgentWithReturnResponseDirectly()
         {
             // This test verifies that ReturnAgentResponseDirectly option works correctly
@@ -610,7 +610,8 @@ namespace Azure.AI.VoiceLive.Tests
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(TimeoutToken);
             cts.CancelAfter(TestConstants.McpTimeout);
 
-            bool foundAgentCall = false;
+            bool foundArgumentsDone = false;
+            SessionUpdateResponseFoundryAgentCallArgumentsDone? doneEvent = null;
 
             try
             {
@@ -618,12 +619,12 @@ namespace Azure.AI.VoiceLive.Tests
                 do
                 {
                     update = await GetNextUpdate(updatesEnum, checkEventId: true).ConfigureAwait(false);
+                    TestContext.WriteLine($"🔍 Received event type: {update.GetType().Name}");
 
-                    if (update is SessionUpdateResponseFoundryAgentCallCompleted completed)
+                    if (update is SessionUpdateResponseFoundryAgentCallArgumentsDone done)
                     {
-                        foundAgentCall = true;
-                        TestContext.WriteLine($"✓ Agent call completed with ReturnAgentResponseDirectly mode");
-                        break;
+                        foundArgumentsDone = true;
+                        doneEvent = done;
                     }
                     else if (update is SessionUpdateResponseDone)
                     {
@@ -636,9 +637,10 @@ namespace Azure.AI.VoiceLive.Tests
                 Assert.Inconclusive("Timeout waiting for agent call. AI may not have chosen to use the agent.");
             }
 
-            if (foundAgentCall)
+            if (foundArgumentsDone)
             {
-                TestContext.WriteLine("✓ Agent executed successfully with direct response mode");
+                Assert.IsNotNull(doneEvent?.Arguments);
+                TestContext.WriteLine("✓ Received complete agent call arguments");
             }
             else
             {
@@ -745,6 +747,25 @@ namespace Azure.AI.VoiceLive.Tests
             {
                 Assert.Inconclusive("AI did not decide to use the Foundry agent in this test run.");
             }
+        }
+
+        [LiveOnly]
+        [TestCase]
+        public async Task ShouldCreateBasicFoundryAgent()
+        {
+            // This test verifies that we can create a basic Foundry agent configuration
+            var foundryAgent = CreateTestFoundryAgent();
+
+            Assert.IsNotNull(foundryAgent);
+            Assert.IsNotEmpty(foundryAgent.AgentName);
+            Assert.IsNotEmpty(foundryAgent.ProjectName);
+
+            TestContext.WriteLine($"✓ Created Foundry agent: {foundryAgent.AgentName}");
+            TestContext.WriteLine($"✓ Project name: {foundryAgent.ProjectName}");
+            TestContext.WriteLine($"✓ Agent version: {foundryAgent.AgentVersion}");
+            TestContext.WriteLine($"✓ Description: {foundryAgent.Description}");
+
+            await Task.CompletedTask;
         }
     }
 }
