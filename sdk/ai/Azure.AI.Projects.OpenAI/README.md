@@ -1164,7 +1164,7 @@ while (nextResponseOptions is not null)
         {
             nextResponseOptions = new CreateResponseOptions()
             {
-                PreviousResponseId = latestResponse.PreviousResponseId,
+                PreviousResponseId = latestResponse.Id,
             };
             if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
             {
