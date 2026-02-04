@@ -333,15 +333,8 @@ namespace Azure.Storage.DataMovement
                     }
                     catch (Exception ex) when (
                         _creationPreference == StorageResourceCreationMode.SkipIfExists &&
-                        (
-                            // Share Directory already exists
-                            (ex is InvalidOperationException operationException &&
-                             operationException.Message.Contains(DataMovementConstants.ErrorCode.CannotOverwriteDirectory)) ||
-                            // Local Directory already exists
-                            (ex is IOException ioException &&
-                             (ioException.Message.Contains("already exists") ||
-                              ioException.Message.Contains("Cannot create")))
-                        ))
+                        (ex is InvalidOperationException operationException &&
+                        operationException.Message.Contains(DataMovementConstants.ErrorCode.CannotOverwriteDirectory)))
                     {
                         DataMovementEventSource.Singleton.DirectorySkipped(
                             _transferOperation.Id,
