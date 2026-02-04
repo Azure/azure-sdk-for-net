@@ -107,17 +107,19 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 isAvailable is null && availabilityStatus is null ? default : new CheckQuotaAvailabilityResponseProperties(isAvailable, availabilityStatus, null));
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="identity"></param>
-        /// <param name="description"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="dataPlaneUri"></param>
-        /// <param name="encryption"></param>
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <param name="description"> Description of the resource. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="dataPlaneUri"> Resource data plane URI. </param>
+        /// <param name="encryption"> CMK Encryption property. </param>
+        /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
         public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneUri = default, LoadTestingCmkEncryptionProperties encryption = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
