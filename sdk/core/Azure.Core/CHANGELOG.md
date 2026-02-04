@@ -5,6 +5,7 @@
 ### Features Added
 
 - Update the APIs for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection to enable Azure.Identity use cases.
+- Updated BCL dependencies to 10.x.
 
 ## 1.51.0 (2026-01-29)
 
