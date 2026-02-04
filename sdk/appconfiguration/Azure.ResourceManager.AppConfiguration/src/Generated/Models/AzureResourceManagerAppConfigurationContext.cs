@@ -59,14 +59,12 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
-    [ModelReaderWriterBuildable(typeof(ResourceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelemetryProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserIdentity))]
     public partial class AzureResourceManagerAppConfigurationContext : ModelReaderWriterContext
     {
     }

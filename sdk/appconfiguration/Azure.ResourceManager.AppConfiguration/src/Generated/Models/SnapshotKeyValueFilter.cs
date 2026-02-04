@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Filters key-values by their key field. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
 
         /// <summary> Filters key-values by their label field. </summary>
+        [WirePath("label")]
         public string Label { get; set; }
     }
 }

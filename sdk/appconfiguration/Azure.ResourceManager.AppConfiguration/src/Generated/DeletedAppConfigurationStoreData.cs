@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Properties of the deleted configuration store. </summary>
+        [WirePath("properties")]
         internal DeletedConfigurationStoreProperties Properties { get; }
 
         /// <summary> The resource id of the original configuration store. </summary>
+        [WirePath("properties.configurationStoreId")]
         public ResourceIdentifier ConfigurationStoreId
         {
             get
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The location of the original configuration store. </summary>
-        public string Location
+        [WirePath("properties.location")]
+        public AzureLocation? Location
         {
             get
             {
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The deleted date. </summary>
+        [WirePath("properties.deletionDate")]
         public DateTimeOffset? DeletedOn
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The scheduled purged date. </summary>
+        [WirePath("properties.scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Tags of the original configuration store. </summary>
+        [WirePath("properties.tags")]
         public IReadOnlyDictionary<string, string> Tags
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Purge protection status of the original configuration store. </summary>
+        [WirePath("properties.purgeProtectionEnabled")]
         public bool? IsPurgeProtectionEnabled
         {
             get

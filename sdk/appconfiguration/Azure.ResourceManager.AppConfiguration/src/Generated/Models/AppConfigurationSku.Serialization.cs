@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Describes a configuration store SKU. </summary>
-    internal partial class AppConfigurationSku : IJsonModel<AppConfigurationSku>
+    public partial class AppConfigurationSku : IJsonModel<AppConfigurationSku>
     {
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSku"/> for deserialization. </summary>
         internal AppConfigurationSku()

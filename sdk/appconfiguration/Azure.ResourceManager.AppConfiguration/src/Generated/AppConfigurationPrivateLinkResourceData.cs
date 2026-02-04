@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Private link resource properties. </summary>
+        [WirePath("properties")]
         internal AppConfigurationPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The list of required DNS zone names of the private link resource. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -46,30 +47,39 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The encryption settings of the configuration store. </summary>
+        [WirePath("encryption")]
         internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
 
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
 
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("dataPlaneProxy")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
 
         /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("defaultKeyValueRevisionRetentionPeriodInSeconds")]
         public long? DefaultKeyValueRevisionRetentionPeriodInSeconds { get; set; }
 
         /// <summary> Property specifying the configuration of telemetry to update for this configuration store. </summary>
+        [WirePath("telemetry")]
         internal TelemetryProperties Telemetry { get; set; }
 
         /// <summary> Property specifying the configuration of Azure Front Door for this configuration store. </summary>
+        [WirePath("azureFrontDoor")]
         internal AzureFrontDoorProperties AzureFrontDoor { get; set; }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -87,6 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("telemetry.resourceId")]
         public ResourceIdentifier TelemetryResourceId
         {
             get
@@ -104,6 +115,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("azureFrontDoor.resourceId")]
         public ResourceIdentifier AzureFrontDoorResourceId
         {
             get

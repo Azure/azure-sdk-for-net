@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary></summary>
-    public partial class AppConfigurationSnapshotResource : IJsonModel<AppConfigurationSnapshotData>
+    public partial class AppConfigurationSnapshotResource : ArmResource, IJsonModel<AppConfigurationSnapshotData>
     {
         private static IJsonModel<AppConfigurationSnapshotData> s_dataDeserializationInstance;
 

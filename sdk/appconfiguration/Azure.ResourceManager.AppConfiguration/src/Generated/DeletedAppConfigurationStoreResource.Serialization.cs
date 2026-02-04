@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary></summary>
-    public partial class DeletedAppConfigurationStoreResource : IJsonModel<DeletedAppConfigurationStoreData>
+    public partial class DeletedAppConfigurationStoreResource : ArmResource, IJsonModel<DeletedAppConfigurationStoreData>
     {
         private static IJsonModel<DeletedAppConfigurationStoreData> s_dataDeserializationInstance;
 

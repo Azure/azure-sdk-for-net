@@ -20,17 +20,6 @@ namespace Azure.ResourceManager.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="skuName"> The SKU name of the configuration store. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public AppConfigurationStoreData(AzureLocation location, string skuName) : base(location)
-        {
-            Argument.AssertNotNull(skuName, nameof(skuName));
-
-            Sku = new AppConfigurationSku(skuName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -50,15 +39,19 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The properties of a configuration store. </summary>
+        [WirePath("properties")]
         internal ConfigurationStoreProperties Properties { get; set; }
 
         /// <summary> The managed identity information, if configured. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The sku of the configuration store. </summary>
+        [WirePath("sku")]
         internal AppConfigurationSku Sku { get; set; }
 
         /// <summary> The provisioning state of the configuration store. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -68,6 +61,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The creation date of configuration store. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -77,6 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
+        [WirePath("properties.endpoint")]
         public string Endpoint
         {
             get
@@ -86,6 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections
         {
             get
@@ -99,6 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -116,6 +113,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth
         {
             get
@@ -133,6 +131,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
+        [WirePath("properties.softDeleteRetentionInDays")]
         public int? SoftDeleteRetentionInDays
         {
             get
@@ -150,6 +149,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("properties.defaultKeyValueRevisionRetentionPeriodInSeconds")]
         public long? DefaultKeyValueRevisionRetentionPeriodInSeconds
         {
             get
@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection
         {
             get
@@ -184,6 +185,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("properties.dataPlaneProxy")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
         {
             get
@@ -201,6 +203,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        [WirePath("properties.createMode")]
         public AppConfigurationCreateMode? CreateMode
         {
             get
@@ -218,6 +221,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -235,6 +239,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("properties.telemetry.resourceId")]
         public ResourceIdentifier TelemetryResourceId
         {
             get
@@ -252,6 +257,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        [WirePath("properties.managedOnBehalfOfConfiguration.moboBrokerResources")]
         public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
         {
             get
@@ -265,6 +271,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("properties.azureFrontDoor.resourceId")]
         public ResourceIdentifier AzureFrontDoorResourceId
         {
             get
@@ -282,6 +289,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource identifier of a Managed-On-Behalf-Of broker resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

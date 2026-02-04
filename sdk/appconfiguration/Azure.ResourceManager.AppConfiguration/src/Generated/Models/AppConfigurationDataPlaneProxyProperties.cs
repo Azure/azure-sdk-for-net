@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
+        [WirePath("authenticationMode")]
         public DataPlaneProxyAuthenticationMode? AuthenticationMode { get; set; }
 
         /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
+        [WirePath("privateLinkDelegation")]
         public DataPlaneProxyPrivateLinkDelegation? PrivateLinkDelegation { get; set; }
     }
 }

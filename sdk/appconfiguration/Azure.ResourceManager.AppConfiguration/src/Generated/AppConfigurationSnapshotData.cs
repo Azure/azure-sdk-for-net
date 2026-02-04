@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
@@ -38,9 +39,11 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> All snapshot properties. </summary>
+        [WirePath("properties")]
         internal SnapshotProperties Properties { get; set; }
 
         /// <summary> The provisioning state of the snapshot. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The current status of the snapshot. </summary>
+        [WirePath("properties.status")]
         public AppConfigurationSnapshotStatus? Status
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
+        [WirePath("properties.filters")]
         public IList<SnapshotKeyValueFilter> Filters
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
+        [WirePath("properties.compositionType")]
         public SnapshotCompositionType? CompositionType
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The time that the snapshot was created. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The time that the snapshot will expire. </summary>
+        [WirePath("properties.expires")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -103,6 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
+        [WirePath("properties.retentionPeriod")]
         public long? RetentionPeriod
         {
             get
@@ -120,6 +129,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The size in bytes of the snapshot. </summary>
+        [WirePath("properties.size")]
         public long? Size
         {
             get
@@ -129,6 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The amount of key-values in the snapshot. </summary>
+        [WirePath("properties.itemsCount")]
         public long? ItemsCount
         {
             get
@@ -138,6 +149,7 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </summary>
+        [WirePath("properties.tags")]
         public IDictionary<string, string> Tags
         {
             get
@@ -147,7 +159,8 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> A value representing the current state of the snapshot. </summary>
-        public string ETag
+        [WirePath("properties.etag")]
+        public ETag? ETag
         {
             get
             {

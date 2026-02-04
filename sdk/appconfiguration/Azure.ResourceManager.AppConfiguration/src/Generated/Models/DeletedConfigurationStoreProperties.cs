@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="isPurgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedConfigurationStoreProperties(ResourceIdentifier configurationStoreId, string location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedConfigurationStoreProperties(ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The resource id of the original configuration store. </summary>
+        [WirePath("configurationStoreId")]
         public ResourceIdentifier ConfigurationStoreId { get; }
 
         /// <summary> The location of the original configuration store. </summary>
-        public string Location { get; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
 
         /// <summary> The deleted date. </summary>
+        [WirePath("deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The scheduled purged date. </summary>
+        [WirePath("scheduledPurgeDate")]
         public DateTimeOffset? ScheduledPurgeOn { get; }
 
         /// <summary> Tags of the original configuration store. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Purge protection status of the original configuration store. </summary>
+        [WirePath("purgeProtectionEnabled")]
         public bool? IsPurgeProtectionEnabled { get; }
     }
 }

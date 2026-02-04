@@ -19,31 +19,33 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type to check for name availability. </param>
+        /// <param name="resourceType"> The resource type to check for name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType @type)
+        public AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
-        /// <param name="type"> The resource type to check for name availability. </param>
+        /// <param name="resourceType"> The resource type to check for name availability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name to check for availability. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The resource type to check for name availability. </summary>
-        public AppConfigurationResourceType Type { get; }
+        [WirePath("type")]
+        public AppConfigurationResourceType ResourceType { get; }
     }
 }

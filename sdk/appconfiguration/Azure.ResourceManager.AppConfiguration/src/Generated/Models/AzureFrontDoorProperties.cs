@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

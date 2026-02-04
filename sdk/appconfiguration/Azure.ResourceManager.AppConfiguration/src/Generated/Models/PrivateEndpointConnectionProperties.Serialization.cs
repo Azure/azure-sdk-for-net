@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             AppConfigurationProvisioningState? provisioningState = default;
             PrivateEndpoint privateEndpoint = default;
-            AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            AppConfigurationPrivateLinkServiceConnectionState connectionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, connectionState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             ConfigurationStorePropertiesUpdateParameters properties = default;
-            ResourceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             AppConfigurationSku sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -130,7 +132,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppConfigurationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

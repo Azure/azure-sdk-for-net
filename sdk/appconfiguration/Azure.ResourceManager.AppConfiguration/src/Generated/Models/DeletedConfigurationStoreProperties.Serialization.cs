@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             ResourceIdentifier configurationStoreId = default;
-            string location = default;
+            AzureLocation? location = default;
             DateTimeOffset? deletedOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             IReadOnlyDictionary<string, string> tags = default;
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deletionDate"u8))

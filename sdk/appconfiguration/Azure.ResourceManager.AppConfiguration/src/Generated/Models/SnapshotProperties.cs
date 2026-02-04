@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -59,36 +60,47 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The provisioning state of the snapshot. </summary>
+        [WirePath("provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> The current status of the snapshot. </summary>
+        [WirePath("status")]
         public AppConfigurationSnapshotStatus? Status { get; }
 
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
+        [WirePath("filters")]
         public IList<SnapshotKeyValueFilter> Filters { get; } = new ChangeTrackingList<SnapshotKeyValueFilter>();
 
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
+        [WirePath("compositionType")]
         public SnapshotCompositionType? CompositionType { get; set; }
 
         /// <summary> The time that the snapshot was created. </summary>
+        [WirePath("created")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time that the snapshot will expire. </summary>
+        [WirePath("expires")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
+        [WirePath("retentionPeriod")]
         public long? RetentionPeriod { get; set; }
 
         /// <summary> The size in bytes of the snapshot. </summary>
+        [WirePath("size")]
         public long? Size { get; }
 
         /// <summary> The amount of key-values in the snapshot. </summary>
+        [WirePath("itemsCount")]
         public long? ItemsCount { get; }
 
         /// <summary> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> A value representing the current state of the snapshot. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
     }
 }

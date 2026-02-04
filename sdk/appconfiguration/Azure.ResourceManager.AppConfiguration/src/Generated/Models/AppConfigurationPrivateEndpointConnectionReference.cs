@@ -7,6 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -22,33 +25,30 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
-        /// <param name="id"> The resource ID. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. </param>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationPrivateEndpointConnectionReference(string id, string name, string @type, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Type = @type;
             Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource ID. </summary>
-        public string Id { get; }
-
-        /// <summary> The name of the resource. </summary>
-        public string Name { get; }
-
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The properties of a private endpoint connection. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; }
 
         /// <summary> The provisioning status of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -58,16 +58,18 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public AppConfigurationPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties.PrivateLinkServiceConnectionState;
+                return Properties.ConnectionState;
             }
         }
 
         /// <summary> The resource Id for private endpoint. </summary>
-        public string PrivateEndpointId
+        [WirePath("properties.privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

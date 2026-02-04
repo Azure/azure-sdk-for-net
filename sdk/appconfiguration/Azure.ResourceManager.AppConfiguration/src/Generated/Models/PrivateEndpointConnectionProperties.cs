@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -18,39 +19,43 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public PrivateEndpointConnectionProperties(AppConfigurationPrivateLinkServiceConnectionState connectionState)
         {
-            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(AppConfigurationProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(AppConfigurationProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning status of the private endpoint connection. </summary>
+        [WirePath("provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource of private endpoint. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        [WirePath("privateLinkServiceConnectionState")]
+        public AppConfigurationPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The resource Id for private endpoint. </summary>
-        public string PrivateEndpointId
+        [WirePath("privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

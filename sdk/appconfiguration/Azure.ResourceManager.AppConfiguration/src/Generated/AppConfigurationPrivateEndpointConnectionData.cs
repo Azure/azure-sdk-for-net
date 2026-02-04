@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The properties of a private endpoint. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The provisioning status of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -50,11 +52,12 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public AppConfigurationPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -62,12 +65,13 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
         /// <summary> The resource Id for private endpoint. </summary>
-        public string PrivateEndpointId
+        [WirePath("properties.privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

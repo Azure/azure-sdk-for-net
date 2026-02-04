@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The list of required DNS zone names of the private link resource. </summary>
+        [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

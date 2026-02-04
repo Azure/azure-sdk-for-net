@@ -62,51 +62,67 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The provisioning state of the configuration store. </summary>
+        [WirePath("provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> The creation date of configuration store. </summary>
+        [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; }
 
         /// <summary> The encryption settings of the configuration store. </summary>
+        [WirePath("encryption")]
         internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get; } = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
 
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
+        [WirePath("softDeleteRetentionInDays")]
         public int? SoftDeleteRetentionInDays { get; set; }
 
         /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("defaultKeyValueRevisionRetentionPeriodInSeconds")]
         public long? DefaultKeyValueRevisionRetentionPeriodInSeconds { get; set; }
 
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
 
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("dataPlaneProxy")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
 
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        [WirePath("createMode")]
         public AppConfigurationCreateMode? CreateMode { get; set; }
 
         /// <summary> Property specifying the configuration of telemetry for this configuration store. </summary>
+        [WirePath("telemetry")]
         internal TelemetryProperties Telemetry { get; set; }
 
         /// <summary> Managed On Behalf Of Configuration. </summary>
+        [WirePath("managedOnBehalfOfConfiguration")]
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
 
         /// <summary> Property specifying the configuration of Azure Front Door for this configuration store. </summary>
+        [WirePath("azureFrontDoor")]
         internal AzureFrontDoorProperties AzureFrontDoor { get; set; }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -124,6 +140,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("telemetry.resourceId")]
         public ResourceIdentifier TelemetryResourceId
         {
             get
@@ -141,6 +158,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        [WirePath("managedOnBehalfOfConfiguration.moboBrokerResources")]
         public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
         {
             get
@@ -150,6 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("azureFrontDoor.resourceId")]
         public ResourceIdentifier AzureFrontDoorResourceId
         {
             get

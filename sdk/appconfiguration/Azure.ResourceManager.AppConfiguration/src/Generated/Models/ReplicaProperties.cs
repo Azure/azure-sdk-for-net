@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The URI of the replica where the replica API will be available. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; }
 
         /// <summary> The provisioning state of the replica. </summary>
+        [WirePath("provisioningState")]
         public AppConfigurationReplicaProvisioningState? ProvisioningState { get; }
     }
 }

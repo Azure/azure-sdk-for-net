@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("keyVaultProperties")]
         public AppConfigurationKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

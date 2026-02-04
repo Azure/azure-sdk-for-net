@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             string name = default;
-            AppConfigurationResourceType @type = default;
+            AppConfigurationResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new AppConfigurationResourceType(prop.Value.GetString());
+                    resourceType = new AppConfigurationResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppConfigurationNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new AppConfigurationNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

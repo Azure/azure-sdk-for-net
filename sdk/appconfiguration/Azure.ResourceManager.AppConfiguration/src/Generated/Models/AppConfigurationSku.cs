@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppConfiguration;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Describes a configuration store SKU. </summary>
-    internal partial class AppConfigurationSku
+    public partial class AppConfigurationSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

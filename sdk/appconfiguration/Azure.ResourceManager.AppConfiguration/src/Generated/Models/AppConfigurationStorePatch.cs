@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="sku"> The SKU of the configuration store. </param>
         /// <param name="tags"> The ARM resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStorePatch(ConfigurationStorePropertiesUpdateParameters properties, ResourceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationStorePatch(ConfigurationStorePropertiesUpdateParameters properties, ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The properties for updating a configuration store. </summary>
+        [WirePath("properties")]
         internal ConfigurationStorePropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> The managed identity information for the configuration store. </summary>
-        public ResourceIdentity Identity { get; set; }
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The SKU of the configuration store. </summary>
+        [WirePath("sku")]
         internal AppConfigurationSku Sku { get; set; }
 
         /// <summary> The ARM resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth
         {
             get
@@ -69,6 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -86,6 +93,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection
         {
             get
@@ -103,6 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("properties.dataPlaneProxy")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
         {
             get
@@ -120,6 +129,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("properties.defaultKeyValueRevisionRetentionPeriodInSeconds")]
         public long? DefaultKeyValueRevisionRetentionPeriodInSeconds
         {
             get
@@ -137,6 +147,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -154,6 +165,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("properties.telemetry.resourceId")]
         public ResourceIdentifier TelemetryResourceId
         {
             get
@@ -171,6 +183,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("properties.azureFrontDoor.resourceId")]
         public ResourceIdentifier AzureFrontDoorResourceId
         {
             get
@@ -188,6 +201,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get
