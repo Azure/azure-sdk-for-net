@@ -100,11 +100,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
             Assert.AreEqual(preBackup.ValidationStatus, "Success");
 
-            // Require a real disk snapshot id for live test
-            //DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
-            //    new ResourceIdentifier[] {
-            //        new ResourceIdentifier(
-            //            "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/weitry/providers/Microsoft.Compute/snapshots/yifantestdisksnap1") });
             DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
                 new ResourceIdentifier[] {
                     new ResourceIdentifier(
