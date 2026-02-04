@@ -122,6 +122,12 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
+            # Clean up sparse-spec folder to avoid backslash path issues
+            $sparseSpecDir = Join-Path (Split-Path $sdkRepo -Parent) "sparse-spec" $folder.Library
+            if (Test-Path $sparseSpecDir) {
+                Remove-Item $sparseSpecDir -Recurse -Force
+            }
+            
             # Sync TypeSpec files
             $syncScript = Join-Path $sdkRepo "eng" "common" "scripts" "TypeSpec-Project-Sync.ps1"
             & $syncScript -ProjectDirectory $folder.Path 2>&1 | Out-Null
@@ -210,6 +216,12 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
+            # Clean up sparse-spec folder to avoid backslash path issues
+            $sparseSpecDir = Join-Path (Split-Path $sdkRepoRoot -Parent) "sparse-spec" $folder.Library
+            if (Test-Path $sparseSpecDir) {
+                Remove-Item $sparseSpecDir -Recurse -Force
+            }
+            
             # Sync TypeSpec files
             $syncScript = Join-Path $sdkRepoRoot "eng" "common" "scripts" "TypeSpec-Project-Sync.ps1"
             & $syncScript -ProjectDirectory $folder.Path 2>&1 | Out-Null
