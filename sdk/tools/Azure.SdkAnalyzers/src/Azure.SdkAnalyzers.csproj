@@ -11,8 +11,9 @@
     <!-- Prevent Azure.ClientSdk.Analyzers from running on this analyzer project -->
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsPackable>true</IsPackable>
-    <!-- Analyzer packaging properties -->
-    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <!-- Include build output in lib/ folder so types can be referenced directly -->
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <!-- Mark as development dependency for analyzer usage -->
     <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
 
