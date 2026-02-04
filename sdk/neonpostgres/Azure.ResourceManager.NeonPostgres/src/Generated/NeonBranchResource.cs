@@ -406,12 +406,12 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="content"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preflightCheckContent"/> is null. </exception>
-        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PreflightCheckResult>> PreflightAsync(PreflightCheckContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _branchesClientDiagnostics.CreateScope("NeonBranchResource.Preflight");
             scope.Start();
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="preflightCheckContent"> Parameters for preflight checks. </param>
+        /// <param name="content"> Parameters for preflight checks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preflightCheckContent"/> is null. </exception>
-        public virtual Response<PreflightCheckResult> Preflight(PreflightCheckContent preflightCheckContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PreflightCheckResult> Preflight(PreflightCheckContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(preflightCheckContent, nameof(preflightCheckContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _branchesClientDiagnostics.CreateScope("NeonBranchResource.Preflight");
             scope.Start();
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(preflightCheckContent), context);
+                HttpMessage message = _branchesRestClient.CreatePreflightRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreflightCheckContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreflightCheckResult> response = Response.FromValue(PreflightCheckResult.FromResponse(result), result);
                 if (response.Value == null)

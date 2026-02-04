@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary></summary>
-    public partial class HybridConnectivityEndpointResource : ArmResource, IJsonModel<HybridConnectivityEndpointData>
+    public partial class HybridConnectivityEndpointResource : IJsonModel<HybridConnectivityEndpointData>
     {
         private static IJsonModel<HybridConnectivityEndpointData> s_dataDeserializationInstance;
 
