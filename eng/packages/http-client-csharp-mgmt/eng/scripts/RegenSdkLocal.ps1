@@ -101,88 +101,10 @@ if ($mgmtSdkFolders.Count -eq 0) {
 $selectedFolders = $mgmtSdkFolders
 Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 
-# Helper function: Sync TypeSpec files with proper forward-slash paths for git sparse-checkout
-function Sync-TypeSpecFiles {
-    param(
-        [string]$ProjectDirectory,
-        [string]$SdkRepoRoot
-    )
-    
-    # Load tsp-location.yaml
-    $tspLocationPath = Join-Path $ProjectDirectory "tsp-location.yaml"
-    $tspConfig = Get-Content $tspLocationPath -Raw | ConvertFrom-Yaml
-    
-    $repo = $tspConfig["repo"]
-    $commit = $tspConfig["commit"]
-    $directory = $tspConfig["directory"]
-    $additionalDirs = $tspConfig["additionalDirectories"]
-    $projectName = Split-Path $ProjectDirectory -Leaf
-    
-    # Convert backslashes to forward slashes for git
-    $directoryForGit = $directory -replace '\\', '/'
-    $directoryForGit = $directoryForGit.TrimEnd('/')
-    
-    # Setup sparse-spec clone directory
-    $sparseSpecRoot = Join-Path (Split-Path $SdkRepoRoot -Parent) "sparse-spec"
-    $sparseSpecDir = Join-Path $sparseSpecRoot $projectName
-    
-    # Clean up and recreate
-    if (Test-Path $sparseSpecDir) {
-        Remove-Item $sparseSpecDir -Recurse -Force
-    }
-    New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
-    
-    Push-Location $sparseSpecDir
-    try {
-        # Initialize sparse clone
-        $gitRemote = "https://github.com/$repo.git"
-        git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1 | Out-Null
-        git sparse-checkout init --cone 2>&1 | Out-Null
-        git sparse-checkout set $directoryForGit 2>&1 | Out-Null
-        
-        # Add additional directories if any
-        if ($additionalDirs) {
-            foreach ($addDir in $additionalDirs) {
-                $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
-                git sparse-checkout add $addDirForGit 2>&1 | Out-Null
-            }
-        }
-        
-        # Checkout the specific commit
-        git fetch --depth 1 origin $commit 2>&1 | Out-Null
-        git checkout $commit 2>&1 | Out-Null
-        
-        # Verify directory exists
-        if (-not (Test-Path $directory)) {
-            throw "Cannot find path '$sparseSpecDir\$directory' because it does not exist."
-        }
-    }
-    finally {
-        Pop-Location
-    }
-    
-    # Copy spec files to TempTypeSpecFiles
-    $tempTypeSpecDir = Join-Path $ProjectDirectory "TempTypeSpecFiles"
-    if (Test-Path $tempTypeSpecDir) {
-        Remove-Item $tempTypeSpecDir -Recurse -Force
-    }
-    New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
-    
-    $source = Join-Path $sparseSpecDir $directory
-    Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
-    
-    # Copy additional directories if any
-    if ($additionalDirs) {
-        foreach ($addDir in $additionalDirs) {
-            $addSource = Join-Path $sparseSpecDir $addDir
-            Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
-        }
-    }
-}
-
 # Step 3: Regenerate
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 $totalStart = Get-Date
+$workerScript = Join-Path $PSScriptRoot "Invoke-SdkRegeneration.ps1"
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -190,136 +112,27 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $folder = $_
         $mgmtPkgRoot = $using:mgmtPackageRoot
         $sdkRepo = $using:sdkRepoRoot
+        $worker = $using:workerScript
         
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
         
         try {
-            # Load tsp-location.yaml
-            if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
-                Install-Module -Name powershell-yaml -Force -Scope CurrentUser 2>&1 | Out-Null
+            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo 2>&1
+            $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
+            if ($jsonLine) {
+                $workerResult = $jsonLine | ConvertFrom-Json
+                $result.Success = $workerResult.Success
+                $result.Error = $workerResult.Error
+            } else {
+                throw "Worker script did not return valid result"
             }
-            Import-Module powershell-yaml -ErrorAction SilentlyContinue
-            $tspConfig = Get-Content (Join-Path $folder.Path "tsp-location.yaml") -Raw | ConvertFrom-Yaml
-            
-            $repo = $tspConfig["repo"]
-            $commit = $tspConfig["commit"]
-            $directory = $tspConfig["directory"]
-            $additionalDirs = $tspConfig["additionalDirectories"]
-            $specDir = Split-Path $directory -Leaf
-            
-            # Convert backslashes to forward slashes for git
-            $directoryForGit = ($directory -replace '\\', '/').TrimEnd('/')
-            
-            # Setup sparse-spec clone directory
-            $sparseSpecRoot = Join-Path (Split-Path $sdkRepo -Parent) "sparse-spec"
-            $sparseSpecDir = Join-Path $sparseSpecRoot $folder.Library
-            
-            # Clean up and recreate
-            if (Test-Path $sparseSpecDir) {
-                Remove-Item $sparseSpecDir -Recurse -Force
-            }
-            New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
-            
-            Push-Location $sparseSpecDir
-            try {
-                # Initialize sparse clone with forward slashes
-                $gitRemote = "https://github.com/$repo.git"
-                git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1 | Out-Null
-                git sparse-checkout init --cone 2>&1 | Out-Null
-                git sparse-checkout set $directoryForGit 2>&1 | Out-Null
-                
-                # Add additional directories if any
-                if ($additionalDirs) {
-                    foreach ($addDir in $additionalDirs) {
-                        $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
-                        git sparse-checkout add $addDirForGit 2>&1 | Out-Null
-                    }
-                }
-                
-                # Checkout the specific commit
-                git fetch --depth 1 origin $commit 2>&1 | Out-Null
-                git checkout $commit 2>&1 | Out-Null
-            }
-            finally {
-                Pop-Location
-            }
-            
-            # Copy spec files to TempTypeSpecFiles
-            $tempTypeSpecDir = Join-Path $folder.Path "TempTypeSpecFiles"
-            if (Test-Path $tempTypeSpecDir) {
-                Remove-Item $tempTypeSpecDir -Recurse -Force
-            }
-            New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
-            
-            $source = Join-Path $sparseSpecDir $directory
-            Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
-            
-            # Copy additional directories if any
-            if ($additionalDirs) {
-                foreach ($addDir in $additionalDirs) {
-                    $addSource = Join-Path $sparseSpecDir $addDir
-                    Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
-                }
-            }
-            
-            $workDir = Join-Path $tempTypeSpecDir $specDir
-            if (-not (Test-Path $workDir)) { throw "TypeSpec files not found: $workDir" }
-            
-            # Find main tsp file
-            $mainTsp = if (Test-Path "$workDir/client.tsp") { "$workDir/client.tsp" } else { "$workDir/main.tsp" }
-            
-            # Remove any interfering package.json from work dir
-            Remove-Item "$workDir/package.json" -Force -ErrorAction SilentlyContinue
-            Remove-Item "$workDir/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
-            
-            # Temporarily rename SDK's node_modules to avoid TypeSpec version conflicts
-            $sdkNodeModules = Join-Path $folder.Path "node_modules"
-            $sdkNodeModulesBackup = $null
-            if (Test-Path $sdkNodeModules) {
-                $sdkNodeModulesBackup = "$sdkNodeModules.bak"
-                Rename-Item $sdkNodeModules $sdkNodeModulesBackup -Force
-            }
-            
-            # Create junction from TempTypeSpecFiles/node_modules to mgmt package's node_modules
-            $tempTypeSpecFiles = Join-Path $folder.Path "TempTypeSpecFiles"
-            $linkPath = Join-Path $tempTypeSpecFiles "node_modules"
-            if (Test-Path $linkPath) { Remove-Item $linkPath -Recurse -Force }
-            New-Item -ItemType Junction -Path $linkPath -Target (Join-Path $mgmtPkgRoot "node_modules") | Out-Null
-            
-            try {
-                # Run tsp compile using local emitter path
-                Push-Location $mgmtPkgRoot
-                $tspOutput = npx tsp compile $mainTsp --emit $mgmtPkgRoot --option "@azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$($folder.Path)" 2>&1
-                $tspExitCode = $LASTEXITCODE
-                Pop-Location
-                
-                if ($tspExitCode -ne 0) {
-                    $errorLines = $tspOutput | Where-Object { $_ -match 'error|Error' } | Select-Object -First 5
-                    throw "tsp compile failed: $($errorLines -join '; ')"
-                }
-            }
-            finally {
-                # Cleanup junction
-                Remove-Item $linkPath -Force -ErrorAction SilentlyContinue
-                
-                # Restore SDK node_modules if we backed it up
-                if ($sdkNodeModulesBackup -and (Test-Path $sdkNodeModulesBackup)) {
-                    if (Test-Path $sdkNodeModules) { Remove-Item $sdkNodeModules -Recurse -Force }
-                    Rename-Item $sdkNodeModulesBackup $sdkNodeModules -Force
-                }
-            }
-            
-            # Cleanup temp files
-            Remove-Item (Join-Path $folder.Path "TempTypeSpecFiles") -Recurse -Force -ErrorAction SilentlyContinue
-            
-            $result.Success = $true
-            $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         }
         catch {
             $result.Error = $_.ToString()
-            $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         }
+        
+        $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         
         # Output progress
         if ($result.Success) {
@@ -339,74 +152,21 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            # Sync TypeSpec files using the helper function with forward-slash paths
-            Sync-TypeSpecFiles -ProjectDirectory $folder.Path -SdkRepoRoot $sdkRepoRoot
-            
-            # Get spec directory from tsp-location.yaml
-            if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
-                Install-Module -Name powershell-yaml -Force -Scope CurrentUser 2>&1 | Out-Null
+            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot 2>&1
+            $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
+            if ($jsonLine) {
+                $workerResult = $jsonLine | ConvertFrom-Json
+                $result.Success = $workerResult.Success
+                $result.Error = $workerResult.Error
+            } else {
+                throw "Worker script did not return valid result"
             }
-            Import-Module powershell-yaml -ErrorAction SilentlyContinue
-            $tspConfig = Get-Content (Join-Path $folder.Path "tsp-location.yaml") -Raw | ConvertFrom-Yaml
-            $specDir = Split-Path $tspConfig["directory"] -Leaf
-            
-            $workDir = Join-Path $folder.Path "TempTypeSpecFiles" $specDir
-            if (-not (Test-Path $workDir)) { throw "TypeSpec files not found: $workDir" }
-            
-            # Find main tsp file
-            $mainTsp = if (Test-Path "$workDir/client.tsp") { "$workDir/client.tsp" } else { "$workDir/main.tsp" }
-            
-            # Remove any interfering package.json from work dir
-            Remove-Item "$workDir/package.json" -Force -ErrorAction SilentlyContinue
-            Remove-Item "$workDir/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
-            
-            # Temporarily rename SDK's node_modules to avoid TypeSpec version conflicts
-            $sdkNodeModules = Join-Path $folder.Path "node_modules"
-            $sdkNodeModulesBackup = $null
-            if (Test-Path $sdkNodeModules) {
-                $sdkNodeModulesBackup = "$sdkNodeModules.bak"
-                Rename-Item $sdkNodeModules $sdkNodeModulesBackup -Force
-            }
-            
-            # Create junction from TempTypeSpecFiles/node_modules to mgmt package's node_modules
-            $tempTypeSpecFiles = Join-Path $folder.Path "TempTypeSpecFiles"
-            $linkPath = Join-Path $tempTypeSpecFiles "node_modules"
-            if (Test-Path $linkPath) { Remove-Item $linkPath -Recurse -Force }
-            New-Item -ItemType Junction -Path $linkPath -Target (Join-Path $mgmtPackageRoot "node_modules") | Out-Null
-            
-            try {
-                # Run tsp compile using local emitter path
-                Push-Location $mgmtPackageRoot
-                $tspOutput = npx tsp compile $mainTsp --emit $mgmtPackageRoot --option "@azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$($folder.Path)" 2>&1
-                $tspExitCode = $LASTEXITCODE
-                Pop-Location
-                
-                if ($tspExitCode -ne 0) {
-                    $errorLines = $tspOutput | Where-Object { $_ -match 'error|Error' } | Select-Object -First 5
-                    throw "tsp compile failed: $($errorLines -join '; ')"
-                }
-            }
-            finally {
-                # Cleanup junction
-                Remove-Item $linkPath -Force -ErrorAction SilentlyContinue
-                
-                # Restore SDK node_modules if we backed it up
-                if ($sdkNodeModulesBackup -and (Test-Path $sdkNodeModulesBackup)) {
-                    if (Test-Path $sdkNodeModules) { Remove-Item $sdkNodeModules -Recurse -Force }
-                    Rename-Item $sdkNodeModulesBackup $sdkNodeModules -Force
-                }
-            }
-            
-            # Cleanup temp files
-            Remove-Item (Join-Path $folder.Path "TempTypeSpecFiles") -Recurse -Force -ErrorAction SilentlyContinue
-            
-            $result.Success = $true
-            $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         }
         catch {
             $result.Error = $_.ToString()
-            $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         }
+        
+        $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
         
         if ($result.Success) {
             Write-Host "    OK ($($result.Elapsed)s)"
