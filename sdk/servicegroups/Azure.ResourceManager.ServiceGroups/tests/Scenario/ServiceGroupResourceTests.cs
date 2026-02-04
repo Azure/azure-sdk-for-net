@@ -158,6 +158,11 @@ namespace Azure.ResourceManager.ServiceGroups.Tests.Scenario
             {
                 await _serviceGroup.DeleteAsync(WaitUntil.Completed);
             }
+
+            if (_parentServiceGroup != null)
+            {
+                await _parentServiceGroup.DeleteAsync(WaitUntil.Completed);
+            }
         }
     }
 }
