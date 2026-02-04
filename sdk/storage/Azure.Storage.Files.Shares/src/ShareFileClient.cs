@@ -540,7 +540,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Create
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -597,7 +597,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -932,7 +932,7 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -1035,24 +1035,44 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
-
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    // compute hash BEFORE attaching progress handler
                     ContentHasher.GetHashResult hashResult = null;
+                    long originalContentLength = (content?.Length - content?.Position) ?? 0;
+                    long? structuredContentLength = default;
+                    string structuredBodyType = null;
+
                     if (content != null)
                     {
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
+                        if (validationOptions != null &&
+                            validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
+                        {
+                            // report progress in terms of caller bytes, not encoded bytes
+                            structuredContentLength = originalContentLength;
+                            structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                            content = content.WithNoDispose().WithProgress(progressHandler);
+                            content = validationOptions.PrecalculatedChecksum.IsEmpty
+                                ? new StructuredMessageEncodingStream(
+                                    content,
+                                    Constants.StructuredMessage.DefaultSegmentContentLength,
+                                    StructuredMessage.Flags.StorageCrc64)
+                                : new StructuredMessagePrecalculatedCrcWrapperStream(
+                                    content,
+                                    validationOptions.PrecalculatedChecksum.Span);
+                        }
+                        else
+                        {
+                            // compute hash BEFORE attaching progress handler
+                            hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                                content,
+                                validationOptions,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                            content = content.WithNoDispose().WithProgress(progressHandler);
+                        }
                     }
 
-                    content = content?.WithNoDispose().WithProgress(progressHandler);
-
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
-
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
                     ResponseWithHeaders<FileCreateHeaders> response;
@@ -1073,6 +1093,8 @@ namespace Azure.Storage.Files.Shares
                             contentMD5: hashResult?.MD5AsArray,
                             filePropertySemantics: filePropertySemantics,
                             optionalbody: content,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1098,6 +1120,8 @@ namespace Azure.Storage.Files.Shares
                             contentMD5: hashResult?.MD5AsArray,
                             filePropertySemantics: filePropertySemantics,
                             optionalbody: content,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,

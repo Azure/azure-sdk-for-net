@@ -50,6 +50,11 @@ namespace Azure.Storage.Files.Shares.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// Indicates the structured message body was accepted and mirrors back the message schema version and properties.
+        /// </summary>
+        public string StructuredBodyType { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareFileInfo() { }
@@ -78,7 +83,54 @@ namespace Azure.Storage.Files.Shares.Models
             string owner = default,
             string group = default,
             NfsFileType nfsFileType = default,
-            byte[] contentHash = default)
+            byte[] contentHash = default,
+            string structuredBodyType = default)
+            => new ShareFileInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                },
+                PosixProperties = new FilePosixProperties
+                {
+                    FileMode = nfsFileMode,
+                    Owner = owner,
+                    Group = group,
+                    FileType = nfsFileType,
+                },
+                ContentHash = contentHash,
+                StructuredBodyType = structuredBodyType
+            };
+
+        /// <summary>
+        /// Creates a new StorageFileInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareFileInfo StorageFileInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId,
+            NfsFileMode nfsFileMode,
+            string owner,
+            string group,
+            NfsFileType nfsFileType,
+            byte[] contentHash)
             => new ShareFileInfo
             {
                 ETag = eTag,

@@ -324,6 +324,7 @@ namespace Azure.Storage.Files.Shares
                     FileType = response.Headers.NfsFileType,
                 },
                 ContentHash = response.Headers.ContentMD5,
+                StructuredBodyType = response.Headers.StructuredBodyType
             };
 
             return shareFileInfo;
