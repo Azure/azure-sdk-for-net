@@ -396,10 +396,9 @@ namespace Azure.Core
             public override void Dispose()
             {
 #if NET6_0_OR_GREATER
-                if (_buffer != null)
+                var bufferToReturn = Interlocked.Exchange(ref _buffer, null);
+                if (bufferToReturn != null)
                 {
-                    var bufferToReturn = _buffer;
-                    _buffer = null;
                     ArrayPool<byte>.Shared.Return(bufferToReturn, clearArray: true);
                 }
 #endif
