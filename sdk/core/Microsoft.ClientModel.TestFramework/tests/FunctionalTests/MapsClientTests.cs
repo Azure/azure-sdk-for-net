@@ -3,9 +3,11 @@
 
 using System;
 using System.ClientModel;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
@@ -49,6 +51,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
 
     public MapsClientTests(bool isAsync) : base(isAsync)
     {
+        CustomSanitizers.Add(new ContentDispositionFilePathSanitizer());
     }
 
     [RecordedTest]
@@ -217,5 +220,35 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
         // Test the response itself
         var response = typedResult.GetRawResponse();
         Assert.That(response.Status, Is.EqualTo(200));
+    }
+
+    [RecordedTest]
+    public async Task DefaultSanitizers_AreStillPresentByDefault()
+    {
+        // Need a recording to exist in order to get the sanitizers to be applied
+        MapsClientOptions options = new()
+        {
+            Transport = _transport
+        };
+        MapsClient client = CreateProxyFromClient(new MapsClient(new Uri("https://example.com"),
+            new ApiKeyCredential(TestEnvironment.ApiKey),
+            options: InstrumentClientOptions(options)));
+
+        Assert.That(UseDefaultSanitizers, Is.True);
+
+        var adminClient = TestProxy?.AdminClient;
+        Assert.That(adminClient, Is.Not.Null);
+
+        // Try to remove some default sanitizers - they should still be present
+        var sanitizersToRemove = new SanitizerList(new List<string> { "AZSDK1000", "AZSDK2001", "AZSDK3400" });
+        var removeResult = await adminClient.RemoveSanitizersAsync(sanitizersToRemove, Recording.RecordingId);
+
+        Assert.That(removeResult.Value, Is.Not.Null);
+        Assert.That(removeResult.Value.Removed, Is.Not.Null);
+
+        // The removed list should contain these sanitizers because they were not removed by RemoveDefaultSanitizers
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK1000"));
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK2001"));
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK3400"));
     }
 }

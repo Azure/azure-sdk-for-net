@@ -14,21 +14,6 @@ trigger:
     exclude:
     - sdk/batch/Azure.ResourceManager.Batch/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/batch/ci.yml
-    - sdk/batch/service.projects
-    - sdk/batch/Azure.Compute.Batch
-    exclude:
-    - sdk/batch/Azure.ResourceManager.Batch/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class ReservationBillingStatus : IUtf8JsonSerializable, IJsonModel<ReservationBillingStatus>
+    /// <summary> Latest billing status for this reservation. </summary>
+    public partial class ReservationBillingStatus : IJsonModel<ReservationBillingStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationBillingStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ReservationBillingStatus"/> for deserialization. </summary>
+        internal ReservationBillingStatus()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReservationBillingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationBillingStatus)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("timestamp"u8);
             writer.WriteStringValue(Timestamp);
             writer.WritePropertyName("totalUsedCapacityReported"u8);
@@ -62,15 +68,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteNumberValue(TotalPerformanceIncludedPlan);
             writer.WritePropertyName("totalPerformanceOverage"u8);
             writer.WriteNumberValue(TotalPerformanceOverage);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,22 +85,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        ReservationBillingStatus IJsonModel<ReservationBillingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationBillingStatus IJsonModel<ReservationBillingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationBillingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationBillingStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReservationBillingStatus(document.RootElement, options);
         }
 
-        internal static ReservationBillingStatus DeserializeReservationBillingStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReservationBillingStatus DeserializeReservationBillingStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,86 +124,84 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             long totalPerformanceReported = default;
             long totalPerformanceIncludedPlan = default;
             long totalPerformanceOverage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"u8))
+                if (prop.NameEquals("timestamp"u8))
                 {
-                    timestamp = property.Value.GetString();
+                    timestamp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalUsedCapacityReported"u8))
+                if (prop.NameEquals("totalUsedCapacityReported"u8))
                 {
-                    totalUsedCapacityReported = property.Value.GetInt64();
+                    totalUsedCapacityReported = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lowDrrPoolCount"u8))
+                if (prop.NameEquals("lowDrrPoolCount"u8))
                 {
-                    lowDrrPoolCount = property.Value.GetInt32();
+                    lowDrrPoolCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("drrWeightedAverage"u8))
+                if (prop.NameEquals("drrWeightedAverage"u8))
                 {
-                    drrWeightedAverage = property.Value.GetDouble();
+                    drrWeightedAverage = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("totalNonReducibleReported"u8))
+                if (prop.NameEquals("totalNonReducibleReported"u8))
                 {
-                    totalNonReducibleReported = property.Value.GetInt64();
+                    totalNonReducibleReported = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extraUsedCapacityNonReducible"u8))
+                if (prop.NameEquals("extraUsedCapacityNonReducible"u8))
                 {
-                    extraUsedCapacityNonReducible = property.Value.GetInt64();
+                    extraUsedCapacityNonReducible = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extraUsedCapacityLowUsageRounding"u8))
+                if (prop.NameEquals("extraUsedCapacityLowUsageRounding"u8))
                 {
-                    extraUsedCapacityLowUsageRounding = property.Value.GetInt64();
+                    extraUsedCapacityLowUsageRounding = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extraUsedCapacityNonReduciblePlanDiscount"u8))
+                if (prop.NameEquals("extraUsedCapacityNonReduciblePlanDiscount"u8))
                 {
-                    extraUsedCapacityNonReduciblePlanDiscount = property.Value.GetInt64();
+                    extraUsedCapacityNonReduciblePlanDiscount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalUsedCapacityBilled"u8))
+                if (prop.NameEquals("totalUsedCapacityBilled"u8))
                 {
-                    totalUsedCapacityBilled = property.Value.GetInt64();
+                    totalUsedCapacityBilled = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalUsedCapacityIncludedPlan"u8))
+                if (prop.NameEquals("totalUsedCapacityIncludedPlan"u8))
                 {
-                    totalUsedCapacityIncludedPlan = property.Value.GetInt64();
+                    totalUsedCapacityIncludedPlan = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalUsedCapacityOverage"u8))
+                if (prop.NameEquals("totalUsedCapacityOverage"u8))
                 {
-                    totalUsedCapacityOverage = property.Value.GetInt64();
+                    totalUsedCapacityOverage = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalPerformanceReported"u8))
+                if (prop.NameEquals("totalPerformanceReported"u8))
                 {
-                    totalPerformanceReported = property.Value.GetInt64();
+                    totalPerformanceReported = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalPerformanceIncludedPlan"u8))
+                if (prop.NameEquals("totalPerformanceIncludedPlan"u8))
                 {
-                    totalPerformanceIncludedPlan = property.Value.GetInt64();
+                    totalPerformanceIncludedPlan = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalPerformanceOverage"u8))
+                if (prop.NameEquals("totalPerformanceOverage"u8))
                 {
-                    totalPerformanceOverage = property.Value.GetInt64();
+                    totalPerformanceOverage = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationBillingStatus(
                 timestamp,
                 totalUsedCapacityReported,
@@ -208,13 +217,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 totalPerformanceReported,
                 totalPerformanceIncludedPlan,
                 totalPerformanceOverage,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ReservationBillingStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReservationBillingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -224,15 +236,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        ReservationBillingStatus IPersistableModel<ReservationBillingStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationBillingStatus IPersistableModel<ReservationBillingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationBillingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationBillingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeReservationBillingStatus(document.RootElement, options);
                     }
                 default:
@@ -240,6 +257,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReservationBillingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReservationBillingStatus"/> from. </param>
+        internal static ReservationBillingStatus FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeReservationBillingStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -31,7 +31,10 @@ namespace Azure.ResourceManager.Astro
         public AstroOrganizationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Astro.Models.AstroOrganizationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.AstroOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.AstroOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -95,17 +98,22 @@ namespace Azure.ResourceManager.Astro.Models
 {
     public static partial class ArmAstroModelFactory
     {
+        public static Azure.ResourceManager.Astro.Models.AstroOfferDetails AstroOfferDetails(string publisherId = null, string offerId = null, string planId = null, string planName = null, string termUnit = null, string termId = null, Azure.ResourceManager.Astro.Models.AstroRenewalMode? renewalMode = default(Azure.ResourceManager.Astro.Models.AstroRenewalMode?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Astro.AstroOrganizationData AstroOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Astro.Models.AstroOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Astro.Models.AstroOrganizationPatch AstroOrganizationPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Astro.Models.AstroOrganizationProperties AstroOrganizationProperties(Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails marketplace = null, Azure.ResourceManager.Astro.Models.AstroUserDetails user = null, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState?), Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties partnerOrganizationProperties = null) { throw null; }
         public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties AstroSingleSignOnProperties(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState?), string enterpriseAppId = null, System.Uri singleSignOnUri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState?)) { throw null; }
     }
     public partial class AstroMarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>
     {
-        public AstroMarketplaceDetails(string subscriptionId, Azure.ResourceManager.Astro.Models.AstroOfferDetails offerDetails) { }
+        public AstroMarketplaceDetails(Azure.ResourceManager.Astro.Models.AstroOfferDetails offerDetails) { }
         public Azure.ResourceManager.Astro.Models.AstroOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -115,13 +123,18 @@ namespace Azure.ResourceManager.Astro.Models
     public partial class AstroOfferDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOfferDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOfferDetails>
     {
         public AstroOfferDetails(string publisherId, string offerId, string planId) { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public string OfferId { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
         public string PlanName { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
+        public Azure.ResourceManager.Astro.Models.AstroRenewalMode? RenewalMode { get { throw null; } set { } }
         public string TermId { get { throw null; } set { } }
         public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -134,7 +147,10 @@ namespace Azure.ResourceManager.Astro.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroOrganizationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroOrganizationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOrganizationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -148,7 +164,10 @@ namespace Azure.ResourceManager.Astro.Models
         public Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties PartnerOrganizationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Astro.Models.AstroUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroOrganizationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOrganizationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -158,9 +177,13 @@ namespace Azure.ResourceManager.Astro.Models
     public partial class AstroOrganizationUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties>
     {
         public AstroOrganizationUpdateProperties() { }
-        public Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties PartnerOrganizationProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails User { get { throw null; } set { } }
+        public Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails Marketplace { get { throw null; } set { } }
+        public Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties PartnerOrganizationProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Astro.Models.AstroUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroOrganizationUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -175,27 +198,32 @@ namespace Azure.ResourceManager.Astro.Models
         public Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties SingleSignOnProperties { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
         public string WorkspaceName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AstroPartnerOrganizationUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AstroRenewalMode : System.IEquatable<Azure.ResourceManager.Astro.Models.AstroRenewalMode>
     {
-        public AstroPartnerOrganizationUpdateProperties() { }
-        public string OrganizationId { get { throw null; } set { } }
-        public string OrganizationName { get { throw null; } set { } }
-        public Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties SingleSignOnProperties { get { throw null; } set { } }
-        public string WorkspaceId { get { throw null; } set { } }
-        public string WorkspaceName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AstroRenewalMode(string value) { throw null; }
+        public static Azure.ResourceManager.Astro.Models.AstroRenewalMode Auto { get { throw null; } }
+        public static Azure.ResourceManager.Astro.Models.AstroRenewalMode Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Astro.Models.AstroRenewalMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroRenewalMode left, Azure.ResourceManager.Astro.Models.AstroRenewalMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.AstroRenewalMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.AstroRenewalMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Astro.Models.AstroRenewalMode left, Azure.ResourceManager.Astro.Models.AstroRenewalMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AstroResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState>
@@ -207,12 +235,11 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState left, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState left, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -224,7 +251,10 @@ namespace Azure.ResourceManager.Astro.Models
         public Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -241,12 +271,11 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnState Enable { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState left, Azure.ResourceManager.Astro.Models.AstroSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.AstroSingleSignOnState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState left, Azure.ResourceManager.Astro.Models.AstroSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -258,27 +287,15 @@ namespace Azure.ResourceManager.Astro.Models
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string Upn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Astro.Models.AstroUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Astro.Models.AstroUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroUserDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Astro.Models.AstroUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AstroUserUpdateDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>
-    {
-        public AstroUserUpdateDetails() { }
-        public string EmailAddress { get { throw null; } set { } }
-        public string FirstName { get { throw null; } set { } }
-        public string LastName { get { throw null; } set { } }
-        public string PhoneNumber { get { throw null; } set { } }
-        public string Upn { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroUserUpdateDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus>
@@ -291,12 +308,11 @@ namespace Azure.ResourceManager.Astro.Models
         public static Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Astro.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }

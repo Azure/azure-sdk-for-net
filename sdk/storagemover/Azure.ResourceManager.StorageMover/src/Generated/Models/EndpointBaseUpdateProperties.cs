@@ -12,61 +12,34 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The Endpoint resource, which contains information about file sources and targets.
-    /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, and <see cref="SmbMountEndpointUpdateProperties"/>.
     /// </summary>
     public abstract partial class EndpointBaseUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
-        protected EndpointBaseUpdateProperties()
+        /// <param name="endpointType"> The Endpoint resource type. </param>
+        private protected EndpointBaseUpdateProperties(EndpointType endpointType)
         {
+            EndpointType = endpointType;
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointBaseUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointBaseUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointType = endpointType;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Endpoint resource type. </summary>
         internal EndpointType EndpointType { get; set; }
+
         /// <summary> A description for the Endpoint. </summary>
         public string Description { get; set; }
     }

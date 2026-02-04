@@ -666,7 +666,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    url = new Uri(prop.Value.GetString());
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("httpMethod"u8))

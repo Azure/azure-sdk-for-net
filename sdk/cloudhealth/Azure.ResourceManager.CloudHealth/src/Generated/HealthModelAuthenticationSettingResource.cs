@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a AuthenticationSetting
+        /// Update a HealthModelAuthenticationSetting.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a AuthenticationSetting
+        /// Update a HealthModelAuthenticationSetting.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

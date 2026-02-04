@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a PreRulesResource
+        /// Update a PreRulestackRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a PreRulesResource
+        /// Update a PreRulestackRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

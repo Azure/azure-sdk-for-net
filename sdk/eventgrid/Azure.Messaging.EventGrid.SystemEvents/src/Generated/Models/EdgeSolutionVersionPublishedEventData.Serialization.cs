@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("callbackUrl"u8))
                 {
-                    callbackUrl = new Uri(prop.Value.GetString());
+                    callbackUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

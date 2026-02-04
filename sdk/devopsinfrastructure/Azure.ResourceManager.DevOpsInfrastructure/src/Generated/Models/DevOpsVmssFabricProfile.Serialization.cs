@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    public partial class DevOpsVmssFabricProfile : IUtf8JsonSerializable, IJsonModel<DevOpsVmssFabricProfile>
+    /// <summary> The agents will run on Virtual Machine Scale Sets. </summary>
+    public partial class DevOpsVmssFabricProfile : DevOpsFabricProfile, IJsonModel<DevOpsVmssFabricProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsVmssFabricProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DevOpsVmssFabricProfile"/> for deserialization. </summary>
+        internal DevOpsVmssFabricProfile()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsVmssFabricProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +34,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsVmssFabricProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("images"u8);
             writer.WriteStartArray();
-            foreach (var item in Images)
+            foreach (DevOpsPoolVmImage item in Images)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -61,92 +66,95 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        DevOpsVmssFabricProfile IJsonModel<DevOpsVmssFabricProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsVmssFabricProfile IJsonModel<DevOpsVmssFabricProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DevOpsVmssFabricProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevOpsFabricProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsVmssFabricProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsVmssFabricProfile(document.RootElement, options);
         }
 
-        internal static DevOpsVmssFabricProfile DeserializeDevOpsVmssFabricProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DevOpsVmssFabricProfile DeserializeDevOpsVmssFabricProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string kind = "Vmss";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DevOpsAzureSku sku = default;
             IList<DevOpsPoolVmImage> images = default;
             DevOpsOSProfile osProfile = default;
             DevOpsStorageProfile storageProfile = default;
             DevOpsNetworkProfile networkProfile = default;
-            string kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    sku = DevOpsAzureSku.DeserializeDevOpsAzureSku(property.Value, options);
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("images"u8))
+                if (prop.NameEquals("sku"u8))
+                {
+                    sku = DevOpsAzureSku.DeserializeDevOpsAzureSku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("images"u8))
                 {
                     List<DevOpsPoolVmImage> array = new List<DevOpsPoolVmImage>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DevOpsPoolVmImage.DeserializeDevOpsPoolVmImage(item, options));
                     }
                     images = array;
                     continue;
                 }
-                if (property.NameEquals("osProfile"u8))
+                if (prop.NameEquals("osProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osProfile = DevOpsOSProfile.DeserializeDevOpsOSProfile(property.Value, options);
+                    osProfile = DevOpsOSProfile.DeserializeDevOpsOSProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"u8))
+                if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageProfile = DevOpsStorageProfile.DeserializeDevOpsStorageProfile(property.Value, options);
+                    storageProfile = DevOpsStorageProfile.DeserializeDevOpsStorageProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("networkProfile"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = DevOpsNetworkProfile.DeserializeDevOpsNetworkProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
+                    networkProfile = DevOpsNetworkProfile.DeserializeDevOpsNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DevOpsVmssFabricProfile(
                 kind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 sku,
                 images,
                 osProfile,
@@ -154,10 +162,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 networkProfile);
         }
 
-        BinaryData IPersistableModel<DevOpsVmssFabricProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevOpsVmssFabricProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -167,15 +178,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        DevOpsVmssFabricProfile IPersistableModel<DevOpsVmssFabricProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevOpsVmssFabricProfile IPersistableModel<DevOpsVmssFabricProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (DevOpsVmssFabricProfile)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DevOpsFabricProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevOpsVmssFabricProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsVmssFabricProfile(document.RootElement, options);
                     }
                 default:
@@ -183,6 +199,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevOpsVmssFabricProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

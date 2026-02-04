@@ -270,9 +270,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions,CancellationToken cancellationToken) =>
@@ -317,13 +317,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
+               It.IsAny<string>(),
+               It.IsAny<TimeSpan?>(),
+               It.IsAny<DateTimeOffset?>(),
+               It.IsAny<RequestConditions>(),
+               It.IsAny<IEnumerable<string>>(),
+               It.IsAny<IEnumerable<string>>(),
+               It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
@@ -366,15 +366,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
+              It.IsAny<string>(),
+              It.IsAny<TimeSpan?>(),
+              It.IsAny<DateTimeOffset?>(),
+              It.IsAny<RequestConditions>(),
+              It.IsAny<IEnumerable<string>>(),
+              It.IsAny<IEnumerable<string>>(),
+              It.IsAny<CancellationToken>())
             )
-             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+            .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
@@ -418,9 +418,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -467,9 +467,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -516,9 +516,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -565,9 +565,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -611,15 +611,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
-            )
-             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+                 It.IsAny<string>(),
+                 It.IsAny<TimeSpan?>(),
+                 It.IsAny<DateTimeOffset?>(),
+                 It.IsAny<RequestConditions>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<CancellationToken>())
+             )
+              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
                  {
@@ -660,14 +660,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
-                It.IsAny<string>(),
-                It.IsAny<TimeSpan?>(),
-                It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<RequestConditions>(),
-                It.IsAny<CancellationToken>())
-            )
+                 It.IsAny<string>(),
+                 It.IsAny<TimeSpan?>(),
+                 It.IsAny<DateTimeOffset?>(),
+                 It.IsAny<RequestConditions>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<IEnumerable<string>>(),
+                 It.IsAny<CancellationToken>())
+             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
              {
                  if (CallsToGet++ <= 2)
@@ -747,9 +747,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -867,9 +867,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -988,9 +988,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1036,9 +1036,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1085,9 +1085,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1309,9 +1309,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1432,9 +1432,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1553,9 +1553,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1726,9 +1726,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1849,9 +1849,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
@@ -1896,9 +1896,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions,CancellationToken cancellationToken) =>
@@ -1945,9 +1945,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 It.IsAny<string>(),
                 It.IsAny<TimeSpan?>(),
                 It.IsAny<DateTimeOffset?>(),
-                It.IsAny<IEnumerable<string>>(),
-                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<RequestConditions>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
                 It.IsAny<CancellationToken>())
             )
              .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>

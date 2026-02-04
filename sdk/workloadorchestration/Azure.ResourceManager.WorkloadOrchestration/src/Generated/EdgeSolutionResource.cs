@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
-    /// A Class representing an EdgeSolution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeSolutionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeSolutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EdgeTargetResource"/> using the GetEdgeSolution method.
+    /// A class representing a EdgeSolution along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeSolutionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EdgeTargetResource"/> using the GetEdgeSolutions method.
     /// </summary>
     public partial class EdgeSolutionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeSolutionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="targetName"> The targetName. </param>
-        /// <param name="solutionName"> The solutionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string targetName, string solutionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeSolutionSolutionsClientDiagnostics;
-        private readonly SolutionsRestOperations _edgeSolutionSolutionsRestClient;
+        private readonly ClientDiagnostics _solutionsClientDiagnostics;
+        private readonly Solutions _solutionsRestClient;
         private readonly EdgeSolutionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/targets/solutions";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeSolutionResource for mocking. </summary>
         protected EdgeSolutionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeSolutionResource(ArmClient client, EdgeSolutionData data) : this(client, data.Id)
@@ -55,209 +44,93 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSolutionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeSolutionSolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string edgeSolutionSolutionsApiVersion);
-            _edgeSolutionSolutionsRestClient = new SolutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionSolutionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string edgeSolutionApiVersion);
+            _solutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
+            _solutionsRestClient = new Solutions(_solutionsClientDiagnostics, Pipeline, Endpoint, edgeSolutionApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeSolutionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="targetName"> The targetName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string targetName, string solutionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of EdgeSolutionVersionResources in the EdgeSolution. </summary>
-        /// <returns> An object representing collection of EdgeSolutionVersionResources and their operations over a EdgeSolutionVersionResource. </returns>
-        public virtual EdgeSolutionVersionCollection GetEdgeSolutionVersions()
-        {
-            return GetCachedClient(client => new EdgeSolutionVersionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Solution Version Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/versions/{solutionVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionVersionName"> Name of the solution version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSolutionVersionResource>> GetEdgeSolutionVersionAsync(string solutionVersionName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeSolutionVersions().GetAsync(solutionVersionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Solution Version Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/versions/{solutionVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionVersionName"> Name of the solution version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeSolutionVersionResource> GetEdgeSolutionVersion(string solutionVersionName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeSolutionVersions().Get(solutionVersionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EdgeDeploymentInstanceResources in the EdgeSolution. </summary>
-        /// <returns> An object representing collection of EdgeDeploymentInstanceResources and their operations over a EdgeDeploymentInstanceResource. </returns>
-        public virtual EdgeDeploymentInstanceCollection GetEdgeDeploymentInstances()
-        {
-            return GetCachedClient(client => new EdgeDeploymentInstanceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get Instance Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="instanceName"> Name of the instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeDeploymentInstanceResource>> GetEdgeDeploymentInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeDeploymentInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Instance Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}/instances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDeploymentInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="instanceName"> Name of the instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeDeploymentInstanceResource> GetEdgeDeploymentInstance(string instanceName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeDeploymentInstances().Get(instanceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Solution resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeSolutionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Get");
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeSolutionSolutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSolutionData> response = Response.FromValue(EdgeSolutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSolutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,118 +144,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Solution resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeSolutionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Get");
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeSolutionSolutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSolutionData> response = Response.FromValue(EdgeSolutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSolutionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Solution Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _edgeSolutionSolutionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionSolutionsClientDiagnostics, Pipeline, _edgeSolutionSolutionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Solution Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _edgeSolutionSolutionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionSolutionsClientDiagnostics, Pipeline, _edgeSolutionSolutionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -395,20 +192,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Update a Solution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,14 +217,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Update");
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Update");
             scope.Start();
             try
             {
-                var response = await _edgeSolutionSolutionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(new EdgeSolutionOperationSource(Client), _edgeSolutionSolutionsClientDiagnostics, Pipeline, _edgeSolutionSolutionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeSolutionPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeSolutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(
+                    new EdgeSolutionOperationSource(Client),
+                    _solutionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -441,20 +251,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Update a Solution Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Solution_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,14 +276,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _edgeSolutionSolutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Update");
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Update");
             scope.Start();
             try
             {
-                var response = _edgeSolutionSolutionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(new EdgeSolutionOperationSource(Client), _edgeSolutionSolutionsClientDiagnostics, Pipeline, _edgeSolutionSolutionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeSolutionPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeSolutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(
+                    new EdgeSolutionOperationSource(Client),
+                    _solutionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -481,6 +304,170 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Delete a Solution Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Solution Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/solutions/{solutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Solutions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _solutionsClientDiagnostics.CreateScope("EdgeSolutionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of EdgeSolutionVersions in the <see cref="EdgeSolutionResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeSolutionVersions and their operations over a EdgeSolutionVersionResource. </returns>
+        public virtual EdgeSolutionVersionCollection GetEdgeSolutionVersions()
+        {
+            return GetCachedClient(client => new EdgeSolutionVersionCollection(client, Id));
+        }
+
+        /// <summary> Get a Solution Version Resource. </summary>
+        /// <param name="solutionVersionName"> Name of the solution version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeSolutionVersionResource>> GetEdgeSolutionVersionAsync(string solutionVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionVersionName, nameof(solutionVersionName));
+
+            return await GetEdgeSolutionVersions().GetAsync(solutionVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Solution Version Resource. </summary>
+        /// <param name="solutionVersionName"> Name of the solution version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeSolutionVersionResource> GetEdgeSolutionVersion(string solutionVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionVersionName, nameof(solutionVersionName));
+
+            return GetEdgeSolutionVersions().Get(solutionVersionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeDeploymentInstances in the <see cref="EdgeSolutionResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeDeploymentInstances and their operations over a EdgeDeploymentInstanceResource. </returns>
+        public virtual EdgeDeploymentInstanceCollection GetEdgeDeploymentInstances()
+        {
+            return GetCachedClient(client => new EdgeDeploymentInstanceCollection(client, Id));
+        }
+
+        /// <summary> Get Instance Resource. </summary>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeDeploymentInstanceResource>> GetEdgeDeploymentInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            return await GetEdgeDeploymentInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get Instance Resource. </summary>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeDeploymentInstanceResource> GetEdgeDeploymentInstance(string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            return GetEdgeDeploymentInstances().Get(instanceName, cancellationToken);
         }
     }
 }

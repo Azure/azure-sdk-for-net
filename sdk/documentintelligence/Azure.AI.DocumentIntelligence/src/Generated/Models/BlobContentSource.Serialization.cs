@@ -94,7 +94,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = new Uri(prop.Value.GetString());
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("prefix"u8))

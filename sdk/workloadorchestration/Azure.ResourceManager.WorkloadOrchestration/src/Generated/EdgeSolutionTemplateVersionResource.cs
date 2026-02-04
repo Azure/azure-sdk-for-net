@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
-    /// A Class representing an EdgeSolutionTemplateVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeSolutionTemplateVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeSolutionTemplateVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EdgeSolutionTemplateResource"/> using the GetEdgeSolutionTemplateVersion method.
+    /// A class representing a EdgeSolutionTemplateVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeSolutionTemplateVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EdgeSolutionTemplateResource"/> using the GetEdgeSolutionTemplateVersions method.
     /// </summary>
     public partial class EdgeSolutionTemplateVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeSolutionTemplateVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="solutionTemplateName"> The solutionTemplateName. </param>
-        /// <param name="solutionTemplateVersionName"> The solutionTemplateVersionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics;
-        private readonly SolutionTemplateVersionsRestOperations _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient;
+        private readonly ClientDiagnostics _solutionTemplateVersionsClientDiagnostics;
+        private readonly SolutionTemplateVersions _solutionTemplateVersionsRestClient;
         private readonly EdgeSolutionTemplateVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/solutionTemplates/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionTemplateVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeSolutionTemplateVersionResource for mocking. </summary>
         protected EdgeSolutionTemplateVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionTemplateVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionTemplateVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeSolutionTemplateVersionResource(ArmClient client, EdgeSolutionTemplateVersionData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSolutionTemplateVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSolutionTemplateVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSolutionTemplateVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string edgeSolutionTemplateVersionSolutionTemplateVersionsApiVersion);
-            _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient = new SolutionTemplateVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionTemplateVersionSolutionTemplateVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string edgeSolutionTemplateVersionApiVersion);
+            _solutionTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
+            _solutionTemplateVersionsRestClient = new SolutionTemplateVersions(_solutionTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeSolutionTemplateVersionApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeSolutionTemplateVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionTemplateName"> The solutionTemplateName. </param>
+        /// <param name="solutionTemplateVersionName"> The solutionTemplateVersionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionTemplateName, string solutionTemplateVersionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Solution Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeSolutionTemplateVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.Get");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSolutionTemplateVersionData> response = Response.FromValue(EdgeSolutionTemplateVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSolutionTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Solution Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeSolutionTemplateVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.Get");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSolutionTemplateVersionData> response = Response.FromValue(EdgeSolutionTemplateVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSolutionTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Post request for bulk deploy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkDeploySolution</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkDeploySolution. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersions_BulkDeploySolution</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_BulkDeploySolution. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,14 +217,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkDeploySolution");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkDeploySolution");
             scope.Start();
             try
             {
-                var response = await _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkDeploySolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkDeploySolutionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +245,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Post request for bulk deploy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkDeploySolution</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkDeploySolution. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersions_BulkDeploySolution</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_BulkDeploySolution. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,14 +270,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkDeploySolution");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkDeploySolution");
             scope.Start();
             try
             {
-                var response = _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkDeploySolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkDeploySolutionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -265,20 +298,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Post request for bulk publish
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkPublishSolution</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkPublishSolution. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersions_BulkPublishSolution</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_BulkPublishSolution. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,14 +323,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkPublishSolution");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkPublishSolution");
             scope.Start();
             try
             {
-                var response = await _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkPublishSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkPublishSolutionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -311,20 +351,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Post request for bulk publish
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkPublishSolution</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}/versions/{solutionTemplateVersionName}/bulkPublishSolution. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersions_BulkPublishSolution</description>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionTemplateVersions_BulkPublishSolution. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeSolutionTemplateVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,14 +376,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkPublishSolution");
+            using DiagnosticScope scope = _solutionTemplateVersionsClientDiagnostics.CreateScope("EdgeSolutionTemplateVersionResource.BulkPublishSolution");
             scope.Start();
             try
             {
-                var response = _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkPublishSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkPublishSolutionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplateVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

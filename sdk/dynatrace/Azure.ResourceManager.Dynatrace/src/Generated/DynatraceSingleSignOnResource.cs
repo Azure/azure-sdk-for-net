@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Create a DynatraceSingleSignOnResource
+        /// Update a DynatraceSingleSignOn.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary>
-        /// Create a DynatraceSingleSignOnResource
+        /// Update a DynatraceSingleSignOn.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

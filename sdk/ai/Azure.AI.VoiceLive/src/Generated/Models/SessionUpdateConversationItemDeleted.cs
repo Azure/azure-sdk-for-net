@@ -26,18 +26,15 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemDeleted"/>. </summary>
         /// <param name="type"> The type of event. </param>
+        /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item that was deleted. </param>
-        /// <param name="eventId"></param>
-        internal SessionUpdateConversationItemDeleted(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemDeleted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }
 
         /// <summary> The ID of the item that was deleted. </summary>
         public string ItemId { get; }
-
-        /// <summary> Gets the EventId. </summary>
-        public override string EventId { get; }
     }
 }

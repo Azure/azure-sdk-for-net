@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a BgpPeer
+        /// Update a ConnectedClusterBgpPeer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Create a BgpPeer
+        /// Update a ConnectedClusterBgpPeer.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

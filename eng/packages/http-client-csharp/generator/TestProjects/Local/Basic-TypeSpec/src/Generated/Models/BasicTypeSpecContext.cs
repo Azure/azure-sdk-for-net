@@ -13,6 +13,7 @@ namespace BasicTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DataFactoryElementModel))]
     [ModelReaderWriterBuildable(typeof(FriendModel))]
     [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenHeaderResponseResponse))]
     [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenResponse))]

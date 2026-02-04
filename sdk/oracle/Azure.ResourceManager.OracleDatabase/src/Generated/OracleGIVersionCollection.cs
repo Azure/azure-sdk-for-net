@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
@@ -22,76 +23,83 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="OracleGIVersionResource"/> and their operations.
     /// Each <see cref="OracleGIVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="OracleGIVersionCollection"/> instance call the GetOracleGIVersions method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="OracleGIVersionCollection"/> instance call the GetOracleGIVersions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class OracleGIVersionCollection : ArmCollection, IEnumerable<OracleGIVersionResource>, IAsyncEnumerable<OracleGIVersionResource>
     {
-        private readonly ClientDiagnostics _oracleGIVersionGiVersionsClientDiagnostics;
-        private readonly GiVersionsRestOperations _oracleGIVersionGiVersionsRestClient;
+        private readonly ClientDiagnostics _giVersionsClientDiagnostics;
+        private readonly GiVersions _giVersionsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OracleGIVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OracleGIVersionCollection for mocking. </summary>
         protected OracleGIVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OracleGIVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleGIVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal OracleGIVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(OracleGIVersionResource.ResourceType, out string oracleGIVersionApiVersion);
             _location = location;
-            _oracleGIVersionGiVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleGIVersionResource.ResourceType, out string oracleGIVersionGiVersionsApiVersion);
-            _oracleGIVersionGiVersionsRestClient = new GiVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIVersionGiVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _giVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIVersionResource.ResourceType.Namespace, Diagnostics);
+            _giVersionsRestClient = new GiVersions(_giVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIVersionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a GiVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OracleGIVersionResource>> GetAsync(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Get");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleGIVersionGiVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OracleGIVersionData> response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +113,42 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a GiVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OracleGIVersionResource> Get(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Get");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleGIVersionGiVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OracleGIVersionData> response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,53 +162,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List GiVersion resources by SubscriptionLocationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_ListByLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_ListByLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="shape"> If provided, filters the results for the given shape. </param>
-        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
-        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(OracleDatabaseSystemShape? shape = null, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleGIVersionResource(Client, OracleGIVersionData.DeserializeOracleGIVersionData(e)), _oracleGIVersionGiVersionsClientDiagnostics, Pipeline, "OracleGIVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List GiVersion resources by SubscriptionLocationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_ListByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,47 +180,108 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIVersionResource> GetAll(OracleDatabaseSystemShape? shape = null, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(OracleDatabaseSystemShape? shape = default, string zone = default, string shapeAttribute = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleGIVersionResource(Client, OracleGIVersionData.DeserializeOracleGIVersionData(e)), _oracleGIVersionGiVersionsClientDiagnostics, Pipeline, "OracleGIVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OracleGIVersionData, OracleGIVersionResource>(new GiVersionsGetByLocationAsyncCollectionResultOfT(
+                _giVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                shape.ToString(),
+                zone,
+                shapeAttribute,
+                context), data => new OracleGIVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GiVersion resources by SubscriptionLocationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OracleGIVersionResource> GetAll(OracleDatabaseSystemShape? shape = default, string zone = default, string shapeAttribute = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OracleGIVersionData, OracleGIVersionResource>(new GiVersionsGetByLocationCollectionResultOfT(
+                _giVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                shape.ToString(),
+                zone,
+                shapeAttribute,
+                context), data => new OracleGIVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Exists");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleGIVersionGiVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleGIVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,36 +295,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Exists");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleGIVersionGiVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleGIVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,38 +352,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OracleGIVersionResource>> GetIfExistsAsync(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleGIVersionGiVersionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OracleGIVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleGIVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,38 +413,54 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GiVersion_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GiVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OracleGIVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="giversionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="giversionname"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OracleGIVersionResource> GetIfExists(string giversionname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(giversionname, nameof(giversionname));
 
-            using var scope = _oracleGIVersionGiVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _giVersionsClientDiagnostics.CreateScope("OracleGIVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleGIVersionGiVersionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), giversionname, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OracleGIVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OracleGIVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OracleGIVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OracleGIVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,6 +480,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleGIVersionResource> IAsyncEnumerable<OracleGIVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

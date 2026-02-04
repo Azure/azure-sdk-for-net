@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    proxyUri = new Uri(prop.Value.GetString());
+                    proxyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

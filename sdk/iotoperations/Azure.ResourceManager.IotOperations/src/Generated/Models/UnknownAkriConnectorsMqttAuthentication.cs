@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of AkriConnectorsMqttAuthentication. </summary>
     internal partial class UnknownAkriConnectorsMqttAuthentication : AkriConnectorsMqttAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsMqttAuthentication"/>. </summary>
         /// <param name="method"> The authentication method for the MQTT connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAkriConnectorsMqttAuthentication(AkriConnectorsMqttAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(method, serializedAdditionalRawData)
-        {
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsMqttAuthentication"/> for deserialization. </summary>
-        internal UnknownAkriConnectorsMqttAuthentication()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAkriConnectorsMqttAuthentication(AkriConnectorsMqttAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@method != default ? @method : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

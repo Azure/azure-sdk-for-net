@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStorageMoverResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageMoverResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageMoverResourceGroupResource for mocking. </summary>
         protected MockableStorageMoverResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageMoverResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageMoverResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageMoverResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of StorageMoverResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
+        /// <summary> Gets a collection of StorageMovers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StorageMovers and their operations over a StorageMoverResource. </returns>
         public virtual StorageMoverCollection GetStorageMovers()
         {
             return GetCachedClient(client => new StorageMoverCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// Gets a Storage Mover resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageMover_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageMovers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageMoverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverResource>> GetStorageMoverAsync(string storageMoverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+
             return await GetStorageMovers().GetAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// Gets a Storage Mover resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageMover_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageMovers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageMoverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         [ForwardsClientCalls]
         public virtual Response<StorageMoverResource> GetStorageMover(string storageMoverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageMoverName, nameof(storageMoverName));
+
             return GetStorageMovers().Get(storageMoverName, cancellationToken);
         }
     }

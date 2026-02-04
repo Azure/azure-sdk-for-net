@@ -86,7 +86,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAssetResourcesRequest(nextLink, _filter, _orderby, _skip, _maxpagesize, _mark, _responseType, _responseIncludes, _recentOnly, _context) : _client.CreateGetAssetResourcesRequest(_filter, _orderby, _skip, _maxpagesize, _mark, _responseType, _responseIncludes, _recentOnly, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAssetResourcesRequest(nextLink, pageSize, _context) : _client.CreateGetAssetResourcesRequest(_filter, _orderby, _skip, pageSize, _mark, _responseType, _responseIncludes, _recentOnly, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
             scope.Start();
             try

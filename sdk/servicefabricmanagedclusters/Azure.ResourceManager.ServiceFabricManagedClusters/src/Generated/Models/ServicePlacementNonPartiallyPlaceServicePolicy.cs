@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>. </summary>
-        public ServicePlacementNonPartiallyPlaceServicePolicy()
+        public ServicePlacementNonPartiallyPlaceServicePolicy() : base(ServicePlacementPolicyType.NonPartiallyPlaceService)
         {
-            Type = ServicePlacementPolicyType.NonPartiallyPlaceService;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
-            Type = type;
         }
     }
 }

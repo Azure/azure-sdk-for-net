@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDisconnectedOperationsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDisconnectedOperationsArmClient for mocking. </summary>
         protected MockableDisconnectedOperationsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDisconnectedOperationsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDisconnectedOperationsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDisconnectedOperationsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DisconnectedOperationResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DisconnectedOperationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisconnectedOperationResource"/> object. </returns>
         public virtual DisconnectedOperationResource GetDisconnectedOperationResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             return new DisconnectedOperationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationsImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DisconnectedOperationsImageResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationsImageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DisconnectedOperationsImageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisconnectedOperationsImageResource"/> object. </returns>
         public virtual DisconnectedOperationsImageResource GetDisconnectedOperationsImageResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             return new DisconnectedOperationsImageResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationsArtifactResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DisconnectedOperationsArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationsArtifactResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DisconnectedOperationsArtifactResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisconnectedOperationsArtifactResource"/> object. </returns>
         public virtual DisconnectedOperationsArtifactResource GetDisconnectedOperationsArtifactResource(ResourceIdentifier id)

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Delegated resource properties - internal use only. </summary>
+    /// <summary>
+    /// Delegated resource properties - internal use only.
+    /// Serialized Name: DelegatedResource
+    /// </summary>
     public partial class ManagedClusterDelegatedIdentity
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
-        /// <param name="resourceId"> The ARM resource id of the delegated resource - internal use only. </param>
-        /// <param name="tenantId"> The tenant id of the delegated resource - internal use only. </param>
-        /// <param name="referralResource"> The delegation id of the referral delegation (optional) - internal use only. </param>
-        /// <param name="location"> The source resource location - internal use only. </param>
+        /// <param name="resourceId">
+        /// The ARM resource id of the delegated resource - internal use only.
+        /// Serialized Name: DelegatedResource.resourceId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant id of the delegated resource - internal use only.
+        /// Serialized Name: DelegatedResource.tenantId
+        /// </param>
+        /// <param name="referralResource">
+        /// The delegation id of the referral delegation (optional) - internal use only.
+        /// Serialized Name: DelegatedResource.referralResource
+        /// </param>
+        /// <param name="location">
+        /// The source resource location - internal use only.
+        /// Serialized Name: DelegatedResource.location
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterDelegatedIdentity(ResourceIdentifier resourceId, Guid? tenantId, string referralResource, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +81,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ARM resource id of the delegated resource - internal use only. </summary>
+        /// <summary>
+        /// The ARM resource id of the delegated resource - internal use only.
+        /// Serialized Name: DelegatedResource.resourceId
+        /// </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> The tenant id of the delegated resource - internal use only. </summary>
+        /// <summary>
+        /// The tenant id of the delegated resource - internal use only.
+        /// Serialized Name: DelegatedResource.tenantId
+        /// </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary> The delegation id of the referral delegation (optional) - internal use only. </summary>
+        /// <summary>
+        /// The delegation id of the referral delegation (optional) - internal use only.
+        /// Serialized Name: DelegatedResource.referralResource
+        /// </summary>
         [WirePath("referralResource")]
         public string ReferralResource { get; set; }
-        /// <summary> The source resource location - internal use only. </summary>
+        /// <summary>
+        /// The source resource location - internal use only.
+        /// Serialized Name: DelegatedResource.location
+        /// </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
     }

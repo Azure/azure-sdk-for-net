@@ -24,7 +24,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <param name="threadRunStepsClient">The thread run steps client to be used.</param>
-        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient): this (
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, ThreadRunSteps threadRunStepsClient) : this(
                 clientDiagnostics: clientDiagnostics,
                 pipeline: pipeline,
                 tokenCredential: tokenCredential,
@@ -553,7 +553,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default,  CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = SubmitToolOutputsToRunInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken);
@@ -590,7 +590,7 @@ namespace Azure.AI.Agents.Persistent
         /// /// <param name="toolApprovals"> The list of tool approvals to provide as part of an submission to an agent thread run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs=default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
             Response response = await SubmitToolOutputsToRunAsyncInternal(run.ThreadId, run.Id, toolOutputs, toolApprovals, false, cancellationToken).ConfigureAwait(false);
@@ -648,7 +648,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Gets a list of runs for a specified thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -657,9 +657,21 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual AsyncPageable<ThreadRun> GetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+
+            return GetRunsAsync(
+                threadId: threadId,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                context: context);
+        }
+
+        internal virtual AsyncPageable<ThreadRun> GetRunsAsync(string threadId, int? limit, ListSortOrder? order, string after, string before, RequestContext context)
+        {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(
                 threadId: threadId,
                 limit: limit,
@@ -667,6 +679,7 @@ namespace Azure.AI.Agents.Persistent
                 after: continuationToken,
                 before: before,
                 context: context);
+
             return new ContinuationTokenPageableAsync<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),
@@ -680,7 +693,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Gets a list of runs for a specified thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -698,7 +711,7 @@ namespace Azure.AI.Agents.Persistent
                 order: order?.ToString(),
                 after: continuationToken,
                 before: before,
-                context:context);
+                context: context);
             return new ContinuationTokenPageable<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),

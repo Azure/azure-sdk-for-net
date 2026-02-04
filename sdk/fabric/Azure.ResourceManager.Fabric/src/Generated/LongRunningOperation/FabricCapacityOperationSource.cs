@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Fabric
 {
-    internal class FabricCapacityOperationSource : IOperationSource<FabricCapacityResource>
+    /// <summary></summary>
+    internal partial class FabricCapacityOperationSource : IOperationSource<FabricCapacityResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal FabricCapacityOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         FabricCapacityResource IOperationSource<FabricCapacityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FabricCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            FabricCapacityData data = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new FabricCapacityResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<FabricCapacityResource> IOperationSource<FabricCapacityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FabricCapacityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFabricContext.Default);
-            return await Task.FromResult(new FabricCapacityResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            FabricCapacityData data = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FabricCapacityResource(_client, data);
         }
     }
 }

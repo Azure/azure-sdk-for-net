@@ -41,6 +41,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format != "W" && Optional.IsDefined(Prediction))
+            {
+                writer.WritePropertyName("prediction"u8);
+                writer.WriteObjectValue(Prediction, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -84,6 +89,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string name = default;
+            Prediction prediction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,12 +98,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prediction"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    prediction = Prediction.DeserializePrediction(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JooProperties(name, additionalBinaryDataProperties);
+            return new JooProperties(name, prediction, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

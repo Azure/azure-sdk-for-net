@@ -30,37 +30,6 @@ trigger:
     exclude:
     - sdk/provisioning/Generator/
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/provisioning/ci.data.yml
-    - sdk/provisioning/cspell.yaml
-    - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.AppConfiguration
-    - sdk/provisioning/Azure.Provisioning.CognitiveServices
-    - sdk/provisioning/Azure.Provisioning.CosmosDB
-    - sdk/provisioning/Azure.Provisioning.EventHubs
-    - sdk/provisioning/Azure.Provisioning.FrontDoor
-    - sdk/provisioning/Azure.Provisioning.KeyVault
-    - sdk/provisioning/Azure.Provisioning.Kusto
-    - sdk/provisioning/Azure.Provisioning.PostgreSql
-    - sdk/provisioning/Azure.Provisioning.Redis
-    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
-    - sdk/provisioning/Azure.Provisioning.Search
-    - sdk/provisioning/Azure.Provisioning.ServiceBus
-    - sdk/provisioning/Azure.Provisioning.SignalR
-    - sdk/provisioning/Azure.Provisioning.Sql
-    - sdk/provisioning/Azure.Provisioning.Storage
-    - sdk/provisioning/Azure.Provisioning.WebPubSub
-    exclude:
-    - sdk/provisioning/Generator/
-
 parameters:
   - name: release_Azure_Provisioning
     displayName: 'Azure.Provisioning'

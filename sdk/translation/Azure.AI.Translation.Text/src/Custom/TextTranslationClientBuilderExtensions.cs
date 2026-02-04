@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="TextTranslationClient"/> to client builder. </summary>
     //TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
-    [CodeGenType("AITranslationTextClientBuilderExtensions")]
+    [CodeGenType("TranslationTextClientBuilderExtensions")]
     public static partial class TextTranslationClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>

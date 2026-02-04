@@ -54,7 +54,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.BlobContainer FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -502,7 +501,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.FileShare FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -973,7 +971,6 @@ namespace Azure.Provisioning.Storage
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageAccount FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountKey> GetKeys() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1316,11 +1313,8 @@ namespace Azure.Provisioning.Storage
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageTableDataContributor { get { throw null; } }
         public static Azure.Provisioning.Storage.StorageBuiltInRole StorageTableDataReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.Storage.StorageBuiltInRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string GetBuiltInRoleName(Azure.Provisioning.Storage.StorageBuiltInRole value) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.Storage.StorageBuiltInRole left, Azure.Provisioning.Storage.StorageBuiltInRole right) { throw null; }
         public static implicit operator Azure.Provisioning.Storage.StorageBuiltInRole (string value) { throw null; }
@@ -1526,7 +1520,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageQueue FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1643,7 +1636,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageTable FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1720,7 +1712,6 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskAssignmentExecutionContext ExecutionContext { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReportPrefix { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskReportProperties RunStatus { get { throw null; } set { } }

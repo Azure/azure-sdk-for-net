@@ -344,10 +344,8 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.ExportDevicesContent ExportDevicesContent(System.Uri exportBlobContainerUri = null, bool excludeKeys = false, string exportBlobName = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = default(bool?), string configurationsBlobName = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCapacity IotHubCapacity(long? minimum = default(long?), long? maximum = default(long?), long? @default = default(long?), Azure.ResourceManager.IotHub.Models.IotHubScaleType? scaleType = default(Azure.ResourceManager.IotHub.Models.IotHubScaleType?)) { throw null; }
         public static Azure.ResourceManager.IotHub.IotHubCertificateDescriptionData IotHubCertificateDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties IotHubCertificateProperties(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, System.BinaryData certificate) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties IotHubCertificateProperties(string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprintString = null, bool? isVerified = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.BinaryData certificate = null, Azure.Core.ResourceIdentifier policyResourceId = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string verificationCode, System.BinaryData certificate) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprintString = null, bool? isVerified = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string verificationCode = null, System.BinaryData certificate = null, Azure.Core.ResourceIdentifier policyResourceId = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateWithNonceDescription IotHubCertificateWithNonceDescription(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -362,7 +360,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotHub.Models.IotHubPrivateEndpointGroupInformationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubPrivateEndpointGroupInformationProperties IotHubPrivateEndpointGroupInformationProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredDnsZoneNames = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = default(bool?), bool? disableDeviceSas = default(bool?), bool? disableModuleSas = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules = null, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints = null, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = default(bool?), Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice = null, string comments = null, System.Collections.Generic.IEnumerable<string> deviceStreamsStreamingEndpoints = null, Azure.ResourceManager.IotHub.Models.IotHubCapability? features = default(Azure.ResourceManager.IotHub.Models.IotHubCapability?), Azure.ResourceManager.IotHub.Models.IotHubEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations = null, bool? enableDataResidency = default(bool?), Azure.ResourceManager.IotHub.Models.IotHubRootCertificateProperties rootCertificate = null, Azure.ResourceManager.IotHub.Models.IotHubIPVersion? ipVersion = default(Azure.ResourceManager.IotHub.Models.IotHubIPVersion?), Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry deviceRegistry = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdns, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice, string comments, Azure.ResourceManager.IotHub.Models.IotHubCapability? features, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations, bool? enableDataResidency) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubQuotaMetricInfo IotHubQuotaMetricInfo(string name = null, long? currentValue = default(long?), long? maxValue = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubRegistryStatistics IotHubRegistryStatistics(long? totalDeviceCount = default(long?), long? enabledDeviceCount = default(long?), long? disabledDeviceCount = default(long?)) { throw null; }
@@ -457,9 +454,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType IdentityBased { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType KeyBased { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType left, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType (string value) { throw null; }
@@ -475,9 +470,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubCapability DeviceManagement { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubCapability None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubCapability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubCapability left, Azure.ResourceManager.IotHub.Models.IotHubCapability right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubCapability (string value) { throw null; }
@@ -507,7 +500,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public bool? IsVerified { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PolicyResourceId { get { throw null; } set { } }
         public string Subject { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
@@ -528,7 +520,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public bool? IsVerified { get { throw null; } }
         public Azure.Core.ResourceIdentifier PolicyResourceId { get { throw null; } }
         public string Subject { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
@@ -627,9 +618,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus left, Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus (string value) { throw null; }
@@ -721,9 +710,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubIPVersion IPv4IPv6 { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubIPVersion IPv6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubIPVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubIPVersion left, Azure.ResourceManager.IotHub.Models.IotHubIPVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubIPVersion (string value) { throw null; }
@@ -774,9 +761,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubJobType UpdateDeviceConfiguration { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubJobType WriteDeviceProperties { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubJobType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubJobType left, Azure.ResourceManager.IotHub.Models.IotHubJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubJobType (string value) { throw null; }
@@ -855,9 +840,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public IotHubNetworkRuleIPAction(string value) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleIPAction Allow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleIPAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleIPAction left, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleIPAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleIPAction (string value) { throw null; }
@@ -873,9 +856,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction Allow { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction left, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetDefaultAction (string value) { throw null; }
@@ -957,9 +938,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -1014,9 +993,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess left, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess (string value) { throw null; }
@@ -1058,9 +1035,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType Primary { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType left, Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubReplicaRoleType (string value) { throw null; }
@@ -1108,9 +1083,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource MqttBrokerMessages { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubRoutingSource TwinChangeEvents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubRoutingSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubRoutingSource left, Azure.ResourceManager.IotHub.Models.IotHubRoutingSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubRoutingSource (string value) { throw null; }
@@ -1156,9 +1129,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubSku S2 { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubSku S3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubSku left, Azure.ResourceManager.IotHub.Models.IotHubSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubSku (string value) { throw null; }
@@ -1247,9 +1218,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus True { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus Undefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus left, Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus (string value) { throw null; }
@@ -1368,9 +1337,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.RouteErrorSeverity Error { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorSeverity Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity left, Azure.ResourceManager.IotHub.Models.RouteErrorSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.RouteErrorSeverity (string value) { throw null; }
@@ -1533,9 +1500,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding AvroDeflate { get { throw null; } }
         public static Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding Json { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding left, Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding (string value) { throw null; }

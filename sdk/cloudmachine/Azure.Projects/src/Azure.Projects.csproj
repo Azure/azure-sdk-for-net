@@ -25,8 +25,6 @@
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
-    <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Virtual Enclave Patchable Properties. </summary>
     public partial class VirtualEnclavePatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/>. </summary>
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
             IsBastionEnabled = isBastionEnabled;
@@ -76,39 +48,45 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             GovernedServiceList = governedServiceList;
             EnclaveDefaultSettings = enclaveDefaultSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclavePatchProperties"/> for deserialization. </summary>
-        internal VirtualEnclavePatchProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Virtual Network. </summary>
         public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; }
+
         /// <summary> Deploy Bastion service (True or False). </summary>
         public bool? IsBastionEnabled { get; set; }
+
         /// <summary> Enclave role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }
+
         /// <summary> Workload role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get; }
+
         /// <summary> Enclave specific policies. </summary>
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
+
         /// <summary> Enclave default settings. </summary>
         internal EnclaveDefaultSettingsPatch EnclaveDefaultSettings { get; set; }
-        /// <summary> Diagnostic Destination. </summary>
-        public VirtualEnclaveDiagnosticDestination? EnclaveDefaultDiagnosticDestination
-        {
-            get => EnclaveDefaultSettings is null ? default : EnclaveDefaultSettings.DiagnosticDestination;
-            set
-            {
-                if (EnclaveDefaultSettings is null)
-                    EnclaveDefaultSettings = new EnclaveDefaultSettingsPatch();
-                EnclaveDefaultSettings.DiagnosticDestination = value;
-            }
-        }
 
         /// <summary> Maintenance Mode configuration. </summary>
         public VirtualEnclaveMaintenanceModeConfigurationPatch MaintenanceModeConfiguration { get; set; }
+
+        /// <summary> Diagnostic Destination. </summary>
+        public VirtualEnclaveDiagnosticDestination? EnclaveDefaultDiagnosticDestination
+        {
+            get
+            {
+                return EnclaveDefaultSettings is null ? default : EnclaveDefaultSettings.DiagnosticDestination;
+            }
+            set
+            {
+                if (EnclaveDefaultSettings is null)
+                {
+                    EnclaveDefaultSettings = new EnclaveDefaultSettingsPatch();
+                }
+                EnclaveDefaultSettings.DiagnosticDestination = value;
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -27,6 +27,7 @@ string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
+      projectName: projectName,
       language: "en-us"
     )
 {
@@ -46,8 +47,10 @@ To create a new project, call `CreateProjectAsync` on the `ConversationAuthoring
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
 string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
+      projectName: projectName,
       language: "en-us"
     )
 {

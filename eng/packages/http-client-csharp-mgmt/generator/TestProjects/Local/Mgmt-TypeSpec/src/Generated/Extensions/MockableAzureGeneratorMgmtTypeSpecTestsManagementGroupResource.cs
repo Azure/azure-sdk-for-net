@@ -103,6 +103,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetCachedClient(client => new GroupQuotaLimitListCollection(client, Id));
         }
 
+        /// <summary>
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaLimitLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetGroupQuotaLimitListAsync(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetGroupQuotaLimitLists().GetAsync(groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaLimitLists_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotaLimitListResource> GetGroupQuotaLimitList(string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetGroupQuotaLimitLists().Get(groupQuotaName, resourceProviderName, location, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="ManagementGroupResource"/>. </summary>
         /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
         public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists()

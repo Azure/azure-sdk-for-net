@@ -230,16 +230,30 @@ class PackageProps {
 # Returns important properties of the package relative to the language repo
 # Returns a PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
 # Note: python is required for parsing python package properties.
+# GroupId is optional and is used to filter packages for languages that support group identifiers (e.g., Java).
+# When GroupId is provided, the function will match both the package name and the group ID.
 function Get-PkgProperties {
     Param
     (
         [Parameter(Mandatory = $true)]
         [string]$PackageName,
-        [string]$ServiceDirectory
+        [string]$ServiceDirectory,
+        [string]$GroupId
     )
 
+    Write-Host "Get-PkgProperties called with PackageName: [$PackageName], ServiceDirectory: [$ServiceDirectory], GroupId: [$GroupId]"
+
     $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
-    $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
+    
+    if ([string]::IsNullOrEmpty($GroupId)) {
+        $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
+    }
+    else {
+        $pkgProps = $allPkgProps.Where({ 
+            ($_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName) -and 
+            ($_.PSObject.Properties.Name -contains "Group" -and $_.Group -eq $GroupId)
+        });
+    }
 
     if ($pkgProps.Count -ge 1) {
         if ($pkgProps.Count -gt 1) {
@@ -248,7 +262,12 @@ function Get-PkgProperties {
         return $pkgProps[0]
     }
 
-    LogError "Failed to retrieve Properties for [$PackageName]"
+    if ([string]::IsNullOrEmpty($GroupId)) {
+        LogError "Failed to retrieve Properties for [$PackageName]"
+    }
+    else {
+        LogError "Failed to retrieve Properties for [$PackageName] with GroupId [$GroupId]. Ensure the package has a Group property matching the specified GroupId."
+    }
     return $null
 }
 
@@ -567,4 +586,26 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath) {
     }
 
     return $projectProps
+}
+
+# Get the full package name based on packageInfo properties
+# Returns Group+ArtifactName if Group exists and has a value, otherwise returns Name
+# If UseColonSeparator switch is enabled, returns Group:ArtifactName format (colon separator)
+function Get-FullPackageName {
+    param (
+        [Parameter(Mandatory=$true)]
+        [PSCustomObject]$PackageInfo,
+        [switch]$UseColonSeparator
+    )
+    
+    if ($PackageInfo.PSObject.Members.Name -contains "Group") {
+        $groupId = $PackageInfo.Group
+        if ($groupId) {
+            if ($UseColonSeparator) {
+                return "${groupId}:$($PackageInfo.Name)"
+            }
+            return "${groupId}+$($PackageInfo.Name)"
+        }
+    }
+    return $PackageInfo.Name
 }

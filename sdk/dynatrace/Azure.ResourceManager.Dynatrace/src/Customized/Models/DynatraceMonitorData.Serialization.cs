@@ -9,7 +9,7 @@ using Azure.ResourceManager.Dynatrace.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    [CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(WriteIdentity), DeserializationValueHook = nameof(ReadIdentity))]
     public partial class DynatraceMonitorData
     {
         internal void WriteIdentity(Utf8JsonWriter writer, ModelReaderWriterOptions options)

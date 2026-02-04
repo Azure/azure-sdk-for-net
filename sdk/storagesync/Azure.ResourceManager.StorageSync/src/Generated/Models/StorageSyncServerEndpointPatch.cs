@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Parameters for updating an Server Endpoint. </summary>
     public partial class StorageSyncServerEndpointPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointPatch"/>. </summary>
         public StorageSyncServerEndpointPatch()
@@ -51,35 +22,117 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointPatch"/>. </summary>
-        /// <param name="cloudTiering"> Cloud Tiering. </param>
-        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
-        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
-        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
-        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
-        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServerEndpointPatch(StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, LocalCacheMode? localCacheMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the server endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServerEndpointPatch(ServerEndpointUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CloudTiering = cloudTiering;
-            VolumeFreeSpacePercent = volumeFreeSpacePercent;
-            TierFilesOlderThanDays = tierFilesOlderThanDays;
-            OfflineDataTransfer = offlineDataTransfer;
-            OfflineDataTransferShareName = offlineDataTransferShareName;
-            LocalCacheMode = localCacheMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of the server endpoint. </summary>
+        internal ServerEndpointUpdateProperties Properties { get; set; }
+
         /// <summary> Cloud Tiering. </summary>
-        public StorageSyncFeatureStatus? CloudTiering { get; set; }
+        public StorageSyncFeatureStatus? CloudTiering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudTiering;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.CloudTiering = value.Value;
+            }
+        }
+
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
-        public int? VolumeFreeSpacePercent { get; set; }
+        public int? VolumeFreeSpacePercent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VolumeFreeSpacePercent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.VolumeFreeSpacePercent = value.Value;
+            }
+        }
+
         /// <summary> Tier files older than days. </summary>
-        public int? TierFilesOlderThanDays { get; set; }
+        public int? TierFilesOlderThanDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TierFilesOlderThanDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.TierFilesOlderThanDays = value.Value;
+            }
+        }
+
         /// <summary> Offline data transfer. </summary>
-        public StorageSyncFeatureStatus? OfflineDataTransfer { get; set; }
+        public StorageSyncFeatureStatus? OfflineDataTransfer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfflineDataTransfer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.OfflineDataTransfer = value.Value;
+            }
+        }
+
         /// <summary> Offline data transfer share name. </summary>
-        public string OfflineDataTransferShareName { get; set; }
+        public string OfflineDataTransferShareName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfflineDataTransferShareName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.OfflineDataTransferShareName = value;
+            }
+        }
+
         /// <summary> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </summary>
-        public LocalCacheMode? LocalCacheMode { get; set; }
+        public LocalCacheMode? LocalCacheMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalCacheMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerEndpointUpdateProperties();
+                }
+                Properties.LocalCacheMode = value.Value;
+            }
+        }
     }
 }

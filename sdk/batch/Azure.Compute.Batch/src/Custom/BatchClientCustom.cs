@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -100,7 +100,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> PoolExistsAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -109,8 +109,8 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -143,7 +143,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> PoolExists(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -152,8 +152,8 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> JobScheduleExistsAsync(string jobScheduleId, TimeSpan? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -198,8 +198,8 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> JobScheduleExists(string jobScheduleId, TimeSpan? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -244,8 +244,8 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -279,7 +279,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<BatchFileProperties>> GetTaskFilePropertiesAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFileProperties");
@@ -321,15 +321,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesInternal(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesInternal(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<BatchFileProperties> GetTaskFileProperties(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFileProperties");
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, context);
+                Response response = GetTaskFilePropertiesInternal(
+                    jobId,
+                    taskId,
+                    filePath,
+                    timeOutInSeconds,
+                    ocpdate,
+                    null,
+                    cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -370,8 +376,14 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, context).ConfigureAwait(false);
+                Response response = await GetNodeFilePropertiesInternalAsync(
+                    poolId,
+                    nodeId,
+                    filePath,
+                    timeOutInSeconds,
+                    ocpdate,
+                    null,
+                    cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -446,15 +458,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdatePoolAsync(string poolId, BatchPoolUpdateOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdatePoolAsync(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            using RequestContent content = pool;
+            Response response = await UpdatePoolAsync(poolId, pool, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return response;
         }
 
@@ -482,15 +493,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdatePool(string poolId, BatchPoolUpdateOptions pool, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdatePool(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            using RequestContent content = pool;
+            Response response = UpdatePool(poolId, content, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return response;
         }
 
@@ -518,15 +528,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdateJobAsync(string jobId, BatchJobUpdateOptions job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            using RequestContent content = job.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            using RequestContent content = job;
+            Response response = await UpdateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return response;
         }
 
@@ -554,15 +563,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdateJob(string jobId, BatchJobUpdateOptions job, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            using RequestContent content = job.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            using RequestContent content = job;
+            Response response = UpdateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return response;
         }
 
@@ -590,15 +598,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdateJobScheduleAsync(string jobScheduleId, BatchJobScheduleUpdateOptions jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            using RequestContent content = jobSchedule.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            using RequestContent content = jobSchedule;
+            Response response = await UpdateJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return response;
         }
 
@@ -626,15 +633,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdateJobSchedule(string jobScheduleId, BatchJobScheduleUpdateOptions jobSchedule, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            using RequestContent content = jobSchedule.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            using RequestContent content = jobSchedule;
+            Response response = UpdateJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return response;
         }
 
@@ -742,13 +748,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<DeleteJobOperation> DeleteJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
-            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -783,14 +789,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
-        /// <include file="../Generated/Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
         public virtual DeleteJobOperation DeleteJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
             {
-                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -830,7 +836,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -870,7 +876,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+            {   Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -986,7 +992,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken).ConfigureAwait(false);
+            {   Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken).ConfigureAwait(false);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1024,7 +1030,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken);
+            {   Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1064,7 +1070,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
-            {   Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new TerminateJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -1104,7 +1110,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
-            {   Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+            {   Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new TerminateJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)

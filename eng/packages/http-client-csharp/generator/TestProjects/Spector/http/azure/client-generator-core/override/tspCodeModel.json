@@ -12,6 +12,7 @@
       "crossLanguageDefinitionId": "Customization.GroupParametersOptions",
       "usage": "Input",
       "decorators": [],
+      "serializationOptions": {},
       "properties": [
         {
           "$id": "2",
@@ -182,7 +183,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.reorder",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Override"
               },
               "parameters": [
                 {
@@ -264,7 +266,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -273,7 +275,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "6"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "24",
@@ -350,7 +353,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.group",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Override"
               },
               "parameters": [
                 {
@@ -407,7 +411,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -416,7 +420,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "6"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "35",
@@ -499,7 +504,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RequireOptionalParameter.requireOptional",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Override"
               },
               "parameters": [
                 {
@@ -581,7 +587,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RequireOptionalParameter.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -590,7 +596,8 @@
           "apiVersions": [],
           "parent": {
             "$ref": "6"
-          }
+          },
+          "isMultiServiceClient": false
         },
         {
           "$id": "49",
@@ -710,7 +717,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.removeOptional",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.ClientGenerator.Core.Override"
               },
               "parameters": [
                 {
@@ -792,7 +800,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.RemoveOptionalParameter.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -801,9 +809,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "6"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

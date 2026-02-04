@@ -479,3 +479,37 @@ op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None
 @convenientAPI(true)
 @post
 op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;
+
+// DataFactoryElement alternate type pattern
+@alternateType({identity: "Azure.Core.Expressions.DataFactoryElement"}, "csharp")
+union Dfe<T> {
+    T,
+    DataFactoryElementModel
+}
+
+@doc("Model with DataFactoryElement properties")
+model DataFactoryElementModel {
+  @doc("String property with DFE pattern")
+  stringProperty: Dfe<string>;
+
+  @doc("Int property with DFE pattern")
+  intProperty: Dfe<int32>;
+
+  @doc("Bool property with DFE pattern")
+  boolProperty: Dfe<boolean>;
+
+  @doc("String array property with DFE pattern")
+  stringArrayProperty: Dfe<string[]>;
+}
+
+@route("datafactory")
+@doc("Create a model with DataFactoryElement properties")
+@convenientAPI(true)
+@post
+op CreateDataFactoryModel(@body body: DataFactoryElementModel): DataFactoryElementModel;
+
+@route("datafactory/{id}")
+@doc("Get a model with DataFactoryElement properties")
+@convenientAPI(true)
+@get
+op GetDataFactoryModel(@path id: string): DataFactoryElementModel;

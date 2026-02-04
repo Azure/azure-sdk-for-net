@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34009.444
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Provisioning", "Azure.Provisioning\src\Azure.Provisioning.csproj", "{A2363999-F8EF-4C2F-8DDE-6777AE903BB3}"
 EndProject
@@ -129,6 +129,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Dns", "Azure.Provisioning.Dns\src\Azure.Provisioning.Dns.csproj", "{15C5A92A-614E-30D9-5D3A-AA857462E456}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Dns.Tests", "Azure.Provisioning.Dns\tests\Azure.Provisioning.Dns.Tests.csproj", "{78621E7D-65DF-8346-3ED9-8F0CB9531744}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.PrivateDns", "Azure.Provisioning.PrivateDns\src\Azure.Provisioning.PrivateDns.csproj", "{29703EE4-89CC-BB2F-29AA-5F092C1799EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.PrivateDns.Tests", "Azure.Provisioning.PrivateDns\tests\Azure.Provisioning.PrivateDns.Tests.csproj", "{0F591945-027C-7A4C-D18A-E242126C427A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -380,6 +384,14 @@ Global
 		{78621E7D-65DF-8346-3ED9-8F0CB9531744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78621E7D-65DF-8346-3ED9-8F0CB9531744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78621E7D-65DF-8346-3ED9-8F0CB9531744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29703EE4-89CC-BB2F-29AA-5F092C1799EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29703EE4-89CC-BB2F-29AA-5F092C1799EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29703EE4-89CC-BB2F-29AA-5F092C1799EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29703EE4-89CC-BB2F-29AA-5F092C1799EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F591945-027C-7A4C-D18A-E242126C427A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F591945-027C-7A4C-D18A-E242126C427A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F591945-027C-7A4C-D18A-E242126C427A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F591945-027C-7A4C-D18A-E242126C427A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

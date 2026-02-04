@@ -16,25 +16,25 @@ namespace Azure.Projects.AIFoundry
     /// </summary>
     public class AIProjectFeature : AzureProjectFeature
     {
-        private string _connectionString;
+        private Uri _endpoint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AIProjectFeature"/> class.
         /// </summary>
-        /// <param name="connectionString">
-        /// The Foundry connection string for the AI Project endpoint.
+        /// <param name="endpoint">
+        /// The Foundry endpoint URI for the AI Project.
         /// </param>
-        /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="connectionString"/> is null or empty.
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="endpoint"/> is null.
         /// </exception>
-        public AIProjectFeature(string connectionString) : this()
+        public AIProjectFeature(Uri endpoint) : this()
         {
-            if (string.IsNullOrEmpty(connectionString))
+            if (endpoint == null)
             {
-                throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
+                throw new ArgumentNullException(nameof(endpoint));
             }
 
-            _connectionString = connectionString;
+            _endpoint = endpoint;
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace Azure.Projects.AIFoundry
 
         private  void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
-            if (_connectionString != null)
+            if (_endpoint != null)
             {
-                var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
+                var foundryConnections = new AIFoundryConnections(_endpoint, new DefaultAzureCredential());
 
                 // Add OpenAI connections
                 connections.Add(foundryConnections.GetConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
@@ -92,9 +92,9 @@ namespace Azure.Projects.AIFoundry
                 infrastructure.AddConstruct(Id + "_connection" + i, connectionCdk);
             }
 
-            if (_connectionString != null)
+            if (_endpoint != null)
             {
-                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _connectionString);
+                EmitConnection(infrastructure, "Azure.AI.Projects.AIProjectClient", _endpoint.AbsoluteUri);
             }
         }
     }

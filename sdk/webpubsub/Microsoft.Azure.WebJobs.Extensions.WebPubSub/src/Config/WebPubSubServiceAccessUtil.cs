@@ -99,19 +99,10 @@ internal static class WebPubSubServiceAccessUtil
     {
         if (!string.IsNullOrEmpty(section.Value))
         {
-            // Assume connection string exists.
             return true;
         }
-        else
-        {
-            // Check if this is an identity-based connection (has serviceUri)
-            var serviceUri = section[Constants.ServiceUriKey];
-            if (!string.IsNullOrEmpty(serviceUri))
-            {
-                // Identity-based connection
-                return true;
-            }
-        }
-        return false;
+
+        var serviceUri = section[Constants.ServiceUriKey];
+        return !string.IsNullOrEmpty(serviceUri);
     }
 }

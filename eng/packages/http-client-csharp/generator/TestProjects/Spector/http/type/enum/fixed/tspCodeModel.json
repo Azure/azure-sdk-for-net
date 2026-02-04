@@ -332,7 +332,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
@@ -433,7 +434,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
@@ -548,7 +550,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
@@ -623,7 +626,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint"
             }
           ],
           "initializedBy": 0,
@@ -632,9 +635,11 @@
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
+    /// <summary></summary>
     public partial class PureStorageAvsVmVolumeResource : IJsonModel<PureStorageAvsVmVolumeData>
     {
-        private static PureStorageAvsVmVolumeData s_dataDeserializationInstance;
-        private static PureStorageAvsVmVolumeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PureStorageAvsVmVolumeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PureStorageAvsVmVolumeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PureStorageAvsVmVolumeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageAvsVmVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsVmVolumeData>)Data).Write(writer, options);
 
-        PureStorageAvsVmVolumeData IJsonModel<PureStorageAvsVmVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsVmVolumeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageAvsVmVolumeData IJsonModel<PureStorageAvsVmVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PureStorageAvsVmVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PureStorageAvsVmVolumeData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PureStorageAvsVmVolumeData IPersistableModel<PureStorageAvsVmVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PureStorageAvsVmVolumeData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        string IPersistableModel<PureStorageAvsVmVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageAvsVmVolumeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PureStorageAvsVmVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

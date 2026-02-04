@@ -317,6 +317,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
             Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
@@ -416,7 +417,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
-                null,
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
@@ -445,6 +446,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
     }

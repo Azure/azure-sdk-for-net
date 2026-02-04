@@ -7,67 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class OccurrenceResourceData : ResourceData
+    public partial class OccurrenceResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceData"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
-        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal OccurrenceResourceData(ResourceIdentifier resourceId, DateTimeOffset scheduledOn)
+        internal OccurrenceResourceData(ResourceIdentifier resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
             ResourceId = resourceId;
             NotificationSettings = new ChangeTrackingList<NotificationSettings>();
-            ScheduledOn = scheduledOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
+        /// <param name="type"> The type of resource. </param>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
@@ -76,33 +42,44 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, IReadOnlyList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OccurrenceResourceData(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Id = id;
+            Type = @type;
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;
             ScheduledOn = scheduledOn;
             ProvisioningState = provisioningState;
             ErrorDetails = errorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceData"/> for deserialization. </summary>
-        internal OccurrenceResourceData()
-        {
-        }
+        /// <summary> The name of the resource. </summary>
+        public string Name { get; }
+
+        /// <summary> The compute RP resource id of the resource in the scheduled actions scope. . </summary>
+        public ResourceIdentifier Id { get; }
+
+        /// <summary> The type of resource. </summary>
+        public string Type { get; }
 
         /// <summary>
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> The desired notification settings for the specified resource. </summary>
-        public IReadOnlyList<NotificationSettings> NotificationSettings { get; }
+        public IList<NotificationSettings> NotificationSettings { get; }
+
         /// <summary> The time the occurrence is scheduled for the resource. </summary>
         public DateTimeOffset ScheduledOn { get; }
+
         /// <summary> The current state of the resource. </summary>
         public OccurrenceResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> Error details for the resource. Only populated if resource is in failed state. </summary>
         public ResponseError ErrorDetails { get; }
     }

@@ -74,7 +74,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, _filter, _orderby, _skip, _maxpagesize, _context) : _client.CreateGetTasksRequest(_filter, _orderby, _skip, _maxpagesize, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTasksRequest(nextLink, pageSize, _context) : _client.CreateGetTasksRequest(_filter, _orderby, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EasmClient.GetTasks");
             scope.Start();
             try

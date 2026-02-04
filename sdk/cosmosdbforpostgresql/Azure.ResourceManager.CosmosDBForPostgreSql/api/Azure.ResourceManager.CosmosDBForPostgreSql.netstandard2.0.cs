@@ -618,9 +618,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType Integer { get { throw null; } }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType Numeric { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlConfigurationDataType (string value) { throw null; }
@@ -649,9 +647,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public CosmosDBForPostgreSqlNameAvailabilityResourceType(string value) { throw null; }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType ServerGroupsV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlNameAvailabilityResourceType (string value) { throw null; }
@@ -669,9 +665,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -688,9 +682,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -721,9 +713,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlProvisioningState (string value) { throw null; }
@@ -751,9 +741,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole Coordinator { get { throw null; } }
         public static Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole Worker { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole left, Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRole (string value) { throw null; }

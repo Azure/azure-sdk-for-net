@@ -16,21 +16,29 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
+    <ApiCompatExcludeAttributeList>System.ComponentModel.EditorBrowsableAttribute</ApiCompatExcludeAttributeList>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System.Web" />
-    <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
+    <PackageReference Include="System.Net.Http" />
     <!--
     Disable this temporarily until we can find a workaround for ReferenceOutputAssembly being broken
     <ProjectReference Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
@@ -47,6 +55,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; reliability</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
   <PropertyGroup>
     <CodeAnalysisRuleSet>AzureBatch.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>

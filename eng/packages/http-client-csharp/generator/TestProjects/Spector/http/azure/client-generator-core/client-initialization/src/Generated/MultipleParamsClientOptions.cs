@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     public partial class MultipleParamsClientOptions : ClientOptions
     {

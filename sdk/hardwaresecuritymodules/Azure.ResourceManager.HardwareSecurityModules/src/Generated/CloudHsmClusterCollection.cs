@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     {
         private readonly ClientDiagnostics _cloudHsmClustersClientDiagnostics;
         private readonly CloudHsmClusters _cloudHsmClustersRestClient;
-        private readonly ClientDiagnostics _cloudHsmClusterPrivateLinkResourcesClientDiagnostics;
-        private readonly CloudHsmClusterPrivateLinkResources _cloudHsmClusterPrivateLinkResourcesRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterBackupStatusClientDiagnostics;
         private readonly CloudHsmClusterBackupStatus _cloudHsmClusterBackupStatusRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterRestoreStatusClientDiagnostics;
         private readonly CloudHsmClusterRestoreStatus _cloudHsmClusterRestoreStatusRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterPrivateLinkResourcesClientDiagnostics;
+        private readonly CloudHsmClusterPrivateLinkResources _cloudHsmClusterPrivateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of CloudHsmClusterCollection for mocking. </summary>
         protected CloudHsmClusterCollection()
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             TryGetApiVersion(CloudHsmClusterResource.ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
-            _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
+            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Cloud HSM Cluster
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Cloud HSM Cluster
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Cloud HSM Cluster
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Cloud HSM Cluster
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

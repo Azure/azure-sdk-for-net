@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
-    /// A Class representing an IotOperationsRegistryEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotOperationsRegistryEndpointResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetIotOperationsRegistryEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotOperationsInstanceResource"/> using the GetIotOperationsRegistryEndpoint method.
+    /// A class representing a IotOperationsRegistryEndpoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotOperationsRegistryEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotOperationsInstanceResource"/> using the GetIotOperationsRegistryEndpoints method.
     /// </summary>
     public partial class IotOperationsRegistryEndpointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="IotOperationsRegistryEndpointResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="instanceName"> The instanceName. </param>
-        /// <param name="registryEndpointName"> The registryEndpointName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string instanceName, string registryEndpointName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics;
-        private readonly RegistryEndpointRestOperations _iotOperationsRegistryEndpointRegistryEndpointRestClient;
+        private readonly ClientDiagnostics _registryEndpointClientDiagnostics;
+        private readonly RegistryEndpoint _registryEndpointRestClient;
         private readonly IotOperationsRegistryEndpointData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTOperations/instances/registryEndpoints";
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsRegistryEndpointResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotOperationsRegistryEndpointResource for mocking. </summary>
         protected IotOperationsRegistryEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsRegistryEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotOperationsRegistryEndpointResource(ArmClient client, IotOperationsRegistryEndpointData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.IotOperations
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotOperationsRegistryEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperationsRegistryEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotOperationsRegistryEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string iotOperationsRegistryEndpointRegistryEndpointApiVersion);
-            _iotOperationsRegistryEndpointRegistryEndpointRestClient = new RegistryEndpointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsRegistryEndpointRegistryEndpointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string iotOperationsRegistryEndpointApiVersion);
+            _registryEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
+            _registryEndpointRestClient = new RegistryEndpoint(_registryEndpointClientDiagnostics, Pipeline, Endpoint, iotOperationsRegistryEndpointApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual IotOperationsRegistryEndpointData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="instanceName"> The instanceName. </param>
+        /// <param name="registryEndpointName"> The registryEndpointName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string instanceName, string registryEndpointName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a RegistryEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotOperationsRegistryEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Get");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _iotOperationsRegistryEndpointRegistryEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotOperationsRegistryEndpointData> response = Response.FromValue(IotOperationsRegistryEndpointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsRegistryEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a RegistryEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotOperationsRegistryEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Get");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _iotOperationsRegistryEndpointRegistryEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotOperationsRegistryEndpointData> response = Response.FromValue(IotOperationsRegistryEndpointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotOperationsRegistryEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Delete a RegistryEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Delete");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _iotOperationsRegistryEndpointRegistryEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotOperationsArmOperation(_iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics, Pipeline, _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotOperationsArmOperation operation = new IotOperationsArmOperation(_registryEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Delete a RegistryEndpointResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Delete");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _iotOperationsRegistryEndpointRegistryEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new IotOperationsArmOperation(_iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics, Pipeline, _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotOperationsArmOperation operation = new IotOperationsArmOperation(_registryEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Create a RegistryEndpointResource
+        /// Update a IotOperationsRegistryEndpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Update");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(new IotOperationsRegistryEndpointOperationSource(Client), _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics, Pipeline, _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
+                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    _registryEndpointClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Create a RegistryEndpointResource
+        /// Update a IotOperationsRegistryEndpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/registryEndpoints/{registryEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryEndpointResource_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegistryEndpoint_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotOperationsRegistryEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Update");
+            using DiagnosticScope scope = _registryEndpointClientDiagnostics.CreateScope("IotOperationsRegistryEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(new IotOperationsRegistryEndpointOperationSource(Client), _iotOperationsRegistryEndpointRegistryEndpointClientDiagnostics, Pipeline, _iotOperationsRegistryEndpointRegistryEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
+                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    _registryEndpointClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

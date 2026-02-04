@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Grafana.Models
     public readonly partial struct GrafanaSize : IEquatable<GrafanaSize>
     {
         private readonly string _value;
+        /// <summary> X1 capacity tier. </summary>
+        private const string X1Value = "X1";
+        /// <summary> X2 capacity tier. </summary>
+        private const string X2Value = "X2";
 
         /// <summary> Initializes a new instance of <see cref="GrafanaSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GrafanaSize(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string X1Value = "X1";
-        private const string X2Value = "X2";
+            _value = value;
+        }
 
         /// <summary> X1 capacity tier. </summary>
         public static GrafanaSize X1 { get; } = new GrafanaSize(X1Value);
+
         /// <summary> X2 capacity tier. </summary>
         public static GrafanaSize X2 { get; } = new GrafanaSize(X2Value);
+
         /// <summary> Determines if two <see cref="GrafanaSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrafanaSize left, GrafanaSize right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrafanaSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrafanaSize left, GrafanaSize right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaSize"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrafanaSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrafanaSize(string value) => new GrafanaSize(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrafanaSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrafanaSize?(string value) => value == null ? null : new GrafanaSize(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrafanaSize other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrafanaSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

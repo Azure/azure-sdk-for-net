@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>(capacity: (int)batchLogRecord.Count);
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
             TelemetryItem telemetryItem;
 

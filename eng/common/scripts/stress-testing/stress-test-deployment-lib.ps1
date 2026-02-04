@@ -122,21 +122,21 @@ function DeployStressTests(
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
-        $clusterGroup = 'rg-stress-cluster-pg'
+        $clusterGroup = 'SSS3PT_rg-stress-cluster-pg'
         $subscription = 'Azure SDK Test Resources - TME'
         $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
-        $clusterGroup = 'rg-stress-cluster-prod'
+        $clusterGroup = 'SSS3PT_rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources - TME'
         $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'storage') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
         }
-        $clusterGroup = 'rg-stress-cluster-storage'
+        $clusterGroup = 'SSS3PT_rg-stress-cluster-storage'
         $subscription = 'Azure SDK Test Resources - TME'
         $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
     } elseif (!$clusterGroup -or !$subscription -or $tenant) {

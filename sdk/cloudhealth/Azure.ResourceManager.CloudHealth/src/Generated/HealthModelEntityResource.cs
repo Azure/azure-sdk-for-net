@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a Entity
+        /// Update a HealthModelEntity.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a Entity
+        /// Update a HealthModelEntity.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

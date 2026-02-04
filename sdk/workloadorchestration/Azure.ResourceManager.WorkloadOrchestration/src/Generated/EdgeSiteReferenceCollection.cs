@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeSiteReferenceResource"/> and their operations.
     /// Each <see cref="EdgeSiteReferenceResource"/> in the collection will belong to the same instance of <see cref="EdgeContextResource"/>.
-    /// To get an <see cref="EdgeSiteReferenceCollection"/> instance call the GetEdgeSiteReferences method from an instance of <see cref="EdgeContextResource"/>.
+    /// To get a <see cref="EdgeSiteReferenceCollection"/> instance call the GetEdgeSiteReferences method from an instance of <see cref="EdgeContextResource"/>.
     /// </summary>
     public partial class EdgeSiteReferenceCollection : ArmCollection, IEnumerable<EdgeSiteReferenceResource>, IAsyncEnumerable<EdgeSiteReferenceResource>
     {
-        private readonly ClientDiagnostics _edgeSiteReferenceSiteReferencesClientDiagnostics;
-        private readonly SiteReferencesRestOperations _edgeSiteReferenceSiteReferencesRestClient;
+        private readonly ClientDiagnostics _siteReferencesClientDiagnostics;
+        private readonly SiteReferences _siteReferencesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSiteReferenceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeSiteReferenceCollection for mocking. </summary>
         protected EdgeSiteReferenceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeSiteReferenceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteReferenceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSiteReferenceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeSiteReferenceSiteReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSiteReferenceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeSiteReferenceResource.ResourceType, out string edgeSiteReferenceSiteReferencesApiVersion);
-            _edgeSiteReferenceSiteReferencesRestClient = new SiteReferencesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSiteReferenceSiteReferencesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EdgeSiteReferenceResource.ResourceType, out string edgeSiteReferenceApiVersion);
+            _siteReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSiteReferenceResource.ResourceType.Namespace, Diagnostics);
+            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeContextResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeContextResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get Site Reference Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeSiteReferenceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteReferenceName, EdgeSiteReferenceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeSiteReferenceSiteReferencesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(new EdgeSiteReferenceOperationSource(Client), _edgeSiteReferenceSiteReferencesClientDiagnostics, Pipeline, _edgeSiteReferenceSiteReferencesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, EdgeSiteReferenceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(
+                    new EdgeSiteReferenceOperationSource(Client),
+                    _siteReferencesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get Site Reference Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeSiteReferenceResource> CreateOrUpdate(WaitUntil waitUntil, string siteReferenceName, EdgeSiteReferenceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeSiteReferenceSiteReferencesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(new EdgeSiteReferenceOperationSource(Client), _edgeSiteReferenceSiteReferencesClientDiagnostics, Pipeline, _edgeSiteReferenceSiteReferencesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, EdgeSiteReferenceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSiteReferenceResource>(
+                    new EdgeSiteReferenceOperationSource(Client),
+                    _siteReferencesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get Site Reference Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeSiteReferenceResource>> GetAsync(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Get");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeSiteReferenceSiteReferencesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSiteReferenceData> response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSiteReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get Site Reference Resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeSiteReferenceResource> Get(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Get");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeSiteReferenceSiteReferencesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSiteReferenceData> response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSiteReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List Site Reference Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_ListByContext</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_ListByContext. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeSiteReferenceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeSiteReferenceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeSiteReferenceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSiteReferenceSiteReferencesRestClient.CreateListByContextRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSiteReferenceSiteReferencesRestClient.CreateListByContextNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteReferenceResource(Client, EdgeSiteReferenceData.DeserializeEdgeSiteReferenceData(e)), _edgeSiteReferenceSiteReferencesClientDiagnostics, Pipeline, "EdgeSiteReferenceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextAsyncCollectionResultOfT(_siteReferencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSiteReferenceResource(Client, data));
         }
 
         /// <summary>
         /// List Site Reference Resources
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_ListByContext</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_ListByContext. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeSiteReferenceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeSiteReferenceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSiteReferenceSiteReferencesRestClient.CreateListByContextRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSiteReferenceSiteReferencesRestClient.CreateListByContextNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteReferenceResource(Client, EdgeSiteReferenceData.DeserializeEdgeSiteReferenceData(e)), _edgeSiteReferenceSiteReferencesClientDiagnostics, Pipeline, "EdgeSiteReferenceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeSiteReferenceData, EdgeSiteReferenceResource>(new SiteReferencesGetByContextCollectionResultOfT(_siteReferencesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeSiteReferenceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Exists");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeSiteReferenceSiteReferencesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSiteReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Exists");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeSiteReferenceSiteReferencesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSiteReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeSiteReferenceResource>> GetIfExistsAsync(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.GetIfExists");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeSiteReferenceSiteReferencesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeSiteReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeSiteReferenceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSiteReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/siteReferences/{siteReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSiteReferenceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteReferenceName"> The name of the SiteReference. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeSiteReferenceResource> GetIfExists(string siteReferenceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteReferenceName, nameof(siteReferenceName));
 
-            using var scope = _edgeSiteReferenceSiteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.GetIfExists");
+            using DiagnosticScope scope = _siteReferencesClientDiagnostics.CreateScope("EdgeSiteReferenceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeSiteReferenceSiteReferencesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteReferenceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteReferenceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeSiteReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeSiteReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeSiteReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeSiteReferenceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeSiteReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeSiteReferenceResource> IAsyncEnumerable<EdgeSiteReferenceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

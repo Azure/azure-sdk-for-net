@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class PureStorageAvsStorageContainerProperties : IUtf8JsonSerializable, IJsonModel<PureStorageAvsStorageContainerProperties>
+    /// <summary> AVS storage container properties. </summary>
+    public partial class PureStorageAvsStorageContainerProperties : IJsonModel<PureStorageAvsStorageContainerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageAvsStorageContainerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageAvsStorageContainerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageAvsStorageContainerProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Space))
             {
                 writer.WritePropertyName("space"u8);
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("mounted"u8);
                 writer.WriteBooleanValue(Mounted.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +76,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageAvsStorageContainerProperties IJsonModel<PureStorageAvsStorageContainerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageAvsStorageContainerProperties IJsonModel<PureStorageAvsStorageContainerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageAvsStorageContainerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageAvsStorageContainerProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageAvsStorageContainerProperties(document.RootElement, options);
         }
 
-        internal static PureStorageAvsStorageContainerProperties DeserializePureStorageAvsStorageContainerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PureStorageAvsStorageContainerProperties DeserializePureStorageAvsStorageContainerProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,66 +106,67 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             long? provisionedLimit = default;
             string datastore = default;
             bool? mounted = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("space"u8))
+                if (prop.NameEquals("space"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
+                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceName"u8))
+                if (prop.NameEquals("resourceName"u8))
                 {
-                    resourceName = property.Value.GetString();
+                    resourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisionedLimit"u8))
+                if (prop.NameEquals("provisionedLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisionedLimit = property.Value.GetInt64();
+                    provisionedLimit = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("datastore"u8))
+                if (prop.NameEquals("datastore"u8))
                 {
-                    datastore = property.Value.GetString();
+                    datastore = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mounted"u8))
+                if (prop.NameEquals("mounted"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mounted = property.Value.GetBoolean();
+                    mounted = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PureStorageAvsStorageContainerProperties(
                 space,
                 resourceName,
                 provisionedLimit,
                 datastore,
                 mounted,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PureStorageAvsStorageContainerProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PureStorageAvsStorageContainerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -170,15 +176,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        PureStorageAvsStorageContainerProperties IPersistableModel<PureStorageAvsStorageContainerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PureStorageAvsStorageContainerProperties IPersistableModel<PureStorageAvsStorageContainerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PureStorageAvsStorageContainerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePureStorageAvsStorageContainerProperties(document.RootElement, options);
                     }
                 default:
@@ -186,6 +197,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PureStorageAvsStorageContainerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

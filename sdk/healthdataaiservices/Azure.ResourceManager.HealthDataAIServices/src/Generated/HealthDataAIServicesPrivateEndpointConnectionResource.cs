@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Create a Private endpoint connection
+        /// Update a HealthDataAIServicesPrivateEndpointConnectionResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Create a Private endpoint connection
+        /// Update a HealthDataAIServicesPrivateEndpointConnectionResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

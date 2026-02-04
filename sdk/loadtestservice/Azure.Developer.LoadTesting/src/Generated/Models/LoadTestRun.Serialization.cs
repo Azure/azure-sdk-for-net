@@ -525,7 +525,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    portalUri = new Uri(prop.Value.GetString());
+                    portalUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -602,7 +602,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdByUri = new Uri(prop.Value.GetString());
+                    createdByUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("estimatedVirtualUserHours"u8))

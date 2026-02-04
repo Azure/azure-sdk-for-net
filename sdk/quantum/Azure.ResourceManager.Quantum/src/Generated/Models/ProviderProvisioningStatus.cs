@@ -7,57 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Provisioning status field. </summary>
+    /// <summary> The Workspace provisioning status. </summary>
     public readonly partial struct ProviderProvisioningStatus : IEquatable<ProviderProvisioningStatus>
     {
         private readonly string _value;
+        /// <summary> The Workspace provisioning is succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Workspace provisioning failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Workspace is currently starting to provision a provider. </summary>
+        private const string ProviderLaunchingValue = "ProviderLaunching";
+        /// <summary> The Workspace is currently updating a provider. </summary>
+        private const string ProviderUpdatingValue = "ProviderUpdating";
+        /// <summary> The Workspace is currently deleting a provider. </summary>
+        private const string ProviderDeletingValue = "ProviderDeleting";
+        /// <summary> The Workspace is currently provisioning a provider. </summary>
+        private const string ProviderProvisioningValue = "ProviderProvisioning";
 
         /// <summary> Initializes a new instance of <see cref="ProviderProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProviderProvisioningStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string LaunchingValue = "Launching";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string DeletedValue = "Deleted";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Workspace provisioning is succeeded. </summary>
         public static ProviderProvisioningStatus Succeeded { get; } = new ProviderProvisioningStatus(SucceededValue);
-        /// <summary> Launching. </summary>
-        public static ProviderProvisioningStatus Launching { get; } = new ProviderProvisioningStatus(LaunchingValue);
-        /// <summary> Updating. </summary>
-        public static ProviderProvisioningStatus Updating { get; } = new ProviderProvisioningStatus(UpdatingValue);
-        /// <summary> Deleting. </summary>
-        public static ProviderProvisioningStatus Deleting { get; } = new ProviderProvisioningStatus(DeletingValue);
-        /// <summary> Deleted. </summary>
-        public static ProviderProvisioningStatus Deleted { get; } = new ProviderProvisioningStatus(DeletedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Workspace provisioning failed. </summary>
         public static ProviderProvisioningStatus Failed { get; } = new ProviderProvisioningStatus(FailedValue);
+
+        /// <summary> Resource creation was canceled. </summary>
+        public static ProviderProvisioningStatus Canceled { get; } = new ProviderProvisioningStatus(CanceledValue);
+
+        /// <summary> The Workspace is currently starting to provision a provider. </summary>
+        public static ProviderProvisioningStatus ProviderLaunching { get; } = new ProviderProvisioningStatus(ProviderLaunchingValue);
+
+        /// <summary> The Workspace is currently updating a provider. </summary>
+        public static ProviderProvisioningStatus ProviderUpdating { get; } = new ProviderProvisioningStatus(ProviderUpdatingValue);
+
+        /// <summary> The Workspace is currently deleting a provider. </summary>
+        public static ProviderProvisioningStatus ProviderDeleting { get; } = new ProviderProvisioningStatus(ProviderDeletingValue);
+
+        /// <summary> The Workspace is currently provisioning a provider. </summary>
+        public static ProviderProvisioningStatus ProviderProvisioning { get; } = new ProviderProvisioningStatus(ProviderProvisioningValue);
+
         /// <summary> Determines if two <see cref="ProviderProvisioningStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderProvisioningStatus left, ProviderProvisioningStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderProvisioningStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderProvisioningStatus left, ProviderProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderProvisioningStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderProvisioningStatus(string value) => new ProviderProvisioningStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderProvisioningStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderProvisioningStatus?(string value) => value == null ? null : new ProviderProvisioningStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderProvisioningStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderProvisioningStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

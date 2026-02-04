@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core
 {
@@ -21,6 +24,71 @@ namespace Azure.Core
         /// </summary>
         protected internal DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
         { }
+
+        internal DiagnosticsOptions(IConfigurationSection section)
+        {
+            if (section is null || !section.Exists())
+            {
+                InitializeDefaults();
+                return;
+            }
+
+            ApplicationId = section["ApplicationId"];
+            if (bool.TryParse(section["IsLoggingEnabled"], out var isLoggingEnabled))
+            {
+                IsLoggingEnabled = isLoggingEnabled;
+            }
+            if (bool.TryParse(section["IsTelemetryEnabled"], out var isTelemetryEnabled))
+            {
+                IsTelemetryEnabled = isTelemetryEnabled;
+            }
+            else
+            {
+                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+            }
+            IConfigurationSection loggedHeaderSection = section.GetSection("LoggedHeaderNames");
+            if (loggedHeaderSection.Exists())
+            {
+                LoggedHeaderNames = loggedHeaderSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
+            }
+            else
+            {
+                LoggedHeaderNames = GetDefaultLoggedHeaders();
+            }
+            IConfigurationSection loggedQueryParametersSection = section.GetSection("LoggedQueryParameters");
+            if (loggedQueryParametersSection.Exists())
+            {
+                LoggedQueryParameters = loggedQueryParametersSection
+                    .GetChildren()
+                    .Where(c => c.Value is not null)
+                    .Select(c => c.Value!)
+                    .ToList();
+            }
+            else
+            {
+                LoggedQueryParameters = new List<string> { "api-version" };
+            }
+            if (int.TryParse(section["LoggedContentSizeLimit"], out var loggedContentSizeLimit))
+            {
+                LoggedContentSizeLimit = loggedContentSizeLimit;
+            }
+            if (bool.TryParse(section["IsDistributedTracingEnabled"], out var isDistributedTracingEnabled))
+            {
+                IsDistributedTracingEnabled = isDistributedTracingEnabled;
+            }
+            else
+            {
+                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+            }
+            if (bool.TryParse(section["IsLoggingContentEnabled"], out var isLoggingContentEnabled))
+            {
+                IsLoggingContentEnabled = isLoggingContentEnabled;
+            }
+        }
 
         /// <summary>
         /// Initializes the newly created <see cref="DiagnosticsOptions"/> with the same settings as the specified <paramref name="diagnosticsOptions"/>.
@@ -41,40 +109,51 @@ namespace Azure.Core
             }
             else
             {
-                // These values are similar to the default values in System.ClientModel.Primitives.ClientLoggingOptions and both
-                // should be kept in sync. When updating, update the default values in both classes.
-                LoggedHeaderNames = new List<string>()
-                {
-                    "x-ms-request-id",
-                    "x-ms-client-request-id",
-                    "x-ms-return-client-request-id",
-                    "traceparent",
-                    "MS-CV",
-                    "Accept",
-                    "Cache-Control",
-                    "Connection",
-                    "Content-Length",
-                    "Content-Type",
-                    "Date",
-                    "ETag",
-                    "Expires",
-                    "If-Match",
-                    "If-Modified-Since",
-                    "If-None-Match",
-                    "If-Unmodified-Since",
-                    "Last-Modified",
-                    "Pragma",
-                    "Request-Id",
-                    "Retry-After",
-                    "Server",
-                    "Transfer-Encoding",
-                    "User-Agent",
-                    "WWW-Authenticate" // OAuth Challenge header.
-                };
-                LoggedQueryParameters = new List<string> { "api-version" };
-                IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
-                IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+                InitializeDefaults();
             }
+        }
+
+        [MemberNotNull(nameof(LoggedHeaderNames), nameof(LoggedQueryParameters))]
+        private void InitializeDefaults()
+        {
+            LoggedHeaderNames = GetDefaultLoggedHeaders();
+            LoggedQueryParameters = ["api-version"];
+            IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
+            IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+        }
+
+        private static IList<string> GetDefaultLoggedHeaders()
+        {
+            // These values are similar to the default values in System.ClientModel.Primitives.ClientLoggingOptions and both
+            // should be kept in sync. When updating, update the default values in both classes.
+            return
+            [
+                "x-ms-request-id",
+                "x-ms-client-request-id",
+                "x-ms-return-client-request-id",
+                "traceparent",
+                "MS-CV",
+                "Accept",
+                "Cache-Control",
+                "Connection",
+                "Content-Length",
+                "Content-Type",
+                "Date",
+                "ETag",
+                "Expires",
+                "If-Match",
+                "If-Modified-Since",
+                "If-None-Match",
+                "If-Unmodified-Since",
+                "Last-Modified",
+                "Pragma",
+                "Request-Id",
+                "Retry-After",
+                "Server",
+                "Transfer-Encoding",
+                "User-Agent",
+                "WWW-Authenticate" // OAuth Challenge header.
+            ];
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class KeyVaultNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KeyVaultNameUnavailableReason value) => value switch
         {
             KeyVaultNameUnavailableReason.AccountNameInvalid => "AccountNameInvalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static KeyVaultNameUnavailableReason ToKeyVaultNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid")) return KeyVaultNameUnavailableReason.AccountNameInvalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return KeyVaultNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid"))
+            {
+                return KeyVaultNameUnavailableReason.AccountNameInvalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return KeyVaultNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultNameUnavailableReason value.");
         }
     }

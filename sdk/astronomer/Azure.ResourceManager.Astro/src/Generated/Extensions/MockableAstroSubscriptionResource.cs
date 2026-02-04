@@ -6,87 +6,79 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Astro;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Astro.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAstroSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _astroOrganizationOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _astroOrganizationOrganizationsRestClient;
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAstroSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAstroSubscriptionResource for mocking. </summary>
         protected MockableAstroSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAstroSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAstroSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAstroSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AstroOrganizationOrganizationsClientDiagnostics => _astroOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Astro", AstroOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations AstroOrganizationOrganizationsRestClient => _astroOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AstroOrganizationResource.ResourceType));
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Astro.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-08-27");
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AstroOrganizationResource> GetAstroOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), AstroOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetAstroOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-27. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +86,11 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AstroOrganizationResource> GetAstroOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), AstroOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetAstroOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new AstroOrganizationResource(Client, data));
         }
     }
 }

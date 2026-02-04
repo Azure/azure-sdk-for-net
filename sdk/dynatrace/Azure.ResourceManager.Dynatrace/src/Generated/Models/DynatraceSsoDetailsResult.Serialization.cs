@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    metadataUri = new Uri(prop.Value.GetString());
+                    metadataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("singleSignOnUrl"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    singleSignOnUri = new Uri(prop.Value.GetString());
+                    singleSignOnUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadDomains"u8))

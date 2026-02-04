@@ -13,43 +13,11 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary>
-    /// A class representing the JobRun data model.
-    /// The Job Run resource.
-    /// </summary>
+    /// <summary> The Job Run resource. </summary>
     public partial class JobRunData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
         public JobRunData()
@@ -57,214 +25,284 @@ namespace Azure.ResourceManager.StorageMover
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The state of the job execution. </param>
-        /// <param name="scanStatus"> The status of Agent's scanning of source. </param>
-        /// <param name="agentName"> Name of the Agent assigned to this run. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent assigned to this run. </param>
-        /// <param name="executionStartOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
-        /// <param name="executionEndOn"> End time of the run. Null if Agent has not reported that the job has ended. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Job Run. </param>
-        /// <param name="itemsScanned"> Number of items scanned so far in source. </param>
-        /// <param name="itemsExcluded"> Number of items that will not be transferred, as they are excluded by user configuration. </param>
-        /// <param name="itemsUnsupported"> Number of items that will not be transferred, as they are unsupported on target. </param>
-        /// <param name="itemsNoTransferNeeded"> Number of items that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
-        /// <param name="itemsFailed"> Number of items that were attempted to transfer and failed. </param>
-        /// <param name="itemsTransferred"> Number of items successfully transferred to target. </param>
-        /// <param name="bytesScanned"> Bytes of data scanned so far in source. </param>
-        /// <param name="bytesExcluded"> Bytes of data that will not be transferred, as they are excluded by user configuration. </param>
-        /// <param name="bytesUnsupported"> Bytes of data that will not be transferred, as they are unsupported on target. </param>
-        /// <param name="bytesNoTransferNeeded"> Bytes of data that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
-        /// <param name="bytesFailed"> Bytes of data that were attempted to transfer and failed. </param>
-        /// <param name="bytesTransferred"> Bytes of data successfully transferred to target. </param>
-        /// <param name="sourceName"> Name of source Endpoint resource. This resource may no longer exist. </param>
-        /// <param name="sourceResourceId"> Fully qualified resource id of source Endpoint. This id may no longer exist. </param>
-        /// <param name="sourceProperties"> Copy of source Endpoint resource's properties at time of Job Run creation. </param>
-        /// <param name="targetName"> Name of target Endpoint resource. This resource may no longer exist. </param>
-        /// <param name="targetResourceId"> Fully qualified resource id of of Endpoint. This id may no longer exist. </param>
-        /// <param name="targetProperties"> Copy of Endpoint resource's properties at time of Job Run creation. </param>
-        /// <param name="jobDefinitionProperties"> Copy of parent Job Definition's properties at time of Job Run creation. </param>
-        /// <param name="error"> Error details. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Job run properties. </param>
+        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobRunProperties properties) : base(id, name, resourceType, systemData)
         {
-            Status = status;
-            ScanStatus = scanStatus;
-            AgentName = agentName;
-            AgentResourceId = agentResourceId;
-            ExecutionStartOn = executionStartOn;
-            ExecutionEndOn = executionEndOn;
-            LastStatusUpdate = lastStatusUpdate;
-            ItemsScanned = itemsScanned;
-            ItemsExcluded = itemsExcluded;
-            ItemsUnsupported = itemsUnsupported;
-            ItemsNoTransferNeeded = itemsNoTransferNeeded;
-            ItemsFailed = itemsFailed;
-            ItemsTransferred = itemsTransferred;
-            BytesScanned = bytesScanned;
-            BytesExcluded = bytesExcluded;
-            BytesUnsupported = bytesUnsupported;
-            BytesNoTransferNeeded = bytesNoTransferNeeded;
-            BytesFailed = bytesFailed;
-            BytesTransferred = bytesTransferred;
-            SourceName = sourceName;
-            SourceResourceId = sourceResourceId;
-            SourceProperties = sourceProperties;
-            TargetName = targetName;
-            TargetResourceId = targetResourceId;
-            TargetProperties = targetProperties;
-            JobDefinitionProperties = jobDefinitionProperties;
-            Error = error;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Job run properties. </summary>
+        internal JobRunProperties Properties { get; set; }
+
         /// <summary> The state of the job execution. </summary>
-        public JobRunStatus? Status { get; }
+        public JobRunStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The status of Agent's scanning of source. </summary>
-        public JobRunScanStatus? ScanStatus { get; }
+        public JobRunScanStatus? ScanStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScanStatus;
+            }
+        }
+
         /// <summary> Name of the Agent assigned to this run. </summary>
-        public string AgentName { get; }
+        public string AgentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentName;
+            }
+        }
+
         /// <summary> Fully qualified resource id of the Agent assigned to this run. </summary>
-        public ResourceIdentifier AgentResourceId { get; }
+        public ResourceIdentifier AgentResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AgentResourceId;
+            }
+        }
+
         /// <summary> Start time of the run. Null if no Agent reported that the job has started. </summary>
-        public DateTimeOffset? ExecutionStartOn { get; }
+        public DateTimeOffset? ExecutionStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutionStartOn;
+            }
+        }
+
         /// <summary> End time of the run. Null if Agent has not reported that the job has ended. </summary>
-        public DateTimeOffset? ExecutionEndOn { get; }
+        public DateTimeOffset? ExecutionEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutionEndOn;
+            }
+        }
+
         /// <summary> The last updated time of the Job Run. </summary>
-        public DateTimeOffset? LastStatusUpdate { get; }
+        public DateTimeOffset? LastStatusUpdate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStatusUpdate;
+            }
+        }
+
         /// <summary> Number of items scanned so far in source. </summary>
-        public long? ItemsScanned { get; }
+        public long? ItemsScanned
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsScanned;
+            }
+        }
+
         /// <summary> Number of items that will not be transferred, as they are excluded by user configuration. </summary>
-        public long? ItemsExcluded { get; }
+        public long? ItemsExcluded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsExcluded;
+            }
+        }
+
         /// <summary> Number of items that will not be transferred, as they are unsupported on target. </summary>
-        public long? ItemsUnsupported { get; }
+        public long? ItemsUnsupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsUnsupported;
+            }
+        }
+
         /// <summary> Number of items that will not be transferred, as they are already found on target (e.g. mirror mode). </summary>
-        public long? ItemsNoTransferNeeded { get; }
+        public long? ItemsNoTransferNeeded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsNoTransferNeeded;
+            }
+        }
+
         /// <summary> Number of items that were attempted to transfer and failed. </summary>
-        public long? ItemsFailed { get; }
+        public long? ItemsFailed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsFailed;
+            }
+        }
+
         /// <summary> Number of items successfully transferred to target. </summary>
-        public long? ItemsTransferred { get; }
+        public long? ItemsTransferred
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsTransferred;
+            }
+        }
+
         /// <summary> Bytes of data scanned so far in source. </summary>
-        public long? BytesScanned { get; }
+        public long? BytesScanned
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesScanned;
+            }
+        }
+
         /// <summary> Bytes of data that will not be transferred, as they are excluded by user configuration. </summary>
-        public long? BytesExcluded { get; }
+        public long? BytesExcluded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesExcluded;
+            }
+        }
+
         /// <summary> Bytes of data that will not be transferred, as they are unsupported on target. </summary>
-        public long? BytesUnsupported { get; }
+        public long? BytesUnsupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesUnsupported;
+            }
+        }
+
         /// <summary> Bytes of data that will not be transferred, as they are already found on target (e.g. mirror mode). </summary>
-        public long? BytesNoTransferNeeded { get; }
+        public long? BytesNoTransferNeeded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesNoTransferNeeded;
+            }
+        }
+
         /// <summary> Bytes of data that were attempted to transfer and failed. </summary>
-        public long? BytesFailed { get; }
+        public long? BytesFailed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesFailed;
+            }
+        }
+
         /// <summary> Bytes of data successfully transferred to target. </summary>
-        public long? BytesTransferred { get; }
+        public long? BytesTransferred
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesTransferred;
+            }
+        }
+
         /// <summary> Name of source Endpoint resource. This resource may no longer exist. </summary>
-        public string SourceName { get; }
+        public string SourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceName;
+            }
+        }
+
         /// <summary> Fully qualified resource id of source Endpoint. This id may no longer exist. </summary>
-        public ResourceIdentifier SourceResourceId { get; }
-        /// <summary>
-        /// Copy of source Endpoint resource's properties at time of Job Run creation.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData SourceProperties { get; }
+        public ResourceIdentifier SourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceId;
+            }
+        }
+
+        /// <summary> Copy of source Endpoint resource's properties at time of Job Run creation. </summary>
+        public BinaryData SourceProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceProperties;
+            }
+        }
+
         /// <summary> Name of target Endpoint resource. This resource may no longer exist. </summary>
-        public string TargetName { get; }
+        public string TargetName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetName;
+            }
+        }
+
         /// <summary> Fully qualified resource id of of Endpoint. This id may no longer exist. </summary>
-        public ResourceIdentifier TargetResourceId { get; }
-        /// <summary>
-        /// Copy of Endpoint resource's properties at time of Job Run creation.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData TargetProperties { get; }
-        /// <summary>
-        /// Copy of parent Job Definition's properties at time of Job Run creation.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData JobDefinitionProperties { get; }
+        public ResourceIdentifier TargetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceId;
+            }
+        }
+
+        /// <summary> Copy of Endpoint resource's properties at time of Job Run creation. </summary>
+        public BinaryData TargetProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetProperties;
+            }
+        }
+
+        /// <summary> Copy of parent Job Definition's properties at time of Job Run creation. </summary>
+        public BinaryData JobDefinitionProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobDefinitionProperties;
+            }
+        }
+
         /// <summary> Error details. </summary>
-        public JobRunError Error { get; }
+        public JobRunError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> Warning details. </summary>
+        public IReadOnlyList<JobRunWarning> Warnings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobRunProperties();
+                }
+                return Properties.Warnings;
+            }
+        }
+
         /// <summary> The provisioning state of this resource. </summary>
-        public StorageMoverProvisioningState? ProvisioningState { get; }
+        public StorageMoverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

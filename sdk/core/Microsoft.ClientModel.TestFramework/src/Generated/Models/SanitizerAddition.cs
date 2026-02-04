@@ -12,7 +12,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary>
     /// The SanitizerAddition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="ContentDispositionFilePathSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
     /// </summary>
     public abstract partial class SanitizerAddition
     {

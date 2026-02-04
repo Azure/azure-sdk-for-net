@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class RegistryEndpointArtifactPullSecretAuthentication : IUtf8JsonSerializable, IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>
+    /// <summary> Artifact Pull Secret authentication. </summary>
+    public partial class RegistryEndpointArtifactPullSecretAuthentication : RegistryEndpointAuthentication, IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointArtifactPullSecretAuthentication"/> for deserialization. </summary>
+        internal RegistryEndpointArtifactPullSecretAuthentication()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,66 +34,71 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegistryEndpointArtifactPullSecretAuthentication)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifactPullSecretSettings"u8);
             writer.WriteObjectValue(ArtifactPullSecretSettings, options);
         }
 
-        RegistryEndpointArtifactPullSecretAuthentication IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegistryEndpointArtifactPullSecretAuthentication IJsonModel<RegistryEndpointArtifactPullSecretAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RegistryEndpointArtifactPullSecretAuthentication)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RegistryEndpointAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegistryEndpointArtifactPullSecretAuthentication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRegistryEndpointArtifactPullSecretAuthentication(document.RootElement, options);
         }
 
-        internal static RegistryEndpointArtifactPullSecretAuthentication DeserializeRegistryEndpointArtifactPullSecretAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RegistryEndpointArtifactPullSecretAuthentication DeserializeRegistryEndpointArtifactPullSecretAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            RegistryEndpointAuthenticationMethod @method = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RegistryEndpointArtifactPullSecretSettings artifactPullSecretSettings = default;
-            RegistryEndpointAuthenticationMethod method = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactPullSecretSettings"u8))
+                if (prop.NameEquals("method"u8))
                 {
-                    artifactPullSecretSettings = RegistryEndpointArtifactPullSecretSettings.DeserializeRegistryEndpointArtifactPullSecretSettings(property.Value, options);
+                    @method = new RegistryEndpointAuthenticationMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("method"u8))
+                if (prop.NameEquals("artifactPullSecretSettings"u8))
                 {
-                    method = new RegistryEndpointAuthenticationMethod(property.Value.GetString());
+                    artifactPullSecretSettings = RegistryEndpointArtifactPullSecretSettings.DeserializeRegistryEndpointArtifactPullSecretSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RegistryEndpointArtifactPullSecretAuthentication(method, serializedAdditionalRawData, artifactPullSecretSettings);
+            return new RegistryEndpointArtifactPullSecretAuthentication(@method, additionalBinaryDataProperties, artifactPullSecretSettings);
         }
 
-        BinaryData IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -97,15 +108,20 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        RegistryEndpointArtifactPullSecretAuthentication IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegistryEndpointArtifactPullSecretAuthentication IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (RegistryEndpointArtifactPullSecretAuthentication)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RegistryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRegistryEndpointArtifactPullSecretAuthentication(document.RootElement, options);
                     }
                 default:
@@ -113,6 +129,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RegistryEndpointArtifactPullSecretAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
