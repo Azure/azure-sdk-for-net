@@ -9,10 +9,10 @@ namespace SimpleCustomized;
 
 public class CustomizedAgentInvocation : IAgentInvocation
 {
-    public Task<Response> InvokeAsync(CreateResponseRequest request, AgentInvocationContext context,
+    public Task<Response> InvokeAsync(AgentRunContext context,
         CancellationToken cancellationToken = default)
     {
-        var inputText = GetInputText(request);
+        var inputText = GetInputText(context.Request);
 
         var text = "I am a mock agent with no intelligence. You said: " + inputText;
 
@@ -28,11 +28,11 @@ public class CustomizedAgentInvocation : IAgentInvocation
             )
         ];
 
-        return Task.FromResult(ToResponse(request, context, output: outputs));
+        return Task.FromResult(ToResponse(context.Request, context, output: outputs));
     }
 
-    public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
+    public async IAsyncEnumerable<ResponseStreamEvent> InvokeStreamAsync(
+        AgentRunContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var seq = -1;
@@ -40,7 +40,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
         #region response.*
 
         yield return new ResponseCreatedEvent(++seq,
-            ToResponse(request, context, status: ResponseStatus.InProgress));
+            ToResponse(context.Request, context, status: ResponseStatus.InProgress));
 
         #region response.output_item.*
 
@@ -61,7 +61,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
 
         #region response.output_text.*
 
-        var inputText = GetInputText(request);
+        var inputText = GetInputText(context.Request);
         var text = "I am a mock agent with no intelligence. You said: " + inputText;
         foreach (var part in text.Split(" "))
         {
@@ -85,7 +85,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
         #endregion response.output_item.*
 
         yield return new ResponseCompletedEvent(++seq,
-            ToResponse(request, context, status: ResponseStatus.Completed, output: [item]));
+            ToResponse(context.Request, context, status: ResponseStatus.Completed, output: [item]));
 
         #endregion response.*
     }
@@ -113,7 +113,7 @@ public class CustomizedAgentInvocation : IAgentInvocation
         return request.Input.ToString();
     }
 
-    private static Response ToResponse(CreateResponseRequest request, AgentInvocationContext context,
+    private static Response ToResponse(CreateResponseRequest request, AgentRunContext context,
         ResponseStatus status = ResponseStatus.Completed,
         IEnumerable<ItemResource>? output = null)
     {
