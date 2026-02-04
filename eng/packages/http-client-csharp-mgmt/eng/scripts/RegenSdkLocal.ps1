@@ -108,6 +108,85 @@ if ($mgmtSdkFolders.Count -eq 0) {
 $selectedFolders = $mgmtSdkFolders
 Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 
+# Helper function: Sync TypeSpec files with proper forward-slash paths for git sparse-checkout
+function Sync-TypeSpecFiles {
+    param(
+        [string]$ProjectDirectory,
+        [string]$SdkRepoRoot
+    )
+    
+    # Load tsp-location.yaml
+    $tspLocationPath = Join-Path $ProjectDirectory "tsp-location.yaml"
+    $tspConfig = Get-Content $tspLocationPath -Raw | ConvertFrom-Yaml
+    
+    $repo = $tspConfig["repo"]
+    $commit = $tspConfig["commit"]
+    $directory = $tspConfig["directory"]
+    $additionalDirs = $tspConfig["additionalDirectories"]
+    $projectName = Split-Path $ProjectDirectory -Leaf
+    
+    # Convert backslashes to forward slashes for git
+    $directoryForGit = $directory -replace '\\', '/'
+    $directoryForGit = $directoryForGit.TrimEnd('/')
+    
+    # Setup sparse-spec clone directory
+    $sparseSpecRoot = Join-Path (Split-Path $SdkRepoRoot -Parent) "sparse-spec"
+    $sparseSpecDir = Join-Path $sparseSpecRoot $projectName
+    
+    # Clean up and recreate
+    if (Test-Path $sparseSpecDir) {
+        Remove-Item $sparseSpecDir -Recurse -Force
+    }
+    New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
+    
+    Push-Location $sparseSpecDir
+    try {
+        # Initialize sparse clone
+        $gitRemote = "https://github.com/$repo.git"
+        git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1 | Out-Null
+        git sparse-checkout init --cone 2>&1 | Out-Null
+        git sparse-checkout set $directoryForGit 2>&1 | Out-Null
+        
+        # Add additional directories if any
+        if ($additionalDirs) {
+            foreach ($addDir in $additionalDirs) {
+                $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
+                git sparse-checkout add $addDirForGit 2>&1 | Out-Null
+            }
+        }
+        
+        # Checkout the specific commit
+        git fetch --depth 1 origin $commit 2>&1 | Out-Null
+        git checkout $commit 2>&1 | Out-Null
+        
+        # Verify directory exists
+        if (-not (Test-Path $directory)) {
+            throw "Cannot find path '$sparseSpecDir\$directory' because it does not exist."
+        }
+    }
+    finally {
+        Pop-Location
+    }
+    
+    # Copy spec files to TempTypeSpecFiles
+    $tempTypeSpecDir = Join-Path $ProjectDirectory "TempTypeSpecFiles"
+    if (Test-Path $tempTypeSpecDir) {
+        Remove-Item $tempTypeSpecDir -Recurse -Force
+    }
+    New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
+    
+    $source = Join-Path $sparseSpecDir $directory
+    Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
+    
+    # Copy additional directories if any
+    if ($additionalDirs) {
+        foreach ($addDir in $additionalDirs) {
+            $addSource = Join-Path $sparseSpecDir $addDir
+            Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
+        }
+    }
+}
+
 # Step 3: Regenerate
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 
@@ -122,25 +201,75 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            # Clean up sparse-spec folder to avoid backslash path issues
-            $sparseSpecDir = Join-Path (Split-Path $sdkRepo -Parent) "sparse-spec" $folder.Library
-            if (Test-Path $sparseSpecDir) {
-                Remove-Item $sparseSpecDir -Recurse -Force
-            }
-            
-            # Sync TypeSpec files
-            $syncScript = Join-Path $sdkRepo "eng" "common" "scripts" "TypeSpec-Project-Sync.ps1"
-            & $syncScript -ProjectDirectory $folder.Path 2>&1 | Out-Null
-            
-            # Get spec directory from tsp-location.yaml
+            # Load tsp-location.yaml
             if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
                 Install-Module -Name powershell-yaml -Force -Scope CurrentUser 2>&1 | Out-Null
             }
             Import-Module powershell-yaml -ErrorAction SilentlyContinue
             $tspConfig = Get-Content (Join-Path $folder.Path "tsp-location.yaml") -Raw | ConvertFrom-Yaml
-            $specDir = Split-Path $tspConfig["directory"] -Leaf
             
-            $workDir = Join-Path $folder.Path "TempTypeSpecFiles" $specDir
+            $repo = $tspConfig["repo"]
+            $commit = $tspConfig["commit"]
+            $directory = $tspConfig["directory"]
+            $additionalDirs = $tspConfig["additionalDirectories"]
+            $specDir = Split-Path $directory -Leaf
+            
+            # Convert backslashes to forward slashes for git
+            $directoryForGit = ($directory -replace '\\', '/').TrimEnd('/')
+            
+            # Setup sparse-spec clone directory
+            $sparseSpecRoot = Join-Path (Split-Path $sdkRepo -Parent) "sparse-spec"
+            $sparseSpecDir = Join-Path $sparseSpecRoot $folder.Library
+            
+            # Clean up and recreate
+            if (Test-Path $sparseSpecDir) {
+                Remove-Item $sparseSpecDir -Recurse -Force
+            }
+            New-Item $sparseSpecDir -ItemType Directory -Force | Out-Null
+            
+            Push-Location $sparseSpecDir
+            try {
+                # Initialize sparse clone with forward slashes
+                $gitRemote = "https://github.com/$repo.git"
+                git clone --filter=blob:none --no-checkout --depth 1 --sparse $gitRemote . 2>&1 | Out-Null
+                git sparse-checkout init --cone 2>&1 | Out-Null
+                git sparse-checkout set $directoryForGit 2>&1 | Out-Null
+                
+                # Add additional directories if any
+                if ($additionalDirs) {
+                    foreach ($addDir in $additionalDirs) {
+                        $addDirForGit = ($addDir -replace '\\', '/').TrimEnd('/')
+                        git sparse-checkout add $addDirForGit 2>&1 | Out-Null
+                    }
+                }
+                
+                # Checkout the specific commit
+                git fetch --depth 1 origin $commit 2>&1 | Out-Null
+                git checkout $commit 2>&1 | Out-Null
+            }
+            finally {
+                Pop-Location
+            }
+            
+            # Copy spec files to TempTypeSpecFiles
+            $tempTypeSpecDir = Join-Path $folder.Path "TempTypeSpecFiles"
+            if (Test-Path $tempTypeSpecDir) {
+                Remove-Item $tempTypeSpecDir -Recurse -Force
+            }
+            New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
+            
+            $source = Join-Path $sparseSpecDir $directory
+            Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
+            
+            # Copy additional directories if any
+            if ($additionalDirs) {
+                foreach ($addDir in $additionalDirs) {
+                    $addSource = Join-Path $sparseSpecDir $addDir
+                    Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
+                }
+            }
+            
+            $workDir = Join-Path $tempTypeSpecDir $specDir
             if (-not (Test-Path $workDir)) { throw "TypeSpec files not found: $workDir" }
             
             # Find main tsp file
@@ -216,15 +345,8 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            # Clean up sparse-spec folder to avoid backslash path issues
-            $sparseSpecDir = Join-Path (Split-Path $sdkRepoRoot -Parent) "sparse-spec" $folder.Library
-            if (Test-Path $sparseSpecDir) {
-                Remove-Item $sparseSpecDir -Recurse -Force
-            }
-            
-            # Sync TypeSpec files
-            $syncScript = Join-Path $sdkRepoRoot "eng" "common" "scripts" "TypeSpec-Project-Sync.ps1"
-            & $syncScript -ProjectDirectory $folder.Path 2>&1 | Out-Null
+            # Sync TypeSpec files using the helper function with forward-slash paths
+            Sync-TypeSpecFiles -ProjectDirectory $folder.Path -SdkRepoRoot $sdkRepoRoot
             
             # Get spec directory from tsp-location.yaml
             if (-not (Get-Module -ListAvailable -Name powershell-yaml -ErrorAction SilentlyContinue)) {
