@@ -86,7 +86,7 @@ public partial class ArmDeployment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ArmDeployment.</param>
     public ArmDeployment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Resources/deployments", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.Resources/deployments", resourceVersion ?? "2023-07-01")
     {
     }
 
@@ -110,64 +110,14 @@ public partial class ArmDeployment : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2025-04-01.
-        /// </summary>
-        public static readonly string V2025_04_01 = "2025-04-01";
-
-        /// <summary>
-        /// 2025-03-01.
-        /// </summary>
-        public static readonly string V2025_03_01 = "2025-03-01";
-
-        /// <summary>
-        /// 2024-11-01.
-        /// </summary>
-        public static readonly string V2024_11_01 = "2024-11-01";
-
-        /// <summary>
-        /// 2024-08-01.
-        /// </summary>
-        public static readonly string V2024_08_01 = "2024-08-01";
-
-        /// <summary>
-        /// 2024-07-01.
-        /// </summary>
-        public static readonly string V2024_07_01 = "2024-07-01";
-
-        /// <summary>
-        /// 2024-03-01.
-        /// </summary>
-        public static readonly string V2024_03_01 = "2024-03-01";
-
-        /// <summary>
         /// 2023-07-01.
         /// </summary>
         public static readonly string V2023_07_01 = "2023-07-01";
 
         /// <summary>
-        /// 2022-12-01.
-        /// </summary>
-        public static readonly string V2022_12_01 = "2022-12-01";
-
-        /// <summary>
         /// 2022-09-01.
         /// </summary>
         public static readonly string V2022_09_01 = "2022-09-01";
-
-        /// <summary>
-        /// 2022-06-01.
-        /// </summary>
-        public static readonly string V2022_06_01 = "2022-06-01";
-
-        /// <summary>
-        /// 2022-05-01.
-        /// </summary>
-        public static readonly string V2022_05_01 = "2022-05-01";
-
-        /// <summary>
-        /// 2022-01-01.
-        /// </summary>
-        public static readonly string V2022_01_01 = "2022-01-01";
 
         /// <summary>
         /// 2021-04-01.
@@ -185,44 +135,9 @@ public partial class ArmDeployment : ProvisionableResource
         public static readonly string V2020_10_01 = "2020-10-01";
 
         /// <summary>
-        /// 2020-09-01.
-        /// </summary>
-        public static readonly string V2020_09_01 = "2020-09-01";
-
-        /// <summary>
-        /// 2020-08-01.
-        /// </summary>
-        public static readonly string V2020_08_01 = "2020-08-01";
-
-        /// <summary>
-        /// 2020-07-01.
-        /// </summary>
-        public static readonly string V2020_07_01 = "2020-07-01";
-
-        /// <summary>
         /// 2020-06-01.
         /// </summary>
         public static readonly string V2020_06_01 = "2020-06-01";
-
-        /// <summary>
-        /// 2020-05-01.
-        /// </summary>
-        public static readonly string V2020_05_01 = "2020-05-01";
-
-        /// <summary>
-        /// 2020-01-01.
-        /// </summary>
-        public static readonly string V2020_01_01 = "2020-01-01";
-
-        /// <summary>
-        /// 2019-11-01.
-        /// </summary>
-        public static readonly string V2019_11_01 = "2019-11-01";
-
-        /// <summary>
-        /// 2019-10-01.
-        /// </summary>
-        public static readonly string V2019_10_01 = "2019-10-01";
 
         /// <summary>
         /// 2019-09-01.
@@ -233,21 +148,6 @@ public partial class ArmDeployment : ProvisionableResource
         /// 2019-08-01.
         /// </summary>
         public static readonly string V2019_08_01 = "2019-08-01";
-
-        /// <summary>
-        /// 2019-07-01.
-        /// </summary>
-        public static readonly string V2019_07_01 = "2019-07-01";
-
-        /// <summary>
-        /// 2019-06-01.
-        /// </summary>
-        public static readonly string V2019_06_01 = "2019-06-01";
-
-        /// <summary>
-        /// 2019-05-10.
-        /// </summary>
-        public static readonly string V2019_05_10 = "2019-05-10";
 
         /// <summary>
         /// 2019-05-01.
@@ -285,11 +185,6 @@ public partial class ArmDeployment : ProvisionableResource
         public static readonly string V2018_07_01 = "2018-07-01";
 
         /// <summary>
-        /// 2018-06-01.
-        /// </summary>
-        public static readonly string V2018_06_01 = "2018-06-01";
-
-        /// <summary>
         /// 2018-05-01.
         /// </summary>
         public static readonly string V2018_05_01 = "2018-05-01";
@@ -303,11 +198,6 @@ public partial class ArmDeployment : ProvisionableResource
         /// 2018-01-01.
         /// </summary>
         public static readonly string V2018_01_01 = "2018-01-01";
-
-        /// <summary>
-        /// 2017-12-01.
-        /// </summary>
-        public static readonly string V2017_12_01 = "2017-12-01";
 
         /// <summary>
         /// 2017-08-01.
@@ -363,26 +253,6 @@ public partial class ArmDeployment : ProvisionableResource
         /// 2015-01-01.
         /// </summary>
         public static readonly string V2015_01_01 = "2015-01-01";
-
-        /// <summary>
-        /// 2014-04-01.
-        /// </summary>
-        public static readonly string V2014_04_01 = "2014-04-01";
-
-        /// <summary>
-        /// 2014-02-26.
-        /// </summary>
-        public static readonly string V2014_02_26 = "2014-02-26";
-
-        /// <summary>
-        /// 2014-01-01.
-        /// </summary>
-        public static readonly string V2014_01_01 = "2014-01-01";
-
-        /// <summary>
-        /// 2013-03-01.
-        /// </summary>
-        public static readonly string V2013_03_01 = "2013-03-01";
     }
 
     /// <summary>

@@ -1276,10 +1276,6 @@ namespace Azure.Provisioning.Resources
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2013_03_01;
-            public static readonly string V2014_01_01;
-            public static readonly string V2014_02_26;
-            public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2015_11_01;
             public static readonly string V2016_02_01;
@@ -1291,11 +1287,9 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2017_05_10;
             public static readonly string V2017_06_01;
             public static readonly string V2017_08_01;
-            public static readonly string V2017_12_01;
             public static readonly string V2018_01_01;
             public static readonly string V2018_02_01;
             public static readonly string V2018_05_01;
-            public static readonly string V2018_06_01;
             public static readonly string V2018_07_01;
             public static readonly string V2018_08_01;
             public static readonly string V2018_09_01;
@@ -1303,34 +1297,14 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2019_03_01;
             public static readonly string V2019_04_01;
             public static readonly string V2019_05_01;
-            public static readonly string V2019_05_10;
-            public static readonly string V2019_06_01;
-            public static readonly string V2019_07_01;
             public static readonly string V2019_08_01;
             public static readonly string V2019_09_01;
-            public static readonly string V2019_10_01;
-            public static readonly string V2019_11_01;
-            public static readonly string V2020_01_01;
-            public static readonly string V2020_05_01;
             public static readonly string V2020_06_01;
-            public static readonly string V2020_07_01;
-            public static readonly string V2020_08_01;
-            public static readonly string V2020_09_01;
             public static readonly string V2020_10_01;
             public static readonly string V2021_01_01;
             public static readonly string V2021_04_01;
-            public static readonly string V2022_01_01;
-            public static readonly string V2022_05_01;
-            public static readonly string V2022_06_01;
             public static readonly string V2022_09_01;
-            public static readonly string V2022_12_01;
             public static readonly string V2023_07_01;
-            public static readonly string V2024_03_01;
-            public static readonly string V2024_07_01;
-            public static readonly string V2024_08_01;
-            public static readonly string V2024_11_01;
-            public static readonly string V2025_03_01;
-            public static readonly string V2025_04_01;
         }
     }
     public partial class ArmDeploymentContent : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1696,7 +1670,6 @@ namespace Azure.Provisioning.Resources
         public static partial class ResourceVersions
         {
             public static readonly string V2024_03_01;
-            public static readonly string V2025_07_01;
         }
     }
     public enum DeploymentStackProvisioningState
