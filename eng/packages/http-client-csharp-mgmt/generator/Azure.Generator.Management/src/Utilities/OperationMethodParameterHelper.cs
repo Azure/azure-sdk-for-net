@@ -67,7 +67,7 @@ namespace Azure.Generator.Management.Utilities
 
                 ParameterProvider outputParameter = convenienceParam;
 
-                // Rename body parameters to "data" if the parameter type is a resource model
+                // Normalize body parameter names based on the type name (e.g., "patch", "details", "data", "content", or camelCase type name)
                 if (convenienceParam.Location == ParameterLocation.Body)
                 {
                     // Rename body parameters for Resource/ResourceCollection/MockableArmClient/MockableResource operations
