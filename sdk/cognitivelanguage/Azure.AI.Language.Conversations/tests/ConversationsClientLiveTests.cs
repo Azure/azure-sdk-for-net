@@ -599,7 +599,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             ConversationalAIResult conversationalAIResult = ConversationalAITaskResult.Result;
 
-            IReadOnlyList<ConversationalAIAnalysis> conversations = conversationalAIResult?.Conversations;
+            IList<ConversationalAIAnalysis> conversations = conversationalAIResult?.Conversations;
             Assert.That(conversations, Is.Not.Null);
             Assert.That(conversations.Count, Is.GreaterThan(0));
 
