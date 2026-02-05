@@ -152,11 +152,11 @@ public class ClientResultTests
     [Test]
     public void ImplicitConversionHandlesNullClientResultSafely()
     {
-        ClientResult<string> nullClientResult = null;
+        ClientResult<string> nullClientResult = null!;
         string convertedValue = nullClientResult;
         Assert.That(convertedValue, Is.Null);
-        
-        ClientResult<int> nullIntResult = null;
+
+        ClientResult<int> nullIntResult = null!;
         int convertedInt = nullIntResult;
         Assert.That(convertedInt, Is.EqualTo(0));
     }

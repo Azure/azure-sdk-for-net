@@ -426,7 +426,7 @@ namespace Azure.Core
             {
                 return default;
             }
-            
+
             if (PublicCloudLocations.TryGetValue(location, out AzureLocation value))
             {
                 return value;

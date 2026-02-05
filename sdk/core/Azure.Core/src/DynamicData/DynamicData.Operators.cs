@@ -28,14 +28,14 @@ namespace Azure.Core.Serialization
             {
                 return false;
             }
-            
+
             try
             {
-                return value._element.GetBoolean();
+                return value!._element.GetBoolean();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(bool), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(bool), value!._element), e);
             }
         }
 
@@ -46,19 +46,19 @@ namespace Azure.Core.Serialization
         public static implicit operator string?(DynamicData value)
         {
             bool lacksDynamicData = object.ReferenceEquals(value, null);
-            
+
             if (lacksDynamicData)
             {
                 return null;
             }
-            
+
             try
             {
-                return value._element.GetString();
+                return value!._element.GetString();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(string), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(string), value!._element), e);
             }
         }
 
@@ -71,15 +71,15 @@ namespace Azure.Core.Serialization
             if (value is null) return 0;
             try
             {
-                return value._element.GetByte();
+                return value!._element.GetByte();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte), value!._element), formatException);
             }
         }
 
@@ -94,15 +94,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(sbyte); return result; }
             try
             {
-                return value._element.GetSByte();
+                return value!._element.GetSByte();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(sbyte), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(sbyte), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(sbyte), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(sbyte), value!._element), formatException);
             }
         }
 
@@ -117,15 +117,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(short); return result; }
             try
             {
-                return value._element.GetInt16();
+                return value!._element.GetInt16();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(short), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(short), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(short), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(short), value!._element), formatException);
             }
         }
 
@@ -140,15 +140,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(ushort); return result; }
             try
             {
-                return value._element.GetUInt16();
+                return value!._element.GetUInt16();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ushort), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ushort), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ushort), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ushort), value!._element), formatException);
             }
         }
 
@@ -163,15 +163,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(int); return result; }
             try
             {
-                return value._element.GetInt32();
+                return value!._element.GetInt32();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(int), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(int), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(int), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(int), value!._element), formatException);
             }
         }
 
@@ -186,15 +186,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(uint); return result; }
             try
             {
-                return value._element.GetUInt32();
+                return value!._element.GetUInt32();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(uint), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(uint), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(uint), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(uint), value!._element), formatException);
             }
         }
 
@@ -209,15 +209,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(long); return result; }
             try
             {
-                return value._element.GetInt64();
+                return value!._element.GetInt64();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(long), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(long), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(long), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(long), value!._element), formatException);
             }
         }
 
@@ -232,15 +232,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(ulong); return result; }
             try
             {
-                return value._element.GetUInt64();
+                return value!._element.GetUInt64();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ulong), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ulong), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ulong), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ulong), value!._element), formatException);
             }
         }
 
@@ -255,15 +255,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(float); return result; }
             try
             {
-                return value._element.GetSingle();
+                return value!._element.GetSingle();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(float), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(float), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(float), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(float), value!._element), formatException);
             }
         }
 
@@ -278,15 +278,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(double); return result; }
             try
             {
-                return value._element.GetDouble();
+                return value!._element.GetDouble();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(double), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(double), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(double), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(double), value!._element), formatException);
             }
         }
 
@@ -301,15 +301,15 @@ namespace Azure.Core.Serialization
             if (valueIsNull) { result = default(decimal); return result; }
             try
             {
-                return value._element.GetDecimal();
+                return value!._element.GetDecimal();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(decimal), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(decimal), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(decimal), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(decimal), value!._element), formatException);
             }
         }
 
@@ -326,15 +326,15 @@ namespace Azure.Core.Serialization
                     return value.ConvertTo<DateTime>();
                 }
 
-                return value._element.GetDateTime();
+                return value!._element.GetDateTime();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTime), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTime), value!._element), formatException);
             }
         }
 
@@ -351,15 +351,15 @@ namespace Azure.Core.Serialization
                     return value.ConvertTo<DateTimeOffset>();
                 }
 
-                return value._element.GetDateTimeOffset();
+                return value!._element.GetDateTimeOffset();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTimeOffset), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTimeOffset), value!._element), formatException);
             }
         }
 
@@ -371,15 +371,15 @@ namespace Azure.Core.Serialization
         {
             try
             {
-                return value._element.GetGuid();
+                return value!._element.GetGuid();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value!._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(Guid), value._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(Guid), value!._element), formatException);
             }
         }
 
