@@ -1,0 +1,4 @@
+directory: specification/sphere/Sphere.Management
+commit: 0e1f3ea7a1a1c3e537ad06581aa0d2c2b6167d99
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
