@@ -13,7 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Test resource to reproduce property override issue. </summary>
+    /// <summary>
+    /// Test resource to validate property override inheritance fix.
+    /// This test spec creates a scenario where derived models redefine base model properties
+    /// with default values or different descriptions, which previously caused duplicate
+    /// property generation in C# code.
+    /// </summary>
     public partial class TestPropertyOverrideData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

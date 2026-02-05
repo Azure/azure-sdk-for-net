@@ -1077,7 +1077,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 location);
         }
 
-        /// <summary> Test resource to reproduce property override issue. </summary>
+        /// <summary>
+        /// Test resource to validate property override inheritance fix.
+        /// This test spec creates a scenario where derived models redefine base model properties
+        /// with default values or different descriptions, which previously caused duplicate
+        /// property generation in C# code.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

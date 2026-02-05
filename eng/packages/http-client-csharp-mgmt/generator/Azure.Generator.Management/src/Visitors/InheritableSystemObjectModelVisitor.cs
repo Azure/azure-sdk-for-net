@@ -33,7 +33,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
         {
-            // Handle regular model inheritance (non-system models extending other non-system models)
+            // Handle regular model inheritance where a non-system model extends another non-system model.
+            // This fixes duplicate property generation when TypeSpec models redefine base model properties
+            // (e.g., to add default values or change descriptions). Without this, properties with the 'new'
+            // modifier would generate duplicates causing C# compilation errors.
             UpdateRegularModelInheritance(type);
         }
         return type;
@@ -57,7 +60,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider)
         {
-            // Handle regular model inheritance (non-system models extending other non-system models)
+            // Handle regular model inheritance where a non-system model extends another non-system model.
+            // This fixes duplicate property generation when TypeSpec models redefine base model properties
+            // (e.g., to add default values or change descriptions). Without this, properties with the 'new'
+            // modifier would generate duplicates causing C# compilation errors.
             UpdateRegularModelInheritance(model2);
         }
         return type;

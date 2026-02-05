@@ -39,6 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> A property that will be redefined in derived models. </summary>
         [WirePath("sharedProperty")]
-        public string SharedProperty { get; set; }
+        public virtual string SharedProperty { get; set; }
     }
 }
