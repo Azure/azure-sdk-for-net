@@ -44,16 +44,11 @@ namespace Azure.Core
         /// <param name="contentType">The content type string.</param>
         public static implicit operator ContentType(string contentType)
         {
-            ContentType output;
-            if (string.IsNullOrEmpty(contentType) && contentType == null)
+            if (contentType == null)
             {
-                output = default(ContentType);
+                return default(ContentType);
             }
-            else
-            {
-                output = new ContentType(contentType);
-            }
-            return output;
+            return new ContentType(contentType);
         }
 
         /// <inheritdoc />
