@@ -142,7 +142,7 @@ private static BinaryData GetEvaluationCriteria(string[] names, string modelDepl
     return BinaryData.FromObjectAsJson(
         new
         {
-            name = "Agent Evaluation",
+            name = "Trace Evaluation",
             data_source_config = dataSourceConfig,
             testing_criteria = testingCriteria
         }
