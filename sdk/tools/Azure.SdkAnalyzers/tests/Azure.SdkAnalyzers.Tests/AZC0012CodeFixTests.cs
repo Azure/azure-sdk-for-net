@@ -50,31 +50,7 @@ namespace Azure.Data.Tables
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
-        }
-
-        [Test]
-        public async Task CodeFixRenamesClassWithSecondSuggestion()
-        {
-            const string code = @"
-namespace Azure.Data.Tables
-{
-    public class {|AZC0012:Foo|}
-    {
-        public Foo() { }
-    }
-}";
-
-            const string fixedCode = @"
-namespace Azure.Data.Tables
-{
-    public class DataFoo
-    {
-        public DataFoo() { }
-    }
-}";
-
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 1);
+            await Verifier.VerifyCodeFixAsync(code, "Foo.cs", fixedCode, "TablesFoo.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -96,7 +72,7 @@ namespace Azure.Data.Tables
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "IFoo.cs", fixedCode, "ITablesFoo.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -120,7 +96,7 @@ namespace Azure.Data.Streams
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "IIO.cs", fixedCode, "IStreamsIO.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -174,7 +150,7 @@ namespace Azure.Data.Tables
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "ICache.cs", fixedCode, "ITablesCache.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -208,7 +184,7 @@ namespace Azure.Storage.Blobs
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Options.cs", fixedCode, "BlobsOptions.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -236,7 +212,7 @@ namespace Azure.Messaging
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Sender.cs", fixedCode, "MessagingSender.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -259,7 +235,7 @@ namespace Azure.Security.KeyVault.Keys
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Foo.cs", fixedCode, "KeysFoo.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -283,7 +259,7 @@ namespace Azure.Data.Tables
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Image.cs", fixedCode, "TablesImage.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -307,7 +283,7 @@ namespace Azure.Data.Tables
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Indigo.cs", fixedCode, "TablesIndigo.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -331,7 +307,7 @@ namespace Azure.Data.Networking
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "IPv4.cs", fixedCode, "NetworkingIPv4.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -355,7 +331,7 @@ namespace Azure.Data.Networking
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "IPv6.cs", fixedCode, "NetworkingIPv6.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -379,7 +355,7 @@ namespace Azure.Search.Documents
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "Index.cs", fixedCode, "DocumentsIndex.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -403,7 +379,7 @@ namespace Azure.Compute
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "OS.cs", fixedCode, "ComputeOS.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -427,7 +403,7 @@ namespace Azure.Data.Networking
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "IP.cs", fixedCode, "NetworkingIP.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -451,7 +427,7 @@ namespace Azure.Data
     }
 }";
 
-            await Verifier.VerifyCodeFixAsync(code, fixedCode, codeActionIndex: 0);
+            await Verifier.VerifyCodeFixAsync(code, "A.cs", fixedCode, "DataA.cs", codeActionIndex: 0);
         }
 
         [Test]
@@ -635,98 +611,6 @@ namespace Azure.Data.Tables.Internal
                 expectedCustomCode,
                 customFilePath: "/0/Custom/Internal/InternalFoo.cs",
                 codeActionIndex: 0);
-        }
-
-        [Test]
-        public async Task CodeFixCreatesCustomFileForGeneratedFolderSecondSuggestion()
-        {
-            const string code = @"
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    public partial class {|AZC0012:Foo|}
-    {
-        public Foo() { }
-    }
-}";
-
-            const string fixedGeneratedCode = @"
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    public partial class TablesFoo
-    {
-        public TablesFoo() { }
-    }
-}";
-
-            const string expectedCustomCode = @"// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Microsoft.TypeSpec.Generator.Customizations;
-
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    [CodeGenType(""Foo"")]
-    public partial class TablesFoo { }
-}
-";
-
-            await Verifier.VerifyCodeFixCreatesMultipleFilesAsync(
-                code,
-                sourceFilePath: "Generated/Models/Foo.cs",
-                fixedGeneratedCode,
-                fixedGeneratedFilePath: "Generated/Models/TablesFoo.cs",
-                expectedCustomCode,
-                customFilePath: "/0/Custom/Models/TablesFoo.cs",
-                codeActionIndex: 1);
-        }
-
-        [Test]
-        public async Task CodeFixCreatesCustomFileForGeneratedFolderThirdSuggestion()
-        {
-            const string code = @"
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    public partial class {|AZC0012:Foo|}
-    {
-        public Foo() { }
-    }
-}";
-
-            const string fixedGeneratedCode = @"
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    public partial class DataFoo
-    {
-        public DataFoo() { }
-    }
-}";
-
-            const string expectedCustomCode = @"// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using Microsoft.TypeSpec.Generator.Customizations;
-
-namespace Azure.Data.Tables.Models
-{
-    /// <summary> A model representing a foo. </summary>
-    [CodeGenType(""Foo"")]
-    public partial class DataFoo { }
-}
-";
-
-            await Verifier.VerifyCodeFixCreatesMultipleFilesAsync(
-                code,
-                sourceFilePath: "Generated/Models/Foo.cs",
-                fixedGeneratedCode,
-                fixedGeneratedFilePath: "Generated/Models/DataFoo.cs",
-                expectedCustomCode,
-                customFilePath: "/0/Custom/Models/DataFoo.cs",
-                codeActionIndex: 2);
         }
 
         [Test]

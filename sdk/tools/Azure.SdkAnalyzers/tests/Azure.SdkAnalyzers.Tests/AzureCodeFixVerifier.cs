@@ -18,7 +18,9 @@ namespace Azure.SdkAnalyzers.Tests
     {
         public static CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier> CreateCodeFixTest(
             string source,
+            string sourceFilePath,
             string fixedSource,
+            string fixedFilePath,
             int codeActionIndex = 0,
             LanguageVersion languageVersion = LanguageVersion.Latest)
         {
@@ -35,26 +37,35 @@ namespace Azure.SdkAnalyzers.Tests
                     }
                     return solution!;
                 }},
-                TestCode = source,
-                FixedCode = fixedSource,
                 CodeActionIndex = codeActionIndex,
                 TestBehaviors = TestBehaviors.SkipGeneratedCodeCheck
             };
 
             // Always add CodeGenTypeAttribute to support Generated code scenarios
             test.TestState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+            test.TestState.Sources.Add((sourceFilePath, source));
+
             test.FixedState.Sources.Add((AzureTestReferences.CodeGenTypeAttributeFilePath, AzureTestReferences.CodeGenTypeAttributeSource));
+            test.FixedState.Sources.Add((fixedFilePath, fixedSource));
 
             return test;
         }
 
         public static async Task VerifyCodeFixAsync(
             string source,
+            string sourceFileName,
             string fixedSource,
+            string fixedFileName,
             int codeActionIndex = 0,
             LanguageVersion languageVersion = LanguageVersion.Latest)
         {
-            CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier> test = CreateCodeFixTest(source, fixedSource, codeActionIndex, languageVersion);
+            CSharpCodeFixTest<TAnalyzer, TCodeFix, DefaultVerifier> test = CreateCodeFixTest(
+                source,
+                $"/0/{sourceFileName}",
+                fixedSource,
+                $"/0/{fixedFileName}",
+                codeActionIndex,
+                languageVersion);
             await test.RunAsync(CancellationToken.None);
         }
 

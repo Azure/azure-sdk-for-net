@@ -439,5 +439,23 @@ namespace Azure.Data.Tables
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        [Test]
+        public async Task AZC0012MessageIncludesSuggestions()
+        {
+            // Validate that the diagnostic message includes the rename suggestions
+            const string code = @"
+namespace Azure.Data.Tables
+{
+    public class Program { }
+}";
+            var test = Verifier.CreateAnalyzer(code);
+            test.ExpectedDiagnostics.Add(
+                new Microsoft.CodeAnalysis.Testing.DiagnosticResult("AZC0012", Microsoft.CodeAnalysis.DiagnosticSeverity.Warning)
+                    .WithSpan(4, 18, 4, 25)
+                    .WithMessage("Type name 'Program' is too generic and has high chance of collision with BCL types or types from other libraries. Consider renaming to: 'TablesProgram', 'DataProgram', 'ProgramOptions'"));
+
+            await test.RunAsync();
+        }
     }
 }

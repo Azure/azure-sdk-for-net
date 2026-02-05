@@ -62,110 +62,27 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            // Generate 3 name suggestions based on namespace parts
-            ImmutableArray<string> suggestions = GenerateNameSuggestions(typeSymbol);
+            // Generate name suggestions using shared helper
+            ImmutableArray<string> suggestions = TypeNameSuggestionHelper.GenerateNameSuggestions(typeSymbol);
 
-            // Create nested actions for each suggestion
-            ImmutableArray<CodeAction>.Builder nestedActions = ImmutableArray.CreateBuilder<CodeAction>();
-            foreach (string suggestion in suggestions)
-            {
-                CodeAction action = CodeAction.Create(
+            // Create individual code actions for each suggestion
+            ImmutableArray<CodeAction> nestedActions = suggestions.Select(suggestion =>
+                CodeAction.Create(
                     title: $"Rename to '{suggestion}'",
                     createChangedSolution: c => generatedInfo.IsInGeneratedFolder
                         ? RenameGeneratedTypeAsync(context.Document, typeSymbol, suggestion, generatedInfo, c)
-                        : RenameTypeAsync(context.Document, typeSymbol, suggestion, c),
-                    equivalenceKey: suggestion);
+                        : RenameTypeAsync(context.Document.Project.Solution, context.Document, typeSymbol, suggestion, c),
+                    equivalenceKey: suggestion)).ToImmutableArray();
 
-                nestedActions.Add(action);
-            }
-
-            // Create a parent code action that contains the nested actions
+            // Register a parent action with nested children for IDE submenu experience
+            // Note: dotnet format does not support nested actions, so an external orchestrator
+            // must be used to automate these fixes in CLI scenarios
             CodeAction parentAction = CodeAction.Create(
-                title: "Fix AZC0012: Rename type",
-                nestedActions: nestedActions.ToImmutable(),
+                title: "Fix AZC0012",
+                nestedActions: nestedActions,
                 isInlinable: false);
 
             context.RegisterCodeFix(parentAction, diagnostic);
-        }
-
-        private ImmutableArray<string> GenerateNameSuggestions(INamedTypeSymbol typeSymbol)
-        {
-            ImmutableArray<string>.Builder suggestions = ImmutableArray.CreateBuilder<string>();
-            string currentName = typeSymbol.Name;
-
-            // For interfaces, work with the name without 'I' prefix
-            string baseName = currentName;
-            bool isInterface = typeSymbol.TypeKind == TypeKind.Interface;
-            if (isInterface && currentName.Length > 1 && currentName[0] == 'I' && char.IsUpper(currentName[1]))
-            {
-                baseName = currentName.Substring(1);
-            }
-
-            // Get namespace parts (exclude 'Azure' and common prefixes)
-            List<string> namespaceParts = typeSymbol.ContainingNamespace.ToDisplayString()
-                .Split('.')
-                .Where(p => !string.Equals(p, "Azure", StringComparison.OrdinalIgnoreCase) &&
-                           !string.IsNullOrWhiteSpace(p))
-                .Reverse()
-                .ToList();
-
-            // Generate up to 3 suggestions using namespace parts
-            int suggestionCount = 0;
-            foreach (string part in namespaceParts)
-            {
-                if (suggestionCount >= 3)
-                    break;
-
-                string newName = part + baseName;
-
-                // Add 'I' prefix back for interfaces
-                if (isInterface && newName[0] != 'I')
-                {
-                    newName = "I" + newName;
-                }
-
-                // Avoid suggesting the same name
-                if (!string.Equals(newName, currentName, StringComparison.Ordinal))
-                {
-                    suggestions.Add(newName);
-                    suggestionCount++;
-                }
-            }
-
-            // If we don't have enough suggestions, add some generic ones
-            while (suggestions.Count < 3)
-            {
-                string fallback;
-                if (suggestions.Count == 0)
-                {
-                    fallback = baseName + "Service";
-                }
-                else if (suggestions.Count == 1)
-                {
-                    fallback = baseName + "Client";
-                }
-                else
-                {
-                    fallback = baseName + "Options";
-                }
-
-                if (isInterface && fallback[0] != 'I')
-                {
-                    fallback = "I" + fallback;
-                }
-
-                if (!suggestions.Contains(fallback) && !string.Equals(fallback, currentName, StringComparison.Ordinal))
-                {
-                    suggestions.Add(fallback);
-                }
-                else
-                {
-                    // If the fallback is already used, add a number
-                    suggestions.Add($"{baseName}Type{suggestions.Count}");
-                }
-            }
-
-            return suggestions.ToImmutable();
         }
 
         private async Task<Solution> RenameGeneratedTypeAsync(Document document, INamedTypeSymbol typeSymbol, string newName, GeneratedFolderInfo generatedInfo, CancellationToken cancellationToken)
@@ -194,42 +111,19 @@ namespace Azure.SdkAnalyzers
             Document customDocument = project.AddDocument(customFileName, customCode, generatedInfo.CustomFolders);
             solution = customDocument.Project.Solution;
 
-            // Also perform the rename to update the generated file symbols
-            solution = await Renamer.RenameSymbolAsync(
-                solution,
-                typeSymbol,
-                new SymbolRenameOptions(),
-                newName,
-                cancellationToken).ConfigureAwait(false);
-
-            // Rename the generated file to match the new type name
-            Document updatedDocument = solution.GetDocument(document.Id);
-            if (updatedDocument != null && !string.IsNullOrEmpty(updatedDocument.FilePath))
-            {
-                string oldFileName = Path.GetFileNameWithoutExtension(updatedDocument.Name);
-                string extension = Path.GetExtension(updatedDocument.Name);
-
-                // Only rename if the file name matches the old type name
-                if (oldFileName.Equals(typeSymbol.Name, StringComparison.Ordinal))
-                {
-                    string newFileName = newName + extension;
-                    solution = solution.WithDocumentName(updatedDocument.Id, newFileName);
-                }
-            }
-
-            return solution;
+            return await RenameTypeAsync(solution, document, typeSymbol, newName, cancellationToken);
         }
 
         private string GenerateCustomTypeCode(INamedTypeSymbol typeSymbol, string newName)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("// Copyright (c) Microsoft Corporation. All rights reserved.");
-            sb.AppendLine("// Licensed under the MIT License.");
-            sb.AppendLine();
-            sb.AppendLine("using Microsoft.TypeSpec.Generator.Customizations;");
-            sb.AppendLine();
-            sb.AppendLine($"namespace {typeSymbol.ContainingNamespace.ToDisplayString()}");
-            sb.AppendLine("{");
+            sb.AppendNormalizedLine("// Copyright (c) Microsoft Corporation. All rights reserved.");
+            sb.AppendNormalizedLine("// Licensed under the MIT License.");
+            sb.AppendNormalizedLine("");
+            sb.AppendNormalizedLine("using Microsoft.TypeSpec.Generator.Customizations;");
+            sb.AppendNormalizedLine("");
+            sb.AppendNormalizedLine($"namespace {typeSymbol.ContainingNamespace.ToDisplayString()}");
+            sb.AppendNormalizedLine("{");
 
             // Copy the original documentation comment exactly as written
             SyntaxReference syntaxRef = typeSymbol.DeclaringSyntaxReferences.FirstOrDefault();
@@ -247,13 +141,13 @@ namespace Azure.SdkAnalyzers
                     // Add indentation to each line
                     foreach (string line in docComment.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
                     {
-                        sb.AppendLine($"    {line.TrimStart()}");
+                        sb.AppendNormalizedLine($"    {line.TrimStart()}");
                     }
                 }
             }
 
             // Add CodeGenType attribute with the original name
-            sb.AppendLine($"    [CodeGenType(\"{typeSymbol.Name}\")]");
+            sb.AppendNormalizedLine($"    [CodeGenType(\"{typeSymbol.Name}\")]");
 
             // Determine the type kind and accessibility
             string typeKind = typeSymbol.TypeKind switch
@@ -266,17 +160,15 @@ namespace Azure.SdkAnalyzers
 
             string readonlyModifier = typeSymbol.TypeKind == TypeKind.Struct ? "readonly " : "";
 
-            sb.AppendLine($"    public {readonlyModifier}partial {typeKind} {newName} {{ }}");
+            sb.AppendNormalizedLine($"    public {readonlyModifier}partial {typeKind} {newName} {{ }}");
 
-            sb.AppendLine("}");
+            sb.AppendNormalizedLine("}");
 
             return sb.ToString();
         }
 
-        private async Task<Solution> RenameTypeAsync(Document document, INamedTypeSymbol typeSymbol, string newName, CancellationToken cancellationToken)
+        private async Task<Solution> RenameTypeAsync(Solution solution, Document document, INamedTypeSymbol typeSymbol, string newName, CancellationToken cancellationToken)
         {
-            Solution solution = document.Project.Solution;
-
             // Rename the symbol and all its references
             Solution newSolution = await Renamer.RenameSymbolAsync(
                 solution,
@@ -287,13 +179,13 @@ namespace Azure.SdkAnalyzers
 
             // Also rename the file to match the new type name
             Document newDocument = newSolution.GetDocument(document.Id);
-            if (newDocument != null && !string.IsNullOrEmpty(newDocument.FilePath))
+            if (newDocument != null)
             {
                 string oldFileName = Path.GetFileNameWithoutExtension(newDocument.Name);
                 string extension = Path.GetExtension(newDocument.Name);
 
                 // Only rename if the file name matches the old type name
-                if (oldFileName.Equals(typeSymbol.Name, StringComparison.Ordinal))
+                if (!string.IsNullOrEmpty(oldFileName) && oldFileName.Equals(typeSymbol.Name, StringComparison.Ordinal))
                 {
                     string newFileName = newName + extension;
                     newSolution = newSolution.WithDocumentName(newDocument.Id, newFileName);
