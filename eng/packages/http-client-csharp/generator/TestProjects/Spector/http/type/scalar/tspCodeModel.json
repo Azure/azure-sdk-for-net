@@ -636,7 +636,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "7"
+                    "$ref": "5"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -905,7 +905,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "15"
+                    "$ref": "13"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -1174,7 +1174,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "23"
+                    "$ref": "21"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -1439,7 +1439,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "31"
+                    "$ref": "29"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -1784,7 +1784,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "39"
+                    "$ref": "37"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2128,7 +2128,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "45"
+                    "$ref": "49"
                   },
                   "location": "Header",
                   "isApiVersion": false,

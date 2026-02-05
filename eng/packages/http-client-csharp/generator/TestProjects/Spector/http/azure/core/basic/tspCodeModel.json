@@ -1011,7 +1011,7 @@
               "serializedName": "Content-Type",
               "doc": "This request has a JSON Merge Patch body.",
               "type": {
-                "$ref": "8"
+                "$ref": "4"
               },
               "location": "Header",
               "isApiVersion": false,

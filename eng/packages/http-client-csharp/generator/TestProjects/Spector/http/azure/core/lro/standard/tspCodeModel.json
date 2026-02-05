@@ -1245,7 +1245,7 @@
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "15"
+                "$ref": "11"
               },
               "location": "Header",
               "isApiVersion": false,

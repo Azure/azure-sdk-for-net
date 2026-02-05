@@ -232,7 +232,7 @@
               "name": "contentType",
               "serializedName": "Content-Type",
               "type": {
-                "$ref": "10"
+                "$ref": "4"
               },
               "location": "Header",
               "isApiVersion": false,

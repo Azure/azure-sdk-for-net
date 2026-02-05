@@ -1576,7 +1576,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "7"
+                    "$ref": "5"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -1692,7 +1692,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "11"
+                    "$ref": "9"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2026,7 +2026,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "19"
+                    "$ref": "17"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2142,7 +2142,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "23"
+                    "$ref": "21"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2476,7 +2476,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "31"
+                    "$ref": "29"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2592,7 +2592,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "35"
+                    "$ref": "33"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2926,7 +2926,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "43"
+                    "$ref": "41"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -3042,7 +3042,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "47"
+                    "$ref": "45"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -3376,7 +3376,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "55"
+                    "$ref": "53"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -3492,7 +3492,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "59"
+                    "$ref": "57"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -3826,7 +3826,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "67"
+                    "$ref": "65"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -3942,7 +3942,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "71"
+                    "$ref": "69"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -4276,7 +4276,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "79"
+                    "$ref": "77"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -4392,7 +4392,7 @@
                   "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
-                    "$ref": "83"
+                    "$ref": "81"
                   },
                   "location": "Header",
                   "isApiVersion": false,

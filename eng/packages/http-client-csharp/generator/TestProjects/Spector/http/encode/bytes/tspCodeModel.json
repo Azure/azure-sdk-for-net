@@ -2278,7 +2278,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "21"
+                    "$ref": "19"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2398,7 +2398,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "25"
+                    "$ref": "23"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2519,7 +2519,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "29"
+                    "$ref": "27"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -2641,7 +2641,7 @@
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "type": {
-                    "$ref": "33"
+                    "$ref": "31"
                   },
                   "location": "Header",
                   "isApiVersion": false,

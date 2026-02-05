@@ -3712,7 +3712,7 @@
               "name": "contentType",
               "serializedName": "Content-Type",
               "type": {
-                "$ref": "73"
+                "$ref": "69"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -7717,7 +7717,7 @@
               "name": "contentType",
               "serializedName": "Content-Type",
               "type": {
-                "$ref": "153"
+                "$ref": "151"
               },
               "location": "Header",
               "isApiVersion": false,

@@ -248,7 +248,7 @@
               "name": "contentType",
               "serializedName": "Content-Type",
               "type": {
-                "$ref": "11"
+                "$ref": "5"
               },
               "location": "Header",
               "isApiVersion": false,
