@@ -1,6 +1,6 @@
 # Microsoft Azure ServiceGroups management client library for .NET
 
-**[Describe the service briefly first.]**
+Service Groups in Azure are an ARM tenant level group that represents a flexible collection of resources and scopes for a common purpose. Service Groups are designed to complement existing organizational structures like Resource Groups, Subscriptions, and Management Groups by offering a flexible way to view and aggregate resources and thier data for varying purposes.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

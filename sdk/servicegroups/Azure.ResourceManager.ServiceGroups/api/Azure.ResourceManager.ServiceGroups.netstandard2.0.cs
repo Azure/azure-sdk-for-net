@@ -86,38 +86,38 @@ namespace Azure.ResourceManager.ServiceGroups.Models
     public static partial class ArmServiceGroupsModelFactory
     {
         public static Azure.ResourceManager.ServiceGroups.ServiceGroupData ServiceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties ServiceGroupProperties(Azure.ResourceManager.ServiceGroups.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceGroups.Models.ProvisioningState?), string displayName = null, Azure.Core.ResourceIdentifier parentResourceId = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceGroups.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceGroups.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceGroups.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ServiceGroups.Models.ProvisioningState NotStarted { get { throw null; } }
-        public static Azure.ResourceManager.ServiceGroups.Models.ProvisioningState Running { get { throw null; } }
-        public static Azure.ResourceManager.ServiceGroups.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceGroups.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceGroups.Models.ProvisioningState left, Azure.ResourceManager.ServiceGroups.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceGroups.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceGroups.Models.ProvisioningState left, Azure.ResourceManager.ServiceGroups.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties ServiceGroupProperties(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState?), string displayName = null, Azure.Core.ResourceIdentifier parentResourceId = null) { throw null; }
     }
     public partial class ServiceGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>
     {
         public ServiceGroupProperties() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ParentResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceGroups.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceGroupProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceGroupProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState left, Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState left, Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            ServiceGroupProvisioningState? provisioningState = default;
             string displayName = default;
             ParentServiceGroupProperties parent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ServiceGroupProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

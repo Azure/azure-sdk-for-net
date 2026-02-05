@@ -28,6 +28,9 @@ enable-bicep-serialization: true
 # mgmt-debug:
 #   show-serialized-names: true
 
+rename-mapping:
+  ProvisioningState: ServiceGroupProvisioningState
+
 directive:
   # Fix inconsistent operationIds in the swagger - normalize to ServiceGroups_ prefix
   - from: serviceGroups.json

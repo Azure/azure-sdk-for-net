@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
         /// <param name="parentResourceId"> The details of the parent serviceGroup. </param>
         /// <returns> A new <see cref="Models.ServiceGroupProperties"/> instance for mocking. </returns>
-        public static ServiceGroupProperties ServiceGroupProperties(ProvisioningState? provisioningState = null, string displayName = null, ResourceIdentifier parentResourceId = null)
+        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = null, string displayName = null, ResourceIdentifier parentResourceId = null)
         {
             return new ServiceGroupProperties(provisioningState, displayName, parentResourceId != null ? new ParentServiceGroupProperties(parentResourceId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }

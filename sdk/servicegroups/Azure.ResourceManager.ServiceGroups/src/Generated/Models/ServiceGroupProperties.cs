@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
         /// <param name="parent"> The details of the parent serviceGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupProperties(ProvisioningState? provisioningState, string displayName, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState, string displayName, ParentServiceGroupProperties parent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
 
         /// <summary> The provisioning state of the serviceGroup. For example, Running. </summary>
         [WirePath("provisioningState")]
-        public ProvisioningState? ProvisioningState { get; }
+        public ServiceGroupProvisioningState? ProvisioningState { get; }
         /// <summary> The display name of the serviceGroup. For example, ServiceGroupTest1. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
