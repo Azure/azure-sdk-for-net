@@ -262,7 +262,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         /// <summary>
-        /// Extracts a resource type discriminator from the client name or path.
+        /// Extracts a resource type discriminator from the operation path.
         /// </summary>
         private static string ExtractResourceTypeDiscriminator(string clientName, RequestPathPattern operationPath)
         {
@@ -279,35 +279,22 @@ namespace Azure.Generator.Management.Providers
                     var providerNamespace = operationPath[i + 1];
                     var resourceTypeSegment = operationPath[i + 2];
 
-                    // Skip if this is the RP's own provider namespace
+                    // Skip if this is not a constant segment (e.g., {scope})
                     if (!providerNamespace.IsConstant || !resourceTypeSegment.IsConstant)
                         continue;
 
                     var namespaceValue = providerNamespace.Value;
                     var resourceType = resourceTypeSegment.Value;
 
-                    // Map known provider/type combinations to discriminators
-                    var discriminator = (namespaceValue, resourceType) switch
+                    // Check if the next segment is a variable (indicating this is a parent resource)
+                    if (i + 3 < operationPath.Count && !operationPath[i + 3].IsConstant)
                     {
-                        ("Microsoft.Compute", "virtualMachines") => "Vm",
-                        ("Microsoft.Compute", "virtualMachineScaleSets") => "Vmss",
-                        ("Microsoft.HybridCompute", "machines") => "Hcrp",
-                        ("Microsoft.ConnectedVMwarevSphere", "virtualmachines") => "ConnectedVMwarevSphere",
-                        _ => null
-                    };
-
-                    if (discriminator != null)
-                        return discriminator;
+                        // Build the full parent resource type and use the shared helper
+                        var parentResourceType = $"{namespaceValue}/{resourceType}";
+                        return ResourceHelpers.GetParentTypeDiscriminator(parentResourceType);
+                    }
                 }
             }
-
-            // Fallback: try to extract from client name patterns
-            if (clientName.Contains("HCRP", StringComparison.OrdinalIgnoreCase))
-                return "Hcrp";
-            if (clientName.Contains("VMSS", StringComparison.OrdinalIgnoreCase))
-                return "Vmss";
-            if (clientName.Contains("ConnectedVMwarevSphere", StringComparison.OrdinalIgnoreCase))
-                return "ConnectedVMwarevSphere";
 
             return string.Empty;
         }

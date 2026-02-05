@@ -133,7 +133,7 @@ namespace Azure.Generator.Management.Utilities
         /// <summary>
         /// Extracts a short discriminator from a parent resource type.
         /// </summary>
-        private static string GetParentTypeDiscriminator(string parentResourceType)
+        internal static string GetParentTypeDiscriminator(string parentResourceType)
         {
             return parentResourceType switch
             {

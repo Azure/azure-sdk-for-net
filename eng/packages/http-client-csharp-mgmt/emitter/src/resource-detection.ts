@@ -65,35 +65,10 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Try the new resolveArmResources API first if the flag is set
-  // Fall back to legacy detection if no resources are found (e.g., for Legacy.ExtensionOperations pattern)
   let armProviderSchema: ArmProviderSchema;
-  
+
   if (options?.["use-legacy-resource-detection"] === false) {
     armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
-    
-    // Emit diagnostic showing resource count
-    sdkContext.logger.reportDiagnostic({
-      code: "general-warning",
-      messageId: "default",
-      format: {
-        message: `resolveArmResources found ${armProviderSchema.resources.length} resources`
-      },
-      target: NoTarget
-    });
-    
-    // If resolveArmResources returns no resources, fall back to legacy detection
-    if (armProviderSchema.resources.length === 0) {
-      armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
-      sdkContext.logger.reportDiagnostic({
-        code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Legacy detection found ${armProviderSchema.resources.length} resources`
-        },
-        target: NoTarget
-      });
-    }
   } else {
     armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
   }
