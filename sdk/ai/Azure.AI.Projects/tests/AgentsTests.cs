@@ -7,14 +7,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Microsoft.ClientModel.TestFramework;
 using Azure.AI.Projects.Tests.Utils;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -354,7 +357,6 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationNoInput()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-
         AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
@@ -372,7 +374,101 @@ public class AgentsTests : AgentsTestBase
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId:conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
-        Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestConversationStructuralOutput()
+    {
+        BinaryData calendatSchema = BinaryData.FromObjectAsJson(
+            new
+            {
+                additionalProperties = false,
+                properties = new
+                {
+                    name = new
+                    {
+                        title = "Name",
+                        type = "string"
+                    },
+                    date = new
+                    {
+                        description = "Date in YYYY-MM-DD format",
+                        title = "Date",
+                        type = "string"
+                    },
+                    participants = new
+                    {
+                        items = new { type = "string" },
+                        title = "Participants",
+                        type = "array"
+                    }
+                },
+                required = new List<string> { "name", "date", "participants" },
+                title = "CalendarEvent",
+                type = "object",
+            }
+        );
+        AIProjectClient projectClient = GetTestProjectClient();
+        var textOptions = new ResponseTextOptions()
+        {
+            TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
+                jsonSchemaFormatName: "Calendar",
+                jsonSchema: calendatSchema
+            )
+        };
+        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        {
+            Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
+                           "and returns it in the desired structured output format.",
+            TextOptions = textOptions
+        };
+
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: "TestPromptAgentFromDotnet",
+            options: new(agentDefinition));
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
+            {
+                Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") },
+            });
+
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+
+        ResponseResult response = await responseClient.CreateResponseAsync(new CreateResponseOptions());
+        string text = response.GetOutputText();
+        Assert.That(text, Is.Not.Null.And.Not.Empty);
+        // Validate the JSON
+        JsonDocument doc = JsonDocument.Parse(text);
+        bool hasName = false, hasDate = false, hasParticipants = false;
+        foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
+        {
+            if (prop.NameEquals("name"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for name: {prop.Value.ValueKind.ToString()}");
+                hasName = true;
+            }
+            else if (prop.NameEquals("date"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for date: {prop.Value.ValueKind.ToString()}");
+                hasDate = true;
+            }
+            else if (prop.NameEquals("participants"u8))
+            {
+                Assert.That(prop.Value.ValueKind, Is.EqualTo(JsonValueKind.Array), $"Incorrect value type for partoicipants: {prop.Value.ValueKind.ToString()}");
+                HashSet<string> values = [];
+                foreach (JsonElement dataElement in prop.Value.EnumerateArray())
+                {
+                    Assert.That(dataElement.ValueKind, Is.EqualTo(JsonValueKind.String), $"Incorrect value type for partoicipants element: {dataElement.ValueKind.ToString()}");
+                    values.Add(dataElement.GetString());
+                }
+                Assert.That(values, Is.EqualTo(new HashSet<string> { "Alice", "Bob" }), $"Wrong participants array in {text}");
+                hasParticipants = true;
+            }
+        }
+        Assert.That(hasName, Is.True, "No name field in output.");
+        Assert.That(hasDate, Is.True, "No date field in output.");
+        Assert.That(hasParticipants, Is.True, $"No participants array in the output {text}.");
     }
 
     [RecordedTest]
