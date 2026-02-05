@@ -14,7 +14,7 @@ using Azure.ResourceManager.FileShares.Models;
 
 namespace Azure.ResourceManager.FileShares
 {
-    internal partial class PrivateLinkResourcesGetAllCollectionResultOfT : Pageable<FileSharesPrivateLinkResourceData>
+    internal partial class PrivateLinkResourcesGetAllCollectionResultOfT : Pageable<FileSharePrivateLinkResourceData>
     {
         private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FileSharesPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<FileSharePrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileSharesPrivateLinkResourceListResult result = FileSharesPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<FileSharesPrivateLinkResourceData>.FromValues((IReadOnlyList<FileSharesPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FileSharePrivateLinkResourceData>.FromValues((IReadOnlyList<FileSharePrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FileShares
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FileSharePrivateLinkResourceCollection.GetAll");
             scope.Start();
             try
             {
