@@ -1,4 +1,4 @@
 directory: specification/loadtestservice/resource-manager/Microsoft.LoadTestService/loadtesting
-commit: e6801e36f4d2175ea42ba5ca3b38a15e8c08ad14
+commit: 7a163a7c4c279b7b4ea2bbd358a80d2f012b62ab
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -187,7 +187,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingCmkIdentity() { }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

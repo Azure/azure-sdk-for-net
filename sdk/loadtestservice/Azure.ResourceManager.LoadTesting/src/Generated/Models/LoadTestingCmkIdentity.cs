@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -16,7 +17,26 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="LoadTestingCmkIdentity"/>. </summary>
+        public LoadTestingCmkIdentity()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingCmkIdentity"/>. </summary>
+        /// <param name="identityType"> Managed identity type to use for accessing encryption key Url. </param>
+        /// <param name="resourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/a0a0a0a0-bbbb-cccd-dddd-e1e1e1e1e1e1/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingCmkIdentity(LoadTestingCmkIdentityType? identityType, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            IdentityType = identityType;
+            ResourceId = resourceId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Managed identity type to use for accessing encryption key Url. </summary>
-        public LoadTestingCmkIdentityType? Type { get; set; }
+        public LoadTestingCmkIdentityType? IdentityType { get; set; }
+
+        /// <summary> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/a0a0a0a0-bbbb-cccd-dddd-e1e1e1e1e1e1/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }
