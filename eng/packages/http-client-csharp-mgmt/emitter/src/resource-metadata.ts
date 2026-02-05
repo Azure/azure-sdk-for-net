@@ -106,6 +106,11 @@ export interface ResourceMethod {
    * or undefined
    */
   resourceScope?: string;
+  /**
+   * For extension resources, the type of the parent resource (e.g., "Microsoft.Compute/virtualMachines")
+   * This is used to disambiguate methods when multiple extension operations target different parent types.
+   */
+  parentResourceType?: string;
 }
 
 export enum ResourceOperationKind {
@@ -203,7 +208,8 @@ export function convertArmProviderSchemaToArguments(
         kind: m.kind,
         operationPath: m.operationPath,
         operationScope: m.operationScope,
-        resourceScope: m.resourceScope
+        resourceScope: m.resourceScope,
+        parentResourceType: m.parentResourceType
       })),
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
