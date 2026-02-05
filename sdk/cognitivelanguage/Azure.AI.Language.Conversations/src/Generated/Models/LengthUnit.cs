@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,83 +15,132 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct LengthUnit : IEquatable<LengthUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified length unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Kilometer length unit. </summary>
+        private const string KilometerValue = "Kilometer";
+        /// <summary> Hectometer length unit. </summary>
+        private const string HectometerValue = "Hectometer";
+        /// <summary> Decameter length unit. </summary>
+        private const string DecameterValue = "Decameter";
+        /// <summary> Meter length unit. </summary>
+        private const string MeterValue = "Meter";
+        /// <summary> Decimeter length unit. </summary>
+        private const string DecimeterValue = "Decimeter";
+        /// <summary> Centimeter length unit. </summary>
+        private const string CentimeterValue = "Centimeter";
+        /// <summary> Millimeter length unit. </summary>
+        private const string MillimeterValue = "Millimeter";
+        /// <summary> Micrometer length unit. </summary>
+        private const string MicrometerValue = "Micrometer";
+        /// <summary> Nanometer length unit. </summary>
+        private const string NanometerValue = "Nanometer";
+        /// <summary> Picometer length unit. </summary>
+        private const string PicometerValue = "Picometer";
+        /// <summary> Mile length unit. </summary>
+        private const string MileValue = "Mile";
+        /// <summary> Yard length unit. </summary>
+        private const string YardValue = "Yard";
+        /// <summary> Inch length unit. </summary>
+        private const string InchValue = "Inch";
+        /// <summary> Foot length unit. </summary>
+        private const string FootValue = "Foot";
+        /// <summary> Light year length unit. </summary>
+        private const string LightYearValue = "LightYear";
+        /// <summary> Point length unit. </summary>
+        private const string PointValue = "Pt";
 
         /// <summary> Initializes a new instance of <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LengthUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string KilometerValue = "Kilometer";
-        private const string HectometerValue = "Hectometer";
-        private const string DecameterValue = "Decameter";
-        private const string MeterValue = "Meter";
-        private const string DecimeterValue = "Decimeter";
-        private const string CentimeterValue = "Centimeter";
-        private const string MillimeterValue = "Millimeter";
-        private const string MicrometerValue = "Micrometer";
-        private const string NanometerValue = "Nanometer";
-        private const string PicometerValue = "Picometer";
-        private const string MileValue = "Mile";
-        private const string YardValue = "Yard";
-        private const string InchValue = "Inch";
-        private const string FootValue = "Foot";
-        private const string LightYearValue = "LightYear";
-        private const string PointValue = "Pt";
+            _value = value;
+        }
 
         /// <summary> Unspecified length unit. </summary>
         public static LengthUnit Unspecified { get; } = new LengthUnit(UnspecifiedValue);
+
         /// <summary> Kilometer length unit. </summary>
         public static LengthUnit Kilometer { get; } = new LengthUnit(KilometerValue);
+
         /// <summary> Hectometer length unit. </summary>
         public static LengthUnit Hectometer { get; } = new LengthUnit(HectometerValue);
+
         /// <summary> Decameter length unit. </summary>
         public static LengthUnit Decameter { get; } = new LengthUnit(DecameterValue);
+
         /// <summary> Meter length unit. </summary>
         public static LengthUnit Meter { get; } = new LengthUnit(MeterValue);
+
         /// <summary> Decimeter length unit. </summary>
         public static LengthUnit Decimeter { get; } = new LengthUnit(DecimeterValue);
+
         /// <summary> Centimeter length unit. </summary>
         public static LengthUnit Centimeter { get; } = new LengthUnit(CentimeterValue);
+
         /// <summary> Millimeter length unit. </summary>
         public static LengthUnit Millimeter { get; } = new LengthUnit(MillimeterValue);
+
         /// <summary> Micrometer length unit. </summary>
         public static LengthUnit Micrometer { get; } = new LengthUnit(MicrometerValue);
+
         /// <summary> Nanometer length unit. </summary>
         public static LengthUnit Nanometer { get; } = new LengthUnit(NanometerValue);
+
         /// <summary> Picometer length unit. </summary>
         public static LengthUnit Picometer { get; } = new LengthUnit(PicometerValue);
+
         /// <summary> Mile length unit. </summary>
         public static LengthUnit Mile { get; } = new LengthUnit(MileValue);
+
         /// <summary> Yard length unit. </summary>
         public static LengthUnit Yard { get; } = new LengthUnit(YardValue);
+
         /// <summary> Inch length unit. </summary>
         public static LengthUnit Inch { get; } = new LengthUnit(InchValue);
+
         /// <summary> Foot length unit. </summary>
         public static LengthUnit Foot { get; } = new LengthUnit(FootValue);
+
         /// <summary> Light year length unit. </summary>
         public static LengthUnit LightYear { get; } = new LengthUnit(LightYearValue);
+
         /// <summary> Point length unit. </summary>
         public static LengthUnit Point { get; } = new LengthUnit(PointValue);
+
         /// <summary> Determines if two <see cref="LengthUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LengthUnit left, LengthUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LengthUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LengthUnit(string value) => new LengthUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LengthUnit?(string value) => value == null ? null : new LengthUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LengthUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LengthUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

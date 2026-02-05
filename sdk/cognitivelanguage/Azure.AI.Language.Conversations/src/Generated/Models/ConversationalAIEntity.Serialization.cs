@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class ConversationalAIEntity : IUtf8JsonSerializable, IJsonModel<ConversationalAIEntity>
+    /// <summary> The entity associated with this intent. </summary>
+    public partial class ConversationalAIEntity : IJsonModel<ConversationalAIEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationalAIEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConversationalAIEntity"/> for deserialization. </summary>
+        internal ConversationalAIEntity()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationalAIEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationalAIEntity)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("text"u8);
@@ -55,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 writer.WritePropertyName("resolutions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Resolutions)
+                foreach (ResolutionBase item in Resolutions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,21 +70,21 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 writer.WritePropertyName("extraInformation"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExtraInformation)
+                foreach (ConversationEntityExtraInformation item in ExtraInformation)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +93,27 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        ConversationalAIEntity IJsonModel<ConversationalAIEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationalAIEntity IJsonModel<ConversationalAIEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConversationalAIEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationalAIEntity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConversationalAIEntity(document.RootElement, options);
         }
 
-        internal static ConversationalAIEntity DeserializeConversationalAIEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConversationalAIEntity DeserializeConversationalAIEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,73 +125,72 @@ namespace Azure.AI.Language.Conversations.Models
             int length = default;
             string conversationItemId = default;
             int? conversationItemIndex = default;
-            IReadOnlyList<ResolutionBase> resolutions = default;
-            IReadOnlyList<ConversationEntityExtraInformation> extraInformation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<ResolutionBase> resolutions = default;
+            IList<ConversationEntityExtraInformation> extraInformation = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    text = property.Value.GetString();
+                    text = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"u8))
+                if (prop.NameEquals("confidenceScore"u8))
                 {
-                    confidenceScore = property.Value.GetSingle();
+                    confidenceScore = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("offset"u8))
+                if (prop.NameEquals("offset"u8))
                 {
-                    offset = property.Value.GetInt32();
+                    offset = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("length"u8))
+                if (prop.NameEquals("length"u8))
                 {
-                    length = property.Value.GetInt32();
+                    length = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("conversationItemId"u8))
+                if (prop.NameEquals("conversationItemId"u8))
                 {
-                    conversationItemId = property.Value.GetString();
+                    conversationItemId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("conversationItemIndex"u8))
+                if (prop.NameEquals("conversationItemIndex"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    conversationItemIndex = property.Value.GetInt32();
+                    conversationItemIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resolutions"u8))
+                if (prop.NameEquals("resolutions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResolutionBase> array = new List<ResolutionBase>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResolutionBase.DeserializeResolutionBase(item, options));
                     }
                     resolutions = array;
                     continue;
                 }
-                if (property.NameEquals("extraInformation"u8))
+                if (prop.NameEquals("extraInformation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ConversationEntityExtraInformation> array = new List<ConversationEntityExtraInformation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConversationEntityExtraInformation.DeserializeConversationEntityExtraInformation(item, options));
                     }
@@ -190,10 +199,9 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConversationalAIEntity(
                 name,
                 text,
@@ -204,13 +212,16 @@ namespace Azure.AI.Language.Conversations.Models
                 conversationItemIndex,
                 resolutions ?? new ChangeTrackingList<ResolutionBase>(),
                 extraInformation ?? new ChangeTrackingList<ConversationEntityExtraInformation>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ConversationalAIEntity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConversationalAIEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -220,15 +231,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        ConversationalAIEntity IPersistableModel<ConversationalAIEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConversationalAIEntity IPersistableModel<ConversationalAIEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConversationalAIEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConversationalAIEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConversationalAIEntity(document.RootElement, options);
                     }
                 default:
@@ -236,22 +252,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConversationalAIEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationalAIEntity FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationalAIEntity(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

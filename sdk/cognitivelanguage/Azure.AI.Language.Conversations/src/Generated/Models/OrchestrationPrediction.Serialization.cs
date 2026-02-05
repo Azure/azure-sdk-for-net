@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class OrchestrationPrediction : IUtf8JsonSerializable, IJsonModel<OrchestrationPrediction>
+    /// <summary> This represents the prediction result of an Orchestration project. </summary>
+    public partial class OrchestrationPrediction : PredictionBase, IJsonModel<OrchestrationPrediction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestrationPrediction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/> for deserialization. </summary>
+        internal OrchestrationPrediction()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OrchestrationPrediction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrchestrationPrediction)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("intents"u8);
             writer.WriteStartObject();
@@ -45,66 +50,72 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteEndObject();
         }
 
-        OrchestrationPrediction IJsonModel<OrchestrationPrediction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OrchestrationPrediction IJsonModel<OrchestrationPrediction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OrchestrationPrediction)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PredictionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrchestrationPrediction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOrchestrationPrediction(document.RootElement, options);
         }
 
-        internal static OrchestrationPrediction DeserializeOrchestrationPrediction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OrchestrationPrediction DeserializeOrchestrationPrediction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyDictionary<string, TargetIntentResult> intents = default;
             ProjectKind projectKind = default;
             string topIntent = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, TargetIntentResult> intents = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("intents"u8))
+                if (prop.NameEquals("projectKind"u8))
+                {
+                    projectKind = new ProjectKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("topIntent"u8))
+                {
+                    topIntent = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("intents"u8))
                 {
                     Dictionary<string, TargetIntentResult> dictionary = new Dictionary<string, TargetIntentResult>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, TargetIntentResult.DeserializeTargetIntentResult(property0.Value, options));
+                        dictionary.Add(prop0.Name, TargetIntentResult.DeserializeTargetIntentResult(prop0.Value, options));
                     }
                     intents = dictionary;
                     continue;
                 }
-                if (property.NameEquals("projectKind"u8))
-                {
-                    projectKind = new ProjectKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("topIntent"u8))
-                {
-                    topIntent = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OrchestrationPrediction(projectKind, topIntent, serializedAdditionalRawData, intents);
+            return new OrchestrationPrediction(projectKind, topIntent, additionalBinaryDataProperties, intents);
         }
 
-        BinaryData IPersistableModel<OrchestrationPrediction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OrchestrationPrediction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -114,15 +125,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        OrchestrationPrediction IPersistableModel<OrchestrationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OrchestrationPrediction IPersistableModel<OrchestrationPrediction>.Create(BinaryData data, ModelReaderWriterOptions options) => (OrchestrationPrediction)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override PredictionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OrchestrationPrediction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOrchestrationPrediction(document.RootElement, options);
                     }
                 default:
@@ -130,22 +146,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OrchestrationPrediction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new OrchestrationPrediction FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOrchestrationPrediction(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }
