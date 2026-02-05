@@ -881,6 +881,9 @@
 # ServiceLabel: %TimeSeriesInsights
 # ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
+# PRLabel: %Azure.SdkAnalyzers
+/sdk/tools/Azure.SdkAnalyzers/                                     @m-nash @m-redding @jsquire
+
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
 
@@ -1196,7 +1199,6 @@
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
-/eng/tools/                                                        @m-nash @m-redding @jsquire
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
