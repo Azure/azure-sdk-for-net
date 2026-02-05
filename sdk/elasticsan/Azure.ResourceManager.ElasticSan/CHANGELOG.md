@@ -4,7 +4,7 @@
 
 ### Features Added
 - Upgraded api-version tag from 'package-preview-2024-07' to 'package-2025-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2daa450f8eaef939165415ce90178334568eacfd/specification/elasticsan/resource-manager/Microsoft.ElasticSan/ElasticSan/readme.md.
-    - Supported prebackup and prerestore fro ElasticSan.
+    - Supported prebackup and prerestore for ElasticSan.
     - Supported auto scale policy for ElasticSan.
 
 ## 1.2.0-beta.2 (2025-04-24)
