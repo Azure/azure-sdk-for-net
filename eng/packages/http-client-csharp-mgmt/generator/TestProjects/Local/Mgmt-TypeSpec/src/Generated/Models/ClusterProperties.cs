@@ -26,8 +26,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="ClusterProperties"/>. </summary>
         /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
-        /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
-        /// <param name="maintenanceConfiguration"> Cluster-level maintenance configuration. </param>
+        /// <param name="encryption">
+        /// Encryption-at-rest configuration for the cluster.
+        /// This nested object was missing in the factory constructor call.
+        /// </param>
+        /// <param name="maintenanceConfiguration">
+        /// Cluster-level maintenance configuration.
+        /// This nested object was missing in the factory constructor call.
+        /// </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster. </param>
@@ -58,11 +64,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         [WirePath("minimumTlsVersion")]
         public TlsVersion? MinimumTlsVersion { get; set; }
 
-        /// <summary> Encryption-at-rest configuration for the cluster. </summary>
+        /// <summary>
+        /// Encryption-at-rest configuration for the cluster.
+        /// This nested object was missing in the factory constructor call.
+        /// </summary>
         [WirePath("encryption")]
         internal ClusterPropertiesEncryption Encryption { get; set; }
 
-        /// <summary> Cluster-level maintenance configuration. </summary>
+        /// <summary>
+        /// Cluster-level maintenance configuration.
+        /// This nested object was missing in the factory constructor call.
+        /// </summary>
         [WirePath("maintenanceConfiguration")]
         internal MaintenanceConfiguration MaintenanceConfiguration { get; set; }
 

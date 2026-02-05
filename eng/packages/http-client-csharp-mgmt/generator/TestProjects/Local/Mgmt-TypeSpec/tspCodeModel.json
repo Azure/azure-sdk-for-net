@@ -15700,7 +15700,7 @@
                 "kind": "property",
                 "name": "encryption",
                 "serializedName": "encryption",
-                "doc": "Encryption-at-rest configuration for the cluster.",
+                "doc": "Encryption-at-rest configuration for the cluster.\nThis nested object was missing in the factory constructor call.",
                 "type": {
                   "$id": "1190",
                   "kind": "model",
@@ -15889,7 +15889,7 @@
                 "kind": "property",
                 "name": "maintenanceConfiguration",
                 "serializedName": "maintenanceConfiguration",
-                "doc": "Cluster-level maintenance configuration.",
+                "doc": "Cluster-level maintenance configuration.\nThis nested object was missing in the factory constructor call.",
                 "type": {
                   "$id": "1201",
                   "kind": "model",

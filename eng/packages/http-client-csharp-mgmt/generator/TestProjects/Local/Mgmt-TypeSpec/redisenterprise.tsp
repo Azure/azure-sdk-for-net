@@ -2,11 +2,13 @@ import "@typespec/http";
 import "@typespec/rest";
 import "@azure-tools/typespec-azure-core";
 import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ClientGenerator.Core;
 
 namespace MgmtTypeSpec {
 
@@ -24,6 +26,10 @@ namespace MgmtTypeSpec {
     ...ResourceNameParameter<Cluster>;
   }
 
+  /**
+   * Patch model that has properties flattened - this is the key pattern from
+   * the original issue where the factory method was missing constructor parameters.
+   */
   model ClusterUpdate {
     /**
      * The SKU to create, which affects price, performance, and features.
@@ -31,7 +37,7 @@ namespace MgmtTypeSpec {
     sku?: Sku;
 
     /**
-     * Other properties of the cluster.
+     * Other properties of the cluster - this gets flattened via decorator.
      */
     properties?: ClusterUpdateProperties;
 
@@ -47,6 +53,12 @@ namespace MgmtTypeSpec {
     tags?: Record<string>;
   }
 
+  /**
+   * Extended properties model - extends ClusterProperties which has nested
+   * complex objects (encryption, maintenanceConfiguration). The original issue
+   * was that the factory method for ClusterUpdate was calling
+   * new ClusterUpdateProperties(...) with missing parameters for these nested objects.
+   */
   model ClusterUpdateProperties extends ClusterProperties {
     /**
      * Whether or not public network traffic can access the Redis cluster.
@@ -67,11 +79,13 @@ namespace MgmtTypeSpec {
 
     /**
      * Encryption-at-rest configuration for the cluster.
+     * This nested object was missing in the factory constructor call.
      */
     encryption?: ClusterPropertiesEncryption;
 
     /**
      * Cluster-level maintenance configuration.
+     * This nested object was missing in the factory constructor call.
      */
     @visibility(Lifecycle.Read, Lifecycle.Create, Lifecycle.Update)
     maintenanceConfiguration?: MaintenanceConfiguration;
@@ -226,4 +240,8 @@ namespace MgmtTypeSpec {
     Approved,
     Rejected,
   }
+
+  // Apply property flattening to ClusterUpdate.properties - this triggers the bug
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(ClusterUpdate.properties);
 }
