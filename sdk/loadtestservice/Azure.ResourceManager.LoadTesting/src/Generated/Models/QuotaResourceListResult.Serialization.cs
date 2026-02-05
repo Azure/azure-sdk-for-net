@@ -14,16 +14,17 @@ using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    internal partial class LoadTestingQuotaListResult : IJsonModel<LoadTestingQuotaListResult>
+    /// <summary> The response of a QuotaResource list operation. </summary>
+    internal partial class QuotaResourceListResult : IJsonModel<QuotaResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/> for deserialization. </summary>
-        internal LoadTestingQuotaListResult()
+        /// <summary> Initializes a new instance of <see cref="QuotaResourceListResult"/> for deserialization. </summary>
+        internal QuotaResourceListResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoadTestingQuotaListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +35,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -70,24 +71,24 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingQuotaListResult IJsonModel<LoadTestingQuotaListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QuotaResourceListResult IJsonModel<QuotaResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingQuotaListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual QuotaResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoadTestingQuotaListResult(document.RootElement, options);
+            return DeserializeQuotaResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LoadTestingQuotaListResult DeserializeLoadTestingQuotaListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuotaResourceListResult DeserializeQuotaResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,54 +123,54 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LoadTestingQuotaListResult(value, nextLink, additionalBinaryDataProperties);
+            return new QuotaResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestingQuotaListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QuotaResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestingQuotaListResult IPersistableModel<LoadTestingQuotaListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QuotaResourceListResult IPersistableModel<QuotaResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LoadTestingQuotaListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual QuotaResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLoadTestingQuotaListResult(document.RootElement, options);
+                        return DeserializeQuotaResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestingQuotaListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestingQuotaListResult"/> from. </param>
-        internal static LoadTestingQuotaListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuotaResourceListResult"/> from. </param>
+        internal static QuotaResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestingQuotaListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeQuotaResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

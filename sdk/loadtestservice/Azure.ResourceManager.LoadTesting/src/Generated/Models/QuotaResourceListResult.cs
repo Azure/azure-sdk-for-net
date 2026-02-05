@@ -12,23 +12,24 @@ using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    internal partial class LoadTestingQuotaListResult
+    /// <summary> The response of a QuotaResource list operation. </summary>
+    internal partial class QuotaResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaResourceListResult"/>. </summary>
         /// <param name="value"> The QuotaResource items on this page. </param>
-        internal LoadTestingQuotaListResult(IEnumerable<LoadTestingQuotaData> value)
+        internal QuotaResourceListResult(IEnumerable<LoadTestingQuotaData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaResourceListResult"/>. </summary>
         /// <param name="value"> The QuotaResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingQuotaListResult(IList<LoadTestingQuotaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaResourceListResult(IList<LoadTestingQuotaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

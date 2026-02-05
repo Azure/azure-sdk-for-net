@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     yield break;
                 }
-                LoadTestingQuotaListResult result = LoadTestingQuotaListResult.FromResponse(response);
+                QuotaResourceListResult result = QuotaResourceListResult.FromResponse(response);
                 yield return Page<LoadTestingQuotaData>.FromValues((IReadOnlyList<LoadTestingQuotaData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
