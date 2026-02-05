@@ -1740,7 +1740,7 @@
             {
               "$id": "170",
               "kind": "property",
-              "name": "SnapshotType",
+              "name": "type",
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {

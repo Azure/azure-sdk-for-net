@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -85,7 +80,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
             PrivateEndpointConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,11 +115,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -146,7 +135,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 systemData,
                 additionalBinaryDataProperties,
                 name,
-                @type,
                 properties);
         }
 

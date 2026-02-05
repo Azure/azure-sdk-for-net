@@ -30,18 +30,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
-        internal AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Type = @type;
             Properties = properties;
         }
-
-        /// <summary> The type of the resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The properties of a private endpoint connection. </summary>
         [WirePath("properties")]

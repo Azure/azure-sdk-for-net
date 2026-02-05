@@ -76,27 +76,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 skuName is null ? default : new AppConfigurationSku(skuName, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="privateEndpointId"> The resource Id for private endpoint. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
-        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, string @type = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new AppConfigurationPrivateEndpointConnectionReference(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                @type,
-                provisioningState is null && connectionState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), connectionState, null));
-        }
-
         /// <summary> The state of a private link service connection. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
@@ -350,10 +329,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="privateEndpointId"> The resource of private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, AppConfigurationPrivateLinkServiceConnectionState connectionState)
+        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AppConfigurationPrivateLinkServiceConnectionState connectionState = default)
         {
-            return AppConfigurationPrivateEndpointConnectionReference(id, resourceType, systemData, name, type: default, provisioningState, connectionState, privateEndpointId);
+            return new AppConfigurationPrivateEndpointConnectionReference(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationPrivateEndpointConnectionData"/>. </summary>
