@@ -271,7 +271,19 @@ namespace Azure.Generator.Management.Providers
             // /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...
             // /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/...
 
-            // Find the parent provider segment to identify the target resource type
+            // Count the number of providers segments - extension resources have at least 2
+            int providerCount = 0;
+            for (int i = 0; i < operationPath.Count; i++)
+            {
+                if (operationPath[i].IsProvidersSegment)
+                    providerCount++;
+            }
+
+            // Only apply disambiguation for extension resources (paths with multiple provider segments)
+            if (providerCount < 2)
+                return string.Empty;
+
+            // Find the first (parent) provider segment to identify the target resource type
             for (int i = 0; i < operationPath.Count - 1; i++)
             {
                 if (operationPath[i].IsProvidersSegment && i + 2 < operationPath.Count)
