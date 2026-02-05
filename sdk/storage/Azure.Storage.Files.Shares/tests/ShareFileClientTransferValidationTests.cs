@@ -492,10 +492,13 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Act
                 streamTamperPolicy.TransformRequestBody = true;
-                AsyncTestDelegate operation = async () => await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
 
                 // Assert
-                AssertWriteChecksumMismatch(operation, algorithm, true);
+                var ex = Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await fileClient.CreateAsync(maxSize: Constants.KB, options: options)
+                );
+                Assert.That("InvalidStructuredMessage", Is.EqualTo(ex.ErrorCode));
+                Assert.That(ex.Message, Does.Contain("The Structured Message was not valid."));
             }
         }
 
