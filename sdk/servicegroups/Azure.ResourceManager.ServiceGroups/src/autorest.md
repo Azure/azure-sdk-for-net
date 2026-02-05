@@ -8,8 +8,8 @@ csharp: true
 library-name: ServiceGroups
 title: ServiceGroupClient
 namespace: Azure.ResourceManager.ServiceGroups
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8b0ad3e71102ad633f716845e5bc2d2d25d9f6a0/specification/management/resource-manager/Microsoft.Management/ServiceGroups/preview/2024-02-01-preview/serviceGroups.json
+require: https://github.com/Azure/azure-rest-api-specs/blob/94cec42b293ffaaf67b51ac86235819e6c4886b3/specification/management/resource-manager/Microsoft.Management/ServiceGroups/readme.md
+#tag: package-2024-02-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
