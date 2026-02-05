@@ -46,6 +46,11 @@
       "usage": "Input,Output,Json",
       "doc": "extension",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Extension"
+        }
+      },
       "baseModel": {
         "$id": "6",
         "kind": "model",
@@ -55,6 +60,11 @@
         "usage": "Input,Output,Json",
         "doc": "element",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "Element"
+          }
+        },
         "properties": [
           {
             "$id": "7",
@@ -194,7 +204,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.Recursive"
           },
           "parameters": [
             {
@@ -290,7 +301,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.Recursive"
           },
           "parameters": [
             {

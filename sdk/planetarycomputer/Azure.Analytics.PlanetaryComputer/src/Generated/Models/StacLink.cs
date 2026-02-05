@@ -13,10 +13,8 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Link model.
-    /// 
     /// Ref:
     /// http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml
-    /// 
     /// Represents a link.
     /// </summary>
     public partial class StacLink

@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DateTimeResolution : IUtf8JsonSerializable, IJsonModel<DateTimeResolution>
+    /// <summary> A resolution for datetime entity instances. </summary>
+    public partial class DateTimeResolution : ResolutionBase, IJsonModel<DateTimeResolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateTimeResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/> for deserialization. </summary>
+        internal DateTimeResolution()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DateTimeResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DateTimeResolution)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("timex"u8);
             writer.WriteStringValue(Timex);
@@ -48,83 +53,89 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        DateTimeResolution IJsonModel<DateTimeResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DateTimeResolution IJsonModel<DateTimeResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DateTimeResolution)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResolutionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DateTimeResolution)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDateTimeResolution(document.RootElement, options);
         }
 
-        internal static DateTimeResolution DeserializeDateTimeResolution(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DateTimeResolution DeserializeDateTimeResolution(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResolutionKind resolutionKind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string timex = default;
             DateTimeSubKind dateTimeSubKind = default;
             string value = default;
             TemporalModifier? modifier = default;
-            ResolutionKind resolutionKind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timex"u8))
+                if (prop.NameEquals("resolutionKind"u8))
                 {
-                    timex = property.Value.GetString();
+                    resolutionKind = new ResolutionKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dateTimeSubKind"u8))
+                if (prop.NameEquals("timex"u8))
                 {
-                    dateTimeSubKind = new DateTimeSubKind(property.Value.GetString());
+                    timex = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("dateTimeSubKind"u8))
                 {
-                    value = property.Value.GetString();
+                    dateTimeSubKind = new DateTimeSubKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modifier"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    value = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modifier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    modifier = new TemporalModifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resolutionKind"u8))
-                {
-                    resolutionKind = new ResolutionKind(property.Value.GetString());
+                    modifier = new TemporalModifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DateTimeResolution(
                 resolutionKind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 timex,
                 dateTimeSubKind,
                 value,
                 modifier);
         }
 
-        BinaryData IPersistableModel<DateTimeResolution>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DateTimeResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -134,15 +145,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        DateTimeResolution IPersistableModel<DateTimeResolution>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DateTimeResolution IPersistableModel<DateTimeResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (DateTimeResolution)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DateTimeResolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDateTimeResolution(document.RootElement, options);
                     }
                 default:
@@ -150,22 +166,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DateTimeResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DateTimeResolution FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDateTimeResolution(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

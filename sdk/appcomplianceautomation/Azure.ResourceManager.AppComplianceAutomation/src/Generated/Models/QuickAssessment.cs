@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the quick assessment. </summary>
     public partial class QuickAssessment
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuickAssessment"/>. </summary>
         internal QuickAssessment()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="displayName"> Quick assessment display name. </param>
         /// <param name="description"> Quick assessment display name. </param>
         /// <param name="remediationLink"> Link to remediation steps for this quick assessment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuickAssessment(ResourceIdentifier resourceId, string responsibilityId, DateTimeOffset? createdOn, ReportResourceStatus? resourceStatus, string displayName, string description, string remediationLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuickAssessment(ResourceIdentifier resourceId, string responsibilityId, DateTimeOffset? createdOn, ReportResourceStatus? resourceStatus, string displayName, string description, string remediationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResponsibilityId = responsibilityId;
@@ -69,21 +40,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             DisplayName = displayName;
             Description = description;
             RemediationLink = remediationLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id. </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> Responsibility id. </summary>
         public string ResponsibilityId { get; }
+
         /// <summary> The timestamp of resource creation (UTC). </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Quick assessment status. </summary>
         public ReportResourceStatus? ResourceStatus { get; }
+
         /// <summary> Quick assessment display name. </summary>
         public string DisplayName { get; }
+
         /// <summary> Quick assessment display name. </summary>
         public string Description { get; }
+
         /// <summary> Link to remediation steps for this quick assessment. </summary>
         public string RemediationLink { get; }
     }

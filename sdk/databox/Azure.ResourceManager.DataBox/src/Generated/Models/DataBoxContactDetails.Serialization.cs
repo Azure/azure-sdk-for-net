@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxContactDetails : IUtf8JsonSerializable, IJsonModel<DataBoxContactDetails>
+    /// <summary> Contact Details. </summary>
+    public partial class DataBoxContactDetails : IJsonModel<DataBoxContactDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxContactDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/> for deserialization. </summary>
+        internal DataBoxContactDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxContactDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("contactName"u8);
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
@@ -50,8 +55,13 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("emailList"u8);
             writer.WriteStartArray();
-            foreach (var item in EmailList)
+            foreach (string item in EmailList)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -59,21 +69,21 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();
-                foreach (var item in NotificationPreference)
+                foreach (NotificationPreference item in NotificationPreference)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +92,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxContactDetails IJsonModel<DataBoxContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxContactDetails IJsonModel<DataBoxContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxContactDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxContactDetails(document.RootElement, options);
         }
 
-        internal static DataBoxContactDetails DeserializeDataBoxContactDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxContactDetails DeserializeDataBoxContactDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,48 +123,54 @@ namespace Azure.ResourceManager.DataBox.Models
             string mobile = default;
             IList<string> emailList = default;
             IList<NotificationPreference> notificationPreference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("contactName"u8))
+                if (prop.NameEquals("contactName"u8))
                 {
-                    contactName = property.Value.GetString();
+                    contactName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"u8))
+                if (prop.NameEquals("phone"u8))
                 {
-                    phone = property.Value.GetString();
+                    phone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneExtension"u8))
+                if (prop.NameEquals("phoneExtension"u8))
                 {
-                    phoneExtension = property.Value.GetString();
+                    phoneExtension = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobile"u8))
+                if (prop.NameEquals("mobile"u8))
                 {
-                    mobile = property.Value.GetString();
+                    mobile = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailList"u8))
+                if (prop.NameEquals("emailList"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     emailList = array;
                     continue;
                 }
-                if (property.NameEquals("notificationPreference"u8))
+                if (prop.NameEquals("notificationPreference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NotificationPreference> array = new List<NotificationPreference>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
@@ -158,10 +179,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxContactDetails(
                 contactName,
                 phone,
@@ -169,13 +189,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 mobile,
                 emailList,
                 notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -185,15 +208,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxContactDetails IPersistableModel<DataBoxContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxContactDetails IPersistableModel<DataBoxContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxContactDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxContactDetails(document.RootElement, options);
                     }
                 default:
@@ -201,6 +229,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

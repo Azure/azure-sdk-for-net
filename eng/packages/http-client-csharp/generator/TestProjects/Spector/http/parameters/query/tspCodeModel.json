@@ -136,7 +136,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Parameters.Query.Constant.post",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Parameters.Query"
               },
               "parameters": [
                 {

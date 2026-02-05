@@ -8,15 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
+    /// <summary>
+    /// This is the base class of an intent prediction
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownTargetIntentResult))]
-    public partial class TargetIntentResult : IUtf8JsonSerializable, IJsonModel<TargetIntentResult>
+    public abstract partial class TargetIntentResult : IJsonModel<TargetIntentResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetIntentResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TargetIntentResult"/> for deserialization. </summary>
+        internal TargetIntentResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TargetIntentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetIntentResult)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("targetProjectKind"u8);
             writer.WriteStringValue(TargetProjectKind.ToString());
             if (Optional.IsDefined(ApiVersion))
@@ -43,15 +51,15 @@ namespace Azure.AI.Language.Conversations.Models
             }
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(Confidence);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,43 +68,55 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        TargetIntentResult IJsonModel<TargetIntentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetIntentResult IJsonModel<TargetIntentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetIntentResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetIntentResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTargetIntentResult(document.RootElement, options);
         }
 
-        internal static TargetIntentResult DeserializeTargetIntentResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TargetIntentResult DeserializeTargetIntentResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("targetProjectKind", out JsonElement discriminator))
+            if (element.TryGetProperty("targetProjectKind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Conversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element, options);
-                    case "Luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element, options);
-                    case "NonLinked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element, options);
-                    case "QuestionAnswering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element, options);
+                    case "Luis":
+                        return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element, options);
+                    case "QuestionAnswering":
+                        return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element, options);
+                    case "NonLinked":
+                        return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element, options);
+                    case "Conversation":
+                        return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element, options);
                 }
             }
             return UnknownTargetIntentResult.DeserializeUnknownTargetIntentResult(element, options);
         }
 
-        BinaryData IPersistableModel<TargetIntentResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TargetIntentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -106,15 +126,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        TargetIntentResult IPersistableModel<TargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetIntentResult IPersistableModel<TargetIntentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetIntentResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetIntentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTargetIntentResult(document.RootElement, options);
                     }
                 default:
@@ -122,22 +147,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TargetIntentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TargetIntentResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTargetIntentResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrixSet.json
-    /// 
     /// A definition of a tile matrix set following the Tile Matrix Set standard.
     /// For tileset metadata, such a description (in `tileMatrixSet` property) is only
     /// required for offline use,
