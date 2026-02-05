@@ -78,8 +78,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 containerScanInfo = new ContainerScanInfo()
                 {
                     Registrations = new List<ITriggerExecutor<BlobTriggerExecutorContext>>(),
-                    LastSweepCycleLatestModified = latestStoredScan ?? DateTime.MinValue,
-                    CurrentSweepCycleLatestModified = DateTime.MinValue,
+                    LastSweepCycleLatestModified = latestStoredScan ?? DateTimeOffset.MinValue,
+                    CurrentSweepCycleLatestModified = DateTimeOffset.MinValue,
                     ContinuationToken = null
                 };
 
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             if (continuationToken == null)
             {
                 containerScanInfo.PollingStartTime = DateTimeOffset.UtcNow;
-                containerScanInfo.CurrentSweepCycleLatestModified = DateTime.MinValue;
+                containerScanInfo.CurrentSweepCycleLatestModified = DateTimeOffset.MinValue;
             }
 
             Stopwatch sw = Stopwatch.StartNew();
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var properties = currentBlob.Properties;
-                DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
+                DateTimeOffset lastModifiedTimestamp = properties.LastModified.Value;
 
                 if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
                     (continuationToken == null || lastModifiedTimestamp <= containerScanInfo.PollingStartTime))
