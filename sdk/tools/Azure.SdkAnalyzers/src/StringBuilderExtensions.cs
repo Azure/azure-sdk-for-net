@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Text;
-using System.Xml;
 
-internal static class StringBuilderExtensions
+namespace Azure.SdkAnalyzers
 {
-    private const char Newline = '\n';
-    public static StringBuilder AppendNormalizedLine(this StringBuilder sb, string value)
+    internal static class StringBuilderExtensions
     {
-        sb.Append(value);
-        sb.Append(Newline);
-        return sb;
+        private const char Newline = '\n';
+        public static StringBuilder AppendNormalizedLine(this StringBuilder sb, string value)
+        {
+            sb.Append(value);
+            sb.Append(Newline);
+            return sb;
+        }
     }
 }
