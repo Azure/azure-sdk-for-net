@@ -8,17 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAgentPoolProfileProperties : IUtf8JsonSerializable, IJsonModel<ManagedClusterAgentPoolProfileProperties>
+    /// <summary> Properties for the container service agent pool profile. </summary>
+    public partial class ManagedClusterAgentPoolProfileProperties : IJsonModel<ManagedClusterAgentPoolProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterAgentPoolProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +30,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(Count))
             {
@@ -56,10 +55,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("osDiskSizeGB"u8);
                 writer.WriteNumberValue(OSDiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(OSDiskType))
+            if (Optional.IsDefined(OsDiskType))
             {
                 writer.WritePropertyName("osDiskType"u8);
-                writer.WriteStringValue(OSDiskType.Value.ToString());
+                writer.WriteStringValue(OsDiskType.Value.ToString());
             }
             if (Optional.IsDefined(KubeletDiskType))
             {
@@ -76,15 +75,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("messageOfTheDay"u8);
                 writer.WriteStringValue(MessageOfTheDay);
             }
-            if (Optional.IsDefined(VnetSubnetId))
+            if (Optional.IsDefined(VnetSubnetID))
             {
                 writer.WritePropertyName("vnetSubnetID"u8);
-                writer.WriteStringValue(VnetSubnetId);
+                writer.WriteStringValue(VnetSubnetID);
             }
-            if (Optional.IsDefined(PodSubnetId))
+            if (Optional.IsDefined(PodSubnetID))
             {
                 writer.WritePropertyName("podSubnetID"u8);
-                writer.WriteStringValue(PodSubnetId);
+                writer.WriteStringValue(PodSubnetID);
             }
             if (Optional.IsDefined(PodIPAllocationMode))
             {
@@ -96,15 +95,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OsType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSku))
+            if (Optional.IsDefined(OsSKU))
             {
                 writer.WritePropertyName("osSKU"u8);
-                writer.WriteStringValue(OSSku.Value.ToString());
+                writer.WriteStringValue(OsSKU.Value.ToString());
             }
             if (Optional.IsDefined(MaxCount))
             {
@@ -126,10 +125,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("scaleDownMode"u8);
                 writer.WriteStringValue(ScaleDownMode.Value.ToString());
             }
-            if (Optional.IsDefined(AgentPoolType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AgentPoolType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
@@ -151,10 +150,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
+            if (Optional.IsDefined(UpgradeStrategy))
+            {
+                writer.WritePropertyName("upgradeStrategy"u8);
+                writer.WriteStringValue(UpgradeStrategy.Value.ToString());
+            }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings, options);
+            }
+            if (Optional.IsDefined(UpgradeSettingsBlueGreen))
+            {
+                writer.WritePropertyName("upgradeSettingsBlueGreen"u8);
+                writer.WriteObjectValue(UpgradeSettingsBlueGreen, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -170,8 +179,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
-                foreach (var item in AvailabilityZones)
+                foreach (string item in AvailabilityZones)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -181,10 +195,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
-            if (Optional.IsDefined(NodePublicIPPrefixId))
+            if (Optional.IsDefined(NodePublicIPPrefixID))
             {
                 writer.WritePropertyName("nodePublicIPPrefixID"u8);
-                writer.WriteStringValue(NodePublicIPPrefixId);
+                writer.WriteStringValue(NodePublicIPPrefixID);
             }
             if (Optional.IsDefined(ScaleSetPriority))
             {
@@ -208,6 +222,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -219,6 +238,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in NodeLabels)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -227,16 +251,36 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodeTaints)
+                foreach (string item in NodeTaints)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroupId))
+            if (Optional.IsCollectionDefined(NodeInitializationTaints))
+            {
+                writer.WritePropertyName("nodeInitializationTaints"u8);
+                writer.WriteStartArray();
+                foreach (string item in NodeInitializationTaints)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ProximityPlacementGroupID))
             {
                 writer.WritePropertyName("proximityPlacementGroupID"u8);
-                writer.WriteStringValue(ProximityPlacementGroupId);
+                writer.WriteStringValue(ProximityPlacementGroupID);
             }
             if (Optional.IsDefined(KubeletConfig))
             {
@@ -253,15 +297,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(EnableUltraSsd))
+            if (Optional.IsDefined(EnableUltraSSD))
             {
                 writer.WritePropertyName("enableUltraSSD"u8);
-                writer.WriteBooleanValue(EnableUltraSsd.Value);
+                writer.WriteBooleanValue(EnableUltraSSD.Value);
             }
-            if (Optional.IsDefined(EnableFips))
+            if (Optional.IsDefined(EnableFIPS))
             {
                 writer.WritePropertyName("enableFIPS"u8);
-                writer.WriteBooleanValue(EnableFips.Value);
+                writer.WriteBooleanValue(EnableFIPS.Value);
             }
             if (Optional.IsDefined(GpuInstanceProfile))
             {
@@ -273,15 +317,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData, options);
             }
-            if (Optional.IsDefined(CapacityReservationGroupId))
+            if (Optional.IsDefined(CapacityReservationGroupID))
             {
                 writer.WritePropertyName("capacityReservationGroupID"u8);
-                writer.WriteStringValue(CapacityReservationGroupId);
+                writer.WriteStringValue(CapacityReservationGroupID);
             }
-            if (Optional.IsDefined(HostGroupId))
+            if (Optional.IsDefined(HostGroupID))
             {
                 writer.WritePropertyName("hostGroupID"u8);
-                writer.WriteStringValue(HostGroupId);
+                writer.WriteStringValue(HostGroupID);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -308,6 +352,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("gatewayProfile"u8);
                 writer.WriteObjectValue(GatewayProfile, options);
             }
+            if (Optional.IsDefined(ArtifactStreamingProfile))
+            {
+                writer.WritePropertyName("artifactStreamingProfile"u8);
+                writer.WriteObjectValue(ArtifactStreamingProfile, options);
+            }
             if (Optional.IsDefined(VirtualMachinesProfile))
             {
                 writer.WritePropertyName("virtualMachinesProfile"u8);
@@ -317,7 +366,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("virtualMachineNodesStatus"u8);
                 writer.WriteStartArray();
-                foreach (var item in VirtualMachineNodesStatus)
+                foreach (AgentPoolVirtualMachineNodes item in VirtualMachineNodesStatus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -328,20 +377,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
-            if (Optional.IsDefined(LocalDnsProfile))
+            if (Optional.IsDefined(LocalDNSProfile))
             {
                 writer.WritePropertyName("localDNSProfile"u8);
-                writer.WriteObjectValue(LocalDnsProfile, options);
+                writer.WriteObjectValue(LocalDNSProfile, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(NodeCustomizationProfile))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("nodeCustomizationProfile"u8);
+                writer.WriteObjectValue(NodeCustomizationProfile, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -350,1654 +404,759 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ManagedClusterAgentPoolProfileProperties IJsonModel<ManagedClusterAgentPoolProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterAgentPoolProfileProperties IJsonModel<ManagedClusterAgentPoolProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterAgentPoolProfileProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterAgentPoolProfileProperties(document.RootElement, options);
         }
 
-        internal static ManagedClusterAgentPoolProfileProperties DeserializeManagedClusterAgentPoolProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedClusterAgentPoolProfileProperties DeserializeManagedClusterAgentPoolProfileProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
+            string eTag = default;
             int? count = default;
             string vmSize = default;
-            int? osDiskSizeGB = default;
+            int? osDiskSizeInGB = default;
             ContainerServiceOSDiskType? osDiskType = default;
             KubeletDiskType? kubeletDiskType = default;
             WorkloadRuntime? workloadRuntime = default;
             string messageOfTheDay = default;
-            ResourceIdentifier vnetSubnetId = default;
-            ResourceIdentifier podSubnetId = default;
+            ResourceIdentifier vnetSubnetID = default;
+            ResourceIdentifier podSubnetID = default;
             PodIPAllocationMode? podIPAllocationMode = default;
             int? maxPods = default;
             ContainerServiceOSType? osType = default;
-            ContainerServiceOSSku? osSku = default;
+            ContainerServiceOSSku? osSKU = default;
             int? maxCount = default;
             int? minCount = default;
             bool? enableAutoScaling = default;
             ScaleDownMode? scaleDownMode = default;
-            AgentPoolType? type = default;
+            AgentPoolType? @type = default;
             AgentPoolMode? mode = default;
             string orchestratorVersion = default;
             string currentOrchestratorVersion = default;
             string nodeImageVersion = default;
+            UpgradeStrategy? upgradeStrategy = default;
             AgentPoolUpgradeSettings upgradeSettings = default;
+            AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen = default;
             string provisioningState = default;
             ContainerServicePowerState powerState = default;
             IList<string> availabilityZones = default;
             bool? enableNodePublicIP = default;
-            ResourceIdentifier nodePublicIPPrefixId = default;
+            ResourceIdentifier nodePublicIPPrefixID = default;
             ScaleSetPriority? scaleSetPriority = default;
             ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default;
             float? spotMaxPrice = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
-            ResourceIdentifier proximityPlacementGroupId = default;
+            IList<string> nodeInitializationTaints = default;
+            ResourceIdentifier proximityPlacementGroupID = default;
             KubeletConfig kubeletConfig = default;
             LinuxOSConfig linuxOSConfig = default;
             bool? enableEncryptionAtHost = default;
-            bool? enableUltraSsd = default;
+            bool? enableUltraSSD = default;
             bool? enableFIPS = default;
             GpuInstanceProfile? gpuInstanceProfile = default;
             ContainerServiceCreationData creationData = default;
-            ResourceIdentifier capacityReservationGroupId = default;
-            ResourceIdentifier hostGroupId = default;
+            ResourceIdentifier capacityReservationGroupID = default;
+            ResourceIdentifier hostGroupID = default;
             AgentPoolNetworkProfile networkProfile = default;
             AgentPoolWindowsProfile windowsProfile = default;
             AgentPoolSecurityProfile securityProfile = default;
             AgentPoolGpuProfile gpuProfile = default;
             AgentPoolGatewayProfile gatewayProfile = default;
+            AgentPoolArtifactStreamingProfile artifactStreamingProfile = default;
             VirtualMachinesProfile virtualMachinesProfile = default;
             IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default;
             AgentPoolStatus status = default;
-            LocalDnsProfile localDnsProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            LocalDnsProfile localDNSProfile = default;
+            NodeCustomizationProfile nodeCustomizationProfile = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    count = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("vmSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    vmSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osDiskSizeGB"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt32();
+                    osDiskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmSize"u8))
+                if (prop.NameEquals("osDiskType"u8))
                 {
-                    vmSize = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osDiskSizeGB"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDiskSizeGB = property.Value.GetInt32();
+                    osDiskType = new ContainerServiceOSDiskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osDiskType"u8))
+                if (prop.NameEquals("kubeletDiskType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDiskType = new ContainerServiceOSDiskType(property.Value.GetString());
+                    kubeletDiskType = new KubeletDiskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kubeletDiskType"u8))
+                if (prop.NameEquals("workloadRuntime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kubeletDiskType = new KubeletDiskType(property.Value.GetString());
+                    workloadRuntime = new WorkloadRuntime(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workloadRuntime"u8))
+                if (prop.NameEquals("messageOfTheDay"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    messageOfTheDay = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vnetSubnetID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workloadRuntime = new WorkloadRuntime(property.Value.GetString());
+                    vnetSubnetID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("messageOfTheDay"u8))
+                if (prop.NameEquals("podSubnetID"u8))
                 {
-                    messageOfTheDay = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vnetSubnetID"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    podSubnetID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("podSubnetID"u8))
+                if (prop.NameEquals("podIPAllocationMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    podSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    podIPAllocationMode = new PodIPAllocationMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("podIPAllocationMode"u8))
+                if (prop.NameEquals("maxPods"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    podIPAllocationMode = new PodIPAllocationMode(property.Value.GetString());
+                    maxPods = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPods"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPods = property.Value.GetInt32();
+                    osType = new ContainerServiceOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osSKU"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new ContainerServiceOSType(property.Value.GetString());
+                    osSKU = new ContainerServiceOSSku(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osSKU"u8))
+                if (prop.NameEquals("maxCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osSku = new ContainerServiceOSSku(property.Value.GetString());
+                    maxCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxCount"u8))
+                if (prop.NameEquals("minCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxCount = property.Value.GetInt32();
+                    minCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minCount"u8))
+                if (prop.NameEquals("enableAutoScaling"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minCount = property.Value.GetInt32();
+                    enableAutoScaling = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAutoScaling"u8))
+                if (prop.NameEquals("scaleDownMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutoScaling = property.Value.GetBoolean();
+                    scaleDownMode = new ScaleDownMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scaleDownMode"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleDownMode = new ScaleDownMode(property.Value.GetString());
+                    @type = new AgentPoolType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new AgentPoolType(property.Value.GetString());
+                    mode = new AgentPoolMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("orchestratorVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    orchestratorVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("currentOrchestratorVersion"u8))
+                {
+                    currentOrchestratorVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("nodeImageVersion"u8))
+                {
+                    nodeImageVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("upgradeStrategy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new AgentPoolMode(property.Value.GetString());
+                    upgradeStrategy = new UpgradeStrategy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("orchestratorVersion"u8))
+                if (prop.NameEquals("upgradeSettings"u8))
                 {
-                    orchestratorVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("currentOrchestratorVersion"u8))
-                {
-                    currentOrchestratorVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("nodeImageVersion"u8))
-                {
-                    nodeImageVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("upgradeSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
+                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("upgradeSettingsBlueGreen"u8))
                 {
-                    provisioningState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("powerState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value, options);
+                    upgradeSettingsBlueGreen = AgentPoolBlueGreenUpgradeSettings.DeserializeAgentPoolBlueGreenUpgradeSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("availabilityZones"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    provisioningState = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("powerState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("availabilityZones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     availabilityZones = array;
                     continue;
                 }
-                if (property.NameEquals("enableNodePublicIP"u8))
+                if (prop.NameEquals("enableNodePublicIP"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableNodePublicIP = property.Value.GetBoolean();
+                    enableNodePublicIP = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nodePublicIPPrefixID"u8))
+                if (prop.NameEquals("nodePublicIPPrefixID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodePublicIPPrefixId = new ResourceIdentifier(property.Value.GetString());
+                    nodePublicIPPrefixID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scaleSetPriority"u8))
+                if (prop.NameEquals("scaleSetPriority"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleSetPriority = new ScaleSetPriority(property.Value.GetString());
+                    scaleSetPriority = new ScaleSetPriority(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scaleSetEvictionPolicy"u8))
+                if (prop.NameEquals("scaleSetEvictionPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleSetEvictionPolicy = new ScaleSetEvictionPolicy(property.Value.GetString());
+                    scaleSetEvictionPolicy = new ScaleSetEvictionPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("spotMaxPrice"u8))
+                if (prop.NameEquals("spotMaxPrice"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    spotMaxPrice = property.Value.GetSingle();
+                    spotMaxPrice = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeLabels"u8))
+                if (prop.NameEquals("nodeLabels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     nodeLabels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeTaints"u8))
+                if (prop.NameEquals("nodeTaints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nodeTaints = array;
                     continue;
                 }
-                if (property.NameEquals("proximityPlacementGroupID"u8))
+                if (prop.NameEquals("nodeInitializationTaints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    proximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    nodeInitializationTaints = array;
                     continue;
                 }
-                if (property.NameEquals("kubeletConfig"u8))
+                if (prop.NameEquals("proximityPlacementGroupID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value, options);
+                    proximityPlacementGroupID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linuxOSConfig"u8))
+                if (prop.NameEquals("kubeletConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value, options);
+                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enableEncryptionAtHost"u8))
+                if (prop.NameEquals("linuxOSConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableEncryptionAtHost = property.Value.GetBoolean();
+                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enableUltraSSD"u8))
+                if (prop.NameEquals("enableEncryptionAtHost"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableUltraSsd = property.Value.GetBoolean();
+                    enableEncryptionAtHost = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableFIPS"u8))
+                if (prop.NameEquals("enableUltraSSD"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableFIPS = property.Value.GetBoolean();
+                    enableUltraSSD = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("gpuInstanceProfile"u8))
+                if (prop.NameEquals("enableFIPS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gpuInstanceProfile = new GpuInstanceProfile(property.Value.GetString());
+                    enableFIPS = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("creationData"u8))
+                if (prop.NameEquals("gpuInstanceProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value, options);
+                    gpuInstanceProfile = new GpuInstanceProfile(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacityReservationGroupID"u8))
+                if (prop.NameEquals("creationData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hostGroupID"u8))
+                if (prop.NameEquals("capacityReservationGroupID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostGroupId = new ResourceIdentifier(property.Value.GetString());
+                    capacityReservationGroupID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkProfile"u8))
+                if (prop.NameEquals("hostGroupID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value, options);
+                    hostGroupID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("windowsProfile"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(property.Value, options);
+                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securityProfile"u8))
+                if (prop.NameEquals("windowsProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityProfile = AgentPoolSecurityProfile.DeserializeAgentPoolSecurityProfile(property.Value, options);
+                    windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("gpuProfile"u8))
+                if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gpuProfile = AgentPoolGpuProfile.DeserializeAgentPoolGpuProfile(property.Value, options);
+                    securityProfile = AgentPoolSecurityProfile.DeserializeAgentPoolSecurityProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("gatewayProfile"u8))
+                if (prop.NameEquals("gpuProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gatewayProfile = AgentPoolGatewayProfile.DeserializeAgentPoolGatewayProfile(property.Value, options);
+                    gpuProfile = AgentPoolGpuProfile.DeserializeAgentPoolGpuProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("virtualMachinesProfile"u8))
+                if (prop.NameEquals("gatewayProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachinesProfile = VirtualMachinesProfile.DeserializeVirtualMachinesProfile(property.Value, options);
+                    gatewayProfile = AgentPoolGatewayProfile.DeserializeAgentPoolGatewayProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("virtualMachineNodesStatus"u8))
+                if (prop.NameEquals("artifactStreamingProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    artifactStreamingProfile = AgentPoolArtifactStreamingProfile.DeserializeAgentPoolArtifactStreamingProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("virtualMachinesProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachinesProfile = VirtualMachinesProfile.DeserializeVirtualMachinesProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("virtualMachineNodesStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AgentPoolVirtualMachineNodes> array = new List<AgentPoolVirtualMachineNodes>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AgentPoolVirtualMachineNodes.DeserializeAgentPoolVirtualMachineNodes(item, options));
                     }
                     virtualMachineNodesStatus = array;
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = AgentPoolStatus.DeserializeAgentPoolStatus(property.Value, options);
+                    status = AgentPoolStatus.DeserializeAgentPoolStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("localDNSProfile"u8))
+                if (prop.NameEquals("localDNSProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(property.Value, options);
+                    localDNSProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("nodeCustomizationProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeCustomizationProfile = NodeCustomizationProfile.DeserializeNodeCustomizationProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAgentPoolProfileProperties(
-                etag,
+                eTag,
                 count,
                 vmSize,
-                osDiskSizeGB,
+                osDiskSizeInGB,
                 osDiskType,
                 kubeletDiskType,
                 workloadRuntime,
                 messageOfTheDay,
-                vnetSubnetId,
-                podSubnetId,
+                vnetSubnetID,
+                podSubnetID,
                 podIPAllocationMode,
                 maxPods,
                 osType,
-                osSku,
+                osSKU,
                 maxCount,
                 minCount,
                 enableAutoScaling,
                 scaleDownMode,
-                type,
+                @type,
                 mode,
                 orchestratorVersion,
                 currentOrchestratorVersion,
                 nodeImageVersion,
+                upgradeStrategy,
                 upgradeSettings,
+                upgradeSettingsBlueGreen,
                 provisioningState,
                 powerState,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 enableNodePublicIP,
-                nodePublicIPPrefixId,
+                nodePublicIPPrefixID,
                 scaleSetPriority,
                 scaleSetEvictionPolicy,
                 spotMaxPrice,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
-                proximityPlacementGroupId,
+                nodeInitializationTaints ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupID,
                 kubeletConfig,
                 linuxOSConfig,
                 enableEncryptionAtHost,
-                enableUltraSsd,
+                enableUltraSSD,
                 enableFIPS,
                 gpuInstanceProfile,
                 creationData,
-                capacityReservationGroupId,
-                hostGroupId,
+                capacityReservationGroupID,
+                hostGroupID,
                 networkProfile,
                 windowsProfile,
                 securityProfile,
                 gpuProfile,
                 gatewayProfile,
+                artifactStreamingProfile,
                 virtualMachinesProfile,
                 virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 status,
-                localDnsProfile,
-                serializedAdditionalRawData);
+                localDNSProfile,
+                nodeCustomizationProfile,
+                additionalBinaryDataProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedClusterAgentPoolProfileProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  eTag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  count: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Count))
-                {
-                    builder.Append("  count: ");
-                    builder.AppendLine($"{Count.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vmSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VmSize))
-                {
-                    builder.Append("  vmSize: ");
-                    if (VmSize.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VmSize}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VmSize}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSDiskSizeInGB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osDiskSizeGB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSDiskSizeInGB))
-                {
-                    builder.Append("  osDiskSizeGB: ");
-                    builder.AppendLine($"{OSDiskSizeInGB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSDiskType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osDiskType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSDiskType))
-                {
-                    builder.Append("  osDiskType: ");
-                    builder.AppendLine($"'{OSDiskType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeletDiskType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kubeletDiskType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KubeletDiskType))
-                {
-                    builder.Append("  kubeletDiskType: ");
-                    builder.AppendLine($"'{KubeletDiskType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadRuntime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  workloadRuntime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WorkloadRuntime))
-                {
-                    builder.Append("  workloadRuntime: ");
-                    builder.AppendLine($"'{WorkloadRuntime.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MessageOfTheDay), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  messageOfTheDay: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MessageOfTheDay))
-                {
-                    builder.Append("  messageOfTheDay: ");
-                    if (MessageOfTheDay.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MessageOfTheDay}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MessageOfTheDay}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetSubnetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vnetSubnetID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VnetSubnetId))
-                {
-                    builder.Append("  vnetSubnetID: ");
-                    builder.AppendLine($"'{VnetSubnetId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodSubnetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  podSubnetID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PodSubnetId))
-                {
-                    builder.Append("  podSubnetID: ");
-                    builder.AppendLine($"'{PodSubnetId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodIPAllocationMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  podIPAllocationMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PodIPAllocationMode))
-                {
-                    builder.Append("  podIPAllocationMode: ");
-                    builder.AppendLine($"'{PodIPAllocationMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPods), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxPods: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxPods))
-                {
-                    builder.Append("  maxPods: ");
-                    builder.AppendLine($"{MaxPods.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSType))
-                {
-                    builder.Append("  osType: ");
-                    builder.AppendLine($"'{OSType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSSku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osSKU: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSSku))
-                {
-                    builder.Append("  osSKU: ");
-                    builder.AppendLine($"'{OSSku.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxCount))
-                {
-                    builder.Append("  maxCount: ");
-                    builder.AppendLine($"{MaxCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinCount))
-                {
-                    builder.Append("  minCount: ");
-                    builder.AppendLine($"{MinCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableAutoScaling), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableAutoScaling: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableAutoScaling))
-                {
-                    builder.Append("  enableAutoScaling: ");
-                    var boolValue = EnableAutoScaling.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleDownMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownMode))
-                {
-                    builder.Append("  scaleDownMode: ");
-                    builder.AppendLine($"'{ScaleDownMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentPoolType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AgentPoolType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{AgentPoolType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Mode))
-                {
-                    builder.Append("  mode: ");
-                    builder.AppendLine($"'{Mode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OrchestratorVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  orchestratorVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OrchestratorVersion))
-                {
-                    builder.Append("  orchestratorVersion: ");
-                    if (OrchestratorVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OrchestratorVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OrchestratorVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentOrchestratorVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currentOrchestratorVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentOrchestratorVersion))
-                {
-                    builder.Append("  currentOrchestratorVersion: ");
-                    if (CurrentOrchestratorVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CurrentOrchestratorVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CurrentOrchestratorVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeImageVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeImageVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeImageVersion))
-                {
-                    builder.Append("  nodeImageVersion: ");
-                    if (NodeImageVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NodeImageVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NodeImageVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  upgradeSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UpgradeSettings))
-                {
-                    builder.Append("  upgradeSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, UpgradeSettings, options, 2, false, "  upgradeSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PowerStateCode", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  powerState: ");
-                builder.AppendLine("{");
-                builder.Append("    code: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(PowerState))
-                {
-                    builder.Append("  powerState: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PowerState, options, 2, false, "  powerState: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailabilityZones), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  availabilityZones: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AvailabilityZones))
-                {
-                    if (AvailabilityZones.Any())
-                    {
-                        builder.Append("  availabilityZones: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AvailabilityZones)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableNodePublicIP), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableNodePublicIP: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableNodePublicIP))
-                {
-                    builder.Append("  enableNodePublicIP: ");
-                    var boolValue = EnableNodePublicIP.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodePublicIPPrefixId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodePublicIPPrefixID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodePublicIPPrefixId))
-                {
-                    builder.Append("  nodePublicIPPrefixID: ");
-                    builder.AppendLine($"'{NodePublicIPPrefixId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSetPriority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleSetPriority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleSetPriority))
-                {
-                    builder.Append("  scaleSetPriority: ");
-                    builder.AppendLine($"'{ScaleSetPriority.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSetEvictionPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleSetEvictionPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleSetEvictionPolicy))
-                {
-                    builder.Append("  scaleSetEvictionPolicy: ");
-                    builder.AppendLine($"'{ScaleSetEvictionPolicy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpotMaxPrice), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  spotMaxPrice: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SpotMaxPrice))
-                {
-                    builder.Append("  spotMaxPrice: ");
-                    builder.AppendLine($"'{SpotMaxPrice.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeLabels), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeLabels: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NodeLabels))
-                {
-                    if (NodeLabels.Any())
-                    {
-                        builder.Append("  nodeLabels: ");
-                        builder.AppendLine("{");
-                        foreach (var item in NodeLabels)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeTaints), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeTaints: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NodeTaints))
-                {
-                    if (NodeTaints.Any())
-                    {
-                        builder.Append("  nodeTaints: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NodeTaints)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProximityPlacementGroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  proximityPlacementGroupID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProximityPlacementGroupId))
-                {
-                    builder.Append("  proximityPlacementGroupID: ");
-                    builder.AppendLine($"'{ProximityPlacementGroupId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeletConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kubeletConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KubeletConfig))
-                {
-                    builder.Append("  kubeletConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KubeletConfig, options, 2, false, "  kubeletConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxOSConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  linuxOSConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinuxOSConfig))
-                {
-                    builder.Append("  linuxOSConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LinuxOSConfig, options, 2, false, "  linuxOSConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableEncryptionAtHost), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableEncryptionAtHost: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableEncryptionAtHost))
-                {
-                    builder.Append("  enableEncryptionAtHost: ");
-                    var boolValue = EnableEncryptionAtHost.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableUltraSsd), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableUltraSSD: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableUltraSsd))
-                {
-                    builder.Append("  enableUltraSSD: ");
-                    var boolValue = EnableUltraSsd.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFips), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableFIPS: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableFips))
-                {
-                    builder.Append("  enableFIPS: ");
-                    var boolValue = EnableFips.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GpuInstanceProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gpuInstanceProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GpuInstanceProfile))
-                {
-                    builder.Append("  gpuInstanceProfile: ");
-                    builder.AppendLine($"'{GpuInstanceProfile.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CreationDataSourceResourceId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  creationData: ");
-                builder.AppendLine("{");
-                builder.Append("    sourceResourceId: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(CreationData))
-                {
-                    builder.Append("  creationData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CreationData, options, 2, false, "  creationData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacityReservationGroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capacityReservationGroupID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CapacityReservationGroupId))
-                {
-                    builder.Append("  capacityReservationGroupID: ");
-                    builder.AppendLine($"'{CapacityReservationGroupId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostGroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostGroupID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostGroupId))
-                {
-                    builder.Append("  hostGroupID: ");
-                    builder.AppendLine($"'{HostGroupId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkProfile))
-                {
-                    builder.Append("  networkProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NetworkProfile, options, 2, false, "  networkProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsOutboundNatDisabled", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  windowsProfile: ");
-                builder.AppendLine("{");
-                builder.Append("    disableOutboundNat: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(WindowsProfile))
-                {
-                    builder.Append("  windowsProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, WindowsProfile, options, 2, false, "  windowsProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  securityProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecurityProfile))
-                {
-                    builder.Append("  securityProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SecurityProfile, options, 2, false, "  securityProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("GpuDriver", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gpuProfile: ");
-                builder.AppendLine("{");
-                builder.Append("    driver: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(GpuProfile))
-                {
-                    builder.Append("  gpuProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GpuProfile, options, 2, false, "  gpuProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("GatewayPublicIPPrefixSize", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gatewayProfile: ");
-                builder.AppendLine("{");
-                builder.Append("    publicIPPrefixSize: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(GatewayProfile))
-                {
-                    builder.Append("  gatewayProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GatewayProfile, options, 2, false, "  gatewayProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ScaleManual", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  virtualMachinesProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    scale: {");
-                builder.Append("      manual: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualMachinesProfile))
-                {
-                    builder.Append("  virtualMachinesProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualMachinesProfile, options, 2, false, "  virtualMachinesProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualMachineNodesStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  virtualMachineNodesStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VirtualMachineNodesStatus))
-                {
-                    if (VirtualMachineNodesStatus.Any())
-                    {
-                        builder.Append("  virtualMachineNodesStatus: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VirtualMachineNodesStatus)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  virtualMachineNodesStatus: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StatusProvisioningError", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine("{");
-                builder.Append("    provisioningError: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Status, options, 2, false, "  status: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalDnsProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  localDNSProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalDnsProfile))
-                {
-                    builder.Append("  localDNSProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LocalDnsProfile, options, 2, false, "  localDNSProfile: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedClusterAgentPoolProfileProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedClusterAgentPoolProfileProperties IPersistableModel<ManagedClusterAgentPoolProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterAgentPoolProfileProperties IPersistableModel<ManagedClusterAgentPoolProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterAgentPoolProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedClusterAgentPoolProfileProperties(document.RootElement, options);
                     }
                 default:
@@ -2005,6 +1164,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedClusterAgentPoolProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

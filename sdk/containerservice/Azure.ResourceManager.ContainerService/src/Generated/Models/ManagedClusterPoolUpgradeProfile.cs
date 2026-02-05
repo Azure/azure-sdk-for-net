@@ -7,121 +7,62 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The list of available upgrade versions.
-    /// Serialized Name: ManagedClusterPoolUpgradeProfile
-    /// </summary>
+    /// <summary> The list of available upgrade versions. </summary>
     public partial class ManagedClusterPoolUpgradeProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
-        /// <param name="kubernetesVersion">
-        /// The Kubernetes version (major.minor.patch).
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
-        /// </param>
-        /// <param name="osType">
-        /// The operating system type. The default is Linux.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
+        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
+        /// <param name="osType"> The operating system type. The default is Linux. </param>
         internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
-
             KubernetesVersion = kubernetesVersion;
-            OSType = osType;
+            OsType = osType;
             Upgrades = new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>();
+            ComponentsByReleases = new ChangeTrackingList<ComponentsByRelease>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
-        /// <param name="kubernetesVersion">
-        /// The Kubernetes version (major.minor.patch).
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
-        /// </param>
-        /// <param name="name">
-        /// The Agent Pool name.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.name
-        /// </param>
-        /// <param name="osType">
-        /// The operating system type. The default is Linux.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
-        /// </param>
-        /// <param name="upgrades">
-        /// List of orchestrator types and versions available for upgrade.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
+        /// <param name="name"> The Agent Pool name. </param>
+        /// <param name="osType"> The operating system type. The default is Linux. </param>
+        /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
+        /// <param name="componentsByReleases"> List of components grouped by kubernetes major.minor version. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IList<ComponentsByRelease> componentsByReleases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
-            OSType = osType;
+            OsType = osType;
             Upgrades = upgrades;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ComponentsByReleases = componentsByReleases;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/> for deserialization. </summary>
-        internal ManagedClusterPoolUpgradeProfile()
-        {
-        }
-
-        /// <summary>
-        /// The Kubernetes version (major.minor.patch).
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
-        /// </summary>
+        /// <summary> The Kubernetes version (major.minor.patch). </summary>
         [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
-        /// <summary>
-        /// The Agent Pool name.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.name
-        /// </summary>
+
+        /// <summary> The Agent Pool name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The operating system type. The default is Linux.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
-        /// </summary>
+
+        /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("osType")]
-        public ContainerServiceOSType OSType { get; }
-        /// <summary>
-        /// List of orchestrator types and versions available for upgrade.
-        /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
-        /// </summary>
+        public ContainerServiceOSType OsType { get; }
+
+        /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         [WirePath("upgrades")]
         public IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
+
+        /// <summary> List of components grouped by kubernetes major.minor version. </summary>
+        [WirePath("componentsByReleases")]
+        public IList<ComponentsByRelease> ComponentsByReleases { get; }
     }
 }

@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The credential result response.
-    /// Serialized Name: CredentialResult
-    /// </summary>
+    /// <summary> The credential result response. </summary>
     public partial class ManagedClusterCredential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
         internal ManagedClusterCredential()
@@ -54,33 +23,37 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
-        /// <param name="name">
-        /// The name of the credential.
-        /// Serialized Name: CredentialResult.name
-        /// </param>
-        /// <param name="value">
-        /// Base64-encoded Kubernetes configuration file.
-        /// Serialized Name: CredentialResult.value
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterCredential(string name, byte[] value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> The name of the credential. </param>
+        /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterCredential(string name, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The name of the credential.
-        /// Serialized Name: CredentialResult.name
-        /// </summary>
+        /// <summary> The name of the credential. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary>
         /// Base64-encoded Kubernetes configuration file.
-        /// Serialized Name: CredentialResult.value
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
         [WirePath("value")]
-        public byte[] Value { get; }
+        public BinaryData Value { get; }
     }
 }

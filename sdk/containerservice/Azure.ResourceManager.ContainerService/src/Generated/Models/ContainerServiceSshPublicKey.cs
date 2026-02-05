@@ -7,52 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Contains information about SSH certificate public key data.
-    /// Serialized Name: ContainerServiceSshPublicKey
-    /// </summary>
+    /// <summary> Contains information about SSH certificate public key data. </summary>
     public partial class ContainerServiceSshPublicKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshPublicKey"/>. </summary>
-        /// <param name="keyData">
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </param>
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public ContainerServiceSshPublicKey(string keyData)
         {
@@ -62,26 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshPublicKey"/>. </summary>
-        /// <param name="keyData">
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceSshPublicKey(string keyData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceSshPublicKey(string keyData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyData = keyData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshPublicKey"/> for deserialization. </summary>
-        internal ContainerServiceSshPublicKey()
-        {
-        }
-
-        /// <summary>
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </summary>
+        /// <summary> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>
         [WirePath("keyData")]
         public string KeyData { get; set; }
     }

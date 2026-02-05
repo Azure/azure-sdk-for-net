@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state of the pod identity.
-    /// Serialized Name: ManagedClusterPodIdentityProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state of the pod identity. </summary>
     public readonly partial struct ManagedClusterPodIdentityProvisioningState : IEquatable<ManagedClusterPodIdentityProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedClusterPodIdentityProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AssignedValue = "Assigned";
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
@@ -32,53 +22,64 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Assigned
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Assigned
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedClusterPodIdentityProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Assigned. </summary>
         public static ManagedClusterPodIdentityProvisioningState Assigned { get; } = new ManagedClusterPodIdentityProvisioningState(AssignedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Canceled
-        /// </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ManagedClusterPodIdentityProvisioningState Canceled { get; } = new ManagedClusterPodIdentityProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ManagedClusterPodIdentityProvisioningState Deleting { get; } = new ManagedClusterPodIdentityProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ManagedClusterPodIdentityProvisioningState Failed { get; } = new ManagedClusterPodIdentityProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ManagedClusterPodIdentityProvisioningState Succeeded { get; } = new ManagedClusterPodIdentityProvisioningState(SucceededValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ManagedClusterPodIdentityProvisioningState.Updating
-        /// </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static ManagedClusterPodIdentityProvisioningState Updating { get; } = new ManagedClusterPodIdentityProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterPodIdentityProvisioningState left, ManagedClusterPodIdentityProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterPodIdentityProvisioningState left, ManagedClusterPodIdentityProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterPodIdentityProvisioningState(string value) => new ManagedClusterPodIdentityProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterPodIdentityProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterPodIdentityProvisioningState?(string value) => value == null ? null : new ManagedClusterPodIdentityProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterPodIdentityProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterPodIdentityProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

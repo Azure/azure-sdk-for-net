@@ -7,47 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Properties for the container service agent pool profile.
-    /// Serialized Name: ManagedClusterAgentPoolProfileProperties
-    /// </summary>
+    /// <summary> Properties for the container service agent pool profile. </summary>
     public partial class ManagedClusterAgentPoolProfileProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentPoolProfileProperties"/>. </summary>
         public ManagedClusterAgentPoolProfileProperties()
@@ -56,707 +26,505 @@ namespace Azure.ResourceManager.ContainerService.Models
             Tags = new ChangeTrackingDictionary<string, string>();
             NodeLabels = new ChangeTrackingDictionary<string, string>();
             NodeTaints = new ChangeTrackingList<string>();
+            NodeInitializationTaints = new ChangeTrackingList<string>();
             VirtualMachineNodesStatus = new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentPoolProfileProperties"/>. </summary>
-        /// <param name="etag">
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.eTag
-        /// </param>
-        /// <param name="count">
-        /// Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.count
-        /// </param>
-        /// <param name="vmSize">
-        /// The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.vmSize
-        /// </param>
-        /// <param name="osDiskSizeInGB">
-        /// OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osDiskSizeGB
-        /// </param>
-        /// <param name="osDiskType">
-        /// The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osDiskType
-        /// </param>
-        /// <param name="kubeletDiskType">
-        /// Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.kubeletDiskType
-        /// </param>
-        /// <param name="workloadRuntime">
-        /// Determines the type of workload a node can run.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.workloadRuntime
-        /// </param>
-        /// <param name="messageOfTheDay">
-        /// Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.messageOfTheDay
-        /// </param>
-        /// <param name="vnetSubnetId">
-        /// The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.vnetSubnetID
-        /// </param>
-        /// <param name="podSubnetId">
-        /// The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.podSubnetID
-        /// </param>
-        /// <param name="podIPAllocationMode">
-        /// Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.podIPAllocationMode
-        /// </param>
-        /// <param name="maxPods">
-        /// The maximum number of pods that can run on a node.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.maxPods
-        /// </param>
-        /// <param name="osType">
-        /// The operating system type. The default is Linux.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osType
-        /// </param>
-        /// <param name="osSku">
-        /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osSKU
-        /// </param>
-        /// <param name="maxCount">
-        /// The maximum number of nodes for auto-scaling
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.maxCount
-        /// </param>
-        /// <param name="minCount">
-        /// The minimum number of nodes for auto-scaling
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.minCount
-        /// </param>
-        /// <param name="enableAutoScaling">
-        /// Whether to enable auto-scaler
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableAutoScaling
-        /// </param>
-        /// <param name="scaleDownMode">
-        /// The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleDownMode
-        /// </param>
-        /// <param name="agentPoolType">
-        /// The type of Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.type
-        /// </param>
-        /// <param name="mode">
-        /// The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.mode
-        /// </param>
-        /// <param name="orchestratorVersion">
-        /// The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.orchestratorVersion
-        /// </param>
-        /// <param name="currentOrchestratorVersion">
-        /// The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.currentOrchestratorVersion
-        /// </param>
-        /// <param name="nodeImageVersion">
-        /// The version of node image
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeImageVersion
-        /// </param>
-        /// <param name="upgradeSettings">
-        /// Settings for upgrading the agentpool
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.upgradeSettings
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current deployment or provisioning state.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.provisioningState
-        /// </param>
-        /// <param name="powerState">
-        /// Whether the Agent Pool is running or stopped. When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.powerState
-        /// </param>
-        /// <param name="availabilityZones">
-        /// The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.availabilityZones
-        /// </param>
-        /// <param name="enableNodePublicIP">
-        /// Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableNodePublicIP
-        /// </param>
-        /// <param name="nodePublicIPPrefixId">
-        /// The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodePublicIPPrefixID
-        /// </param>
-        /// <param name="scaleSetPriority">
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
-        /// </param>
-        /// <param name="scaleSetEvictionPolicy">
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
-        /// </param>
-        /// <param name="spotMaxPrice">
-        /// The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing)
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.spotMaxPrice
-        /// </param>
-        /// <param name="tags">
-        /// The tags to be persisted on the agent pool virtual machine scale set.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.tags
-        /// </param>
-        /// <param name="nodeLabels">
-        /// The node labels to be persisted across all nodes in agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeLabels
-        /// </param>
-        /// <param name="nodeTaints">
-        /// The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeTaints
-        /// </param>
-        /// <param name="proximityPlacementGroupId">
-        /// The ID for Proximity Placement Group.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.proximityPlacementGroupID
-        /// </param>
-        /// <param name="kubeletConfig">
-        /// The Kubelet configuration on the agent pool nodes.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.kubeletConfig
-        /// </param>
-        /// <param name="linuxOSConfig">
-        /// The OS configuration of Linux agent nodes.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.linuxOSConfig
-        /// </param>
-        /// <param name="enableEncryptionAtHost">
-        /// Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableEncryptionAtHost
-        /// </param>
-        /// <param name="enableUltraSsd">
-        /// Whether to enable UltraSSD
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableUltraSSD
-        /// </param>
-        /// <param name="enableFips">
-        /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableFIPS
-        /// </param>
-        /// <param name="gpuInstanceProfile">
-        /// GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gpuInstanceProfile
-        /// </param>
-        /// <param name="creationData">
-        /// CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.creationData
-        /// </param>
-        /// <param name="capacityReservationGroupId">
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
-        /// </param>
-        /// <param name="hostGroupId">
-        /// The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.hostGroupID
-        /// </param>
-        /// <param name="networkProfile">
-        /// Network-related settings of an agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.networkProfile
-        /// </param>
-        /// <param name="windowsProfile">
-        /// The Windows agent pool's specific profile.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.windowsProfile
-        /// </param>
-        /// <param name="securityProfile">
-        /// The security settings of an agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.securityProfile
-        /// </param>
-        /// <param name="gpuProfile">
-        /// GPU settings for the Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gpuProfile
-        /// </param>
-        /// <param name="gatewayProfile">
-        /// Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gatewayProfile
-        /// </param>
-        /// <param name="virtualMachinesProfile">
-        /// Specifications on VirtualMachines agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.virtualMachinesProfile
-        /// </param>
-        /// <param name="virtualMachineNodesStatus">
-        /// The status of nodes in a VirtualMachines agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.virtualMachineNodesStatus
-        /// </param>
-        /// <param name="status">
-        /// Contains read-only information about the Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.status
-        /// </param>
-        /// <param name="localDnsProfile">
-        /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.localDNSProfile
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAgentPoolProfileProperties(ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
+        /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
+        /// <param name="vmSize"> The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
+        /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
+        /// <param name="osDiskType"> The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
+        /// <param name="kubeletDiskType"> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </param>
+        /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
+        /// <param name="messageOfTheDay"> Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </param>
+        /// <param name="vnetSubnetID"> The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="podSubnetID"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
+        /// <param name="podIPAllocationMode"> Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="osType"> The operating system type. The default is Linux. </param>
+        /// <param name="osSKU"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. </param>
+        /// <param name="scaleDownMode"> The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete. </param>
+        /// <param name="type"> The type of Agent Pool. </param>
+        /// <param name="mode"> The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </param>
+        /// <param name="orchestratorVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool). </param>
+        /// <param name="currentOrchestratorVersion"> The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
+        /// <param name="nodeImageVersion"> The version of node image. </param>
+        /// <param name="upgradeStrategy"> Defines the upgrade strategy for the agent pool. The default is Rolling. </param>
+        /// <param name="upgradeSettings"> Settings for upgrading the agentpool. </param>
+        /// <param name="upgradeSettingsBlueGreen"> Settings for Blue-Green upgrade on the agentpool. Applies when upgrade strategy is set to BlueGreen. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state. </param>
+        /// <param name="powerState"> Whether the Agent Pool is running or stopped. When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded. </param>
+        /// <param name="availabilityZones"> The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'. </param>
+        /// <param name="enableNodePublicIP"> Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </param>
+        /// <param name="nodePublicIPPrefixID"> The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
+        /// <param name="scaleSetPriority"> The Virtual Machine Scale Set priority. </param>
+        /// <param name="scaleSetEvictionPolicy"> The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms). </param>
+        /// <param name="spotMaxPrice"> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </param>
+        /// <param name="tags"> The tags to be persisted on the agent pool virtual machine scale set. </param>
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="nodeInitializationTaints"> Taints added on the nodes during creation that will not be reconciled by AKS. These taints will not be reconciled by AKS and can be removed with a kubectl call. This field can be modified after node pool is created, but nodes will not be recreated with new taints until another operation that requires recreation (e.g. node image upgrade) happens. These taints allow for required configuration to run before the node is ready to accept workloads, for example 'key1=value1:NoSchedule' that then can be removed with `kubectl taint nodes node1 key1=value1:NoSchedule-`. </param>
+        /// <param name="proximityPlacementGroupID"> The ID for Proximity Placement Group. </param>
+        /// <param name="kubeletConfig"> The Kubelet configuration on the agent pool nodes. </param>
+        /// <param name="linuxOSConfig"> The OS configuration of Linux agent nodes. </param>
+        /// <param name="enableEncryptionAtHost"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
+        /// <param name="enableUltraSSD"> Whether to enable UltraSSD. </param>
+        /// <param name="enableFIPS"> Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
+        /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
+        /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </param>
+        /// <param name="capacityReservationGroupID"> The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview). </param>
+        /// <param name="hostGroupID"> The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </param>
+        /// <param name="networkProfile"> Network-related settings of an agent pool. </param>
+        /// <param name="windowsProfile"> The Windows agent pool's specific profile. </param>
+        /// <param name="securityProfile"> The security settings of an agent pool. </param>
+        /// <param name="gpuProfile"> GPU settings for the Agent Pool. </param>
+        /// <param name="gatewayProfile"> Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway. </param>
+        /// <param name="artifactStreamingProfile"> Configuration for using artifact streaming on AKS. </param>
+        /// <param name="virtualMachinesProfile"> Specifications on VirtualMachines agent pool. </param>
+        /// <param name="virtualMachineNodesStatus"> The status of nodes in a VirtualMachines agent pool. </param>
+        /// <param name="status"> Contains read-only information about the Agent Pool. </param>
+        /// <param name="localDNSProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
+        /// <param name="nodeCustomizationProfile"> Settings to determine the node customization used to provision nodes in a pool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAgentPoolProfileProperties(string eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetID, ResourceIdentifier podSubnetID, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSKU, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? @type, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, UpgradeStrategy? upgradeStrategy, AgentPoolUpgradeSettings upgradeSettings, AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixID, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, IList<string> nodeInitializationTaints, ResourceIdentifier proximityPlacementGroupID, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSSD, bool? enableFIPS, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupID, ResourceIdentifier hostGroupID, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, AgentPoolArtifactStreamingProfile artifactStreamingProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDNSProfile, NodeCustomizationProfile nodeCustomizationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ETag = etag;
+            ETag = eTag;
             Count = count;
             VmSize = vmSize;
             OSDiskSizeInGB = osDiskSizeInGB;
-            OSDiskType = osDiskType;
+            OsDiskType = osDiskType;
             KubeletDiskType = kubeletDiskType;
             WorkloadRuntime = workloadRuntime;
             MessageOfTheDay = messageOfTheDay;
-            VnetSubnetId = vnetSubnetId;
-            PodSubnetId = podSubnetId;
+            VnetSubnetID = vnetSubnetID;
+            PodSubnetID = podSubnetID;
             PodIPAllocationMode = podIPAllocationMode;
             MaxPods = maxPods;
-            OSType = osType;
-            OSSku = osSku;
+            OsType = osType;
+            OsSKU = osSKU;
             MaxCount = maxCount;
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
             ScaleDownMode = scaleDownMode;
-            AgentPoolType = agentPoolType;
+            Type = @type;
             Mode = mode;
             OrchestratorVersion = orchestratorVersion;
             CurrentOrchestratorVersion = currentOrchestratorVersion;
             NodeImageVersion = nodeImageVersion;
+            UpgradeStrategy = upgradeStrategy;
             UpgradeSettings = upgradeSettings;
+            UpgradeSettingsBlueGreen = upgradeSettingsBlueGreen;
             ProvisioningState = provisioningState;
             PowerState = powerState;
             AvailabilityZones = availabilityZones;
             EnableNodePublicIP = enableNodePublicIP;
-            NodePublicIPPrefixId = nodePublicIPPrefixId;
+            NodePublicIPPrefixID = nodePublicIPPrefixID;
             ScaleSetPriority = scaleSetPriority;
             ScaleSetEvictionPolicy = scaleSetEvictionPolicy;
             SpotMaxPrice = spotMaxPrice;
             Tags = tags;
             NodeLabels = nodeLabels;
             NodeTaints = nodeTaints;
-            ProximityPlacementGroupId = proximityPlacementGroupId;
+            NodeInitializationTaints = nodeInitializationTaints;
+            ProximityPlacementGroupID = proximityPlacementGroupID;
             KubeletConfig = kubeletConfig;
             LinuxOSConfig = linuxOSConfig;
             EnableEncryptionAtHost = enableEncryptionAtHost;
-            EnableUltraSsd = enableUltraSsd;
-            EnableFips = enableFips;
+            EnableUltraSSD = enableUltraSSD;
+            EnableFIPS = enableFIPS;
             GpuInstanceProfile = gpuInstanceProfile;
             CreationData = creationData;
-            CapacityReservationGroupId = capacityReservationGroupId;
-            HostGroupId = hostGroupId;
+            CapacityReservationGroupID = capacityReservationGroupID;
+            HostGroupID = hostGroupID;
             NetworkProfile = networkProfile;
             WindowsProfile = windowsProfile;
             SecurityProfile = securityProfile;
             GpuProfile = gpuProfile;
             GatewayProfile = gatewayProfile;
+            ArtifactStreamingProfile = artifactStreamingProfile;
             VirtualMachinesProfile = virtualMachinesProfile;
             VirtualMachineNodesStatus = virtualMachineNodesStatus;
             Status = status;
-            LocalDnsProfile = localDnsProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LocalDNSProfile = localDNSProfile;
+            NodeCustomizationProfile = nodeCustomizationProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.eTag
-        /// </summary>
+        /// <summary> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </summary>
         [WirePath("eTag")]
-        public ETag? ETag { get; }
-        /// <summary>
-        /// Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.count
-        /// </summary>
+        public string ETag { get; }
+
+        /// <summary> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
-        /// <summary>
-        /// The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.vmSize
-        /// </summary>
+
+        /// <summary> The size of the agent pool VMs. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </summary>
         [WirePath("vmSize")]
         public string VmSize { get; set; }
-        /// <summary>
-        /// OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osDiskSizeGB
-        /// </summary>
+
+        /// <summary> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </summary>
         [WirePath("osDiskSizeGB")]
         public int? OSDiskSizeInGB { get; set; }
-        /// <summary>
-        /// The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osDiskType
-        /// </summary>
+
+        /// <summary> The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </summary>
         [WirePath("osDiskType")]
-        public ContainerServiceOSDiskType? OSDiskType { get; set; }
-        /// <summary>
-        /// Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.kubeletDiskType
-        /// </summary>
+        public ContainerServiceOSDiskType? OsDiskType { get; set; }
+
+        /// <summary> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </summary>
         [WirePath("kubeletDiskType")]
         public KubeletDiskType? KubeletDiskType { get; set; }
-        /// <summary>
-        /// Determines the type of workload a node can run.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.workloadRuntime
-        /// </summary>
+
+        /// <summary> Determines the type of workload a node can run. </summary>
         [WirePath("workloadRuntime")]
         public WorkloadRuntime? WorkloadRuntime { get; set; }
-        /// <summary>
-        /// Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.messageOfTheDay
-        /// </summary>
+
+        /// <summary> Message of the day for Linux nodes, base64-encoded. A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </summary>
         [WirePath("messageOfTheDay")]
         public string MessageOfTheDay { get; set; }
-        /// <summary>
-        /// The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.vnetSubnetID
-        /// </summary>
+
+        /// <summary> The ID of the subnet which agent pool nodes and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("vnetSubnetID")]
-        public ResourceIdentifier VnetSubnetId { get; set; }
-        /// <summary>
-        /// The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.podSubnetID
-        /// </summary>
+        public ResourceIdentifier VnetSubnetID { get; set; }
+
+        /// <summary> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("podSubnetID")]
-        public ResourceIdentifier PodSubnetId { get; set; }
-        /// <summary>
-        /// Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.podIPAllocationMode
-        /// </summary>
+        public ResourceIdentifier PodSubnetID { get; set; }
+
+        /// <summary> Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'. </summary>
         [WirePath("podIPAllocationMode")]
         public PodIPAllocationMode? PodIPAllocationMode { get; set; }
-        /// <summary>
-        /// The maximum number of pods that can run on a node.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.maxPods
-        /// </summary>
+
+        /// <summary> The maximum number of pods that can run on a node. </summary>
         [WirePath("maxPods")]
         public int? MaxPods { get; set; }
-        /// <summary>
-        /// The operating system type. The default is Linux.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osType
-        /// </summary>
+
+        /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("osType")]
-        public ContainerServiceOSType? OSType { get; set; }
-        /// <summary>
-        /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.osSKU
-        /// </summary>
+        public ContainerServiceOSType? OsType { get; set; }
+
+        /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
         [WirePath("osSKU")]
-        public ContainerServiceOSSku? OSSku { get; set; }
-        /// <summary>
-        /// The maximum number of nodes for auto-scaling
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.maxCount
-        /// </summary>
+        public ContainerServiceOSSku? OsSKU { get; set; }
+
+        /// <summary> The maximum number of nodes for auto-scaling. </summary>
         [WirePath("maxCount")]
         public int? MaxCount { get; set; }
-        /// <summary>
-        /// The minimum number of nodes for auto-scaling
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.minCount
-        /// </summary>
+
+        /// <summary> The minimum number of nodes for auto-scaling. </summary>
         [WirePath("minCount")]
         public int? MinCount { get; set; }
-        /// <summary>
-        /// Whether to enable auto-scaler
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableAutoScaling
-        /// </summary>
+
+        /// <summary> Whether to enable auto-scaler. </summary>
         [WirePath("enableAutoScaling")]
         public bool? EnableAutoScaling { get; set; }
-        /// <summary>
-        /// The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleDownMode
-        /// </summary>
+
+        /// <summary> The scale down mode to use when scaling the Agent Pool. This also effects the cluster autoscaler behavior. If not specified, it defaults to Delete. </summary>
         [WirePath("scaleDownMode")]
         public ScaleDownMode? ScaleDownMode { get; set; }
-        /// <summary>
-        /// The type of Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.type
-        /// </summary>
+
+        /// <summary> The type of Agent Pool. </summary>
         [WirePath("type")]
-        public AgentPoolType? AgentPoolType { get; set; }
-        /// <summary>
-        /// The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.mode
-        /// </summary>
+        public AgentPoolType? Type { get; set; }
+
+        /// <summary> The mode of an agent pool. A cluster must have at least one 'System' Agent Pool at all times. For additional information on agent pool restrictions and best practices, see: https://docs.microsoft.com/azure/aks/use-system-pools. </summary>
         [WirePath("mode")]
         public AgentPoolMode? Mode { get; set; }
-        /// <summary>
-        /// The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.orchestratorVersion
-        /// </summary>
+
+        /// <summary> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. As a best practice, you should upgrade all node pools in an AKS cluster to the same Kubernetes version. The node pool version must have the same major version as the control plane. The node pool minor version must be within two minor versions of the control plane version. The node pool version cannot be greater than the control plane version. For more information see [upgrading a node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool). </summary>
         [WirePath("orchestratorVersion")]
         public string OrchestratorVersion { get; set; }
-        /// <summary>
-        /// The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.currentOrchestratorVersion
-        /// </summary>
+
+        /// <summary> The version of Kubernetes the Agent Pool is running. If orchestratorVersion is a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion is &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </summary>
         [WirePath("currentOrchestratorVersion")]
         public string CurrentOrchestratorVersion { get; }
-        /// <summary>
-        /// The version of node image
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeImageVersion
-        /// </summary>
+
+        /// <summary> The version of node image. </summary>
         [WirePath("nodeImageVersion")]
         public string NodeImageVersion { get; }
-        /// <summary>
-        /// Settings for upgrading the agentpool
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.upgradeSettings
-        /// </summary>
+
+        /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
+        [WirePath("upgradeStrategy")]
+        public UpgradeStrategy? UpgradeStrategy { get; set; }
+
+        /// <summary> Settings for upgrading the agentpool. </summary>
         [WirePath("upgradeSettings")]
         public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
-        /// <summary>
-        /// The current deployment or provisioning state.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.provisioningState
-        /// </summary>
+
+        /// <summary> Settings for Blue-Green upgrade on the agentpool. Applies when upgrade strategy is set to BlueGreen. </summary>
+        [WirePath("upgradeSettingsBlueGreen")]
+        public AgentPoolBlueGreenUpgradeSettings UpgradeSettingsBlueGreen { get; set; }
+
+        /// <summary> The current deployment or provisioning state. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Whether the Agent Pool is running or stopped. When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.powerState
-        /// </summary>
+
+        /// <summary> Whether the Agent Pool is running or stopped. When an Agent Pool is first created it is initially Running. The Agent Pool can be stopped by setting this field to Stopped. A stopped Agent Pool stops all of its VMs and does not accrue billing charges. An Agent Pool can only be stopped if it is Running and provisioning state is Succeeded. </summary>
+        [WirePath("powerState")]
         internal ContainerServicePowerState PowerState { get; set; }
-        /// <summary>
-        /// Tells whether the cluster is Running or Stopped
-        /// Serialized Name: PowerState.code
-        /// </summary>
+
+        /// <summary> The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'. </summary>
+        [WirePath("availabilityZones")]
+        public IList<string> AvailabilityZones { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </summary>
+        [WirePath("enableNodePublicIP")]
+        public bool? EnableNodePublicIP { get; set; }
+
+        /// <summary> The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </summary>
+        [WirePath("nodePublicIPPrefixID")]
+        public ResourceIdentifier NodePublicIPPrefixID { get; set; }
+
+        /// <summary> The Virtual Machine Scale Set priority. </summary>
+        [WirePath("scaleSetPriority")]
+        public ScaleSetPriority? ScaleSetPriority { get; set; }
+
+        /// <summary> The Virtual Machine Scale Set eviction policy. The eviction policy specifies what to do with the VM when it is evicted. The default is Delete. For more information about eviction see [spot VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms). </summary>
+        [WirePath("scaleSetEvictionPolicy")]
+        public ScaleSetEvictionPolicy? ScaleSetEvictionPolicy { get; set; }
+
+        /// <summary> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </summary>
+        [WirePath("spotMaxPrice")]
+        public float? SpotMaxPrice { get; set; }
+
+        /// <summary> The tags to be persisted on the agent pool virtual machine scale set. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
+
+        /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
+        [WirePath("nodeLabels")]
+        public IDictionary<string, string> NodeLabels { get; } = new ChangeTrackingDictionary<string, string>();
+
+        /// <summary> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
+        [WirePath("nodeTaints")]
+        public IList<string> NodeTaints { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Taints added on the nodes during creation that will not be reconciled by AKS. These taints will not be reconciled by AKS and can be removed with a kubectl call. This field can be modified after node pool is created, but nodes will not be recreated with new taints until another operation that requires recreation (e.g. node image upgrade) happens. These taints allow for required configuration to run before the node is ready to accept workloads, for example 'key1=value1:NoSchedule' that then can be removed with `kubectl taint nodes node1 key1=value1:NoSchedule-`. </summary>
+        [WirePath("nodeInitializationTaints")]
+        public IList<string> NodeInitializationTaints { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> The ID for Proximity Placement Group. </summary>
+        [WirePath("proximityPlacementGroupID")]
+        public ResourceIdentifier ProximityPlacementGroupID { get; set; }
+
+        /// <summary> The Kubelet configuration on the agent pool nodes. </summary>
+        [WirePath("kubeletConfig")]
+        public KubeletConfig KubeletConfig { get; set; }
+
+        /// <summary> The OS configuration of Linux agent nodes. </summary>
+        [WirePath("linuxOSConfig")]
+        public LinuxOSConfig LinuxOSConfig { get; set; }
+
+        /// <summary> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </summary>
+        [WirePath("enableEncryptionAtHost")]
+        public bool? EnableEncryptionAtHost { get; set; }
+
+        /// <summary> Whether to enable UltraSSD. </summary>
+        [WirePath("enableUltraSSD")]
+        public bool? EnableUltraSSD { get; set; }
+
+        /// <summary> Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </summary>
+        [WirePath("enableFIPS")]
+        public bool? EnableFIPS { get; set; }
+
+        /// <summary> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </summary>
+        [WirePath("gpuInstanceProfile")]
+        public GpuInstanceProfile? GpuInstanceProfile { get; set; }
+
+        /// <summary> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </summary>
+        [WirePath("creationData")]
+        internal ContainerServiceCreationData CreationData { get; set; }
+
+        /// <summary> The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Virtual Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create an agentpool with a specified CRG. For more information see [Capacity Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview). </summary>
+        [WirePath("capacityReservationGroupID")]
+        public ResourceIdentifier CapacityReservationGroupID { get; set; }
+
+        /// <summary> The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </summary>
+        [WirePath("hostGroupID")]
+        public ResourceIdentifier HostGroupID { get; set; }
+
+        /// <summary> Network-related settings of an agent pool. </summary>
+        [WirePath("networkProfile")]
+        public AgentPoolNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary> The Windows agent pool's specific profile. </summary>
+        [WirePath("windowsProfile")]
+        internal AgentPoolWindowsProfile WindowsProfile { get; set; }
+
+        /// <summary> The security settings of an agent pool. </summary>
+        [WirePath("securityProfile")]
+        public AgentPoolSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary> GPU settings for the Agent Pool. </summary>
+        [WirePath("gpuProfile")]
+        public AgentPoolGpuProfile GpuProfile { get; set; }
+
+        /// <summary> Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway. </summary>
+        [WirePath("gatewayProfile")]
+        internal AgentPoolGatewayProfile GatewayProfile { get; set; }
+
+        /// <summary> Configuration for using artifact streaming on AKS. </summary>
+        [WirePath("artifactStreamingProfile")]
+        internal AgentPoolArtifactStreamingProfile ArtifactStreamingProfile { get; set; }
+
+        /// <summary> Specifications on VirtualMachines agent pool. </summary>
+        [WirePath("virtualMachinesProfile")]
+        internal VirtualMachinesProfile VirtualMachinesProfile { get; set; }
+
+        /// <summary> The status of nodes in a VirtualMachines agent pool. </summary>
+        [WirePath("virtualMachineNodesStatus")]
+        public IList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus { get; } = new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
+
+        /// <summary> Contains read-only information about the Agent Pool. </summary>
+        [WirePath("status")]
+        internal AgentPoolStatus Status { get; set; }
+
+        /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
+        [WirePath("localDNSProfile")]
+        public LocalDnsProfile LocalDNSProfile { get; set; }
+
+        /// <summary> Settings to determine the node customization used to provision nodes in a pool. </summary>
+        [WirePath("nodeCustomizationProfile")]
+        internal NodeCustomizationProfile NodeCustomizationProfile { get; set; }
+
+        /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("powerState.code")]
         public ContainerServiceStateCode? PowerStateCode
         {
-            get => PowerState is null ? default : PowerState.Code;
+            get
+            {
+                return PowerState is null ? default : PowerState.Code;
+            }
             set
             {
                 if (PowerState is null)
+                {
                     PowerState = new ContainerServicePowerState();
+                }
                 PowerState.Code = value;
             }
         }
 
-        /// <summary>
-        /// The list of Availability zones to use for nodes. This can only be specified if the AgentPoolType property is 'VirtualMachineScaleSets'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.availabilityZones
-        /// </summary>
-        [WirePath("availabilityZones")]
-        public IList<string> AvailabilityZones { get; }
-        /// <summary>
-        /// Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableNodePublicIP
-        /// </summary>
-        [WirePath("enableNodePublicIP")]
-        public bool? EnableNodePublicIP { get; set; }
-        /// <summary>
-        /// The public IP prefix ID which VM nodes should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodePublicIPPrefixID
-        /// </summary>
-        [WirePath("nodePublicIPPrefixID")]
-        public ResourceIdentifier NodePublicIPPrefixId { get; set; }
-        /// <summary>
-        /// The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetPriority
-        /// </summary>
-        [WirePath("scaleSetPriority")]
-        public ScaleSetPriority? ScaleSetPriority { get; set; }
-        /// <summary>
-        /// The Virtual Machine Scale Set eviction policy to use. This cannot be specified unless the scaleSetPriority is 'Spot'. If not specified, the default is 'Delete'.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.scaleSetEvictionPolicy
-        /// </summary>
-        [WirePath("scaleSetEvictionPolicy")]
-        public ScaleSetEvictionPolicy? ScaleSetEvictionPolicy { get; set; }
-        /// <summary>
-        /// The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. Possible values are any decimal value greater than zero or -1 which indicates the willingness to pay any on-demand price. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing)
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.spotMaxPrice
-        /// </summary>
-        [WirePath("spotMaxPrice")]
-        public float? SpotMaxPrice { get; set; }
-        /// <summary>
-        /// The tags to be persisted on the agent pool virtual machine scale set.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.tags
-        /// </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The node labels to be persisted across all nodes in agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeLabels
-        /// </summary>
-        [WirePath("nodeLabels")]
-        public IDictionary<string, string> NodeLabels { get; }
-        /// <summary>
-        /// The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.nodeTaints
-        /// </summary>
-        [WirePath("nodeTaints")]
-        public IList<string> NodeTaints { get; }
-        /// <summary>
-        /// The ID for Proximity Placement Group.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.proximityPlacementGroupID
-        /// </summary>
-        [WirePath("proximityPlacementGroupID")]
-        public ResourceIdentifier ProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The Kubelet configuration on the agent pool nodes.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.kubeletConfig
-        /// </summary>
-        [WirePath("kubeletConfig")]
-        public KubeletConfig KubeletConfig { get; set; }
-        /// <summary>
-        /// The OS configuration of Linux agent nodes.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.linuxOSConfig
-        /// </summary>
-        [WirePath("linuxOSConfig")]
-        public LinuxOSConfig LinuxOSConfig { get; set; }
-        /// <summary>
-        /// Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableEncryptionAtHost
-        /// </summary>
-        [WirePath("enableEncryptionAtHost")]
-        public bool? EnableEncryptionAtHost { get; set; }
-        /// <summary>
-        /// Whether to enable UltraSSD
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableUltraSSD
-        /// </summary>
-        [WirePath("enableUltraSSD")]
-        public bool? EnableUltraSsd { get; set; }
-        /// <summary>
-        /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.enableFIPS
-        /// </summary>
-        [WirePath("enableFIPS")]
-        public bool? EnableFips { get; set; }
-        /// <summary>
-        /// GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gpuInstanceProfile
-        /// </summary>
-        [WirePath("gpuInstanceProfile")]
-        public GpuInstanceProfile? GpuInstanceProfile { get; set; }
-        /// <summary>
-        /// CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.creationData
-        /// </summary>
-        internal ContainerServiceCreationData CreationData { get; set; }
-        /// <summary>
-        /// This is the ARM ID of the source object to be used to create the target object.
-        /// Serialized Name: CreationData.sourceResourceId
-        /// </summary>
+        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
         [WirePath("creationData.sourceResourceId")]
         public ResourceIdentifier CreationDataSourceResourceId
         {
-            get => CreationData is null ? default : CreationData.SourceResourceId;
+            get
+            {
+                return CreationData is null ? default : CreationData.SourceResourceId;
+            }
             set
             {
                 if (CreationData is null)
+                {
                     CreationData = new ContainerServiceCreationData();
+                }
                 CreationData.SourceResourceId = value;
             }
         }
 
-        /// <summary>
-        /// AKS will associate the specified agent pool with the Capacity Reservation Group.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID
-        /// </summary>
-        [WirePath("capacityReservationGroupID")]
-        public ResourceIdentifier CapacityReservationGroupId { get; set; }
-        /// <summary>
-        /// The fully qualified resource ID of the Dedicated Host Group to provision virtual machines from, used only in creation scenario and not allowed to changed once set. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts).
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.hostGroupID
-        /// </summary>
-        [WirePath("hostGroupID")]
-        public ResourceIdentifier HostGroupId { get; set; }
-        /// <summary>
-        /// Network-related settings of an agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.networkProfile
-        /// </summary>
-        [WirePath("networkProfile")]
-        public AgentPoolNetworkProfile NetworkProfile { get; set; }
-        /// <summary>
-        /// The Windows agent pool's specific profile.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.windowsProfile
-        /// </summary>
-        internal AgentPoolWindowsProfile WindowsProfile { get; set; }
-        /// <summary>
-        /// Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled.
-        /// Serialized Name: AgentPoolWindowsProfile.disableOutboundNat
-        /// </summary>
+        /// <summary> Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </summary>
         [WirePath("windowsProfile.disableOutboundNat")]
         public bool? IsOutboundNatDisabled
         {
-            get => WindowsProfile is null ? default : WindowsProfile.IsOutboundNatDisabled;
+            get
+            {
+                return WindowsProfile is null ? default : WindowsProfile.IsOutboundNatDisabled;
+            }
             set
             {
                 if (WindowsProfile is null)
+                {
                     WindowsProfile = new AgentPoolWindowsProfile();
+                }
                 WindowsProfile.IsOutboundNatDisabled = value;
             }
         }
 
-        /// <summary>
-        /// The security settings of an agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.securityProfile
-        /// </summary>
-        [WirePath("securityProfile")]
-        public AgentPoolSecurityProfile SecurityProfile { get; set; }
-        /// <summary>
-        /// GPU settings for the Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gpuProfile
-        /// </summary>
-        internal AgentPoolGpuProfile GpuProfile { get; set; }
-        /// <summary>
-        /// Whether to install GPU drivers. When it's not specified, default is Install.
-        /// Serialized Name: GPUProfile.driver
-        /// </summary>
-        [WirePath("gpuProfile.driver")]
-        public AgentPoolGpuDriver? GpuDriver
-        {
-            get => GpuProfile is null ? default : GpuProfile.Driver;
-            set
-            {
-                if (GpuProfile is null)
-                    GpuProfile = new AgentPoolGpuProfile();
-                GpuProfile.Driver = value;
-            }
-        }
-
-        /// <summary>
-        /// Profile specific to a managed agent pool in Gateway mode. This field cannot be set if agent pool mode is not Gateway.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.gatewayProfile
-        /// </summary>
-        internal AgentPoolGatewayProfile GatewayProfile { get; set; }
-        /// <summary>
-        /// The Gateway agent pool associates one public IPPrefix for each static egress gateway to provide public egress. The size of Public IPPrefix should be selected by the user. Each node in the agent pool is assigned with one IP from the IPPrefix. The IPPrefix size thus serves as a cap on the size of the Gateway agent pool. Due to Azure public IPPrefix size limitation, the valid value range is [28, 31] (/31 = 2 nodes/IPs, /30 = 4 nodes/IPs, /29 = 8 nodes/IPs, /28 = 16 nodes/IPs). The default value is 31.
-        /// Serialized Name: AgentPoolGatewayProfile.publicIPPrefixSize
-        /// </summary>
+        /// <summary> The Gateway agent pool associates one public IPPrefix for each static egress gateway to provide public egress. The size of Public IPPrefix should be selected by the user. Each node in the agent pool is assigned with one IP from the IPPrefix. The IPPrefix size thus serves as a cap on the size of the Gateway agent pool. Due to Azure public IPPrefix size limitation, the valid value range is [28, 31] (/31 = 2 nodes/IPs, /30 = 4 nodes/IPs, /29 = 8 nodes/IPs, /28 = 16 nodes/IPs). The default value is 31. </summary>
         [WirePath("gatewayProfile.publicIPPrefixSize")]
         public int? GatewayPublicIPPrefixSize
         {
-            get => GatewayProfile is null ? default : GatewayProfile.PublicIPPrefixSize;
+            get
+            {
+                return GatewayProfile is null ? default : GatewayProfile.PublicIPPrefixSize;
+            }
             set
             {
                 if (GatewayProfile is null)
+                {
                     GatewayProfile = new AgentPoolGatewayProfile();
+                }
                 GatewayProfile.PublicIPPrefixSize = value;
             }
         }
 
-        /// <summary>
-        /// Specifications on VirtualMachines agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.virtualMachinesProfile
-        /// </summary>
-        internal VirtualMachinesProfile VirtualMachinesProfile { get; set; }
-        /// <summary>
-        /// Specifications on how to scale the VirtualMachines agent pool to a fixed size.
-        /// Serialized Name: ScaleProfile.manual
-        /// </summary>
-        [WirePath("virtualMachinesProfile.scale.manual")]
-        public IList<ManualScaleProfile> ScaleManual
+        /// <summary> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </summary>
+        [WirePath("artifactStreamingProfile.enabled")]
+        public bool? ArtifactStreamingProfileEnabled
         {
             get
             {
-                if (VirtualMachinesProfile is null)
-                    VirtualMachinesProfile = new VirtualMachinesProfile();
-                return VirtualMachinesProfile.ScaleManual;
+                return ArtifactStreamingProfile is null ? default : ArtifactStreamingProfile.Enabled;
+            }
+            set
+            {
+                if (ArtifactStreamingProfile is null)
+                {
+                    ArtifactStreamingProfile = new AgentPoolArtifactStreamingProfile();
+                }
+                ArtifactStreamingProfile.Enabled = value;
             }
         }
 
-        /// <summary>
-        /// The status of nodes in a VirtualMachines agent pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.virtualMachineNodesStatus
-        /// </summary>
-        [WirePath("virtualMachineNodesStatus")]
-        public IList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus { get; }
-        /// <summary>
-        /// Contains read-only information about the Agent Pool.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.status
-        /// </summary>
-        internal AgentPoolStatus Status { get; set; }
-        /// <summary>
-        /// The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted.
-        /// Serialized Name: AgentPoolStatus.provisioningError
-        /// </summary>
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
+        [WirePath("virtualMachinesProfile.scale")]
+        public ScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.Scale;
+            }
+            set
+            {
+                if (VirtualMachinesProfile is null)
+                {
+                    VirtualMachinesProfile = new VirtualMachinesProfile();
+                }
+                VirtualMachinesProfile.Scale = value;
+            }
+        }
+
+        /// <summary> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("status.provisioningError")]
         public ResponseError StatusProvisioningError
         {
-            get => Status is null ? default : Status.ProvisioningError;
+            get
+            {
+                return Status is null ? default : Status.ProvisioningError;
+            }
         }
 
-        /// <summary>
-        /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns.
-        /// Serialized Name: ManagedClusterAgentPoolProfileProperties.localDNSProfile
-        /// </summary>
-        [WirePath("localDNSProfile")]
-        public LocalDnsProfile LocalDnsProfile { get; set; }
+        /// <summary> The resource ID of the node customization resource to use. This can be a version. Omitting the version will use the latest version of the node customization. </summary>
+        [WirePath("nodeCustomizationProfile.nodeCustomizationId")]
+        public ResourceIdentifier NodeCustomizationId
+        {
+            get
+            {
+                return NodeCustomizationProfile is null ? default : NodeCustomizationProfile.NodeCustomizationId;
+            }
+            set
+            {
+                if (NodeCustomizationProfile is null)
+                {
+                    NodeCustomizationProfile = new NodeCustomizationProfile();
+                }
+                NodeCustomizationProfile.NodeCustomizationId = value;
+            }
+        }
     }
 }

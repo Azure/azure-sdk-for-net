@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`.
-    /// Serialized Name: KeyVaultNetworkAccessTypes
-    /// </summary>
+    /// <summary> Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </summary>
     public readonly partial struct ManagedClusterKeyVaultNetworkAccessType : IEquatable<ManagedClusterKeyVaultNetworkAccessType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedClusterKeyVaultNetworkAccessType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PublicValue = "Public";
         private const string PrivateValue = "Private";
 
-        /// <summary>
-        /// Public
-        /// Serialized Name: KeyVaultNetworkAccessTypes.Public
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedClusterKeyVaultNetworkAccessType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Public. </summary>
         public static ManagedClusterKeyVaultNetworkAccessType Public { get; } = new ManagedClusterKeyVaultNetworkAccessType(PublicValue);
-        /// <summary>
-        /// Private
-        /// Serialized Name: KeyVaultNetworkAccessTypes.Private
-        /// </summary>
+
+        /// <summary> Gets the Private. </summary>
         public static ManagedClusterKeyVaultNetworkAccessType Private { get; } = new ManagedClusterKeyVaultNetworkAccessType(PrivateValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterKeyVaultNetworkAccessType(string value) => new ManagedClusterKeyVaultNetworkAccessType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterKeyVaultNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterKeyVaultNetworkAccessType?(string value) => value == null ? null : new ManagedClusterKeyVaultNetworkAccessType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterKeyVaultNetworkAccessType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterKeyVaultNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

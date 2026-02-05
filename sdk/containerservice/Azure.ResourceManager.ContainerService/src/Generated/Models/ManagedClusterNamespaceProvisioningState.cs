@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state of the namespace.
-    /// Serialized Name: NamespaceProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state of the namespace. </summary>
     public readonly partial struct ManagedClusterNamespaceProvisioningState : IEquatable<ManagedClusterNamespaceProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedClusterNamespaceProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
@@ -32,53 +22,64 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Updating
-        /// Serialized Name: NamespaceProvisioningState.Updating
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedClusterNamespaceProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Updating. </summary>
         public static ManagedClusterNamespaceProvisioningState Updating { get; } = new ManagedClusterNamespaceProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: NamespaceProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ManagedClusterNamespaceProvisioningState Deleting { get; } = new ManagedClusterNamespaceProvisioningState(DeletingValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: NamespaceProvisioningState.Creating
-        /// </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ManagedClusterNamespaceProvisioningState Creating { get; } = new ManagedClusterNamespaceProvisioningState(CreatingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: NamespaceProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ManagedClusterNamespaceProvisioningState Succeeded { get; } = new ManagedClusterNamespaceProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: NamespaceProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ManagedClusterNamespaceProvisioningState Failed { get; } = new ManagedClusterNamespaceProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: NamespaceProvisioningState.Canceled
-        /// </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ManagedClusterNamespaceProvisioningState Canceled { get; } = new ManagedClusterNamespaceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterNamespaceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterNamespaceProvisioningState left, ManagedClusterNamespaceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterNamespaceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterNamespaceProvisioningState left, ManagedClusterNamespaceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterNamespaceProvisioningState(string value) => new ManagedClusterNamespaceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterNamespaceProvisioningState?(string value) => value == null ? null : new ManagedClusterNamespaceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterNamespaceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterNamespaceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

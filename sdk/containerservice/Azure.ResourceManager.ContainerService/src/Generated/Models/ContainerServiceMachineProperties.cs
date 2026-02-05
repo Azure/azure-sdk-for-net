@@ -8,89 +8,105 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The properties of the machine
-    /// Serialized Name: MachineProperties
-    /// </summary>
+    /// <summary> The properties of the machine. </summary>
     public partial class ContainerServiceMachineProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineProperties"/>. </summary>
-        internal ContainerServiceMachineProperties()
+        public ContainerServiceMachineProperties()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineProperties"/>. </summary>
-        /// <param name="network">
-        /// network properties of the machine
-        /// Serialized Name: MachineProperties.network
-        /// </param>
-        /// <param name="resourceId">
-        /// Azure resource id of the machine. It can be used to GET underlying VM Instance
-        /// Serialized Name: MachineProperties.resourceId
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="network"> network properties of the machine. </param>
+        /// <param name="resourceId"> Azure resource id of the machine. It can be used to GET underlying VM Instance. </param>
+        /// <param name="hardware"> The hardware and GPU settings of the machine. </param>
+        /// <param name="operatingSystem"> The operating system and disk used by the machine. </param>
+        /// <param name="kubernetes"> The Kubernetes configurations used by the machine. </param>
+        /// <param name="mode"> Machine only allows 'System' and 'User' mode. </param>
+        /// <param name="security"> The security settings of the machine. </param>
+        /// <param name="priority"> The priority for the machine. If not specified, the default is 'Regular'. </param>
+        /// <param name="nodeImageVersion"> The version of node image. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state. </param>
+        /// <param name="tags"> The tags to be persisted on the machine. </param>
+        /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
+        /// <param name="status"> Contains read-only information about the machine. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, MachineHardwareProfile hardware, MachineOSProfile operatingSystem, MachineKubernetesProfile kubernetes, AgentPoolMode? mode, MachineSecurityProfile security, ScaleSetPriority? priority, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, string eTag, MachineStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             ResourceId = resourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Hardware = hardware;
+            OperatingSystem = operatingSystem;
+            Kubernetes = kubernetes;
+            Mode = mode;
+            Security = security;
+            Priority = priority;
+            NodeImageVersion = nodeImageVersion;
+            ProvisioningState = provisioningState;
+            Tags = tags;
+            ETag = eTag;
+            Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// network properties of the machine
-        /// Serialized Name: MachineProperties.network
-        /// </summary>
-        internal MachineNetworkProperties Network { get; }
-        /// <summary>
-        /// IPv4, IPv6 addresses of the machine
-        /// Serialized Name: MachineNetworkProperties.ipAddresses
-        /// </summary>
-        [WirePath("network.ipAddresses")]
-        public IReadOnlyList<ContainerServiceMachineIPAddress> NetworkIPAddresses
-        {
-            get => Network?.IPAddresses;
-        }
+        /// <summary> network properties of the machine. </summary>
+        [WirePath("network")]
+        public MachineNetworkProperties Network { get; }
 
-        /// <summary>
-        /// Azure resource id of the machine. It can be used to GET underlying VM Instance
-        /// Serialized Name: MachineProperties.resourceId
-        /// </summary>
+        /// <summary> Azure resource id of the machine. It can be used to GET underlying VM Instance. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
+
+        /// <summary> The hardware and GPU settings of the machine. </summary>
+        [WirePath("hardware")]
+        public MachineHardwareProfile Hardware { get; set; }
+
+        /// <summary> The operating system and disk used by the machine. </summary>
+        [WirePath("operatingSystem")]
+        public MachineOSProfile OperatingSystem { get; set; }
+
+        /// <summary> The Kubernetes configurations used by the machine. </summary>
+        [WirePath("kubernetes")]
+        public MachineKubernetesProfile Kubernetes { get; set; }
+
+        /// <summary> Machine only allows 'System' and 'User' mode. </summary>
+        [WirePath("mode")]
+        public AgentPoolMode? Mode { get; set; }
+
+        /// <summary> The security settings of the machine. </summary>
+        [WirePath("security")]
+        public MachineSecurityProfile Security { get; set; }
+
+        /// <summary> The priority for the machine. If not specified, the default is 'Regular'. </summary>
+        [WirePath("priority")]
+        public ScaleSetPriority? Priority { get; set; }
+
+        /// <summary> The version of node image. </summary>
+        [WirePath("nodeImageVersion")]
+        public string NodeImageVersion { get; }
+
+        /// <summary> The current deployment or provisioning state. </summary>
+        [WirePath("provisioningState")]
+        public string ProvisioningState { get; }
+
+        /// <summary> The tags to be persisted on the machine. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </summary>
+        [WirePath("eTag")]
+        public string ETag { get; }
+
+        /// <summary> Contains read-only information about the machine. </summary>
+        [WirePath("status")]
+        public MachineStatus Status { get; }
     }
 }

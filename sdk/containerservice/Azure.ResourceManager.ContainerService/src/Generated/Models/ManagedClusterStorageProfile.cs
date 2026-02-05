@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Storage profile for the container service cluster.
-    /// Serialized Name: ManagedClusterStorageProfile
-    /// </summary>
+    /// <summary> Storage profile for the container service cluster. </summary>
     public partial class ManagedClusterStorageProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
         public ManagedClusterStorageProfile()
@@ -54,54 +23,88 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
-        /// <param name="diskCsiDriver">
-        /// AzureDisk CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.diskCSIDriver
-        /// </param>
-        /// <param name="fileCsiDriver">
-        /// AzureFile CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.fileCSIDriver
-        /// </param>
-        /// <param name="snapshotController">
-        /// Snapshot Controller settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.snapshotController
-        /// </param>
-        /// <param name="blobCsiDriver">
-        /// AzureBlob CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.blobCSIDriver
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="diskCSIDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
+        /// <param name="fileCSIDriver"> AzureFile CSI Driver settings for the storage profile. </param>
+        /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>
+        /// <param name="blobCSIDriver"> AzureBlob CSI Driver settings for the storage profile. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCSIDriver diskCSIDriver, ManagedClusterStorageProfileFileCSIDriver fileCSIDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCSIDriver blobCSIDriver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DiskCsiDriver = diskCsiDriver;
-            FileCsiDriver = fileCsiDriver;
+            DiskCSIDriver = diskCSIDriver;
+            FileCSIDriver = fileCSIDriver;
             SnapshotController = snapshotController;
-            BlobCsiDriver = blobCsiDriver;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            BlobCSIDriver = blobCSIDriver;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// AzureDisk CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.diskCSIDriver
-        /// </summary>
-        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
+        /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
+        [WirePath("diskCSIDriver")]
+        public ManagedClusterStorageProfileDiskCSIDriver DiskCSIDriver { get; set; }
 
-        /// <summary>
-        /// AzureFile CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.fileCSIDriver
-        /// </summary>
-        internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
+        /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
+        [WirePath("fileCSIDriver")]
+        internal ManagedClusterStorageProfileFileCSIDriver FileCSIDriver { get; set; }
 
-        /// <summary>
-        /// Snapshot Controller settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.snapshotController
-        /// </summary>
+        /// <summary> Snapshot Controller settings for the storage profile. </summary>
+        [WirePath("snapshotController")]
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
 
-        /// <summary>
-        /// AzureBlob CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.blobCSIDriver
-        /// </summary>
-        internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
+        /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
+        [WirePath("blobCSIDriver")]
+        internal ManagedClusterStorageProfileBlobCSIDriver BlobCSIDriver { get; set; }
+
+        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
+        [WirePath("fileCSIDriver.enabled")]
+        public bool? IsFileCsiDriverEnabled
+        {
+            get
+            {
+                return FileCSIDriver is null ? default : FileCSIDriver.IsFileCsiDriverEnabled;
+            }
+            set
+            {
+                if (FileCSIDriver is null)
+                {
+                    FileCSIDriver = new ManagedClusterStorageProfileFileCSIDriver();
+                }
+                FileCSIDriver.IsFileCsiDriverEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
+        [WirePath("snapshotController.enabled")]
+        public bool? IsSnapshotControllerEnabled
+        {
+            get
+            {
+                return SnapshotController is null ? default : SnapshotController.IsSnapshotControllerEnabled;
+            }
+            set
+            {
+                if (SnapshotController is null)
+                {
+                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
+                }
+                SnapshotController.IsSnapshotControllerEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
+        [WirePath("blobCSIDriver.enabled")]
+        public bool? IsBlobCsiDriverEnabled
+        {
+            get
+            {
+                return BlobCSIDriver is null ? default : BlobCSIDriver.IsBlobCsiDriverEnabled;
+            }
+            set
+            {
+                if (BlobCSIDriver is null)
+                {
+                    BlobCSIDriver = new ManagedClusterStorageProfileBlobCSIDriver();
+                }
+                BlobCSIDriver.IsBlobCsiDriverEnabled = value;
+            }
+        }
     }
 }

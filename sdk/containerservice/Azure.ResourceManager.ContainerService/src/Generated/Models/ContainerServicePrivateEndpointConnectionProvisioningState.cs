@@ -7,72 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct ContainerServicePrivateEndpointConnectionProvisioningState : IEquatable<ContainerServicePrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerServicePrivateEndpointConnectionProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerServicePrivateEndpointConnectionProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Canceled. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Canceled { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CanceledValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
-        /// </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Creating { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Deleting { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Failed { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Succeeded { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServicePrivateEndpointConnectionProvisioningState(string value) => new ContainerServicePrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServicePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new ContainerServicePrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServicePrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServicePrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,90 +13,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A class representing the ManagedClusterNamespace data model.
-    /// Namespace managed by ARM.
-    /// Serialized Name: ManagedNamespace
-    /// </summary>
-    public partial class ManagedClusterNamespaceData : TrackedResourceData
+    /// <summary> Namespace managed by ARM. </summary>
+    public partial class ManagedClusterNamespaceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ManagedClusterNamespaceData(AzureLocation location) : base(location)
+        public ManagedClusterNamespaceData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </param>
-        /// <param name="properties">
-        /// Properties of a namespace.
-        /// Serialized Name: ManagedNamespace.properties
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterNamespaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a namespace. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        internal ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedClusterNamespaceProperties properties, IDictionary<string, string> tags, string location, string eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Tags = tags;
+            Location = location;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceData"/> for deserialization. </summary>
-        internal ManagedClusterNamespaceData()
-        {
-        }
-
-        /// <summary>
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </summary>
-        [WirePath("eTag")]
-        public ETag? ETag { get; }
-        /// <summary>
-        /// Properties of a namespace.
-        /// Serialized Name: ManagedNamespace.properties
-        /// </summary>
+        /// <summary> Properties of a namespace. </summary>
         [WirePath("properties")]
         public ManagedClusterNamespaceProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public string Location { get; set; }
+
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        [WirePath("eTag")]
+        public string ETag { get; }
     }
 }

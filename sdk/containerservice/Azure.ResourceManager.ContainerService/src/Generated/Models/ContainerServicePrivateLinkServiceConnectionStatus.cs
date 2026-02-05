@@ -7,66 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The private link service connection status.
-    /// Serialized Name: ConnectionStatus
-    /// </summary>
+    /// <summary> The private link service connection status. </summary>
     public readonly partial struct ContainerServicePrivateLinkServiceConnectionStatus : IEquatable<ContainerServicePrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerServicePrivateLinkServiceConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: ConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerServicePrivateLinkServiceConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pending. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Pending { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: ConnectionStatus.Approved
-        /// </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Approved { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: ConnectionStatus.Rejected
-        /// </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Rejected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: ConnectionStatus.Disconnected
-        /// </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Disconnected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServicePrivateLinkServiceConnectionStatus left, ContainerServicePrivateLinkServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServicePrivateLinkServiceConnectionStatus left, ContainerServicePrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServicePrivateLinkServiceConnectionStatus(string value) => new ContainerServicePrivateLinkServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServicePrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new ContainerServicePrivateLinkServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServicePrivateLinkServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServicePrivateLinkServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

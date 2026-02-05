@@ -7,47 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Delegated resource properties - internal use only.
-    /// Serialized Name: DelegatedResource
-    /// </summary>
+    /// <summary> Delegated resource properties - internal use only. </summary>
     public partial class ManagedClusterDelegatedIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
         public ManagedClusterDelegatedIdentity()
@@ -55,55 +23,34 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterDelegatedIdentity"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM resource id of the delegated resource - internal use only.
-        /// Serialized Name: DelegatedResource.resourceId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant id of the delegated resource - internal use only.
-        /// Serialized Name: DelegatedResource.tenantId
-        /// </param>
-        /// <param name="referralResource">
-        /// The delegation id of the referral delegation (optional) - internal use only.
-        /// Serialized Name: DelegatedResource.referralResource
-        /// </param>
-        /// <param name="location">
-        /// The source resource location - internal use only.
-        /// Serialized Name: DelegatedResource.location
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterDelegatedIdentity(ResourceIdentifier resourceId, Guid? tenantId, string referralResource, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resourceId"> The ARM resource id of the delegated resource - internal use only. </param>
+        /// <param name="tenantId"> The tenant id of the delegated resource - internal use only. </param>
+        /// <param name="referralResource"> The delegation id of the referral delegation (optional) - internal use only. </param>
+        /// <param name="location"> The source resource location - internal use only. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterDelegatedIdentity(string resourceId, Guid? tenantId, string referralResource, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             TenantId = tenantId;
             ReferralResource = referralResource;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The ARM resource id of the delegated resource - internal use only.
-        /// Serialized Name: DelegatedResource.resourceId
-        /// </summary>
+        /// <summary> The ARM resource id of the delegated resource - internal use only. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// The tenant id of the delegated resource - internal use only.
-        /// Serialized Name: DelegatedResource.tenantId
-        /// </summary>
+        public string ResourceId { get; set; }
+
+        /// <summary> The tenant id of the delegated resource - internal use only. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// The delegation id of the referral delegation (optional) - internal use only.
-        /// Serialized Name: DelegatedResource.referralResource
-        /// </summary>
+
+        /// <summary> The delegation id of the referral delegation (optional) - internal use only. </summary>
         [WirePath("referralResource")]
         public string ReferralResource { get; set; }
-        /// <summary>
-        /// The source resource location - internal use only.
-        /// Serialized Name: DelegatedResource.location
-        /// </summary>
+
+        /// <summary> The source resource location - internal use only. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; set; }
+        public string Location { get; set; }
     }
 }

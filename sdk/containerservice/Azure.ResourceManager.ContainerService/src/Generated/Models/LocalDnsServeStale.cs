@@ -7,60 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name: LocalDNSServeStale
-    /// </summary>
-    public readonly partial struct LocalDnsServeStale : IEquatable<LocalDnsServeStale>
+    /// <summary> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
+    public readonly partial struct LocalDNSServeStale : IEquatable<LocalDNSServeStale>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LocalDnsServeStale"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LocalDnsServeStale(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Serve stale data with verification. First verify that an entry is still unavailable from the source before sending the expired entry to the client. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         private const string VerifyValue = "Verify";
+        /// <summary> Serve stale data immediately. Send the expired entry to the client before checking to see if the entry is available from the source. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         private const string ImmediateValue = "Immediate";
+        /// <summary> Disable serving stale data. </summary>
         private const string DisableValue = "Disable";
 
-        /// <summary>
-        /// Serve stale data with verification. First verify that an entry is still unavailable from the source before sending the expired entry to the client. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-        /// Serialized Name: LocalDNSServeStale.Verify
-        /// </summary>
-        public static LocalDnsServeStale Verify { get; } = new LocalDnsServeStale(VerifyValue);
-        /// <summary>
-        /// Serve stale data immediately. Send the expired entry to the client before checking to see if the entry is available from the source. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-        /// Serialized Name: LocalDNSServeStale.Immediate
-        /// </summary>
-        public static LocalDnsServeStale Immediate { get; } = new LocalDnsServeStale(ImmediateValue);
-        /// <summary>
-        /// Disable serving stale data.
-        /// Serialized Name: LocalDNSServeStale.Disable
-        /// </summary>
-        public static LocalDnsServeStale Disable { get; } = new LocalDnsServeStale(DisableValue);
-        /// <summary> Determines if two <see cref="LocalDnsServeStale"/> values are the same. </summary>
-        public static bool operator ==(LocalDnsServeStale left, LocalDnsServeStale right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LocalDnsServeStale"/> values are not the same. </summary>
-        public static bool operator !=(LocalDnsServeStale left, LocalDnsServeStale right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalDnsServeStale"/>. </summary>
-        public static implicit operator LocalDnsServeStale(string value) => new LocalDnsServeStale(value);
+        /// <summary> Initializes a new instance of <see cref="LocalDNSServeStale"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LocalDNSServeStale(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Serve stale data with verification. First verify that an entry is still unavailable from the source before sending the expired entry to the client. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
+        public static LocalDNSServeStale Verify { get; } = new LocalDNSServeStale(VerifyValue);
+
+        /// <summary> Serve stale data immediately. Send the expired entry to the client before checking to see if the entry is available from the source. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
+        public static LocalDNSServeStale Immediate { get; } = new LocalDNSServeStale(ImmediateValue);
+
+        /// <summary> Disable serving stale data. </summary>
+        public static LocalDNSServeStale Disable { get; } = new LocalDNSServeStale(DisableValue);
+
+        /// <summary> Determines if two <see cref="LocalDNSServeStale"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(LocalDNSServeStale left, LocalDNSServeStale right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="LocalDNSServeStale"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(LocalDNSServeStale left, LocalDNSServeStale right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="LocalDNSServeStale"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalDNSServeStale(string value) => new LocalDNSServeStale(value);
+
+        /// <summary> Converts a string to a <see cref="LocalDNSServeStale"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalDNSServeStale?(string value) => value == null ? null : new LocalDNSServeStale(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalDnsServeStale other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(LocalDnsServeStale other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is LocalDNSServeStale other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(LocalDNSServeStale other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

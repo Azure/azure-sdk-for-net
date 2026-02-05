@@ -7,60 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The tier of a managed cluster SKU. If not specified, the default is 'Free'. See [AKS Pricing Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers) for more details.
-    /// Serialized Name: ManagedClusterSKUTier
-    /// </summary>
-    public readonly partial struct ManagedClusterSkuTier : IEquatable<ManagedClusterSkuTier>
+    /// <summary> The tier of a managed cluster SKU. If not specified, the default is 'Free'. See [AKS Pricing Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers) for more details. </summary>
+    public readonly partial struct ManagedClusterSKUTier : IEquatable<ManagedClusterSKUTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterSkuTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedClusterSkuTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions. </summary>
         private const string PremiumValue = "Premium";
+        /// <summary> Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones. </summary>
         private const string StandardValue = "Standard";
+        /// <summary> The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases. </summary>
         private const string FreeValue = "Free";
 
-        /// <summary>
-        /// Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions.
-        /// Serialized Name: ManagedClusterSKUTier.Premium
-        /// </summary>
-        public static ManagedClusterSkuTier Premium { get; } = new ManagedClusterSkuTier(PremiumValue);
-        /// <summary>
-        /// Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones.
-        /// Serialized Name: ManagedClusterSKUTier.Standard
-        /// </summary>
-        public static ManagedClusterSkuTier Standard { get; } = new ManagedClusterSkuTier(StandardValue);
-        /// <summary>
-        /// The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases.
-        /// Serialized Name: ManagedClusterSKUTier.Free
-        /// </summary>
-        public static ManagedClusterSkuTier Free { get; } = new ManagedClusterSkuTier(FreeValue);
-        /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are the same. </summary>
-        public static bool operator ==(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ManagedClusterSkuTier"/> values are not the same. </summary>
-        public static bool operator !=(ManagedClusterSkuTier left, ManagedClusterSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterSkuTier"/>. </summary>
-        public static implicit operator ManagedClusterSkuTier(string value) => new ManagedClusterSkuTier(value);
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSKUTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedClusterSKUTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions. </summary>
+        public static ManagedClusterSKUTier Premium { get; } = new ManagedClusterSKUTier(PremiumValue);
+
+        /// <summary> Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones. </summary>
+        public static ManagedClusterSKUTier Standard { get; } = new ManagedClusterSKUTier(StandardValue);
+
+        /// <summary> The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases. </summary>
+        public static ManagedClusterSKUTier Free { get; } = new ManagedClusterSKUTier(FreeValue);
+
+        /// <summary> Determines if two <see cref="ManagedClusterSKUTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ManagedClusterSKUTier left, ManagedClusterSKUTier right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ManagedClusterSKUTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ManagedClusterSKUTier left, ManagedClusterSKUTier right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterSKUTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterSKUTier(string value) => new ManagedClusterSKUTier(value);
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterSKUTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterSKUTier?(string value) => value == null ? null : new ManagedClusterSKUTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ManagedClusterSkuTier other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ManagedClusterSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is ManagedClusterSKUTier other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(ManagedClusterSKUTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
