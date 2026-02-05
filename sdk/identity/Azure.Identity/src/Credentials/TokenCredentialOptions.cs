@@ -33,12 +33,12 @@ namespace Azure.Identity
                 return;
             }
 
-            if (Uri.TryCreate(section["AuthorityHost"], UriKind.Absolute, out Uri authorityHost))
+            if (Uri.TryCreate(section[nameof(AuthorityHost)], UriKind.Absolute, out Uri authorityHost))
             {
                 AuthorityHost = authorityHost;
             }
 
-            if (bool.TryParse(section["IsUnsafeSupportLoggingEnabled"], out bool isUnsafeSupportLoggingEnabled))
+            if (bool.TryParse(section[nameof(IsUnsafeSupportLoggingEnabled)], out bool isUnsafeSupportLoggingEnabled))
             {
                 IsUnsafeSupportLoggingEnabled = isUnsafeSupportLoggingEnabled;
             }

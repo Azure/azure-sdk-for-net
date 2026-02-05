@@ -65,12 +65,12 @@ namespace Azure.Identity
                 return;
             }
 
-            if (section["TenantId"] is string tenantId)
+            if (section[nameof(TenantId)] is string tenantId)
             {
                 TenantId = tenantId;
             }
 
-            IConfigurationSection additionallyAllowedTenantsSection = section.GetSection("AdditionallyAllowedTenants");
+            IConfigurationSection additionallyAllowedTenantsSection = section.GetSection(nameof(AdditionallyAllowedTenants));
             if (additionallyAllowedTenantsSection.Exists())
             {
                 AdditionallyAllowedTenants = additionallyAllowedTenantsSection
@@ -80,37 +80,37 @@ namespace Azure.Identity
                     .ToList();
             }
 
-            if (section["InteractiveBrowserCredentialClientId"] is string interactiveBrowserCredentialClientId)
+            if (section[nameof(InteractiveBrowserCredentialClientId)] is string interactiveBrowserCredentialClientId)
             {
                 InteractiveBrowserCredentialClientId = interactiveBrowserCredentialClientId;
             }
 
-            if (section["WorkloadIdentityClientId"] is string workloadIdentityClientId)
+            if (section[nameof(WorkloadIdentityClientId)] is string workloadIdentityClientId)
             {
                 WorkloadIdentityClientId = workloadIdentityClientId;
             }
 
-            if (section["ManagedIdentityClientId"] is string managedIdentityClientId)
+            if (section[nameof(ManagedIdentityClientId)] is string managedIdentityClientId)
             {
                 ManagedIdentityClientId = managedIdentityClientId;
             }
 
-            if (section["ManagedIdentityResourceId"] is string managedIdentityResourceId)
+            if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
             {
                 ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
             }
 
-            if (TimeSpan.TryParse(section["CredentialProcessTimeout"], out TimeSpan credentialProcessTimeout))
+            if (TimeSpan.TryParse(section[nameof(CredentialProcessTimeout)], out TimeSpan credentialProcessTimeout))
             {
                 CredentialProcessTimeout = credentialProcessTimeout;
             }
 
-            if (bool.TryParse(section["DisableInstanceDiscovery"], out bool disableInstanceDiscovery))
+            if (bool.TryParse(section[nameof(DisableInstanceDiscovery)], out bool disableInstanceDiscovery))
             {
                 DisableInstanceDiscovery = disableInstanceDiscovery;
             }
 
-            if (section["Subscription"] is string subscription)
+            if (section[nameof(AzureCliCredentialOptions.Subscription)] is string subscription)
             {
                 Subscription = subscription;
             }

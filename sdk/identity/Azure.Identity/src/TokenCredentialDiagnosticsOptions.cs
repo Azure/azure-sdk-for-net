@@ -31,7 +31,7 @@ namespace Azure.Identity
                 return;
             }
 
-            if (bool.TryParse(section["IsAccountIdentifierLoggingEnabled"], out bool isAccountIdentifierLoggingEnabled))
+            if (bool.TryParse(section[nameof(IsAccountIdentifierLoggingEnabled)], out bool isAccountIdentifierLoggingEnabled))
             {
                 IsAccountIdentifierLoggingEnabled = isAccountIdentifierLoggingEnabled;
             }
