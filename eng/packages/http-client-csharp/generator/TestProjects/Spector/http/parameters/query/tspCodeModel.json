@@ -117,7 +117,26 @@
                     "scope": "Constant",
                     "decorators": [],
                     "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "13",
+                        "kind": "method",
+                        "name": "queryParam",
+                        "serializedName": "queryParam",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -141,21 +160,7 @@
               },
               "parameters": [
                 {
-                  "$id": "13",
-                  "kind": "method",
-                  "name": "queryParam",
-                  "serializedName": "queryParam",
-                  "type": {
-                    "$ref": "3"
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "13"
                 }
               ],
               "response": {},
