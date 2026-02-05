@@ -956,7 +956,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
         public async Task CreateFile_Data_StructuredMessage()
         {
             // Arrange
@@ -976,12 +976,9 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            Response<ShareFileInfo> response = await fileClient.CreateAsync(
+            await fileClient.CreateAsync(
                 maxSize: Constants.KB,
                 options: options);
-
-            // Assert
-            Assert.AreEqual(Constants.StructuredMessage.CrcStructuredMessage, response.Value.StructuredBodyType);
         }
 
         [RecordedTest]

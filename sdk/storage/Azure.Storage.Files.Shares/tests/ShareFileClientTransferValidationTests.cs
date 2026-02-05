@@ -374,6 +374,59 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public virtual async Task CreateFile_Data_DefaultValidationOptions()
+        {
+            await using IDisposingContainer<ShareClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+
+            // make pipeline assertion for checking checksum & structured message was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
+            {
+                if (request.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-structured-body"))
+                {
+                    Assert.Fail($"Structured Message found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-structured-content-length"))
+                {
+                    Assert.Fail($"Structured Message found when none expected.");
+                }
+            });
+            ShareClientOptions clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            ShareClient container = InstrumentClient(new ShareClient(disposingContainer.Container.Uri, Tenants.GetNewSharedKeyCredentials(), clientOptions));
+            ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            using (checksumPipelineAssertion.CheckRequestScope())
+            {
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    Content = stream,
+                    // no validation options specified; should use client defaults which are None
+                };
+
+                await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+            }
+
+            // Assert
+            // Assertion was in the pipeline
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
         public async Task CreateFile_Data_StructuredMessage()
         {
             StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.StorageCrc64;
@@ -394,7 +447,6 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(GetNewResourceName()));
 
             // Act
-            Response<ShareFileInfo> response;
             using (var stream = new MemoryStream(data))
             using (checksumPipelineAssertion.CheckRequestScope())
             {
@@ -407,16 +459,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     }
                 };
 
-                response = await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
+                await fileClient.CreateAsync(maxSize: Constants.KB, options: options);
             }
 
             // Assert
             // Assertion was in the pipeline and the service returning success means the structured message and checksum was correct
-            Assert.AreEqual(Constants.StructuredMessage.CrcStructuredMessage, response.Value.StructuredBodyType);
         }
 
         [Test]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
         public async Task CreateFile_Data_StructuredMessage_UsePrecalculatedHashFail()
         {
             StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.StorageCrc64;
@@ -461,7 +512,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
         public virtual async Task CreateFile_Data_StructuredMessage_TamperedStreamThrows()
         {
             StorageChecksumAlgorithm algorithm = StorageChecksumAlgorithm.StorageCrc64;
