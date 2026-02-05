@@ -417,17 +417,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.True(task.Result.Succeeded);
 
             // Validate log is written
-            var logMessage = _loggerProvider.GetAllLogMessages().Single();
-            Assert.AreEqual("BlobMessageEnqueued", logMessage.EventId.Name);
-            Assert.AreEqual(LogLevel.Debug, logMessage.Level);
-            Assert.AreEqual(7, logMessage.State.Count());
-            Assert.AreEqual("FunctionIdLogName", logMessage.GetStateValue<string>("functionName"));
-            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage.GetStateValue<string>("blobName"));
-            Assert.AreEqual("testQueueName", logMessage.GetStateValue<string>("queueName"));
-            Assert.AreEqual("testMessageId", logMessage.GetStateValue<string>("messageId"));
-            Assert.AreEqual(context.PollId, logMessage.GetStateValue<string>("pollId"));
-            Assert.AreEqual(context.TriggerSource, logMessage.GetStateValue<BlobTriggerScanSource>("triggerSource"));
-            Assert.True(!string.IsNullOrWhiteSpace(logMessage.GetStateValue<string>("{OriginalFormat}")));
+            var logMessage = _loggerProvider.GetAllLogMessages().ToList();
+            Assert.AreEqual(2, logMessage.Count);
+
+            Assert.AreEqual("BlobProcessingStarted", logMessage[0].EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage[0].Level);
+            Assert.AreEqual(6, logMessage[0].State.Count());
+            Assert.AreEqual("FunctionIdLogName", logMessage[0].GetStateValue<string>("functionName"));
+            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage[0].GetStateValue<string>("blobName"));
+            Assert.AreEqual(context.PollId, logMessage[0].GetStateValue<string>("pollId"));
+            Assert.AreEqual(expectedETag, logMessage[0].GetStateValue<string>("eTag"));
+            Assert.AreEqual(context.TriggerSource, logMessage[0].GetStateValue<BlobTriggerScanSource>("triggerSource"));
+            Assert.True(!string.IsNullOrWhiteSpace(logMessage[0].GetStateValue<string>("{OriginalFormat}")));
+
+            Assert.AreEqual("BlobMessageEnqueued", logMessage[1].EventId.Name);
+            Assert.AreEqual(LogLevel.Debug, logMessage[1].Level);
+            Assert.AreEqual(7, logMessage[1].State.Count());
+            Assert.AreEqual("FunctionIdLogName", logMessage[1].GetStateValue<string>("functionName"));
+            Assert.AreEqual(context.Blob.BlobClient.Name, logMessage[1].GetStateValue<string>("blobName"));
+            Assert.AreEqual("testQueueName", logMessage[1].GetStateValue<string>("queueName"));
+            Assert.AreEqual("testMessageId", logMessage[1].GetStateValue<string>("messageId"));
+            Assert.AreEqual(context.PollId, logMessage[1].GetStateValue<string>("pollId"));
+            Assert.AreEqual(context.TriggerSource, logMessage[1].GetStateValue<BlobTriggerScanSource>("triggerSource"));
+            Assert.True(!string.IsNullOrWhiteSpace(logMessage[1].GetStateValue<string>("{OriginalFormat}")));
         }
 
         private BlobTriggerExecutorContext CreateExecutorContext(bool createBlob = true)
