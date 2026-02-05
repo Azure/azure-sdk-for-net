@@ -10,6 +10,7 @@
 - Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
+- Added log entry for when the BlobTrigger starts processing a blob.
 
 ## 5.3.7 (2025-10-29)
 
