@@ -41,6 +41,40 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public LoadTestResourceUpdateProperties Properties { get; set; }
+        internal LoadTestResourceUpdateProperties Properties { get; set; }
+
+        /// <summary> Description of the resource. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadTestResourceUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> CMK Encryption property. </summary>
+        public LoadTestingCmkEncryptionProperties Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadTestResourceUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.LoadTesting;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> The updatable properties of the LoadTestResource. </summary>
-    public partial class LoadTestResourceUpdateProperties : IJsonModel<LoadTestResourceUpdateProperties>
+    internal partial class LoadTestResourceUpdateProperties : IJsonModel<LoadTestResourceUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
