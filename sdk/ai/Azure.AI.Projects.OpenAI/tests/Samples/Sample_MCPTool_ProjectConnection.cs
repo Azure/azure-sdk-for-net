@@ -29,9 +29,7 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var mcpProjectConnectionName = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
 #endif
-        AIProjectClientOptions options = new();
-        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #endregion
         #region Snippet:Sample_CreateAgent_MCPTool_ProjectConnection_Async
@@ -50,11 +48,9 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
-        agentVersion = await projectClient.Agents.GetAgentVersionAsync(
-            agentName: "myAgent", agentVersion: "1");
         #endregion
         #region Snippet:Sample_CreateResponse_MCPTool_ProjectConnection_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("MCPGitHub");
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("What is my username in Github profile?")]);
         ResponseResult latestResponse = null;
@@ -91,7 +87,7 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_MCPTool_ProjectConnection_Async
-        //await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
