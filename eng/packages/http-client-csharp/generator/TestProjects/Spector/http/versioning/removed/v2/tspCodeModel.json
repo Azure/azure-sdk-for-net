@@ -224,6 +224,11 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV2",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV2"
+        }
+      },
       "properties": [
         {
           "$id": "22",
@@ -322,6 +327,11 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV3",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV3"
+        }
+      },
       "properties": [
         {
           "$id": "30",
@@ -474,7 +484,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v2",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
@@ -636,7 +647,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.modelV3",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {

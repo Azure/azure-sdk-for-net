@@ -26,6 +26,15 @@ public partial class ContainerAppCertificateProperties : ProvisionableConstruct
     private BicepValue<ContainerAppCertificateProvisioningState>? _provisioningState;
 
     /// <summary>
+    /// Any errors that occurred during deployment or deployment validation.
+    /// </summary>
+    public BicepValue<string> DeploymentErrors 
+    {
+        get { Initialize(); return _deploymentErrors!; }
+    }
+    private BicepValue<string>? _deploymentErrors;
+
+    /// <summary>
     /// Properties for a certificate stored in a Key Vault.
     /// </summary>
     public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties 
@@ -142,6 +151,7 @@ public partial class ContainerAppCertificateProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _provisioningState = DefineProperty<ContainerAppCertificateProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
+        _deploymentErrors = DefineProperty<string>("DeploymentErrors", ["deploymentErrors"], isOutput: true);
         _certificateKeyVaultProperties = DefineModelProperty<ContainerAppCertificateKeyVaultProperties>("CertificateKeyVaultProperties", ["certificateKeyVaultProperties"]);
         _password = DefineProperty<string>("Password", ["password"]);
         _subjectName = DefineProperty<string>("SubjectName", ["subjectName"], isOutput: true);

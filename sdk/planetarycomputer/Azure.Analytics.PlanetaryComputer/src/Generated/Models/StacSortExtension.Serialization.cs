@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/sort#sort-api-extension
-    /// 
     /// Represents a sort specification for STAC API queries.
     /// </summary>
     public partial class StacSortExtension : IJsonModel<StacSortExtension>

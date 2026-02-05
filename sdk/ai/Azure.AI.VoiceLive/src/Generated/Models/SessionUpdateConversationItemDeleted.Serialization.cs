@@ -45,11 +45,6 @@ namespace Azure.AI.VoiceLive
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("item_id"u8);
             writer.WriteStringValue(ItemId);
-            if (Optional.IsDefined(EventId))
-            {
-                writer.WritePropertyName("event_id"u8);
-                writer.WriteStringValue(EventId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -78,9 +73,9 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             ServerEventType @type = default;
+            string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
-            string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -88,14 +83,14 @@ namespace Azure.AI.VoiceLive
                     @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("item_id"u8))
-                {
-                    itemId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("event_id"u8))
                 {
                     eventId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("item_id"u8))
+                {
+                    itemId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,7 +98,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionUpdateConversationItemDeleted(@type, additionalBinaryDataProperties, itemId, eventId);
+            return new SessionUpdateConversationItemDeleted(@type, eventId, additionalBinaryDataProperties, itemId);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

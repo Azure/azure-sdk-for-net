@@ -2,6 +2,12 @@
 
 ## 12.12.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Marco Studerus _([GitHub](https://github.com/e-i-n-s))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -10,6 +16,7 @@
 - Fixed an issue where `TimeSpan` properties in strongly typed table entities were not being deserialized.
 - Fixed an issue when deserializing strongly typed table entities with enum properties. Enum values that aren't defined in the enum type are now skipped during deserialization of the table entity.
 - Fixed an issue when comparing `TableErrorCode` with null strings using equality operators.
+- Fixed duplicated diagnostic scopes in `TableClient.Query` and `TableServiceClient.Query` (A community contribution, courtesy of _[e-i-n-s](https://github.com/e-i-n-s)_)
 
 ### Other Changes
 - Use precedence rules to reduce the parenthesis nesting in OData filters generated from LINQ expressions.

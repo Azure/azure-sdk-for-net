@@ -583,5 +583,124 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
             Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
         }
+
+        [TestCase]
+        public void ValidateContextualParameters_VariableKeySegment()
+        {
+            // Test path like /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}
+            // where {parentResourceType} is the key for {parentResourceName}
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}");
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
+
+            // Should have 6 parameters: subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceName, parentResourceType, targetName
+            // Note: When key is variable, the value (parentResourceName) is pushed after key (parentResourceType) to the stack,
+            // so in the final list, parentResourceName appears before parentResourceType due to stack LIFO behavior.
+            Assert.AreEqual(6, contextualParameters.Count);
+
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+
+            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
+            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentProviderNamespace comes from providers segment
+            Assert.AreEqual("providers", contextualParameters[2].Key);
+            Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses the variable key - appears first due to stack order
+            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Parent.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceType is a variable key - should use ResourceType().Type()
+            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+
+            Assert.AreEqual("targets", contextualParameters[5].Key);
+            Assert.AreEqual("targetName", contextualParameters[5].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[5].BuildValueExpression(_idVariable).ToDisplayString());
+        }
+
+        [TestCase]
+        public void ValidateContextualParameters_VariableKeySegment_ParentResource()
+        {
+            // Test path with variable key at parent level (without the child resource)
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}");
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
+
+            // Should have 5 parameters: subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceName, parentResourceType
+            Assert.AreEqual(5, contextualParameters.Count);
+
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+
+            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
+            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+
+            // parentProviderNamespace comes from providers segment
+            Assert.AreEqual("providers", contextualParameters[2].Key);
+            Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
+            Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses the variable key - appears first due to stack order
+            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceType is a variable key
+            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+        }
+
+        [Test]
+        public void ValidateSecondaryContextualParameters_VariableKeySegment()
+        {
+            // Test secondary contextual path with variable key segment
+            var primaryPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var secondaryPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}");
+
+            var mockFields = new Dictionary<string, FieldProvider>();
+            Func<string, FieldProvider> fieldSelector = name =>
+            {
+                if (!mockFields.TryGetValue(name, out var field))
+                {
+                    field = new FieldProvider(FieldModifiers.Private, typeof(string), name, enclosingType: null!);
+                    mockFields[name] = field;
+                }
+                return field;
+            };
+
+            var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector);
+
+            // Primary should have subscriptionId and resourceGroupName
+            Assert.AreEqual(2, operationContext.ContextualPathParameters.Count);
+            Assert.AreEqual("subscriptionId", operationContext.ContextualPathParameters[0].VariableName);
+            Assert.AreEqual("resourceGroupName", operationContext.ContextualPathParameters[1].VariableName);
+
+            // Secondary should have parentProviderNamespace, parentResourceType, parentResourceName, and targetName
+            // Note: providers/Microsoft.Example is constant pair so skipped, targets/{targetName} has constant key
+            Assert.AreEqual(4, operationContext.SecondaryContextualPathParameters.Count);
+
+            Assert.AreEqual("providers", operationContext.SecondaryContextualPathParameters[0].Key);
+            Assert.AreEqual("parentProviderNamespace", operationContext.SecondaryContextualPathParameters[0].VariableName);
+
+            // parentResourceType is a variable key - should be included
+            Assert.AreEqual("parentResourceType", operationContext.SecondaryContextualPathParameters[1].Key);
+            Assert.AreEqual("parentResourceType", operationContext.SecondaryContextualPathParameters[1].VariableName);
+
+            // parentResourceName uses the variable key
+            Assert.AreEqual("parentResourceName", operationContext.SecondaryContextualPathParameters[2].Key);
+            Assert.AreEqual("parentResourceName", operationContext.SecondaryContextualPathParameters[2].VariableName);
+
+            Assert.AreEqual("targets", operationContext.SecondaryContextualPathParameters[3].Key);
+            Assert.AreEqual("targetName", operationContext.SecondaryContextualPathParameters[3].VariableName);
+        }
     }
 }

@@ -213,6 +213,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of User items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "23",
@@ -233,6 +238,11 @@
               "usage": "Output,Json",
               "doc": "Details about a user.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "User"
+                }
+              },
               "properties": [
                 {
                   "$id": "26",
@@ -305,6 +315,11 @@
                       "usage": "Output,Json",
                       "doc": "UserOrder for testing list with expand.",
                       "decorators": [],
+                      "serializationOptions": {
+                        "json": {
+                          "name": "UserOrder"
+                        }
+                      },
                       "properties": [
                         {
                           "$id": "33",
@@ -503,6 +518,11 @@
       "usage": "Json,Exception",
       "doc": "A response containing error details.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
       "properties": [
         {
           "$id": "46",
@@ -519,6 +539,11 @@
             "usage": "Json,Exception",
             "doc": "The error object.",
             "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "Error"
+              }
+            },
             "properties": [
               {
                 "$id": "48",
@@ -642,6 +667,11 @@
                   "usage": "Json,Exception",
                   "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "InnerError"
+                    }
+                  },
                   "properties": [
                     {
                       "$id": "58",
@@ -764,6 +794,11 @@
       "usage": "Input,Json",
       "doc": "The body of the input.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ListItemInputBody"
+        }
+      },
       "properties": [
         {
           "$id": "64",
@@ -801,6 +836,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.CustomPageModel",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "CustomPageModel"
+        }
+      },
       "properties": [
         {
           "$id": "67",
@@ -860,6 +900,11 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.ParameterizedNextLinkPagingResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ParameterizedNextLinkPagingResult"
+        }
+      },
       "properties": [
         {
           "$id": "71",
@@ -925,6 +970,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of FirstItem items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "76",
@@ -945,6 +995,11 @@
               "usage": "Output,Json",
               "doc": "First item.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "FirstItem"
+                }
+              },
               "properties": [
                 {
                   "$id": "79",
@@ -1037,6 +1092,11 @@
       "usage": "Output,Json",
       "doc": "Paged collection of SecondItem items",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Page"
+        }
+      },
       "properties": [
         {
           "$id": "85",
@@ -1057,6 +1117,11 @@
               "usage": "Output,Json",
               "doc": "Second item.",
               "decorators": [],
+              "serializationOptions": {
+                "json": {
+                  "name": "SecondItem"
+                }
+              },
               "properties": [
                 {
                   "$id": "88",
@@ -1234,7 +1299,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1422,7 +1488,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1607,7 +1674,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithCustomPageModel",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -1748,7 +1816,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.Core.Page"
           },
           "parameters": [
             {
@@ -2003,7 +2072,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listFirstItem",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Page"
               },
               "parameters": [
                 {
@@ -2134,7 +2204,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listSecondItem",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Page"
               },
               "parameters": [
                 {

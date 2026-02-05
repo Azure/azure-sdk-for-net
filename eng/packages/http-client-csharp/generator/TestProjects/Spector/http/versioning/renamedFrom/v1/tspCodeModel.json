@@ -148,6 +148,11 @@
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "OldModel"
+        }
+      },
       "properties": [
         {
           "$id": "16",
@@ -366,7 +371,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.RenamedFrom.oldOp",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.RenamedFrom"
           },
           "parameters": [
             {
@@ -609,7 +615,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldInterface.newOpInNewInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.RenamedFrom"
               },
               "parameters": [
                 {

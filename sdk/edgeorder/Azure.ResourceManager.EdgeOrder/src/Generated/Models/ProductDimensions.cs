@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Dimensions of a configuration. </summary>
     public partial class ProductDimensions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         internal ProductDimensions()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="weight"> Weight of the device. </param>
         /// <param name="depth"> Depth of the device. </param>
         /// <param name="weightUnit"> Unit for the dimensions of weight. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Length = length;
             Height = height;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Weight = weight;
             Depth = depth;
             WeightUnit = weightUnit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Length of the device. </summary>
         public double? Length { get; }
+
         /// <summary> Height of the device. </summary>
         public double? Height { get; }
+
         /// <summary> Width of the device. </summary>
         public double? Width { get; }
+
         /// <summary> Unit for the dimensions of length, height and width. </summary>
         public ProductLengthHeightWidthUnit? LengthHeightUnit { get; }
+
         /// <summary> Weight of the device. </summary>
         public double? Weight { get; }
+
         /// <summary> Depth of the device. </summary>
         public double? Depth { get; }
+
         /// <summary> Unit for the dimensions of weight. </summary>
         public ProductWeightMeasurementUnit? WeightUnit { get; }
     }

@@ -46,6 +46,11 @@
       "usage": "Input,Output,Json",
       "doc": "Model with client default values on properties.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelWithDefaultValues"
+        }
+      },
       "properties": [
         {
           "$id": "6",
@@ -252,7 +257,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.putModelProperty",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
@@ -425,7 +431,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getOperationParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
@@ -600,7 +607,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getPathParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {
@@ -748,7 +756,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.getHeaderParameter",
-            "decorators": []
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue"
           },
           "parameters": [
             {

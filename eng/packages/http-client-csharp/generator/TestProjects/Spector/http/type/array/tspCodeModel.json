@@ -462,6 +462,11 @@
       "usage": "Input,Output,Json",
       "doc": "Array inner model",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InnerModel"
+        }
+      },
       "properties": [
         {
           "$id": "58",
@@ -634,7 +639,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -733,7 +739,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -889,7 +896,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int64Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -988,7 +996,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Int64Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1144,7 +1153,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.BooleanValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1243,7 +1253,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.BooleanValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1399,7 +1410,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.StringValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1498,7 +1510,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.StringValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1654,7 +1667,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Float32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1753,7 +1767,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.Float32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -1917,7 +1932,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DatetimeValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2016,7 +2032,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DatetimeValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2180,7 +2197,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DurationValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2279,7 +2297,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.DurationValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2435,7 +2454,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.UnknownValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2534,7 +2554,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.UnknownValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2679,7 +2700,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.ModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2778,7 +2800,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.ModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -2939,7 +2962,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3038,7 +3062,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableFloatValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3199,7 +3224,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3298,7 +3324,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableInt32Value.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3459,7 +3486,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3558,7 +3586,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableBooleanValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3719,7 +3748,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableStringValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3818,7 +3848,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableStringValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -3975,7 +4006,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableModelValue.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {
@@ -4074,7 +4106,8 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Array.NullableModelValue.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Array"
               },
               "parameters": [
                 {

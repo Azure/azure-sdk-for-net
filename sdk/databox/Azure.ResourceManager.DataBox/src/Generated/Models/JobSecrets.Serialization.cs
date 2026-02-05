@@ -8,15 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
+    /// <summary>
+    /// The base class for the secrets
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/>, <see cref="DataBoxHeavyJobSecrets"/>, and <see cref="DataBoxJobSecrets"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownJobSecrets))]
-    public partial class JobSecrets : IUtf8JsonSerializable, IJsonModel<JobSecrets>
+    public abstract partial class JobSecrets : IJsonModel<JobSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobSecrets)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
@@ -46,15 +50,15 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,43 +67,55 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        JobSecrets IJsonModel<JobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobSecrets IJsonModel<JobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobSecrets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JobSecrets)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJobSecrets(document.RootElement, options);
         }
 
-        internal static JobSecrets DeserializeJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static JobSecrets DeserializeJobSecrets(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("jobSecretsType", out JsonElement discriminator))
+            if (element.TryGetProperty("jobSecretsType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxJobSecrets.DeserializeDataBoxJobSecrets(element, options);
-                    case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element, options);
-                    case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element, options);
-                    case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element, options);
+                    case "DataBoxCustomerDisk":
+                        return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element, options);
+                    case "DataBoxDisk":
+                        return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element, options);
+                    case "DataBoxHeavy":
+                        return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element, options);
+                    case "DataBox":
+                        return DataBoxJobSecrets.DeserializeDataBoxJobSecrets(element, options);
                 }
             }
             return UnknownJobSecrets.DeserializeUnknownJobSecrets(element, options);
         }
 
-        BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -109,15 +125,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        JobSecrets IPersistableModel<JobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JobSecrets IPersistableModel<JobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJobSecrets(document.RootElement, options);
                     }
                 default:
@@ -125,6 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,11 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// FieldsExtension.
-    /// 
     /// Attributes:
     /// include: set of fields to include.
     /// exclude: set of fields to exclude.
-    /// 
     /// Controls which fields to include or exclude from the response.
     /// </summary>
     public partial class SearchOptionsFields : IJsonModel<SearchOptionsFields>
