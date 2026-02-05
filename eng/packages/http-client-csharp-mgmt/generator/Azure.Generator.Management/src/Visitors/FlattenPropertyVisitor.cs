@@ -348,14 +348,6 @@ namespace Azure.Generator.Management.Visitors
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
 
-        /// <summary>
-        /// Gets the properties defined directly on the model (not inherited from base classes).
-        /// </summary>
-        private static IEnumerable<PropertyProvider> GetOwnProperties(ModelProvider modelProvider)
-        {
-            return modelProvider.Properties.Concat(modelProvider.CustomCodeView?.Properties ?? []);
-        }
-
         private void FlattenModel(ModelProvider model)
         {
             if (_visitedModelTypes.Contains(model.Type))
@@ -385,19 +377,19 @@ namespace Azure.Generator.Management.Visitors
 
                 var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
 
-                // handle `@flattenProperty`
+                // handle `@flattenProperty` - client flatten corresponding to the decorator
                 if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Contains(internalProperty))
                 {
                     isFlattenProperty = true;
-                    PropertyFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
+                    DoClientFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
                     continue;
                 }
-                // safe flatten single property
+                // safe flatten single property - automatically when the model has only one own public property
                 else
                 {
                     // only safe flatten single public property
-                    // Count only properties defined on this model, not inherited properties
-                    var ownProperties = GetOwnProperties(modelProvider);
+                    // Use CanonicalView.Properties to get only properties defined on this model (not inherited)
+                    var ownProperties = modelProvider.CanonicalView.Properties;
                     var publicPropertyCount = ownProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
                     if (publicPropertyCount != 1)
                     {
@@ -417,7 +409,7 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    isSafeFlatten = SafeFlatten(model, innerProperties, propertyMap, internalProperty, modelProvider);
+                    isSafeFlatten = DoSafeFlatten(model, propertyMap, internalProperty, modelProvider);
                 }
             }
 
@@ -432,7 +424,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
+        private void DoClientFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
             var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
 
@@ -499,11 +491,11 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.IsApiVersion);
         }
 
-        private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
+        private bool DoSafeFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
             // Get the single public property from the model's own properties (not inherited)
-            var ownProperties = GetOwnProperties(modelProvider);
+            var ownProperties = modelProvider.CanonicalView.Properties;
             var innerProperty = ownProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             isFlattened = true;
 
