@@ -367,7 +367,12 @@
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Update="SauceControl.InheritDoc" Version="2.0.2" PrivateAssets="All" />
+    <!--
+      Note: SauceControl.InheritDoc 2.0.x causes NuGet restore loops in Visual Studio with multi-targeting projects.
+      See https://github.com/saucecontrol/InheritDoc/releases for v2.0 release notes about incremental build fixes.
+      Do not upgrade until this issue is resolved upstream.
+    -->
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
   </ItemGroup>
 
