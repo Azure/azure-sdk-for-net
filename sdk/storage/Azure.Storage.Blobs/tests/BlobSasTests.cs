@@ -245,15 +245,54 @@ namespace Azure.Storage.Blobs.Test
                 IsDirectory = true,
             };
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            // Test using same name as SAS
+            BlobUriBuilder blobUriBuilder1 = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
                 Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
             };
+            AppendBlobClient appendBlobClient1 = InstrumentClient(new AppendBlobClient(blobUriBuilder1.ToUri(), GetOptions()));
+            await appendBlobClient1.CreateAsync();
+
+            // Test using SAS name + suffix
+            BlobUriBuilder blobUriBuilder2 = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName + "/test",
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
+            };
+            AppendBlobClient appendBlobClient2 = InstrumentClient(new AppendBlobClient(blobUriBuilder2.ToUri(), GetOptions()));
+            await appendBlobClient2.CreateAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DirectorySas_AllPermissions_Fail()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
+                permissions: BlobContainerSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1))
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = "foo/bar/hello",
+                IsDirectory = true,
+            };
+
+            BlobUriBuilder blobUriBuilderFail = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = "foo/bar", // this name does NOT have a prefix of the name in the SAS
+                Sas = blobSasBuilder.ToSasQueryParameters(Tenants.GetNewSharedKeyCredentials())
+            };
 
             // Act
-            AppendBlobClient appendBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-            await appendBlobClient.CreateAsync();
+            AppendBlobClient appendBlobFailClient = InstrumentClient(new AppendBlobClient(blobUriBuilderFail.ToUri(), GetOptions()));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await appendBlobFailClient.CreateAsync();
+            });
+            Assert.AreEqual("AuthenticationFailed", ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -281,15 +320,59 @@ namespace Azure.Storage.Blobs.Test
                 IsDirectory = true,
             };
 
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            // Test using same name as SAS
+            BlobUriBuilder blobUriBuilder1 = new BlobUriBuilder(test.Container.Uri)
             {
                 BlobName = blobName,
                 Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName)
             };
+            AppendBlobClient appendBlobClient1 = InstrumentClient(new AppendBlobClient(blobUriBuilder1.ToUri(), GetOptions()));
+            await appendBlobClient1.CreateAsync();
+
+            // Test using SAS name + suffix
+            BlobUriBuilder blobUriBuilder2 = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = blobName + "/test",
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName)
+            };
+            AppendBlobClient appendBlobClient2 = InstrumentClient(new AppendBlobClient(blobUriBuilder2.ToUri(), GetOptions()));
+            await appendBlobClient2.CreateAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DirectoryIdentitySas_AllPermissions_Fail()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            string containerName = GetNewContainerName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                options: options);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(
+                permissions: BlobContainerSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddDays(1))
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = "foo/bar/hello",
+                IsDirectory = true,
+            };
+
+            BlobUriBuilder blobUriBuilderFail = new BlobUriBuilder(test.Container.Uri)
+            {
+                BlobName = "foo/bar", // this name does NOT have a prefix of the name in the SAS
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName)
+            };
 
             // Act
-            AppendBlobClient appendBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-            await appendBlobClient.CreateAsync();
+            AppendBlobClient appendBlobFailClient = InstrumentClient(new AppendBlobClient(blobUriBuilderFail.ToUri(), GetOptions()));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await appendBlobFailClient.CreateAsync();
+            });
+            Assert.AreEqual("AuthenticationFailed", ex.ErrorCode);
         }
 
         [RecordedTest]
