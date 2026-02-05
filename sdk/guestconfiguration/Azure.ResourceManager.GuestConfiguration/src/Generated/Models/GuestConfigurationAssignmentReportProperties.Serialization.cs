@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            ComplianceStatus? complianceStatus = default;
             string reportId = default;
-            GuestConfigurationAssignmentInfo assignment = default;
-            GuestConfigurationVmInfo vm = default;
+            AssignmentInfo assignment = default;
+            VMInfo vm = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            GuestConfigurationAssignmentReportDetails details = default;
+            AssignmentReportDetails details = default;
             string vmssResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(prop.Value.GetString());
+                    complianceStatus = new ComplianceStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reportId"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    assignment = GuestConfigurationAssignmentInfo.DeserializeGuestConfigurationAssignmentInfo(prop.Value, options);
+                    assignment = AssignmentInfo.DeserializeAssignmentInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vm"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    vm = GuestConfigurationVmInfo.DeserializeGuestConfigurationVmInfo(prop.Value, options);
+                    vm = VMInfo.DeserializeVMInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         details = null;
                         continue;
                     }
-                    details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(prop.Value, options);
+                    details = AssignmentReportDetails.DeserializeAssignmentReportDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmssResourceId"u8))

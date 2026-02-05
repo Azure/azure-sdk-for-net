@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -130,6 +130,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

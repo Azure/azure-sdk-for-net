@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -38,16 +40,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
 
         private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-04-05");
 
+        /// <summary> Gets a collection of VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines and their operations over a VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineResource. </returns>
+        public virtual VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineCollection GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines()
+        {
+            return GetCachedClient(client => new VirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineCollection(client, Id));
+        }
+
         /// <summary>
-        /// List all guest configuration assignments for a subscription.
+        /// Get a report for the guest configuration assignment, by reportId.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GuestConfigurationAssignments_SubscriptionList. </description>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -55,15 +64,211 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignment> SubscriptionListAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachineAsync(string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            return await GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines().GetAsync(resourceGroupName, vmName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a report for the guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationAssignmentReport> GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachine(string resourceGroupName, string vmName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            return GetVirtualMachinesGuestConfigurationAssignmentsReportsForVirtualMachines().Get(resourceGroupName, vmName, guestConfigurationAssignmentName, reportId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets and their operations over a ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetResource. </returns>
+        public virtual ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetCollection GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets()
+        {
+            return GetCachedClient(client => new ExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a report for the VMSS guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationAssignmentsVMSS_GuestConfigurationAssignmentReportsVMSSGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSetAsync(string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return await GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets().GetAsync(resourceGroupName, vmssName, guestConfigurationAssignmentName, id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a report for the VMSS guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationAssignmentsVMSS_GuestConfigurationAssignmentReportsVMSSGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vmssName"> The name of the virtual machine scale set. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationAssignmentReport> GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSet(string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return GetExternalResourceGuestConfigurationAssignmentForVirtualMachineScaleSets().Get(resourceGroupName, vmssName, guestConfigurationAssignmentName, id, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MachinesGuestConfigurationAssignmentsReportsForMachines in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of MachinesGuestConfigurationAssignmentsReportsForMachines and their operations over a MachinesGuestConfigurationAssignmentsReportsForMachineResource. </returns>
+        public virtual MachinesGuestConfigurationAssignmentsReportsForMachineCollection GetMachinesGuestConfigurationAssignmentsReportsForMachines()
+        {
+            return GetCachedClient(client => new MachinesGuestConfigurationAssignmentsReportsForMachineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a report for the guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationHCRPAssignments_GuestConfigurationHCRPAssignmentReportsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetMachinesGuestConfigurationAssignmentsReportsForMachineAsync(string resourceGroupName, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            return await GetMachinesGuestConfigurationAssignmentsReportsForMachines().GetAsync(resourceGroupName, machineName, guestConfigurationAssignmentName, reportId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a report for the guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationHCRPAssignments_GuestConfigurationHCRPAssignmentReportsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationAssignmentReport> GetMachinesGuestConfigurationAssignmentsReportsForMachine(string resourceGroupName, string machineName, string guestConfigurationAssignmentName, string reportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            return GetMachinesGuestConfigurationAssignmentsReportsForMachines().Get(resourceGroupName, machineName, guestConfigurationAssignmentName, reportId, cancellationToken);
         }
 
         /// <summary>
@@ -84,14 +289,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignment> SubscriptionList(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context);
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource>(new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context), data => new VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all guest configuration assignments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationAssignments_SubscriptionList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource> GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GuestConfigurationAssignmentData, VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource>(new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context), data => new VirtualMachinesGuestConfigurationAssignmentsForVirtualMachineResource(Client, data));
         }
     }
 }

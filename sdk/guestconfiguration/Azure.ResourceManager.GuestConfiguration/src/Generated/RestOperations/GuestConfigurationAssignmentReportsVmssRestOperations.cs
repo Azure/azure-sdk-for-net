@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendPath("/reports", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, string id, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string guestConfigurationAssignmentName, string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
             uri.AppendPath(vmssName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendPath("/reports/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);

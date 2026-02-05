@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()
         {
-            ConfigurationParameters = new ChangeTrackingList<GuestConfigurationParameter>();
-            ConfigurationProtectedParameters = new ChangeTrackingList<GuestConfigurationParameter>();
+            ConfigurationParameter = new ChangeTrackingList<ConfigurationParameter>();
+            ConfigurationProtectedParameter = new ChangeTrackingList<ConfigurationParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
         /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
         /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
-        /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
-        /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
+        /// <param name="configurationParameter"> The configuration parameters for the guest configuration. </param>
+        /// <param name="configurationProtectedParameter"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, string contentUri, string contentHash, string contentManagedIdentity, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, string contentUri, string contentHash, string contentManagedIdentity, AssignmentType? assignmentType, string assignmentSource, string contentType, IList<ConfigurationParameter> configurationParameter, IList<ConfigurationParameter> configurationProtectedParameter, ConfigurationSetting configurationSetting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             AssignmentType = assignmentType;
             AssignmentSource = assignmentSource;
             ContentType = contentType;
-            ConfigurationParameters = configurationParameters;
-            ConfigurationProtectedParameters = configurationProtectedParameters;
+            ConfigurationParameter = configurationParameter;
+            ConfigurationProtectedParameter = configurationProtectedParameter;
             ConfigurationSetting = configurationSetting;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string ContentManagedIdentity { get; set; }
 
         /// <summary> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </summary>
-        public GuestConfigurationAssignmentType? AssignmentType { get; set; }
+        public AssignmentType? AssignmentType { get; set; }
 
         /// <summary> Specifies the origin of the configuration. </summary>
         public string AssignmentSource { get; }
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string ContentType { get; }
 
         /// <summary> The configuration parameters for the guest configuration. </summary>
-        public IList<GuestConfigurationParameter> ConfigurationParameters { get; }
+        public IList<ConfigurationParameter> ConfigurationParameter { get; }
 
         /// <summary> The protected configuration parameters for the guest configuration. </summary>
-        public IList<GuestConfigurationParameter> ConfigurationProtectedParameters { get; }
+        public IList<ConfigurationParameter> ConfigurationProtectedParameter { get; }
 
         /// <summary> The configuration setting for the guest configuration. </summary>
-        public LcmConfigurationSetting ConfigurationSetting { get; }
+        public ConfigurationSetting ConfigurationSetting { get; }
     }
 }

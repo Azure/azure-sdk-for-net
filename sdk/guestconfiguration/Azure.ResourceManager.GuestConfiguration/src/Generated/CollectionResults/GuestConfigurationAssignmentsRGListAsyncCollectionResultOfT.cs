@@ -15,7 +15,7 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    internal partial class GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignment>
+    internal partial class GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignmentData>
     {
         private readonly GuestConfigurationAssignments _client;
         private readonly string _resourceGroupName;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GuestConfigurationAssignmentsRGListAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GuestConfigurationAssignment>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<GuestConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     yield break;
                 }
                 GuestConfigurationAssignmentList result = GuestConfigurationAssignmentList.FromResponse(response);
-                yield return Page<GuestConfigurationAssignment>.FromValues((IReadOnlyList<GuestConfigurationAssignment>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GuestConfigurationAssignmentData>.FromValues((IReadOnlyList<GuestConfigurationAssignmentData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

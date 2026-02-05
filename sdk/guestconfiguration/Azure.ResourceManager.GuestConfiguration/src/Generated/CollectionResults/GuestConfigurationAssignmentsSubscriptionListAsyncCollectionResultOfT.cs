@@ -15,7 +15,7 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    internal partial class GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignment>
+    internal partial class GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT : AsyncPageable<GuestConfigurationAssignmentData>
     {
         private readonly GuestConfigurationAssignments _client;
         private readonly string _subscriptionId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GuestConfigurationAssignment>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<GuestConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     yield break;
                 }
                 GuestConfigurationAssignmentList result = GuestConfigurationAssignmentList.FromResponse(response);
-                yield return Page<GuestConfigurationAssignment>.FromValues((IReadOnlyList<GuestConfigurationAssignment>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GuestConfigurationAssignmentData>.FromValues((IReadOnlyList<GuestConfigurationAssignmentData>)result.Value, nextPage?.AbsoluteUri, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextSubscriptionListRequest(nextLink, _subscriptionId, _context) : _client.CreateSubscriptionListRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationSubscriptionResource.SubscriptionList");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableGuestConfigurationSubscriptionResource.GetVirtualMachinesGuestConfigurationAssignmentsForVirtualMachines");
             scope.Start();
             try
             {

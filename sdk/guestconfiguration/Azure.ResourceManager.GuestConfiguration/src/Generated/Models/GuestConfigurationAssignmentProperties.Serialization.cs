@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusCheckedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusChecked))
             {
                 writer.WritePropertyName("lastComplianceStatusChecked"u8);
-                writer.WriteStringValue(LastComplianceStatusCheckedOn.Value, "O");
+                writer.WriteStringValue(LastComplianceStatusChecked.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 writer.WritePropertyName("vmssVMList"u8);
                 writer.WriteStartArray();
-                foreach (GuestConfigurationVmssVmInfo item in VmssVMList)
+                foreach (VMSSVMInfo item in VmssVMList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             string targetResourceId = default;
             GuestConfigurationNavigation guestConfiguration = default;
-            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
-            DateTimeOffset? lastComplianceStatusCheckedOn = default;
+            ComplianceStatus? complianceStatus = default;
+            DateTimeOffset? lastComplianceStatusChecked = default;
             string latestReportId = default;
             string parameterHash = default;
-            GuestConfigurationAssignmentReportInfo latestAssignmentReport = default;
+            AssignmentReport latestAssignmentReport = default;
             string context = default;
             string assignmentHash = default;
-            GuestConfigurationProvisioningState? provisioningState = default;
+            ProvisioningState? provisioningState = default;
             string resourceType = default;
-            IList<GuestConfigurationVmssVmInfo> vmssVMList = default;
+            IList<VMSSVMInfo> vmssVMList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(prop.Value.GetString());
+                    complianceStatus = new ComplianceStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastComplianceStatusChecked"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastComplianceStatusCheckedOn = null;
+                        lastComplianceStatusChecked = null;
                         continue;
                     }
-                    lastComplianceStatusCheckedOn = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceStatusChecked = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("latestReportId"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(prop.Value, options);
+                    latestAssignmentReport = AssignmentReport.DeserializeAssignmentReport(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("context"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         provisioningState = null;
                         continue;
                     }
-                    provisioningState = new GuestConfigurationProvisioningState(prop.Value.GetString());
+                    provisioningState = new ProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceType"u8))
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
+                    List<VMSSVMInfo> array = new List<VMSSVMInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item, options));
+                        array.Add(VMSSVMInfo.DeserializeVMSSVMInfo(item, options));
                     }
                     vmssVMList = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 targetResourceId,
                 guestConfiguration,
                 complianceStatus,
-                lastComplianceStatusCheckedOn,
+                lastComplianceStatusChecked,
                 latestReportId,
                 parameterHash,
                 latestAssignmentReport,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentHash,
                 provisioningState,
                 resourceType,
-                vmssVMList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
+                vmssVMList ?? new ChangeTrackingList<VMSSVMInfo>(),
                 additionalBinaryDataProperties);
         }
 

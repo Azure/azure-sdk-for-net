@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="details"> Details of the assignment report. </param>
         /// <param name="vmssResourceId"> Azure resource Id of the VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, string reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, GuestConfigurationAssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportProperties(ComplianceStatus? complianceStatus, string reportId, AssignmentInfo assignment, VMInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceStatus = complianceStatus;
             ReportId = reportId;
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
-        public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
+        public ComplianceStatus? ComplianceStatus { get; }
 
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         public string ReportId { get; }
 
         /// <summary> Configuration details of the guest configuration assignment. </summary>
-        public GuestConfigurationAssignmentInfo Assignment { get; }
+        public AssignmentInfo Assignment { get; }
 
         /// <summary> Information about the VM. </summary>
-        public GuestConfigurationVmInfo Vm { get; }
+        public VMInfo Vm { get; }
 
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
         public DateTimeOffset? StartOn { get; }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Details of the assignment report. </summary>
-        public GuestConfigurationAssignmentReportDetails Details { get; }
+        public AssignmentReportDetails Details { get; }
 
         /// <summary> Azure resource Id of the VMSS. </summary>
         public string VmssResourceId { get; }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GuestConfigurationAssignment item in Value)
+                foreach (GuestConfigurationAssignmentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            IList<GuestConfigurationAssignment> value = default;
+            IList<GuestConfigurationAssignmentData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    List<GuestConfigurationAssignment> array = new List<GuestConfigurationAssignment>();
+                    List<GuestConfigurationAssignmentData> array = new List<GuestConfigurationAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationAssignment.DeserializeGuestConfigurationAssignment(item, options));
+                        array.Add(GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuestConfigurationAssignmentList(value ?? new ChangeTrackingList<GuestConfigurationAssignment>(), nextLink, additionalBinaryDataProperties);
+            return new GuestConfigurationAssignmentList(value ?? new ChangeTrackingList<GuestConfigurationAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

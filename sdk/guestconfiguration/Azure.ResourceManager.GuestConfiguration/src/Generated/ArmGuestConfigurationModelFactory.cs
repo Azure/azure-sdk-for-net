@@ -20,20 +20,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
 
         /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
-        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
-        /// <param name="name"> The guest configuration assignment name. </param>
-        /// <param name="location"> Region where the VM is located. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="properties"> Properties of the Guest configuration assignment. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationAssignment"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignment GuestConfigurationAssignment(ResourceIdentifier id = default, string name = default, string location = default, ResourceType? @type = default, GuestConfigurationAssignmentProperties properties = default, SystemData systemData = default)
+        /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(string id = default, string name = default, ResourceType resourceType = default, GuestConfigurationAssignmentProperties properties = default, SystemData systemData = default)
         {
-            return new GuestConfigurationAssignment(
+            return new GuestConfigurationAssignmentData(
                 id,
                 name,
-                location,
-                @type,
+                resourceType,
                 additionalBinaryDataProperties: null,
                 properties,
                 systemData);
@@ -43,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="targetResourceId"> VM resource Id. </param>
         /// <param name="guestConfiguration"> The guest configuration to assign. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="lastComplianceStatusCheckedOn"> Date and time when last compliance status was checked. </param>
+        /// <param name="lastComplianceStatusChecked"> Date and time when last compliance status was checked. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
         /// <param name="parameterHash"> parameter hash for the guest configuration assignment. </param>
         /// <param name="latestAssignmentReport"> Last reported guest configuration assignment report. </param>
@@ -53,15 +51,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVMList"> The list of VM Compliance data for VMSS. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentProperties"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentProperties GuestConfigurationAssignmentProperties(string targetResourceId = default, GuestConfigurationNavigation guestConfiguration = default, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, DateTimeOffset? lastComplianceStatusCheckedOn = default, string latestReportId = default, string parameterHash = default, GuestConfigurationAssignmentReportInfo latestAssignmentReport = default, string context = default, string assignmentHash = default, GuestConfigurationProvisioningState? provisioningState = default, string resourceType = default, IEnumerable<GuestConfigurationVmssVmInfo> vmssVMList = default)
+        public static GuestConfigurationAssignmentProperties GuestConfigurationAssignmentProperties(string targetResourceId = default, GuestConfigurationNavigation guestConfiguration = default, ComplianceStatus? complianceStatus = default, DateTimeOffset? lastComplianceStatusChecked = default, string latestReportId = default, string parameterHash = default, AssignmentReport latestAssignmentReport = default, string context = default, string assignmentHash = default, ProvisioningState? provisioningState = default, string resourceType = default, IEnumerable<VMSSVMInfo> vmssVMList = default)
         {
-            vmssVMList ??= new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
+            vmssVMList ??= new ChangeTrackingList<VMSSVMInfo>();
 
             return new GuestConfigurationAssignmentProperties(
                 targetResourceId,
                 guestConfiguration,
                 complianceStatus,
-                lastComplianceStatusCheckedOn,
+                lastComplianceStatusChecked,
                 latestReportId,
                 parameterHash,
                 latestAssignmentReport,
@@ -83,14 +81,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
         /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
         /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
-        /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
-        /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
+        /// <param name="configurationParameter"> The configuration parameters for the guest configuration. </param>
+        /// <param name="configurationProtectedParameter"> The protected configuration parameters for the guest configuration. </param>
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationNavigation"/> instance for mocking. </returns>
-        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind = default, string name = default, string version = default, string contentUri = default, string contentHash = default, string contentManagedIdentity = default, GuestConfigurationAssignmentType? assignmentType = default, string assignmentSource = default, string contentType = default, IEnumerable<GuestConfigurationParameter> configurationParameters = default, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters = default, LcmConfigurationSetting configurationSetting = default)
+        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind = default, string name = default, string version = default, string contentUri = default, string contentHash = default, string contentManagedIdentity = default, AssignmentType? assignmentType = default, string assignmentSource = default, string contentType = default, IEnumerable<ConfigurationParameter> configurationParameter = default, IEnumerable<ConfigurationParameter> configurationProtectedParameter = default, ConfigurationSetting configurationSetting = default)
         {
-            configurationParameters ??= new ChangeTrackingList<GuestConfigurationParameter>();
-            configurationProtectedParameters ??= new ChangeTrackingList<GuestConfigurationParameter>();
+            configurationParameter ??= new ChangeTrackingList<ConfigurationParameter>();
+            configurationProtectedParameter ??= new ChangeTrackingList<ConfigurationParameter>();
 
             return new GuestConfigurationNavigation(
                 kind,
@@ -102,33 +100,33 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentType,
                 assignmentSource,
                 contentType,
-                configurationParameters.ToList(),
-                configurationProtectedParameters.ToList(),
+                configurationParameter.ToList(),
+                configurationProtectedParameter.ToList(),
                 configurationSetting,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration setting of LCM (Local Configuration Manager). </summary>
         /// <param name="configurationMode"> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </param>
-        /// <param name="isModuleOverwriteAllowed"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>
+        /// <param name="allowModuleOverwrite"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>
         /// <param name="actionAfterReboot"> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </param>
-        /// <param name="refreshFrequencyInMins"> The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30. </param>
+        /// <param name="refreshFrequencyMins"> The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30. </param>
         /// <param name="rebootIfNeeded"> Set this to true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default value is false. To use this setting when a reboot condition is enacted by something other than DSC (such as Windows Installer), combine this setting with the xPendingReboot module. </param>
-        /// <param name="configurationModeFrequencyInMins"> How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15. </param>
-        /// <returns> A new <see cref="Models.LcmConfigurationSetting"/> instance for mocking. </returns>
-        public static LcmConfigurationSetting LcmConfigurationSetting(LcmConfigurationMode? configurationMode = default, bool? isModuleOverwriteAllowed = default, ActionAfterReboot? actionAfterReboot = default, float? refreshFrequencyInMins = default, bool? rebootIfNeeded = default, float? configurationModeFrequencyInMins = default)
+        /// <param name="configurationModeFrequencyMins"> How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15. </param>
+        /// <returns> A new <see cref="Models.ConfigurationSetting"/> instance for mocking. </returns>
+        public static ConfigurationSetting ConfigurationSetting(ConfigurationMode? configurationMode = default, bool? allowModuleOverwrite = default, ActionAfterReboot? actionAfterReboot = default, float? refreshFrequencyMins = default, bool? rebootIfNeeded = default, float? configurationModeFrequencyMins = default)
         {
-            return new LcmConfigurationSetting(
+            return new ConfigurationSetting(
                 configurationMode,
-                isModuleOverwriteAllowed,
+                allowModuleOverwrite,
                 actionAfterReboot,
-                refreshFrequencyInMins,
+                refreshFrequencyMins,
                 rebootIfNeeded,
-                configurationModeFrequencyInMins,
+                configurationModeFrequencyMins,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The GuestConfigurationAssignmentReportInfo. </summary>
+        /// <summary> The AssignmentReport. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>
@@ -138,12 +136,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReportInfo"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentReportInfo GuestConfigurationAssignmentReportInfo(string id = default, string reportId = default, GuestConfigurationAssignmentInfo assignment = default, GuestConfigurationVmInfo vm = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, GuestConfigurationAssignmentReportType? operationType = default, IEnumerable<AssignmentReportResourceInfo> resources = default)
+        /// <returns> A new <see cref="Models.AssignmentReport"/> instance for mocking. </returns>
+        public static AssignmentReport AssignmentReport(string id = default, string reportId = default, AssignmentInfo assignment = default, VMInfo vm = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ComplianceStatus? complianceStatus = default, Type? operationType = default, IEnumerable<AssignmentReportResource> resources = default)
         {
-            resources ??= new ChangeTrackingList<AssignmentReportResourceInfo>();
+            resources ??= new ChangeTrackingList<AssignmentReportResource>();
 
-            return new GuestConfigurationAssignmentReportInfo(
+            return new AssignmentReport(
                 id,
                 reportId,
                 assignment,
@@ -159,41 +157,41 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Information about the guest configuration assignment. </summary>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="configuration"> Information about the configuration. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationAssignmentInfo"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentInfo GuestConfigurationAssignmentInfo(string name = default, GuestConfigurationInfo configuration = default)
+        /// <returns> A new <see cref="Models.AssignmentInfo"/> instance for mocking. </returns>
+        public static AssignmentInfo AssignmentInfo(string name = default, ConfigurationInfo configuration = default)
         {
-            return new GuestConfigurationAssignmentInfo(name, configuration, additionalBinaryDataProperties: null);
+            return new AssignmentInfo(name, configuration, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about the configuration. </summary>
         /// <param name="name"> Name of the configuration. </param>
         /// <param name="version"> Version of the configuration. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationInfo"/> instance for mocking. </returns>
-        public static GuestConfigurationInfo GuestConfigurationInfo(string name = default, string version = default)
+        /// <returns> A new <see cref="Models.ConfigurationInfo"/> instance for mocking. </returns>
+        public static ConfigurationInfo ConfigurationInfo(string name = default, string version = default)
         {
-            return new GuestConfigurationInfo(name, version, additionalBinaryDataProperties: null);
+            return new ConfigurationInfo(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about the VM. </summary>
         /// <param name="id"> Azure resource Id of the VM. </param>
         /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationVmInfo"/> instance for mocking. </returns>
-        public static GuestConfigurationVmInfo GuestConfigurationVmInfo(string id = default, string uuid = default)
+        /// <returns> A new <see cref="Models.VMInfo"/> instance for mocking. </returns>
+        public static VMInfo VMInfo(string id = default, string uuid = default)
         {
-            return new GuestConfigurationVmInfo(id, uuid, additionalBinaryDataProperties: null);
+            return new VMInfo(id, uuid, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The guest configuration assignment resource. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="assignmentResourceSettingName"> Name of the guest configuration assignment resource setting. </param>
+        /// <param name="resourceId"> Name of the guest configuration assignment resource setting. </param>
         /// <param name="reasons"> Compliance reason and reason code for a resource. </param>
         /// <param name="properties"> Properties of a guest configuration assignment resource. </param>
-        /// <returns> A new <see cref="Models.AssignmentReportResourceInfo"/> instance for mocking. </returns>
-        public static AssignmentReportResourceInfo AssignmentReportResourceInfo(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, string assignmentResourceSettingName = default, IEnumerable<AssignmentReportResourceComplianceReason> reasons = default, BinaryData properties = default)
+        /// <returns> A new <see cref="Models.AssignmentReportResource"/> instance for mocking. </returns>
+        public static AssignmentReportResource AssignmentReportResource(ComplianceStatus? complianceStatus = default, string resourceId = default, IEnumerable<AssignmentReportResourceComplianceReason> reasons = default, BinaryData properties = default)
         {
             reasons ??= new ChangeTrackingList<AssignmentReportResourceComplianceReason>();
 
-            return new AssignmentReportResourceInfo(complianceStatus, assignmentResourceSettingName, reasons.ToList(), properties, additionalBinaryDataProperties: null);
+            return new AssignmentReportResource(complianceStatus, resourceId, reasons.ToList(), properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Reason and code for the compliance of the guest configuration assignment resource. </summary>
@@ -210,28 +208,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
-        /// <param name="lastComplianceCheckedOn"> Date and time when last compliance status was checked. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationVmssVmInfo"/> instance for mocking. </returns>
-        public static GuestConfigurationVmssVmInfo GuestConfigurationVmssVmInfo(string vmId = default, string vmResourceId = default, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, string latestReportId = default, DateTimeOffset? lastComplianceCheckedOn = default)
+        /// <param name="lastComplianceChecked"> Date and time when last compliance status was checked. </param>
+        /// <returns> A new <see cref="Models.VMSSVMInfo"/> instance for mocking. </returns>
+        public static VMSSVMInfo VMSSVMInfo(string vmId = default, string vmResourceId = default, ComplianceStatus? complianceStatus = default, string latestReportId = default, DateTimeOffset? lastComplianceChecked = default)
         {
-            return new GuestConfigurationVmssVmInfo(
+            return new VMSSVMInfo(
                 vmId,
                 vmResourceId,
                 complianceStatus,
                 latestReportId,
-                lastComplianceCheckedOn,
+                lastComplianceChecked,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> ARM proxy resource. </summary>
-        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
-        /// <param name="name"> The guest configuration assignment name. </param>
-        /// <param name="location"> Region where the VM is located. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
-        public static ProxyResource ProxyResource(ResourceIdentifier id = default, string name = default, string location = default, ResourceType? @type = default)
-        {
-            return new ProxyResource(id, name, location, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of guest configuration assignment reports. </summary>
@@ -265,7 +252,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="details"> Details of the assignment report. </param>
         /// <param name="vmssResourceId"> Azure resource Id of the VMSS. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReportProperties"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentReportProperties GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, string reportId = default, GuestConfigurationAssignmentInfo assignment = default, GuestConfigurationVmInfo vm = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, GuestConfigurationAssignmentReportDetails details = default, string vmssResourceId = default)
+        public static GuestConfigurationAssignmentReportProperties GuestConfigurationAssignmentReportProperties(ComplianceStatus? complianceStatus = default, string reportId = default, AssignmentInfo assignment = default, VMInfo vm = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, AssignmentReportDetails details = default, string vmssResourceId = default)
         {
             return new GuestConfigurationAssignmentReportProperties(
                 complianceStatus,
@@ -286,12 +273,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="jobId"> GUID of the report. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReportDetails"/> instance for mocking. </returns>
-        public static GuestConfigurationAssignmentReportDetails GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string jobId = default, GuestConfigurationAssignmentReportType? operationType = default, IEnumerable<AssignmentReportResourceInfo> resources = default)
+        /// <returns> A new <see cref="Models.AssignmentReportDetails"/> instance for mocking. </returns>
+        public static AssignmentReportDetails AssignmentReportDetails(ComplianceStatus? complianceStatus = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string jobId = default, Type? operationType = default, IEnumerable<AssignmentReportResource> resources = default)
         {
-            resources ??= new ChangeTrackingList<AssignmentReportResourceInfo>();
+            resources ??= new ChangeTrackingList<AssignmentReportResource>();
 
-            return new GuestConfigurationAssignmentReportDetails(
+            return new AssignmentReportDetails(
                 complianceStatus,
                 startOn,
                 endOn,
@@ -299,6 +286,26 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 operationType,
                 resources.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/>. </summary>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> Name of the guest configuration assignment. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Guest configuration assignment. </param>
+        /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, GuestConfigurationAssignmentProperties properties)
+        {
+            return new GuestConfigurationAssignmentData(
+                id,
+                name,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                properties,
+                systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentProperties"/>. </summary>
@@ -316,15 +323,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GuestConfigurationAssignmentProperties GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IEnumerable<GuestConfigurationVmssVmInfo> vmssVmList)
+        public static GuestConfigurationAssignmentProperties GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, Models.AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, Models.GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, Models.GuestConfigurationProvisioningState? provisioningState, string resourceType, IEnumerable<Models.GuestConfigurationVmssVmInfo> vmssVmList)
         {
-            vmssVmList ??= new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
+            vmssVmList ??= new ChangeTrackingList<Models.GuestConfigurationVmssVmInfo>();
 
             return new GuestConfigurationAssignmentProperties(
                 targetResourceId,
                 guestConfiguration,
                 complianceStatus,
-                lastComplianceStatusCheckedOn,
+                default,
                 latestReportId,
                 parameterHash,
                 latestAssignmentReport,
@@ -342,6 +349,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="version"> Version of the guest configuration. </param>
         /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
         /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
+        /// <param name="contentManagedIdentity"> Managed identity with storage access of the guest configuration package and configuration parameters. </param>
         /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
         /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
         /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
@@ -350,10 +358,45 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationNavigation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<GuestConfigurationParameter> configurationParameters, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
+        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, string contentManagedIdentity, Models.GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<Models.GuestConfigurationParameter> configurationParameters, IEnumerable<Models.GuestConfigurationParameter> configurationProtectedParameters, Models.LcmConfigurationSetting configurationSetting)
         {
-            configurationParameters ??= new ChangeTrackingList<GuestConfigurationParameter>();
-            configurationProtectedParameters ??= new ChangeTrackingList<GuestConfigurationParameter>();
+            configurationParameters ??= new ChangeTrackingList<Models.GuestConfigurationParameter>();
+            configurationProtectedParameters ??= new ChangeTrackingList<Models.GuestConfigurationParameter>();
+
+            return new GuestConfigurationNavigation(
+                kind,
+                name,
+                version,
+                contentUri,
+                contentHash,
+                contentManagedIdentity,
+                assignmentType,
+                assignmentSource,
+                contentType,
+                default,
+                default,
+                configurationSetting,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationNavigation"/>. </summary>
+        /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
+        /// <param name="name"> Name of the guest configuration. </param>
+        /// <param name="version"> Version of the guest configuration. </param>
+        /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
+        /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
+        /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
+        /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
+        /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
+        /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
+        /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
+        /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
+        /// <returns> A new <see cref="Models.GuestConfigurationNavigation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, Models.GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<Models.GuestConfigurationParameter> configurationParameters, IEnumerable<Models.GuestConfigurationParameter> configurationProtectedParameters, Models.LcmConfigurationSetting configurationSetting)
+        {
+            configurationParameters ??= new ChangeTrackingList<Models.GuestConfigurationParameter>();
+            configurationProtectedParameters ??= new ChangeTrackingList<Models.GuestConfigurationParameter>();
 
             return new GuestConfigurationNavigation(
                 kind,
@@ -365,8 +408,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 assignmentType,
                 assignmentSource,
                 contentType,
-                configurationParameters.ToList(),
-                configurationProtectedParameters.ToList(),
+                default,
+                default,
                 configurationSetting,
                 additionalBinaryDataProperties: null);
         }
