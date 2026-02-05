@@ -1,4 +1,4 @@
 directory: specification/fileshares/resource-manager/Microsoft.FileShares/FileShares
-commit: 2daa450f8eaef939165415ce90178334568eacfd
+commit: 6a9ac1728fd1b59dcf80b8f7e27b1d5f8ccdfb8e
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
