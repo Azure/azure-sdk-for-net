@@ -18,21 +18,22 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// Test resource to validate property override inheritance fix.
-    /// This test spec creates a scenario where derived models redefine base model properties
-    /// with default values or different descriptions, which previously caused duplicate
-    /// property generation in C# code.
+    /// Test resource that uses the DERIVED properties model (PropertyOverrideCreateProperties)
+    /// instead of the base model. This is the key pattern from the original issue where
+    /// RedisEnterpriseDatabaseData used DatabaseCreateProperties.
+    /// With property flattening applied, this previously generated duplicate properties:
+    /// <list type="bullet"><item><description>public virtual string OverridableProperty (from base)</description></item><item><description>public override string OverridableProperty (from derived)</description></item></list>
     /// </summary>
-    public partial class TestPropertyOverrideData : TrackedResourceData, IJsonModel<TestPropertyOverrideData>
+    public partial class DuplicatePropertyTestData : TrackedResourceData, IJsonModel<DuplicatePropertyTestData>
     {
-        /// <summary> Initializes a new instance of <see cref="TestPropertyOverrideData"/> for deserialization. </summary>
-        internal TestPropertyOverrideData()
+        /// <summary> Initializes a new instance of <see cref="DuplicatePropertyTestData"/> for deserialization. </summary>
+        internal DuplicatePropertyTestData()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestPropertyOverrideData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DuplicatePropertyTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -43,10 +44,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DuplicatePropertyTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestPropertyOverrideData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DuplicatePropertyTestData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -58,24 +59,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestPropertyOverrideData IJsonModel<TestPropertyOverrideData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TestPropertyOverrideData)JsonModelCreateCore(ref reader, options);
+        DuplicatePropertyTestData IJsonModel<DuplicatePropertyTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DuplicatePropertyTestData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DuplicatePropertyTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestPropertyOverrideData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DuplicatePropertyTestData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestPropertyOverrideData(document.RootElement, options);
+            return DeserializeDuplicatePropertyTestData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TestPropertyOverrideData DeserializeTestPropertyOverrideData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DuplicatePropertyTestData DeserializeDuplicatePropertyTestData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +89,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            TestPropertyOverrideProperties properties = default;
+            PropertyOverrideCreateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -155,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = TestPropertyOverrideProperties.DeserializeTestPropertyOverrideProperties(prop.Value, options);
+                    properties = PropertyOverrideCreateProperties.DeserializePropertyOverrideCreateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +164,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestPropertyOverrideData(
+            return new DuplicatePropertyTestData(
                 id,
                 name,
                 resourceType,
@@ -175,62 +176,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestPropertyOverrideData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DuplicatePropertyTestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DuplicatePropertyTestData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestPropertyOverrideData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DuplicatePropertyTestData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestPropertyOverrideData IPersistableModel<TestPropertyOverrideData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TestPropertyOverrideData)PersistableModelCreateCore(data, options);
+        DuplicatePropertyTestData IPersistableModel<DuplicatePropertyTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DuplicatePropertyTestData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DuplicatePropertyTestData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestPropertyOverrideData(document.RootElement, options);
+                        return DeserializeDuplicatePropertyTestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestPropertyOverrideData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DuplicatePropertyTestData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestPropertyOverrideData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DuplicatePropertyTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="testPropertyOverrideData"> The <see cref="TestPropertyOverrideData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TestPropertyOverrideData testPropertyOverrideData)
+        /// <param name="duplicatePropertyTestData"> The <see cref="DuplicatePropertyTestData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DuplicatePropertyTestData duplicatePropertyTestData)
         {
-            if (testPropertyOverrideData == null)
+            if (duplicatePropertyTestData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(testPropertyOverrideData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(duplicatePropertyTestData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TestPropertyOverrideData"/> from. </param>
-        internal static TestPropertyOverrideData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DuplicatePropertyTestData"/> from. </param>
+        internal static DuplicatePropertyTestData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestPropertyOverrideData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

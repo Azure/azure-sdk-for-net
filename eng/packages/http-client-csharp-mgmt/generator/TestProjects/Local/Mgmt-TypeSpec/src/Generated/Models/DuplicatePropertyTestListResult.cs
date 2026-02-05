@@ -12,33 +12,33 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The response of a TestPropertyOverride list operation. </summary>
-    internal partial class TestPropertyOverrideListResult
+    /// <summary> The response of a DuplicatePropertyTest list operation. </summary>
+    internal partial class DuplicatePropertyTestListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestPropertyOverrideListResult"/>. </summary>
-        /// <param name="value"> The TestPropertyOverride items on this page. </param>
-        internal TestPropertyOverrideListResult(IEnumerable<TestPropertyOverrideData> value)
+        /// <summary> Initializes a new instance of <see cref="DuplicatePropertyTestListResult"/>. </summary>
+        /// <param name="value"> The DuplicatePropertyTest items on this page. </param>
+        internal DuplicatePropertyTestListResult(IEnumerable<DuplicatePropertyTestData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestPropertyOverrideListResult"/>. </summary>
-        /// <param name="value"> The TestPropertyOverride items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="DuplicatePropertyTestListResult"/>. </summary>
+        /// <param name="value"> The DuplicatePropertyTest items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestPropertyOverrideListResult(IList<TestPropertyOverrideData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DuplicatePropertyTestListResult(IList<DuplicatePropertyTestData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The TestPropertyOverride items on this page. </summary>
+        /// <summary> The DuplicatePropertyTest items on this page. </summary>
         [WirePath("value")]
-        public IList<TestPropertyOverrideData> Value { get; }
+        public IList<DuplicatePropertyTestData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

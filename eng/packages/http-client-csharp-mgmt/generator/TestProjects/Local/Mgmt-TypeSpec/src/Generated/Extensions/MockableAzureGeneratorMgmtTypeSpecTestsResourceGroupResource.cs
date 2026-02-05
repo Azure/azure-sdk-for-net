@@ -927,23 +927,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TestPropertyOverrides in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of TestPropertyOverrides and their operations over a TestPropertyOverrideResource. </returns>
-        public virtual TestPropertyOverrideCollection GetTestPropertyOverrides()
+        /// <summary> Gets a collection of DuplicatePropertyTests in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DuplicatePropertyTests and their operations over a DuplicatePropertyTestResource. </returns>
+        public virtual DuplicatePropertyTestCollection GetDuplicatePropertyTests()
         {
-            return GetCachedClient(client => new TestPropertyOverrideCollection(client, Id));
+            return GetCachedClient(client => new DuplicatePropertyTestCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a TestPropertyOverride
+        /// Get a DuplicatePropertyTest
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/testPropertyOverrides/{testPropertyOverrideName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TestPropertyOverrides_Get. </description>
+        /// <description> DuplicatePropertyTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -951,28 +951,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="testPropertyOverrideName"> The name of the TestPropertyOverride. </param>
+        /// <param name="duplicatePropertyTestName"> The name of the DuplicatePropertyTest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testPropertyOverrideName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testPropertyOverrideName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="duplicatePropertyTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="duplicatePropertyTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TestPropertyOverrideResource>> GetTestPropertyOverrideAsync(string testPropertyOverrideName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DuplicatePropertyTestResource>> GetDuplicatePropertyTestAsync(string duplicatePropertyTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testPropertyOverrideName, nameof(testPropertyOverrideName));
+            Argument.AssertNotNullOrEmpty(duplicatePropertyTestName, nameof(duplicatePropertyTestName));
 
-            return await GetTestPropertyOverrides().GetAsync(testPropertyOverrideName, cancellationToken).ConfigureAwait(false);
+            return await GetDuplicatePropertyTests().GetAsync(duplicatePropertyTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a TestPropertyOverride
+        /// Get a DuplicatePropertyTest
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/testPropertyOverrides/{testPropertyOverrideName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/duplicatePropertyTests/{duplicatePropertyTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> TestPropertyOverrides_Get. </description>
+        /// <description> DuplicatePropertyTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -980,16 +980,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="testPropertyOverrideName"> The name of the TestPropertyOverride. </param>
+        /// <param name="duplicatePropertyTestName"> The name of the DuplicatePropertyTest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testPropertyOverrideName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testPropertyOverrideName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="duplicatePropertyTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="duplicatePropertyTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TestPropertyOverrideResource> GetTestPropertyOverride(string testPropertyOverrideName, CancellationToken cancellationToken = default)
+        public virtual Response<DuplicatePropertyTestResource> GetDuplicatePropertyTest(string duplicatePropertyTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testPropertyOverrideName, nameof(testPropertyOverrideName));
+            Argument.AssertNotNullOrEmpty(duplicatePropertyTestName, nameof(duplicatePropertyTestName));
 
-            return GetTestPropertyOverrides().Get(testPropertyOverrideName, cancellationToken);
+            return GetDuplicatePropertyTests().Get(duplicatePropertyTestName, cancellationToken);
         }
 
         /// <summary>

@@ -1,106 +1,64 @@
 import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
 
 using Azure.ResourceManager;
+using Azure.ClientGenerator.Core;
 using TypeSpec.Rest;
 using TypeSpec.Http;
 
 namespace MgmtTypeSpec;
 
 /**
- * Test resource to validate property override inheritance fix.
- * This test spec creates a scenario where derived models redefine base model properties
- * with default values or different descriptions, which previously caused duplicate
- * property generation in C# code.
+ * Base properties model - similar to DatabaseProperties in the original issue.
+ * Contains a property that will be redefined in derived models.
  */
-@resource("testPropertyOverrides")
-model TestPropertyOverride is TrackedResource<TestPropertyOverrideProperties> {
-  ...ResourceNameParameter<TestPropertyOverride>;
-}
-
-/**
- * Base properties model
- */
-model TestPropertyOverrideProperties {
+model PropertyOverrideBaseProperties {
   /**
-   * A property that exists in the base model.
+   * A base property that won't be redefined.
    */
-  baseProperty?: string;
+  baseOnlyProperty?: string;
   
   /**
-   * A property that will be redefined in derived models.
+   * This property will be redefined in derived models with a default value.
+   * Similar to accessKeysAuthentication in the original RedisEnterprise issue.
    */
-  sharedProperty?: string;
+  overridableProperty?: string;
 }
 
 /**
- * Derived properties model for create - redefines sharedProperty with a default value.
- * This model is used in createOrUpdate operations to test that property override
- * inheritance is correctly handled without generating duplicate properties.
+ * Derived properties model - similar to DatabaseCreateProperties in the original issue.
+ * Redefines overridableProperty with a default value, which previously caused
+ * duplicate property generation when used with property flattening.
  */
-model TestPropertyOverrideCreateProperties extends TestPropertyOverrideProperties {
+model PropertyOverrideCreateProperties extends PropertyOverrideBaseProperties {
   /**
-   * Redefined property with a default value.
+   * Redefined property with a default value. This is the pattern that caused
+   * the original issue - a derived model redefining a base property.
    */
-  sharedProperty?: string = "DefaultValue";
+  overridableProperty?: string = "DefaultValue";
 }
 
 /**
- * Derived properties model for update - redefines sharedProperty with different description.
- * This model is used in patch operations to test that property override
- * inheritance is correctly handled without generating duplicate properties.
+ * Test resource that uses the DERIVED properties model (PropertyOverrideCreateProperties)
+ * instead of the base model. This is the key pattern from the original issue where
+ * RedisEnterpriseDatabaseData used DatabaseCreateProperties.
+ * 
+ * With property flattening applied, this previously generated duplicate properties:
+ * - public virtual string OverridableProperty (from base)
+ * - public override string OverridableProperty (from derived)
  */
-model TestPropertyOverrideUpdateProperties extends TestPropertyOverrideProperties {
-  /**
-   * Redefined property for update operations.
-   */
-  sharedProperty?: string;
-}
-
-/**
- * Request body for create operation using derived properties model
- */
-model TestPropertyOverrideCreateRequest {
-  /**
-   * Properties for the create operation using derived model with property override
-   */
-  properties?: TestPropertyOverrideCreateProperties;
-}
-
-/**
- * Request body for update operation using derived properties model
- */
-model TestPropertyOverrideUpdateRequest {
-  /**
-   * Properties for the update operation using derived model with property override
-   */
-  properties?: TestPropertyOverrideUpdateProperties;
+@resource("duplicatePropertyTests")
+model DuplicatePropertyTest is TrackedResource<PropertyOverrideCreateProperties> {
+  ...ResourceNameParameter<DuplicatePropertyTest>;
 }
 
 @armResourceOperations
-interface TestPropertyOverrides {
-  get is ArmResourceRead<TestPropertyOverride>;
-  createOrUpdate is ArmResourceCreateOrUpdateAsync<TestPropertyOverride>;
-  update is ArmCustomPatchAsync<TestPropertyOverride, TestPropertyOverride>;
-  delete is ArmResourceDeleteWithoutOkAsync<TestPropertyOverride>;
-  list is ArmResourceListByParent<TestPropertyOverride>;
-  
-  /**
-   * Custom action that uses derived create properties model to ensure it appears in generated code
-   */
-  @post
-  @armResourceAction(TestPropertyOverride)
-  createCustom(
-    ...ResourceInstanceParameters<TestPropertyOverride>,
-    @body body: TestPropertyOverrideCreateRequest
-  ): ArmResponse<TestPropertyOverride> | ErrorResponse;
-  
-  /**
-   * Custom action that uses derived update properties model to ensure it appears in generated code
-   */
-  @post
-  @armResourceAction(TestPropertyOverride)
-  updateCustom(
-    ...ResourceInstanceParameters<TestPropertyOverride>,
-    @body body: TestPropertyOverrideUpdateRequest
-  ): ArmResponse<TestPropertyOverride> | ErrorResponse;
+interface DuplicatePropertyTests {
+  get is ArmResourceRead<DuplicatePropertyTest>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<DuplicatePropertyTest>;
+  delete is ArmResourceDeleteWithoutOkAsync<DuplicatePropertyTest>;
+  list is ArmResourceListByParent<DuplicatePropertyTest>;
 }
+
+// Apply property flattening to reproduce the original issue
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(DuplicatePropertyTest.properties);

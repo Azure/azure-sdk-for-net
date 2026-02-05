@@ -1077,25 +1077,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 location);
         }
 
-        /// <summary>
-        /// Test resource to validate property override inheritance fix.
-        /// This test spec creates a scenario where derived models redefine base model properties
-        /// with default values or different descriptions, which previously caused duplicate
-        /// property generation in C# code.
-        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.TestPropertyOverrideData"/> instance for mocking. </returns>
-        public static TestPropertyOverrideData TestPropertyOverrideData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, TestPropertyOverrideProperties properties = default)
+        /// <param name="baseOnlyProperty"> A base property that won't be redefined. </param>
+        /// <param name="overridableProperty">
+        /// This property will be redefined in derived models with a default value.
+        /// Similar to accessKeysAuthentication in the original RedisEnterprise issue.
+        /// </param>
+        /// <returns> A new <see cref="Tests.DuplicatePropertyTestData"/> instance for mocking. </returns>
+        public static DuplicatePropertyTestData DuplicatePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string baseOnlyProperty = default, string overridableProperty = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TestPropertyOverrideData(
+            return new DuplicatePropertyTestData(
                 id,
                 name,
                 resourceType,
@@ -1103,7 +1101,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                baseOnlyProperty is null && overridableProperty is null ? default : new PropertyOverrideCreateProperties(baseOnlyProperty, overridableProperty, null));
         }
 
         /// <summary> Site at ServiceGroup scope. </summary>

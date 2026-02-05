@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class TestPropertyOverrideOperationSource : IOperationSource<TestPropertyOverrideResource>
+    internal partial class DuplicatePropertyTestOperationSource : IOperationSource<DuplicatePropertyTestResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal TestPropertyOverrideOperationSource(ArmClient client)
+        internal DuplicatePropertyTestOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        TestPropertyOverrideResource IOperationSource<TestPropertyOverrideResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DuplicatePropertyTestResource IOperationSource<DuplicatePropertyTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            TestPropertyOverrideData data = TestPropertyOverrideData.DeserializeTestPropertyOverrideData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TestPropertyOverrideResource(_client, data);
+            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DuplicatePropertyTestResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<TestPropertyOverrideResource> IOperationSource<TestPropertyOverrideResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DuplicatePropertyTestResource> IOperationSource<DuplicatePropertyTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            TestPropertyOverrideData data = TestPropertyOverrideData.DeserializeTestPropertyOverrideData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TestPropertyOverrideResource(_client, data);
+            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DuplicatePropertyTestResource(_client, data);
         }
     }
 }

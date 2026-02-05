@@ -13,12 +13,15 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Base properties model. </summary>
-    public partial class TestPropertyOverrideProperties : IJsonModel<TestPropertyOverrideProperties>
+    /// <summary>
+    /// Base properties model - similar to DatabaseProperties in the original issue.
+    /// Contains a property that will be redefined in derived models.
+    /// </summary>
+    internal partial class PropertyOverrideBaseProperties : IJsonModel<PropertyOverrideBaseProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestPropertyOverrideProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PropertyOverrideBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,20 +32,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropertyOverrideBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestPropertyOverrideProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyOverrideBaseProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(BaseProperty))
+            if (Optional.IsDefined(BaseOnlyProperty))
             {
-                writer.WritePropertyName("baseProperty"u8);
-                writer.WriteStringValue(BaseProperty);
+                writer.WritePropertyName("baseOnlyProperty"u8);
+                writer.WriteStringValue(BaseOnlyProperty);
             }
-            if (Optional.IsDefined(SharedProperty))
+            if (Optional.IsDefined(OverridableProperty))
             {
-                writer.WritePropertyName("sharedProperty"u8);
-                writer.WriteStringValue(SharedProperty);
+                writer.WritePropertyName("overridableProperty"u8);
+                writer.WriteStringValue(OverridableProperty);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -63,42 +66,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestPropertyOverrideProperties IJsonModel<TestPropertyOverrideProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PropertyOverrideBaseProperties IJsonModel<PropertyOverrideBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TestPropertyOverrideProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PropertyOverrideBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropertyOverrideBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestPropertyOverrideProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyOverrideBaseProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestPropertyOverrideProperties(document.RootElement, options);
+            return DeserializePropertyOverrideBaseProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TestPropertyOverrideProperties DeserializeTestPropertyOverrideProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PropertyOverrideBaseProperties DeserializePropertyOverrideBaseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string baseProperty = default;
-            string sharedProperty = default;
+            string baseOnlyProperty = default;
+            string overridableProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("baseProperty"u8))
+                if (prop.NameEquals("baseOnlyProperty"u8))
                 {
-                    baseProperty = prop.Value.GetString();
+                    baseOnlyProperty = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sharedProperty"u8))
+                if (prop.NameEquals("overridableProperty"u8))
                 {
-                    sharedProperty = prop.Value.GetString();
+                    overridableProperty = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,47 +109,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestPropertyOverrideProperties(baseProperty, sharedProperty, additionalBinaryDataProperties);
+            return new PropertyOverrideBaseProperties(baseOnlyProperty, overridableProperty, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestPropertyOverrideProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PropertyOverrideBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropertyOverrideBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestPropertyOverrideProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyOverrideBaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestPropertyOverrideProperties IPersistableModel<TestPropertyOverrideProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PropertyOverrideBaseProperties IPersistableModel<PropertyOverrideBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TestPropertyOverrideProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PropertyOverrideBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestPropertyOverrideProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PropertyOverrideBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestPropertyOverrideProperties(document.RootElement, options);
+                        return DeserializePropertyOverrideBaseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestPropertyOverrideProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyOverrideBaseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestPropertyOverrideProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PropertyOverrideBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
