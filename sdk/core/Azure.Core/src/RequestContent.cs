@@ -399,7 +399,15 @@ namespace Azure.Core
                 var bufferToReturn = Interlocked.Exchange(ref _buffer, null);
                 if (bufferToReturn != null)
                 {
-                    ArrayPool<byte>.Shared.Return(bufferToReturn, clearArray: true);
+                    try
+                    {
+                        ArrayPool<byte>.Shared.Return(bufferToReturn, clearArray: true);
+                    }
+                    catch
+                    {
+                        // Dispose must not throw per .NET conventions.
+                        // If Return fails, we cannot recover, so we swallow the exception.
+                    }
                 }
 #endif
             }
