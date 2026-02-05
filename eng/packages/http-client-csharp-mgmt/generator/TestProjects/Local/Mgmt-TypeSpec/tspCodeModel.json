@@ -3618,11 +3618,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "FooPreviewAction"
-        }
-      },
       "properties": [
         {
           "$id": "414",
@@ -3692,11 +3687,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ErrorResponse"
-        }
-      },
       "properties": [
         {
           "$id": "419",
@@ -3718,11 +3708,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ErrorDetail"
-              }
-            },
             "properties": [
               {
                 "$id": "421",
@@ -3855,11 +3840,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "ErrorAdditionalInfo"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "432",
@@ -3968,11 +3948,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "OperationListResult"
-        }
-      },
       "properties": [
         {
           "$id": "437",
@@ -3999,11 +3974,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "Operation"
-                }
-              },
               "properties": [
                 {
                   "$id": "440",
@@ -4077,11 +4047,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "OperationDisplay"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "446",
@@ -4319,11 +4284,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "460",
@@ -4353,11 +4313,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "PrivateLink"
-                }
-              },
               "baseModel": {
                 "$id": "463",
                 "kind": "model",
@@ -4373,11 +4328,6 @@
                     "arguments": {}
                   }
                 ],
-                "serializationOptions": {
-                  "json": {
-                    "name": "ProxyResource"
-                  }
-                },
                 "baseModel": {
                   "$id": "464",
                   "kind": "model",
@@ -4393,11 +4343,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "Resource"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "465",
@@ -4511,11 +4456,6 @@
                             "arguments": {}
                           }
                         ],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "SystemData"
-                          }
-                        },
                         "properties": [
                           {
                             "$id": "475",
@@ -4721,11 +4661,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "PrivateLinkResourceProperties"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "489",
@@ -4869,11 +4804,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "ManagedServiceIdentity"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "499",
@@ -4996,11 +4926,6 @@
                                   "arguments": {}
                                 }
                               ],
-                              "serializationOptions": {
-                                "json": {
-                                  "name": "UserAssignedIdentity"
-                                }
-                              },
                               "properties": [
                                 {
                                   "$id": "511",
@@ -5201,11 +5126,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "PrivateEndpointConnection"
-        }
-      },
       "baseModel": {
         "$ref": "464"
       },
@@ -5230,11 +5150,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "PrivateEndpointConnectionProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "523",
@@ -5277,11 +5192,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "SubResource"
-                    }
-                  },
                   "properties": []
                 },
                 "optional": true,
@@ -5317,11 +5227,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "PrivateLinkServiceConnectionState"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "528",
@@ -5474,11 +5379,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ArmOperationStatus"
-        }
-      },
       "properties": [
         {
           "$id": "535",
@@ -5690,11 +5590,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "StorageSyncService"
-        }
-      },
       "baseModel": {
         "$id": "550",
         "kind": "model",
@@ -5710,11 +5605,6 @@
             "arguments": {}
           }
         ],
-        "serializationOptions": {
-          "json": {
-            "name": "TrackedResource"
-          }
-        },
         "baseModel": {
           "$ref": "464"
         },
@@ -5812,11 +5702,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "StorageSyncServiceProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "560",
@@ -5933,11 +5818,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "Foo"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -5967,11 +5847,6 @@
                 }
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "FooProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "568",
@@ -6170,11 +6045,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "NestedFooModel"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "583",
@@ -6230,11 +6100,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "SafeFlattenModel"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "586",
@@ -6291,11 +6156,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "VmProfile"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "589",
@@ -6316,11 +6176,6 @@
                             "arguments": {}
                           }
                         ],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "ApplicationProfile"
-                          }
-                        },
                         "properties": [
                           {
                             "$id": "591",
@@ -6426,11 +6281,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "WritableSubResource"
-                    }
-                  },
                   "properties": []
                 },
                 "optional": true,
@@ -6465,11 +6315,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "ComputeFleetVmProfile"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "599",
@@ -6489,11 +6334,6 @@
                             "arguments": {}
                           }
                         ],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "CapacityReservationProfile"
-                          }
-                        },
                         "properties": [
                           {
                             "$id": "601",
@@ -6513,11 +6353,6 @@
                                   "arguments": {}
                                 }
                               ],
-                              "serializationOptions": {
-                                "json": {
-                                  "name": "TestSubResource"
-                                }
-                              },
                               "properties": [
                                 {
                                   "$id": "603",
@@ -6661,11 +6496,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ExtendedLocation"
-              }
-            },
             "properties": [
               {
                 "$id": "610",
@@ -6750,11 +6580,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ManagedServiceIdentityV4"
-              }
-            },
             "properties": [
               {
                 "$id": "615",
@@ -6913,11 +6738,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "Plan"
-              }
-            },
             "properties": [
               {
                 "$id": "627",
@@ -7116,11 +6936,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "638",
@@ -7199,11 +7014,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "FooActionRequest"
-        }
-      },
       "properties": [
         {
           "$id": "644",
@@ -7245,11 +7055,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "FooActionResult"
-        }
-      },
       "properties": [
         {
           "$id": "647",
@@ -7312,11 +7117,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "FooDependency"
-        }
-      },
       "properties": [
         {
           "$id": "651",
@@ -7392,11 +7192,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "FooSettings"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -7421,11 +7216,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "FooSettingsProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "658",
@@ -7447,11 +7237,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "MarketplaceDetails"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "660",
@@ -7521,11 +7306,6 @@
                             "arguments": {}
                           }
                         ],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "OfferDetails"
-                          }
-                        },
                         "properties": [
                           {
                             "$id": "665",
@@ -7789,11 +7569,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "UserDetails"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "683",
@@ -8012,11 +7787,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "FooSettingsPropertiesMetaData"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "699",
@@ -8126,11 +7896,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceUpdateModel"
-        }
-      },
       "properties": [
         {
           "$id": "703",
@@ -8152,11 +7917,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ResourceUpdateModelProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "705",
@@ -8261,11 +8021,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "710",
@@ -8299,11 +8054,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "Bar"
-                }
-              },
               "baseModel": {
                 "$ref": "550"
               },
@@ -8327,11 +8077,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "BarProperties"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "715",
@@ -8591,11 +8336,6 @@
           }
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "BarSettingsResource"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -8619,11 +8359,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "BarSettingsProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "733",
@@ -8731,11 +8466,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "BarQuotaProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "740",
@@ -8817,11 +8547,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "BarNestedQuotaProperties"
-              }
-            },
             "baseModel": {
               "$id": "745",
               "kind": "model",
@@ -8835,11 +8560,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "BarMiddleNestedQuotaProperties"
-                }
-              },
               "baseModel": {
                 "$id": "746",
                 "kind": "model",
@@ -8853,11 +8573,6 @@
                     "arguments": {}
                   }
                 ],
-                "serializationOptions": {
-                  "json": {
-                    "name": "BarDeeplyNestedQuotaProperties"
-                  }
-                },
                 "properties": [
                   {
                     "$id": "747",
@@ -9045,11 +8760,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "optionalFlattenPropertyType"
-              }
-            },
             "properties": [
               {
                 "$id": "759",
@@ -9106,11 +8816,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "LimitJsonObject"
-              }
-            },
             "discriminatorProperty": {
               "$id": "762",
               "kind": "property",
@@ -9197,11 +8902,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "BarQuotaResource"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -9266,11 +8966,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "767",
@@ -9304,11 +8999,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "Employee"
-                }
-              },
               "baseModel": {
                 "$ref": "550"
               },
@@ -9333,11 +9023,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "EmployeeProperties"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "772",
@@ -9509,11 +9194,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "Baz"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -9537,11 +9217,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "BazProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "784",
@@ -9708,11 +9383,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "795",
@@ -9796,11 +9466,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "Zoo"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -9830,11 +9495,6 @@
                 }
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ZooProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "803",
@@ -9943,11 +9603,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceUpdateModel"
-        }
-      },
       "properties": [
         {
           "$id": "809",
@@ -9991,11 +9646,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ResourceUpdateModelProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "812",
@@ -10057,11 +9707,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "815",
@@ -10141,11 +9786,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ZooAddressListListResult"
-        }
-      },
       "properties": [
         {
           "$id": "821",
@@ -10229,11 +9869,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "EndpointResource"
-        }
-      },
       "baseModel": {
         "$id": "827",
         "kind": "model",
@@ -10248,11 +9883,6 @@
             "arguments": {}
           }
         ],
-        "serializationOptions": {
-          "json": {
-            "name": "ExtensionResource"
-          }
-        },
         "baseModel": {
           "$ref": "464"
         },
@@ -10278,11 +9908,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "EndpointProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "830",
@@ -10372,11 +9997,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "835",
@@ -10460,11 +10080,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SelfHelpResource"
-        }
-      },
       "baseModel": {
         "$ref": "827"
       },
@@ -10488,11 +10103,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "SelfHelpResourceProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "843",
@@ -10579,11 +10189,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "CheckNameAvailabilityRequest"
-        }
-      },
       "properties": [
         {
           "$id": "848",
@@ -10652,11 +10257,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "CheckNameAvailabilityResponse"
-        }
-      },
       "properties": [
         {
           "$id": "853",
@@ -10757,11 +10357,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "PlaywrightQuota"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -10786,11 +10381,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "PlaywrightQuotaProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "862",
@@ -10900,11 +10490,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "868",
@@ -10988,11 +10573,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "JobResource"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -11016,11 +10596,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "JobProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "876",
@@ -11106,11 +10681,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "JobResourceUpdateParameter"
-        }
-      },
       "properties": [
         {
           "$id": "881",
@@ -11180,11 +10750,6 @@
           }
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "HciVmInstance"
-        }
-      },
       "baseModel": {
         "$ref": "827"
       },
@@ -11208,11 +10773,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "HciVmInstanceProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "886",
@@ -11303,11 +10863,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "GroupQuotaSubscriptionRequestStatus"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -11331,11 +10886,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "GroupQuotaLimitProperties"
-              }
-            },
             "baseModel": {
               "$id": "893",
               "kind": "model",
@@ -11350,11 +10900,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "GroupQuotaDetails"
-                }
-              },
               "properties": [
                 {
                   "$id": "894",
@@ -11506,11 +11051,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "AllocatedQuotaToSubscriptionList"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "906",
@@ -11536,11 +11076,6 @@
                                 "arguments": {}
                               }
                             ],
-                            "serializationOptions": {
-                              "json": {
-                                "name": "AllocatedToSubscription"
-                              }
-                            },
                             "properties": [
                               {
                                 "$id": "909",
@@ -11702,11 +11237,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "GroupQuotaLimitList"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -11730,11 +11260,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "GroupQuotaLimitListProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "918",
@@ -11821,11 +11346,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "GroupQuotaListPatch"
-        }
-      },
       "properties": [
         {
           "$id": "923",
@@ -11872,11 +11392,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SubscriptionQuotaAllocationsList"
-        }
-      },
       "baseModel": {
         "$ref": "827"
       },
@@ -11900,11 +11415,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "SubscriptionQuotaAllocationsListProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "928",
@@ -12014,11 +11524,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "QueryNetworkSiblingSetRequest"
-        }
-      },
       "properties": [
         {
           "$id": "934",
@@ -12088,11 +11593,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "NetworkSiblingSet"
-        }
-      },
       "properties": [
         {
           "$id": "939",
@@ -12192,11 +11692,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "NetworkSiblingSetProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "947",
@@ -12222,11 +11717,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "NetworkSibling"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "950",
@@ -12391,11 +11881,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "Joo"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -12419,11 +11904,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "JooProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "961",
@@ -12468,11 +11948,6 @@
                       "arguments": {}
                     }
                   ],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "Prediction"
-                    }
-                  },
                   "properties": [
                     {
                       "$id": "965",
@@ -12492,11 +11967,6 @@
                             "arguments": {}
                           }
                         ],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "PredictionInput"
-                          }
-                        },
                         "properties": [
                           {
                             "$id": "967",
@@ -12630,11 +12100,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SAPVirtualInstance"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -12658,11 +12123,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "SAPVirtualInstanceProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "975",
@@ -12748,11 +12208,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SAPAvailabilityZoneDetailsRequest"
-        }
-      },
       "properties": [
         {
           "$id": "980",
@@ -12795,11 +12250,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SAPAvailabilityZoneDetailsResult"
-        }
-      },
       "properties": [
         {
           "$id": "983",
@@ -12851,11 +12301,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "BestPractice"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -12880,11 +12325,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "BestPracticeProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "988",
@@ -12994,11 +12434,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ExtendedLocationOptional"
-              }
-            },
             "properties": [
               {
                 "$id": "995",
@@ -13085,11 +12520,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceUpdateModel"
-        }
-      },
       "properties": [
         {
           "$id": "999",
@@ -13111,11 +12541,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ResourceUpdateModelProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1001",
@@ -13177,11 +12602,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1004",
@@ -13265,11 +12685,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceTypeTestResource"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -13294,11 +12709,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "ResourceTypeTestProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1012",
@@ -13423,11 +12833,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "SampleData"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -13451,11 +12856,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "SampleDataProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1022",
@@ -13569,11 +12969,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1029",
@@ -13653,11 +13048,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1035",
@@ -13687,11 +13077,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "ScheduledActionResources"
-                }
-              },
               "baseModel": {
                 "$ref": "827"
               },
@@ -13716,11 +13101,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "ScheduledActionsExtensionProperties"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "1040",
@@ -13892,11 +13272,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "WorkloadNetworks"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -13920,11 +13295,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "WorkloadNetworksProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1052",
@@ -14038,11 +13408,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1059",
@@ -14126,11 +13491,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "WorkloadNetworkVmGroup"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -14154,11 +13514,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "WorkloadNetworkVmGroupProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1067",
@@ -14294,11 +13649,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1075",
@@ -14382,11 +13732,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "WorkloadNetworkSegment"
-        }
-      },
       "baseModel": {
         "$ref": "550"
       },
@@ -14410,11 +13755,6 @@
                 "arguments": {}
               }
             ],
-            "serializationOptions": {
-              "json": {
-                "name": "WorkloadNetworkSegmentProperties"
-              }
-            },
             "properties": [
               {
                 "$id": "1083",
@@ -14580,11 +13920,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1094",
@@ -14668,11 +14003,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "Target"
-        }
-      },
       "baseModel": {
         "$ref": "463"
       },
@@ -14790,11 +14120,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "TargetListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1110",
@@ -14874,11 +14199,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ResourceListResult"
-        }
-      },
       "properties": [
         {
           "$id": "1116",
@@ -14908,11 +14228,6 @@
                   "arguments": {}
                 }
               ],
-              "serializationOptions": {
-                "json": {
-                  "name": "ServiceGroupSite"
-                }
-              },
               "baseModel": {
                 "$ref": "463"
               },
@@ -14937,11 +14252,6 @@
                         "arguments": {}
                       }
                     ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "ServiceGroupSiteProperties"
-                      }
-                    },
                     "properties": [
                       {
                         "$id": "1121",
@@ -15130,11 +14440,6 @@
           "arguments": {}
         }
       ],
-      "serializationOptions": {
-        "json": {
-          "name": "ZooRecommendation"
-        }
-      },
       "properties": [
         {
           "$id": "1132",
@@ -15384,8 +14689,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "MgmtTypeSpec.previewActions",
-            "decorators": [],
-            "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+            "decorators": []
           },
           "parameters": [
             {
@@ -16728,8 +16032,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -16973,8 +16276,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -17304,8 +16606,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateEndpointConnections.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -17728,8 +17029,7 @@
                       "finalState": "location"
                     }
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -18116,8 +17416,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -18513,8 +17812,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -18821,8 +18119,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -19092,8 +18389,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -19316,8 +18612,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -19522,8 +18817,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -19838,8 +19132,7 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -20153,8 +19446,7 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -20448,8 +19740,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -20716,8 +20007,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -21007,8 +20297,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -21243,8 +20532,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -21519,8 +20807,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -21897,8 +21184,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -22261,8 +21547,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -22691,8 +21976,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -23045,8 +22329,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -23430,8 +22713,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -23847,8 +23129,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -24277,8 +23558,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -24711,8 +23991,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -25019,8 +24298,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -25290,8 +24568,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -25610,8 +24887,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -25894,8 +25170,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -26120,8 +25395,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -26509,8 +25783,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -26817,8 +26090,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -27088,8 +26360,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -27408,8 +26679,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -27692,8 +26962,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -27898,8 +27167,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -28150,8 +27418,7 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -28459,8 +27726,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -28713,8 +27979,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -29003,8 +28268,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -29238,8 +28502,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -29407,8 +28670,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -29667,8 +28929,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.SolutionResources.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -29948,8 +29209,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.CheckNameAvailabilityOperationGroup.checkNameAvailability",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -30263,8 +29523,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -30510,8 +29769,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -30827,8 +30085,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -31206,8 +30463,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -31582,8 +30838,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -31915,8 +31170,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -32160,8 +31414,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -32482,8 +31735,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.list",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -32894,8 +32146,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.createOrUpdate",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -33382,8 +32633,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitLists.update",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -33868,8 +33118,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.SubscriptionQuotaAllocationsLists.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -34247,8 +33496,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.NetworkProviderActions.queryNetworkSiblingSet",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -34619,8 +33867,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -34916,8 +34163,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -35187,8 +34433,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -35493,8 +34738,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -35832,8 +35076,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -36163,8 +35406,7 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -36444,8 +35686,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -36660,8 +35901,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.createOrUpdate",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -36899,8 +36139,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.update",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -37083,8 +36322,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.delete",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -37201,8 +36439,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPractices.list",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -37440,8 +36677,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -37702,8 +36938,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.createOrUpdate",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -37987,8 +37222,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.update",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -38217,8 +37451,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.delete",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -38381,8 +37614,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BestPracticeVersions.list",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -38677,8 +37909,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -38991,8 +38222,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -39424,8 +38654,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -39732,8 +38961,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -40003,8 +39231,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -40227,8 +39454,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -40484,8 +39710,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -40780,8 +40005,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -41119,8 +40343,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -41437,8 +40660,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -41661,8 +40883,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -42051,8 +41272,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -42431,8 +41651,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -42715,8 +41934,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -43105,8 +42323,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -43485,8 +42702,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -43769,8 +42985,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -44153,8 +43368,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -44605,8 +43819,7 @@
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -45025,8 +44238,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -45400,8 +44612,7 @@
                     "name": "Azure.ResourceManager.@armResourceList",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -45740,8 +44951,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.ServiceGroupSites.listByServiceGroup",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -45942,8 +45152,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.ServiceGroupSites.get",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -46229,8 +45438,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.ServiceGroupSites.createOrUpdate",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                "decorators": []
               },
               "parameters": [
                 {
@@ -46607,8 +45815,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -46954,8 +46161,7 @@
                     "name": "Azure.ResourceManager.@armResourceUpdate",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -47326,8 +46532,7 @@
                     "name": "Azure.ResourceManager.@armResourceAction",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -47640,8 +46845,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -47911,8 +47115,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -48159,8 +47362,7 @@
                     "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {
@@ -48430,8 +47632,7 @@
                     "name": "Azure.ResourceManager.@armResourceDelete",
                     "arguments": {}
                   }
-                ],
-                "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
+                ]
               },
               "parameters": [
                 {

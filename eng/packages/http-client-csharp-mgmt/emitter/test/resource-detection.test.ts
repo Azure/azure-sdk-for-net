@@ -1680,7 +1680,147 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     };
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
-      normalizeSchemaForComparison(armProviderSchema, normalizeServiceGroupScopes)
+      normalizeSchemaForComparison(
+        armProviderSchema,
+        normalizeServiceGroupScopes
+      )
+    );
+  });
+
+  it("Legacy.ExtensionOperations resources are detected", async () => {
+    // This test validates that resources defined using Legacy.ExtensionOperations pattern
+    // (like GuestConfiguration) are properly detected even though they don't have
+    // @armResourceInternal or @armResourceWithParameter decorators
+    const program = await typeSpecCompile(
+      `
+/** A GuestConfiguration assignment resource - using Legacy.ExtensionOperations pattern */
+model GuestConfigurationAssignment is ProxyResource<GuestConfigurationAssignmentProperties> {
+  ...ResourceNameParameter<
+    Resource = GuestConfigurationAssignment,
+    KeyName = "guestConfigurationAssignmentName",
+    SegmentName = "guestConfigurationAssignments",
+    NamePattern = ""
+  >;
+}
+
+/** GuestConfiguration assignment properties */
+model GuestConfigurationAssignmentProperties {
+  ...DefaultProvisioningStateProperty;
+  description?: string;
+}
+
+// Define operations for VM extension using Legacy.ExtensionOperations pattern
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For test purposes"
+alias VMGuestConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.SubscriptionIdParameter;
+    ...Azure.ResourceManager.ResourceGroupParameter;
+
+    @segment("virtualMachines")
+    @path
+    @key
+    vmName: string;
+
+    @segment("providers")
+    @path
+    @key
+    extensionProviderNamespace: "Microsoft.GuestConfiguration";
+  },
+  {},
+  {
+    ...KeysOf<GuestConfigurationAssignment>;
+  }
+>;
+
+/** GuestConfiguration assignments for Virtual Machines */
+@armResourceOperations
+interface VMGuestConfigurationAssignments {
+  get is VMGuestConfigOps.Read<GuestConfigurationAssignment>;
+  createOrUpdate is VMGuestConfigOps.CreateOrUpdateAsync<GuestConfigurationAssignment>;
+  @list list is VMGuestConfigOps.List<GuestConfigurationAssignment>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult);
+
+    // Verify GuestConfigurationAssignment model exists
+    const guestConfigModel = root.models.find(
+      (m) => m.name === "GuestConfigurationAssignment"
+    );
+    ok(guestConfigModel, "GuestConfigurationAssignment model should exist");
+
+    // The key assertion: verify that the model IS detected as a resource
+    // (this was the bug - Legacy.ExtensionOperations resources were not detected)
+    const guestConfigModelId = guestConfigModel.crossLanguageDefinitionId;
+    const resourcesForModel = armProviderSchemaResult.resources.filter(
+      (r) => r.resourceModelId === guestConfigModelId
+    );
+
+    strictEqual(
+      resourcesForModel.length,
+      1,
+      "GuestConfigurationAssignment should have 1 resource entry"
+    );
+
+    const resourceMetadata = resourcesForModel[0].metadata;
+
+    // Verify methods are detected
+    strictEqual(
+      resourceMetadata.methods.length,
+      3,
+      "Should have 3 methods (Get, CreateOrUpdate, List)"
+    );
+
+    // The resource has subscription/resourceGroup in its path, so scope is ResourceGroup
+    // (Extension scope requires a /{resourceUri} or /{scope} path prefix)
+    strictEqual(
+      resourceMetadata.resourceScope,
+      ResourceScope.ResourceGroup,
+      "Should be a ResourceGroup-scoped resource"
+    );
+
+    // Verify the resource ID pattern contains the parent VM path
+    ok(
+      resourceMetadata.resourceIdPattern.includes("virtualMachines"),
+      "Resource ID pattern should include virtualMachines parent path"
+    );
+    ok(
+      resourceMetadata.resourceIdPattern.includes(
+        "guestConfigurationAssignments"
+      ),
+      "Resource ID pattern should include guestConfigurationAssignments segment"
+    );
+
+    // Also validate using resolveArmResources API
+    // The resolveArmResources uses the TypeSpec ARM library which should detect Legacy.ExtensionOperations
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    const resolvedResourcesForModel = resolvedSchema.resources.filter(
+      (r) => r.resourceModelId === guestConfigModelId
+    );
+
+    strictEqual(
+      resolvedResourcesForModel.length,
+      1,
+      "resolveArmResources: GuestConfigurationAssignment should have 1 resource entry"
+    );
+
+    const resolvedMetadata = resolvedResourcesForModel[0].metadata;
+
+    // Verify methods are detected
+    strictEqual(
+      resolvedMetadata.methods.length,
+      3,
+      "resolveArmResources: Should have 3 methods (Get, CreateOrUpdate, List)"
     );
   });
 });

@@ -97,7 +97,7 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
-  const resourceModels = getAllResourceModels(codeModel);
+  const resourceModels = getAllResourceModels(codeModel, serviceMethods);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
@@ -836,8 +836,24 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
-function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
+/**
+ * Gets all resource models from the code model, including those referenced by legacy extension operations.
+ *
+ * This function detects resource models in two ways:
+ * 1. Models with @armResourceInternal or @armResourceWithParameter decorators (standard ARM resources)
+ * 2. Models referenced by legacy extension operations (@legacyExtensionResourceOperation, @legacyResourceOperation)
+ *
+ * The second case is needed to support Legacy.ExtensionOperations pattern where resources don't get
+ * the standard ARM resource decorators but are still valid ARM resources.
+ */
+function getAllResourceModels(
+  codeModel: CodeModel,
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>
+): InputModelType[] {
+  const resourceModelIds = new Set<string>();
   const resourceModels: InputModelType[] = [];
+
+  // First pass: detect models with standard ARM resource decorators
   for (const model of codeModel.models) {
     if (
       model.decorators?.some(
@@ -846,9 +862,71 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
       )
     ) {
       resourceModels.push(model);
+      resourceModelIds.add(model.crossLanguageDefinitionId);
     }
   }
+
+  // Second pass: detect models referenced by legacy extension operations
+  // These models may only have @armProviderNamespace decorator but are still valid resources
+  for (const [, serviceMethod] of serviceMethods) {
+    const decorators = serviceMethod?.__raw?.decorators;
+    for (const decorator of decorators ?? []) {
+      const decoratorName = decorator.definition?.name;
+      if (
+        decoratorName === legacyExtensionResourceOperationName ||
+        decoratorName === legacyResourceOperationName
+      ) {
+        // For legacy operations, the model is in args[0]
+        const modelArg = decorator.args[0]?.value as Model | undefined;
+        if (modelArg) {
+          const crossLanguageDefinitionId =
+            getCrossLanguageDefinitionId(modelArg);
+          if (
+            crossLanguageDefinitionId &&
+            !resourceModelIds.has(crossLanguageDefinitionId)
+          ) {
+            // Find the corresponding InputModelType from codeModel
+            const inputModel = codeModel.models.find(
+              (m) => m.crossLanguageDefinitionId === crossLanguageDefinitionId
+            );
+            if (inputModel) {
+              resourceModels.push(inputModel);
+              resourceModelIds.add(crossLanguageDefinitionId);
+            }
+          }
+        }
+      }
+    }
+  }
+
   return resourceModels;
+}
+
+/**
+ * Gets the cross-language definition ID from a TypeSpec Model.
+ */
+function getCrossLanguageDefinitionId(model: Model): string | undefined {
+  // Build the cross-language definition ID using the model's namespace and name
+  const namespace = getNamespacePath(model);
+  if (namespace && model.name) {
+    return `${namespace}.${model.name}`;
+  }
+  return undefined;
+}
+
+/**
+ * Gets the full namespace path for a model.
+ */
+function getNamespacePath(model: Model): string | undefined {
+  const parts: string[] = [];
+  let current = model.namespace;
+  while (current) {
+    if (current.name) {
+      parts.unshift(current.name);
+    }
+    current = current.namespace;
+  }
+  return parts.length > 0 ? parts.join(".") : undefined;
 }
 
 function getSingletonResource(
