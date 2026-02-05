@@ -97,8 +97,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             string leaseId = await _receiptManager.TryAcquireLeaseAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
-            string processId = Guid.NewGuid().ToString();
-            Logger.BlobProcessingStarted(_logger, _functionDescriptor.LogName, value.Name, pollId, processId, triggerSource);
 
             if (leaseId == null)
             {
@@ -109,6 +107,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             try
             {
+                Logger.BlobProcessingStarted(_logger, _functionDescriptor.LogName, value.Name, pollId, possibleETag, triggerSource);
+
                 // Check again for the completed receipt. If it's already there, noop.
                 BlobReceipt receipt = await _receiptManager.TryReadAsync(receiptBlob, cancellationToken).ConfigureAwait(false);
                 Debug.Assert(receipt != null); // We have a (30 second) lease on the blob; it should never disappear on us.
