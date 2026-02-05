@@ -68,6 +68,8 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
+        internal CredentialPipeline Pipeline => _pipeline;
+
         /// <summary>
         /// The default environment variable name used for token credential configuration.
         /// </summary>
