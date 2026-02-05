@@ -20,6 +20,12 @@
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
 
+.PARAMETER SaveInputs
+    When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
+
+.PARAMETER DebugGenerator
+    When specified, passes debug=true to the emitter to enable attaching a debugger to the generator process.
+
 .NOTES
     Prerequisites: git, npm, dotnet, and npx must be installed and in PATH.
     The powershell-yaml module will be auto-installed if not present.
@@ -37,7 +43,9 @@
 param(
     [string[]]$Services,
     [ValidateRange(1, [int]::MaxValue)]
-    [int]$Parallel = 4
+    [int]$Parallel = 4,
+    [switch]$SaveInputs,
+    [switch]$DebugGenerator
 )
 
 $ErrorActionPreference = 'Stop'
@@ -149,12 +157,14 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $mgmtPkgRoot = $using:mgmtPackageRoot
         $sdkRepo = $using:sdkRepoRoot
         $worker = $using:workerScript
+        $saveInputsFlag = $using:SaveInputs
+        $debugFlag = $using:DebugGenerator
         
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
         
         try {
-            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo 2>&1
+            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo -SaveInputs:$saveInputsFlag -DebugGenerator:$debugFlag 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json
@@ -188,7 +198,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot 2>&1
+            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot -SaveInputs:$SaveInputs -DebugGenerator:$DebugGenerator 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json

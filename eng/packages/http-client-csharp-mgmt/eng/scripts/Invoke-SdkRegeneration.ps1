@@ -26,7 +26,11 @@ param(
     [string]$MgmtPackageRoot,
     
     [Parameter(Mandatory)]
-    [string]$SdkRepoRoot
+    [string]$SdkRepoRoot,
+    
+    [switch]$SaveInputs,
+    
+    [switch]$DebugGenerator
 )
 
 $ErrorActionPreference = 'Stop'
@@ -141,7 +145,14 @@ try {
     try {
         # Run tsp compile using local emitter path
         Push-Location $MgmtPackageRoot
-        $tspOutput = npx tsp compile $mainTsp --emit $MgmtPackageRoot --option "@azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$ProjectPath" 2>&1
+        $tspOptions = "--emit $MgmtPackageRoot --option `"@azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$ProjectPath`""
+        if ($SaveInputs) {
+            $tspOptions += " --option `"@azure-typespec/http-client-csharp-mgmt.save-inputs=true`""
+        }
+        if ($DebugGenerator) {
+            $tspOptions += " --option `"@azure-typespec/http-client-csharp-mgmt.debug=true`""
+        }
+        $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
         $tspExitCode = $LASTEXITCODE
         Pop-Location
         
