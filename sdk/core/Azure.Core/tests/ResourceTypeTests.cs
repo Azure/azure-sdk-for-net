@@ -20,10 +20,11 @@ namespace Azure.Core.Tests
         }
 
         [TestCase]
-        public void NullImplicitFromString()
+        public void NullImplicitFromStringReturnsDefault()
         {
             string from = null;
-            Assert.Throws<ArgumentNullException>(() => { ResourceType to = from; });
+            ResourceType to = from;
+            Assert.AreEqual(default(ResourceType), to);
         }
 
         [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]

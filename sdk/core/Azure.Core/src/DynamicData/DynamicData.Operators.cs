@@ -89,6 +89,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator sbyte(DynamicData value)
         {
+            sbyte result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(sbyte); return result; }
             try
             {
                 return value._element.GetSByte();
@@ -109,6 +112,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator short(DynamicData value)
         {
+            short result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(short); return result; }
             try
             {
                 return value._element.GetInt16();
@@ -129,6 +135,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator ushort(DynamicData value)
         {
+            ushort result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(ushort); return result; }
             try
             {
                 return value._element.GetUInt16();
@@ -149,6 +158,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator int(DynamicData value)
         {
+            int result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(int); return result; }
             try
             {
                 return value._element.GetInt32();
@@ -169,6 +181,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator uint(DynamicData value)
         {
+            uint result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(uint); return result; }
             try
             {
                 return value._element.GetUInt32();
@@ -189,6 +204,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator long(DynamicData value)
         {
+            long result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(long); return result; }
             try
             {
                 return value._element.GetInt64();
@@ -209,6 +227,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator ulong(DynamicData value)
         {
+            ulong result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(ulong); return result; }
             try
             {
                 return value._element.GetUInt64();
@@ -229,6 +250,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator float(DynamicData value)
         {
+            float result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(float); return result; }
             try
             {
                 return value._element.GetSingle();
@@ -249,6 +273,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator double(DynamicData value)
         {
+            double result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(double); return result; }
             try
             {
                 return value._element.GetDouble();
@@ -269,6 +296,9 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator decimal(DynamicData value)
         {
+            decimal result;
+            bool valueIsNull = (value is null);
+            if (valueIsNull) { result = default(decimal); return result; }
             try
             {
                 return value._element.GetDecimal();
