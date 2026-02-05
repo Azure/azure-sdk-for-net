@@ -23,6 +23,12 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator bool(DynamicData value)
         {
+            bool isNullInput = object.ReferenceEquals(value, null);
+            if (isNullInput)
+            {
+                return false;
+            }
+            
             try
             {
                 return value._element.GetBoolean();
@@ -39,6 +45,13 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator string?(DynamicData value)
         {
+            bool lacksDynamicData = object.ReferenceEquals(value, null);
+            
+            if (lacksDynamicData)
+            {
+                return null;
+            }
+            
             try
             {
                 return value._element.GetString();
@@ -55,6 +68,7 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator byte(DynamicData value)
         {
+            if (value is null) return 0;
             try
             {
                 return value._element.GetByte();

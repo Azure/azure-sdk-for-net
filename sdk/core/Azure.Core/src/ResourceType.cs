@@ -78,7 +78,12 @@ namespace Azure.Core
         /// <param name="resourceType"> String to be converted into a <see cref="ResourceType"/> object. </param>
         public static implicit operator ResourceType(string resourceType)
         {
-            return new ResourceType(resourceType);
+            ResourceType result = resourceType switch
+            {
+                null => default(ResourceType),
+                var str => new ResourceType(str)
+            };
+            return result;
         }
 
         /// <summary>

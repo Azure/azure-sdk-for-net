@@ -29,17 +29,7 @@ namespace Azure
         /// Returns the value of this <see cref="Response{T}"/> object.
         /// </summary>
         /// <param name="response">The <see cref="Response{T}"/> instance.</param>
-        public static implicit operator T(Response<T> response)
-        {
-            if (response == null)
-            {
-#pragma warning disable CA1065 // Don't throw from cast operators
-                throw new ArgumentNullException(nameof(response), $"The implicit cast from Response<{typeof(T)}> to {typeof(T)} failed because the Response<{typeof(T)}> was null.");
-#pragma warning restore CA1065
-            }
-
-            return response.Value!;
-        }
+        public static implicit operator T(Response<T> response) => response != null ? response.Value! : default!;
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

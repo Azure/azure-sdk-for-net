@@ -42,7 +42,19 @@ namespace Azure.Core
         /// Creates an instance of <see cref="ContentType"/>.
         /// </summary>
         /// <param name="contentType">The content type string.</param>
-        public static implicit operator ContentType(string contentType) => new ContentType(contentType);
+        public static implicit operator ContentType(string contentType)
+        {
+            ContentType output;
+            if (string.IsNullOrEmpty(contentType) && contentType == null)
+            {
+                output = default(ContentType);
+            }
+            else
+            {
+                output = new ContentType(contentType);
+            }
+            return output;
+        }
 
         /// <inheritdoc />
         public bool Equals(ContentType other)
