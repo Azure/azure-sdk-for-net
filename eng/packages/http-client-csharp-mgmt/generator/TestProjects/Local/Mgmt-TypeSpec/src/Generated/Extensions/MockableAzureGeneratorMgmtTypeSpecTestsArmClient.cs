@@ -126,6 +126,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new ZooResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="IssueTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IssueTestResource"/> object. </returns>
+        public virtual IssueTestResource GetIssueTestResource(ResourceIdentifier id)
+        {
+            IssueTestResource.ValidateResourceId(id);
+            return new IssueTestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>

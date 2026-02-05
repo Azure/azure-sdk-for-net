@@ -492,6 +492,68 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.
+        /// This uses a patch model with properties that extend a base type with nested complex objects.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.IssueTestResourceData"/> instance for mocking. </returns>
+        public static IssueTestResourceData IssueTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IssueTestBaseProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IssueTestResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <param name="displayName"> Simple property. </param>
+        /// <param name="innerValue"> Inner value that gets flattened. </param>
+        /// <param name="innerFlag"> Inner flag that gets flattened. </param>
+        /// <param name="status"> Read-only property. </param>
+        /// <returns> A new <see cref="Models.IssueTestBaseProperties"/> instance for mocking. </returns>
+        public static IssueTestBaseProperties IssueTestBaseProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default)
+        {
+            return new IssueTestBaseProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, null), status, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="displayName"> Simple property. </param>
+        /// <param name="status"> Read-only property. </param>
+        /// <param name="innerValue"> Inner value that gets flattened. </param>
+        /// <param name="innerFlag"> Inner flag that gets flattened. </param>
+        /// <param name="updateOnlyValue"> Property specific to updates. </param>
+        /// <returns> A new <see cref="Models.IssueTestResourcePatch"/> instance for mocking. </returns>
+        public static IssueTestResourcePatch IssueTestResourcePatch(IDictionary<string, string> tags = default, string displayName = default, string status = default, string innerValue = default, bool? innerFlag = default, string updateOnlyValue = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IssueTestResourcePatch(tags, displayName is null && status is null && innerValue is null && innerFlag is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, default, status, null, updateOnlyValue), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="displayName"> Simple property. </param>
+        /// <param name="innerValue"> Inner value that gets flattened. </param>
+        /// <param name="innerFlag"> Inner flag that gets flattened. </param>
+        /// <param name="status"> Read-only property. </param>
+        /// <param name="updateOnlyValue"> Property specific to updates. </param>
+        /// <returns> A new <see cref="Models.IssueTestUpdateProperties"/> instance for mocking. </returns>
+        public static IssueTestUpdateProperties IssueTestUpdateProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default, string updateOnlyValue = default)
+        {
+            return new IssueTestUpdateProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, null), status, additionalBinaryDataProperties: null, updateOnlyValue);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

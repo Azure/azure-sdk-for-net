@@ -327,6 +327,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetZoos().Get(zooName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of IssueTestResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IssueTestResources and their operations over a IssueTestResource. </returns>
+        public virtual IssueTestResourceCollection GetIssueTestResources()
+        {
+            return GetCachedClient(client => new IssueTestResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a IssueTestResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueTestResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueTestResourceName"> The name of the IssueTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IssueTestResource>> GetIssueTestResourceAsync(string issueTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueTestResourceName, nameof(issueTestResourceName));
+
+            return await GetIssueTestResources().GetAsync(issueTestResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a IssueTestResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/issueTests/{issueTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IssueTestResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="issueTestResourceName"> The name of the IssueTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="issueTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IssueTestResource> GetIssueTestResource(string issueTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(issueTestResourceName, nameof(issueTestResourceName));
+
+            return GetIssueTestResources().Get(issueTestResourceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of JobResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
         public virtual JobResourceCollection GetJobResources()
