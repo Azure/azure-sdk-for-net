@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FileShares.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FileSharesPrivateEndpointConnectionData item in Value)
+            foreach (FileSharePrivateEndpointConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            IList<FileSharesPrivateEndpointConnectionData> value = default;
+            IList<FileSharePrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FileSharesPrivateEndpointConnectionData> array = new List<FileSharesPrivateEndpointConnectionData>();
+                    List<FileSharePrivateEndpointConnectionData> array = new List<FileSharePrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileSharesPrivateEndpointConnectionData.DeserializeFileSharesPrivateEndpointConnectionData(item, options));
+                        array.Add(FileSharePrivateEndpointConnectionData.DeserializeFileSharePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FileShares.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FileSharesPrivateLinkResourceData item in Value)
+            foreach (FileSharePrivateLinkResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            IList<FileSharesPrivateLinkResourceData> value = default;
+            IList<FileSharePrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FileSharesPrivateLinkResourceData> array = new List<FileSharesPrivateLinkResourceData>();
+                    List<FileSharePrivateLinkResourceData> array = new List<FileSharePrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileSharesPrivateLinkResourceData.DeserializeFileSharesPrivateLinkResourceData(item, options));
+                        array.Add(FileSharePrivateLinkResourceData.DeserializeFileSharePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

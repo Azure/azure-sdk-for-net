@@ -14,7 +14,7 @@ using Azure.ResourceManager.FileShares.Models;
 
 namespace Azure.ResourceManager.FileShares
 {
-    internal partial class PrivateEndpointConnectionsGetByFileShareCollectionResultOfT : Pageable<FileSharesPrivateEndpointConnectionData>
+    internal partial class PrivateEndpointConnectionsGetByFileShareCollectionResultOfT : Pageable<FileSharePrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateEndpointConnectionsGetByFileShareCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FileSharesPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<FileSharePrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileSharesPrivateEndpointConnectionListResult result = FileSharesPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<FileSharesPrivateEndpointConnectionData>.FromValues((IReadOnlyList<FileSharesPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FileSharePrivateEndpointConnectionData>.FromValues((IReadOnlyList<FileSharePrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FileShares
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByFileShareRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetByFileShareRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FileSharePrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

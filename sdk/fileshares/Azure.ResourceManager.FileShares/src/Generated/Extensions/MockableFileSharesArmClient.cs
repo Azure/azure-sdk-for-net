@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.FileShares.Mocking
             return new FileShareSnapshotResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="FileSharePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FileSharePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual FileSharePrivateEndpointConnectionResource GetFileSharePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            FileSharePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new FileSharePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="FileSharePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FileSharePrivateLinkResource"/> object. </returns>
+        public virtual FileSharePrivateLinkResource GetFileSharePrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            FileSharePrivateLinkResource.ValidateResourceId(id);
+            return new FileSharePrivateLinkResource(Client, id);
         }
     }
 }

@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
-        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, ShareRootSquash? nfsProtocolRootSquash = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharesPrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, ShareRootSquash? nfsProtocolRootSquash = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default)
         {
-            privateEndpointConnections ??= new ChangeTrackingList<FileSharesPrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
 
             return new FileShareProperties(
                 mountName,
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="FileShares.FileSharesPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static FileSharesPrivateEndpointConnectionData FileSharesPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSharePrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="FileShares.FileSharePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static FileSharePrivateEndpointConnectionData FileSharePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSharePrivateEndpointConnectionProperties properties = default)
         {
-            return new FileSharesPrivateEndpointConnectionData(
+            return new FileSharePrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -273,10 +273,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="FileShares.FileSharesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static FileSharesPrivateLinkResourceData FileSharesPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSharesPrivateLinkResourceProperties properties = default)
+        /// <returns> A new <see cref="FileShares.FileSharePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static FileSharePrivateLinkResourceData FileSharePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileSharePrivateLinkResourceProperties properties = default)
         {
-            return new FileSharesPrivateLinkResourceData(
+            return new FileSharePrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -289,13 +289,13 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.FileSharesPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static FileSharesPrivateLinkResourceProperties FileSharesPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <returns> A new <see cref="Models.FileSharePrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static FileSharePrivateLinkResourceProperties FileSharePrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new FileSharesPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new FileSharePrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }
