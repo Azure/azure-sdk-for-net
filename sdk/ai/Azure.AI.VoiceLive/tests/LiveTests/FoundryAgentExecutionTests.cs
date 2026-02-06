@@ -27,9 +27,6 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     public class FoundryAgentExecutionTests : VoiceLiveTestBase
     {
-        private string _testAgentId = string.Empty;
-        private const string AgentNamePrefix = "FoundryAgentExecutionTests";
-
         public FoundryAgentExecutionTests() : base(true)
         {
         }
@@ -38,58 +35,9 @@ namespace Azure.AI.VoiceLive.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task SetupTestAgent()
-        {
-            // Try to find an existing agent with our test class name
-            var agentName = $"{AgentNamePrefix}-{DateTime.UtcNow:yyyyMMdd}";
-
-            try
-            {
-                _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                if (string.IsNullOrEmpty(_testAgentId))
-                {
-                    // Agent doesn't exist, create it
-                    TestContext.WriteLine($"Creating test agent: {agentName}");
-                    await TestAgent.CreateAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    // Find the newly created agent to get its ID
-                    _testAgentId = await TestAgent.FindAgentAsync(agentName, TestEnvironment).ConfigureAwait(false);
-
-                    if (!string.IsNullOrEmpty(_testAgentId))
-                    {
-                        TestContext.WriteLine($"Created test agent with ID: {_testAgentId}");
-                    }
-                }
-                else
-                {
-                    TestContext.WriteLine($"Found existing test agent with ID: {_testAgentId}");
-                }
-            }
-            catch (Exception ex)
-            {
-                TestContext.WriteLine($"Warning: Could not setup test agent: {ex.Message}");
-                TestContext.WriteLine("Tests will use configured constants instead.");
-            }
-        }
-
         private VoiceLiveFoundryAgentDefinition CreateTestFoundryAgent()
         {
-            // Use the dynamically created/found agent ID if available, otherwise fall back to constants
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-
-            return new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                AgentVersion = TestConstants.TestFoundryAgentVersion,
-                Description = TestConstants.TestFoundryAgentDescription,
-                AgentContextType = FoundryAgentContextType.AgentContext,
-                ReturnAgentResponseDirectly = false
-            };
+            return TestAgent.CreateFoundryAgentTool(TestEnvironment);
         }
 
         [LiveOnly]
@@ -592,12 +540,8 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that ReturnAgentResponseDirectly option works correctly
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var foundryAgent = new VoiceLiveFoundryAgentDefinition(
-                agentName: TestConstants.TestFoundryAgentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                ReturnAgentResponseDirectly = true
-            };
+            var foundryAgent = CreateTestFoundryAgent();
+            foundryAgent.ReturnAgentResponseDirectly = true;
 
             var options = new VoiceLiveSessionOptions
             {
