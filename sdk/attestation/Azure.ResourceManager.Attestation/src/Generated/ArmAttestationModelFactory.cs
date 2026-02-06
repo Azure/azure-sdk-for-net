@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new AttestationPrivateEndpointConnectionData(
                 id,

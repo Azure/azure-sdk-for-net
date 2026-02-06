@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Attestation
         }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.Attestation
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultAttestationProviderByLocationRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetDefaultAttestationProviderByLocationRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Attestation/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/defaultProvider", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();

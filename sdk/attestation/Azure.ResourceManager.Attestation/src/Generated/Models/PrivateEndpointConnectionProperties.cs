@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public AttestationPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {
