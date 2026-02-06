@@ -97,7 +97,6 @@ model ComputeFleetVmProfile {
   capacityReservation?: CapacityReservationProfile;
 }
 
-
 @armResourceOperations
 interface Foos {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
