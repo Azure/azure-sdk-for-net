@@ -592,6 +592,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="requestMediaTypes"></param>
         /// <param name="path"></param>
         /// <param name="decorators"></param>
+        /// <param name="ns"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -600,7 +601,8 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputOperationResponse>? responses = null,
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
-            IReadOnlyList<InputDecoratorInfo>? decorators = null)
+            IReadOnlyList<InputDecoratorInfo>? decorators = null,
+            string? ns = null)
         {
             var operation = new InputOperation(
                 name,
@@ -619,7 +621,8 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                name);
+                name,
+                ns);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputOperation).GetProperty(nameof(InputOperation.Decorators));

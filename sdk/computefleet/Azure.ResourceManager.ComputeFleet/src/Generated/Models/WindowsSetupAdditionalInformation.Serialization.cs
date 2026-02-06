@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class WindowsSetupAdditionalInformation : IUtf8JsonSerializable, IJsonModel<WindowsSetupAdditionalInformation>
+    /// <summary>
+    /// Specifies additional XML formatted information that can be included in the
+    /// Unattend.xml file, which is used by Windows Setup. Contents are defined by
+    /// setting name, component name, and the pass in which the content is applied.
+    /// </summary>
+    public partial class WindowsSetupAdditionalInformation : IJsonModel<WindowsSetupAdditionalInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsSetupAdditionalInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WindowsSetupAdditionalInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WindowsSetupAdditionalInformation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
@@ -54,15 +58,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +75,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        WindowsSetupAdditionalInformation IJsonModel<WindowsSetupAdditionalInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WindowsSetupAdditionalInformation IJsonModel<WindowsSetupAdditionalInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WindowsSetupAdditionalInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WindowsSetupAdditionalInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWindowsSetupAdditionalInformation(document.RootElement, options);
         }
 
-        internal static WindowsSetupAdditionalInformation DeserializeWindowsSetupAdditionalInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WindowsSetupAdditionalInformation DeserializeWindowsSetupAdditionalInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,55 +104,56 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             WindowsSetupAdditionalInformationComponentName? componentName = default;
             AdditionalInformationSettingName? settingName = default;
             string content = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("passName"u8))
+                if (prop.NameEquals("passName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    passName = new WindowsSetupAdditionalInformationPassName(property.Value.GetString());
+                    passName = new WindowsSetupAdditionalInformationPassName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("componentName"u8))
+                if (prop.NameEquals("componentName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    componentName = new WindowsSetupAdditionalInformationComponentName(property.Value.GetString());
+                    componentName = new WindowsSetupAdditionalInformationComponentName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("settingName"u8))
+                if (prop.NameEquals("settingName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    settingName = new AdditionalInformationSettingName(property.Value.GetString());
+                    settingName = new AdditionalInformationSettingName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("content"u8))
+                if (prop.NameEquals("content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WindowsSetupAdditionalInformation(passName, componentName, settingName, content, serializedAdditionalRawData);
+            return new WindowsSetupAdditionalInformation(passName, componentName, settingName, content, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<WindowsSetupAdditionalInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WindowsSetupAdditionalInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -153,15 +163,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        WindowsSetupAdditionalInformation IPersistableModel<WindowsSetupAdditionalInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WindowsSetupAdditionalInformation IPersistableModel<WindowsSetupAdditionalInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WindowsSetupAdditionalInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WindowsSetupAdditionalInformation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWindowsSetupAdditionalInformation(document.RootElement, options);
                     }
                 default:
@@ -169,6 +184,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WindowsSetupAdditionalInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
+    /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and required when using Confidential VMs. </summary>
     public partial class BatchVmDiskSecurityProfile : IJsonModel<BatchVmDiskSecurityProfile>
     {
         /// <param name="writer"> The JSON writer. </param>

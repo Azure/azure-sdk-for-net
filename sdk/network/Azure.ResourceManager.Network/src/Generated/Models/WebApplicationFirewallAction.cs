@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string JSChallengeValue = "JSChallenge";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Allow. </summary>
         public static WebApplicationFirewallAction Allow { get; } = new WebApplicationFirewallAction(AllowValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallAction Log { get; } = new WebApplicationFirewallAction(LogValue);
         /// <summary> JSChallenge. </summary>
         public static WebApplicationFirewallAction JSChallenge { get; } = new WebApplicationFirewallAction(JSChallengeValue);
+        /// <summary> CAPTCHA. </summary>
+        public static WebApplicationFirewallAction Captcha { get; } = new WebApplicationFirewallAction(CaptchaValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallAction left, WebApplicationFirewallAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are not the same. </summary>

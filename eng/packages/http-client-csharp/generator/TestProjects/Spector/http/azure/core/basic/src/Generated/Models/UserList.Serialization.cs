@@ -16,6 +16,10 @@ namespace Specs.Azure.Core.Basic
     {
         internal UserList() => throw null;
 
+        protected virtual UserList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator UserList(Response response) => throw null;
+
         void IJsonModel<UserList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,10 +34,6 @@ namespace Specs.Azure.Core.Basic
 
         UserList IPersistableModel<UserList>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UserList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<UserList>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator UserList(Response response) => throw null;
     }
 }

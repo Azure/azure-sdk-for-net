@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.FileShares.Models
             writer.WriteNumberValue(BaseThroughputMiBPerSec);
             writer.WritePropertyName("scalarThroughputMiBPerSec"u8);
             writer.WriteNumberValue(ScalarThroughputMiBPerSec);
+            writer.WritePropertyName("guardrailIOPerSecScalar"u8);
+            writer.WriteNumberValue(GuardrailIOPerSecScalar);
+            writer.WritePropertyName("guardrailThroughputScalar"u8);
+            writer.WriteNumberValue(GuardrailThroughputScalar);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -93,6 +97,8 @@ namespace Azure.ResourceManager.FileShares.Models
             double scalarIOPerSec = default;
             int baseThroughputMiBPerSec = default;
             double scalarThroughputMiBPerSec = default;
+            double guardrailIOPerSecScalar = default;
+            double guardrailThroughputScalar = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,12 +122,29 @@ namespace Azure.ResourceManager.FileShares.Models
                     scalarThroughputMiBPerSec = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("guardrailIOPerSecScalar"u8))
+                {
+                    guardrailIOPerSecScalar = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("guardrailThroughputScalar"u8))
+                {
+                    guardrailThroughputScalar = prop.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileShareProvisioningConstants(baseIOPerSec, scalarIOPerSec, baseThroughputMiBPerSec, scalarThroughputMiBPerSec, additionalBinaryDataProperties);
+            return new FileShareProvisioningConstants(
+                baseIOPerSec,
+                scalarIOPerSec,
+                baseThroughputMiBPerSec,
+                scalarThroughputMiBPerSec,
+                guardrailIOPerSecScalar,
+                guardrailThroughputScalar,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

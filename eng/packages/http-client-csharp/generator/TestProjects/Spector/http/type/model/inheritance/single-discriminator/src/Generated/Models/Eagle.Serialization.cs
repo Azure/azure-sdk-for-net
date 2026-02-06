@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         internal Eagle() => throw null;
 
+        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Eagle IPersistableModel<Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

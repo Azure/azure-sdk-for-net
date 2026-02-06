@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Properties of a STAC Item containing metadata about the asset.
-    /// 
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#properties-object
     /// </summary>
     public partial class StacItemProperties : IJsonModel<StacItemProperties>

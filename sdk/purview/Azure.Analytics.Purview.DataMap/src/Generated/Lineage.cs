@@ -250,19 +250,14 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Return lineage info about entity.
-        /// 
         /// In addition to the typeName path parameter,
         /// attribute key-value pair(s) can be provided in the following
         /// format
-        /// 
         /// attr:[attrName]=[attrValue]
-        /// 
         /// NOTE: The attrName and attrValue should be
         /// unique across entities, eg. qualifiedName.
-        /// 
         /// The REST request would look
         /// something like this:
-        /// 
         /// GET
         /// /v2/lineage/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
@@ -303,19 +298,14 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// [Protocol Method] Return lineage info about entity.
-        /// 
         /// In addition to the typeName path parameter,
         /// attribute key-value pair(s) can be provided in the following
         /// format
-        /// 
         /// attr:[attrName]=[attrValue]
-        /// 
         /// NOTE: The attrName and attrValue should be
         /// unique across entities, eg. qualifiedName.
-        /// 
         /// The REST request would look
         /// something like this:
-        /// 
         /// GET
         /// /v2/lineage/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
@@ -356,19 +346,14 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Return lineage info about entity.
-        /// 
         /// In addition to the typeName path parameter,
         /// attribute key-value pair(s) can be provided in the following
         /// format
-        /// 
         /// attr:[attrName]=[attrValue]
-        /// 
         /// NOTE: The attrName and attrValue should be
         /// unique across entities, eg. qualifiedName.
-        /// 
         /// The REST request would look
         /// something like this:
-        /// 
         /// GET
         /// /v2/lineage/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
@@ -393,19 +378,14 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Return lineage info about entity.
-        /// 
         /// In addition to the typeName path parameter,
         /// attribute key-value pair(s) can be provided in the following
         /// format
-        /// 
         /// attr:[attrName]=[attrValue]
-        /// 
         /// NOTE: The attrName and attrValue should be
         /// unique across entities, eg. qualifiedName.
-        /// 
         /// The REST request would look
         /// something like this:
-        /// 
         /// GET
         /// /v2/lineage/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>

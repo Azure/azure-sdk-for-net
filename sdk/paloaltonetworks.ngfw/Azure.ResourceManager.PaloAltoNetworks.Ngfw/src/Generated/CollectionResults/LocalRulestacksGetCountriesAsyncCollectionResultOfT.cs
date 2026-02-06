@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly string _resourceGroupName;
         private readonly string _localRulestackName;
         private readonly string _skip;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of LocalRulestacksGetCountriesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocalRulestacksGetCountriesAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LocalRulestacksGetCountriesAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _localRulestackName = localRulestackName;
             _skip = skip;
-            _top = top;
+            _maxCount = maxCount;
             _context = context;
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCountriesRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _skip, _top, _context) : _client.CreateGetCountriesRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _skip, _top, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCountriesRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _skip, _maxCount, _context) : _client.CreateGetCountriesRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _skip, _maxCount, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackResource.GetCountries");
             scope.Start();
             try

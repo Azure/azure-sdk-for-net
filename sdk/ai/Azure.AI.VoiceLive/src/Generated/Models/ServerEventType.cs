@@ -49,6 +49,16 @@ namespace Azure.AI.VoiceLive
         private const string ResponseAnimationVisemeDoneValue = "response.animation_viseme.done";
         private const string ResponseFunctionCallArgumentsDeltaValue = "response.function_call_arguments.delta";
         private const string ResponseFunctionCallArgumentsDoneValue = "response.function_call_arguments.done";
+        private const string McpListToolsInProgressValue = "mcp_list_tools.in_progress";
+        private const string McpListToolsCompletedValue = "mcp_list_tools.completed";
+        private const string McpListToolsFailedValue = "mcp_list_tools.failed";
+        private const string ResponseMcpCallArgumentsDeltaValue = "response.mcp_call_arguments.delta";
+        private const string ResponseMcpCallArgumentsDoneValue = "response.mcp_call_arguments.done";
+        private const string McpApprovalRequestValue = "mcp_approval_request";
+        private const string McpApprovalResponseValue = "mcp_approval_response";
+        private const string ResponseMcpCallInProgressValue = "response.mcp_call.in_progress";
+        private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
+        private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
 
         /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -164,6 +174,36 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ResponseFunctionCallArgumentsDone. </summary>
         public static ServerEventType ResponseFunctionCallArgumentsDone { get; } = new ServerEventType(ResponseFunctionCallArgumentsDoneValue);
+
+        /// <summary> Gets the McpListToolsInProgress. </summary>
+        public static ServerEventType McpListToolsInProgress { get; } = new ServerEventType(McpListToolsInProgressValue);
+
+        /// <summary> Gets the McpListToolsCompleted. </summary>
+        public static ServerEventType McpListToolsCompleted { get; } = new ServerEventType(McpListToolsCompletedValue);
+
+        /// <summary> Gets the McpListToolsFailed. </summary>
+        public static ServerEventType McpListToolsFailed { get; } = new ServerEventType(McpListToolsFailedValue);
+
+        /// <summary> Gets the ResponseMcpCallArgumentsDelta. </summary>
+        public static ServerEventType ResponseMcpCallArgumentsDelta { get; } = new ServerEventType(ResponseMcpCallArgumentsDeltaValue);
+
+        /// <summary> Gets the ResponseMcpCallArgumentsDone. </summary>
+        public static ServerEventType ResponseMcpCallArgumentsDone { get; } = new ServerEventType(ResponseMcpCallArgumentsDoneValue);
+
+        /// <summary> Gets the McpApprovalRequest. </summary>
+        public static ServerEventType McpApprovalRequest { get; } = new ServerEventType(McpApprovalRequestValue);
+
+        /// <summary> Gets the McpApprovalResponse. </summary>
+        public static ServerEventType McpApprovalResponse { get; } = new ServerEventType(McpApprovalResponseValue);
+
+        /// <summary> Gets the ResponseMcpCallInProgress. </summary>
+        public static ServerEventType ResponseMcpCallInProgress { get; } = new ServerEventType(ResponseMcpCallInProgressValue);
+
+        /// <summary> Gets the ResponseMcpCallCompleted. </summary>
+        public static ServerEventType ResponseMcpCallCompleted { get; } = new ServerEventType(ResponseMcpCallCompletedValue);
+
+        /// <summary> Gets the ResponseMcpCallFailed. </summary>
+        public static ServerEventType ResponseMcpCallFailed { get; } = new ServerEventType(ResponseMcpCallFailedValue);
 
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

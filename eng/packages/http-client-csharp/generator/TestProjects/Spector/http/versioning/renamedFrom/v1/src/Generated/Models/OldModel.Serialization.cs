@@ -17,6 +17,10 @@ namespace Versioning.RenamedFrom
     {
         internal OldModel() => throw null;
 
+        protected virtual OldModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator OldModel(Response response) => throw null;
+
         void IJsonModel<OldModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Versioning.RenamedFrom
 
         OldModel IPersistableModel<OldModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual OldModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<OldModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="oldModel"> The <see cref="OldModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(OldModel oldModel) => throw null;
-
-        public static explicit operator OldModel(Response response) => throw null;
     }
 }

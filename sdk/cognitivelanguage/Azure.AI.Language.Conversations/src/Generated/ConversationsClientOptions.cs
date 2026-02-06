@@ -10,31 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Client options for ConversationAnalysisClient. </summary>
+    /// <summary> Client options for <see cref="ConversationAnalysisClient"/>. </summary>
     public partial class ConversationsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2022-05-01". </summary>
-            V2022_05_01 = 1,
-            /// <summary> Service version "2023-04-01". </summary>
-            V2023_04_01 = 2,
-            /// <summary> Service version "2024-05-01". </summary>
-            V2024_05_01 = 3,
-            /// <summary> Service version "2024-11-01". </summary>
-            V2024_11_01 = 4,
-            /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 5,
-            /// <summary> Service version "2025-11-15-preview". </summary>
-            V2025_11_15_Preview = 6,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of ConversationsClientOptions. </summary>
+        /// <summary> Initializes a new instance of ConversationAnalysisClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public ConversationsClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -47,6 +29,26 @@ namespace Azure.AI.Language.Conversations
                 ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Version 2022-05-01. </summary>
+            V2022_05_01 = 1,
+            /// <summary> Version 2023-04-01. </summary>
+            V2023_04_01 = 2,
+            /// <summary> Version 2024-05-01. </summary>
+            V2024_05_01 = 3,
+            /// <summary> Version 2024-11-01. </summary>
+            V2024_11_01 = 4,
+            /// <summary> Version 2025-05-15. </summary>
+            V2025_05_15_Preview = 5,
+            /// <summary> Version 2025-11-15-preview. </summary>
+            V2025_11_15_Preview = 6
         }
     }
 }

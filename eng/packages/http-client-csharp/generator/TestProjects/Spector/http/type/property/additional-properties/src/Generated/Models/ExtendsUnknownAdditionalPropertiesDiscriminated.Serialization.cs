@@ -18,6 +18,10 @@ namespace _Type.Property.AdditionalProperties
     {
         internal ExtendsUnknownAdditionalPropertiesDiscriminated() => throw null;
 
+        protected virtual ExtendsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ExtendsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
+
         void IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -32,13 +36,9 @@ namespace _Type.Property.AdditionalProperties
 
         ExtendsUnknownAdditionalPropertiesDiscriminated IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ExtendsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminated>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="extendsUnknownAdditionalPropertiesDiscriminated"> The <see cref="ExtendsUnknownAdditionalPropertiesDiscriminated"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ExtendsUnknownAdditionalPropertiesDiscriminated extendsUnknownAdditionalPropertiesDiscriminated) => throw null;
-
-        public static explicit operator ExtendsUnknownAdditionalPropertiesDiscriminated(Response response) => throw null;
     }
 }

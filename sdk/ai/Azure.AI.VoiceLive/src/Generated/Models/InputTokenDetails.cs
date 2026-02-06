@@ -20,12 +20,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
+        /// <param name="imageTokens"> Number of image tokens used in the input. </param>
         /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
-        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails)
+        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, int imageTokens, CachedTokenDetails cachedTokensDetails)
         {
             CachedTokens = cachedTokens;
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            ImageTokens = imageTokens;
             CachedTokensDetails = cachedTokensDetails;
         }
 
@@ -33,13 +35,15 @@ namespace Azure.AI.VoiceLive
         /// <param name="cachedTokens"> Number of cached tokens used in the input. </param>
         /// <param name="textTokens"> Number of text tokens used in the input. </param>
         /// <param name="audioTokens"> Number of audio tokens used in the input. </param>
+        /// <param name="imageTokens"> Number of image tokens used in the input. </param>
         /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, int imageTokens, CachedTokenDetails cachedTokensDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CachedTokens = cachedTokens;
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            ImageTokens = imageTokens;
             CachedTokensDetails = cachedTokensDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,6 +56,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Number of audio tokens used in the input. </summary>
         public int AudioTokens { get; }
+
+        /// <summary> Number of image tokens used in the input. </summary>
+        public int ImageTokens { get; }
 
         /// <summary> Details of cached token usage. </summary>
         public CachedTokenDetails CachedTokensDetails { get; }

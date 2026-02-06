@@ -16,6 +16,8 @@ namespace Service
     {
         internal WithBodyRequest() => throw null;
 
+        protected virtual WithBodyRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<WithBodyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Service
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         WithBodyRequest IPersistableModel<WithBodyRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual WithBodyRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<WithBodyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
