@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -34,12 +33,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </param>
         /// <param name="tier">
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
@@ -47,7 +44,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="capacity">
         /// Optional, integer. The unit count of the resource.
         /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
-        /// 
         /// If present, following values are allowed:
         /// Free_F1: 1;
         /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
@@ -67,14 +63,12 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary>
         /// The name of the SKU. Required.
-        /// 
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </summary>
         public SignalRSkuTier? Tier { get; set; }
@@ -88,7 +82,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary>
         /// Optional, integer. The unit count of the resource.
         /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
-        /// 
         /// If present, following values are allowed:
         /// Free_F1: 1;
         /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;

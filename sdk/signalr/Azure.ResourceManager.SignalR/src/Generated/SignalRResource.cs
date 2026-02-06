@@ -1151,39 +1151,6 @@ namespace Azure.ResourceManager.SignalR
             }
         }
 
-        /// <summary> Gets a collection of SignalRPrivateEndpointConnections in the <see cref="SignalRResource"/>. </summary>
-        /// <returns> An object representing collection of SignalRPrivateEndpointConnections and their operations over a SignalRPrivateEndpointConnectionResource. </returns>
-        public virtual SignalRPrivateEndpointConnectionCollection GetSignalRPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new SignalRPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Get the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SignalRPrivateEndpointConnectionResource>> GetSignalRPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetSignalRPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SignalRPrivateEndpointConnectionResource> GetSignalRPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetSignalRPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SignalRCustomCertificates in the <see cref="SignalRResource"/>. </summary>
         /// <returns> An object representing collection of SignalRCustomCertificates and their operations over a SignalRCustomCertificateResource. </returns>
         public virtual SignalRCustomCertificateCollection GetSignalRCustomCertificates()
@@ -1248,6 +1215,39 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetSignalRCustomDomains().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SignalRPrivateEndpointConnections in the <see cref="SignalRResource"/>. </summary>
+        /// <returns> An object representing collection of SignalRPrivateEndpointConnections and their operations over a SignalRPrivateEndpointConnectionResource. </returns>
+        public virtual SignalRPrivateEndpointConnectionCollection GetSignalRPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new SignalRPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SignalRPrivateEndpointConnectionResource>> GetSignalRPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetSignalRPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SignalRPrivateEndpointConnectionResource> GetSignalRPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetSignalRPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SignalRReplicas in the <see cref="SignalRResource"/>. </summary>

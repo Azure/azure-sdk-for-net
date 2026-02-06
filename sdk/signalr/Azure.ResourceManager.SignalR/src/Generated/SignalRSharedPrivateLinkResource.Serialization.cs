@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
     /// <summary></summary>
-    public partial class SignalRSharedPrivateLinkResource : ArmResource, IJsonModel<SignalRSharedPrivateLinkResourceData>
+    public partial class SignalRSharedPrivateLinkResource : IJsonModel<SignalRSharedPrivateLinkResourceData>
     {
         private static IJsonModel<SignalRSharedPrivateLinkResourceData> s_dataDeserializationInstance;
 

@@ -57,60 +57,6 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
-        public static SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSignalRArmClient(client).GetSignalRPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
-        public static SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSignalRArmClient(client).GetSignalRReplicaSharedPrivateLinkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
-        public static SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSignalRArmClient(client).GetSignalRSharedPrivateLinkResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SignalRCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -147,6 +93,24 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
+        public static SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSignalRArmClient(client).GetSignalRPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SignalRReplicaResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -162,6 +126,42 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSignalRArmClient(client).GetSignalRReplicaResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
+        public static SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSignalRArmClient(client).GetSignalRReplicaSharedPrivateLinkResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
+        public static SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSignalRArmClient(client).GetSignalRSharedPrivateLinkResource(id);
         }
 
         /// <summary>

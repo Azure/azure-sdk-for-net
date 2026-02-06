@@ -35,33 +35,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
             return new SignalRResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            SignalRPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new SignalRPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
-        public virtual SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier id)
-        {
-            SignalRReplicaSharedPrivateLinkResource.ValidateResourceId(id);
-            return new SignalRReplicaSharedPrivateLinkResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
-        public virtual SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(ResourceIdentifier id)
-        {
-            SignalRSharedPrivateLinkResource.ValidateResourceId(id);
-            return new SignalRSharedPrivateLinkResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SignalRCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SignalRCustomCertificateResource"/> object. </returns>
@@ -80,6 +53,15 @@ namespace Azure.ResourceManager.SignalR.Mocking
             return new SignalRCustomDomainResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            SignalRPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new SignalRPrivateEndpointConnectionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="SignalRReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SignalRReplicaResource"/> object. </returns>
@@ -87,6 +69,24 @@ namespace Azure.ResourceManager.SignalR.Mocking
         {
             SignalRReplicaResource.ValidateResourceId(id);
             return new SignalRReplicaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
+        public virtual SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier id)
+        {
+            SignalRReplicaSharedPrivateLinkResource.ValidateResourceId(id);
+            return new SignalRReplicaSharedPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SignalRSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource"/> object. </returns>
+        public virtual SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(ResourceIdentifier id)
+        {
+            SignalRSharedPrivateLinkResource.ValidateResourceId(id);
+            return new SignalRSharedPrivateLinkResource(Client, id);
         }
     }
 }

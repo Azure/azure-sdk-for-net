@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        /// 
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
         /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
@@ -156,10 +155,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
-        /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
-        /// - EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.
-        /// - EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.
-        /// - EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.
+        /// <list type="bullet"><item><description>ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.</description></item><item><description>EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.</description></item></list>
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
@@ -243,12 +239,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> The billing information of the resource. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </param>
         /// <param name="tier">
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        /// 
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
@@ -256,7 +250,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="capacity">
         /// Optional, integer. The unit count of the resource.
         /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
-        /// 
         /// If present, following values are allowed:
         /// Free_F1: 1;
         /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;

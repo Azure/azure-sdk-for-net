@@ -149,7 +149,6 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// List of the featureFlags.
-        /// 
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
         /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used

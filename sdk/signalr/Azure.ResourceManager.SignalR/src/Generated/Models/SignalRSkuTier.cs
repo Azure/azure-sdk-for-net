@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary>
     /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-    /// 
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
     public readonly partial struct SignalRSkuTier : IEquatable<SignalRSkuTier>
