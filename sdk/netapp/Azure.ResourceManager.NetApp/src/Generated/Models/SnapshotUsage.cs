@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </summary>
+    /// <summary> Snapshot usage for backup. </summary>
     public readonly partial struct SnapshotUsage : IEquatable<SnapshotUsage>
     {
         private readonly string _value;
+        /// <summary> Value indicating an existing snapshot is used. </summary>
+        private const string UseExistingSnapshotValue = "UseExistingSnapshot";
+        /// <summary> Value indicating a new snapshot is created. </summary>
+        private const string CreateNewSnapshotValue = "CreateNewSnapshot";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotUsage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UseExistingSnapshotValue = "UseExistingSnapshot";
-        private const string CreateNewSnapshotValue = "CreateNewSnapshot";
+            _value = value;
+        }
 
         /// <summary> Value indicating an existing snapshot is used. </summary>
         public static SnapshotUsage UseExistingSnapshot { get; } = new SnapshotUsage(UseExistingSnapshotValue);
+
         /// <summary> Value indicating a new snapshot is created. </summary>
         public static SnapshotUsage CreateNewSnapshot { get; } = new SnapshotUsage(CreateNewSnapshotValue);
+
         /// <summary> Determines if two <see cref="SnapshotUsage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotUsage left, SnapshotUsage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnapshotUsage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotUsage left, SnapshotUsage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotUsage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnapshotUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnapshotUsage(string value) => new SnapshotUsage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnapshotUsage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotUsage?(string value) => value == null ? null : new SnapshotUsage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotUsage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnapshotUsage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

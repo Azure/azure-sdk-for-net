@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CheckElasticResourceAvailabilityReason : IEquatable<CheckElasticResourceAvailabilityReason>
     {
         private readonly string _value;
+        /// <summary> Value indicating the name provided does not match Azure NetApp Files naming requirements. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Value indicating the name is already in use and is therefore unavailable. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="CheckElasticResourceAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CheckElasticResourceAvailabilityReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> Value indicating the name provided does not match Azure NetApp Files naming requirements. </summary>
         public static CheckElasticResourceAvailabilityReason Invalid { get; } = new CheckElasticResourceAvailabilityReason(InvalidValue);
+
         /// <summary> Value indicating the name is already in use and is therefore unavailable. </summary>
         public static CheckElasticResourceAvailabilityReason AlreadyExists { get; } = new CheckElasticResourceAvailabilityReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="CheckElasticResourceAvailabilityReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CheckElasticResourceAvailabilityReason left, CheckElasticResourceAvailabilityReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CheckElasticResourceAvailabilityReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CheckElasticResourceAvailabilityReason left, CheckElasticResourceAvailabilityReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CheckElasticResourceAvailabilityReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CheckElasticResourceAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CheckElasticResourceAvailabilityReason(string value) => new CheckElasticResourceAvailabilityReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CheckElasticResourceAvailabilityReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CheckElasticResourceAvailabilityReason?(string value) => value == null ? null : new CheckElasticResourceAvailabilityReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CheckElasticResourceAvailabilityReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CheckElasticResourceAvailabilityReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

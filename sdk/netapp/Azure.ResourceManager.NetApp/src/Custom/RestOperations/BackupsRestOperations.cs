@@ -17,7 +17,25 @@ namespace Azure.ResourceManager.NetApp
 {
     internal partial class BackupsRestOperations
     {
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
         private readonly string _backup_old_apiVersion = "2022-11-01";
+
+        /// <summary> Initializes a new instance of BackupsRestOperations. </summary>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public BackupsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2022-11-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
 
         internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
@@ -69,7 +87,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppVolumeBackupStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetAppVolumeBackupStatus.DeserializeNetAppVolumeBackupStatus(document.RootElement);
+                        value = NetAppVolumeBackupStatus.DeserializeNetAppVolumeBackupStatus(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppVolumeBackupStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetAppVolumeBackupStatus.DeserializeNetAppVolumeBackupStatus(document.RootElement);
+                        value = NetAppVolumeBackupStatus.DeserializeNetAppVolumeBackupStatus(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -613,6 +631,79 @@ namespace Azure.ResourceManager.NetApp
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetVolumeLatestRestoreStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/restoreStatus", false);
+            uri.AppendQuery("api-version", _backup_old_apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        public async Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var message = CreateGetVolumeLatestRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetAppRestoreStatus value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = NetAppRestoreStatus.DeserializeNetAppRestoreStatus(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        public Response<NetAppRestoreStatus> GetVolumeLatestRestoreStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var message = CreateGetVolumeLatestRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        NetAppRestoreStatus value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = NetAppRestoreStatus.DeserializeNetAppRestoreStatus(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

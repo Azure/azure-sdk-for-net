@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class ElasticSnapshotOperationSource : IOperationSource<ElasticSnapshotResource>
+    /// <summary></summary>
+    internal partial class ElasticSnapshotOperationSource : IOperationSource<ElasticSnapshotResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticSnapshotOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticSnapshotResource IOperationSource<ElasticSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticSnapshotData data = ElasticSnapshotData.DeserializeElasticSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticSnapshotResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticSnapshotResource> IOperationSource<ElasticSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new ElasticSnapshotResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticSnapshotData data = ElasticSnapshotData.DeserializeElasticSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticSnapshotResource(_client, data);
         }
     }
 }

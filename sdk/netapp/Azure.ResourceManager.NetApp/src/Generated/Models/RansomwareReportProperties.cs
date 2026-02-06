@@ -7,52 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
     /// Advanced Ransomware Protection (ARP) report properties.
-    ///
     /// Evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious using the ClearSuspects operation.
-    ///
     /// Advanced Ransomware Protection (ARP) creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of the ARP snapshots or another snapshot of your volume to restore data.
     /// </summary>
     public partial class RansomwareReportProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportProperties"/>. </summary>
-        public RansomwareReportProperties()
+        internal RansomwareReportProperties()
         {
             Suspects = new ChangeTrackingList<RansomwareSuspects>();
         }
@@ -65,8 +35,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="reportedCount"> The number of suspects identified by the ARP report. </param>
         /// <param name="suspects"> Suspects identified in an ARP report. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RansomwareReportProperties(DateTimeOffset? eventOn, RansomwareReportState? state, RansomwareReportSeverity? severity, int? clearedCount, int? reportedCount, IReadOnlyList<RansomwareSuspects> suspects, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RansomwareReportProperties(DateTimeOffset? eventOn, RansomwareReportState? state, RansomwareReportSeverity? severity, int? clearedCount, int? reportedCount, IReadOnlyList<RansomwareSuspects> suspects, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventOn = eventOn;
             State = state;
@@ -75,21 +45,27 @@ namespace Azure.ResourceManager.NetApp.Models
             ReportedCount = reportedCount;
             Suspects = suspects;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The creation date and time of the report. </summary>
         public DateTimeOffset? EventOn { get; }
+
         /// <summary> State of the Advanced Ransomware Protection (ARP) report. </summary>
         public RansomwareReportState? State { get; }
+
         /// <summary> Severity of the Advanced Ransomware Protection (ARP) report. </summary>
         public RansomwareReportSeverity? Severity { get; }
+
         /// <summary> The number of cleared suspects identified by the ARP report. </summary>
         public int? ClearedCount { get; }
+
         /// <summary> The number of suspects identified by the ARP report. </summary>
         public int? ReportedCount { get; }
+
         /// <summary> Suspects identified in an ARP report. </summary>
         public IReadOnlyList<RansomwareSuspects> Suspects { get; }
+
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
     }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class ElasticCapacityPoolOperationSource : IOperationSource<ElasticCapacityPoolResource>
+    /// <summary></summary>
+    internal partial class ElasticCapacityPoolOperationSource : IOperationSource<ElasticCapacityPoolResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticCapacityPoolOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticCapacityPoolResource IOperationSource<ElasticCapacityPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticCapacityPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticCapacityPoolData data = ElasticCapacityPoolData.DeserializeElasticCapacityPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticCapacityPoolResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticCapacityPoolResource> IOperationSource<ElasticCapacityPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticCapacityPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new ElasticCapacityPoolResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticCapacityPoolData data = ElasticCapacityPoolData.DeserializeElasticCapacityPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticCapacityPoolResource(_client, data);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticBackupType : IEquatable<ElasticBackupType>
     {
         private readonly string _value;
+        /// <summary> Manual backup type. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Scheduled backup type. </summary>
+        private const string ScheduledValue = "Scheduled";
 
         /// <summary> Initializes a new instance of <see cref="ElasticBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticBackupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string ScheduledValue = "Scheduled";
+            _value = value;
+        }
 
         /// <summary> Manual backup type. </summary>
         public static ElasticBackupType Manual { get; } = new ElasticBackupType(ManualValue);
+
         /// <summary> Scheduled backup type. </summary>
         public static ElasticBackupType Scheduled { get; } = new ElasticBackupType(ScheduledValue);
+
         /// <summary> Determines if two <see cref="ElasticBackupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticBackupType left, ElasticBackupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticBackupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticBackupType left, ElasticBackupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticBackupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticBackupType(string value) => new ElasticBackupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticBackupType?(string value) => value == null ? null : new ElasticBackupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticBackupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticBackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

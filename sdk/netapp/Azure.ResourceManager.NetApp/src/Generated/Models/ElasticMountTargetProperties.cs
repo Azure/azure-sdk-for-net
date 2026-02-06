@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Contains all the information needed to mount an elastic volume. </summary>
     public partial class ElasticMountTargetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticMountTargetProperties"/>. </summary>
         internal ElasticMountTargetProperties()
@@ -53,16 +25,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticMountTargetProperties"/>. </summary>
         /// <param name="ipAddress"> The mount target's IPv4 address, used to mount the volume. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMountTargetProperties(string ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticMountTargetProperties(IPAddress ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             SmbServerFqdn = smbServerFqdn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The mount target's IPv4 address, used to mount the volume. </summary>
-        public string IPAddress { get; }
+        public IPAddress IpAddress { get; }
+
         /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
         public string SmbServerFqdn { get; }
     }

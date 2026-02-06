@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A class representing a collection of <see cref="ElasticBackupPolicyResource"/> and their operations.
     /// Each <see cref="ElasticBackupPolicyResource"/> in the collection will belong to the same instance of <see cref="ElasticAccountResource"/>.
-    /// To get an <see cref="ElasticBackupPolicyCollection"/> instance call the GetElasticBackupPolicies method from an instance of <see cref="ElasticAccountResource"/>.
+    /// To get a <see cref="ElasticBackupPolicyCollection"/> instance call the GetElasticBackupPolicies method from an instance of <see cref="ElasticAccountResource"/>.
     /// </summary>
     public partial class ElasticBackupPolicyCollection : ArmCollection, IEnumerable<ElasticBackupPolicyResource>, IAsyncEnumerable<ElasticBackupPolicyResource>
     {
-        private readonly ClientDiagnostics _elasticBackupPolicyClientDiagnostics;
-        private readonly ElasticBackupPoliciesRestOperations _elasticBackupPolicyRestClient;
+        private readonly ClientDiagnostics _elasticBackupPoliciesClientDiagnostics;
+        private readonly ElasticBackupPolicies _elasticBackupPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticBackupPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticBackupPolicyCollection for mocking. </summary>
         protected ElasticBackupPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticBackupPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticBackupPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticBackupPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticBackupPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticBackupPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ElasticBackupPolicyResource.ResourceType, out string elasticBackupPolicyApiVersion);
-            _elasticBackupPolicyRestClient = new ElasticBackupPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticBackupPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _elasticBackupPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticBackupPolicyResource.ResourceType.Namespace, Diagnostics);
+            _elasticBackupPoliciesRestClient = new ElasticBackupPolicies(_elasticBackupPoliciesClientDiagnostics, Pipeline, Endpoint, elasticBackupPolicyApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ElasticAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update the specified Elastic Backup Policy in the NetApp account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ElasticBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupPolicyName, ElasticBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _elasticBackupPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<ElasticBackupPolicyResource>(new ElasticBackupPolicyOperationSource(Client), _elasticBackupPolicyClientDiagnostics, Pipeline, _elasticBackupPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, ElasticBackupPolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<ElasticBackupPolicyResource> operation = new NetAppArmOperation<ElasticBackupPolicyResource>(
+                    new ElasticBackupPolicyOperationSource(Client),
+                    _elasticBackupPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.NetApp
         /// Create or update the specified Elastic Backup Policy in the NetApp account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ElasticBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string backupPolicyName, ElasticBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticBackupPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken);
-                var operation = new NetAppArmOperation<ElasticBackupPolicyResource>(new ElasticBackupPolicyOperationSource(Client), _elasticBackupPolicyClientDiagnostics, Pipeline, _elasticBackupPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, ElasticBackupPolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<ElasticBackupPolicyResource> operation = new NetAppArmOperation<ElasticBackupPolicyResource>(
+                    new ElasticBackupPolicyOperationSource(Client),
+                    _elasticBackupPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the Elastic Backup Policy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ElasticBackupPolicyResource>> GetAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Get");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticBackupPolicyData> response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the Elastic Backup Policy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ElasticBackupPolicyResource> Get(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Get");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _elasticBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticBackupPolicyData> response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.NetApp
         /// List and describe all Elastic Backup Policies in the elastic account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticBackupPolicyRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticBackupPolicyRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticBackupPolicyResource(Client, ElasticBackupPolicyData.DeserializeElasticBackupPolicyData(e)), _elasticBackupPolicyClientDiagnostics, Pipeline, "ElasticBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT(_elasticBackupPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticBackupPolicyResource(Client, data));
         }
 
         /// <summary>
         /// List and describe all Elastic Backup Policies in the elastic account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="ElasticBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticBackupPolicyRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticBackupPolicyRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticBackupPolicyResource(Client, ElasticBackupPolicyData.DeserializeElasticBackupPolicyData(e)), _elasticBackupPolicyClientDiagnostics, Pipeline, "ElasticBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountCollectionResultOfT(_elasticBackupPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticBackupPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Exists");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _elasticBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticBackupPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticBackupPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Exists");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _elasticBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticBackupPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticBackupPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ElasticBackupPolicyResource>> GetIfExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _elasticBackupPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticBackupPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticBackupPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticBackupPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupPolicies/{backupPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackupPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticBackupPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> The name of the ElasticBackupPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ElasticBackupPolicyResource> GetIfExists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using var scope = _elasticBackupPolicyClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticBackupPoliciesClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _elasticBackupPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticBackupPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticBackupPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticBackupPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticBackupPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ElasticBackupPolicyResource> IAsyncEnumerable<ElasticBackupPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

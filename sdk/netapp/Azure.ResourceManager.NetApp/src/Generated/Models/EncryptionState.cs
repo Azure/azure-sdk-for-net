@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct EncryptionState : IEquatable<EncryptionState>
     {
         private readonly string _value;
+        /// <summary> Encryption is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Encryption is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="EncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EncryptionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Encryption is disabled. </summary>
         public static EncryptionState Disabled { get; } = new EncryptionState(DisabledValue);
+
         /// <summary> Encryption is enabled. </summary>
         public static EncryptionState Enabled { get; } = new EncryptionState(EnabledValue);
+
         /// <summary> Determines if two <see cref="EncryptionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EncryptionState left, EncryptionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EncryptionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EncryptionState left, EncryptionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EncryptionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EncryptionState(string value) => new EncryptionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EncryptionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EncryptionState?(string value) => value == null ? null : new EncryptionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EncryptionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EncryptionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

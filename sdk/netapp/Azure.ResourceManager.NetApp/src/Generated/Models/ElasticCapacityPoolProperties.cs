@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Elastic capacity pool properties. </summary>
     public partial class ElasticCapacityPoolProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticCapacityPoolProperties"/>. </summary>
         /// <param name="size"> Provisioned size of the pool (in bytes). For zoneRedundant service level pool, value must be in the range 1TiB to 16TiB or 1TiB to 128TiB for supported region. Values expressed in bytes as multiples of 1TiB till 16TiB and in multiples of 8TiB from 24TiB to 128TiB. Pool size can't be shrunk once it is created. </param>
@@ -70,8 +42,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="currentZone"> Indicates the current zone of the pool. This can be changed for zoneRedundant service level pool with the changeZone action. </param>
         /// <param name="availabilityStatus"> Current availability status of the resource. </param>
         /// <param name="activeDirectoryConfigResourceId"> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticCapacityPoolProperties(long size, ElasticServiceLevel serviceLevel, NetAppProvisioningState? provisioningState, ElasticEncryptionConfiguration encryption, double? totalThroughputMibps, ResourceIdentifier subnetResourceId, string currentZone, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier activeDirectoryConfigResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticCapacityPoolProperties(long size, ElasticServiceLevel serviceLevel, NetAppProvisioningState? provisioningState, ElasticEncryptionConfiguration encryption, double? totalThroughputMibps, ResourceIdentifier subnetResourceId, string currentZone, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier activeDirectoryConfigResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             ServiceLevel = serviceLevel;
@@ -82,30 +54,33 @@ namespace Azure.ResourceManager.NetApp.Models
             CurrentZone = currentZone;
             AvailabilityStatus = availabilityStatus;
             ActiveDirectoryConfigResourceId = activeDirectoryConfigResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticCapacityPoolProperties"/> for deserialization. </summary>
-        internal ElasticCapacityPoolProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioned size of the pool (in bytes). For zoneRedundant service level pool, value must be in the range 1TiB to 16TiB or 1TiB to 128TiB for supported region. Values expressed in bytes as multiples of 1TiB till 16TiB and in multiples of 8TiB from 24TiB to 128TiB. Pool size can't be shrunk once it is created. </summary>
         public long Size { get; set; }
+
         /// <summary> The service level of the elastic capacity pool. </summary>
         public ElasticServiceLevel ServiceLevel { get; set; }
+
         /// <summary> Azure lifecycle management. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
+
         /// <summary> Encryption settings. </summary>
         public ElasticEncryptionConfiguration Encryption { get; set; }
+
         /// <summary> Total throughput of the pool in MiB/s. </summary>
         public double? TotalThroughputMibps { get; }
+
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/elasticVolumes, this is used by all the volumes within the pool. </summary>
         public ResourceIdentifier SubnetResourceId { get; set; }
+
         /// <summary> Indicates the current zone of the pool. This can be changed for zoneRedundant service level pool with the changeZone action. </summary>
         public string CurrentZone { get; }
+
         /// <summary> Current availability status of the resource. </summary>
         public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }
+
         /// <summary> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </summary>
         public ResourceIdentifier ActiveDirectoryConfigResourceId { get; set; }
     }

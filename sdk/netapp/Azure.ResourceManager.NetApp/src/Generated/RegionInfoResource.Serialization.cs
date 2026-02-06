@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class RegionInfoResource : IJsonModel<RegionInfoResourceData>
     {
-        private static RegionInfoResourceData s_dataDeserializationInstance;
-        private static RegionInfoResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RegionInfoResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RegionInfoResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RegionInfoResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegionInfoResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)Data).Write(writer, options);
 
-        RegionInfoResourceData IJsonModel<RegionInfoResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegionInfoResourceData IJsonModel<RegionInfoResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegionInfoResourceData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RegionInfoResourceData IPersistableModel<RegionInfoResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegionInfoResourceData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<RegionInfoResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegionInfoResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RegionInfoResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

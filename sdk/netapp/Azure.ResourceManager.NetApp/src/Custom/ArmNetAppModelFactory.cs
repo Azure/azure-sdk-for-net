@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData: systemData,
                 backupId: backupId,
                 createdOn: createdOn,
-                snapshotCreationOn: null,
                 provisioningState: provisioningState,
                 size: size,
                 label: label,
@@ -63,7 +62,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeGroupMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IEnumerable<NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount)
-            => NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules, volumesCount);
+        {
+            var metadata = new NetAppVolumeGroupMetadata();
+            metadata.DeploymentSpecId = deploymentSpecId;
+            return metadata;
+        }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = null)
         {
-            return new AvailabilityZoneMapping(availabilityZone, isAvailable, serializedAdditionalRawData: null);
+            return new AvailabilityZoneMapping(availabilityZone, isAvailable, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumePatch"/>. </summary>
@@ -106,30 +109,12 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, float? throughputMibps, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
-            return NetAppVolumePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                serviceLevel,
-                usageThreshold,
-                exportRules,
-                null, //protocolTypes
-                throughputMibps,
-                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() {SnapshotPolicyId = snapshotPolicyId } } : null,
-                isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs,
-                unixPermissions,
-                isCoolAccessEnabled,
-                coolnessPeriod,
-                coolAccessRetrievalPolicy,
-                null,
-                isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration,
-                smbNonBrowsable);
+            var patch = new NetAppVolumePatch();
+            if (snapshotPolicyId != null)
+            {
+                patch.DataProtection = new VolumePatchPropertiesDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId.ToString() } };
+            }
+            return patch;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupData"/>. </summary>
@@ -152,22 +137,23 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
         {
-            return NetAppBackupData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                backupId: backupId,
-                createdOn: createdOn,
-                provisioningState: provisioningState,
-                size: size,
-                label: label,
-                backupType: backupType,
-                failureReason: failureReason,
-                volumeResourceId: volumeResourceId,
-                useExistingSnapshot: useExistingSnapshot,
-                snapshotName: snapshotName,
-                new ResourceIdentifier(backupPolicyResourceId));
+            return new NetAppBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                backupId,
+                createdOn,
+                provisioningState,
+                size,
+                label,
+                backupType,
+                failureReason,
+                volumeResourceId,
+                useExistingSnapshot,
+                snapshotName,
+                backupPolicyResourceId != null ? new ResourceIdentifier(backupPolicyResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>
@@ -187,18 +173,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppSubscriptionQuotaItemData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.NetAppSubscriptionQuotaItemData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
+        public static NetAppSubscriptionQuotaItemData NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
         {
-            return NetAppSubscriptionQuotaItem(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
+            return NetAppSubscriptionQuotaItemData(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
@@ -210,9 +196,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
         public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
-            return NetAppVolumeReplicationStatus(
+            return new NetAppVolumeReplicationStatus(
                 isHealthy,
-                relationshipStatus != null ? new VolumeReplicationRelationshipStatus(relationshipStatus.ToString()) : null,
+                relationshipStatus,
                 mirrorState,
                 totalProgress,
                 errorMessage);
@@ -303,10 +289,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
         public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
-            VolumeBackupRelationshipStatus VolumeBackupRelationshipStatus = relationshipStatus.Value != null ? new VolumeBackupRelationshipStatus(relationshipStatus.ToString()) : null;
+            VolumeBackupRelationshipStatus? backupRelationshipStatus = relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null;
             return ArmNetAppModelFactory.NetAppVolumeBackupStatus(
                 isHealthy,
-                VolumeBackupRelationshipStatus,
+                backupRelationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
@@ -342,9 +328,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
         public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
+            VolumeRestoreRelationshipStatus? restoreRelationshipStatus = relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null;
             return ArmNetAppModelFactory.NetAppRestoreStatus(
                 isHealthy,
-                relationshipStatus,
+                restoreRelationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,

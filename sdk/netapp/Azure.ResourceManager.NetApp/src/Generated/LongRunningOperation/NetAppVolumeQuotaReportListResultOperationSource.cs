@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppVolumeQuotaReportListResultOperationSource : IOperationSource<NetAppVolumeQuotaReportListResult>
+    /// <summary></summary>
+    internal partial class NetAppVolumeQuotaReportListResultOperationSource : IOperationSource<NetAppVolumeQuotaReportListResult>
     {
-        NetAppVolumeQuotaReportListResult IOperationSource<NetAppVolumeQuotaReportListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NetAppVolumeQuotaReportListResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NetAppVolumeQuotaReportListResult.DeserializeNetAppVolumeQuotaReportListResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetAppVolumeQuotaReportListResult IOperationSource<NetAppVolumeQuotaReportListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetAppVolumeQuotaReportListResult result = NetAppVolumeQuotaReportListResult.DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetAppVolumeQuotaReportListResult> IOperationSource<NetAppVolumeQuotaReportListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NetAppVolumeQuotaReportListResult.DeserializeNetAppVolumeQuotaReportListResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetAppVolumeQuotaReportListResult result = NetAppVolumeQuotaReportListResult.DeserializeNetAppVolumeQuotaReportListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRestoreStatus>> GetRestoreStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
+            using var scope = NetAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
             scope.Start();
             try
             {
-                var response = await _netAppBackupVaultBackupBackupsRestClient.GetVolumeLatestRestoreStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await NetAppVolumeBackupBackupsRestClient.GetVolumeLatestRestoreStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRestoreStatus> GetRestoreStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
+            using var scope = NetAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
             scope.Start();
             try
             {
-                var response = _netAppBackupVaultBackupBackupsRestClient.GetVolumeLatestRestoreStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = NetAppVolumeBackupBackupsRestClient.GetVolumeLatestRestoreStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken)
         {
-            return GetReplicationsAsync(content: null, cancellationToken);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetReplicationsAsync instead.");
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken = default)
         {
-            return GetReplications(content: null, cancellationToken);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetReplications instead.");
         }
     }
 }

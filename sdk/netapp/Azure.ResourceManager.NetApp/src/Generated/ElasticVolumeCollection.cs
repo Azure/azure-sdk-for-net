@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A class representing a collection of <see cref="ElasticVolumeResource"/> and their operations.
     /// Each <see cref="ElasticVolumeResource"/> in the collection will belong to the same instance of <see cref="ElasticCapacityPoolResource"/>.
-    /// To get an <see cref="ElasticVolumeCollection"/> instance call the GetElasticVolumes method from an instance of <see cref="ElasticCapacityPoolResource"/>.
+    /// To get a <see cref="ElasticVolumeCollection"/> instance call the GetElasticVolumes method from an instance of <see cref="ElasticCapacityPoolResource"/>.
     /// </summary>
     public partial class ElasticVolumeCollection : ArmCollection, IEnumerable<ElasticVolumeResource>, IAsyncEnumerable<ElasticVolumeResource>
     {
-        private readonly ClientDiagnostics _elasticVolumeClientDiagnostics;
-        private readonly ElasticVolumesRestOperations _elasticVolumeRestClient;
+        private readonly ClientDiagnostics _elasticVolumesClientDiagnostics;
+        private readonly ElasticVolumes _elasticVolumesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticVolumeCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticVolumeCollection for mocking. </summary>
         protected ElasticVolumeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticVolumeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticVolumeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticVolumeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticVolumeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticVolumeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ElasticVolumeResource.ResourceType, out string elasticVolumeApiVersion);
-            _elasticVolumeRestClient = new ElasticVolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticVolumeApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _elasticVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticVolumeResource.ResourceType.Namespace, Diagnostics);
+            _elasticVolumesRestClient = new ElasticVolumes(_elasticVolumesClientDiagnostics, Pipeline, Endpoint, elasticVolumeApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ElasticCapacityPoolResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ElasticCapacityPoolResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticCapacityPoolResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update the specified volume within the capacity pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ElasticVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, ElasticVolumeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _elasticVolumeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<ElasticVolumeResource>(new ElasticVolumeOperationSource(Client), _elasticVolumeClientDiagnostics, Pipeline, _elasticVolumeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, ElasticVolumeData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<ElasticVolumeResource> operation = new NetAppArmOperation<ElasticVolumeResource>(
+                    new ElasticVolumeOperationSource(Client),
+                    _elasticVolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.NetApp
         /// Create or update the specified volume within the capacity pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ElasticVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, ElasticVolumeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticVolumeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, data, cancellationToken);
-                var operation = new NetAppArmOperation<ElasticVolumeResource>(new ElasticVolumeOperationSource(Client), _elasticVolumeClientDiagnostics, Pipeline, _elasticVolumeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, ElasticVolumeData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<ElasticVolumeResource> operation = new NetAppArmOperation<ElasticVolumeResource>(
+                    new ElasticVolumeOperationSource(Client),
+                    _elasticVolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the details of the specified volume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ElasticVolumeResource>> GetAsync(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.Get");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticVolumeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticVolumeData> response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the details of the specified volume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ElasticVolumeResource> Get(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.Get");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.Get");
             scope.Start();
             try
             {
-                var response = _elasticVolumeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticVolumeData> response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.NetApp
         /// List all Elastic Volumes within the Elastic Capacity Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_ListByElasticPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_ListByElasticPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticVolumeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticVolumeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticVolumeRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticVolumeRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticVolumeResource(Client, ElasticVolumeData.DeserializeElasticVolumeData(e)), _elasticVolumeClientDiagnostics, Pipeline, "ElasticVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ElasticVolumeData, ElasticVolumeResource>(new ElasticVolumesGetByElasticPoolAsyncCollectionResultOfT(
+                _elasticVolumesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new ElasticVolumeResource(Client, data));
         }
 
         /// <summary>
         /// List all Elastic Volumes within the Elastic Capacity Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_ListByElasticPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_ListByElasticPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="ElasticVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticVolumeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticVolumeRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticVolumeRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticVolumeResource(Client, ElasticVolumeData.DeserializeElasticVolumeData(e)), _elasticVolumeClientDiagnostics, Pipeline, "ElasticVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ElasticVolumeData, ElasticVolumeResource>(new ElasticVolumesGetByElasticPoolCollectionResultOfT(
+                _elasticVolumesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new ElasticVolumeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.Exists");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _elasticVolumeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticVolumeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticVolumeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.Exists");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _elasticVolumeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticVolumeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticVolumeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ElasticVolumeResource>> GetIfExistsAsync(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _elasticVolumeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticVolumeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticVolumeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticVolumeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticVolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticVolumes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticVolumeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ElasticVolumeResource> GetIfExists(string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var scope = _elasticVolumeClientDiagnostics.CreateScope("ElasticVolumeCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticVolumesClientDiagnostics.CreateScope("ElasticVolumeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _elasticVolumeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticVolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticVolumeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticVolumeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticVolumeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticVolumeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ElasticVolumeResource> IAsyncEnumerable<ElasticVolumeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

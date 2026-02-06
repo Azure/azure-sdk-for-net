@@ -13,12 +13,16 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Properties of key vault. </summary>
     public partial class NetAppKeyVaultProperties
     {
+        private Uri _keyVaultUri;
+        private string _keyName;
+        private ResourceIdentifier _keyVaultResourceId;
+
         /// <summary> The resource ID of KeyVault. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string KeyVaultResourceId
         {
-            get { return KeyVaultArmResourceId.ToString(); }
-            set { KeyVaultArmResourceId = string.IsNullOrEmpty(value)? null : new ResourceIdentifier(value); }
+            get { return _keyVaultResourceId?.ToString(); }
+            set { _keyVaultResourceId = string.IsNullOrEmpty(value)? null : new ResourceIdentifier(value); }
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
@@ -33,9 +37,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 Argument.AssertNotNull(keyName, nameof(keyName));
                 Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
 
-                KeyVaultUri = keyVaultUri;
-                KeyName = keyName;
-                KeyVaultArmResourceId = new ResourceIdentifier(keyVaultResourceId);
+                _keyVaultUri = keyVaultUri;
+                _keyName = keyName;
+                _keyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
             }
         }
 }

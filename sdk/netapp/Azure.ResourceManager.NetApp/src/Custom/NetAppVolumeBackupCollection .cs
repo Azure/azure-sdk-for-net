@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.NetApp
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NetAppVolumeResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppVolumeResource.ResourceType), nameof(id));
+            if (id.ResourceType != VolumeResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VolumeResource.ResourceType), nameof(id));
         }
 
         /// <summary>

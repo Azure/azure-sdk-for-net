@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct RegionStorageToNetworkProximity : IEquatable<RegionStorageToNetworkProximity>
     {
         private readonly string _value;
+        /// <summary> Basic network connectivity. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> Standard T1 network connectivity. </summary>
+        private const string T1Value = "T1";
+        /// <summary> Standard T2 network connectivity. </summary>
+        private const string T2Value = "T2";
+        /// <summary> Standard AcrossT2 network connectivity. </summary>
+        private const string AcrossT2Value = "AcrossT2";
+        /// <summary> Standard T1 and T2 network connectivity. </summary>
+        private const string T1AndT2Value = "T1AndT2";
+        /// <summary> Standard T1 and AcrossT2 network connectivity. </summary>
+        private const string T1AndAcrossT2Value = "T1AndAcrossT2";
+        /// <summary> Standard T2 and AcrossT2 network connectivity. </summary>
+        private const string T2AndAcrossT2Value = "T2AndAcrossT2";
+        /// <summary> Standard T1, T2 and AcrossT2 network connectivity. </summary>
+        private const string T1AndT2AndAcrossT2Value = "T1AndT2AndAcrossT2";
 
         /// <summary> Initializes a new instance of <see cref="RegionStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegionStorageToNetworkProximity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string T1Value = "T1";
-        private const string T2Value = "T2";
-        private const string AcrossT2Value = "AcrossT2";
-        private const string T1AndT2Value = "T1AndT2";
-        private const string T1AndAcrossT2Value = "T1AndAcrossT2";
-        private const string T2AndAcrossT2Value = "T2AndAcrossT2";
-        private const string T1AndT2AndAcrossT2Value = "T1AndT2AndAcrossT2";
+            _value = value;
+        }
 
         /// <summary> Basic network connectivity. </summary>
         public static RegionStorageToNetworkProximity Default { get; } = new RegionStorageToNetworkProximity(DefaultValue);
+
         /// <summary> Standard T1 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T1 { get; } = new RegionStorageToNetworkProximity(T1Value);
+
         /// <summary> Standard T2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T2 { get; } = new RegionStorageToNetworkProximity(T2Value);
+
         /// <summary> Standard AcrossT2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity AcrossT2 { get; } = new RegionStorageToNetworkProximity(AcrossT2Value);
+
         /// <summary> Standard T1 and T2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T1AndT2 { get; } = new RegionStorageToNetworkProximity(T1AndT2Value);
+
         /// <summary> Standard T1 and AcrossT2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T1AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T1AndAcrossT2Value);
+
         /// <summary> Standard T2 and AcrossT2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T2AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T2AndAcrossT2Value);
+
         /// <summary> Standard T1, T2 and AcrossT2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T1AndT2AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T1AndT2AndAcrossT2Value);
+
         /// <summary> Determines if two <see cref="RegionStorageToNetworkProximity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegionStorageToNetworkProximity left, RegionStorageToNetworkProximity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegionStorageToNetworkProximity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegionStorageToNetworkProximity left, RegionStorageToNetworkProximity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionStorageToNetworkProximity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegionStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegionStorageToNetworkProximity(string value) => new RegionStorageToNetworkProximity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegionStorageToNetworkProximity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegionStorageToNetworkProximity?(string value) => value == null ? null : new RegionStorageToNetworkProximity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegionStorageToNetworkProximity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegionStorageToNetworkProximity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

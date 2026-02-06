@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class ActiveDirectoryConfigResource : IJsonModel<ActiveDirectoryConfigData>
     {
-        private static ActiveDirectoryConfigData s_dataDeserializationInstance;
-        private static ActiveDirectoryConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ActiveDirectoryConfigData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ActiveDirectoryConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActiveDirectoryConfigData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActiveDirectoryConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActiveDirectoryConfigData>)Data).Write(writer, options);
 
-        ActiveDirectoryConfigData IJsonModel<ActiveDirectoryConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActiveDirectoryConfigData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActiveDirectoryConfigData IJsonModel<ActiveDirectoryConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ActiveDirectoryConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActiveDirectoryConfigData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ActiveDirectoryConfigData IPersistableModel<ActiveDirectoryConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActiveDirectoryConfigData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<ActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActiveDirectoryConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

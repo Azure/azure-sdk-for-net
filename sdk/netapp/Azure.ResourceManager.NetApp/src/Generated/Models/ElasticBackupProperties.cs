@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Elastic Backup properties. </summary>
     public partial class ElasticBackupProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/>. </summary>
         /// <param name="elasticVolumeResourceId"> ResourceId used to identify the Elastic Volume. </param>
@@ -70,8 +42,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticSnapshotResourceId"> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </param>
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, SnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, VolumeSize? volumeSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, SnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, VolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             SnapshotCreationOn = snapshotCreationOn;
@@ -86,38 +58,45 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticSnapshotResourceId = elasticSnapshotResourceId;
             ElasticBackupPolicyResourceId = elasticBackupPolicyResourceId;
             VolumeSize = volumeSize;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/> for deserialization. </summary>
-        internal ElasticBackupProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> The snapshot creation date of the backup. </summary>
         public DateTimeOffset? SnapshotCreationOn { get; }
+
         /// <summary> The completion date of the backup. </summary>
         public DateTimeOffset? CompletionOn { get; }
+
         /// <summary> Azure lifecycle management. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
+
         /// <summary> Size of backup in bytes. </summary>
         public long? Size { get; }
+
         /// <summary> Label for backup. </summary>
         public string Label { get; set; }
+
         /// <summary> Type of backup Manual or Scheduled. </summary>
         public ElasticBackupType? BackupType { get; }
+
         /// <summary> Failure reason. </summary>
         public string FailureReason { get; }
+
         /// <summary> ResourceId used to identify the Elastic Volume. </summary>
         public ResourceIdentifier ElasticVolumeResourceId { get; set; }
+
         /// <summary> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </summary>
         public SnapshotUsage? SnapshotUsage { get; set; }
+
         /// <summary> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </summary>
         public ResourceIdentifier ElasticSnapshotResourceId { get; set; }
+
         /// <summary> ResourceId used to identify the elastic backup policy. </summary>
         public ResourceIdentifier ElasticBackupPolicyResourceId { get; }
+
         /// <summary> Specifies if the backup is for a large volume. </summary>
         public VolumeSize? VolumeSize { get; }
     }

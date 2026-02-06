@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A Class representing an ElasticSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSnapshotResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetElasticSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticVolumeResource"/> using the GetElasticSnapshot method.
+    /// A class representing a ElasticSnapshot along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ElasticSnapshotResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticVolumeResource"/> using the GetElasticSnapshots method.
     /// </summary>
     public partial class ElasticSnapshotResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ElasticSnapshotResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="poolName"> The poolName. </param>
-        /// <param name="volumeName"> The volumeName. </param>
-        /// <param name="snapshotName"> The snapshotName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _elasticSnapshotClientDiagnostics;
-        private readonly ElasticSnapshotsRestOperations _elasticSnapshotRestClient;
+        private readonly ClientDiagnostics _elasticSnapshotsClientDiagnostics;
+        private readonly ElasticSnapshots _elasticSnapshotsRestClient;
         private readonly ElasticSnapshotData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/elasticAccounts/elasticCapacityPools/elasticVolumes/elasticSnapshots";
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSnapshotResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticSnapshotResource for mocking. </summary>
         protected ElasticSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSnapshotResource(ArmClient client, ElasticSnapshotData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.NetApp
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticSnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticSnapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string elasticSnapshotApiVersion);
-            _elasticSnapshotRestClient = new ElasticSnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSnapshotApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _elasticSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
+            _elasticSnapshotsRestClient = new ElasticSnapshots(_elasticSnapshotsClientDiagnostics, Pipeline, Endpoint, elasticSnapshotApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ElasticSnapshotData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ElasticSnapshot
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Get");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = await _elasticSnapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticSnapshotData> response = Response.FromValue(ElasticSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.NetApp
         /// Get a ElasticSnapshot
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Get");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = _elasticSnapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticSnapshotData> response = Response.FromValue(ElasticSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +193,20 @@ namespace Azure.ResourceManager.NetApp
         /// Delete a ElasticSnapshot
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,14 +214,21 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Delete");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticSnapshotRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_elasticSnapshotClientDiagnostics, Pipeline, _elasticSnapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation operation = new NetAppArmOperation(_elasticSnapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.NetApp
         /// Delete a ElasticSnapshot
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,14 +263,21 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Delete");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticSnapshotRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_elasticSnapshotClientDiagnostics, Pipeline, _elasticSnapshotRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation operation = new NetAppArmOperation(_elasticSnapshotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,23 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Create a ElasticSnapshot
+        /// Update a ElasticSnapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +316,27 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Update");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = await _elasticSnapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<ElasticSnapshotResource>(new ElasticSnapshotOperationSource(Client), _elasticSnapshotClientDiagnostics, Pipeline, _elasticSnapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ElasticSnapshotData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<ElasticSnapshotResource> operation = new NetAppArmOperation<ElasticSnapshotResource>(
+                    new ElasticSnapshotOperationSource(Client),
+                    _elasticSnapshotsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,23 +347,23 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Create a ElasticSnapshot
+        /// Update a ElasticSnapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}/elasticVolumes/{volumeName}/elasticSnapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshots_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshots_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ElasticSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +375,27 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSnapshotClientDiagnostics.CreateScope("ElasticSnapshotResource.Update");
+            using DiagnosticScope scope = _elasticSnapshotsClientDiagnostics.CreateScope("ElasticSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = _elasticSnapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetAppArmOperation<ElasticSnapshotResource>(new ElasticSnapshotOperationSource(Client), _elasticSnapshotClientDiagnostics, Pipeline, _elasticSnapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ElasticSnapshotData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<ElasticSnapshotResource> operation = new NetAppArmOperation<ElasticSnapshotResource>(
+                    new ElasticSnapshotOperationSource(Client),
+                    _elasticSnapshotsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

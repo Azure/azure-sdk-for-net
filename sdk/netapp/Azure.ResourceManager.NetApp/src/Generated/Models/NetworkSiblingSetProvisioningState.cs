@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetworkSiblingSetProvisioningState : IEquatable<NetworkSiblingSetProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetworkSiblingSetProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetworkSiblingSetProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static NetworkSiblingSetProvisioningState Succeeded { get; } = new NetworkSiblingSetProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static NetworkSiblingSetProvisioningState Failed { get; } = new NetworkSiblingSetProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static NetworkSiblingSetProvisioningState Canceled { get; } = new NetworkSiblingSetProvisioningState(CanceledValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static NetworkSiblingSetProvisioningState Updating { get; } = new NetworkSiblingSetProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="NetworkSiblingSetProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSiblingSetProvisioningState left, NetworkSiblingSetProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSiblingSetProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSiblingSetProvisioningState left, NetworkSiblingSetProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSiblingSetProvisioningState(string value) => new NetworkSiblingSetProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkSiblingSetProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkSiblingSetProvisioningState?(string value) => value == null ? null : new NetworkSiblingSetProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSiblingSetProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSiblingSetProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

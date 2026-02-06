@@ -5,18 +5,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary> Gets or sets the relationship status. </summary>
-        public virtual NetAppRelationshipStatus? RelationshipStatus
-        {
-            get => VolumeRestoreRelationshipStatus.HasValue
-                ? new NetAppRelationshipStatus(VolumeRestoreRelationshipStatus.Value.ToString())
-                : null;
-        }
+        /// <summary> Status of the restore SnapMirror relationship. </summary>
+        public NetAppRelationshipStatus? RelationshipStatus { get; }
+
+        /// <summary> Gets or sets the IsHealthy property. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsHealthy => Healthy;
     }
 }

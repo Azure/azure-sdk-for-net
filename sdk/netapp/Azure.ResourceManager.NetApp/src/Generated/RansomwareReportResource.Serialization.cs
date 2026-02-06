@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class RansomwareReportResource : IJsonModel<RansomwareReportData>
     {
-        private static RansomwareReportData s_dataDeserializationInstance;
-        private static RansomwareReportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RansomwareReportData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RansomwareReportData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RansomwareReportData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RansomwareReportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RansomwareReportData>)Data).Write(writer, options);
 
-        RansomwareReportData IJsonModel<RansomwareReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RansomwareReportData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RansomwareReportData IJsonModel<RansomwareReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RansomwareReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RansomwareReportData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RansomwareReportData IPersistableModel<RansomwareReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RansomwareReportData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<RansomwareReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RansomwareReportData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RansomwareReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

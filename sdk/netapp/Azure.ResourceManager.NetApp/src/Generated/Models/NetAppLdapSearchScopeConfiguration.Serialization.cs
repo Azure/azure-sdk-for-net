@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppLdapSearchScopeConfiguration : IUtf8JsonSerializable, IJsonModel<NetAppLdapSearchScopeConfiguration>
+    /// <summary> LDAP search scope. </summary>
+    public partial class NetAppLdapSearchScopeConfiguration : IJsonModel<NetAppLdapSearchScopeConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppLdapSearchScopeConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppLdapSearchScopeConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UserDN))
             {
                 writer.WritePropertyName("userDN"u8);
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +66,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        NetAppLdapSearchScopeConfiguration IJsonModel<NetAppLdapSearchScopeConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppLdapSearchScopeConfiguration IJsonModel<NetAppLdapSearchScopeConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppLdapSearchScopeConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppLdapSearchScopeConfiguration(document.RootElement, options);
         }
 
-        internal static NetAppLdapSearchScopeConfiguration DeserializeNetAppLdapSearchScopeConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetAppLdapSearchScopeConfiguration DeserializeNetAppLdapSearchScopeConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,38 +94,39 @@ namespace Azure.ResourceManager.NetApp.Models
             string userDN = default;
             string groupDN = default;
             string groupMembershipFilter = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("userDN"u8))
+                if (prop.NameEquals("userDN"u8))
                 {
-                    userDN = property.Value.GetString();
+                    userDN = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupDN"u8))
+                if (prop.NameEquals("groupDN"u8))
                 {
-                    groupDN = property.Value.GetString();
+                    groupDN = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupMembershipFilter"u8))
+                if (prop.NameEquals("groupMembershipFilter"u8))
                 {
-                    groupMembershipFilter = property.Value.GetString();
+                    groupMembershipFilter = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, serializedAdditionalRawData);
+            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NetAppLdapSearchScopeConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppLdapSearchScopeConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -130,15 +136,20 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        NetAppLdapSearchScopeConfiguration IPersistableModel<NetAppLdapSearchScopeConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppLdapSearchScopeConfiguration IPersistableModel<NetAppLdapSearchScopeConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppLdapSearchScopeConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppLdapSearchScopeConfiguration(document.RootElement, options);
                     }
                 default:
@@ -146,6 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetAppLdapSearchScopeConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

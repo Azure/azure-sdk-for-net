@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> The updatable properties of the ElasticVolume. </summary>
     public partial class ElasticVolumeUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeUpdateProperties"/>. </summary>
         public ElasticVolumeUpdateProperties()
@@ -56,46 +27,58 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="dataProtection"> Data protection configuration option for the volume, including snapshot policies and backup. </param>
         /// <param name="snapshotDirectoryVisibility"> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </param>
         /// <param name="smbProperties"> SMB Properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeUpdateProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticVolumeUpdateProperties(long? size, ElasticExportPolicy exportPolicy, ElasticVolumeDataProtectionPatchProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbPatchProperties smbProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             ExportPolicy = exportPolicy;
             DataProtection = dataProtection;
             SnapshotDirectoryVisibility = snapshotDirectoryVisibility;
             SmbProperties = smbProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Maximum size allowed for a volume in bytes. Valid values are in the range 1GiB to 16TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
         public long? Size { get; set; }
+
         /// <summary> Set of export policy rules. </summary>
         internal ElasticExportPolicy ExportPolicy { get; set; }
+
+        /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
+        public ElasticVolumeDataProtectionPatchProperties DataProtection { get; set; }
+
+        /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
+        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
+
+        /// <summary> SMB Properties. </summary>
+        internal ElasticSmbPatchProperties SmbProperties { get; set; }
+
         /// <summary> Export policy rule. </summary>
         public IList<ElasticExportPolicyRule> ExportRules
         {
             get
             {
                 if (ExportPolicy is null)
+                {
                     ExportPolicy = new ElasticExportPolicy();
+                }
                 return ExportPolicy.Rules;
             }
         }
 
-        /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
-        public ElasticVolumeDataProtectionPatchProperties DataProtection { get; set; }
-        /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
-        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
-        /// <summary> SMB Properties. </summary>
-        internal ElasticSmbPatchProperties SmbProperties { get; set; }
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>
         public ElasticSmbEncryption? SmbEncryption
         {
-            get => SmbProperties is null ? default : SmbProperties.SmbEncryption;
+            get
+            {
+                return SmbProperties is null ? default : SmbProperties.SmbEncryption;
+            }
             set
             {
                 if (SmbProperties is null)
+                {
                     SmbProperties = new ElasticSmbPatchProperties();
+                }
                 SmbProperties.SmbEncryption = value;
             }
         }

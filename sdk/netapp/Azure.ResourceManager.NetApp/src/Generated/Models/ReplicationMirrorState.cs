@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ReplicationMirrorState : IEquatable<ReplicationMirrorState>
     {
         private readonly string _value;
+        /// <summary> Destination volume has not been initialized. </summary>
+        private const string UninitializedValue = "Uninitialized";
+        /// <summary> Destination volume has been initialized and is ready. </summary>
+        private const string MirroredValue = "Mirrored";
+        /// <summary> Destination volume is RW, replication relationship has been broken off. </summary>
+        private const string BrokenValue = "Broken";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationMirrorState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationMirrorState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UninitializedValue = "Uninitialized";
-        private const string MirroredValue = "Mirrored";
-        private const string BrokenValue = "Broken";
+            _value = value;
+        }
 
         /// <summary> Destination volume has not been initialized. </summary>
         public static ReplicationMirrorState Uninitialized { get; } = new ReplicationMirrorState(UninitializedValue);
+
         /// <summary> Destination volume has been initialized and is ready. </summary>
         public static ReplicationMirrorState Mirrored { get; } = new ReplicationMirrorState(MirroredValue);
+
         /// <summary> Destination volume is RW, replication relationship has been broken off. </summary>
         public static ReplicationMirrorState Broken { get; } = new ReplicationMirrorState(BrokenValue);
+
         /// <summary> Determines if two <see cref="ReplicationMirrorState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicationMirrorState left, ReplicationMirrorState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicationMirrorState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicationMirrorState left, ReplicationMirrorState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationMirrorState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicationMirrorState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicationMirrorState(string value) => new ReplicationMirrorState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicationMirrorState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicationMirrorState?(string value) => value == null ? null : new ReplicationMirrorState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicationMirrorState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicationMirrorState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

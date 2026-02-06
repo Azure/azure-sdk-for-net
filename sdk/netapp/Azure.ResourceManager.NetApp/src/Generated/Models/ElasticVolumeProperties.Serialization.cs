@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticVolumeProperties : IUtf8JsonSerializable, IJsonModel<ElasticVolumeProperties>
+    /// <summary> Elastic Volume properties. </summary>
+    public partial class ElasticVolumeProperties : IJsonModel<ElasticVolumeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticVolumeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ElasticVolumeProperties"/> for deserialization. </summary>
+        internal ElasticVolumeProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticVolumeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticVolumeProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("filePath"u8);
             writer.WriteStringValue(FilePath);
             writer.WritePropertyName("size"u8);
@@ -45,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("protocolTypes"u8);
             writer.WriteStartArray();
-            foreach (var item in ProtocolTypes)
+            foreach (ElasticProtocolType item in ProtocolTypes)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("mountTargets"u8);
                 writer.WriteStartArray();
-                foreach (var item in MountTargets)
+                foreach (ElasticMountTargetProperties item in MountTargets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,15 +106,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("restorationState"u8);
                 writer.WriteStringValue(RestorationState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,22 +123,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ElasticVolumeProperties IJsonModel<ElasticVolumeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticVolumeProperties IJsonModel<ElasticVolumeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticVolumeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticVolumeProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticVolumeProperties(document.RootElement, options);
         }
 
-        internal static ElasticVolumeProperties DeserializeElasticVolumeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ElasticVolumeProperties DeserializeElasticVolumeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,131 +161,129 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticSmbProperties smbProperties = default;
             ResourceIdentifier backupResourceId = default;
             ElasticVolumeRestorationState? restorationState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("filePath"u8))
+                if (prop.NameEquals("filePath"u8))
                 {
-                    filePath = property.Value.GetString();
+                    filePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    size = property.Value.GetInt64();
+                    size = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("exportPolicy"u8))
+                if (prop.NameEquals("exportPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exportPolicy = ElasticExportPolicy.DeserializeElasticExportPolicy(property.Value, options);
+                    exportPolicy = ElasticExportPolicy.DeserializeElasticExportPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protocolTypes"u8))
+                if (prop.NameEquals("protocolTypes"u8))
                 {
                     List<ElasticProtocolType> array = new List<ElasticProtocolType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ElasticProtocolType(item.GetString()));
                     }
                     protocolTypes = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
                     continue;
                 }
-                if (property.NameEquals("availabilityStatus"u8))
+                if (prop.NameEquals("availabilityStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availabilityStatus = new ElasticResourceAvailabilityStatus(property.Value.GetString());
+                    availabilityStatus = new ElasticResourceAvailabilityStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("snapshotResourceId"u8))
+                if (prop.NameEquals("snapshotResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshotResourceId = new ResourceIdentifier(property.Value.GetString());
+                    snapshotResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mountTargets"u8))
+                if (prop.NameEquals("mountTargets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ElasticMountTargetProperties> array = new List<ElasticMountTargetProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ElasticMountTargetProperties.DeserializeElasticMountTargetProperties(item, options));
                     }
                     mountTargets = array;
                     continue;
                 }
-                if (property.NameEquals("dataProtection"u8))
+                if (prop.NameEquals("dataProtection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataProtection = ElasticVolumeDataProtectionProperties.DeserializeElasticVolumeDataProtectionProperties(property.Value, options);
+                    dataProtection = ElasticVolumeDataProtectionProperties.DeserializeElasticVolumeDataProtectionProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("snapshotDirectoryVisibility"u8))
+                if (prop.NameEquals("snapshotDirectoryVisibility"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshotDirectoryVisibility = new SnapshotDirectoryVisibility(property.Value.GetString());
+                    snapshotDirectoryVisibility = new SnapshotDirectoryVisibility(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("smbProperties"u8))
+                if (prop.NameEquals("smbProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smbProperties = ElasticSmbProperties.DeserializeElasticSmbProperties(property.Value, options);
+                    smbProperties = ElasticSmbProperties.DeserializeElasticSmbProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backupResourceId"u8))
+                if (prop.NameEquals("backupResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupResourceId = new ResourceIdentifier(property.Value.GetString());
+                    backupResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restorationState"u8))
+                if (prop.NameEquals("restorationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restorationState = new ElasticVolumeRestorationState(property.Value.GetString());
+                    restorationState = new ElasticVolumeRestorationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticVolumeProperties(
                 filePath,
                 size,
@@ -289,13 +298,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 smbProperties,
                 backupResourceId,
                 restorationState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ElasticVolumeProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ElasticVolumeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -305,15 +317,20 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ElasticVolumeProperties IPersistableModel<ElasticVolumeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticVolumeProperties IPersistableModel<ElasticVolumeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticVolumeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticVolumeProperties(document.RootElement, options);
                     }
                 default:
@@ -321,6 +338,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticVolumeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

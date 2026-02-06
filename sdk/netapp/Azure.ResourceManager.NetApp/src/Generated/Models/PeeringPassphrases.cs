@@ -13,49 +13,15 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> The response containing peering passphrases and commands for cluster and vserver peering. </summary>
     public partial class PeeringPassphrases
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringPassphrases"/>. </summary>
         /// <param name="clusterPeeringCommand"> The cluster peering command. </param>
         /// <param name="clusterPeeringPassphrase"> The cluster peering passphrase. </param>
         /// <param name="vserverPeeringCommand"> The vserver peering command. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterPeeringCommand"/>, <paramref name="clusterPeeringPassphrase"/> or <paramref name="vserverPeeringCommand"/> is null. </exception>
         internal PeeringPassphrases(string clusterPeeringCommand, string clusterPeeringPassphrase, string vserverPeeringCommand)
         {
-            Argument.AssertNotNull(clusterPeeringCommand, nameof(clusterPeeringCommand));
-            Argument.AssertNotNull(clusterPeeringPassphrase, nameof(clusterPeeringPassphrase));
-            Argument.AssertNotNull(vserverPeeringCommand, nameof(vserverPeeringCommand));
-
             ClusterPeeringCommand = clusterPeeringCommand;
             ClusterPeeringPassphrase = clusterPeeringPassphrase;
             VserverPeeringCommand = vserverPeeringCommand;
@@ -65,24 +31,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="clusterPeeringCommand"> The cluster peering command. </param>
         /// <param name="clusterPeeringPassphrase"> The cluster peering passphrase. </param>
         /// <param name="vserverPeeringCommand"> The vserver peering command. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringPassphrases(string clusterPeeringCommand, string clusterPeeringPassphrase, string vserverPeeringCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringPassphrases(string clusterPeeringCommand, string clusterPeeringPassphrase, string vserverPeeringCommand, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterPeeringCommand = clusterPeeringCommand;
             ClusterPeeringPassphrase = clusterPeeringPassphrase;
             VserverPeeringCommand = vserverPeeringCommand;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PeeringPassphrases"/> for deserialization. </summary>
-        internal PeeringPassphrases()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The cluster peering command. </summary>
         public string ClusterPeeringCommand { get; }
+
         /// <summary> The cluster peering passphrase. </summary>
         public string ClusterPeeringPassphrase { get; }
+
         /// <summary> The vserver peering command. </summary>
         public string VserverPeeringCommand { get; }
     }

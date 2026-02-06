@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class ActiveDirectoryConfigOperationSource : IOperationSource<ActiveDirectoryConfigResource>
+    /// <summary></summary>
+    internal partial class ActiveDirectoryConfigOperationSource : IOperationSource<ActiveDirectoryConfigResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ActiveDirectoryConfigOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ActiveDirectoryConfigResource IOperationSource<ActiveDirectoryConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ActiveDirectoryConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ActiveDirectoryConfigData data = ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ActiveDirectoryConfigResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ActiveDirectoryConfigResource> IOperationSource<ActiveDirectoryConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ActiveDirectoryConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new ActiveDirectoryConfigResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ActiveDirectoryConfigData data = ActiveDirectoryConfigData.DeserializeActiveDirectoryConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ActiveDirectoryConfigResource(_client, data);
         }
     }
 }

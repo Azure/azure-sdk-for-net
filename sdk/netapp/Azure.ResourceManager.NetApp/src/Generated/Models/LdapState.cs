@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct LdapState : IEquatable<LdapState>
     {
         private readonly string _value;
+        /// <summary> ldap is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> ldap is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="LdapState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LdapState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> ldap is disabled. </summary>
         public static LdapState Disabled { get; } = new LdapState(DisabledValue);
+
         /// <summary> ldap is enabled. </summary>
         public static LdapState Enabled { get; } = new LdapState(EnabledValue);
+
         /// <summary> Determines if two <see cref="LdapState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LdapState left, LdapState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LdapState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LdapState left, LdapState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LdapState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LdapState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LdapState(string value) => new LdapState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LdapState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LdapState?(string value) => value == null ? null : new LdapState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LdapState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LdapState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

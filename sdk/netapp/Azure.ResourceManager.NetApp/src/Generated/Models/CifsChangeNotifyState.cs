@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CifsChangeNotifyState : IEquatable<CifsChangeNotifyState>
     {
         private readonly string _value;
+        /// <summary> CIFS change notification is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> CIFS change notification is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="CifsChangeNotifyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CifsChangeNotifyState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> CIFS change notification is disabled. </summary>
         public static CifsChangeNotifyState Disabled { get; } = new CifsChangeNotifyState(DisabledValue);
+
         /// <summary> CIFS change notification is enabled. </summary>
         public static CifsChangeNotifyState Enabled { get; } = new CifsChangeNotifyState(EnabledValue);
+
         /// <summary> Determines if two <see cref="CifsChangeNotifyState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CifsChangeNotifyState left, CifsChangeNotifyState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CifsChangeNotifyState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CifsChangeNotifyState left, CifsChangeNotifyState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CifsChangeNotifyState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CifsChangeNotifyState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CifsChangeNotifyState(string value) => new CifsChangeNotifyState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CifsChangeNotifyState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CifsChangeNotifyState?(string value) => value == null ? null : new CifsChangeNotifyState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CifsChangeNotifyState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CifsChangeNotifyState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class ElasticBackupPolicyResource : IJsonModel<ElasticBackupPolicyData>
     {
-        private static ElasticBackupPolicyData s_dataDeserializationInstance;
-        private static ElasticBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticBackupPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticBackupPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticBackupPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticBackupPolicyData>)Data).Write(writer, options);
 
-        ElasticBackupPolicyData IJsonModel<ElasticBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticBackupPolicyData IJsonModel<ElasticBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticBackupPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticBackupPolicyData IPersistableModel<ElasticBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticBackupPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<ElasticBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

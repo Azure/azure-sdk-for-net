@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> SMB settings for the cache. </summary>
     public partial class SmbSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SmbSettings"/>. </summary>
         public SmbSettings()
@@ -52,21 +23,23 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="SmbSettings"/>. </summary>
         /// <param name="smbEncryption"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </param>
-        /// <param name="smbAccessBasedEnumerations"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SmbSettings(SmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumerations, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SmbSettings(SmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SmbEncryption = smbEncryption;
-            SmbAccessBasedEnumerations = smbAccessBasedEnumerations;
+            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </summary>
         public SmbEncryptionState? SmbEncryption { get; set; }
+
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        public SmbAccessBasedEnumeration? SmbAccessBasedEnumerations { get; set; }
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
     }

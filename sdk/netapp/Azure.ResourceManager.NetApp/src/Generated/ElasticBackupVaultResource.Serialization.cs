@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class ElasticBackupVaultResource : IJsonModel<ElasticBackupVaultData>
     {
-        private static ElasticBackupVaultData s_dataDeserializationInstance;
-        private static ElasticBackupVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticBackupVaultData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticBackupVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticBackupVaultData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticBackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticBackupVaultData>)Data).Write(writer, options);
 
-        ElasticBackupVaultData IJsonModel<ElasticBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticBackupVaultData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticBackupVaultData IJsonModel<ElasticBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticBackupVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticBackupVaultData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticBackupVaultData IPersistableModel<ElasticBackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticBackupVaultData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<ElasticBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticBackupVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

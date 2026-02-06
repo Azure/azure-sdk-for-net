@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CacheProvisioningState : IEquatable<CacheProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The resource is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The resource is in a failed state. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The resource is succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="CacheProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CacheProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> The resource is being created. </summary>
         public static CacheProvisioningState Creating { get; } = new CacheProvisioningState(CreatingValue);
+
         /// <summary> The resource is being updated. </summary>
         public static CacheProvisioningState Updating { get; } = new CacheProvisioningState(UpdatingValue);
+
         /// <summary> The resource is being deleted. </summary>
         public static CacheProvisioningState Deleting { get; } = new CacheProvisioningState(DeletingValue);
+
         /// <summary> The resource is in a failed state. </summary>
         public static CacheProvisioningState Failed { get; } = new CacheProvisioningState(FailedValue);
+
         /// <summary> The resource is succeeded. </summary>
         public static CacheProvisioningState Succeeded { get; } = new CacheProvisioningState(SucceededValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static CacheProvisioningState Canceled { get; } = new CacheProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="CacheProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CacheProvisioningState left, CacheProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CacheProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CacheProvisioningState left, CacheProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CacheProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CacheProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CacheProvisioningState(string value) => new CacheProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CacheProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CacheProvisioningState?(string value) => value == null ? null : new CacheProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CacheProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CacheProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

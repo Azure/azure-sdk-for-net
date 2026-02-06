@@ -12,12 +12,11 @@ namespace Azure.ResourceManager.NetApp.Models
    /// <summary> Backup status. </summary>
    public partial class NetAppVolumeBackupStatus
      {
-        /// <summary> Gets or sets the relationship status. </summary>
-        public virtual NetAppRelationshipStatus? RelationshipStatus
-        {
-            get => VolumeBackupRelationshipStatus.HasValue
-                ? new NetAppRelationshipStatus(VolumeBackupRelationshipStatus.Value.ToString())
-                : null;
-        }
+        /// <summary> Status of the backup mirror relationship. </summary>
+        public NetAppRelationshipStatus? RelationshipStatus { get; }
+
+        /// <summary> Gets or sets the IsHealthy property. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsHealthy => Healthy;
     }
 }

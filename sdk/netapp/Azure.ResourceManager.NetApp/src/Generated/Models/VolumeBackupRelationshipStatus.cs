@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct VolumeBackupRelationshipStatus : IEquatable<VolumeBackupRelationshipStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VolumeBackupRelationshipStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VolumeBackupRelationshipStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IdleValue = "Idle";
         private const string TransferringValue = "Transferring";
         private const string FailedValue = "Failed";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Idle. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeBackupRelationshipStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VolumeBackupRelationshipStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Idle. </summary>
         public static VolumeBackupRelationshipStatus Idle { get; } = new VolumeBackupRelationshipStatus(IdleValue);
-        /// <summary> Transferring. </summary>
+
+        /// <summary> Gets the Transferring. </summary>
         public static VolumeBackupRelationshipStatus Transferring { get; } = new VolumeBackupRelationshipStatus(TransferringValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static VolumeBackupRelationshipStatus Failed { get; } = new VolumeBackupRelationshipStatus(FailedValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static VolumeBackupRelationshipStatus Unknown { get; } = new VolumeBackupRelationshipStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="VolumeBackupRelationshipStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeBackupRelationshipStatus left, VolumeBackupRelationshipStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VolumeBackupRelationshipStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeBackupRelationshipStatus left, VolumeBackupRelationshipStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeBackupRelationshipStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VolumeBackupRelationshipStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeBackupRelationshipStatus(string value) => new VolumeBackupRelationshipStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeBackupRelationshipStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VolumeBackupRelationshipStatus?(string value) => value == null ? null : new VolumeBackupRelationshipStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VolumeBackupRelationshipStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VolumeBackupRelationshipStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

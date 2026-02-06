@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticCapacityPoolProperties : IUtf8JsonSerializable, IJsonModel<ElasticCapacityPoolProperties>
+    /// <summary> Elastic capacity pool properties. </summary>
+    public partial class ElasticCapacityPoolProperties : IJsonModel<ElasticCapacityPoolProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticCapacityPoolProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ElasticCapacityPoolProperties"/> for deserialization. </summary>
+        internal ElasticCapacityPoolProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticCapacityPoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticCapacityPoolProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
             writer.WritePropertyName("serviceLevel"u8);
@@ -70,15 +76,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("activeDirectoryConfigResourceId"u8);
                 writer.WriteStringValue(ActiveDirectoryConfigResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +93,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ElasticCapacityPoolProperties IJsonModel<ElasticCapacityPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticCapacityPoolProperties IJsonModel<ElasticCapacityPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticCapacityPoolProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticCapacityPoolProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticCapacityPoolProperties(document.RootElement, options);
         }
 
-        internal static ElasticCapacityPoolProperties DeserializeElasticCapacityPoolProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ElasticCapacityPoolProperties DeserializeElasticCapacityPoolProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,81 +127,79 @@ namespace Azure.ResourceManager.NetApp.Models
             string currentZone = default;
             ElasticResourceAvailabilityStatus? availabilityStatus = default;
             ResourceIdentifier activeDirectoryConfigResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    size = property.Value.GetInt64();
+                    size = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("serviceLevel"u8))
+                if (prop.NameEquals("serviceLevel"u8))
                 {
-                    serviceLevel = new ElasticServiceLevel(property.Value.GetString());
+                    serviceLevel = new ElasticServiceLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
                     continue;
                 }
-                if (property.NameEquals("encryption"u8))
+                if (prop.NameEquals("encryption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = ElasticEncryptionConfiguration.DeserializeElasticEncryptionConfiguration(property.Value, options);
+                    encryption = ElasticEncryptionConfiguration.DeserializeElasticEncryptionConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("totalThroughputMibps"u8))
+                if (prop.NameEquals("totalThroughputMibps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalThroughputMibps = property.Value.GetDouble();
+                    totalThroughputMibps = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("subnetResourceId"u8))
+                if (prop.NameEquals("subnetResourceId"u8))
                 {
-                    subnetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    subnetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentZone"u8))
+                if (prop.NameEquals("currentZone"u8))
                 {
-                    currentZone = property.Value.GetString();
+                    currentZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availabilityStatus"u8))
+                if (prop.NameEquals("availabilityStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availabilityStatus = new ElasticResourceAvailabilityStatus(property.Value.GetString());
+                    availabilityStatus = new ElasticResourceAvailabilityStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("activeDirectoryConfigResourceId"u8))
+                if (prop.NameEquals("activeDirectoryConfigResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeDirectoryConfigResourceId = new ResourceIdentifier(property.Value.GetString());
+                    activeDirectoryConfigResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticCapacityPoolProperties(
                 size,
                 serviceLevel,
@@ -201,13 +210,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 currentZone,
                 availabilityStatus,
                 activeDirectoryConfigResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ElasticCapacityPoolProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ElasticCapacityPoolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -217,15 +229,20 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ElasticCapacityPoolProperties IPersistableModel<ElasticCapacityPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticCapacityPoolProperties IPersistableModel<ElasticCapacityPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ElasticCapacityPoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticCapacityPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticCapacityPoolProperties(document.RootElement, options);
                     }
                 default:
@@ -233,6 +250,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ElasticCapacityPoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

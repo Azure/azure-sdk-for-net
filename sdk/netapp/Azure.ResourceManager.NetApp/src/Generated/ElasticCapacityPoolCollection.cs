@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A class representing a collection of <see cref="ElasticCapacityPoolResource"/> and their operations.
     /// Each <see cref="ElasticCapacityPoolResource"/> in the collection will belong to the same instance of <see cref="ElasticAccountResource"/>.
-    /// To get an <see cref="ElasticCapacityPoolCollection"/> instance call the GetElasticCapacityPools method from an instance of <see cref="ElasticAccountResource"/>.
+    /// To get a <see cref="ElasticCapacityPoolCollection"/> instance call the GetElasticCapacityPools method from an instance of <see cref="ElasticAccountResource"/>.
     /// </summary>
     public partial class ElasticCapacityPoolCollection : ArmCollection, IEnumerable<ElasticCapacityPoolResource>, IAsyncEnumerable<ElasticCapacityPoolResource>
     {
-        private readonly ClientDiagnostics _elasticCapacityPoolClientDiagnostics;
-        private readonly ElasticCapacityPoolsRestOperations _elasticCapacityPoolRestClient;
+        private readonly ClientDiagnostics _elasticCapacityPoolsClientDiagnostics;
+        private readonly ElasticCapacityPools _elasticCapacityPoolsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticCapacityPoolCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ElasticCapacityPoolCollection for mocking. </summary>
         protected ElasticCapacityPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ElasticCapacityPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticCapacityPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticCapacityPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticCapacityPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticCapacityPoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ElasticCapacityPoolResource.ResourceType, out string elasticCapacityPoolApiVersion);
-            _elasticCapacityPoolRestClient = new ElasticCapacityPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticCapacityPoolApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _elasticCapacityPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticCapacityPoolResource.ResourceType.Namespace, Diagnostics);
+            _elasticCapacityPoolsRestClient = new ElasticCapacityPools(_elasticCapacityPoolsClientDiagnostics, Pipeline, Endpoint, elasticCapacityPoolApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ElasticAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update the specified NetApp Elastic Capacity Pool within the resource group and NetApp Elastic Account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ElasticCapacityPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, ElasticCapacityPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _elasticCapacityPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<ElasticCapacityPoolResource>(new ElasticCapacityPoolOperationSource(Client), _elasticCapacityPoolClientDiagnostics, Pipeline, _elasticCapacityPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, ElasticCapacityPoolData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<ElasticCapacityPoolResource> operation = new NetAppArmOperation<ElasticCapacityPoolResource>(
+                    new ElasticCapacityPoolOperationSource(Client),
+                    _elasticCapacityPoolsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.NetApp
         /// Create or update the specified NetApp Elastic Capacity Pool within the resource group and NetApp Elastic Account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ElasticCapacityPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, ElasticCapacityPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _elasticCapacityPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken);
-                var operation = new NetAppArmOperation<ElasticCapacityPoolResource>(new ElasticCapacityPoolOperationSource(Client), _elasticCapacityPoolClientDiagnostics, Pipeline, _elasticCapacityPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, ElasticCapacityPoolData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<ElasticCapacityPoolResource> operation = new NetAppArmOperation<ElasticCapacityPoolResource>(
+                    new ElasticCapacityPoolOperationSource(Client),
+                    _elasticCapacityPoolsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the NetApp Elastic Capacity Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ElasticCapacityPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Get");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = await _elasticCapacityPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ElasticCapacityPoolData> response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticCapacityPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the NetApp Elastic Capacity Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ElasticCapacityPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Get");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Get");
             scope.Start();
             try
             {
-                var response = _elasticCapacityPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ElasticCapacityPoolData> response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticCapacityPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.NetApp
         /// List and describe all NetApp Elastic Capacity Pools in the Elastic NetApp Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticCapacityPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticCapacityPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticCapacityPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticCapacityPoolRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticCapacityPoolRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticCapacityPoolResource(Client, ElasticCapacityPoolData.DeserializeElasticCapacityPoolData(e)), _elasticCapacityPoolClientDiagnostics, Pipeline, "ElasticCapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ElasticCapacityPoolData, ElasticCapacityPoolResource>(new ElasticCapacityPoolsGetByElasticAccountAsyncCollectionResultOfT(_elasticCapacityPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticCapacityPoolResource(Client, data));
         }
 
         /// <summary>
         /// List and describe all NetApp Elastic Capacity Pools in the Elastic NetApp Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="ElasticCapacityPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticCapacityPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticCapacityPoolRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticCapacityPoolRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticCapacityPoolResource(Client, ElasticCapacityPoolData.DeserializeElasticCapacityPoolData(e)), _elasticCapacityPoolClientDiagnostics, Pipeline, "ElasticCapacityPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ElasticCapacityPoolData, ElasticCapacityPoolResource>(new ElasticCapacityPoolsGetByElasticAccountCollectionResultOfT(_elasticCapacityPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticCapacityPoolResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Exists");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _elasticCapacityPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticCapacityPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticCapacityPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Exists");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.Exists");
             scope.Start();
             try
             {
-                var response = _elasticCapacityPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticCapacityPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticCapacityPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ElasticCapacityPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _elasticCapacityPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ElasticCapacityPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticCapacityPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticCapacityPoolResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticCapacityPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticCapacityPools/{poolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticCapacityPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticCapacityPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ElasticCapacityPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ElasticCapacityPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            using var scope = _elasticCapacityPoolClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticCapacityPoolsClientDiagnostics.CreateScope("ElasticCapacityPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _elasticCapacityPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ElasticCapacityPoolData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ElasticCapacityPoolData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ElasticCapacityPoolData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ElasticCapacityPoolResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ElasticCapacityPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ElasticCapacityPoolResource> IAsyncEnumerable<ElasticCapacityPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

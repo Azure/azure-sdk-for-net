@@ -22,11 +22,13 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
-                return CustomThroughputMibpsInt.HasValue ? (float?)CustomThroughputMibpsInt.Value : null;
+                return Properties is null ? null : (Properties.CustomThroughputMibps.HasValue ? (float?)Properties.CustomThroughputMibps.Value : null);
             }
             set
             {
-                CustomThroughputMibpsInt = value.HasValue ? (int)value.Value : null;
+                if (Properties is null)
+                    Properties = new PoolProperties();
+                Properties.CustomThroughputMibps = value.HasValue ? (int)value.Value : null;
             }
         }
     }

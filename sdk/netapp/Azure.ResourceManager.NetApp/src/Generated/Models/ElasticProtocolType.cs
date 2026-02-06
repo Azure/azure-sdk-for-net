@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticProtocolType : IEquatable<ElasticProtocolType>
     {
         private readonly string _value;
+        /// <summary> NFSv3 protocol type. </summary>
+        private const string NFSv3Value = "NFSv3";
+        /// <summary> NFSv4 protocol type. </summary>
+        private const string NFSv4Value = "NFSv4";
+        /// <summary> SMB/CIFS protocol type. </summary>
+        private const string SMBValue = "SMB";
 
         /// <summary> Initializes a new instance of <see cref="ElasticProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticProtocolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NFSv3Value = "NFSv3";
-        private const string NFSv4Value = "NFSv4";
-        private const string SMBValue = "SMB";
+            _value = value;
+        }
 
         /// <summary> NFSv3 protocol type. </summary>
         public static ElasticProtocolType NFSv3 { get; } = new ElasticProtocolType(NFSv3Value);
+
         /// <summary> NFSv4 protocol type. </summary>
         public static ElasticProtocolType NFSv4 { get; } = new ElasticProtocolType(NFSv4Value);
+
         /// <summary> SMB/CIFS protocol type. </summary>
         public static ElasticProtocolType SMB { get; } = new ElasticProtocolType(SMBValue);
+
         /// <summary> Determines if two <see cref="ElasticProtocolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticProtocolType left, ElasticProtocolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticProtocolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticProtocolType left, ElasticProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticProtocolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticProtocolType(string value) => new ElasticProtocolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticProtocolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticProtocolType?(string value) => value == null ? null : new ElasticProtocolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticProtocolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

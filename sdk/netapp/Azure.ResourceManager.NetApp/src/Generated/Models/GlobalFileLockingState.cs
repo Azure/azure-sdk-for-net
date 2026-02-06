@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct GlobalFileLockingState : IEquatable<GlobalFileLockingState>
     {
         private readonly string _value;
+        /// <summary> Global file locking is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Global file locking is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="GlobalFileLockingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GlobalFileLockingState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Global file locking is disabled. </summary>
         public static GlobalFileLockingState Disabled { get; } = new GlobalFileLockingState(DisabledValue);
+
         /// <summary> Global file locking is enabled. </summary>
         public static GlobalFileLockingState Enabled { get; } = new GlobalFileLockingState(EnabledValue);
+
         /// <summary> Determines if two <see cref="GlobalFileLockingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GlobalFileLockingState left, GlobalFileLockingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GlobalFileLockingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GlobalFileLockingState left, GlobalFileLockingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GlobalFileLockingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GlobalFileLockingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GlobalFileLockingState(string value) => new GlobalFileLockingState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GlobalFileLockingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GlobalFileLockingState?(string value) => value == null ? null : new GlobalFileLockingState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GlobalFileLockingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GlobalFileLockingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

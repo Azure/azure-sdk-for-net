@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class SnapshotPolicyResource : IJsonModel<SnapshotPolicyData>
     {
-        private static SnapshotPolicyData s_dataDeserializationInstance;
-        private static SnapshotPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SnapshotPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SnapshotPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SnapshotPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SnapshotPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SnapshotPolicyData>)Data).Write(writer, options);
 
-        SnapshotPolicyData IJsonModel<SnapshotPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SnapshotPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SnapshotPolicyData IJsonModel<SnapshotPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SnapshotPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SnapshotPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SnapshotPolicyData IPersistableModel<SnapshotPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SnapshotPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<SnapshotPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SnapshotPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SnapshotPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

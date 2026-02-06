@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct VolumeSize : IEquatable<VolumeSize>
     {
         private readonly string _value;
+        /// <summary> Value indicating backup is for a large volume. </summary>
+        private const string LargeValue = "Large";
+        /// <summary> Value indicating backup is not for a large volume. </summary>
+        private const string RegularValue = "Regular";
 
         /// <summary> Initializes a new instance of <see cref="VolumeSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VolumeSize(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LargeValue = "Large";
-        private const string RegularValue = "Regular";
+            _value = value;
+        }
 
         /// <summary> Value indicating backup is for a large volume. </summary>
         public static VolumeSize Large { get; } = new VolumeSize(LargeValue);
+
         /// <summary> Value indicating backup is not for a large volume. </summary>
         public static VolumeSize Regular { get; } = new VolumeSize(RegularValue);
+
         /// <summary> Determines if two <see cref="VolumeSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeSize left, VolumeSize right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VolumeSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeSize left, VolumeSize right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeSize"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VolumeSize"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeSize(string value) => new VolumeSize(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VolumeSize?(string value) => value == null ? null : new VolumeSize(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VolumeSize other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VolumeSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

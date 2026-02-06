@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CacheLifeCycleState : IEquatable<CacheLifeCycleState>
     {
         private readonly string _value;
+        /// <summary> Cluster peering offer has been sent. </summary>
+        private const string ClusterPeeringOfferSentValue = "ClusterPeeringOfferSent";
+        /// <summary> VServer peering offer has been sent. </summary>
+        private const string VserverPeeringOfferSentValue = "VserverPeeringOfferSent";
+        /// <summary> Cache creation in progress. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Cache creation succeeded and is available for use. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Cache is in a failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="CacheLifeCycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CacheLifeCycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClusterPeeringOfferSentValue = "ClusterPeeringOfferSent";
-        private const string VserverPeeringOfferSentValue = "VserverPeeringOfferSent";
-        private const string CreatingValue = "Creating";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Cluster peering offer has been sent. </summary>
         public static CacheLifeCycleState ClusterPeeringOfferSent { get; } = new CacheLifeCycleState(ClusterPeeringOfferSentValue);
+
         /// <summary> VServer peering offer has been sent. </summary>
         public static CacheLifeCycleState VserverPeeringOfferSent { get; } = new CacheLifeCycleState(VserverPeeringOfferSentValue);
+
         /// <summary> Cache creation in progress. </summary>
         public static CacheLifeCycleState Creating { get; } = new CacheLifeCycleState(CreatingValue);
+
         /// <summary> Cache creation succeeded and is available for use. </summary>
         public static CacheLifeCycleState Succeeded { get; } = new CacheLifeCycleState(SucceededValue);
+
         /// <summary> Cache is in a failed state. </summary>
         public static CacheLifeCycleState Failed { get; } = new CacheLifeCycleState(FailedValue);
+
         /// <summary> Determines if two <see cref="CacheLifeCycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CacheLifeCycleState left, CacheLifeCycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CacheLifeCycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CacheLifeCycleState left, CacheLifeCycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CacheLifeCycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CacheLifeCycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CacheLifeCycleState(string value) => new CacheLifeCycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CacheLifeCycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CacheLifeCycleState?(string value) => value == null ? null : new CacheLifeCycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CacheLifeCycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CacheLifeCycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class PeeringPassphrases : IUtf8JsonSerializable, IJsonModel<PeeringPassphrases>
+    /// <summary> The response containing peering passphrases and commands for cluster and vserver peering. </summary>
+    public partial class PeeringPassphrases : IJsonModel<PeeringPassphrases>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringPassphrases>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PeeringPassphrases"/> for deserialization. </summary>
+        internal PeeringPassphrases()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringPassphrases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,27 +35,26 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringPassphrases)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("clusterPeeringCommand"u8);
             writer.WriteStringValue(ClusterPeeringCommand);
             writer.WritePropertyName("clusterPeeringPassphrase"u8);
             writer.WriteStringValue(ClusterPeeringPassphrase);
             writer.WritePropertyName("vserverPeeringCommand"u8);
             writer.WriteStringValue(VserverPeeringCommand);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -57,22 +63,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        PeeringPassphrases IJsonModel<PeeringPassphrases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringPassphrases IJsonModel<PeeringPassphrases>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringPassphrases JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringPassphrases)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePeeringPassphrases(document.RootElement, options);
         }
 
-        internal static PeeringPassphrases DeserializePeeringPassphrases(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PeeringPassphrases DeserializePeeringPassphrases(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,38 +91,39 @@ namespace Azure.ResourceManager.NetApp.Models
             string clusterPeeringCommand = default;
             string clusterPeeringPassphrase = default;
             string vserverPeeringCommand = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterPeeringCommand"u8))
+                if (prop.NameEquals("clusterPeeringCommand"u8))
                 {
-                    clusterPeeringCommand = property.Value.GetString();
+                    clusterPeeringCommand = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterPeeringPassphrase"u8))
+                if (prop.NameEquals("clusterPeeringPassphrase"u8))
                 {
-                    clusterPeeringPassphrase = property.Value.GetString();
+                    clusterPeeringPassphrase = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vserverPeeringCommand"u8))
+                if (prop.NameEquals("vserverPeeringCommand"u8))
                 {
-                    vserverPeeringCommand = property.Value.GetString();
+                    vserverPeeringCommand = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, serializedAdditionalRawData);
+            return new PeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PeeringPassphrases>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PeeringPassphrases>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -121,15 +133,20 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        PeeringPassphrases IPersistableModel<PeeringPassphrases>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringPassphrases IPersistableModel<PeeringPassphrases>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeeringPassphrases PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringPassphrases>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePeeringPassphrases(document.RootElement, options);
                     }
                 default:
@@ -137,6 +154,14 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringPassphrases>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PeeringPassphrases"/> from. </param>
+        internal static PeeringPassphrases FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePeeringPassphrases(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

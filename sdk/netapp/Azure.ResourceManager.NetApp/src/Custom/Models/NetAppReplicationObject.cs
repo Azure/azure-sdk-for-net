@@ -12,6 +12,9 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
+        /// <summary> The resource ID of the remote volume. </summary>
+        internal ResourceIdentifier RemoteVolumeResourceId { get; set; }
+
         /// <summary> Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ReplicationId { get; set; }

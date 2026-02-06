@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct RansomwareReportState : IEquatable<RansomwareReportState>
     {
         private readonly string _value;
+        /// <summary> The ARP report has been created. Take action by running clearsuspects marking suspects as FalsePositive or PotentialThreats. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The ARP Report has been resolved. </summary>
+        private const string ResolvedValue = "Resolved";
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RansomwareReportState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ResolvedValue = "Resolved";
+            _value = value;
+        }
 
         /// <summary> The ARP report has been created. Take action by running clearsuspects marking suspects as FalsePositive or PotentialThreats. </summary>
         public static RansomwareReportState Active { get; } = new RansomwareReportState(ActiveValue);
+
         /// <summary> The ARP Report has been resolved. </summary>
         public static RansomwareReportState Resolved { get; } = new RansomwareReportState(ResolvedValue);
+
         /// <summary> Determines if two <see cref="RansomwareReportState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RansomwareReportState left, RansomwareReportState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RansomwareReportState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RansomwareReportState left, RansomwareReportState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RansomwareReportState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RansomwareReportState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RansomwareReportState(string value) => new RansomwareReportState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RansomwareReportState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RansomwareReportState?(string value) => value == null ? null : new RansomwareReportState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RansomwareReportState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RansomwareReportState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

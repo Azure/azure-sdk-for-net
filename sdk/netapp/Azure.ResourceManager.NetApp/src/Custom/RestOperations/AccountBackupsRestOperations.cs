@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         BackupsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         BackupsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
                         return Response.FromValue(value, message.Response);
                     }
                 default:
