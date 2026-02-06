@@ -16,7 +16,9 @@ namespace Azure.Generator.Management.Visitors
     {
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
         {
-            // Check if this is a CreateXxxRequest method call
+            // Check if this is a CreateXxxRequest method call on a RestClient
+            // These methods are the ones that build HTTP requests and may receive nullable enum parameters
+            // We use string matching because the RestClient types are generated and don't have a common base type
             if (expression.MethodName != null &&
                 expression.MethodName.StartsWith("Create") &&
                 expression.MethodName.EndsWith("Request"))
@@ -57,7 +59,9 @@ namespace Azure.Generator.Management.Visitors
                     }
 
                     // Replace parameter.ToString() with parameter?.ToString()
-                    // Use the NullConditional() method to create the null-conditional access
+                    // This is safe for both nullable and non-nullable types in C#
+                    // For nullable types, it prevents NullReferenceException
+                    // For non-nullable types, it's a no-op since they can't be null
                     var nullConditionalToString = toStringCall.InstanceReference.NullConditional().Invoke("ToString");
                     transformedArguments[i] = nullConditionalToString;
                     needsTransformation = true;
