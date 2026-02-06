@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Destination server for DNS queries to be forwarded from localDNS. </summary>
-    public readonly partial struct LocalDNSForwardDestination : IEquatable<LocalDNSForwardDestination>
+    public readonly partial struct LocalDnsForwardDestination : IEquatable<LocalDnsForwardDestination>
     {
         private readonly string _value;
         /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
         private const string VnetDNSValue = "VnetDNS";
 
-        /// <summary> Initializes a new instance of <see cref="LocalDNSForwardDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalDnsForwardDestination"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LocalDNSForwardDestination(string value)
+        public LocalDnsForwardDestination(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
-        public static LocalDNSForwardDestination ClusterCoreDNS { get; } = new LocalDNSForwardDestination(ClusterCoreDNSValue);
+        public static LocalDnsForwardDestination ClusterCoreDNS { get; } = new LocalDnsForwardDestination(ClusterCoreDNSValue);
 
         /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
-        public static LocalDNSForwardDestination VnetDNS { get; } = new LocalDNSForwardDestination(VnetDNSValue);
+        public static LocalDnsForwardDestination VnetDNS { get; } = new LocalDnsForwardDestination(VnetDNSValue);
 
-        /// <summary> Determines if two <see cref="LocalDNSForwardDestination"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsForwardDestination"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LocalDNSForwardDestination left, LocalDNSForwardDestination right) => left.Equals(right);
+        public static bool operator ==(LocalDnsForwardDestination left, LocalDnsForwardDestination right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LocalDNSForwardDestination"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsForwardDestination"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LocalDNSForwardDestination left, LocalDNSForwardDestination right) => !left.Equals(right);
+        public static bool operator !=(LocalDnsForwardDestination left, LocalDnsForwardDestination right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSForwardDestination"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardDestination"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSForwardDestination(string value) => new LocalDNSForwardDestination(value);
+        public static implicit operator LocalDnsForwardDestination(string value) => new LocalDnsForwardDestination(value);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSForwardDestination"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardDestination"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSForwardDestination?(string value) => value == null ? null : new LocalDNSForwardDestination(value);
+        public static implicit operator LocalDnsForwardDestination?(string value) => value == null ? null : new LocalDnsForwardDestination(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalDNSForwardDestination other && Equals(other);
+        public override bool Equals(object obj) => obj is LocalDnsForwardDestination other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LocalDNSForwardDestination other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LocalDnsForwardDestination other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

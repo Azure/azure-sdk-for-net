@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOutboundType? outboundType = default;
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
-            ManagedClusterNATGatewayProfile natGatewayProfile = default;
+            ManagedClusterNatGatewayProfile natGatewayProfile = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    natGatewayProfile = ManagedClusterNATGatewayProfile.DeserializeManagedClusterNATGatewayProfile(prop.Value, options);
+                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticEgressGatewayProfile"u8))

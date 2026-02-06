@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);

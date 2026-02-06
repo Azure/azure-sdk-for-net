@@ -725,6 +725,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name);
         }
 
+        /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceSshConfiguration"/> instance for mocking. </returns>
+        public static ContainerServiceSshConfiguration ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys = default)
+        {
+            publicKeys ??= new ChangeTrackingList<ContainerServiceSshPublicKey>();
+
+            return new ContainerServiceSshConfiguration(publicKeys.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A Kubernetes add-on profile for a managed cluster. </summary>
         /// <param name="isEnabled"> Whether the add-on is enabled or not. </param>
         /// <param name="config"> Key-value pairs for configuring an add-on. </param>
@@ -824,7 +834,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
         /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
         /// <returns> A new <see cref="Models.ContainerServiceNetworkProfile"/> instance for mocking. </returns>
-        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, NetworkDataplane? networkDataplane = default, ManagedClusterAdvancedNetworking advancedNetworking = default, string podCidr = default, string serviceCidr = default, string dnsServiceIP = default, ContainerServiceOutboundType? outboundType = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default, ManagedClusterLoadBalancerProfile loadBalancerProfile = default, ManagedClusterNATGatewayProfile natGatewayProfile = default, bool? isStaticEgressGatewayAddonEnabled = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default, IEnumerable<ContainerServiceIPFamily> networkIPFamilies = default, PodLinkLocalAccess? podLinkLocalAccess = default, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default)
+        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, NetworkDataplane? networkDataplane = default, ManagedClusterAdvancedNetworking advancedNetworking = default, string podCidr = default, string serviceCidr = default, string dnsServiceIP = default, ContainerServiceOutboundType? outboundType = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default, ManagedClusterLoadBalancerProfile loadBalancerProfile = default, ManagedClusterNatGatewayProfile natGatewayProfile = default, bool? isStaticEgressGatewayAddonEnabled = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default, IEnumerable<ContainerServiceIPFamily> networkIPFamilies = default, PodLinkLocalAccess? podLinkLocalAccess = default, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default)
         {
             podCidrs ??= new ChangeTrackingList<string>();
             serviceCidrs ??= new ChangeTrackingList<string>();
@@ -883,12 +893,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="managedOutboundIPCount"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterNATGatewayProfile"/> instance for mocking. </returns>
-        public static ManagedClusterNATGatewayProfile ManagedClusterNATGatewayProfile(int? managedOutboundIPCount = default, IEnumerable<ResourceReference> effectiveOutboundIPs = default, int? idleTimeoutInMinutes = default)
+        /// <returns> A new <see cref="Models.ManagedClusterNatGatewayProfile"/> instance for mocking. </returns>
+        public static ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(int? managedOutboundIPCount = default, IEnumerable<ResourceReference> effectiveOutboundIPs = default, int? idleTimeoutInMinutes = default)
         {
             effectiveOutboundIPs ??= new ChangeTrackingList<ResourceReference>();
 
-            return new ManagedClusterNATGatewayProfile(managedOutboundIPCount is null ? default : new ManagedClusterManagedOutboundIPProfile(managedOutboundIPCount, null), effectiveOutboundIPs.ToList(), idleTimeoutInMinutes, additionalBinaryDataProperties: null);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPCount is null ? default : new ManagedClusterManagedOutboundIPProfile(managedOutboundIPCount, null), effectiveOutboundIPs.ToList(), idleTimeoutInMinutes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> AADProfile specifies attributes for Azure Active Directory integration. For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
@@ -1681,45 +1691,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 provisioningState is null && privateLinkServiceConnectionState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="snapshotType"> The type of a snapshot. The default is NodePool. </param>
-        /// <param name="kubernetesVersion"> The version of Kubernetes. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
-        /// <param name="vmSize"> The size of the VM. </param>
-        /// <param name="enableFIPS"> Whether to use a FIPS-enabled OS. </param>
-        /// <param name="creationDataSourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
-        /// <returns> A new <see cref="ContainerService.AgentPoolSnapshotData"/> instance for mocking. </returns>
-        public static AgentPoolSnapshotData AgentPoolSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotType? snapshotType = default, string kubernetesVersion = default, string nodeImageVersion = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, string vmSize = default, bool? enableFIPS = default, ResourceIdentifier creationDataSourceResourceId = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgentPoolSnapshotData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                snapshotType is null && kubernetesVersion is null && nodeImageVersion is null && osType is null && osSku is null && vmSize is null && enableFIPS is null && creationDataSourceResourceId is null ? default : new SnapshotProperties(
-                    new ContainerServiceCreationData(creationDataSourceResourceId, null),
-                    snapshotType,
-                    kubernetesVersion,
-                    nodeImageVersion,
-                    osType,
-                    osSku,
-                    vmSize,
-                    enableFIPS,
-                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3490,8 +3461,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         ///             Serialized Name: Snapshot.properties.enableFIPS
         /// </param>
         /// <returns> A new <see cref="ContainerService.AgentPoolSnapshotData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentPoolSnapshotData AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier creationDataSourceResourceId, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips)
+        public static AgentPoolSnapshotData AgentPoolSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier creationDataSourceResourceId = default, SnapshotType? snapshotType = default, string kubernetesVersion = default, string nodeImageVersion = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, string vmSize = default, bool? enableFips = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

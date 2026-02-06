@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serveStaleDurationInSeconds"> Serve stale duration in seconds. See [cache plugin](https://coredns.io/plugins/cache) for more information. </param>
         /// <param name="serveStale"> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalDnsOverride(LocalDNSQueryLogging? queryLogging, LocalDNSProtocol? protocol, LocalDNSForwardDestination? forwardDestination, LocalDNSForwardPolicy? forwardPolicy, int? maxConcurrent, int? cacheDurationInSeconds, int? serveStaleDurationInSeconds, LocalDNSServeStale? serveStale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalDnsOverride(LocalDnsQueryLogging? queryLogging, LocalDnsProtocol? protocol, LocalDnsForwardDestination? forwardDestination, LocalDnsForwardPolicy? forwardPolicy, int? maxConcurrent, int? cacheDurationInSeconds, int? serveStaleDurationInSeconds, LocalDnsServeStale? serveStale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QueryLogging = queryLogging;
             Protocol = protocol;
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Log level for DNS queries in localDNS. </summary>
         [WirePath("queryLogging")]
-        public LocalDNSQueryLogging? QueryLogging { get; set; }
+        public LocalDnsQueryLogging? QueryLogging { get; set; }
 
         /// <summary> Enforce TCP or prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
         [WirePath("protocol")]
-        public LocalDNSProtocol? Protocol { get; set; }
+        public LocalDnsProtocol? Protocol { get; set; }
 
         /// <summary> Destination server for DNS queries to be forwarded from localDNS. </summary>
         [WirePath("forwardDestination")]
-        public LocalDNSForwardDestination? ForwardDestination { get; set; }
+        public LocalDnsForwardDestination? ForwardDestination { get; set; }
 
         /// <summary> Forward policy for selecting upstream DNS server. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         [WirePath("forwardPolicy")]
-        public LocalDNSForwardPolicy? ForwardPolicy { get; set; }
+        public LocalDnsForwardPolicy? ForwardPolicy { get; set; }
 
         /// <summary> Maximum number of concurrent queries. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         [WirePath("maxConcurrent")]
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         [WirePath("serveStale")]
-        public LocalDNSServeStale? ServeStale { get; set; }
+        public LocalDnsServeStale? ServeStale { get; set; }
     }
 }

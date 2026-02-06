@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(ManagedClusterNamespaceData))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterNamespaceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterNamespaceResource))]
-    [ModelReaderWriterBuildable(typeof(ManagedClusterNATGatewayProfile))]
+    [ModelReaderWriterBuildable(typeof(ManagedClusterNatGatewayProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterNodeProvisioningProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterNodeResourceGroupProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedClusterOidcIssuerProfile))]

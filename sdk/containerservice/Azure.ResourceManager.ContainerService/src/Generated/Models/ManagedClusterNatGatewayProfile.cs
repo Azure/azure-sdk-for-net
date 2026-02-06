@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Profile of the managed cluster NAT gateway. </summary>
-    public partial class ManagedClusterNATGatewayProfile
+    public partial class ManagedClusterNatGatewayProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfile"/>. </summary>
-        public ManagedClusterNATGatewayProfile()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
+        public ManagedClusterNatGatewayProfile()
         {
             EffectiveOutboundIPs = new ChangeTrackingList<ResourceReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
         /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNATGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IReadOnlyList<ResourceReference> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IReadOnlyList<ResourceReference> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;

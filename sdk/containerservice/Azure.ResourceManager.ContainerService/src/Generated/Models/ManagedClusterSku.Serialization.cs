@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ManagedClusterSKUName? name = default;
-            ManagedClusterSKUTier? tier = default;
+            ManagedClusterSkuName? name = default;
+            ManagedClusterSkuTier? tier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    name = new ManagedClusterSKUName(prop.Value.GetString());
+                    name = new ManagedClusterSkuName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    tier = new ManagedClusterSKUTier(prop.Value.GetString());
+                    tier = new ManagedClusterSkuTier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

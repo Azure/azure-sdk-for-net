@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal AgentPoolUpgradeProfileProperties(string kubernetesVersion, ContainerServiceOSType osType)
         {
             KubernetesVersion = kubernetesVersion;
-            OsType = osType;
+            OSType = osType;
             Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
             ComponentsByReleases = new ChangeTrackingList<ComponentsByRelease>();
             RecentlyUsedVersions = new ChangeTrackingList<AgentPoolRecentlyUsedVersion>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal AgentPoolUpgradeProfileProperties(string kubernetesVersion, ContainerServiceOSType osType, IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, IList<ComponentsByRelease> componentsByReleases, IReadOnlyList<AgentPoolRecentlyUsedVersion> recentlyUsedVersions, string latestNodeImageVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
-            OsType = osType;
+            OSType = osType;
             Upgrades = upgrades;
             ComponentsByReleases = componentsByReleases;
             RecentlyUsedVersions = recentlyUsedVersions;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("osType")]
-        public ContainerServiceOSType OsType { get; }
+        public ContainerServiceOSType OSType { get; }
 
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         [WirePath("upgrades")]

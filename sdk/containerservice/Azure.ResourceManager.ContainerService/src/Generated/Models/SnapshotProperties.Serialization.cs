@@ -54,25 +54,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OsSku))
+            if (options.Format != "W" && Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSku"u8);
-                writer.WriteStringValue(OsSku.Value.ToString());
+                writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnableFIPS))
+            if (options.Format != "W" && Optional.IsDefined(EnableFips))
             {
                 writer.WritePropertyName("enableFIPS"u8);
-                writer.WriteBooleanValue(EnableFIPS.Value);
+                writer.WriteBooleanValue(EnableFips.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOSType? osType = default;
             ContainerServiceOSSku? osSku = default;
             string vmSize = default;
-            bool? enableFIPS = default;
+            bool? enableFips = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableFIPS = prop.Value.GetBoolean();
+                    enableFips = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 osType,
                 osSku,
                 vmSize,
-                enableFIPS,
+                enableFips,
                 additionalBinaryDataProperties);
         }
 

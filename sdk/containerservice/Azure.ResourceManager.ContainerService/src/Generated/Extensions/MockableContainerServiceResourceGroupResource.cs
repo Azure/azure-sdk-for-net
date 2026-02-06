@@ -10,10 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService.Mocking
@@ -21,9 +19,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableContainerServiceResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _operationStatusResultClientDiagnostics;
-        private OperationStatusResult _operationStatusResultRestClient;
-
         /// <summary> Initializes a new instance of MockableContainerServiceResourceGroupResource for mocking. </summary>
         protected MockableContainerServiceResourceGroupResource()
         {
@@ -35,10 +30,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         internal MockableContainerServiceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics OperationStatusResultClientDiagnostics => _operationStatusResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private OperationStatusResult OperationStatusResultRestClient => _operationStatusResultRestClient ??= new OperationStatusResult(OperationStatusResultClientDiagnostics, Pipeline, Endpoint, "2025-10-02-preview");
 
         /// <summary> Gets a collection of ContainerServiceManagedClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ContainerServiceManagedClusters and their operations over a ContainerServiceManagedClusterResource. </returns>
@@ -233,214 +224,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             return GetManagedClusterSnapshots().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified agent pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgentPools_GetByAgentPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="agentPoolName"> The name of the agent pool. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceManager.Models.OperationStatusResult>> GetOperationStatusByAgentPoolAsync(string resourceName, string agentPoolName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = OperationStatusResultClientDiagnostics.CreateScope("MockableContainerServiceResourceGroupResource.GetOperationStatusByAgentPool");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusResultRestClient.CreateGetOperationStatusByAgentPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, agentPoolName, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceManager.Models.OperationStatusResult> response = Response.FromValue(ResourceManager.Models.OperationStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified agent pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgentPools_GetByAgentPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="agentPoolName"> The name of the agent pool. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/>, <paramref name="agentPoolName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceManager.Models.OperationStatusResult> GetOperationStatusByAgentPool(string resourceName, string agentPoolName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = OperationStatusResultClientDiagnostics.CreateScope("MockableContainerServiceResourceGroupResource.GetOperationStatusByAgentPool");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusResultRestClient.CreateGetOperationStatusByAgentPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, agentPoolName, operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceManager.Models.OperationStatusResult> response = Response.FromValue(ResourceManager.Models.OperationStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.ContainerService/managedClusters/{resourceName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedClusters_OperationStatusResultGet. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceManager.Models.OperationStatusResult>> GetOperationStatusResultAsync(string resourceName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = OperationStatusResultClientDiagnostics.CreateScope("MockableContainerServiceResourceGroupResource.GetOperationStatusResult");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusResultRestClient.CreateGetOperationStatusResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceManager.Models.OperationStatusResult> response = Response.FromValue(ResourceManager.Models.OperationStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.ContainerService/managedClusters/{resourceName}/operations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedClusters_OperationStatusResultGet. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceManager.Models.OperationStatusResult> GetOperationStatusResult(string resourceName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = OperationStatusResultClientDiagnostics.CreateScope("MockableContainerServiceResourceGroupResource.GetOperationStatusResult");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusResultRestClient.CreateGetOperationStatusResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceManager.Models.OperationStatusResult> response = Response.FromValue(ResourceManager.Models.OperationStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

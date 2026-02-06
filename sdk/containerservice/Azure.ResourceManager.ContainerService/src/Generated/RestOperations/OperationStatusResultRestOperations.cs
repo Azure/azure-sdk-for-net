@@ -41,29 +41,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetOperationStatusByAgentPoolRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, string operationId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.ContainerService/managedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/agentPools/", false);
-            uri.AppendPath(agentPoolName, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetOperationStatusResultListRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -89,27 +66,6 @@ namespace Azure.ResourceManager.ContainerService
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
             uri.UpdateQuery("api-version", _apiVersion);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetOperationStatusResultRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string operationId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.ContainerService/managedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

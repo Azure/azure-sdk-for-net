@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Enforce TCP or prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
-    public readonly partial struct LocalDNSProtocol : IEquatable<LocalDNSProtocol>
+    public readonly partial struct LocalDnsProtocol : IEquatable<LocalDnsProtocol>
     {
         private readonly string _value;
         /// <summary> Prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Enforce TCP protocol for connections from localDNS to upstream DNS server. </summary>
         private const string ForceTCPValue = "ForceTCP";
 
-        /// <summary> Initializes a new instance of <see cref="LocalDNSProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalDnsProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LocalDNSProtocol(string value)
+        public LocalDnsProtocol(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
-        public static LocalDNSProtocol PreferUDP { get; } = new LocalDNSProtocol(PreferUDPValue);
+        public static LocalDnsProtocol PreferUDP { get; } = new LocalDnsProtocol(PreferUDPValue);
 
         /// <summary> Enforce TCP protocol for connections from localDNS to upstream DNS server. </summary>
-        public static LocalDNSProtocol ForceTCP { get; } = new LocalDNSProtocol(ForceTCPValue);
+        public static LocalDnsProtocol ForceTCP { get; } = new LocalDnsProtocol(ForceTCPValue);
 
-        /// <summary> Determines if two <see cref="LocalDNSProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LocalDNSProtocol left, LocalDNSProtocol right) => left.Equals(right);
+        public static bool operator ==(LocalDnsProtocol left, LocalDnsProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LocalDNSProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LocalDNSProtocol left, LocalDNSProtocol right) => !left.Equals(right);
+        public static bool operator !=(LocalDnsProtocol left, LocalDnsProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSProtocol(string value) => new LocalDNSProtocol(value);
+        public static implicit operator LocalDnsProtocol(string value) => new LocalDnsProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSProtocol?(string value) => value == null ? null : new LocalDNSProtocol(value);
+        public static implicit operator LocalDnsProtocol?(string value) => value == null ? null : new LocalDnsProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalDNSProtocol other && Equals(other);
+        public override bool Equals(object obj) => obj is LocalDnsProtocol other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LocalDNSProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LocalDnsProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

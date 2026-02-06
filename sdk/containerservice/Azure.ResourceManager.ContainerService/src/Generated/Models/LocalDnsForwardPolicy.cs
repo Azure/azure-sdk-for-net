@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Forward policy for selecting upstream DNS server. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-    public readonly partial struct LocalDNSForwardPolicy : IEquatable<LocalDNSForwardPolicy>
+    public readonly partial struct LocalDnsForwardPolicy : IEquatable<LocalDnsForwardPolicy>
     {
         private readonly string _value;
         /// <summary> Implements sequential upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Implements random upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         private const string RandomValue = "Random";
 
-        /// <summary> Initializes a new instance of <see cref="LocalDNSForwardPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalDnsForwardPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LocalDNSForwardPolicy(string value)
+        public LocalDnsForwardPolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Implements sequential upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        public static LocalDNSForwardPolicy Sequential { get; } = new LocalDNSForwardPolicy(SequentialValue);
+        public static LocalDnsForwardPolicy Sequential { get; } = new LocalDnsForwardPolicy(SequentialValue);
 
         /// <summary> Implements round robin upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        public static LocalDNSForwardPolicy RoundRobin { get; } = new LocalDNSForwardPolicy(RoundRobinValue);
+        public static LocalDnsForwardPolicy RoundRobin { get; } = new LocalDnsForwardPolicy(RoundRobinValue);
 
         /// <summary> Implements random upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
-        public static LocalDNSForwardPolicy Random { get; } = new LocalDNSForwardPolicy(RandomValue);
+        public static LocalDnsForwardPolicy Random { get; } = new LocalDnsForwardPolicy(RandomValue);
 
-        /// <summary> Determines if two <see cref="LocalDNSForwardPolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsForwardPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LocalDNSForwardPolicy left, LocalDNSForwardPolicy right) => left.Equals(right);
+        public static bool operator ==(LocalDnsForwardPolicy left, LocalDnsForwardPolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LocalDNSForwardPolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsForwardPolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LocalDNSForwardPolicy left, LocalDNSForwardPolicy right) => !left.Equals(right);
+        public static bool operator !=(LocalDnsForwardPolicy left, LocalDnsForwardPolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSForwardPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSForwardPolicy(string value) => new LocalDNSForwardPolicy(value);
+        public static implicit operator LocalDnsForwardPolicy(string value) => new LocalDnsForwardPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSForwardPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsForwardPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSForwardPolicy?(string value) => value == null ? null : new LocalDNSForwardPolicy(value);
+        public static implicit operator LocalDnsForwardPolicy?(string value) => value == null ? null : new LocalDnsForwardPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalDNSForwardPolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is LocalDnsForwardPolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LocalDNSForwardPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LocalDnsForwardPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

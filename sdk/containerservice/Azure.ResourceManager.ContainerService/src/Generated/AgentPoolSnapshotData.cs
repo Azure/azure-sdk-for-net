@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("properties.osType")]
-        public ContainerServiceOSType? OsType
+        public ContainerServiceOSType? OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
 
         /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
         [WirePath("properties.osSku")]
-        public ContainerServiceOSSku? OsSku
+        public ContainerServiceOSSku? OSSku
         {
             get
             {
-                return Properties is null ? default : Properties.OsSku;
+                return Properties is null ? default : Properties.OSSku;
             }
         }
 
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
         [WirePath("properties.enableFIPS")]
-        public bool? EnableFIPS
+        public bool? EnableFips
         {
             get
             {
-                return Properties is null ? default : Properties.EnableFIPS;
+                return Properties is null ? default : Properties.EnableFips;
             }
         }
 

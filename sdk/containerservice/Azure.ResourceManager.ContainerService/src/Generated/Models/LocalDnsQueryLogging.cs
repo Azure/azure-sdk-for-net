@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Log level for DNS queries in localDNS. </summary>
-    public readonly partial struct LocalDNSQueryLogging : IEquatable<LocalDNSQueryLogging>
+    public readonly partial struct LocalDnsQueryLogging : IEquatable<LocalDnsQueryLogging>
     {
         private readonly string _value;
         /// <summary> Enables error logging in localDNS. See [errors plugin](https://coredns.io/plugins/errors) for more information. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Enables query logging in localDNS. See [log plugin](https://coredns.io/plugins/log) for more information. </summary>
         private const string LogValue = "Log";
 
-        /// <summary> Initializes a new instance of <see cref="LocalDNSQueryLogging"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalDnsQueryLogging"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LocalDNSQueryLogging(string value)
+        public LocalDnsQueryLogging(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Enables error logging in localDNS. See [errors plugin](https://coredns.io/plugins/errors) for more information. </summary>
-        public static LocalDNSQueryLogging Error { get; } = new LocalDNSQueryLogging(ErrorValue);
+        public static LocalDnsQueryLogging Error { get; } = new LocalDnsQueryLogging(ErrorValue);
 
         /// <summary> Enables query logging in localDNS. See [log plugin](https://coredns.io/plugins/log) for more information. </summary>
-        public static LocalDNSQueryLogging Log { get; } = new LocalDNSQueryLogging(LogValue);
+        public static LocalDnsQueryLogging Log { get; } = new LocalDnsQueryLogging(LogValue);
 
-        /// <summary> Determines if two <see cref="LocalDNSQueryLogging"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsQueryLogging"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LocalDNSQueryLogging left, LocalDNSQueryLogging right) => left.Equals(right);
+        public static bool operator ==(LocalDnsQueryLogging left, LocalDnsQueryLogging right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LocalDNSQueryLogging"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="LocalDnsQueryLogging"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LocalDNSQueryLogging left, LocalDNSQueryLogging right) => !left.Equals(right);
+        public static bool operator !=(LocalDnsQueryLogging left, LocalDnsQueryLogging right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSQueryLogging"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsQueryLogging"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSQueryLogging(string value) => new LocalDNSQueryLogging(value);
+        public static implicit operator LocalDnsQueryLogging(string value) => new LocalDnsQueryLogging(value);
 
-        /// <summary> Converts a string to a <see cref="LocalDNSQueryLogging"/>. </summary>
+        /// <summary> Converts a string to a <see cref="LocalDnsQueryLogging"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LocalDNSQueryLogging?(string value) => value == null ? null : new LocalDNSQueryLogging(value);
+        public static implicit operator LocalDnsQueryLogging?(string value) => value == null ? null : new LocalDnsQueryLogging(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LocalDNSQueryLogging other && Equals(other);
+        public override bool Equals(object obj) => obj is LocalDnsQueryLogging other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LocalDNSQueryLogging other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LocalDnsQueryLogging other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

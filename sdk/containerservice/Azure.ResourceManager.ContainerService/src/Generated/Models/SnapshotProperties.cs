@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </param>
         /// <param name="vmSize"> The size of the VM. </param>
-        /// <param name="enableFIPS"> Whether to use a FIPS-enabled OS. </param>
+        /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFIPS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
             KubernetesVersion = kubernetesVersion;
             NodeImageVersion = nodeImageVersion;
-            OsType = osType;
-            OsSku = osSku;
+            OSType = osType;
+            OSSku = osSku;
             VmSize = vmSize;
-            EnableFIPS = enableFIPS;
+            EnableFips = enableFips;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("osType")]
-        public ContainerServiceOSType? OsType { get; }
+        public ContainerServiceOSType? OSType { get; }
 
         /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
         [WirePath("osSku")]
-        public ContainerServiceOSSku? OsSku { get; }
+        public ContainerServiceOSSku? OSSku { get; }
 
         /// <summary> The size of the VM. </summary>
         [WirePath("vmSize")]
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
         [WirePath("enableFIPS")]
-        public bool? EnableFIPS { get; }
+        public bool? EnableFips { get; }
 
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
         [WirePath("creationData.sourceResourceId")]

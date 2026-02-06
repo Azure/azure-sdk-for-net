@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            LocalDNSQueryLogging? queryLogging = default;
-            LocalDNSProtocol? protocol = default;
-            LocalDNSForwardDestination? forwardDestination = default;
-            LocalDNSForwardPolicy? forwardPolicy = default;
+            LocalDnsQueryLogging? queryLogging = default;
+            LocalDnsProtocol? protocol = default;
+            LocalDnsForwardDestination? forwardDestination = default;
+            LocalDnsForwardPolicy? forwardPolicy = default;
             int? maxConcurrent = default;
             int? cacheDurationInSeconds = default;
             int? serveStaleDurationInSeconds = default;
-            LocalDNSServeStale? serveStale = default;
+            LocalDnsServeStale? serveStale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    queryLogging = new LocalDNSQueryLogging(prop.Value.GetString());
+                    queryLogging = new LocalDnsQueryLogging(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    protocol = new LocalDNSProtocol(prop.Value.GetString());
+                    protocol = new LocalDnsProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("forwardDestination"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    forwardDestination = new LocalDNSForwardDestination(prop.Value.GetString());
+                    forwardDestination = new LocalDnsForwardDestination(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("forwardPolicy"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    forwardPolicy = new LocalDNSForwardPolicy(prop.Value.GetString());
+                    forwardPolicy = new LocalDnsForwardPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrent"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    serveStale = new LocalDNSServeStale(prop.Value.GetString());
+                    serveStale = new LocalDnsServeStale(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

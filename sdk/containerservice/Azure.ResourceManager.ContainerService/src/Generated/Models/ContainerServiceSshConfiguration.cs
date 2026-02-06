@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
-    internal partial class ContainerServiceSshConfiguration
+    public partial class ContainerServiceSshConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

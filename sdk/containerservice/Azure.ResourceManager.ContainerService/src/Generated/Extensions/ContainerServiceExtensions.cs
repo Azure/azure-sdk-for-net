@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.ContainerService.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -550,84 +549,6 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshot(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified agent pool.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetOperationStatusByAgentPoolAsync(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="agentPoolName"> The name of the agent pool. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceManager.Models.OperationStatusResult>> GetOperationStatusByAgentPoolAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string agentPoolName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetOperationStatusByAgentPoolAsync(resourceName, agentPoolName, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified agent pool.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetOperationStatusByAgentPool(string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="agentPoolName"> The name of the agent pool. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceManager.Models.OperationStatusResult> GetOperationStatusByAgentPool(this ResourceGroupResource resourceGroupResource, string resourceName, string agentPoolName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetOperationStatusByAgentPool(resourceName, agentPoolName, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified managed cluster.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetOperationStatusResultAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceManager.Models.OperationStatusResult>> GetOperationStatusResultAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetOperationStatusResultAsync(resourceName, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of a specific operation in the specified managed cluster.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetOperationStatusResult(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceManager.Models.OperationStatusResult> GetOperationStatusResult(this ResourceGroupResource resourceGroupResource, string resourceName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetOperationStatusResult(resourceName, operationId, cancellationToken);
         }
 
         /// <summary>
