@@ -63,6 +63,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new StorageSyncServiceResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AutoUpgradeProfileTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoUpgradeProfileTestResource"/> object. </returns>
+        public virtual AutoUpgradeProfileTestResource GetAutoUpgradeProfileTestResource(ResourceIdentifier id)
+        {
+            AutoUpgradeProfileTestResource.ValidateResourceId(id);
+            return new AutoUpgradeProfileTestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>

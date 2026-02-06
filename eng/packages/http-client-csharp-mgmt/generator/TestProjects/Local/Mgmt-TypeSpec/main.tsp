@@ -61,6 +61,8 @@ namespace MgmtTypeSpec {
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(AutoUpgradeProfileTest.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");

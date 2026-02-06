@@ -97,6 +97,81 @@ model ComputeFleetVmProfile {
   capacityReservation?: CapacityReservationProfile;
 }
 
+/** Test case for multi-layer flatten with @flattenProperty on a model whose properties contain safe-flattened sub-models */
+enum AutoUpgradeNodeImageSelectionType {
+  Latest,
+  Consistent,
+}
+
+model AutoUpgradeNodeImageSelection {
+  @visibility(Lifecycle.Create, Lifecycle.Read)
+  /** The node image upgrade type. */
+  type: AutoUpgradeNodeImageSelectionType;
+}
+
+union UpgradeChannel {
+  string,
+  Rapid: "Rapid",
+  Stable: "Stable",
+  NodeImage: "NodeImage",
+}
+
+/** The properties model that will be @flattenProperty'd into the parent resource */
+model AutoUpgradeProperties {
+  @visibility(Lifecycle.Read)
+  /** The provisioning state. */
+  provisioningState?: string;
+
+  @visibility(Lifecycle.Create, Lifecycle.Read)
+  /** The resource id of the UpdateStrategy resource to reference. */
+  updateStrategyId?: armResourceIdentifier;
+
+  /** Configures how auto-upgrade will be run. */
+  channel: UpgradeChannel;
+
+  /** The node image upgrade to be applied to the target clusters in auto upgrade. */
+  nodeImageSelection?: AutoUpgradeNodeImageSelection;
+
+  /** If set to False: the auto upgrade has effect. */
+  disabled?: boolean;
+
+  /** The status of the auto upgrade profile. */
+  autoUpgradeProfileStatus?: AutoUpgradeProfileStatusModel;
+
+  /** The target Kubernetes version for auto-upgrade. */
+  targetKubernetesVersion?: string;
+
+  /** Whether to enable long term support. */
+  longTermSupport?: boolean;
+}
+
+/** Status info for auto upgrade profile. */
+model AutoUpgradeProfileStatusModel {
+  /** Last triggered time. */
+  @visibility(Lifecycle.Read)
+  lastTriggeredOn?: utcDateTime;
+
+  /** Last trigger status. */
+  @visibility(Lifecycle.Read)
+  lastTriggerStatus?: string;
+
+  /** The target versions. */
+  @visibility(Lifecycle.Read)
+  lastTriggerUpgradeVersions?: string[];
+}
+
+@resource("autoUpgradeProfiles")
+@parentResource(Foo)
+model AutoUpgradeProfileTest is ProxyResource<AutoUpgradeProperties> {
+  ...ResourceNameParameter<AutoUpgradeProfileTest, SegmentName = "autoUpgradeProfiles">;
+}
+
+@armResourceOperations
+interface AutoUpgradeProfiles {
+  get is ArmResourceRead<AutoUpgradeProfileTest>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<AutoUpgradeProfileTest>;
+}
+
 @armResourceOperations
 interface Foos {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;

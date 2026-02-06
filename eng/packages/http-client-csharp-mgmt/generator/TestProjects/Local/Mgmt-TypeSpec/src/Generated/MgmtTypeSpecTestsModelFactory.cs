@@ -121,6 +121,51 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="updateStrategyId"> The resource id of the UpdateStrategy resource to reference. </param>
+        /// <param name="disabled"> If set to False: the auto upgrade has effect. </param>
+        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
+        /// <param name="targetKubernetesVersion"> The target Kubernetes version for auto-upgrade. </param>
+        /// <param name="longTermSupport"> Whether to enable long term support. </param>
+        /// <param name="nodeImageSelectionType"> The node image upgrade type. </param>
+        /// <param name="channel"> Configures how auto-upgrade will be run. </param>
+        /// <returns> A new <see cref="Tests.AutoUpgradeProfileTestData"/> instance for mocking. </returns>
+        public static AutoUpgradeProfileTestData AutoUpgradeProfileTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, ResourceIdentifier updateStrategyId = default, bool? disabled = default, AutoUpgradeProfileStatusModel autoUpgradeProfileStatus = default, string targetKubernetesVersion = default, bool? longTermSupport = default, AutoUpgradeNodeImageSelectionType? nodeImageSelectionType = default, UpgradeChannel? channel = default)
+        {
+            return new AutoUpgradeProfileTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && updateStrategyId is null && disabled is null && autoUpgradeProfileStatus is null && targetKubernetesVersion is null && longTermSupport is null && nodeImageSelectionType is null && channel is null ? default : new AutoUpgradeProperties(
+                    provisioningState,
+                    updateStrategyId,
+                    channel,
+                    new AutoUpgradeNodeImageSelection(nodeImageSelectionType.Value, null),
+                    disabled,
+                    autoUpgradeProfileStatus,
+                    targetKubernetesVersion,
+                    longTermSupport,
+                    null));
+        }
+
+        /// <summary> Status info for auto upgrade profile. </summary>
+        /// <param name="lastTriggeredOn"> Last triggered time. </param>
+        /// <param name="lastTriggerStatus"> Last trigger status. </param>
+        /// <param name="lastTriggerUpgradeVersions"> The target versions. </param>
+        /// <returns> A new <see cref="Models.AutoUpgradeProfileStatusModel"/> instance for mocking. </returns>
+        public static AutoUpgradeProfileStatusModel AutoUpgradeProfileStatusModel(DateTimeOffset? lastTriggeredOn = default, string lastTriggerStatus = default, IEnumerable<string> lastTriggerUpgradeVersions = default)
+        {
+            lastTriggerUpgradeVersions ??= new ChangeTrackingList<string>();
+
+            return new AutoUpgradeProfileStatusModel(lastTriggeredOn, lastTriggerStatus, lastTriggerUpgradeVersions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serviceUri"> the service url. </param>

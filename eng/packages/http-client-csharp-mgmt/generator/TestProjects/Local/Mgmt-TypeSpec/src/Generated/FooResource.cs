@@ -839,6 +839,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Gets a collection of AutoUpgradeProfileTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of AutoUpgradeProfileTests and their operations over a AutoUpgradeProfileTestResource. </returns>
+        public virtual AutoUpgradeProfileTestCollection GetAutoUpgradeProfileTests()
+        {
+            return GetCachedClient(client => new AutoUpgradeProfileTestCollection(client, Id));
+        }
+
+        /// <summary> Get a AutoUpgradeProfileTest. </summary>
+        /// <param name="autoUpgradeProfileTestName"> The name of the AutoUpgradeProfileTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoUpgradeProfileTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoUpgradeProfileTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutoUpgradeProfileTestResource>> GetAutoUpgradeProfileTestAsync(string autoUpgradeProfileTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileTestName, nameof(autoUpgradeProfileTestName));
+
+            return await GetAutoUpgradeProfileTests().GetAsync(autoUpgradeProfileTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a AutoUpgradeProfileTest. </summary>
+        /// <param name="autoUpgradeProfileTestName"> The name of the AutoUpgradeProfileTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoUpgradeProfileTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoUpgradeProfileTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutoUpgradeProfileTestResource> GetAutoUpgradeProfileTest(string autoUpgradeProfileTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileTestName, nameof(autoUpgradeProfileTestName));
+
+            return GetAutoUpgradeProfileTests().Get(autoUpgradeProfileTestName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of Bars in the <see cref="FooResource"/>. </summary>
         /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
         public virtual BarCollection GetBars()
