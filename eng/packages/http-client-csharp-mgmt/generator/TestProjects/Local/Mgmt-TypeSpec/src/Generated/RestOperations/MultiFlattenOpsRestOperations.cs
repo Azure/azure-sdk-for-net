@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class AutoUpgradeProfiles
+    internal partial class MultiFlattenOps
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AutoUpgradeProfiles for mocking. </summary>
-        protected AutoUpgradeProfiles()
+        /// <summary> Initializes a new instance of MultiFlattenOps for mocking. </summary>
+        protected MultiFlattenOps()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoUpgradeProfiles. </summary>
+        /// <summary> Initializes a new instance of MultiFlattenOps. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AutoUpgradeProfiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal MultiFlattenOps(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, string autoUpgradeProfileTestName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, string multiFlattenTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,8 +51,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
             uri.AppendPath(fooName, true);
-            uri.AppendPath("/autoUpgradeProfiles/", false);
-            uri.AppendPath(autoUpgradeProfileTestName, true);
+            uri.AppendPath("/multiFlatten/", false);
+            uri.AppendPath(multiFlattenTestName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string autoUpgradeProfileTestName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, string multiFlattenTestName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,8 +72,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
             uri.AppendPath(fooName, true);
-            uri.AppendPath("/autoUpgradeProfiles/", false);
-            uri.AppendPath(autoUpgradeProfileTestName, true);
+            uri.AppendPath("/multiFlatten/", false);
+            uri.AppendPath(multiFlattenTestName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

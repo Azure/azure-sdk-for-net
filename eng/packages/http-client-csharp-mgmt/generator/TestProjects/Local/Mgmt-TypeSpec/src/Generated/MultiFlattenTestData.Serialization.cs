@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class AutoUpgradeProfileTestData : ResourceData, IJsonModel<AutoUpgradeProfileTestData>
+    public partial class MultiFlattenTestData : ResourceData, IJsonModel<MultiFlattenTestData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AutoUpgradeProfileTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MultiFlattenTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileTestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradeProfileTestData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoUpgradeProfileTestData IJsonModel<AutoUpgradeProfileTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AutoUpgradeProfileTestData)JsonModelCreateCore(ref reader, options);
+        MultiFlattenTestData IJsonModel<MultiFlattenTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MultiFlattenTestData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileTestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradeProfileTestData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoUpgradeProfileTestData(document.RootElement, options);
+            return DeserializeMultiFlattenTestData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AutoUpgradeProfileTestData DeserializeAutoUpgradeProfileTestData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MultiFlattenTestData DeserializeMultiFlattenTestData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AutoUpgradeProperties properties = default;
+            MultiFlattenProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = AutoUpgradeProperties.DeserializeAutoUpgradeProperties(prop.Value, options);
+                    properties = MultiFlattenProperties.DeserializeMultiFlattenProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AutoUpgradeProfileTestData(
+            return new MultiFlattenTestData(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutoUpgradeProfileTestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MultiFlattenTestData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileTestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradeProfileTestData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoUpgradeProfileTestData IPersistableModel<AutoUpgradeProfileTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutoUpgradeProfileTestData)PersistableModelCreateCore(data, options);
+        MultiFlattenTestData IPersistableModel<MultiFlattenTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MultiFlattenTestData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileTestData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiFlattenTestData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAutoUpgradeProfileTestData(document.RootElement, options);
+                        return DeserializeMultiFlattenTestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradeProfileTestData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiFlattenTestData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutoUpgradeProfileTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MultiFlattenTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="autoUpgradeProfileTestData"> The <see cref="AutoUpgradeProfileTestData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AutoUpgradeProfileTestData autoUpgradeProfileTestData)
+        /// <param name="multiFlattenTestData"> The <see cref="MultiFlattenTestData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MultiFlattenTestData multiFlattenTestData)
         {
-            if (autoUpgradeProfileTestData == null)
+            if (multiFlattenTestData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autoUpgradeProfileTestData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(multiFlattenTestData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoUpgradeProfileTestData"/> from. </param>
-        internal static AutoUpgradeProfileTestData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MultiFlattenTestData"/> from. </param>
+        internal static MultiFlattenTestData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutoUpgradeProfileTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMultiFlattenTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

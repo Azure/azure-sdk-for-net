@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a AutoUpgradeProfileTest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutoUpgradeProfileTestResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FooResource"/> using the GetAutoUpgradeProfileTests method.
+    /// A class representing a MultiFlattenTest along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MultiFlattenTestResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FooResource"/> using the GetMultiFlattenTests method.
     /// </summary>
-    public partial class AutoUpgradeProfileTestResource : ArmResource
+    public partial class MultiFlattenTestResource : ArmResource
     {
-        private readonly ClientDiagnostics _autoUpgradeProfilesClientDiagnostics;
-        private readonly AutoUpgradeProfiles _autoUpgradeProfilesRestClient;
-        private readonly AutoUpgradeProfileTestData _data;
+        private readonly ClientDiagnostics _multiFlattenOpsClientDiagnostics;
+        private readonly MultiFlattenOps _multiFlattenOpsRestClient;
+        private readonly MultiFlattenTestData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/autoUpgradeProfiles";
+        public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/multiFlatten";
 
-        /// <summary> Initializes a new instance of AutoUpgradeProfileTestResource for mocking. </summary>
-        protected AutoUpgradeProfileTestResource()
+        /// <summary> Initializes a new instance of MultiFlattenTestResource for mocking. </summary>
+        protected MultiFlattenTestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileTestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiFlattenTestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutoUpgradeProfileTestResource(ArmClient client, AutoUpgradeProfileTestData data) : this(client, data.Id)
+        internal MultiFlattenTestResource(ArmClient client, MultiFlattenTestData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileTestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiFlattenTestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AutoUpgradeProfileTestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MultiFlattenTestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string autoUpgradeProfileTestApiVersion);
-            _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileTestApiVersion ?? "2024-05-01");
+            TryGetApiVersion(ResourceType, out string multiFlattenTestApiVersion);
+            _multiFlattenOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _multiFlattenOpsRestClient = new MultiFlattenOps(_multiFlattenOpsClientDiagnostics, Pipeline, Endpoint, multiFlattenTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AutoUpgradeProfileTestData Data
+        public virtual MultiFlattenTestData Data
         {
             get
             {
@@ -74,10 +74,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="fooName"> The fooName. </param>
-        /// <param name="autoUpgradeProfileTestName"> The autoUpgradeProfileTestName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fooName, string autoUpgradeProfileTestName)
+        /// <param name="multiFlattenTestName"> The multiFlattenTestName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fooName, string multiFlattenTestName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/autoUpgradeProfiles/{autoUpgradeProfileTestName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +92,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a AutoUpgradeProfileTest
+        /// Get a MultiFlattenTest
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/autoUpgradeProfiles/{autoUpgradeProfileTestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Get. </description>
+        /// <description> MultiFlattenOps_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +108,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileTestResource"/>. </description>
+        /// <description> <see cref="MultiFlattenTestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutoUpgradeProfileTestResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MultiFlattenTestResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileTestResource.Get");
+            using DiagnosticScope scope = _multiFlattenOpsClientDiagnostics.CreateScope("MultiFlattenTestResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _multiFlattenOpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutoUpgradeProfileTestData> response = Response.FromValue(AutoUpgradeProfileTestData.FromResponse(result), result);
+                Response<MultiFlattenTestData> response = Response.FromValue(MultiFlattenTestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AutoUpgradeProfileTestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MultiFlattenTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,15 +140,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a AutoUpgradeProfileTest
+        /// Get a MultiFlattenTest
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/autoUpgradeProfiles/{autoUpgradeProfileTestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Get. </description>
+        /// <description> MultiFlattenOps_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +156,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileTestResource"/>. </description>
+        /// <description> <see cref="MultiFlattenTestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutoUpgradeProfileTestResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MultiFlattenTestResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileTestResource.Get");
+            using DiagnosticScope scope = _multiFlattenOpsClientDiagnostics.CreateScope("MultiFlattenTestResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _multiFlattenOpsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutoUpgradeProfileTestData> response = Response.FromValue(AutoUpgradeProfileTestData.FromResponse(result), result);
+                Response<MultiFlattenTestData> response = Response.FromValue(MultiFlattenTestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AutoUpgradeProfileTestResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MultiFlattenTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,15 +188,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a AutoUpgradeProfileTest.
+        /// Update a MultiFlattenTest.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/autoUpgradeProfiles/{autoUpgradeProfileTestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_CreateOrUpdate. </description>
+        /// <description> MultiFlattenOps_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileTestResource"/>. </description>
+        /// <description> <see cref="MultiFlattenTestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,11 +212,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutoUpgradeProfileTestResource>> UpdateAsync(WaitUntil waitUntil, AutoUpgradeProfileTestData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MultiFlattenTestResource>> UpdateAsync(WaitUntil waitUntil, MultiFlattenTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileTestResource.Update");
+            using DiagnosticScope scope = _multiFlattenOpsClientDiagnostics.CreateScope("MultiFlattenTestResource.Update");
             scope.Start();
             try
             {
@@ -224,11 +224,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileTestData.ToRequestContent(data), context);
+                HttpMessage message = _multiFlattenOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MultiFlattenTestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<AutoUpgradeProfileTestResource> operation = new TestsArmOperation<AutoUpgradeProfileTestResource>(
-                    new AutoUpgradeProfileTestOperationSource(Client),
-                    _autoUpgradeProfilesClientDiagnostics,
+                TestsArmOperation<MultiFlattenTestResource> operation = new TestsArmOperation<MultiFlattenTestResource>(
+                    new MultiFlattenTestOperationSource(Client),
+                    _multiFlattenOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -247,15 +247,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a AutoUpgradeProfileTest.
+        /// Update a MultiFlattenTest.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/autoUpgradeProfiles/{autoUpgradeProfileTestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/multiFlatten/{multiFlattenTestName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_CreateOrUpdate. </description>
+        /// <description> MultiFlattenOps_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -263,7 +263,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileTestResource"/>. </description>
+        /// <description> <see cref="MultiFlattenTestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,11 +271,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AutoUpgradeProfileTestResource> Update(WaitUntil waitUntil, AutoUpgradeProfileTestData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MultiFlattenTestResource> Update(WaitUntil waitUntil, MultiFlattenTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileTestResource.Update");
+            using DiagnosticScope scope = _multiFlattenOpsClientDiagnostics.CreateScope("MultiFlattenTestResource.Update");
             scope.Start();
             try
             {
@@ -283,11 +283,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileTestData.ToRequestContent(data), context);
+                HttpMessage message = _multiFlattenOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MultiFlattenTestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<AutoUpgradeProfileTestResource> operation = new TestsArmOperation<AutoUpgradeProfileTestResource>(
-                    new AutoUpgradeProfileTestOperationSource(Client),
-                    _autoUpgradeProfilesClientDiagnostics,
+                TestsArmOperation<MultiFlattenTestResource> operation = new TestsArmOperation<MultiFlattenTestResource>(
+                    new MultiFlattenTestOperationSource(Client),
+                    _multiFlattenOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

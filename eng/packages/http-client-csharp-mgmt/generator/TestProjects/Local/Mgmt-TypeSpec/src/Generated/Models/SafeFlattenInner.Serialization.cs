@@ -13,17 +13,17 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The AutoUpgradeNodeImageSelection. </summary>
-    internal partial class AutoUpgradeNodeImageSelection : IJsonModel<AutoUpgradeNodeImageSelection>
+    /// <summary> Test case for multi-layer flatten withSingle-property model that triggers safe-flatten. </summary>
+    internal partial class SafeFlattenInner : IJsonModel<SafeFlattenInner>
     {
-        /// <summary> Initializes a new instance of <see cref="AutoUpgradeNodeImageSelection"/> for deserialization. </summary>
-        internal AutoUpgradeNodeImageSelection()
+        /// <summary> Initializes a new instance of <see cref="SafeFlattenInner"/> for deserialization. </summary>
+        internal SafeFlattenInner()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AutoUpgradeNodeImageSelection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SafeFlattenInner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,13 +34,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeNodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SafeFlattenInner>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradeNodeImageSelection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SafeFlattenInner)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WritePropertyName("selectionType"u8);
+            writer.WriteStringValue(SelectionType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -60,36 +60,36 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoUpgradeNodeImageSelection IJsonModel<AutoUpgradeNodeImageSelection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SafeFlattenInner IJsonModel<SafeFlattenInner>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutoUpgradeNodeImageSelection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SafeFlattenInner JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeNodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SafeFlattenInner>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradeNodeImageSelection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SafeFlattenInner)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoUpgradeNodeImageSelection(document.RootElement, options);
+            return DeserializeSafeFlattenInner(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AutoUpgradeNodeImageSelection DeserializeAutoUpgradeNodeImageSelection(JsonElement element, ModelReaderWriterOptions options)
+        internal static SafeFlattenInner DeserializeSafeFlattenInner(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AutoUpgradeNodeImageSelectionType @type = default;
+            string selectionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("selectionType"u8))
                 {
-                    @type = prop.Value.GetString().ToAutoUpgradeNodeImageSelectionType();
+                    selectionType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,47 +97,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AutoUpgradeNodeImageSelection(@type, additionalBinaryDataProperties);
+            return new SafeFlattenInner(selectionType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutoUpgradeNodeImageSelection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SafeFlattenInner>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeNodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SafeFlattenInner>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradeNodeImageSelection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SafeFlattenInner)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutoUpgradeNodeImageSelection IPersistableModel<AutoUpgradeNodeImageSelection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SafeFlattenInner IPersistableModel<SafeFlattenInner>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutoUpgradeNodeImageSelection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SafeFlattenInner PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeNodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SafeFlattenInner>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAutoUpgradeNodeImageSelection(document.RootElement, options);
+                        return DeserializeSafeFlattenInner(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradeNodeImageSelection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SafeFlattenInner)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutoUpgradeNodeImageSelection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SafeFlattenInner>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

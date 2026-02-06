@@ -22,6 +22,7 @@ import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
 import "./sitemanager.tsp";
+import "./flatten-with-customized-property.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -62,7 +63,7 @@ namespace MgmtTypeSpec {
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
   #suppress "deprecated"
-  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(AutoUpgradeProfileTest.properties);
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");

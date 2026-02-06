@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class AutoUpgradeProfileTestOperationSource : IOperationSource<AutoUpgradeProfileTestResource>
+    internal partial class MultiFlattenTestOperationSource : IOperationSource<MultiFlattenTestResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AutoUpgradeProfileTestOperationSource(ArmClient client)
+        internal MultiFlattenTestOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AutoUpgradeProfileTestResource IOperationSource<AutoUpgradeProfileTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MultiFlattenTestResource IOperationSource<MultiFlattenTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AutoUpgradeProfileTestData data = AutoUpgradeProfileTestData.DeserializeAutoUpgradeProfileTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutoUpgradeProfileTestResource(_client, data);
+            MultiFlattenTestData data = MultiFlattenTestData.DeserializeMultiFlattenTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MultiFlattenTestResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AutoUpgradeProfileTestResource> IOperationSource<AutoUpgradeProfileTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MultiFlattenTestResource> IOperationSource<MultiFlattenTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AutoUpgradeProfileTestData data = AutoUpgradeProfileTestData.DeserializeAutoUpgradeProfileTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutoUpgradeProfileTestResource(_client, data);
+            MultiFlattenTestData data = MultiFlattenTestData.DeserializeMultiFlattenTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MultiFlattenTestResource(_client, data);
         }
     }
 }
