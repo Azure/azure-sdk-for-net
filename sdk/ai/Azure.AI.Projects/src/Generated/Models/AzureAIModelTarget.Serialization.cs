@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
     public partial class AzureAIModelTarget : Target, IJsonModel<AzureAIModelTarget>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Target PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureAIModelTarget(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureAIModelTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -120,23 +137,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AzureAIModelTarget IPersistableModel<AzureAIModelTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAIModelTarget)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Target PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAIModelTarget>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureAIModelTarget(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureAIModelTarget)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureAIModelTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

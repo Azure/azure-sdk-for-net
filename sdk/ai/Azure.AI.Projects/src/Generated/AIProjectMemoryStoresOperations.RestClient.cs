@@ -13,9 +13,9 @@ namespace Azure.AI.Projects
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier202;
 
-        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        private static PipelineMessageClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = PipelineMessageClassifier.Create(stackalloc ushort[] { 202 });
+        private static PipelineMessageClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 202 });
 
         internal PipelineMessage CreateCreateMemoryStoreRequest(BinaryContent content, RequestOptions options)
         {

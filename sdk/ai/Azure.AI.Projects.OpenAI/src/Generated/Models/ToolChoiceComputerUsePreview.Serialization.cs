@@ -15,6 +15,23 @@ namespace Azure.AI.Projects.OpenAI
     /// </summary>
     public partial class ToolChoiceComputerUsePreview : ToolChoiceParam, IJsonModel<ToolChoiceComputerUsePreview>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceComputerUsePreview>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeToolChoiceComputerUsePreview(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ToolChoiceComputerUsePreview)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ToolChoiceComputerUsePreview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,23 +114,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ToolChoiceComputerUsePreview IPersistableModel<ToolChoiceComputerUsePreview>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolChoiceComputerUsePreview)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceComputerUsePreview>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeToolChoiceComputerUsePreview(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ToolChoiceComputerUsePreview)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ToolChoiceComputerUsePreview>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

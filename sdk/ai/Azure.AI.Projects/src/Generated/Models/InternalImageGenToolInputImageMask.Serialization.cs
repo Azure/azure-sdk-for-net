@@ -12,6 +12,23 @@ namespace OpenAI
 {
     internal partial class InternalImageGenToolInputImageMask : IJsonModel<InternalImageGenToolInputImageMask>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalImageGenToolInputImageMask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalImageGenToolInputImageMask>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalImageGenToolInputImageMask(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalImageGenToolInputImageMask)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalImageGenToolInputImageMask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,23 +141,6 @@ namespace OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalImageGenToolInputImageMask IPersistableModel<InternalImageGenToolInputImageMask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalImageGenToolInputImageMask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalImageGenToolInputImageMask>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalImageGenToolInputImageMask(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalImageGenToolInputImageMask)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalImageGenToolInputImageMask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

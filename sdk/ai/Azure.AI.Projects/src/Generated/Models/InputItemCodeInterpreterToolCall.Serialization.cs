@@ -17,6 +17,23 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInputItemCodeInterpreterToolCall(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InputItemCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputItemCodeInterpreterToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -199,23 +216,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InputItemCodeInterpreterToolCall IPersistableModel<InputItemCodeInterpreterToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputItemCodeInterpreterToolCall)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InputItemCodeInterpreterToolCall>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInputItemCodeInterpreterToolCall(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InputItemCodeInterpreterToolCall)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InputItemCodeInterpreterToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

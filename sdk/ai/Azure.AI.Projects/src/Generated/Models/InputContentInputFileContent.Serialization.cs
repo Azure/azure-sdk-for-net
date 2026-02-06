@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Input file. </summary>
     internal partial class InputContentInputFileContent : InputContent, IJsonModel<InputContentInputFileContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InputContentInputFileContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInputContentInputFileContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InputContentInputFileContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InputContentInputFileContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -153,23 +170,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InputContentInputFileContent IPersistableModel<InputContentInputFileContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InputContentInputFileContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InputContentInputFileContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInputContentInputFileContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InputContentInputFileContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InputContentInputFileContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

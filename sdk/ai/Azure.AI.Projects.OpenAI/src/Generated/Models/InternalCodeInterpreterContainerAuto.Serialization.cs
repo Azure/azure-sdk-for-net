@@ -11,6 +11,23 @@ namespace Azure.AI.Projects.OpenAI
 {
     internal partial class InternalCodeInterpreterContainerAuto : IJsonModel<InternalCodeInterpreterContainerAuto>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InternalCodeInterpreterContainerAuto PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterContainerAuto>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInternalCodeInterpreterContainerAuto(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalCodeInterpreterContainerAuto)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalCodeInterpreterContainerAuto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,23 +179,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         InternalCodeInterpreterContainerAuto IPersistableModel<InternalCodeInterpreterContainerAuto>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InternalCodeInterpreterContainerAuto PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InternalCodeInterpreterContainerAuto>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeInternalCodeInterpreterContainerAuto(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InternalCodeInterpreterContainerAuto)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalCodeInterpreterContainerAuto>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

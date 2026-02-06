@@ -12,6 +12,23 @@ namespace Azure.AI.Projects
     /// <summary> Shared Access Signature (SAS) credential definition. </summary>
     public partial class AIProjectConnectionSasCredential : AIProjectConnectionBaseCredential, IJsonModel<AIProjectConnectionSasCredential>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AIProjectConnectionBaseCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionSasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAIProjectConnectionSasCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AIProjectConnectionSasCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AIProjectConnectionSasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -105,23 +122,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AIProjectConnectionSasCredential IPersistableModel<AIProjectConnectionSasCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => (AIProjectConnectionSasCredential)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIProjectConnectionBaseCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AIProjectConnectionSasCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAIProjectConnectionSasCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AIProjectConnectionSasCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AIProjectConnectionSasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

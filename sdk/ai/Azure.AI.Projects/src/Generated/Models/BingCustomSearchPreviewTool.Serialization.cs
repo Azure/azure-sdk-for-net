@@ -17,6 +17,23 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBingCustomSearchPreviewTool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BingCustomSearchPreviewTool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BingCustomSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,23 +124,6 @@ namespace Azure.AI.Projects
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BingCustomSearchPreviewTool IPersistableModel<BingCustomSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (BingCustomSearchPreviewTool)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBingCustomSearchPreviewTool(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BingCustomSearchPreviewTool)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BingCustomSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

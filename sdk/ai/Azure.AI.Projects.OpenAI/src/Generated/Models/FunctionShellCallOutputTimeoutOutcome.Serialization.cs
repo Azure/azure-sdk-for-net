@@ -12,6 +12,23 @@ namespace Azure.AI.Projects.OpenAI
     /// <summary> Shell call timeout outcome. </summary>
     internal partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputTimeoutOutcome>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FunctionShellCallOutputOutcome PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellCallOutputTimeoutOutcome>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionShellCallOutputTimeoutOutcome(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionShellCallOutputTimeoutOutcome)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionShellCallOutputTimeoutOutcome>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -94,23 +111,6 @@ namespace Azure.AI.Projects.OpenAI
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         FunctionShellCallOutputTimeoutOutcome IPersistableModel<FunctionShellCallOutputTimeoutOutcome>.Create(BinaryData data, ModelReaderWriterOptions options) => (FunctionShellCallOutputTimeoutOutcome)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FunctionShellCallOutputOutcome PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellCallOutputTimeoutOutcome>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFunctionShellCallOutputTimeoutOutcome(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionShellCallOutputTimeoutOutcome)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FunctionShellCallOutputTimeoutOutcome>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
