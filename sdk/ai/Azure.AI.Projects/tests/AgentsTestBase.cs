@@ -50,6 +50,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         Sharepoint,
         ConnectedAgent,
         DeepResearch,
+        AzureFunctionTool,
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -85,6 +86,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
+        {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -126,6 +128,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
         {ToolType.MicrosoftFabric, "62"},
+        {ToolType.AzureFunction, "Bar"}
     };
 
     public Dictionary<ToolType, string> ExpectedAnnotationTitle = new()
@@ -365,6 +368,40 @@ public class AgentsTestBase : ProjectsClientTestBase
         return a2aTool;
     }
 
+    private AzureFunctionTool GetFunctionTool()
+    {
+        AzureFunctionDefinitionFunction functionDefinition = new(
+            name: "foo",
+            parameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        query = new
+                        {
+                            Type = "string",
+                            Description = "The question to ask.",
+                        }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+            )
+        )
+        {
+            Description = "Get answers from the foo bot.",
+        };
+        return new AzureFunctionTool(
+            new AzureFunctionDefinition(
+                function: functionDefinition,
+                inputBinding: new AzureFunctionBinding(
+                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
+                outputBinding: new AzureFunctionBinding(
+                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
+                )
+            );
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -444,11 +481,26 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
+            ToolType.AzureFunction => GetFunctionTool(),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
+        string instructions;
+        if (toolType == ToolType.AzureFunction)
+        {
+            instructions = "You are a helpful support agent. Use the provided function any " +
+                    "time the prompt contains the string 'What would foo say?'. When " +
+                    "you invoke the function, ALWAYS specify the output queue uri parameter as " +
+                    $"'{TestEnvironment.STORAGE_QUEUE_URI}/azure-function-tool-output'" +
+                    ". Always responds with \"Foo says\" and then the response from the tool.";
+        }
+        else
+        {
+            instructions = ToolInstructions[toolType];
+        }
+
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
         {
-            Instructions = ToolInstructions[toolType],
+            Instructions = instructions,
             Tools = { tool },
         };
     }
