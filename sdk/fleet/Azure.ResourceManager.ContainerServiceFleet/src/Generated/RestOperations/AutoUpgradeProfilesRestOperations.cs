@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        internal HttpMessage CreateGetByFleetRequest(Guid subscriptionId, string resourceGroupName, string fleetName, int? top, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetByFleetRequest(Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(fleetName, true);
             uri.AppendPath("/autoUpgradeProfiles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skipToken != null)
             {
@@ -141,10 +141,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        internal HttpMessage CreateNextGetByFleetRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fleetName, int? top, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetByFleetRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

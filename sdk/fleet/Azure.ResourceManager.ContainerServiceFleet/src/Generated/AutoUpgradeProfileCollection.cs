@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
                     new AutoUpgradeProfileOperationSource(Client),
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, autoUpgradeProfileName, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
                     new AutoUpgradeProfileOperationSource(Client),
@@ -291,11 +291,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoUpgradeProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoUpgradeProfileResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutoUpgradeProfileResource> GetAllAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new AutoUpgradeProfileResource(Client, data));
         }
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoUpgradeProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoUpgradeProfileResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutoUpgradeProfileResource> GetAll(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new AutoUpgradeProfileResource(Client, data));
         }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }
@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new ContainerServiceFleetUpdateRunResource(Client, data));
         }

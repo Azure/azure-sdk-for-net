@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetGateResource> GetAllAsync(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetGateResource> GetAllAsync(string filter = default, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new ContainerServiceFleetGateResource(Client, data));
         }
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetGateResource> GetAll(string filter = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetGateResource> GetAll(string filter = default, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new ContainerServiceFleetGateResource(Client, data));
         }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
                     new FleetUpdateStrategyOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
                     new FleetUpdateStrategyOperationSource(Client),
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FleetUpdateStrategyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetUpdateStrategyResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FleetUpdateStrategyResource> GetAllAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new FleetUpdateStrategyResource(Client, data));
         }
@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FleetUpdateStrategyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetUpdateStrategyResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FleetUpdateStrategyResource> GetAll(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 context), data => new FleetUpdateStrategyResource(Client, data));
         }

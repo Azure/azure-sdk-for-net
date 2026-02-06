@@ -226,16 +226,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(top, skipToken, cancellationToken);
+            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(maxCount, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -246,16 +246,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleets(top, skipToken, cancellationToken);
+            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleets(maxCount, skipToken, cancellationToken);
         }
     }
 }

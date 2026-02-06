@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
                     new ContainerServiceFleetUpdateRunOperationSource(Client),

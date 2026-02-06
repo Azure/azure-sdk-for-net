@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _fleetName;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly string _skipToken;
         private readonly string _filter;
         private readonly RequestContext _context;
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FleetMembersGetByFleetAsyncCollectionResultOfT(FleetMembers client, Guid subscriptionId, string resourceGroupName, string fleetName, int? top, string skipToken, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public FleetMembersGetByFleetAsyncCollectionResultOfT(FleetMembers client, Guid subscriptionId, string resourceGroupName, string fleetName, int? maxCount, string skipToken, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _fleetName = fleetName;
-            _top = top;
+            _maxCount = maxCount;
             _skipToken = skipToken;
             _filter = filter;
             _context = context;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByFleetRequest(nextLink, _subscriptionId, _resourceGroupName, _fleetName, _top, _skipToken, _filter, _context) : _client.CreateGetByFleetRequest(_subscriptionId, _resourceGroupName, _fleetName, _top, _skipToken, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByFleetRequest(nextLink, _subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _filter, _context) : _client.CreateGetByFleetRequest(_subscriptionId, _resourceGroupName, _fleetName, _maxCount, _skipToken, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetAll");
             scope.Start();
             try

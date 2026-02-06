@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
                     new ContainerServiceFleetMemberOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
                     new ContainerServiceFleetMemberOperationSource(Client),
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetMemberResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetMemberResource> GetAllAsync(int? top = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetMemberResource> GetAllAsync(int? maxCount = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 filter,
                 context), data => new ContainerServiceFleetMemberResource(Client, data));
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetMemberResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetMemberResource> GetAll(int? top = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetMemberResource> GetAll(int? maxCount = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                top,
+                maxCount,
                 skipToken,
                 filter,
                 context), data => new ContainerServiceFleetMemberResource(Client, data));

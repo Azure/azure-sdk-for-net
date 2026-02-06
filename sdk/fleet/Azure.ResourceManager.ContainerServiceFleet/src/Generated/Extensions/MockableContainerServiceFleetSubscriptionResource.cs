@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
         }
 
         /// <summary>
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), top, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
+            return new PageableWrapper<ContainerServiceFleetData, ContainerServiceFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), maxCount, skipToken, context), data => new ContainerServiceFleetResource(Client, data));
         }
     }
 }

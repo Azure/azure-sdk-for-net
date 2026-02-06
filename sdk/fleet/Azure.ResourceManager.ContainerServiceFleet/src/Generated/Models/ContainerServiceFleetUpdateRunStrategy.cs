@@ -14,11 +14,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary>
     /// Defines the update sequence of the clusters via stages and groups.
-    /// 
     /// Stages within a run are executed sequentially one after another.
     /// Groups within a stage are executed in parallel.
     /// Member clusters within a group are updated sequentially one after another.
-    /// 
     /// A valid strategy contains no duplicate groups within or across stages.
     /// </summary>
     internal partial class ContainerServiceFleetUpdateRunStrategy
