@@ -86,7 +86,7 @@ public partial class JavaComponent : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the JavaComponent.</param>
     public JavaComponent(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/javaComponents", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/javaComponents", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -95,6 +95,7 @@ public partial class JavaComponent : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _properties = DefineModelProperty<JavaComponentProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -107,6 +108,16 @@ public partial class JavaComponent : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

@@ -26,6 +26,7 @@ namespace BasicTypeSpec
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
+        private PlantOperations _cachedPlantOperations;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
@@ -2408,6 +2409,84 @@ namespace BasicTypeSpec
 
             Response result = await GetDataFactoryModelAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DataFactoryElementModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get an advanced XML model with various property types
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetXmlAdvancedModel(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetXmlAdvancedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetXmlAdvancedModelRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get an advanced XML model with various property types
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetXmlAdvancedModelAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetXmlAdvancedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetXmlAdvancedModelRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get an advanced XML model with various property types. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<XmlAdvancedModel> GetXmlAdvancedModel(CancellationToken cancellationToken = default)
+        {
+            Response result = GetXmlAdvancedModel(cancellationToken.ToRequestContext());
+            return Response.FromValue((XmlAdvancedModel)result, result);
+        }
+
+        /// <summary> Get an advanced XML model with various property types. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<XmlAdvancedModel>> GetXmlAdvancedModelAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetXmlAdvancedModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((XmlAdvancedModel)result, result);
+        }
+
+        /// <summary> Initializes a new instance of PlantOperations. </summary>
+        public virtual PlantOperations GetPlantOperationsClient()
+        {
+            return Volatile.Read(ref _cachedPlantOperations) ?? Interlocked.CompareExchange(ref _cachedPlantOperations, new PlantOperations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPlantOperations;
         }
     }
 }

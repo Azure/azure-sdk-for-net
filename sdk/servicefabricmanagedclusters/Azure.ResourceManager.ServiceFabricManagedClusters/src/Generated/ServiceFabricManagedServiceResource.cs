@@ -415,12 +415,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
+        /// <param name="content"> The parameters for restarting replicas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedServiceRestartReplicaContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestartReplicaAsync(WaitUntil waitUntil, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestartReplicaAsync(WaitUntil waitUntil, ManagedServiceRestartReplicaContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedServiceRestartReplicaContent, nameof(managedServiceRestartReplicaContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceResource.RestartReplica");
             scope.Start();
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateRestartReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedServiceRestartReplicaContent.ToRequestContent(managedServiceRestartReplicaContent), context);
+                HttpMessage message = _servicesRestClient.CreateRestartReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedServiceRestartReplicaContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
+        /// <param name="content"> The parameters for restarting replicas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedServiceRestartReplicaContent"/> is null. </exception>
-        public virtual ArmOperation RestartReplica(WaitUntil waitUntil, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RestartReplica(WaitUntil waitUntil, ManagedServiceRestartReplicaContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedServiceRestartReplicaContent, nameof(managedServiceRestartReplicaContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceResource.RestartReplica");
             scope.Start();
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateRestartReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedServiceRestartReplicaContent.ToRequestContent(managedServiceRestartReplicaContent), context);
+                HttpMessage message = _servicesRestClient.CreateRestartReplicaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedServiceRestartReplicaContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_servicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

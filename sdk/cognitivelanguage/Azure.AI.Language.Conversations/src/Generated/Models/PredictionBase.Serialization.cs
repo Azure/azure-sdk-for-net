@@ -8,15 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
+    /// <summary>
+    /// This is the base class of prediction
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownPredictionBase))]
-    public partial class PredictionBase : IUtf8JsonSerializable, IJsonModel<PredictionBase>
+    public abstract partial class PredictionBase : IJsonModel<PredictionBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PredictionBase"/> for deserialization. </summary>
+        internal PredictionBase()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PredictionBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PredictionBase)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("projectKind"u8);
             writer.WriteStringValue(ProjectKind.ToString());
             if (Optional.IsDefined(TopIntent))
@@ -41,15 +49,15 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WritePropertyName("topIntent"u8);
                 writer.WriteStringValue(TopIntent);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,41 +66,51 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        PredictionBase IJsonModel<PredictionBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PredictionBase IJsonModel<PredictionBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PredictionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PredictionBase)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePredictionBase(document.RootElement, options);
         }
 
-        internal static PredictionBase DeserializePredictionBase(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PredictionBase DeserializePredictionBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("projectKind", out JsonElement discriminator))
+            if (element.TryGetProperty("projectKind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Conversation": return ConversationPrediction.DeserializeConversationPrediction(element, options);
-                    case "Orchestration": return OrchestrationPrediction.DeserializeOrchestrationPrediction(element, options);
+                    case "Conversation":
+                        return ConversationPrediction.DeserializeConversationPrediction(element, options);
+                    case "Orchestration":
+                        return OrchestrationPrediction.DeserializeOrchestrationPrediction(element, options);
                 }
             }
             return UnknownPredictionBase.DeserializeUnknownPredictionBase(element, options);
         }
 
-        BinaryData IPersistableModel<PredictionBase>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PredictionBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -102,15 +120,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        PredictionBase IPersistableModel<PredictionBase>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PredictionBase IPersistableModel<PredictionBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PredictionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PredictionBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePredictionBase(document.RootElement, options);
                     }
                 default:
@@ -118,22 +141,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PredictionBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PredictionBase FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePredictionBase(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

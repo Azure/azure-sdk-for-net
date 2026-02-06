@@ -17,6 +17,10 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
     {
         internal FlattenModel() => throw null;
 
+        protected virtual FlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FlattenModel(Response response) => throw null;
+
         void IJsonModel<FlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 
         FlattenModel IPersistableModel<FlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<FlattenModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="flattenModel"> The <see cref="FlattenModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FlattenModel flattenModel) => throw null;
-
-        public static explicit operator FlattenModel(Response response) => throw null;
     }
 }
