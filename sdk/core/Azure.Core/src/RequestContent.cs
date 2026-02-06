@@ -191,7 +191,9 @@ namespace Azure.Core
             public StreamContent(Stream stream)
             {
                 if (!stream.CanSeek)
+                {
                     throw new ArgumentException("stream must be seekable", nameof(stream));
+                }
                 _origin = stream.Position;
                 _stream = stream;
             }
