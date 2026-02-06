@@ -10,15 +10,6 @@
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Ignore Azure-Core-specific constructor rule -->
-    <NoWarn>$(NoWarn);AZC0007</NoWarn>
-    <!-- Ignore Azure-Core-specific pageable rule -->
-    <NoWarn>$(NoWarn);AZC0015</NoWarn>
-    <!-- Ignore Azure-Core-specific client method naming rule -->
-    <NoWarn>$(NoWarn);AZC0102</NoWarn>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
