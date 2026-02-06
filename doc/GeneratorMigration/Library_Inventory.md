@@ -15,8 +15,8 @@
 
 - Total libraries: 402
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 145
-  - New Emitter (TypeSpec): 82
+  - Autorest/Swagger: 143
+  - New Emitter (TypeSpec): 84
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 58
@@ -145,7 +145,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 82 / 82 (100%)
+**Migration Status**: 84 / 84 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -194,6 +194,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
+| loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
@@ -220,6 +221,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager | ✅ |
+| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | ✅ |
 | standbypool | Azure.ResourceManager.StandbyPool | ✅ |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
@@ -235,7 +237,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 145
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 143
 
 | Service | Library |
 | ------- | ------- |
@@ -311,7 +313,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | kusto | Azure.ResourceManager.Kusto |
 | labservices | Azure.ResourceManager.LabServices |
-| loadtestservice | Azure.ResourceManager.LoadTesting |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
 | machinelearningservices | Azure.ResourceManager.MachineLearning |
@@ -324,7 +325,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | maps | Azure.ResourceManager.Maps |
 | marketplace | Azure.ResourceManager.Marketplace |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
-| mediaservices | Azure.ResourceManager.Media |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | mixedreality | Azure.ResourceManager.MixedReality |
@@ -365,12 +365,12 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | securityinsights | Azure.ResourceManager.SecurityInsights |
 | servicebus | Azure.ResourceManager.ServiceBus |
 | servicefabric | Azure.ResourceManager.ServiceFabric |
+| servicegroups | Azure.ResourceManager.ServiceGroups |
 | servicelinker | Azure.ResourceManager.ServiceLinker |
 | signalr | Azure.ResourceManager.SignalR |
 | sphere | Azure.ResourceManager.Sphere |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
 | sqlmanagement | Azure.ResourceManager.Sql |
-| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine |
 | storage | Azure.ResourceManager.Storage |
 | storagecache | Azure.ResourceManager.StorageCache |
 | storagepool | Azure.ResourceManager.StoragePool |

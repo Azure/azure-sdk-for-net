@@ -387,12 +387,6 @@
 # ServiceLabel: %Maps
 # ServiceOwners:                                                   @dubiety
 
-# PRLabel: %Media Services
-/sdk/mediaservices/                                                @bennage @giakas @naiteeks
-
-# ServiceLabel: %Media Services
-# ServiceOwners:                                                   @bennage @giakas @naiteeks
-
 # PRLabel: %Mixed Reality
 /sdk/mixedreality/                                                 @crtreasu @rgarcia
 
