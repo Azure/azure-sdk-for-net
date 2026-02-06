@@ -194,7 +194,7 @@ namespace Azure.Core
                 {
                     throw new ArgumentException("stream must be seekable", nameof(stream));
                 }
-                
+
                 _origin = stream.Position;
                 _stream = stream;
             }
