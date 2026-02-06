@@ -44,6 +44,8 @@ namespace MgmtTypeSpec {
   @@clientLocation(Bars.get, "Bar");
   @@clientLocation(Bars.update, "Bar");
 
+  @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
+
   @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkSegments.get, "WorkloadNetworks");

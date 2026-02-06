@@ -17,6 +17,10 @@ namespace Encode.Duration._Property
     {
         internal FloatSecondsDurationProperty() => throw null;
 
+        protected virtual FloatSecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FloatSecondsDurationProperty(Response response) => throw null;
+
         void IJsonModel<FloatSecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode.Duration._Property
 
         FloatSecondsDurationProperty IPersistableModel<FloatSecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FloatSecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<FloatSecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="floatSecondsDurationProperty"> The <see cref="FloatSecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatSecondsDurationProperty floatSecondsDurationProperty) => throw null;
-
-        public static explicit operator FloatSecondsDurationProperty(Response response) => throw null;
     }
 }

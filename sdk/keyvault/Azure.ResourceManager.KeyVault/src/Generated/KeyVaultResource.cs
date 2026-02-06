@@ -481,12 +481,12 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
+        /// <param name="content"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
-        public virtual async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(keyVaultAccessPolicyParameters), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)
@@ -534,12 +534,12 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="keyVaultAccessPolicyParameters"> Access policy to merge into the vault. </param>
+        /// <param name="content"> Access policy to merge into the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
-        public virtual Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(keyVaultAccessPolicyParameters), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)

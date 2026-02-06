@@ -17,6 +17,10 @@ namespace _Type.Model.Visibility
     {
         internal VisibilityModel() => throw null;
 
+        protected virtual VisibilityModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator VisibilityModel(Response response) => throw null;
+
         void IJsonModel<VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Model.Visibility
 
         VisibilityModel IPersistableModel<VisibilityModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual VisibilityModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<VisibilityModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="visibilityModel"> The <see cref="VisibilityModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(VisibilityModel visibilityModel) => throw null;
-
-        public static explicit operator VisibilityModel(Response response) => throw null;
     }
 }

@@ -16,6 +16,10 @@ namespace Specs.Azure.Core.Traits
     {
         internal UserActionResponse() => throw null;
 
+        protected virtual UserActionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator UserActionResponse(Response response) => throw null;
+
         void IJsonModel<UserActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,10 +34,6 @@ namespace Specs.Azure.Core.Traits
 
         UserActionResponse IPersistableModel<UserActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UserActionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<UserActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator UserActionResponse(Response response) => throw null;
     }
 }

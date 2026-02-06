@@ -34,4 +34,9 @@ public enum ContainerAppCertificateProvisioningState
     /// Pending.
     /// </summary>
     Pending,
+
+    /// <summary>
+    /// Deleting.
+    /// </summary>
+    Deleting,
 }
