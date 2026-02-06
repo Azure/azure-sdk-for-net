@@ -230,7 +230,7 @@ namespace Azure.Storage.Test.Shared
         internal static Action<Request> GetRequestStructuredMessageAssertion(
             StructuredMessage.Flags flags,
             Func<Request, bool> isStructuredMessageExpected = default,
-            long? structuredContentSegmentLength = default)
+            long? expectedStructuredContentLength = default)
         {
             return request =>
             {
@@ -249,9 +249,9 @@ namespace Azure.Storage.Test.Shared
 
                 Assert.That(request.Headers.TryGetValue("Content-Length", out string contentLength));
                 Assert.That(request.Headers.TryGetValue("x-ms-structured-content-length", out string structuredContentLength));
-                if (structuredContentSegmentLength.HasValue)
+                if (expectedStructuredContentLength.HasValue)
                 {
-                    Assert.That(long.Parse(structuredContentLength), Is.EqualTo(structuredContentSegmentLength.Value));
+                    Assert.That(long.Parse(structuredContentLength), Is.EqualTo(expectedStructuredContentLength.Value));
                 }
             };
         }
@@ -262,7 +262,7 @@ namespace Azure.Storage.Test.Shared
         {
             return response =>
             {
-                // filter some response out with predicate
+                // filter some responses out with predicate
                 if (isStructuredMessageExpected != default && !isStructuredMessageExpected(response))
                 {
                     return;
