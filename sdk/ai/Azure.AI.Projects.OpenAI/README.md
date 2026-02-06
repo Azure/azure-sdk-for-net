@@ -29,6 +29,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Published Agents](#published-agents)
   - [Container App](#container-app)
   - [Hosted Agents](#hosted-agents)
+  - [Structured Output](#structured-output)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
   - [Computer use](#computer-use)
@@ -511,6 +512,61 @@ Agent deletion should be done through Azure CLI.
 ```bash
 az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
 az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```
+
+### Structured Output
+
+The Agent can be instructed to give the response in JSON format, compliant with the provided scheme.
+
+For example, if we have the scheme as the one below:
+
+```C# Snippet:Sample_Schema_StructuredOutput
+private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+    new {
+        additionalProperties = false,
+        properties = new {
+            name = new {
+                title = "Name",
+                type = "string"
+            },
+            date = new {
+                description = "Date in YYYY-MM-DD format",
+                title = "Date",
+                type = "string"
+            },
+            participants = new {
+                items = new { type = "string" },
+                title = "Participants",
+                type = "array"
+            }
+        },
+        required = new List<string> { "name", "date", "participants" },
+        title ="CalendarEvent",
+        type = "object",
+    }
+);
+```
+
+We can provide it to the Agent through `TextOptions` property of `PromptAgentDefinition` to get the Agent output in JSON format.
+
+```C# Snippet:Sample_CreateAgent_StructuredOutput_Async
+var textOptions = new ResponseTextOptions()
+{
+    TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
+        jsonSchemaFormatName: "Calendar",
+        jsonSchema: s_calendatSchema
+    )
+};
+PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+{
+    Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
+                   "and returns it in the desired structured output format.",
+    TextOptions = textOptions
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition)
+);
 ```
 
 ### File search
