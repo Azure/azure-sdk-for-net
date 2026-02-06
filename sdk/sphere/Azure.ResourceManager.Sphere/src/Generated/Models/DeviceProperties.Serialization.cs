@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WritePropertyName("chipSku"u8);
                 writer.WriteStringValue(ChipSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableOsVersion))
+            if (options.Format != "W" && Optional.IsDefined(LastAvailableOSVersion))
             {
                 writer.WritePropertyName("lastAvailableOsVersion"u8);
-                writer.WriteStringValue(LastAvailableOsVersion);
+                writer.WriteStringValue(LastAvailableOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastInstalledOsVersion))
+            if (options.Format != "W" && Optional.IsDefined(LastInstalledOSVersion))
             {
                 writer.WritePropertyName("lastInstalledOsVersion"u8);
-                writer.WriteStringValue(LastInstalledOsVersion);
+                writer.WriteStringValue(LastInstalledOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOsUpdateUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastOSUpdateUtc))
             {
                 writer.WritePropertyName("lastOsUpdateUtc"u8);
-                writer.WriteStringValue(LastOsUpdateUtc.Value, "O");
+                writer.WriteStringValue(LastOSUpdateUtc.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateRequestUtc))
             {
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             string deviceId = default;
             string chipSku = default;
-            string lastAvailableOsVersion = default;
-            string lastInstalledOsVersion = default;
-            DateTimeOffset? lastOsUpdateUtc = default;
+            string lastAvailableOSVersion = default;
+            string lastInstalledOSVersion = default;
+            DateTimeOffset? lastOSUpdateUtc = default;
             DateTimeOffset? lastUpdateRequestUtc = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (prop.NameEquals("lastAvailableOsVersion"u8))
                 {
-                    lastAvailableOsVersion = prop.Value.GetString();
+                    lastAvailableOSVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastInstalledOsVersion"u8))
                 {
-                    lastInstalledOsVersion = prop.Value.GetString();
+                    lastInstalledOSVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastOsUpdateUtc"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    lastOsUpdateUtc = prop.Value.GetDateTimeOffset("O");
+                    lastOSUpdateUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdateRequestUtc"u8))
@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.Sphere.Models
             return new DeviceProperties(
                 deviceId,
                 chipSku,
-                lastAvailableOsVersion,
-                lastInstalledOsVersion,
-                lastOsUpdateUtc,
+                lastAvailableOSVersion,
+                lastInstalledOSVersion,
+                lastOSUpdateUtc,
                 lastUpdateRequestUtc,
                 provisioningState,
                 additionalBinaryDataProperties);

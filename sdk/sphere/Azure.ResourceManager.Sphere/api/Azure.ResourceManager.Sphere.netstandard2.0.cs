@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sphere
     }
     public partial class SphereCertificateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.SphereCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.SphereCertificateData>
     {
-        internal SphereCertificateData() { }
+        public SphereCertificateData() { }
         public string Certificate { get { throw null; } }
         public System.DateTimeOffset? ExpiryUtc { get { throw null; } }
         public System.DateTimeOffset? NotBeforeUtc { get { throw null; } }
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Sphere
         public SphereDeviceData() { }
         public string ChipSku { get { throw null; } }
         public string DeviceId { get { throw null; } set { } }
-        public string LastAvailableOsVersion { get { throw null; } }
-        public string LastInstalledOsVersion { get { throw null; } }
-        public System.DateTimeOffset? LastOsUpdateUtc { get { throw null; } }
+        public string LastAvailableOSVersion { get { throw null; } }
+        public string LastInstalledOSVersion { get { throw null; } }
+        public System.DateTimeOffset? LastOSUpdateUtc { get { throw null; } }
         public System.DateTimeOffset? LastUpdateRequestUtc { get { throw null; } }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Sphere
         public Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public bool? HasDeployment { get { throw null; } }
-        public Azure.ResourceManager.Sphere.Models.SphereOSFeedType? OsFeedType { get { throw null; } set { } }
+        public Azure.ResourceManager.Sphere.Models.SphereOSFeedType? OSFeedType { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? RegionalDataBoundary { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? UpdatePolicy { get { throw null; } set { } }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static Azure.ResourceManager.Sphere.SphereCertificateData SphereCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SphereCertificateProperties SphereCertificateProperties(string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereDeploymentData SphereDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereImageData> deployedImages = null, System.DateTimeOffset? deploymentDateUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Sphere.SphereDeviceData SphereDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceId = null, string chipSku = null, string lastAvailableOsVersion = null, string lastInstalledOsVersion = null, System.DateTimeOffset? lastOsUpdateUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdateRequestUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Sphere.SphereDeviceData SphereDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceId = null, string chipSku = null, string lastAvailableOSVersion = null, string lastInstalledOSVersion = null, System.DateTimeOffset? lastOSUpdateUtc = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdateRequestUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereDeviceGroupData SphereDeviceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Sphere.Models.SphereOSFeedType? osFeedType = default(Azure.ResourceManager.Sphere.Models.SphereOSFeedType?), Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? updatePolicy = default(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy?), Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default(Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus?), Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? regionalDataBoundary = default(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary?), bool? hasDeployment = default(bool?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SphereDeviceInsight SphereDeviceInsight(string deviceId = null, string description = null, System.DateTimeOffset startTimestampUtc = default(System.DateTimeOffset), System.DateTimeOffset endTimestampUtc = default(System.DateTimeOffset), string eventCategory = null, string eventClass = null, string eventType = null, int eventCount = 0) { throw null; }
         public static Azure.ResourceManager.Sphere.SphereImageData SphereImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string image = null, string imageId = null, string imageName = null, Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? regionalDataBoundary = default(Azure.ResourceManager.Sphere.Models.RegionalDataBoundary?), System.Uri uri = null, string description = null, string componentId = null, Azure.ResourceManager.Sphere.Models.SphereImageType? imageType = default(Azure.ResourceManager.Sphere.Models.SphereImageType?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public SphereDeviceGroupPatch() { }
         public Azure.ResourceManager.Sphere.Models.SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Sphere.Models.SphereOSFeedType? OsFeedType { get { throw null; } set { } }
+        public Azure.ResourceManager.Sphere.Models.SphereOSFeedType? OSFeedType { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.RegionalDataBoundary? RegionalDataBoundary { get { throw null; } set { } }
         public Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy? UpdatePolicy { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Sphere.Models.SphereDeviceGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Sphere.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SphereUpdatePolicy(string value) { throw null; }
-        public static Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy No3rdPartyAppUpdates { get { throw null; } }
+        public static Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy No3RdPartyAppUpdates { get { throw null; } }
         public static Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy UpdateAll { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Sphere.Models.SphereUpdatePolicy other) { throw null; }
         public override bool Equals(object obj) { throw null; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <summary> Update all policy. </summary>
         private const string UpdateAllValue = "UpdateAll";
         /// <summary> No update for 3rd party app policy. </summary>
-        private const string No3rdPartyAppUpdatesValue = "No3rdPartyAppUpdates";
+        private const string No3RdPartyAppUpdatesValue = "No3rdPartyAppUpdates";
 
         /// <summary> Initializes a new instance of <see cref="SphereUpdatePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static SphereUpdatePolicy UpdateAll { get; } = new SphereUpdatePolicy(UpdateAllValue);
 
         /// <summary> No update for 3rd party app policy. </summary>
-        public static SphereUpdatePolicy No3rdPartyAppUpdates { get; } = new SphereUpdatePolicy(No3rdPartyAppUpdatesValue);
+        public static SphereUpdatePolicy No3RdPartyAppUpdates { get; } = new SphereUpdatePolicy(No3RdPartyAppUpdatesValue);
 
         /// <summary> Determines if two <see cref="SphereUpdatePolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

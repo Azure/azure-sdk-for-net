@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere.Models
         internal DeviceGroupProperties(string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            OsFeedType = osFeedType;
+            OSFeedType = osFeedType;
             UpdatePolicy = updatePolicy;
             AllowCrashDumpsCollection = allowCrashDumpsCollection;
             RegionalDataBoundary = regionalDataBoundary;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public string Description { get; set; }
 
         /// <summary> Operating system feed type of the device group. </summary>
-        public SphereOSFeedType? OsFeedType { get; set; }
+        public SphereOSFeedType? OSFeedType { get; set; }
 
         /// <summary> Update policy of the device group. </summary>
         public SphereUpdatePolicy? UpdatePolicy { get; set; }

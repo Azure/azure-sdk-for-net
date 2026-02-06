@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Sphere
         }
 
         /// <summary> Operating system feed type of the device group. </summary>
-        public SphereOSFeedType? OsFeedType
+        public SphereOSFeedType? OSFeedType
         {
             get
             {
-                return Properties is null ? default : Properties.OsFeedType;
+                return Properties is null ? default : Properties.OSFeedType;
             }
             set
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     Properties = new DeviceGroupProperties();
                 }
-                Properties.OsFeedType = value.Value;
+                Properties.OSFeedType = value.Value;
             }
         }
 

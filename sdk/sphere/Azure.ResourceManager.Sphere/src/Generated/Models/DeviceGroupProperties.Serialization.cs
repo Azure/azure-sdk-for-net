@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(OsFeedType))
+            if (Optional.IsDefined(OSFeedType))
             {
                 writer.WritePropertyName("osFeedType"u8);
-                writer.WriteStringValue(OsFeedType.Value.ToString());
+                writer.WriteStringValue(OSFeedType.Value.ToString());
             }
             if (Optional.IsDefined(UpdatePolicy))
             {

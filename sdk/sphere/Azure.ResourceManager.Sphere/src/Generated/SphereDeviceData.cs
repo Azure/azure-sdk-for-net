@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.Sphere
         }
 
         /// <summary> OS version available for installation when update requested. </summary>
-        public string LastAvailableOsVersion
+        public string LastAvailableOSVersion
         {
             get
             {
-                return Properties is null ? default : Properties.LastAvailableOsVersion;
+                return Properties is null ? default : Properties.LastAvailableOSVersion;
             }
         }
 
         /// <summary> OS version running on device when update requested. </summary>
-        public string LastInstalledOsVersion
+        public string LastInstalledOSVersion
         {
             get
             {
-                return Properties is null ? default : Properties.LastInstalledOsVersion;
+                return Properties is null ? default : Properties.LastInstalledOSVersion;
             }
         }
 
         /// <summary> Time when update requested and new OS version available. </summary>
-        public DateTimeOffset? LastOsUpdateUtc
+        public DateTimeOffset? LastOSUpdateUtc
         {
             get
             {
-                return Properties is null ? default : Properties.LastOsUpdateUtc;
+                return Properties is null ? default : Properties.LastOSUpdateUtc;
             }
         }
 

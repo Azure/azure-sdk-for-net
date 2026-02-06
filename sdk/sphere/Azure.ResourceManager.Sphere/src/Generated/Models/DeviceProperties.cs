@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         /// <param name="deviceId"> Device ID. </param>
         /// <param name="chipSku"> SKU of the chip. </param>
-        /// <param name="lastAvailableOsVersion"> OS version available for installation when update requested. </param>
-        /// <param name="lastInstalledOsVersion"> OS version running on device when update requested. </param>
-        /// <param name="lastOsUpdateUtc"> Time when update requested and new OS version available. </param>
+        /// <param name="lastAvailableOSVersion"> OS version available for installation when update requested. </param>
+        /// <param name="lastInstalledOSVersion"> OS version running on device when update requested. </param>
+        /// <param name="lastOSUpdateUtc"> Time when update requested and new OS version available. </param>
         /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProperties(string deviceId, string chipSku, string lastAvailableOsVersion, string lastInstalledOsVersion, DateTimeOffset? lastOsUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceProperties(string deviceId, string chipSku, string lastAvailableOSVersion, string lastInstalledOSVersion, DateTimeOffset? lastOSUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             ChipSku = chipSku;
-            LastAvailableOsVersion = lastAvailableOsVersion;
-            LastInstalledOsVersion = lastInstalledOsVersion;
-            LastOsUpdateUtc = lastOsUpdateUtc;
+            LastAvailableOSVersion = lastAvailableOSVersion;
+            LastInstalledOSVersion = lastInstalledOSVersion;
+            LastOSUpdateUtc = lastOSUpdateUtc;
             LastUpdateRequestUtc = lastUpdateRequestUtc;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Sphere.Models
         public string ChipSku { get; }
 
         /// <summary> OS version available for installation when update requested. </summary>
-        public string LastAvailableOsVersion { get; }
+        public string LastAvailableOSVersion { get; }
 
         /// <summary> OS version running on device when update requested. </summary>
-        public string LastInstalledOsVersion { get; }
+        public string LastInstalledOSVersion { get; }
 
         /// <summary> Time when update requested and new OS version available. </summary>
-        public DateTimeOffset? LastOsUpdateUtc { get; }
+        public DateTimeOffset? LastOSUpdateUtc { get; }
 
         /// <summary> Time when update was last requested. </summary>
         public DateTimeOffset? LastUpdateRequestUtc { get; }

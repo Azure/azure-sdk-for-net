@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="deviceId"> Device ID. </param>
         /// <param name="chipSku"> SKU of the chip. </param>
-        /// <param name="lastAvailableOsVersion"> OS version available for installation when update requested. </param>
-        /// <param name="lastInstalledOsVersion"> OS version running on device when update requested. </param>
-        /// <param name="lastOsUpdateUtc"> Time when update requested and new OS version available. </param>
+        /// <param name="lastAvailableOSVersion"> OS version available for installation when update requested. </param>
+        /// <param name="lastInstalledOSVersion"> OS version running on device when update requested. </param>
+        /// <param name="lastOSUpdateUtc"> Time when update requested and new OS version available. </param>
         /// <param name="lastUpdateRequestUtc"> Time when update was last requested. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Sphere.SphereDeviceData"/> instance for mocking. </returns>
-        public static SphereDeviceData SphereDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string deviceId = default, string chipSku = default, string lastAvailableOsVersion = default, string lastInstalledOsVersion = default, DateTimeOffset? lastOsUpdateUtc = default, DateTimeOffset? lastUpdateRequestUtc = default, SphereProvisioningState? provisioningState = default)
+        public static SphereDeviceData SphereDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string deviceId = default, string chipSku = default, string lastAvailableOSVersion = default, string lastInstalledOSVersion = default, DateTimeOffset? lastOSUpdateUtc = default, DateTimeOffset? lastUpdateRequestUtc = default, SphereProvisioningState? provisioningState = default)
         {
             return new SphereDeviceData(
                 id,
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                deviceId is null && chipSku is null && lastAvailableOsVersion is null && lastInstalledOsVersion is null && lastOsUpdateUtc is null && lastUpdateRequestUtc is null && provisioningState is null ? default : new DeviceProperties(
+                deviceId is null && chipSku is null && lastAvailableOSVersion is null && lastInstalledOSVersion is null && lastOSUpdateUtc is null && lastUpdateRequestUtc is null && provisioningState is null ? default : new DeviceProperties(
                     deviceId,
                     chipSku,
-                    lastAvailableOsVersion,
-                    lastInstalledOsVersion,
-                    lastOsUpdateUtc,
+                    lastAvailableOSVersion,
+                    lastInstalledOSVersion,
+                    lastOSUpdateUtc,
                     lastUpdateRequestUtc,
                     provisioningState,
                     null));
