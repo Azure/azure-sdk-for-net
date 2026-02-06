@@ -48,6 +48,7 @@ namespace Azure.Core
             {
                 return default;
             }
+
             return new ContentType(contentType);
         }
 
