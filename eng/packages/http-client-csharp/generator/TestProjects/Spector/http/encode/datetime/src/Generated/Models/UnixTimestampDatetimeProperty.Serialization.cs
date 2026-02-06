@@ -17,6 +17,10 @@ namespace Encode.Datetime
     {
         internal UnixTimestampDatetimeProperty() => throw null;
 
+        protected virtual UnixTimestampDatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator UnixTimestampDatetimeProperty(Response response) => throw null;
+
         void IJsonModel<UnixTimestampDatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode.Datetime
 
         UnixTimestampDatetimeProperty IPersistableModel<UnixTimestampDatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual UnixTimestampDatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<UnixTimestampDatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="unixTimestampDatetimeProperty"> The <see cref="UnixTimestampDatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnixTimestampDatetimeProperty unixTimestampDatetimeProperty) => throw null;
-
-        public static explicit operator UnixTimestampDatetimeProperty(Response response) => throw null;
     }
 }

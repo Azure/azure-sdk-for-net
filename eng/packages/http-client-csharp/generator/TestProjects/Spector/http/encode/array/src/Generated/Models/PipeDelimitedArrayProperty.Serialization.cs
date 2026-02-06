@@ -17,6 +17,10 @@ namespace Encode._Array
     {
         internal PipeDelimitedArrayProperty() => throw null;
 
+        protected virtual PipeDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator PipeDelimitedArrayProperty(Response response) => throw null;
+
         void IJsonModel<PipeDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode._Array
 
         PipeDelimitedArrayProperty IPersistableModel<PipeDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual PipeDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<PipeDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="pipeDelimitedArrayProperty"> The <see cref="PipeDelimitedArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(PipeDelimitedArrayProperty pipeDelimitedArrayProperty) => throw null;
-
-        public static explicit operator PipeDelimitedArrayProperty(Response response) => throw null;
     }
 }

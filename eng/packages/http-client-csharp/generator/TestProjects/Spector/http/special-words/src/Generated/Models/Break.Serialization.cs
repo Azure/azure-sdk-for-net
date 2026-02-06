@@ -16,6 +16,8 @@ namespace SpecialWords._Models
     {
         internal Break() => throw null;
 
+        protected virtual Break PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<Break>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace SpecialWords._Models
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Break IPersistableModel<Break>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual Break PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Break>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

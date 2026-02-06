@@ -14,53 +14,18 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The intent classification result for this conversation. </summary>
     public partial class ConversationalAIIntent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationalAIIntent"/>. </summary>
         /// <param name="name"> The name of the detected intent. </param>
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="type"/>, <paramref name="conversationItemRanges"/> or <paramref name="entities"/> is null. </exception>
-        internal ConversationalAIIntent(string name, string type, IEnumerable<ConversationItemRange> conversationItemRanges, IEnumerable<ConversationalAIEntity> entities)
+        internal ConversationalAIIntent(string name, string @type, IEnumerable<ConversationItemRange> conversationItemRanges, IEnumerable<ConversationalAIEntity> entities)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(conversationItemRanges, nameof(conversationItemRanges));
-            Argument.AssertNotNull(entities, nameof(entities));
-
             Name = name;
-            Type = type;
+            Type = @type;
             ConversationItemRanges = conversationItemRanges.ToList();
             Entities = entities.ToList();
         }
@@ -70,28 +35,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIIntent(string name, string type, IReadOnlyList<ConversationItemRange> conversationItemRanges, IReadOnlyList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationalAIIntent(string name, string @type, IList<ConversationItemRange> conversationItemRanges, IList<ConversationalAIEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = type;
+            Type = @type;
             ConversationItemRanges = conversationItemRanges;
             Entities = entities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIIntent"/> for deserialization. </summary>
-        internal ConversationalAIIntent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the detected intent. </summary>
         public string Name { get; }
+
         /// <summary> The type of intent, either "action" or "question". </summary>
         public string Type { get; }
+
         /// <summary> The ranges of conversation items where this intent was identified. </summary>
-        public IReadOnlyList<ConversationItemRange> ConversationItemRanges { get; }
+        public IList<ConversationItemRange> ConversationItemRanges { get; }
+
         /// <summary> The entities associated with this intent. </summary>
-        public IReadOnlyList<ConversationalAIEntity> Entities { get; }
+        public IList<ConversationalAIEntity> Entities { get; }
     }
 }

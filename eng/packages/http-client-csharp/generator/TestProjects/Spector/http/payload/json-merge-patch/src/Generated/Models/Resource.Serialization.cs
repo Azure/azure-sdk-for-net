@@ -17,6 +17,10 @@ namespace Payload.JsonMergePatch
     {
         internal Resource() => throw null;
 
+        protected virtual Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Resource(Response response) => throw null;
+
         void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Payload.JsonMergePatch
 
         Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="resource"> The <see cref="Resource"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Resource resource) => throw null;
-
-        public static explicit operator Resource(Response response) => throw null;
     }
 }

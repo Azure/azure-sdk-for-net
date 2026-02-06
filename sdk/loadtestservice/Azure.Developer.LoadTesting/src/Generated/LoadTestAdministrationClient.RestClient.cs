@@ -21,15 +21,15 @@ namespace Azure.Developer.LoadTesting
         private static ResponseClassifier _pipelineMessageClassifier202;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
         {

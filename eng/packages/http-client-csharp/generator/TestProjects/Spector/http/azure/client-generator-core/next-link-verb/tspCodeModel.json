@@ -171,7 +171,26 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept"
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "15",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -201,21 +220,7 @@
           },
           "parameters": [
             {
-              "$id": "15",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "15"
             }
           ],
           "response": {

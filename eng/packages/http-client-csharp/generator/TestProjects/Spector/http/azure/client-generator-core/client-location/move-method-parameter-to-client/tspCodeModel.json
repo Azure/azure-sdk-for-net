@@ -240,7 +240,12 @@
                     "scope": "Client",
                     "decorators": [],
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.storageAccount",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "16"
+                      }
+                    ]
                   },
                   {
                     "$id": "23",
@@ -260,15 +265,38 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.container",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "25",
+                        "kind": "method",
+                        "name": "container",
+                        "serializedName": "container",
+                        "type": {
+                          "$id": "26",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.container",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "25",
+                    "$id": "27",
                     "kind": "query",
                     "name": "blob",
                     "serializedName": "blob",
                     "type": {
-                      "$id": "26",
+                      "$id": "28",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -280,10 +308,33 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.blob",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "29",
+                        "kind": "method",
+                        "name": "blob",
+                        "serializedName": "blob",
+                        "type": {
+                          "$id": "30",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.blob",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "27",
+                    "$id": "31",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -296,7 +347,26 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.accept"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "32",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -326,63 +396,13 @@
               },
               "parameters": [
                 {
-                  "$id": "28",
-                  "kind": "method",
-                  "name": "container",
-                  "serializedName": "container",
-                  "type": {
-                    "$id": "29",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.container",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "25"
                 },
                 {
-                  "$id": "30",
-                  "kind": "method",
-                  "name": "blob",
-                  "serializedName": "blob",
-                  "type": {
-                    "$id": "31",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.blob",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "29"
                 },
                 {
-                  "$id": "32",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "32"
                 }
               ],
               "response": {

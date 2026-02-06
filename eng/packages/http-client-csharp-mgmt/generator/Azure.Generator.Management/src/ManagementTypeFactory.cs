@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
@@ -56,8 +55,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
+            return base.CreateClientCore(inputClient);
         }
 
         /// <inheritdoc/>
