@@ -40,18 +40,23 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary> Private endpoint. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> Group IDs. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public SignalRPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

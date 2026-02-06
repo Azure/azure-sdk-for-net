@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The default value is 255.
         /// Recommended ```255``` for multiple app servers in same size.
         /// </summary>
+        [WirePath("serverBalanceWeight")]
         public int? ServerBalanceWeight { get; set; }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The default value is 255.
         /// Recommended ```255``` for all of the cases.
         /// </summary>
+        [WirePath("connectionBalanceWeight")]
         public int? ConnectionBalanceWeight { get; set; }
 
         /// <summary>
@@ -77,6 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The default value is 0.
         /// Recommended ```255``` for replicas or app servers in different regions for disaster recovery.
         /// </summary>
+        [WirePath("latencyWeight")]
         public int? LatencyWeight { get; set; }
     }
 }

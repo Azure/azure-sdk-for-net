@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [WirePath("type")]
         internal ClientConnectionCountRuleDiscriminator Type { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

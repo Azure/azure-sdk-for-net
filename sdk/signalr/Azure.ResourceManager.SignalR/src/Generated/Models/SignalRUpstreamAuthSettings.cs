@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -33,15 +34,18 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Upstream auth type enum. </summary>
+        [WirePath("type")]
         public SignalRUpstreamAuthType? AuthType { get; set; }
 
         /// <summary> Managed identity settings for upstream. </summary>
+        [WirePath("managedIdentity")]
         internal ManagedIdentitySettings ManagedIdentity { get; set; }
 
         /// <summary>
         /// The Resource indicating the App ID URI of the target resource.
         /// It also appears in the aud (audience) claim of the issued token.
         /// </summary>
+        [WirePath("managedIdentity.resource")]
         public string ManagedIdentityResource
         {
             get

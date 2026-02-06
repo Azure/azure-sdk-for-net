@@ -41,15 +41,19 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Group Id of the private link resource. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> Required members of the private link resource. </summary>
+        [WirePath("requiredMembers")]
         public IList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Required private DNS zone names. </summary>
+        [WirePath("requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The list of resources that are onboarded to private link service. </summary>
+        [WirePath("shareablePrivateLinkResourceTypes")]
         public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; } = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
     }
 }

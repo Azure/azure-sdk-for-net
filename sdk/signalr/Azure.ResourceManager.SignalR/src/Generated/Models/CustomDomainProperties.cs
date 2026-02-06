@@ -42,15 +42,19 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary> The custom domain name. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; set; }
 
         /// <summary> Reference to a resource. </summary>
+        [WirePath("customCertificate")]
         internal ResourceReference CustomCertificate { get; set; }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("customCertificate.id")]
         public ResourceIdentifier CustomCertificateId
         {
             get

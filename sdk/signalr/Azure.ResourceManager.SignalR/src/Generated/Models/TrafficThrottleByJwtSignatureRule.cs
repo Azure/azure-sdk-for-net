@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -30,9 +31,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT signature will get disconnected if the message bytes exceeds this value. Default value is 1GB. </summary>
+        [WirePath("maxInboundMessageBytes")]
         public long? MaxInboundMessageBytes { get; set; }
 
         /// <summary> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </summary>
+        [WirePath("aggregationWindowInSeconds")]
         public int? AggregationWindowInSeconds { get; set; }
     }
 }

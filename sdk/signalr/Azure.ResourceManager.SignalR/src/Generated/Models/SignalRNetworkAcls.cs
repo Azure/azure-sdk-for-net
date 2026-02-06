@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Azure Networking ACL Action. </summary>
+        [WirePath("defaultAction")]
         public SignalRNetworkAclAction? DefaultAction { get; set; }
 
         /// <summary> Network ACL. </summary>
+        [WirePath("publicNetwork")]
         public SignalRNetworkAcl PublicNetwork { get; set; }
 
         /// <summary> ACLs for requests from private endpoints. </summary>
+        [WirePath("privateEndpoints")]
         public IList<SignalRPrivateEndpointAcl> PrivateEndpoints { get; }
 
         /// <summary> IP rules for filtering public traffic. </summary>
+        [WirePath("ipRules")]
         public IList<SignalRIPRule> IpRules { get; }
     }
 }

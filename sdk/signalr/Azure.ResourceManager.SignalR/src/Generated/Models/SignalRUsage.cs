@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Fully qualified ARM resource id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Current value for the usage quota. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
 
         /// <summary> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Localizable String object containing the name and a localized value. </summary>
+        [WirePath("name")]
         public SignalRUsageName Name { get; }
 
         /// <summary> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
     }
 }

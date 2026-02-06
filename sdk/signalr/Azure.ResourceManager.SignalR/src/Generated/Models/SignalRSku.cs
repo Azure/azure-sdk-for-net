@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The resource type that this object applies to. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
 
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public SignalRResourceSku Sku { get; }
 
         /// <summary> Describes scaling information of a sku. </summary>
+        [WirePath("capacity")]
         public SignalRSkuCapacity Capacity { get; }
     }
 }

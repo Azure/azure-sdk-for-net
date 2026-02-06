@@ -279,20 +279,6 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The list skus operation response. </summary>
-        /// <param name="value"> The list of skus available for the resource. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </param>
-        /// <returns> A new <see cref="Models.SignalRSkuListResult"/> instance for mocking. </returns>
-        public static SignalRSkuListResult SignalRSkuListResult(IEnumerable<SignalRSku> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<SignalRSku>();
-
-            return new SignalRSkuListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes an available sku.". </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>

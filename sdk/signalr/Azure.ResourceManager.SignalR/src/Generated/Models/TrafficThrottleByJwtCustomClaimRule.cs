@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The name of the claim in the JWT token. The message bytes with the same claim value will be aggregated. If the claim is not found in the token, the rule will be skipped. </summary>
+        [WirePath("claimName")]
         public string ClaimName { get; set; }
 
         /// <summary> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT claim will get disconnected if the message bytes exceeds this value. Default value is 1GB. </summary>
+        [WirePath("maxInboundMessageBytes")]
         public long? MaxInboundMessageBytes { get; set; }
 
         /// <summary> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </summary>
+        [WirePath("aggregationWindowInSeconds")]
         public int? AggregationWindowInSeconds { get; set; }
     }
 }

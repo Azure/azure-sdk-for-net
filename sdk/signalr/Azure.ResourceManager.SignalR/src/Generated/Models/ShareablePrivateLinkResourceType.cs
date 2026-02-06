@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The name of the resource type that has been onboarded to private link service. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
+        [WirePath("properties")]
         public ShareablePrivateLinkResourceProperties Properties { get; set; }
     }
 }

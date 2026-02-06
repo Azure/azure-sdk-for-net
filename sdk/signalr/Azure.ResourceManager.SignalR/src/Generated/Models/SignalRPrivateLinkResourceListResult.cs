@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The PrivateLinkResource items on this page. </summary>
+        [WirePath("value")]
         public IList<SignalRPrivateLinkResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

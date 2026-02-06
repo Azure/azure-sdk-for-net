@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// and they want to keep the same client connection alive during this session.
         /// The service considers the client disconnected if it hasn't received a message (including keep-alive) in this interval.
         /// </summary>
+        [WirePath("connectionTimeoutInSeconds")]
         public int? ConnectionTimeoutInSeconds { get; set; }
 
         /// <summary>
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// reducing network traffic, but note that it may take longer to detect a disconnection.
         /// This interval ensures that the connection is maintained by sending periodic keep-alive messages to the client.
         /// </summary>
+        [WirePath("keepAliveIntervalInSeconds")]
         public int? KeepAliveIntervalInSeconds { get; set; }
     }
 }

@@ -53,12 +53,15 @@ namespace Azure.ResourceManager.SignalR.Models
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// <list type="bullet"><item><description>ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.</description></item><item><description>EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.</description></item></list>
         /// </summary>
+        [WirePath("flag")]
         public SignalRFeatureFlag Flag { get; set; }
 
         /// <summary> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Optional properties related to this feature. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
     }
 }

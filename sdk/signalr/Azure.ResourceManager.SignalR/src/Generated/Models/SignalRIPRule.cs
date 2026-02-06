@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> An IP or CIDR or ServiceTag. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Azure Networking ACL Action. </summary>
+        [WirePath("action")]
         public SignalRNetworkAclAction? Action { get; set; }
     }
 }

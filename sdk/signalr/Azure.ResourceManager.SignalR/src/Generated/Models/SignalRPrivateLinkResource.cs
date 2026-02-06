@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Private link resource properties. </summary>
+        [WirePath("properties")]
         internal SignalRPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> Group Id of the private link resource. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Required members of the private link resource. </summary>
+        [WirePath("properties.requiredMembers")]
         public IList<string> RequiredMembers
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Required private DNS zone names. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The list of resources that are onboarded to private link service. </summary>
+        [WirePath("properties.shareablePrivateLinkResourceTypes")]
         public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes
         {
             get

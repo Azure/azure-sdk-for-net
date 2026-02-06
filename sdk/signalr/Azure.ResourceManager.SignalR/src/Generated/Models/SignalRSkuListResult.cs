@@ -12,7 +12,7 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> The list skus operation response. </summary>
-    public partial class SignalRSkuListResult
+    internal partial class SignalRSkuListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -38,12 +38,14 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The list of skus available for the resource. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SignalRSku> Value { get; }
 
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

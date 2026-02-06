@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The Resource indicating the App ID URI of the target resource.
         /// It also appears in the aud (audience) claim of the issued token.
         /// </summary>
+        [WirePath("resource")]
         public string Resource { get; set; }
     }
 }

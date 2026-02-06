@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Describes the properties of an existing Shared Private Link Resource. </summary>
+        [WirePath("properties")]
         internal SharedPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
+        [WirePath("properties.privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
+        [WirePath("properties.requestMessage")]
         public string RequestMessage
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> A list of FQDNs for third party private link service. </summary>
+        [WirePath("properties.fqdns")]
         public IList<string> Fqdns
         {
             get
@@ -110,6 +116,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Status of the shared private link resource. </summary>
+        [WirePath("properties.status")]
         public SignalRSharedPrivateLinkResourceStatus? Status
         {
             get

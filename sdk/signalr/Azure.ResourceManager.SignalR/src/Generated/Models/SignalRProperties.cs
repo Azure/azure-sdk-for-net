@@ -107,33 +107,43 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary> The publicly accessible IP of the resource. </summary>
+        [WirePath("externalIP")]
         public string ExternalIP { get; }
 
         /// <summary> FQDN of the service instance. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
 
         /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
+        [WirePath("publicPort")]
         public int? PublicPort { get; }
 
         /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
+        [WirePath("serverPort")]
         public int? ServerPort { get; }
 
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Private endpoint connections to the resource. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<SignalRPrivateEndpointConnectionData>();
 
         /// <summary> The list of shared private link resources. </summary>
+        [WirePath("sharedPrivateLinkResources")]
         public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get; } = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
 
         /// <summary> TLS settings for the resource. </summary>
+        [WirePath("tls")]
         internal SignalRTlsSettings Tls { get; set; }
 
         /// <summary> Deprecated. </summary>
+        [WirePath("hostNamePrefix")]
         public string HostNamePrefix { get; }
 
         /// <summary>
@@ -143,27 +153,35 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When a featureFlag is not explicitly set, its globally default value will be used
         /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
+        [WirePath("features")]
         public IList<SignalRFeature> Features { get; } = new ChangeTrackingList<SignalRFeature>();
 
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+        [WirePath("liveTraceConfiguration")]
         public SignalRLiveTraceConfiguration LiveTraceConfiguration { get; set; }
 
         /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
+        [WirePath("resourceLogConfiguration")]
         internal SignalRResourceLogConfiguration ResourceLogConfiguration { get; set; }
 
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
+        [WirePath("cors")]
         internal SignalRCorsSettings Cors { get; set; }
 
         /// <summary> Serverless settings. </summary>
+        [WirePath("serverless")]
         public SignalRServerlessSettings Serverless { get; set; }
 
         /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
+        [WirePath("upstream")]
         internal ServerlessUpstreamSettings Upstream { get; set; }
 
         /// <summary> Network ACLs for the resource. </summary>
+        [WirePath("networkACLs")]
         public SignalRNetworkAcls NetworkACLs { get; set; }
 
         /// <summary> Application firewall settings for the resource. </summary>
+        [WirePath("applicationFirewall")]
         public SignalRClientTrafficControlRule ApplicationFirewall { get; set; }
 
         /// <summary>
@@ -171,6 +189,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When it's Enabled, network ACLs still apply.
         /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
+        [WirePath("publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
@@ -178,6 +197,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary>
@@ -185,6 +205,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
+        [WirePath("disableAadAuth")]
         public bool? DisableAadAuth { get; set; }
 
         /// <summary>
@@ -192,6 +213,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
         /// </summary>
+        [WirePath("regionEndpointEnabled")]
         public string RegionEndpointEnabled { get; set; }
 
         /// <summary>
@@ -199,12 +221,15 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When it's true, the data plane of the resource is shutdown.
         /// When it's false, the data plane of the resource is started.
         /// </summary>
+        [WirePath("resourceStopped")]
         public string ResourceStopped { get; set; }
 
         /// <summary> Route settings for the resource. </summary>
+        [WirePath("routeSettings")]
         public SignalRRouteSettings RouteSettings { get; set; }
 
         /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
+        [WirePath("tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
             get
@@ -222,6 +247,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("resourceLogConfiguration.categories")]
         public IList<SignalRResourceLogCategory> ResourceLogCategories
         {
             get
@@ -235,6 +261,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
+        [WirePath("cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -248,6 +275,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
+        [WirePath("upstream.templates")]
         public IList<SignalRUpstreamTemplate> UpstreamTemplates
         {
             get

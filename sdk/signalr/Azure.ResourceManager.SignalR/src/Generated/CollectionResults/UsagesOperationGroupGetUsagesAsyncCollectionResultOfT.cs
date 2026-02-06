@@ -15,19 +15,19 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    internal partial class UsagesOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<SignalRUsage>
+    internal partial class UsagesOperationGroupGetUsagesAsyncCollectionResultOfT : AsyncPageable<SignalRUsage>
     {
         private readonly UsagesOperationGroup _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of UsagesOperationGroupGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UsagesOperationGroupGetUsagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UsagesOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesOperationGroupGetAllAsyncCollectionResultOfT(UsagesOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.SignalR
             _context = context;
         }
 
-        /// <summary> Gets the pages of UsagesOperationGroupGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UsagesOperationGroupGetUsagesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsagesOperationGroupGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of UsagesOperationGroupGetUsagesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SignalRUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUsagesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetUsagesRequest(_subscriptionId, _location, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.GetUsages");
             scope.Start();
             try
             {

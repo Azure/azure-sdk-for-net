@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
 
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

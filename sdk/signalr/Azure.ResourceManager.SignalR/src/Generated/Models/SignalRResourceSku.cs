@@ -65,18 +65,22 @@ namespace Azure.ResourceManager.SignalR.Models
         /// The name of the SKU. Required.
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
         /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Optional tier of this particular SKU. 'Standard' or 'Free'.
         /// `Basic` is deprecated, use `Standard` instead.
         /// </summary>
+        [WirePath("tier")]
         public SignalRSkuTier? Tier { get; set; }
 
         /// <summary> Not used. Retained for future use. </summary>
+        [WirePath("size")]
         public string Size { get; }
 
         /// <summary> Not used. Retained for future use. </summary>
+        [WirePath("family")]
         public string Family { get; }
 
         /// <summary>
@@ -88,6 +92,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
         /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
         /// </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

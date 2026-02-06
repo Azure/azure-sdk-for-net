@@ -43,9 +43,11 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Properties of a custom domain. </summary>
+        [WirePath("properties")]
         internal CustomDomainProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The custom domain name. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName
         {
             get
@@ -72,6 +75,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("properties.customCertificate.id")]
         public ResourceIdentifier CustomCertificateId
         {
             get

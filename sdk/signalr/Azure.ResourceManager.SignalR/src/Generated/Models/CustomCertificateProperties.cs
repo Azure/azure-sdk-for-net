@@ -46,15 +46,19 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary> Base uri of the KeyVault that stores certificate. </summary>
+        [WirePath("keyVaultBaseUri")]
         public Uri KeyVaultBaseUri { get; set; }
 
         /// <summary> Certificate secret name. </summary>
+        [WirePath("keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
 
         /// <summary> Certificate secret version. </summary>
+        [WirePath("keyVaultSecretVersion")]
         public string KeyVaultSecretVersion { get; set; }
     }
 }

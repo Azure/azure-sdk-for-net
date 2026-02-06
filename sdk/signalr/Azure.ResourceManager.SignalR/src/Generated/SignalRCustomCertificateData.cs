@@ -45,9 +45,11 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Custom certificate properties. </summary>
+        [WirePath("properties")]
         internal CustomCertificateProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -57,6 +59,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Base uri of the KeyVault that stores certificate. </summary>
+        [WirePath("properties.keyVaultBaseUri")]
         public Uri KeyVaultBaseUri
         {
             get
@@ -74,6 +77,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Certificate secret name. </summary>
+        [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName
         {
             get
@@ -91,6 +95,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Certificate secret version. </summary>
+        [WirePath("properties.keyVaultSecretVersion")]
         public string KeyVaultSecretVersion
         {
             get

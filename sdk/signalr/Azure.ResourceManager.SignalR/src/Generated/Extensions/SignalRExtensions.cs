@@ -302,14 +302,14 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
-        /// <param name="signalRNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent signalRNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, signalRNameAvailabilityContent, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,21 +321,21 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location name. </param>
-        /// <param name="signalRNameAvailabilityContent"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent signalRNameAvailabilityContent, CancellationToken cancellationToken = default)
+        public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, signalRNameAvailabilityContent, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// List resource usage quotas by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetAllAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -343,18 +343,18 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SignalRUsage> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SignalRUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetAllAsync(location, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// List resource usage quotas by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetAll(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetUsages(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SignalRUsage> GetAll(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<SignalRUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetAll(location, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

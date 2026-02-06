@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Maximum connection count allowed for the same user ID. Clients with the same user ID will get rejected if the connection count exceeds this value. Default value is 20. </summary>
+        [WirePath("maxCount")]
         public int? MaxCount { get; set; }
     }
 }

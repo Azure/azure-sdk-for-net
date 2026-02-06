@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal ReplicaProperties Properties { get; set; }
 
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public SignalRResourceSku Sku { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.SignalR
         /// Enable or disable the regional endpoint. Default to "Enabled".
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// </summary>
+        [WirePath("properties.regionEndpointEnabled")]
         public string RegionEndpointEnabled
         {
             get
@@ -82,6 +86,7 @@ namespace Azure.ResourceManager.SignalR
         /// When it's true, the data plane of the resource is shutdown.
         /// When it's false, the data plane of the resource is started.
         /// </summary>
+        [WirePath("properties.resourceStopped")]
         public string ResourceStopped
         {
             get

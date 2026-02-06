@@ -15,7 +15,7 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> The list skus operation response. </summary>
-    public partial class SignalRSkuListResult : IJsonModel<SignalRSkuListResult>
+    internal partial class SignalRSkuListResult : IJsonModel<SignalRSkuListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

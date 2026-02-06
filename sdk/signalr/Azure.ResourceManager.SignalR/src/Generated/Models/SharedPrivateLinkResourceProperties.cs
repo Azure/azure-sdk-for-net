@@ -52,21 +52,27 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
+        [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
+        [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
 
         /// <summary> A list of FQDNs for third party private link service. </summary>
+        [WirePath("fqdns")]
         public IList<string> Fqdns { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Status of the shared private link resource. </summary>
+        [WirePath("status")]
         public SignalRSharedPrivateLinkResourceStatus? Status { get; }
     }
 }

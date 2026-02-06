@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The primary access key. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
 
         /// <summary> The secondary access key. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
 
         /// <summary> Connection string constructed via the primaryKey. </summary>
+        [WirePath("primaryConnectionString")]
         public string PrimaryConnectionString { get; }
 
         /// <summary> Connection string constructed via the secondaryKey. </summary>
+        [WirePath("secondaryConnectionString")]
         public string SecondaryConnectionString { get; }
     }
 }

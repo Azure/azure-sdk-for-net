@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// There are 3 kind of patterns supported:
         /// <list type="number"><item><description>"*", it to matches any hub name.</description></item><item><description>Combine multiple hubs with ",", for example "hub1,hub2", it matches "hub1" and "hub2".</description></item><item><description>The single hub name, for example, "hub1", it matches "hub1".</description></item></list>
         /// </summary>
+        [WirePath("hubPattern")]
         public string HubPattern { get; set; }
 
         /// <summary>
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// There are 3 kind of patterns supported:
         /// <list type="number"><item><description>"*", it to matches any event name.</description></item><item><description>Combine multiple events with ",", for example "connect,disconnect", it matches event "connect" and "disconnect".</description></item><item><description>The single event name, for example, "connect", it matches "connect".</description></item></list>
         /// </summary>
+        [WirePath("eventPattern")]
         public string EventPattern { get; set; }
 
         /// <summary>
@@ -84,15 +86,18 @@ namespace Azure.ResourceManager.SignalR.Models
         /// There are 3 kind of patterns supported:
         /// <list type="number"><item><description>"*", it to matches any category name.</description></item><item><description>Combine multiple categories with ",", for example "connections,messages", it matches category "connections" and "messages".</description></item><item><description>The single category name, for example, "connections", it matches the category "connections".</description></item></list>
         /// </summary>
+        [WirePath("categoryPattern")]
         public string CategoryPattern { get; set; }
 
         /// <summary>
         /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
         /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
         /// </summary>
+        [WirePath("urlTemplate")]
         public string UrlTemplate { get; set; }
 
         /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
+        [WirePath("auth")]
         public SignalRUpstreamAuthSettings Auth { get; set; }
     }
 }

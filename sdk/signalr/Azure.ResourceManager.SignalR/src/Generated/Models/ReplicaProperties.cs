@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -42,12 +43,14 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
 
         /// <summary>
         /// Enable or disable the regional endpoint. Default to "Enabled".
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// </summary>
+        [WirePath("regionEndpointEnabled")]
         public string RegionEndpointEnabled { get; set; }
 
         /// <summary>
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When it's true, the data plane of the resource is shutdown.
         /// When it's false, the data plane of the resource is started.
         /// </summary>
+        [WirePath("resourceStopped")]
         public string ResourceStopped { get; set; }
     }
 }

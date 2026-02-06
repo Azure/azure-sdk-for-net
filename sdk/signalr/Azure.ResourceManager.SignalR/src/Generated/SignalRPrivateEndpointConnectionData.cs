@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Private endpoint connection properties. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Group IDs. </summary>
+        [WirePath("properties.groupIds")]
         public IReadOnlyList<string> GroupIds
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Connection state of the private endpoint connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public SignalRPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

@@ -47,18 +47,23 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> A class that describes the properties of the resource. </summary>
+        [WirePath("properties")]
         internal SignalRProperties Properties { get; set; }
 
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public SignalRResourceSku Sku { get; set; }
 
         /// <summary> The kind of the service. </summary>
+        [WirePath("kind")]
         public SignalRServiceKind? Kind { get; set; }
 
         /// <summary> A class represent managed identities used for request and response. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The publicly accessible IP of the resource. </summary>
+        [WirePath("properties.externalIP")]
         public string ExternalIP
         {
             get
@@ -77,6 +83,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> FQDN of the service instance. </summary>
+        [WirePath("properties.hostName")]
         public string HostName
         {
             get
@@ -86,6 +93,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
+        [WirePath("properties.publicPort")]
         public int? PublicPort
         {
             get
@@ -95,6 +103,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
+        [WirePath("properties.serverPort")]
         public int? ServerPort
         {
             get
@@ -104,6 +113,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -113,6 +123,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Private endpoint connections to the resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -126,6 +137,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> The list of shared private link resources. </summary>
+        [WirePath("properties.sharedPrivateLinkResources")]
         public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources
         {
             get
@@ -139,6 +151,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Deprecated. </summary>
+        [WirePath("properties.hostNamePrefix")]
         public string HostNamePrefix
         {
             get
@@ -154,6 +167,7 @@ namespace Azure.ResourceManager.SignalR
         /// When a featureFlag is not explicitly set, its globally default value will be used
         /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </summary>
+        [WirePath("properties.features")]
         public IList<SignalRFeature> Features
         {
             get
@@ -167,6 +181,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+        [WirePath("properties.liveTraceConfiguration")]
         public SignalRLiveTraceConfiguration LiveTraceConfiguration
         {
             get
@@ -184,6 +199,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Serverless settings. </summary>
+        [WirePath("properties.serverless")]
         public SignalRServerlessSettings Serverless
         {
             get
@@ -201,6 +217,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Network ACLs for the resource. </summary>
+        [WirePath("properties.networkACLs")]
         public SignalRNetworkAcls NetworkACLs
         {
             get
@@ -218,6 +235,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Application firewall settings for the resource. </summary>
+        [WirePath("properties.applicationFirewall")]
         public SignalRClientTrafficControlRule ApplicationFirewall
         {
             get
@@ -239,6 +257,7 @@ namespace Azure.ResourceManager.SignalR
         /// When it's Enabled, network ACLs still apply.
         /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess
         {
             get
@@ -260,6 +279,7 @@ namespace Azure.ResourceManager.SignalR
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth
         {
             get
@@ -281,6 +301,7 @@ namespace Azure.ResourceManager.SignalR
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
+        [WirePath("properties.disableAadAuth")]
         public bool? DisableAadAuth
         {
             get
@@ -302,6 +323,7 @@ namespace Azure.ResourceManager.SignalR
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
         /// </summary>
+        [WirePath("properties.regionEndpointEnabled")]
         public string RegionEndpointEnabled
         {
             get
@@ -323,6 +345,7 @@ namespace Azure.ResourceManager.SignalR
         /// When it's true, the data plane of the resource is shutdown.
         /// When it's false, the data plane of the resource is started.
         /// </summary>
+        [WirePath("properties.resourceStopped")]
         public string ResourceStopped
         {
             get
@@ -340,6 +363,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Route settings for the resource. </summary>
+        [WirePath("properties.routeSettings")]
         public SignalRRouteSettings RouteSettings
         {
             get
@@ -357,6 +381,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
+        [WirePath("properties.tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
             get
@@ -374,6 +399,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("properties.resourceLogConfiguration.categories")]
         public IList<SignalRResourceLogCategory> ResourceLogCategories
         {
             get
@@ -387,6 +413,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
+        [WirePath("properties.cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -400,6 +427,7 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
+        [WirePath("properties.upstream.templates")]
         public IList<SignalRUpstreamTemplate> UpstreamTemplates
         {
             get

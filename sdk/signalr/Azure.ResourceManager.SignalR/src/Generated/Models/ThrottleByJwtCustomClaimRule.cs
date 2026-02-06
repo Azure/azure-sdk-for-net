@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The name of the claim in the JWT token. The client connection with the same claim value will be aggregated. If the claim is not found in the token, the connection will be allowed. </summary>
+        [WirePath("claimName")]
         public string ClaimName { get; set; }
 
         /// <summary> Maximum connection count allowed for the same Jwt claim value. Clients with the same Jwt claim will get rejected if the connection count exceeds this value. Default value is 20. </summary>
+        [WirePath("maxCount")]
         public int? MaxCount { get; set; }
     }
 }

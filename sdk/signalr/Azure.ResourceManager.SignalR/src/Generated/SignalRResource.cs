@@ -587,30 +587,14 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SignalRSkuListResult>> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SignalRSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _signalRResourcesClientDiagnostics.CreateScope("SignalRResource.GetSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SignalRSkuListResult> response = Response.FromValue(SignalRSkuListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SignalRResourcesGetSkusAsyncCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -635,30 +619,14 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SignalRSkuListResult> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SignalRSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _signalRResourcesClientDiagnostics.CreateScope("SignalRResource.GetSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SignalRSkuListResult> response = Response.FromValue(SignalRSkuListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SignalRResourcesGetSkusCollectionResultOfT(_signalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -683,12 +651,12 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="signalRRegenerateKeyContent"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signalRRegenerateKeyContent"/> is null. </exception>
-        public virtual async Task<ArmOperation<SignalRKeys>> RegenerateKeyAsync(WaitUntil waitUntil, SignalRRegenerateKeyContent signalRRegenerateKeyContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SignalRKeys>> RegenerateKeyAsync(WaitUntil waitUntil, SignalRRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signalRRegenerateKeyContent, nameof(signalRRegenerateKeyContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _signalRResourcesClientDiagnostics.CreateScope("SignalRResource.RegenerateKey");
             scope.Start();
@@ -698,7 +666,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRRegenerateKeyContent.ToRequestContent(signalRRegenerateKeyContent), context);
+                HttpMessage message = _signalRResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRKeys> operation = new SignalRArmOperation<SignalRKeys>(
                     new SignalRKeysOperationSource(),
@@ -742,12 +710,12 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="signalRRegenerateKeyContent"> Parameter that describes the Regenerate Key Operation. </param>
+        /// <param name="content"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signalRRegenerateKeyContent"/> is null. </exception>
-        public virtual ArmOperation<SignalRKeys> RegenerateKey(WaitUntil waitUntil, SignalRRegenerateKeyContent signalRRegenerateKeyContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SignalRKeys> RegenerateKey(WaitUntil waitUntil, SignalRRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signalRRegenerateKeyContent, nameof(signalRRegenerateKeyContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _signalRResourcesClientDiagnostics.CreateScope("SignalRResource.RegenerateKey");
             scope.Start();
@@ -757,7 +725,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRRegenerateKeyContent.ToRequestContent(signalRRegenerateKeyContent), context);
+                HttpMessage message = _signalRResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SignalRRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRKeys> operation = new SignalRArmOperation<SignalRKeys>(
                     new SignalRKeysOperationSource(),

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
+        [WirePath("clientCertEnabled")]
         public bool? IsClientCertEnabled { get; set; }
     }
 }

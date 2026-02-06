@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The type of access key. </summary>
+        [WirePath("keyType")]
         public SignalRKeyType? KeyType { get; set; }
     }
 }

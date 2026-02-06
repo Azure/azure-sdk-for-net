@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Rules to control the client connection count. </summary>
+        [WirePath("clientConnectionCountRules")]
         public IList<SignalRClientConnectionCountRule> ClientConnectionCountRules { get; }
 
         /// <summary> Rules to control the client traffic. </summary>
+        [WirePath("clientTrafficControlRules")]
         public IList<ClientTrafficControlRule> ClientTrafficControlRules { get; }
 
         /// <summary> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </summary>
+        [WirePath("maxClientConnectionLifetimeInSeconds")]
         public long? MaxClientConnectionLifetimeInSeconds { get; set; }
     }
 }
