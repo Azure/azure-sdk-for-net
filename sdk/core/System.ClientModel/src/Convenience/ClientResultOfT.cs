@@ -37,5 +37,11 @@ public class ClientResult<T> : ClientResult
     /// </summary>
     /// <param name="result">The <see cref="ClientResult{T}"/> instance.</param>
     public static implicit operator T(ClientResult<T> result)
-        => result != null ? result.Value! : default!;
+    {
+        if (result is null)
+        {
+            return default!;
+        }
+        return result.Value!;
+    }
 }

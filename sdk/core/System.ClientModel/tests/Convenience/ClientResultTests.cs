@@ -150,7 +150,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void ImplicitConversionHandlesNullClientResultSafely()
+    public void CanImplicitlyCastNullClientResultOfT()
     {
         ClientResult<string> nullClientResult = null!;
         string convertedValue = nullClientResult;

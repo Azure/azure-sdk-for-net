@@ -141,7 +141,10 @@ namespace Azure.Core
         /// <param name="content">The <see cref="string"/> to use.</param>
         public static implicit operator RequestContent(string content)
         {
-            if (content == null) return null!;
+            if (content is null)
+            {
+                return null!;
+            }
             return Create(content);
         }
 
@@ -151,7 +154,10 @@ namespace Azure.Core
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         public static implicit operator RequestContent(BinaryData content)
         {
-            if (content == null) return null!;
+            if (content is null)
+            {
+                return null!;
+            }
             return Create(content);
         }
 
@@ -161,7 +167,10 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content)
         {
-            if (content == null) return null!;
+            if (content is null)
+            {
+                return null!;
+            }
             return Create(content);
         }
 

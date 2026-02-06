@@ -29,7 +29,14 @@ namespace Azure
         /// Returns the value of this <see cref="Response{T}"/> object.
         /// </summary>
         /// <param name="response">The <see cref="Response{T}"/> instance.</param>
-        public static implicit operator T(Response<T> response) => response != null ? response.Value! : default!;
+        public static implicit operator T(Response<T> response)
+        {
+            if (response is null)
+            {
+                return default!;
+            }
+            return response.Value!;
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

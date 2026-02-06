@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ImplicitCastFromResponseTToNullReturnsDefault()
+        public void ImplicitCastFromResponseTToNullFails()
         {
             Response<string> response = null;
             string s = response;

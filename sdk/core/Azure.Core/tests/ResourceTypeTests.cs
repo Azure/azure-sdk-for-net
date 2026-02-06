@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
         }
 
         [TestCase]
-        public void NullImplicitFromStringReturnsDefault()
+        public void NullImplicitFromString()
         {
             string from = null;
             ResourceType to = from;

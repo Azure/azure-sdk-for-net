@@ -23,7 +23,10 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator bool(DynamicData value)
         {
-            if (value is null) return false;
+            if (value is null)
+            {
+                return false;
+            }
 
             try
             {
@@ -41,7 +44,10 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator string?(DynamicData value)
         {
-            if (value is null) return null;
+            if (value is null)
+            {
+                return null;
+            }
 
             try
             {
@@ -59,18 +65,22 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator byte(DynamicData value)
         {
-            if (value is null) return 0;
+            if (value is null)
+            {
+                return default;
+            }
+
             try
             {
-                return value!._element.GetByte();
+                return value._element.GetByte();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(byte), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(byte), value._element), formatException);
             }
         }
 
@@ -80,18 +90,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator sbyte(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetSByte();
+                return value._element.GetSByte();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(sbyte), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(sbyte), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(sbyte), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(sbyte), value._element), formatException);
             }
         }
 
@@ -101,18 +114,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator short(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetInt16();
+                return value._element.GetInt16();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(short), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(short), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(short), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(short), value._element), formatException);
             }
         }
 
@@ -122,18 +138,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator ushort(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetUInt16();
+                return value._element.GetUInt16();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ushort), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ushort), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ushort), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ushort), value._element), formatException);
             }
         }
 
@@ -143,18 +162,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator int(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetInt32();
+                return value._element.GetInt32();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(int), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(int), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(int), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(int), value._element), formatException);
             }
         }
 
@@ -164,18 +186,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator uint(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetUInt32();
+                return value._element.GetUInt32();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(uint), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(uint), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(uint), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(uint), value._element), formatException);
             }
         }
 
@@ -185,18 +210,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator long(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetInt64();
+                return value._element.GetInt64();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(long), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(long), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(long), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(long), value._element), formatException);
             }
         }
 
@@ -206,18 +234,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator ulong(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetUInt64();
+                return value._element.GetUInt64();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ulong), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(ulong), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ulong), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(ulong), value._element), formatException);
             }
         }
 
@@ -227,18 +258,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator float(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetSingle();
+                return value._element.GetSingle();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(float), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(float), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(float), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(float), value._element), formatException);
             }
         }
 
@@ -248,18 +282,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator double(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetDouble();
+                return value._element.GetDouble();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(double), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(double), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(double), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(double), value._element), formatException);
             }
         }
 
@@ -269,18 +306,21 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         public static implicit operator decimal(DynamicData value)
         {
-            if (value is null) return default;
+            if (value is null)
+            {
+                return default;
+            }
             try
             {
-                return value!._element.GetDecimal();
+                return value._element.GetDecimal();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(decimal), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(decimal), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(decimal), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(decimal), value._element), formatException);
             }
         }
 
@@ -297,15 +337,15 @@ namespace Azure.Core.Serialization
                     return value.ConvertTo<DateTime>();
                 }
 
-                return value!._element.GetDateTime();
+                return value._element.GetDateTime();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTime), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTime), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTime), value._element), formatException);
             }
         }
 
@@ -322,15 +362,15 @@ namespace Azure.Core.Serialization
                     return value.ConvertTo<DateTimeOffset>();
                 }
 
-                return value!._element.GetDateTimeOffset();
+                return value._element.GetDateTimeOffset();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(DateTimeOffset), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTimeOffset), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(DateTimeOffset), value._element), formatException);
             }
         }
 
@@ -342,15 +382,15 @@ namespace Azure.Core.Serialization
         {
             try
             {
-                return value!._element.GetGuid();
+                return value._element.GetGuid();
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value!._element), e);
+                throw new InvalidCastException(GetInvalidKindExceptionText(typeof(Guid), value._element), e);
             }
             catch (FormatException formatException)
             {
-                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(Guid), value!._element), formatException);
+                throw new InvalidCastException(GetInvalidFormatExceptionText(typeof(Guid), value._element), formatException);
             }
         }
 
