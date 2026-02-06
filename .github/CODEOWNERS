@@ -515,10 +515,10 @@
 # ServiceOwners:                                                   @chenkennt @JialinXin @vicancy @Y-Sindo
 
 # PRLabel: %Speech Transcription
-/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
 
 # ServiceLabel: %Speech Transcription
-# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji @Lafi7e
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
