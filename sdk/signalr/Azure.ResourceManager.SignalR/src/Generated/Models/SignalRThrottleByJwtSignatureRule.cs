@@ -12,18 +12,18 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client connection by the JWT signature. </summary>
-    public partial class ThrottleByJwtSignatureRule : SignalRClientConnectionCountRule
+    public partial class SignalRThrottleByJwtSignatureRule : SignalRClientConnectionCountRule
     {
-        /// <summary> Initializes a new instance of <see cref="ThrottleByJwtSignatureRule"/>. </summary>
-        public ThrottleByJwtSignatureRule() : base(ClientConnectionCountRuleDiscriminator.ThrottleByJwtSignatureRule)
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByJwtSignatureRule"/>. </summary>
+        public SignalRThrottleByJwtSignatureRule() : base(ClientConnectionCountRuleDiscriminator.ThrottleByJwtSignatureRule)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThrottleByJwtSignatureRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByJwtSignatureRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCount"> Maximum connection count allowed for the same JWT signature. Clients with the same JWT signature will get rejected if the connection count exceeds this value. Default value is 20. </param>
-        internal ThrottleByJwtSignatureRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCount) : base(@type, additionalBinaryDataProperties)
+        internal SignalRThrottleByJwtSignatureRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCount) : base(@type, additionalBinaryDataProperties)
         {
             MaxCount = maxCount;
         }

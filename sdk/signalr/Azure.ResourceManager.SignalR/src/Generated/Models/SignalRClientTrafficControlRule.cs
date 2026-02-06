@@ -11,42 +11,33 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Application firewall settings for the resource. </summary>
-    public partial class SignalRClientTrafficControlRule
+    /// <summary>
+    /// A base class for client traffic control rules
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/>, <see cref="SignalRTrafficThrottleByJwtSignatureRule"/>, and <see cref="SignalRTrafficThrottleByUserIdRule"/>.
+    /// </summary>
+    public abstract partial class SignalRClientTrafficControlRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SignalRClientTrafficControlRule"/>. </summary>
-        public SignalRClientTrafficControlRule()
+        /// <param name="type"></param>
+        private protected SignalRClientTrafficControlRule(ClientTrafficControlRuleDiscriminator @type)
         {
-            ClientConnectionCountRules = new ChangeTrackingList<SignalRClientConnectionCountRule>();
-            ClientTrafficControlRules = new ChangeTrackingList<ClientTrafficControlRule>();
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRClientTrafficControlRule"/>. </summary>
-        /// <param name="clientConnectionCountRules"> Rules to control the client connection count. </param>
-        /// <param name="clientTrafficControlRules"> Rules to control the client traffic. </param>
-        /// <param name="maxClientConnectionLifetimeInSeconds"> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRClientTrafficControlRule(IList<SignalRClientConnectionCountRule> clientConnectionCountRules, IList<ClientTrafficControlRule> clientTrafficControlRules, long? maxClientConnectionLifetimeInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalRClientTrafficControlRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientConnectionCountRules = clientConnectionCountRules;
-            ClientTrafficControlRules = clientTrafficControlRules;
-            MaxClientConnectionLifetimeInSeconds = maxClientConnectionLifetimeInSeconds;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Rules to control the client connection count. </summary>
-        [WirePath("clientConnectionCountRules")]
-        public IList<SignalRClientConnectionCountRule> ClientConnectionCountRules { get; }
-
-        /// <summary> Rules to control the client traffic. </summary>
-        [WirePath("clientTrafficControlRules")]
-        public IList<ClientTrafficControlRule> ClientTrafficControlRules { get; }
-
-        /// <summary> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </summary>
-        [WirePath("maxClientConnectionLifetimeInSeconds")]
-        public long? MaxClientConnectionLifetimeInSeconds { get; set; }
+        /// <summary> Gets or sets the Type. </summary>
+        [WirePath("type")]
+        internal ClientTrafficControlRuleDiscriminator Type { get; set; }
     }
 }

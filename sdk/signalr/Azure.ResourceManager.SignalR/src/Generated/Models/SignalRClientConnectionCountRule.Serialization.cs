@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary>
     /// A base class for client connection count rules
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThrottleByJwtCustomClaimRule"/>, <see cref="ThrottleByJwtSignatureRule"/>, and <see cref="ThrottleByUserIdRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SignalRThrottleByJwtCustomClaimRule"/>, <see cref="SignalRThrottleByJwtSignatureRule"/>, and <see cref="SignalRThrottleByUserIdRule"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSignalRClientConnectionCountRule))]
     public abstract partial class SignalRClientConnectionCountRule : IJsonModel<SignalRClientConnectionCountRule>
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 switch (discriminator.GetString())
                 {
                     case "ThrottleByJwtCustomClaimRule":
-                        return ThrottleByJwtCustomClaimRule.DeserializeThrottleByJwtCustomClaimRule(element, options);
+                        return SignalRThrottleByJwtCustomClaimRule.DeserializeSignalRThrottleByJwtCustomClaimRule(element, options);
                     case "ThrottleByJwtSignatureRule":
-                        return ThrottleByJwtSignatureRule.DeserializeThrottleByJwtSignatureRule(element, options);
+                        return SignalRThrottleByJwtSignatureRule.DeserializeSignalRThrottleByJwtSignatureRule(element, options);
                     case "ThrottleByUserIdRule":
-                        return ThrottleByUserIdRule.DeserializeThrottleByUserIdRule(element, options);
+                        return SignalRThrottleByUserIdRule.DeserializeSignalRThrottleByUserIdRule(element, options);
                 }
             }
             return UnknownSignalRClientConnectionCountRule.DeserializeUnknownSignalRClientConnectionCountRule(element, options);

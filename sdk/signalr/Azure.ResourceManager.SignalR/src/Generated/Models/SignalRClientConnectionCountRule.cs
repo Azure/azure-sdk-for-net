@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary>
     /// A base class for client connection count rules
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThrottleByJwtCustomClaimRule"/>, <see cref="ThrottleByJwtSignatureRule"/>, and <see cref="ThrottleByUserIdRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SignalRThrottleByJwtCustomClaimRule"/>, <see cref="SignalRThrottleByJwtSignatureRule"/>, and <see cref="SignalRThrottleByUserIdRule"/>.
     /// </summary>
     public abstract partial class SignalRClientConnectionCountRule
     {

@@ -14,16 +14,16 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
-    public partial class TrafficThrottleByJwtCustomClaimRule : ClientTrafficControlRule, IJsonModel<TrafficThrottleByJwtCustomClaimRule>
+    public partial class SignalRTrafficThrottleByJwtCustomClaimRule : SignalRClientTrafficControlRule, IJsonModel<SignalRTrafficThrottleByJwtCustomClaimRule>
     {
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByJwtCustomClaimRule"/> for deserialization. </summary>
-        internal TrafficThrottleByJwtCustomClaimRule()
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/> for deserialization. </summary>
+        internal SignalRTrafficThrottleByJwtCustomClaimRule()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TrafficThrottleByJwtCustomClaimRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SignalRTrafficThrottleByJwtCustomClaimRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficThrottleByJwtCustomClaimRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtCustomClaimRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("claimName"u8);
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficThrottleByJwtCustomClaimRule IJsonModel<TrafficThrottleByJwtCustomClaimRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrafficThrottleByJwtCustomClaimRule)JsonModelCreateCore(ref reader, options);
+        SignalRTrafficThrottleByJwtCustomClaimRule IJsonModel<SignalRTrafficThrottleByJwtCustomClaimRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SignalRTrafficThrottleByJwtCustomClaimRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientTrafficControlRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SignalRClientTrafficControlRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficThrottleByJwtCustomClaimRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtCustomClaimRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrafficThrottleByJwtCustomClaimRule(document.RootElement, options);
+            return DeserializeSignalRTrafficThrottleByJwtCustomClaimRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrafficThrottleByJwtCustomClaimRule DeserializeTrafficThrottleByJwtCustomClaimRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static SignalRTrafficThrottleByJwtCustomClaimRule DeserializeSignalRTrafficThrottleByJwtCustomClaimRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,47 +119,47 @@ namespace Azure.ResourceManager.SignalR.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficThrottleByJwtCustomClaimRule(@type, additionalBinaryDataProperties, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByJwtCustomClaimRule(@type, additionalBinaryDataProperties, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficThrottleByJwtCustomClaimRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficThrottleByJwtCustomClaimRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtCustomClaimRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficThrottleByJwtCustomClaimRule IPersistableModel<TrafficThrottleByJwtCustomClaimRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficThrottleByJwtCustomClaimRule)PersistableModelCreateCore(data, options);
+        SignalRTrafficThrottleByJwtCustomClaimRule IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRTrafficThrottleByJwtCustomClaimRule)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SignalRClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTrafficThrottleByJwtCustomClaimRule(document.RootElement, options);
+                        return DeserializeSignalRTrafficThrottleByJwtCustomClaimRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficThrottleByJwtCustomClaimRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRTrafficThrottleByJwtCustomClaimRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficThrottleByJwtCustomClaimRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SignalRTrafficThrottleByJwtCustomClaimRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

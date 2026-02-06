@@ -12,19 +12,19 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client traffic by the JWT signature. </summary>
-    public partial class TrafficThrottleByJwtSignatureRule : ClientTrafficControlRule
+    public partial class SignalRTrafficThrottleByJwtSignatureRule : SignalRClientTrafficControlRule
     {
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByJwtSignatureRule"/>. </summary>
-        public TrafficThrottleByJwtSignatureRule() : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtSignatureRule)
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByJwtSignatureRule"/>. </summary>
+        public SignalRTrafficThrottleByJwtSignatureRule() : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtSignatureRule)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByJwtSignatureRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByJwtSignatureRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT signature will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
-        internal TrafficThrottleByJwtSignatureRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
+        internal SignalRTrafficThrottleByJwtSignatureRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
         {
             MaxInboundMessageBytes = maxInboundMessageBytes;
             AggregationWindowInSeconds = aggregationWindowInSeconds;

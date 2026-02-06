@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary> Application firewall settings for the resource. </summary>
         [WirePath("properties.applicationFirewall")]
-        public SignalRClientTrafficControlRule ApplicationFirewall
+        public SignalRApplicationFirewallSettings ApplicationFirewall
         {
             get
             {

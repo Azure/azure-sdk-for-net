@@ -7,15 +7,23 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Application firewall settings for the resource. </summary>
-    public partial class SignalRClientTrafficControlRule : IJsonModel<SignalRClientTrafficControlRule>
+    /// <summary>
+    /// A base class for client traffic control rules
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/>, <see cref="SignalRTrafficThrottleByJwtSignatureRule"/>, and <see cref="SignalRTrafficThrottleByUserIdRule"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownSignalRClientTrafficControlRule))]
+    public abstract partial class SignalRClientTrafficControlRule : IJsonModel<SignalRClientTrafficControlRule>
     {
+        /// <summary> Initializes a new instance of <see cref="SignalRClientTrafficControlRule"/> for deserialization. </summary>
+        internal SignalRClientTrafficControlRule()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRClientTrafficControlRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,31 +42,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 throw new FormatException($"The model {nameof(SignalRClientTrafficControlRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ClientConnectionCountRules))
-            {
-                writer.WritePropertyName("clientConnectionCountRules"u8);
-                writer.WriteStartArray();
-                foreach (SignalRClientConnectionCountRule item in ClientConnectionCountRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ClientTrafficControlRules))
-            {
-                writer.WritePropertyName("clientTrafficControlRules"u8);
-                writer.WriteStartArray();
-                foreach (ClientTrafficControlRule item in ClientTrafficControlRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MaxClientConnectionLifetimeInSeconds))
-            {
-                writer.WritePropertyName("maxClientConnectionLifetimeInSeconds"u8);
-                writer.WriteNumberValue(MaxClientConnectionLifetimeInSeconds.Value);
-            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,55 +86,19 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            IList<SignalRClientConnectionCountRule> clientConnectionCountRules = default;
-            IList<ClientTrafficControlRule> clientTrafficControlRules = default;
-            long? maxClientConnectionLifetimeInSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("clientConnectionCountRules"u8))
+                switch (discriminator.GetString())
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SignalRClientConnectionCountRule> array = new List<SignalRClientConnectionCountRule>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(SignalRClientConnectionCountRule.DeserializeSignalRClientConnectionCountRule(item, options));
-                    }
-                    clientConnectionCountRules = array;
-                    continue;
-                }
-                if (prop.NameEquals("clientTrafficControlRules"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ClientTrafficControlRule> array = new List<ClientTrafficControlRule>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ClientTrafficControlRule.DeserializeClientTrafficControlRule(item, options));
-                    }
-                    clientTrafficControlRules = array;
-                    continue;
-                }
-                if (prop.NameEquals("maxClientConnectionLifetimeInSeconds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxClientConnectionLifetimeInSeconds = prop.Value.GetInt64();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "TrafficThrottleByJwtCustomClaimRule":
+                        return SignalRTrafficThrottleByJwtCustomClaimRule.DeserializeSignalRTrafficThrottleByJwtCustomClaimRule(element, options);
+                    case "TrafficThrottleByJwtSignatureRule":
+                        return SignalRTrafficThrottleByJwtSignatureRule.DeserializeSignalRTrafficThrottleByJwtSignatureRule(element, options);
+                    case "TrafficThrottleByUserIdRule":
+                        return SignalRTrafficThrottleByUserIdRule.DeserializeSignalRTrafficThrottleByUserIdRule(element, options);
                 }
             }
-            return new SignalRClientTrafficControlRule(clientConnectionCountRules ?? new ChangeTrackingList<SignalRClientConnectionCountRule>(), clientTrafficControlRules ?? new ChangeTrackingList<ClientTrafficControlRule>(), maxClientConnectionLifetimeInSeconds, additionalBinaryDataProperties);
+            return UnknownSignalRClientTrafficControlRule.DeserializeUnknownSignalRClientTrafficControlRule(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

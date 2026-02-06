@@ -13,16 +13,16 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class UnknownClientTrafficControlRule : ClientTrafficControlRule, IJsonModel<ClientTrafficControlRule>
+    internal partial class UnknownSignalRClientTrafficControlRule : SignalRClientTrafficControlRule, IJsonModel<SignalRClientTrafficControlRule>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownClientTrafficControlRule"/> for deserialization. </summary>
-        internal UnknownClientTrafficControlRule()
+        /// <summary> Initializes a new instance of <see cref="UnknownSignalRClientTrafficControlRule"/> for deserialization. </summary>
+        internal UnknownSignalRClientTrafficControlRule()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClientTrafficControlRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SignalRClientTrafficControlRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,34 +33,34 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientTrafficControlRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRClientTrafficControlRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientTrafficControlRule IJsonModel<ClientTrafficControlRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SignalRClientTrafficControlRule IJsonModel<SignalRClientTrafficControlRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientTrafficControlRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SignalRClientTrafficControlRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientTrafficControlRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRClientTrafficControlRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClientTrafficControlRule(document.RootElement, options);
+            return DeserializeSignalRClientTrafficControlRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownClientTrafficControlRule DeserializeUnknownClientTrafficControlRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownSignalRClientTrafficControlRule DeserializeUnknownSignalRClientTrafficControlRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,47 +80,47 @@ namespace Azure.ResourceManager.SignalR.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownClientTrafficControlRule(@type, additionalBinaryDataProperties);
+            return new UnknownSignalRClientTrafficControlRule(@type, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClientTrafficControlRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SignalRClientTrafficControlRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClientTrafficControlRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRClientTrafficControlRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClientTrafficControlRule IPersistableModel<ClientTrafficControlRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SignalRClientTrafficControlRule IPersistableModel<SignalRClientTrafficControlRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SignalRClientTrafficControlRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRClientTrafficControlRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClientTrafficControlRule(document.RootElement, options);
+                        return DeserializeSignalRClientTrafficControlRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientTrafficControlRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRClientTrafficControlRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClientTrafficControlRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SignalRClientTrafficControlRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

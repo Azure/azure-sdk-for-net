@@ -12,19 +12,19 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client traffic by the user ID. </summary>
-    public partial class TrafficThrottleByUserIdRule : ClientTrafficControlRule
+    public partial class SignalRTrafficThrottleByUserIdRule : SignalRClientTrafficControlRule
     {
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByUserIdRule"/>. </summary>
-        public TrafficThrottleByUserIdRule() : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByUserIdRule)
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByUserIdRule"/>. </summary>
+        public SignalRTrafficThrottleByUserIdRule() : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByUserIdRule)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByUserIdRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByUserIdRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same user ID within a time window. Clients with the same user ID will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
-        internal TrafficThrottleByUserIdRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
+        internal SignalRTrafficThrottleByUserIdRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
         {
             MaxInboundMessageBytes = maxInboundMessageBytes;
             AggregationWindowInSeconds = aggregationWindowInSeconds;

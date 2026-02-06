@@ -12,18 +12,18 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client connection by the user ID. </summary>
-    public partial class ThrottleByUserIdRule : SignalRClientConnectionCountRule
+    public partial class SignalRThrottleByUserIdRule : SignalRClientConnectionCountRule
     {
-        /// <summary> Initializes a new instance of <see cref="ThrottleByUserIdRule"/>. </summary>
-        public ThrottleByUserIdRule() : base(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule)
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByUserIdRule"/>. </summary>
+        public SignalRThrottleByUserIdRule() : base(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThrottleByUserIdRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByUserIdRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCount"> Maximum connection count allowed for the same user ID. Clients with the same user ID will get rejected if the connection count exceeds this value. Default value is 20. </param>
-        internal ThrottleByUserIdRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCount) : base(@type, additionalBinaryDataProperties)
+        internal SignalRThrottleByUserIdRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCount) : base(@type, additionalBinaryDataProperties)
         {
             MaxCount = maxCount;
         }

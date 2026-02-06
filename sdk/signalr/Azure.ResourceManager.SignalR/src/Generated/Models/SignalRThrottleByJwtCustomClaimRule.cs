@@ -12,24 +12,24 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client connection by a custom JWT claim. </summary>
-    public partial class ThrottleByJwtCustomClaimRule : SignalRClientConnectionCountRule
+    public partial class SignalRThrottleByJwtCustomClaimRule : SignalRClientConnectionCountRule
     {
-        /// <summary> Initializes a new instance of <see cref="ThrottleByJwtCustomClaimRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByJwtCustomClaimRule"/>. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The client connection with the same claim value will be aggregated. If the claim is not found in the token, the connection will be allowed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="claimName"/> is null. </exception>
-        public ThrottleByJwtCustomClaimRule(string claimName) : base(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule)
+        public SignalRThrottleByJwtCustomClaimRule(string claimName) : base(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule)
         {
             Argument.AssertNotNull(claimName, nameof(claimName));
 
             ClaimName = claimName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThrottleByJwtCustomClaimRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRThrottleByJwtCustomClaimRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="claimName"> The name of the claim in the JWT token. The client connection with the same claim value will be aggregated. If the claim is not found in the token, the connection will be allowed. </param>
         /// <param name="maxCount"> Maximum connection count allowed for the same Jwt claim value. Clients with the same Jwt claim will get rejected if the connection count exceeds this value. Default value is 20. </param>
-        internal ThrottleByJwtCustomClaimRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string claimName, int? maxCount) : base(@type, additionalBinaryDataProperties)
+        internal SignalRThrottleByJwtCustomClaimRule(ClientConnectionCountRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string claimName, int? maxCount) : base(@type, additionalBinaryDataProperties)
         {
             ClaimName = claimName;
             MaxCount = maxCount;

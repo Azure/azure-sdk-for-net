@@ -12,25 +12,25 @@ using Azure.ResourceManager.SignalR;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
-    public partial class TrafficThrottleByJwtCustomClaimRule : ClientTrafficControlRule
+    public partial class SignalRTrafficThrottleByJwtCustomClaimRule : SignalRClientTrafficControlRule
     {
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByJwtCustomClaimRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/>. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The message bytes with the same claim value will be aggregated. If the claim is not found in the token, the rule will be skipped. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="claimName"/> is null. </exception>
-        public TrafficThrottleByJwtCustomClaimRule(string claimName) : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtCustomClaimRule)
+        public SignalRTrafficThrottleByJwtCustomClaimRule(string claimName) : base(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtCustomClaimRule)
         {
             Argument.AssertNotNull(claimName, nameof(claimName));
 
             ClaimName = claimName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficThrottleByJwtCustomClaimRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTrafficThrottleByJwtCustomClaimRule"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="claimName"> The name of the claim in the JWT token. The message bytes with the same claim value will be aggregated. If the claim is not found in the token, the rule will be skipped. </param>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT claim will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
-        internal TrafficThrottleByJwtCustomClaimRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string claimName, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
+        internal SignalRTrafficThrottleByJwtCustomClaimRule(ClientTrafficControlRuleDiscriminator @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string claimName, long? maxInboundMessageBytes, int? aggregationWindowInSeconds) : base(@type, additionalBinaryDataProperties)
         {
             ClaimName = claimName;
             MaxInboundMessageBytes = maxInboundMessageBytes;

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SignalR.Models
             SignalRServerlessSettings serverless = default;
             ServerlessUpstreamSettings upstream = default;
             SignalRNetworkAcls networkACLs = default;
-            SignalRClientTrafficControlRule applicationFirewall = default;
+            SignalRApplicationFirewallSettings applicationFirewall = default;
             string publicNetworkAccess = default;
             bool? disableLocalAuth = default;
             bool? disableAadAuth = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    applicationFirewall = SignalRClientTrafficControlRule.DeserializeSignalRClientTrafficControlRule(prop.Value, options);
+                    applicationFirewall = SignalRApplicationFirewallSettings.DeserializeSignalRApplicationFirewallSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))

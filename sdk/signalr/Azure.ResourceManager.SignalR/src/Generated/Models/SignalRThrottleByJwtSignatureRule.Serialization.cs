@@ -13,17 +13,12 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Throttle the client connection by a custom JWT claim. </summary>
-    public partial class ThrottleByJwtCustomClaimRule : SignalRClientConnectionCountRule, IJsonModel<ThrottleByJwtCustomClaimRule>
+    /// <summary> Throttle the client connection by the JWT signature. </summary>
+    public partial class SignalRThrottleByJwtSignatureRule : SignalRClientConnectionCountRule, IJsonModel<SignalRThrottleByJwtSignatureRule>
     {
-        /// <summary> Initializes a new instance of <see cref="ThrottleByJwtCustomClaimRule"/> for deserialization. </summary>
-        internal ThrottleByJwtCustomClaimRule()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ThrottleByJwtCustomClaimRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SignalRThrottleByJwtSignatureRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,14 +29,12 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottleByJwtCustomClaimRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRThrottleByJwtSignatureRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("claimName"u8);
-            writer.WriteStringValue(ClaimName);
             if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
@@ -51,24 +44,24 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThrottleByJwtCustomClaimRule IJsonModel<ThrottleByJwtCustomClaimRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThrottleByJwtCustomClaimRule)JsonModelCreateCore(ref reader, options);
+        SignalRThrottleByJwtSignatureRule IJsonModel<SignalRThrottleByJwtSignatureRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SignalRThrottleByJwtSignatureRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SignalRClientConnectionCountRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottleByJwtCustomClaimRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRThrottleByJwtSignatureRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThrottleByJwtCustomClaimRule(document.RootElement, options);
+            return DeserializeSignalRThrottleByJwtSignatureRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ThrottleByJwtCustomClaimRule DeserializeThrottleByJwtCustomClaimRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static SignalRThrottleByJwtSignatureRule DeserializeSignalRThrottleByJwtSignatureRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,18 +69,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             ClientConnectionCountRuleDiscriminator @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string claimName = default;
             int? maxCount = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ClientConnectionCountRuleDiscriminator(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("claimName"u8))
-                {
-                    claimName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("maxCount"u8))
@@ -104,47 +91,47 @@ namespace Azure.ResourceManager.SignalR.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ThrottleByJwtCustomClaimRule(@type, additionalBinaryDataProperties, claimName, maxCount);
+            return new SignalRThrottleByJwtSignatureRule(@type, additionalBinaryDataProperties, maxCount);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ThrottleByJwtCustomClaimRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SignalRThrottleByJwtSignatureRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ThrottleByJwtCustomClaimRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRThrottleByJwtSignatureRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThrottleByJwtCustomClaimRule IPersistableModel<ThrottleByJwtCustomClaimRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThrottleByJwtCustomClaimRule)PersistableModelCreateCore(data, options);
+        SignalRThrottleByJwtSignatureRule IPersistableModel<SignalRThrottleByJwtSignatureRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRThrottleByJwtSignatureRule)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SignalRClientConnectionCountRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtCustomClaimRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeThrottleByJwtCustomClaimRule(document.RootElement, options);
+                        return DeserializeSignalRThrottleByJwtSignatureRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThrottleByJwtCustomClaimRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRThrottleByJwtSignatureRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ThrottleByJwtCustomClaimRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SignalRThrottleByJwtSignatureRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="routeSettings"> Route settings for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRProperties(SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogConfiguration resourceLogConfiguration, SignalRCorsSettings cors, SignalRServerlessSettings serverless, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, SignalRClientTrafficControlRule applicationFirewall, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, string regionEndpointEnabled, string resourceStopped, SignalRRouteSettings routeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalRProperties(SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogConfiguration resourceLogConfiguration, SignalRCorsSettings cors, SignalRServerlessSettings serverless, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, SignalRApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, string regionEndpointEnabled, string resourceStopped, SignalRRouteSettings routeSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Application firewall settings for the resource. </summary>
         [WirePath("applicationFirewall")]
-        public SignalRClientTrafficControlRule ApplicationFirewall { get; set; }
+        public SignalRApplicationFirewallSettings ApplicationFirewall { get; set; }
 
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".

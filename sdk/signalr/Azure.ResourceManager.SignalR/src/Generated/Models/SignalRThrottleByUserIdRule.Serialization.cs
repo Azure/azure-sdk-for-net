@@ -13,12 +13,12 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Throttle the client connection by the JWT signature. </summary>
-    public partial class ThrottleByJwtSignatureRule : SignalRClientConnectionCountRule, IJsonModel<ThrottleByJwtSignatureRule>
+    /// <summary> Throttle the client connection by the user ID. </summary>
+    public partial class SignalRThrottleByUserIdRule : SignalRClientConnectionCountRule, IJsonModel<SignalRThrottleByUserIdRule>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ThrottleByJwtSignatureRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SignalRThrottleByUserIdRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottleByJwtSignatureRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MaxCount))
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThrottleByJwtSignatureRule IJsonModel<ThrottleByJwtSignatureRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThrottleByJwtSignatureRule)JsonModelCreateCore(ref reader, options);
+        SignalRThrottleByUserIdRule IJsonModel<SignalRThrottleByUserIdRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SignalRThrottleByUserIdRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SignalRClientConnectionCountRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottleByJwtSignatureRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThrottleByJwtSignatureRule(document.RootElement, options);
+            return DeserializeSignalRThrottleByUserIdRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ThrottleByJwtSignatureRule DeserializeThrottleByJwtSignatureRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static SignalRThrottleByUserIdRule DeserializeSignalRThrottleByUserIdRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,47 +91,47 @@ namespace Azure.ResourceManager.SignalR.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ThrottleByJwtSignatureRule(@type, additionalBinaryDataProperties, maxCount);
+            return new SignalRThrottleByUserIdRule(@type, additionalBinaryDataProperties, maxCount);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ThrottleByJwtSignatureRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SignalRThrottleByUserIdRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ThrottleByJwtSignatureRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThrottleByJwtSignatureRule IPersistableModel<ThrottleByJwtSignatureRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThrottleByJwtSignatureRule)PersistableModelCreateCore(data, options);
+        SignalRThrottleByUserIdRule IPersistableModel<SignalRThrottleByUserIdRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRThrottleByUserIdRule)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SignalRClientConnectionCountRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ThrottleByJwtSignatureRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRThrottleByUserIdRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeThrottleByJwtSignatureRule(document.RootElement, options);
+                        return DeserializeSignalRThrottleByUserIdRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThrottleByJwtSignatureRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRThrottleByUserIdRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ThrottleByJwtSignatureRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SignalRThrottleByUserIdRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
