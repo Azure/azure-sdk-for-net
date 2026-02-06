@@ -15,6 +15,8 @@ namespace Documentation._Lists
     {
         internal BulletPointsModel() => throw null;
 
+        protected virtual BulletPointsModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<BulletPointsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace Documentation._Lists
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BulletPointsModel IPersistableModel<BulletPointsModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BulletPointsModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<BulletPointsModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

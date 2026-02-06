@@ -12,7 +12,6 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// OpenAI voice configuration with explicit type field.
-    /// 
     /// This provides a unified interface for OpenAI voices, complementing the
     /// existing string-based OAIVoice for backward compatibility.
     /// </summary>

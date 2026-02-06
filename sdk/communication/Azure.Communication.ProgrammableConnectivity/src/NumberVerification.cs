@@ -16,14 +16,13 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="numberVerificationWithoutCodeContent"> Request to verify number of device - first call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithoutCodeContent"/> is null. </exception>
-        /// <include file="Generated/Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCodeAsync(string,NumberVerificationWithoutCodeContent,CancellationToken)']/*" />
         public virtual async Task<Response> VerifyWithoutCodeAsync(string apcGatewayId, NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithoutCodeContent, nameof(numberVerificationWithoutCodeContent));
 
-            using RequestContent content = numberVerificationWithoutCodeContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = numberVerificationWithoutCodeContent;
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await VerifyWithoutCodeAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return response;
         }
@@ -33,14 +32,13 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="numberVerificationWithoutCodeContent"> Request to verify number of device - first call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithoutCodeContent"/> is null. </exception>
-        /// <include file="Generated/Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCode(string,NumberVerificationWithoutCodeContent,CancellationToken)']/*" />
         public virtual Response VerifyWithoutCode(string apcGatewayId, NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithoutCodeContent, nameof(numberVerificationWithoutCodeContent));
 
-            using RequestContent content = numberVerificationWithoutCodeContent.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = numberVerificationWithoutCodeContent;
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = VerifyWithoutCode(apcGatewayId, content, context);
             return response;
         }
@@ -66,7 +64,6 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCodeAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> VerifyWithoutCodeAsync(string apcGatewayId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
@@ -78,7 +75,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 using HttpMessage message = CreateVerifyWithoutCodeRequest(apcGatewayId, content, context);
                 RedirectPolicy.SetAllowAutoRedirect(message, false);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -108,7 +105,6 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCode(string,RequestContent,RequestContext)']/*" />
         public virtual Response VerifyWithoutCode(string apcGatewayId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
@@ -120,7 +116,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 using HttpMessage message = CreateVerifyWithoutCodeRequest(apcGatewayId, content, context);
                 RedirectPolicy.SetAllowAutoRedirect(message, false);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

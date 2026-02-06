@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct TroubleshooterQuestionType : IEquatable<TroubleshooterQuestionType>
     {
         private readonly string _value;
+        /// <summary> SingleChoice radio button. </summary>
+        private const string RadioButtonValue = "RadioButton";
+        /// <summary> SingleChoice dropdown. </summary>
+        private const string DropdownValue = "Dropdown";
+        /// <summary> Text Input. </summary>
+        private const string TextInputValue = "TextInput";
+        /// <summary> MultiLineInfoBox. </summary>
+        private const string MultiLineInfoBoxValue = "MultiLineInfoBox";
+        /// <summary> DateTime Picker. </summary>
+        private const string DateTimePickerValue = "DateTimePicker";
+        /// <summary> Multi Select. </summary>
+        private const string MultiSelectValue = "MultiSelect";
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterQuestionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TroubleshooterQuestionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RadioButtonValue = "RadioButton";
-        private const string DropdownValue = "Dropdown";
-        private const string TextInputValue = "TextInput";
-        private const string MultiLineInfoBoxValue = "MultiLineInfoBox";
-        private const string DateTimePickerValue = "DateTimePicker";
-        private const string MultiSelectValue = "MultiSelect";
+            _value = value;
+        }
 
         /// <summary> SingleChoice radio button. </summary>
         public static TroubleshooterQuestionType RadioButton { get; } = new TroubleshooterQuestionType(RadioButtonValue);
+
         /// <summary> SingleChoice dropdown. </summary>
         public static TroubleshooterQuestionType Dropdown { get; } = new TroubleshooterQuestionType(DropdownValue);
+
         /// <summary> Text Input. </summary>
         public static TroubleshooterQuestionType TextInput { get; } = new TroubleshooterQuestionType(TextInputValue);
+
         /// <summary> MultiLineInfoBox. </summary>
         public static TroubleshooterQuestionType MultiLineInfoBox { get; } = new TroubleshooterQuestionType(MultiLineInfoBoxValue);
+
         /// <summary> DateTime Picker. </summary>
         public static TroubleshooterQuestionType DateTimePicker { get; } = new TroubleshooterQuestionType(DateTimePickerValue);
+
         /// <summary> Multi Select. </summary>
         public static TroubleshooterQuestionType MultiSelect { get; } = new TroubleshooterQuestionType(MultiSelectValue);
+
         /// <summary> Determines if two <see cref="TroubleshooterQuestionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TroubleshooterQuestionType left, TroubleshooterQuestionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TroubleshooterQuestionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TroubleshooterQuestionType left, TroubleshooterQuestionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterQuestionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TroubleshooterQuestionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TroubleshooterQuestionType(string value) => new TroubleshooterQuestionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TroubleshooterQuestionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TroubleshooterQuestionType?(string value) => value == null ? null : new TroubleshooterQuestionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TroubleshooterQuestionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TroubleshooterQuestionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

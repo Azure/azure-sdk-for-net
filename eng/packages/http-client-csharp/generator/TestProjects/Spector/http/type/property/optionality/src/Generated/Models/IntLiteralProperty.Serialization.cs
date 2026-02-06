@@ -15,6 +15,10 @@ namespace _Type.Property.Optional
 {
     public partial class IntLiteralProperty : IJsonModel<IntLiteralProperty>
     {
+        protected virtual IntLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator IntLiteralProperty(Response response) => throw null;
+
         void IJsonModel<IntLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,13 +33,9 @@ namespace _Type.Property.Optional
 
         IntLiteralProperty IPersistableModel<IntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual IntLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<IntLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="intLiteralProperty"> The <see cref="IntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IntLiteralProperty intLiteralProperty) => throw null;
-
-        public static explicit operator IntLiteralProperty(Response response) => throw null;
     }
 }

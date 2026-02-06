@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct TroubleshooterQuestionContentType : IEquatable<TroubleshooterQuestionContentType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TroubleshooterQuestionContentType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TroubleshooterQuestionContentType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TextValue = "Text";
         private const string HtmlValue = "Html";
         private const string MarkdownValue = "Markdown";
 
-        /// <summary> Text. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterQuestionContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TroubleshooterQuestionContentType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Text. </summary>
         public static TroubleshooterQuestionContentType Text { get; } = new TroubleshooterQuestionContentType(TextValue);
-        /// <summary> Html. </summary>
+
+        /// <summary> Gets the Html. </summary>
         public static TroubleshooterQuestionContentType Html { get; } = new TroubleshooterQuestionContentType(HtmlValue);
-        /// <summary> Markdown. </summary>
+
+        /// <summary> Gets the Markdown. </summary>
         public static TroubleshooterQuestionContentType Markdown { get; } = new TroubleshooterQuestionContentType(MarkdownValue);
+
         /// <summary> Determines if two <see cref="TroubleshooterQuestionContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TroubleshooterQuestionContentType left, TroubleshooterQuestionContentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TroubleshooterQuestionContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TroubleshooterQuestionContentType left, TroubleshooterQuestionContentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterQuestionContentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TroubleshooterQuestionContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TroubleshooterQuestionContentType(string value) => new TroubleshooterQuestionContentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TroubleshooterQuestionContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TroubleshooterQuestionContentType?(string value) => value == null ? null : new TroubleshooterQuestionContentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TroubleshooterQuestionContentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TroubleshooterQuestionContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

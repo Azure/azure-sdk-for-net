@@ -16,6 +16,8 @@ namespace Client.Naming.Property
     {
         internal ClientNameAndJsonEncodedNameModel() => throw null;
 
+        protected virtual ClientNameAndJsonEncodedNameModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<ClientNameAndJsonEncodedNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,8 +31,6 @@ namespace Client.Naming.Property
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ClientNameAndJsonEncodedNameModel IPersistableModel<ClientNameAndJsonEncodedNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual ClientNameAndJsonEncodedNameModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ClientNameAndJsonEncodedNameModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 

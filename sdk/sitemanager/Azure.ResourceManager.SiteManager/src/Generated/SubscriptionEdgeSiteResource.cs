@@ -6,46 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SiteManager.Models;
 
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
-    /// A Class representing a SubscriptionEdgeSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionEdgeSiteResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionEdgeSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionEdgeSite method.
+    /// A class representing a SubscriptionEdgeSite along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionEdgeSiteResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionEdgeSites method.
     /// </summary>
     public partial class SubscriptionEdgeSiteResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionEdgeSiteResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="siteName"> The siteName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string siteName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics;
-        private readonly SitesBySubscriptionRestOperations _subscriptionEdgeSiteSitesBySubscriptionRestClient;
+        private readonly ClientDiagnostics _subscriptionEdgeSiteClientDiagnostics;
+        private readonly SubscriptionEdgeSite _subscriptionEdgeSiteRestClient;
         private readonly EdgeSiteData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Edge/sites";
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionEdgeSiteResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionEdgeSiteResource for mocking. </summary>
         protected SubscriptionEdgeSiteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionEdgeSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionEdgeSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionEdgeSiteResource(ArmClient client, EdgeSiteData data) : this(client, data.Id)
@@ -54,71 +45,91 @@ namespace Azure.ResourceManager.SiteManager
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionEdgeSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionEdgeSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionEdgeSiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionEdgeSiteSitesBySubscriptionApiVersion);
-            _subscriptionEdgeSiteSitesBySubscriptionRestClient = new SitesBySubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionEdgeSiteSitesBySubscriptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string subscriptionEdgeSiteApiVersion);
+            _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ResourceType.Namespace, Diagnostics);
+            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, subscriptionEdgeSiteApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeSiteData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="siteName"> The siteName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string siteName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionEdgeSiteResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Get");
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionEdgeSiteSitesBySubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,145 @@ namespace Azure.ResourceManager.SiteManager
         /// Get a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionEdgeSiteResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Get");
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionEdgeSiteSitesBySubscriptionRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Site
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SubscriptionEdgeSiteResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a Site
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SubscriptionEdgeSiteResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +295,20 @@ namespace Azure.ResourceManager.SiteManager
         /// Delete a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +316,23 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Delete");
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Delete");
             scope.Start();
             try
             {
-                var response = await _subscriptionEdgeSiteSitesBySubscriptionRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _subscriptionEdgeSiteSitesBySubscriptionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SiteManagerArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SiteManagerArmOperation operation = new SiteManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +346,20 @@ namespace Azure.ResourceManager.SiteManager
         /// Delete a Site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SitesBySubscription_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionEdgeSiteResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,101 +367,24 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Delete");
+            using DiagnosticScope scope = _subscriptionEdgeSiteClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Delete");
             scope.Start();
             try
             {
-                var response = _subscriptionEdgeSiteSitesBySubscriptionRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var uri = _subscriptionEdgeSiteSitesBySubscriptionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SiteManagerArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SiteManagerArmOperation operation = new SiteManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionEdgeSiteResource>> UpdateAsync(EdgeSitePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _subscriptionEdgeSiteSitesBySubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a Site
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Site_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionEdgeSiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SubscriptionEdgeSiteResource> Update(EdgeSitePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _subscriptionEdgeSiteSitesBySubscriptionClientDiagnostics.CreateScope("SubscriptionEdgeSiteResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _subscriptionEdgeSiteSitesBySubscriptionRestClient.Update(Id.SubscriptionId, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SubscriptionEdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

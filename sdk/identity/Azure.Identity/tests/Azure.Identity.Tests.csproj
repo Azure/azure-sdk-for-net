@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);0618</NoWarn>
+    <NoWarn>$(NoWarn);0618;SCME0002</NoWarn>
   </PropertyGroup>
 
   <!-- TEMP until Azure.Core releases with updated dependencies, since these dependencies impact test behavior -->

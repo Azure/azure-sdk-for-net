@@ -93,7 +93,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 Assert.That(
                     async () =>
-                    await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    {
+                        await using var noRetryClient = CreateNoRetryClient();
+                        await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
+                    }, Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };

@@ -15,7 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// TileJSON metadata describing a tile set according to the TileJSON specification
-    /// 
     /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0
     /// </summary>
     public partial class TileJsonMetadata : IJsonModel<TileJsonMetadata>

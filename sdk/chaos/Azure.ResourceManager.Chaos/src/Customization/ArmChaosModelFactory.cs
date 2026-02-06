@@ -22,18 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer works in all API versions.", false)]
         public static ChaosTargetData ChaosTargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, AzureLocation? location = null, IDictionary<string, BinaryData> properties = null)
-        {
-            properties ??= new Dictionary<string, BinaryData>();
-
-            return new ChaosTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
+            => throw new NotSupportedException();
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityTypeData"/>. </summary>
         /// <param name="id"> The id. </param>

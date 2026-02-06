@@ -63,6 +63,14 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public static partial class ConfigurationExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
@@ -96,6 +104,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected AuthenticationPolicy() { }
+        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings) { throw null; }
     }
     public partial class AuthenticationToken
     {
@@ -178,6 +187,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
@@ -206,6 +216,15 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public abstract partial class ClientSettings
+    {
+        protected ClientSettings() { }
+        public System.ClientModel.Primitives.CredentialSettings? Credential { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? CredentialProvider { get { throw null; } set { } }
+        public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
+        public void PostConfigure(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configure) { }
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -217,6 +236,13 @@ namespace System.ClientModel.Primitives
         None = 0,
         ApiKeyString = 1,
         TokenCredential = 2,
+    }
+    public sealed partial class CredentialSettings
+    {
+        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
+        public string? CredentialSource { get { throw null; } set { } }
+        public string? Key { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
@@ -240,6 +266,10 @@ namespace System.ClientModel.Primitives
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
+    public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
+    {
+        Microsoft.Extensions.Hosting.IHostApplicationBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

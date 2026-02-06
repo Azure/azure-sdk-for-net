@@ -15,6 +15,10 @@ namespace _Type.Property.ValueTypes
 {
     public partial class FloatLiteralProperty : IJsonModel<FloatLiteralProperty>
     {
+        protected virtual FloatLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FloatLiteralProperty(Response response) => throw null;
+
         void IJsonModel<FloatLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,13 +33,9 @@ namespace _Type.Property.ValueTypes
 
         FloatLiteralProperty IPersistableModel<FloatLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FloatLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<FloatLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="floatLiteralProperty"> The <see cref="FloatLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatLiteralProperty floatLiteralProperty) => throw null;
-
-        public static explicit operator FloatLiteralProperty(Response response) => throw null;
     }
 }

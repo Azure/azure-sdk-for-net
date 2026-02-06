@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class TransferConfigurationTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TransferConfigurationType value) => value switch
         {
             TransferConfigurationType.TransferAll => "TransferAll",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransferConfigurationType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TransferConfigurationType ToTransferConfigurationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferAll")) return TransferConfigurationType.TransferAll;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferUsingFilter")) return TransferConfigurationType.TransferUsingFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferAll"))
+            {
+                return TransferConfigurationType.TransferAll;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TransferUsingFilter"))
+            {
+                return TransferConfigurationType.TransferUsingFilter;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransferConfigurationType value.");
         }
     }

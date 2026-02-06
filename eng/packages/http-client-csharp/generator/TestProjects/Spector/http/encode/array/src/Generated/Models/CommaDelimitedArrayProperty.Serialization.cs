@@ -17,6 +17,10 @@ namespace Encode._Array
     {
         internal CommaDelimitedArrayProperty() => throw null;
 
+        protected virtual CommaDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator CommaDelimitedArrayProperty(Response response) => throw null;
+
         void IJsonModel<CommaDelimitedArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode._Array
 
         CommaDelimitedArrayProperty IPersistableModel<CommaDelimitedArrayProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual CommaDelimitedArrayProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<CommaDelimitedArrayProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="commaDelimitedArrayProperty"> The <see cref="CommaDelimitedArrayProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(CommaDelimitedArrayProperty commaDelimitedArrayProperty) => throw null;
-
-        public static explicit operator CommaDelimitedArrayProperty(Response response) => throw null;
     }
 }
