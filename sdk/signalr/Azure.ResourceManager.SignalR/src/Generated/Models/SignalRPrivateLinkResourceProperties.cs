@@ -11,7 +11,6 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Private link resource properties. </summary>
     internal partial class SignalRPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -39,10 +38,6 @@ namespace Azure.ResourceManager.SignalR.Models
             ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Group Id of the private link resource. </summary>
-        [WirePath("groupId")]
-        public string GroupId { get; }
 
         /// <summary> Required members of the private link resource. </summary>
         [WirePath("requiredMembers")]

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,10 +20,10 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A class representing a collection of <see cref="SignalRSharedPrivateLinkResource"/> and their operations.
-    /// Each <see cref="SignalRSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="SignalRReplicaResource"/>.
-    /// To get a <see cref="SignalRSharedPrivateLinkResourceCollection"/> instance call the GetSignalRSharedPrivateLinkResources method from an instance of <see cref="SignalRReplicaResource"/>.
+    /// Each <see cref="SignalRSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="SignalRResource"/>.
+    /// To get a <see cref="SignalRSharedPrivateLinkResourceCollection"/> instance call the GetSignalRSharedPrivateLinkResources method from an instance of <see cref="SignalRResource"/>.
     /// </summary>
-    public partial class SignalRSharedPrivateLinkResourceCollection : ArmCollection
+    public partial class SignalRSharedPrivateLinkResourceCollection : ArmCollection, IEnumerable<SignalRSharedPrivateLinkResource>, IAsyncEnumerable<SignalRSharedPrivateLinkResource>
     {
         private readonly ClientDiagnostics _signalRSharedPrivateLinkResourcesClientDiagnostics;
         private readonly SignalRSharedPrivateLinkResources _signalRSharedPrivateLinkResourcesRestClient;
@@ -46,9 +48,9 @@ namespace Azure.ResourceManager.SignalR
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SignalRReplicaResource.ResourceType)
+            if (id.ResourceType != SignalRResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), id);
             }
         }
 
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRSharedPrivateLinkResource> operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(
                     new SignalRSharedPrivateLinkResourceOperationSource(Client),
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRSharedPrivateLinkResource> operation = new SignalRArmOperation<SignalRSharedPrivateLinkResource>(
                     new SignalRSharedPrivateLinkResourceOperationSource(Client),
@@ -201,7 +203,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRSharedPrivateLinkResourceData> response = Response.FromValue(SignalRSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRSharedPrivateLinkResourceData> response = Response.FromValue(SignalRSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,6 +266,62 @@ namespace Azure.ResourceManager.SignalR
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List shared private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignalRSharedPrivateLinkResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SignalRSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SignalRSharedPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_signalRSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRSharedPrivateLinkResource(Client, data));
+        }
+
+        /// <summary>
+        /// List shared private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/sharedPrivateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SignalRSharedPrivateLinkResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SignalRSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SignalRSharedPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRSharedPrivateLinkResource>(new SignalRSharedPrivateLinkResourcesGetAllCollectionResultOfT(_signalRSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -299,7 +357,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRSharedPrivateLinkResourceData> response = default;
@@ -356,7 +414,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRSharedPrivateLinkResourceData> response = default;
@@ -413,7 +471,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRSharedPrivateLinkResourceData> response = default;
@@ -474,7 +532,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _signalRSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRSharedPrivateLinkResourceData> response = default;
@@ -500,6 +558,22 @@ namespace Azure.ResourceManager.SignalR
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SignalRSharedPrivateLinkResource> IEnumerable<SignalRSharedPrivateLinkResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SignalRSharedPrivateLinkResource> IAsyncEnumerable<SignalRSharedPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -13,7 +13,6 @@ using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    /// <summary> Private link resource properties. </summary>
     internal partial class SignalRPrivateLinkResourceProperties : IJsonModel<SignalRPrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
