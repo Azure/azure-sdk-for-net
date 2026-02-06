@@ -22,7 +22,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             // Test convenience method with flattened parameters
             var options = new GroupParametersOptions("param1Value", "param2Value");
             var response = await groupParameters.GroupAsync(options);
-            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with GroupParametersOptions parameter
             Assert.IsNotNull(typeof(GroupParameters).GetMethod("GroupAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(GroupParametersOptions), typeof(CancellationToken) }));
@@ -41,7 +41,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
 
             // Test convenience method with required parameters only
             var response = await removeOptionalParameter.RemoveOptionalAsync("param1Value");
-            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with only required parameters
             Assert.IsNotNull(typeof(RemoveOptionalParameter).GetMethod("RemoveOptionalAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
@@ -60,7 +60,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
 
             // Test convenience method with reordered parameters
             var response = await reorderParameters.ReorderAsync("param1Value", "param2Value");
-            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with reordered parameters (param1, param2)
             Assert.IsNotNull(typeof(ReorderParameters).GetMethod("ReorderAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
@@ -79,7 +79,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
 
             // Test convenience method with required parameter that was optional
             var response = await requireOptionalParameter.RequireOptionalAsync("param1Value", "param2Value", CancellationToken.None);
-            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
 
             // Verify that the convenience method exists with both parameters required
             Assert.IsNotNull(typeof(RequireOptionalParameter).GetMethod("RequireOptionalAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
