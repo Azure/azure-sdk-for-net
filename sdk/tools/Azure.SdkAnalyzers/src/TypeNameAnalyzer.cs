@@ -31,9 +31,13 @@ namespace Azure.SdkAnalyzers
             {
                 var typeName = namedTypeSymbol.Name;
 
+                // Generate suggestions to include in the diagnostic message
+                ImmutableArray<string> suggestions = TypeNameSuggestionHelper.GenerateNameSuggestions(namedTypeSymbol);
+                string suggestionsText = TypeNameSuggestionHelper.FormatSuggestions(suggestions);
+
                 foreach (var location in namedTypeSymbol.Locations)
                 {
-                    context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0012, location, typeName));
+                    context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0012, location, typeName, suggestionsText));
                 }
             }
         }

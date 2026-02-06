@@ -17,6 +17,10 @@ namespace Client.Naming.EnumConflict.FirstNamespace
     {
         internal FirstModel() => throw null;
 
+        protected virtual FirstModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator FirstModel(Response response) => throw null;
+
         void IJsonModel<FirstModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Client.Naming.EnumConflict.FirstNamespace
 
         FirstModel IPersistableModel<FirstModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual FirstModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<FirstModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="firstModel"> The <see cref="FirstModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FirstModel firstModel) => throw null;
-
-        public static explicit operator FirstModel(Response response) => throw null;
     }
 }

@@ -548,6 +548,9 @@
 # ServiceLabel: %TimeSeriesInsights
 # ServiceOwners:                                                   @dmdenmsft @rasidhan @Shipra1Mishra @yeskarthik
 
+# PRLabel: %Azure.Core
+/sdk/tools/Azure.SdkAnalyzers/                                     @m-nash @m-redding @jsquire
+
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas
 
