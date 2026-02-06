@@ -172,7 +172,8 @@ namespace Azure.Identity.Tests
             yield return new object[] {null, AzureDeveloperCliCredential.WinAzdCliError, AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "azd: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "azd: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] {null, AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, typeof(CredentialUnavailableException) };
+            // Now that we parse JSON and use azd's messages directly, we pass through azd's login message instead of substituting
+            yield return new object[] {null, "ERROR: not logged in. Please run azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " ERROR: not logged in. Please run azd auth login", typeof(AuthenticationFailedException) };
             yield return new object[] {null, RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] {null, AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
@@ -188,7 +189,8 @@ namespace Azure.Identity.Tests
             yield return new object[] {null, AzureDeveloperCliCredential.WinAzdCliError, AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "azd: command not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "azd: not found", AzureDeveloperCliCredential.AzdCliNotInstalled, typeof(CredentialUnavailableException) };
-            yield return new object[] {null, AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, typeof(CredentialUnavailableException) };
+            // Now that we parse JSON and use azd's messages directly, we pass through azd's login message instead of substituting
+            yield return new object[] {null, "ERROR: not logged in. Please run azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " ERROR: not logged in. Please run azd auth login", typeof(CredentialUnavailableException) };
             yield return new object[] {null, RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] {null, AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] {null, "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(CredentialUnavailableException) };
@@ -391,6 +393,23 @@ namespace Azure.Identity.Tests
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.That(ex.Message, Does.Contain(plainError));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_LoginRequiredInJson_UsesAzdMessage()
+        {
+            // When azd returns a JSON error about login, use azd's message directly instead of substituting
+            string jsonLoginError = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"ERROR: no auth configuration found. Please run `azd auth login` to setup account\"}}";
+            var testProcess = new TestProcess { Error = jsonLoginError };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            // Should use azd's parsed message, not substitute with our own, and not show raw JSON
+            Assert.That(ex.Message, Does.Contain("ERROR: no auth configuration found. Please run `azd auth login` to setup account"));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
         }
     }
 }
