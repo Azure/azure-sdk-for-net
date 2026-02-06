@@ -405,9 +405,9 @@ namespace Azure.Core
                     }
                     catch
                     {
-                        // Dispose should not throw,  per .NET conventions.  Return
-                        // will fail only when the incoming buffer was not rented or 
-                        // the runtime is in a bad state.  For either of these, there is no 
+                        // Dispose should not throw, per .NET conventions. Return
+                        // will fail only when the incoming buffer was not rented or
+                        // the runtime is in a bad state. For either of these, there is no
                         // recovery possible so the exception is ignored.
                     }
                 }
