@@ -1,79 +1,55 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// NOTE: This file has been commented out to use the generated SearchIndexClient instead.
-// The customizations from this manual client have been moved to SearchIndexClient.KnowledgeSources.Customizations.cs
-// See SearchIndexClient.KnowledgeSources.Customizations.cs for the partial class that extends the generated client.
-
-#if false // Commented out manual client - using generated client with customizations instead
-
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
-    /// Azure Cognitive Search client that can be used to manage indexes on a Search service.
+    /// Azure Cognitive Search client that can be used to manage knowledge sources on a Search service.
     /// </summary>
     public partial class SearchIndexClient
     {
-        private KnowledgeSourcesRestClient _knowledgeSourcesRestClient;
-
-        /// <summary>
-        /// Gets the generated <see cref="KnowledgeSourcesRestClient"/> to make requests.
-        /// </summary>
-        private KnowledgeSourcesRestClient KnowledgeSourcesClient => LazyInitializer.EnsureInitialized(ref _knowledgeSourcesRestClient, () => new KnowledgeSourcesRestClient(
-            _clientDiagnostics,
-            _pipeline,
-            Endpoint.AbsoluteUri,
-            null,
-            _version.ToVersionString())
-        );
-
         #region KnowledgeSources Operations
+
         /// <summary> Creates a new knowledge source. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSource"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/> that was created.
+        /// </returns>
         public virtual Response<KnowledgeSource> CreateKnowledgeSource(KnowledgeSource knowledgeSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return KnowledgeSourcesClient.Create(knowledgeSource, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
+
+            Response response = CreateKnowledgeSource(knowledgeSource, cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSource)response, response);
         }
 
         /// <summary> Creates a new knowledge source. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSource"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/> that was created.
+        /// </returns>
         public virtual async Task<Response<KnowledgeSource>> CreateKnowledgeSourceAsync(KnowledgeSource knowledgeSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return await KnowledgeSourcesClient.CreateAsync(knowledgeSource, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
+
+            Response response = await CreateKnowledgeSourceAsync(knowledgeSource, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSource)response, response);
         }
 
-        /// <summary> Creates a new knowledge source or updates an knowledge source if it already exists. </summary>
+        /// <summary> Creates a new knowledge source or updates a knowledge source if it already exists. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeSource.ETag"/> does not match the current service version;
@@ -81,29 +57,18 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <exception cref="ArgumentNullException"><paramref name="knowledgeSource"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/> that was created or updated.
+        /// </returns>
         public virtual Response<KnowledgeSource> CreateOrUpdateKnowledgeSource(KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return KnowledgeSourcesClient.CreateOrUpdate(
-                    knowledgeSource?.Name,
-                    knowledgeSource,
-                    onlyIfUnchanged ? knowledgeSource?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
+            return CreateOrUpdateKnowledgeSource(knowledgeSource?.Name, knowledgeSource, matchConditions, cancellationToken);
         }
 
-        /// <summary> Creates a new knowledge source or updates an knowledge source if it already exists. </summary>
+        /// <summary> Creates a new knowledge source or updates a knowledge source if it already exists. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to create or update. </param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="KnowledgeSource.ETag"/> does not match the current service version;
@@ -111,26 +76,15 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <exception cref="ArgumentNullException"><paramref name="knowledgeSource"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/> that was created or updated.
+        /// </returns>
         public virtual async Task<Response<KnowledgeSource>> CreateOrUpdateKnowledgeSourceAsync(KnowledgeSource knowledgeSource, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return await KnowledgeSourcesClient.CreateOrUpdateAsync(
-                    knowledgeSource?.Name,
-                    knowledgeSource,
-                    onlyIfUnchanged ? knowledgeSource?.ETag?.ToString() : null,
-                    null,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
+            return await CreateOrUpdateKnowledgeSourceAsync(knowledgeSource?.Name, knowledgeSource, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Deletes an existing knowledge source. </summary>
@@ -138,16 +92,24 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        public virtual Response DeleteKnowledgeSource(string sourceName, CancellationToken cancellationToken = default) =>
-            DeleteKnowledgeSource(sourceName, null, false, cancellationToken);
+        public virtual Response DeleteKnowledgeSource(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return DeleteKnowledgeSource(sourceName, matchConditions: null, cancellationToken);
+        }
 
         /// <summary> Deletes an existing knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        public virtual async Task<Response> DeleteKnowledgeSourceAsync(string sourceName, CancellationToken cancellationToken = default) =>
-            await DeleteKnowledgeSourceAsync(sourceName, null, false, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> DeleteKnowledgeSourceAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return await DeleteKnowledgeSourceAsync(sourceName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary> Deletes an existing knowledge source. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to delete. </param>
@@ -162,11 +124,8 @@ namespace Azure.Search.Documents.Indexes
         {
             Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
 
-            return DeleteKnowledgeSource(
-                knowledgeSource?.Name,
-                knowledgeSource?.ETag,
-                onlyIfUnchanged,
-                cancellationToken);
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
+            return DeleteKnowledgeSource(knowledgeSource?.Name, matchConditions, cancellationToken);
         }
 
         /// <summary> Deletes an existing knowledge source. </summary>
@@ -182,89 +141,38 @@ namespace Azure.Search.Documents.Indexes
         {
             Argument.AssertNotNull(knowledgeSource, nameof(knowledgeSource));
 
-            return await DeleteKnowledgeSourceAsync(
-                knowledgeSource?.Name,
-                knowledgeSource?.ETag,
-                onlyIfUnchanged,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private Response DeleteKnowledgeSource(string sourceName, ETag? etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return KnowledgeSourcesClient.Delete(
-                    sourceName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        private async Task<Response> DeleteKnowledgeSourceAsync(string sourceName, ETag? etag, bool onlyIfUnchanged, CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(DeleteKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return await KnowledgeSourcesClient.DeleteAsync(
-                    sourceName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
+            return await DeleteKnowledgeSourceAsync(knowledgeSource?.Name, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves a knowledge source definition. </summary>
         /// <param name="sourceName"> The name of the knowledge source to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/>.
+        /// </returns>
         public virtual Response<KnowledgeSource> GetKnowledgeSource(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return KnowledgeSourcesClient.Get(sourceName, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            Response response = GetKnowledgeSource(sourceName, cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSource)response, response);
         }
 
         /// <summary> Retrieves a knowledge source definition. </summary>
         /// <param name="sourceName"> The name of the knowledge source to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSource"/>.
+        /// </returns>
         public virtual async Task<Response<KnowledgeSource>> GetKnowledgeSourceAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSource)}");
-            scope.Start();
-            try
-            {
-                return await KnowledgeSourcesClient.GetAsync(sourceName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            Response response = await GetKnowledgeSourceAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSource)response, response);
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
@@ -273,97 +181,52 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Pageable<KnowledgeSource> GetKnowledgeSources(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSources)}");
-                scope.Start();
-                try
-                {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
-
-                    Response<ListKnowledgeSourcesResult> result = KnowledgeSourcesClient.List(cancellationToken);
-
-                    return Page<KnowledgeSource>.FromValues(result.Value.KnowledgeSources, null, result.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+            return new PageableWrapper<BinaryData, KnowledgeSource>(
+                GetKnowledgeSources(cancellationToken.ToRequestContext()),
+                bd => KnowledgeSource.DeserializeKnowledgeSource(JsonDocument.Parse(bd).RootElement, ModelSerializationExtensions.WireOptions));
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="KnowledgeSource"/>.</returns>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="KnowledgeSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual AsyncPageable<KnowledgeSource> GetKnowledgeSourcesAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSources)}");
-                scope.Start();
-                try
-                {
-                    if (continuationToken != null)
-                    {
-                        throw new NotSupportedException("A continuation token is unsupported.");
-                    }
-
-                    Response<ListKnowledgeSourcesResult> result = await KnowledgeSourcesClient.ListAsync(cancellationToken).ConfigureAwait(false);
-
-                    return Page<KnowledgeSource>.FromValues(result.Value.KnowledgeSources, null, result.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+            return new AsyncPageableWrapper<BinaryData, KnowledgeSource>(
+                GetKnowledgeSourcesAsync(cancellationToken.ToRequestContext()),
+                bd => KnowledgeSource.DeserializeKnowledgeSource(JsonDocument.Parse(bd).RootElement, ModelSerializationExtensions.WireOptions));
         }
 
         /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSourceStatus"/>.
+        /// </returns>
         public virtual Response<KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSourceStatus)}");
-            scope.Start();
-            try
-            {
-                return KnowledgeSourcesClient.GetStatus(sourceName, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            Response response = GetKnowledgeSourceStatus(sourceName, cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSourceStatus)response, response);
         }
 
         /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="KnowledgeSourceStatus"/>.
+        /// </returns>
         public virtual async Task<Response<KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetKnowledgeSourceStatus)}");
-            scope.Start();
-            try
-            {
-                return await KnowledgeSourcesClient.GetStatusAsync(sourceName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            Response response = await GetKnowledgeSourceStatusAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSourceStatus)response, response);
         }
+
         #endregion
     }
 }
-
-#endif // End of commented out manual client

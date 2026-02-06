@@ -27,13 +27,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="webApiParameters"> Specifies the properties of the user-defined vectorizer. </param>
-        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApiVectorizerParameters webApiParameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
+        /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
+        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApiVectorizerParameters parameters) : base(vectorizerName, kind, additionalBinaryDataProperties)
         {
-            WebApiParameters = webApiParameters;
+            Parameters = parameters;
         }
 
         /// <summary> Specifies the properties of the user-defined vectorizer. </summary>
-        public WebApiVectorizerParameters WebApiParameters { get; set; }
+        public WebApiVectorizerParameters Parameters { get; set; }
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(StopwordsList))
             {
                 writer.WritePropertyName("stopwordsList"u8);
-                writer.WriteStringValue(StopwordsList.Value.ToString());
+                writer.WriteStringValue(StopwordsList.Value.ToSerialString());
             }
             if (Optional.IsDefined(IgnoreCase))
             {
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    stopwordsList = new StopwordsList(prop.Value.GetString());
+                    stopwordsList = prop.Value.GetString().ToStopwordsList();
                     continue;
                 }
                 if (prop.NameEquals("ignoreCase"u8))

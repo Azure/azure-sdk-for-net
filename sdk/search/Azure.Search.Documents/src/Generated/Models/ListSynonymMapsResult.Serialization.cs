@@ -14,8 +14,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps. </summary>
-    public partial class ListSynonymMapsResult : IJsonModel<ListSynonymMapsResult>
+    internal partial class ListSynonymMapsResult : IJsonModel<ListSynonymMapsResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -18,7 +18,49 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("QueryTimeout")]
         private string _queryTimeout;
 
-        internal IDictionary<string, object> AdditionalProperties { get; }
+        internal IndexingParametersConfiguration(
+            BlobIndexerParsingMode? parsingMode,
+            string excludedFileNameExtensions,
+            string indexedFileNameExtensions,
+            bool? failOnUnsupportedContentType,
+            bool? failOnUnprocessableDocument,
+            bool? indexStorageMetadataOnlyForOversizedDocuments,
+            string delimitedTextHeaders,
+            string delimitedTextDelimiter,
+            bool? firstLineContainsHeaders,
+            MarkdownParsingSubmode? markdownParsingSubmode,
+            MarkdownHeaderDepth? markdownHeaderDepth,
+            string documentRoot,
+            BlobIndexerDataToExtract? dataToExtract,
+            BlobIndexerImageAction? imageAction,
+            bool? allowSkillsetToReadFileData,
+            BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm,
+            IndexerExecutionEnvironment? executionEnvironment,
+            string queryTimeout,
+            IDictionary<string, object> additionalProperties)
+        {
+            ParsingMode = parsingMode;
+            ExcludedFileNameExtensions = excludedFileNameExtensions;
+            IndexedFileNameExtensions = indexedFileNameExtensions;
+            FailOnUnsupportedContentType = failOnUnsupportedContentType;
+            FailOnUnprocessableDocument = failOnUnprocessableDocument;
+            IndexStorageMetadataOnlyForOversizedDocuments = indexStorageMetadataOnlyForOversizedDocuments;
+            DelimitedTextHeaders = delimitedTextHeaders;
+            DelimitedTextDelimiter = delimitedTextDelimiter;
+            FirstLineContainsHeaders = firstLineContainsHeaders;
+            MarkdownParsingSubmode = markdownParsingSubmode;
+            MarkdownHeaderDepth = markdownHeaderDepth;
+            DocumentRoot = documentRoot;
+            DataToExtract = dataToExtract;
+            ImageAction = imageAction;
+            AllowSkillsetToReadFileData = allowSkillsetToReadFileData;
+            PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
+            ExecutionEnvironment = executionEnvironment;
+            _queryTimeout = queryTimeout;
+            AdditionalProperties = additionalProperties;
+        }
+
+        internal IDictionary<string, object> AdditionalProperties { get; } = new ChangeTrackingDictionary<string, object>();
 
         /// <summary>
         /// Increases the timeout beyond the 5-minute default for Azure SQL database data sources.
@@ -152,7 +194,7 @@ namespace Azure.Search.Documents.Indexes.Models
             BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default;
             IndexerExecutionEnvironment? executionEnvironment = default;
             string queryTimeout = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("parsingMode"u8))
@@ -297,7 +339,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalProperties.Add(prop.Name, prop.Value.GetObject());
                 }
             }
             return new IndexingParametersConfiguration(

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
@@ -15,18 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerIndexProjectionsParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
         public SearchIndexerIndexProjectionsParameters()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionsParameters"/>. </summary>
         /// <param name="projectionMode"> Defines behavior of the index projections in relation to the rest of the indexer. </param>
         /// <param name="additionalProperties"></param>
-        internal SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode, IDictionary<string, BinaryData> additionalProperties)
+        internal SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode, IDictionary<string, object> additionalProperties)
         {
             ProjectionMode = projectionMode;
             _additionalBinaryDataProperties = additionalProperties;
@@ -36,6 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexProjectionMode? ProjectionMode { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, object> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

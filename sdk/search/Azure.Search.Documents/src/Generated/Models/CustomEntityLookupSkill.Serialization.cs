@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(EntitiesDefinitionUri))
             {
                 writer.WritePropertyName("entitiesDefinitionUri"u8);
-                writer.WriteStringValue(EntitiesDefinitionUri);
+                writer.WriteStringValue(EntitiesDefinitionUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
             {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CustomEntityLookupSkillLanguage? defaultLanguageCode = default;
-            string entitiesDefinitionUri = default;
+            Uri entitiesDefinitionUri = default;
             IList<CustomEntity> inlineEntitiesDefinition = default;
             bool? globalDefaultCaseSensitive = default;
             bool? globalDefaultAccentSensitive = default;
@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         entitiesDefinitionUri = null;
                         continue;
                     }
-                    entitiesDefinitionUri = prop.Value.GetString();
+                    entitiesDefinitionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inlineEntitiesDefinition"u8))

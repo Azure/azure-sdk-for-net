@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Azure.Search.Documents.Documents.Indexes;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -164,13 +166,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null, CancellationToken.None));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((SearchIndexerDataSourceConnection)null));
             Assert.AreEqual("dataSourceConnection", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null, CancellationToken.None));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((SearchIndexerDataSourceConnection)null));
@@ -224,7 +226,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteDataSourceConnectionAsync(connectionName);
+                    await client.DeleteDataSourceConnectionAsync(connectionName, CancellationToken.None);
                 }
                 throw;
             }
@@ -279,13 +281,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null, CancellationToken.None));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((SearchIndexer)null));
             Assert.AreEqual("indexer", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null, CancellationToken.None));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((SearchIndexer)null));
@@ -369,13 +371,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null, CancellationToken.None));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((SearchIndexerSkillset)null));
             Assert.AreEqual("skillset", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null, CancellationToken.None));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((SearchIndexerSkillset)null));
@@ -431,7 +433,7 @@ namespace Azure.Search.Documents.Tests
                  SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
-                DefaultLanguageCode = SentimentSkillLanguage.En,
+                DefaultLanguageCode = "en"
             };
 
             SearchIndexerSkill skill3 = new LanguageDetectionSkill(
@@ -621,7 +623,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteSkillsetAsync(skillsetName);
+                    await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
                 }
 
                 throw;
@@ -641,7 +643,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
                 var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
+                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), additionalBinaryDataProperties: null)).ToList();
 
                 return t switch
                 {
@@ -663,7 +665,7 @@ namespace Azure.Search.Documents.Tests
             EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
             {
                 var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
+                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), additionalBinaryDataProperties: null)).ToList();
 
                 if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
                 {
@@ -684,13 +686,13 @@ namespace Azure.Search.Documents.Tests
                 if (skillVersion == SentimentSkill.SkillVersion.V1)
                 {
                     var outputs = new[] { "score" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), additionalBinaryDataProperties: null)).ToList();
                     return new SentimentSkill(inputs, outputs);
                 }
                 if (skillVersion == SentimentSkill.SkillVersion.V3)
                 {
                     var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), additionalBinaryDataProperties: null)).ToList();
                     return new SentimentSkill(inputs, outputs, skillVersion);
                 }
 
@@ -749,7 +751,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteSkillsetAsync(skillsetName);
+                    await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
                 }
 
                 throw;

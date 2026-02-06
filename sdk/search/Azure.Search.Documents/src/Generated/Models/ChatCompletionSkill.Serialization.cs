@@ -120,8 +120,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("responseFormat"u8);
                 writer.WriteObjectValue(ResponseFormat, options);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -169,7 +167,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> extraParameters = default;
             ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
             ChatCompletionResponseFormat responseFormat = default;
-            string odataType0 = "#Microsoft.Skills.Custom.ChatCompletionSkill";
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -333,11 +330,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("@odata.type"u8))
-                {
-                    odataType0 = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -363,8 +355,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 commonModelParameters,
                 extraParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 extraParametersBehavior,
-                responseFormat,
-                odataType0);
+                responseFormat);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

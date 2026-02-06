@@ -18,11 +18,11 @@ namespace Azure.Search.Documents
         private static ResponseClassifier _pipelineMessageClassifier200206;
         private static ResponseClassifier _pipelineMessageClassifier200207;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 = new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
+        private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
-        private static ResponseClassifier PipelineMessageClassifier200207 => _pipelineMessageClassifier200207 = new StatusCodeClassifier(stackalloc ushort[] { 200, 207 });
+        private static ResponseClassifier PipelineMessageClassifier200207 => _pipelineMessageClassifier200207 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 207 });
 
         internal HttpMessage CreateGetDocumentCountRequest(RequestContext context)
         {

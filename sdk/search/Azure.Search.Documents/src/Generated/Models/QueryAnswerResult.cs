@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
@@ -15,12 +14,12 @@ namespace Azure.Search.Documents.Models
     public partial class QueryAnswerResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
         public QueryAnswerResult()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
@@ -29,7 +28,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>
-        internal QueryAnswerResult(double? score, string key, string text, string highlights, IDictionary<string, BinaryData> additionalProperties)
+        internal QueryAnswerResult(double? score, string key, string text, string highlights, IDictionary<string, object> additionalProperties)
         {
             Score = score;
             Key = key;
@@ -49,8 +48,5 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </summary>
         public string Highlights { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    interpolation = new ScoringFunctionInterpolation(prop.Value.GetString());
+                    interpolation = prop.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

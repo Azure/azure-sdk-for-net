@@ -92,7 +92,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(ScoringStatistics))
             {
                 writer.WritePropertyName("scoringStatistics"u8);
-                writer.WriteStringValue(ScoringStatistics.Value.ToString());
+                writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
             }
             if (Optional.IsDefined(SessionId))
             {
@@ -137,7 +137,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(SearchMode))
             {
                 writer.WritePropertyName("searchMode"u8);
-                writer.WriteStringValue(SearchMode.Value.ToString());
+                writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryLanguage))
             {
@@ -381,7 +381,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    scoringStatistics = new ScoringStatistics(prop.Value.GetString());
+                    scoringStatistics = prop.Value.GetString().ToScoringStatistics();
                     continue;
                 }
                 if (prop.NameEquals("sessionId"u8))
@@ -440,7 +440,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    searchMode = new SearchMode(prop.Value.GetString());
+                    searchMode = prop.Value.GetString().ToSearchMode();
                     continue;
                 }
                 if (prop.NameEquals("queryLanguage"u8))

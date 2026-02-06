@@ -14,8 +14,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The result of testing an analyzer on text. </summary>
-    public partial class AnalyzeResult : IJsonModel<AnalyzeResult>
+    internal partial class AnalyzeResult : IJsonModel<AnalyzeResult>
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/> for deserialization. </summary>
         internal AnalyzeResult()

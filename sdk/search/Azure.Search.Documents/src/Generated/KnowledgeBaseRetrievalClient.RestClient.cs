@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     {
         private static ResponseClassifier _pipelineMessageClassifier200206;
 
-        private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 = new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
+        private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
         internal HttpMessage CreateRetrieveRequest(string knowledgeBaseName, RequestContent content, string querySourceAuthorization, RequestContext context)
         {

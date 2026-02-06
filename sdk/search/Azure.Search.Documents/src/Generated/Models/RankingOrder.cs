@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Sets sort order as BoostedRerankerScore. </summary>
         private const string BoostedRerankerScoreValue = "BoostedRerankerScore";
         /// <summary> Sets sort order as ReRankerScore. </summary>
-        private const string RerankerScoreValue = "RerankerScore";
+        private const string ReRankerScoreValue = "RerankerScore";
 
         /// <summary> Initializes a new instance of <see cref="RankingOrder"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static RankingOrder BoostedRerankerScore { get; } = new RankingOrder(BoostedRerankerScoreValue);
 
         /// <summary> Sets sort order as ReRankerScore. </summary>
-        public static RankingOrder RerankerScore { get; } = new RankingOrder(RerankerScoreValue);
+        public static RankingOrder ReRankerScore { get; } = new RankingOrder(ReRankerScoreValue);
 
         /// <summary> Determines if two <see cref="RankingOrder"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

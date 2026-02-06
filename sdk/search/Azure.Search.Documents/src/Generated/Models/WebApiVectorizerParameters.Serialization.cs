@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -121,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
-            string authResourceId = default;
+            ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +178,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authResourceId = null;
                         continue;
                     }
-                    authResourceId = prop.Value.GetString();
+                    authResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("authIdentity"u8))

@@ -76,5 +76,80 @@ namespace System.Collections.Generic
 
             return result;
         }
+
+        /// <summary>
+        /// Converts a Dictionary&lt;string, BinaryData&gt; to Dictionary&lt;string, object&gt;.
+        /// </summary>
+        /// <param name="source">The source dictionary to convert.</param>
+        /// <returns>A new dictionary with object values, or null if source is null.</returns>
+        /// <remarks>
+        /// Values are preserved as raw JSON strings to maintain backward compatibility
+        /// with the previous behavior where BinaryData stored raw JSON text.
+        /// </remarks>
+        public static Dictionary<string, object> ToObjectDictionary(this Dictionary<string, BinaryData> source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var result = new Dictionary<string, object>(source.Count);
+            foreach (var kvp in source)
+            {
+                result[kvp.Key] = kvp.Value?.ToString();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts an IDictionary&lt;string, BinaryData&gt; to IDictionary&lt;string, object&gt;.
+        /// </summary>
+        /// <param name="source">The source dictionary to convert.</param>
+        /// <returns>A new dictionary with object values, or null if source is null.</returns>
+        /// <remarks>
+        /// Values are preserved as raw JSON strings to maintain backward compatibility
+        /// with the previous behavior where BinaryData stored raw JSON text.
+        /// </remarks>
+        public static IDictionary<string, object> ToObjectDictionary(this IDictionary<string, BinaryData> source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var result = new Dictionary<string, object>(source.Count);
+            foreach (var kvp in source)
+            {
+                result[kvp.Key] = kvp.Value?.ToString();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts an IReadOnlyDictionary&lt;string, BinaryData&gt; to IReadOnlyDictionary&lt;string, object&gt;.
+        /// </summary>
+        /// <param name="source">The source dictionary to convert.</param>
+        /// <returns>A new dictionary with object values, or null if source is null.</returns>
+        /// <remarks>
+        /// Values are preserved as raw JSON strings to maintain backward compatibility
+        /// with the previous behavior where BinaryData stored raw JSON text.
+        /// </remarks>
+        public static IReadOnlyDictionary<string, object> ToObjectDictionary(this IReadOnlyDictionary<string, BinaryData> source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var result = new Dictionary<string, object>(source.Count);
+            foreach (var kvp in source)
+            {
+                result[kvp.Key] = kvp.Value?.ToString();
+            }
+
+            return result;
+        }
     }
 }

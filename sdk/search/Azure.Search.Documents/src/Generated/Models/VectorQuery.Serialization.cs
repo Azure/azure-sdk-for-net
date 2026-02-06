@@ -19,11 +19,6 @@ namespace Azure.Search.Documents.Models
     [PersistableModelProxy(typeof(UnknownVectorQuery))]
     public abstract partial class VectorQuery : IJsonModel<VectorQuery>
     {
-        /// <summary> Initializes a new instance of <see cref="VectorQuery"/> for deserialization. </summary>
-        internal VectorQuery()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VectorQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

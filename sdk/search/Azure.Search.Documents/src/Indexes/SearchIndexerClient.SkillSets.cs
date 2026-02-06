@@ -1,103 +1,25 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// This file has been replaced by SearchIndexerClient.Customizations.cs which extends the generated client.
-// The generated client is in Generated/SearchIndexerClient.cs.
-
-#if false
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
-using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Indexes
+// TODO: Fix this in generator
+// namespace Azure.Search.Documents.Indexes
+namespace Azure.Azure.Search.Documents.Documents.Indexes
 {
     /// <summary>
-    /// Azure Cognitive Search client that can be used to manage and query
-    /// indexes and documents, as well as manage other resources, on a Search
-    /// Service.
+    /// Customizations for the generated <see cref="SearchIndexerClient"/> - Skillset operations.
     /// </summary>
     public partial class SearchIndexerClient
     {
-        private SkillsetsRestClient _skillsetsClient;
-
-        /// <summary>
-        /// Gets the generated <see cref="SkillsetsRestClient"/> to make requests.
-        /// </summary>
-        private SkillsetsRestClient SkillsetsClient => LazyInitializer.EnsureInitialized(ref _skillsetsClient, () => new SkillsetsRestClient(
-            _clientDiagnostics,
-            _pipeline,
-            Endpoint.AbsoluteUri,
-            null,
-            _version.ToVersionString())
-        );
-
-        /// <summary>
-        /// Creates a new skillset.
-        /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerSkillset> CreateSkillset(
-            SearchIndexerSkillset skillset,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Create(
-                    skillset,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new skillset.
-        /// </summary>
-        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
-        /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> CreateSkillsetAsync(
-            SearchIndexerSkillset skillset,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.CreateAsync(
-                    skillset,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+        #region Skillset operations - Convenience overloads
 
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
@@ -183,27 +105,10 @@ namespace Azure.Search.Documents.Indexes
             bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillset, nameof(skillset));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.CreateOrUpdate(
-                    skillset?.Name,
-                    skillset,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
-                    null,
-                    ignoreCacheResetRequirements,
-                    disableCacheReprocessingChangeDetection,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null;
+            return CreateOrUpdateSkillset(skillset?.Name, skillset, matchConditions, ignoreCacheResetRequirements, disableCacheReprocessingChangeDetection, cancellationToken);
         }
 
         /// <summary>
@@ -243,8 +148,8 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerSkillset.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
@@ -291,28 +196,10 @@ namespace Azure.Search.Documents.Indexes
             bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillset, nameof(skillset));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.CreateOrUpdateAsync(
-                    skillset?.Name,
-                    skillset,
-                    onlyIfUnchanged ? skillset?.ETag?.ToString() : null,
-                    null,
-                    ignoreCacheResetRequirements,
-                    disableCacheReprocessingChangeDetection,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null;
+            return await CreateOrUpdateSkillsetAsync(skillset?.Name, skillset, matchConditions, ignoreCacheResetRequirements, disableCacheReprocessingChangeDetection, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -327,14 +214,8 @@ namespace Azure.Search.Documents.Indexes
             string skillsetName,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
-
-            return DeleteSkillset(
-                skillsetName,
-                null,
-                false,
-                cancellationToken);
+            return DeleteSkillset(skillsetName, matchConditions: null, cancellationToken);
         }
 
         /// <summary>
@@ -349,15 +230,8 @@ namespace Azure.Search.Documents.Indexes
             string skillsetName,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
-
-            return await DeleteSkillsetAsync(
-                skillsetName,
-                null,
-                false,
-                cancellationToken)
-                .ConfigureAwait(false);
+            return await DeleteSkillsetAsync(skillsetName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -377,14 +251,10 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillset, nameof(skillset));
 
-            return DeleteSkillset(
-                skillset?.Name,
-                skillset?.ETag,
-                onlyIfUnchanged,
-                cancellationToken);
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null;
+            return DeleteSkillset(skillset?.Name, matchConditions, cancellationToken);
         }
 
         /// <summary>
@@ -404,117 +274,10 @@ namespace Azure.Search.Documents.Indexes
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
-            // The REST client uses a different parameter name that would be confusing to reference.
             Argument.AssertNotNull(skillset, nameof(skillset));
 
-            return await DeleteSkillsetAsync(
-                skillset?.Name,
-                skillset?.ETag,
-                onlyIfUnchanged,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private Response DeleteSkillset(
-            string skillsetName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Delete(
-                    skillsetName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        private async Task<Response> DeleteSkillsetAsync(
-            string skillsetName,
-            ETag? etag,
-            bool onlyIfUnchanged,
-            CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(DeleteSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.DeleteAsync(
-                    skillsetName,
-                    onlyIfUnchanged ? etag?.ToString() : null,
-                    null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
-        /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual Response<SearchIndexerSkillset> GetSkillset(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.Get(
-                    skillsetName,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
-        /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
-        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
-        public virtual async Task<Response<SearchIndexerSkillset>> GetSkillsetAsync(
-            string skillsetName,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillset)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.GetAsync(
-                    skillsetName,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = skillset?.ETag } : null;
+            return await DeleteSkillsetAsync(skillset?.Name, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -526,21 +289,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = SkillsetsClient.List(
-                    Constants.All,
-                    cancellationToken);
-
-                return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.All }, cancellationToken);
+            return Response.FromValue((IReadOnlyList<SearchIndexerSkillset>)result.Value.Skillsets, result.GetRawResponse());
         }
 
         /// <summary>
@@ -552,22 +302,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsets)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
-                    Constants.All,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((IReadOnlyList<SearchIndexerSkillset>)result.Value.Skillsets, result.GetRawResponse());
         }
 
         /// <summary>
@@ -579,22 +315,9 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = SkillsetsClient.List(
-                    Constants.NameKey,
-                    cancellationToken);
-
-                IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.NameKey }, cancellationToken);
+            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
 
         /// <summary>
@@ -606,74 +329,11 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetSkillsetNames)}");
-            scope.Start();
-            try
-            {
-                Response<ListSkillsetsResult> result = await SkillsetsClient.ListAsync(
-                    Constants.NameKey,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-                return Response.FromValue(names, result.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
+            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
+            return Response.FromValue(names, result.GetRawResponse());
         }
 
-        /// <summary>
-        /// Resets skills in an existing skillset in a search service.
-        /// </summary>
-        /// <param name="skillsetName">The name of the skillset to reset.</param>
-        /// <param name="resetSkillsOptions">Options for the reset skills operation.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
-        public virtual Response ResetSkills(
-            string skillsetName,
-            ResetSkillsOptions resetSkillsOptions,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
-            scope.Start();
-            try
-            {
-                return SkillsetsClient.ResetSkills(skillsetName, resetSkillsOptions, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resets skills in an existing skillset in a search service.
-        /// </summary>
-        /// <param name="skillsetName">The name of the skillset to reset.</param>
-        /// <param name="resetSkillsOptions">Options for the reset skills operation.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>A <see cref="Response" /> indicating the status of the operation.</returns>
-        public virtual async Task<Response> ResetSkillsAsync(
-            string skillsetName,
-            ResetSkillsOptions resetSkillsOptions,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetSkills)}");
-            scope.Start();
-            try
-            {
-                return await SkillsetsClient.ResetSkillsAsync(skillsetName, resetSkillsOptions, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+        #endregion
     }
 }
-#endif

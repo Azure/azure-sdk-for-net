@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Azure.Search.Documents;
@@ -16,23 +15,23 @@ namespace Azure.Search.Documents.Models
     public partial class QueryCaptionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
         internal QueryCaptionResult()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>
-        internal QueryCaptionResult(string text, string highlights, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal QueryCaptionResult(string text, string highlights, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
             Highlights = highlights;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>(additionalProperties);
         }
 
         /// <summary> A representative text passage extracted from the document most relevant to the search query. </summary>
@@ -42,6 +41,6 @@ namespace Azure.Search.Documents.Models
         public string Highlights { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IReadOnlyDictionary<string, object> AdditionalProperties => new ReadOnlyDictionary<string, object>(_additionalBinaryDataProperties);
     }
 }

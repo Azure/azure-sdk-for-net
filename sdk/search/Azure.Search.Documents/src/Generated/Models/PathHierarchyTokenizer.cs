@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxTokenLength"> The maximum token length. Default and maximum is 300. </param>
         /// <param name="reverseTokenOrder"> A value indicating whether to generate tokens in reverse order. Default is false. </param>
         /// <param name="numberOfTokensToSkip"> The number of initial tokens to skip. Default is 0. </param>
-        internal PathHierarchyTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string delimiter, string replacement, int? maxTokenLength, bool? reverseTokenOrder, int? numberOfTokensToSkip) : base(odataType, name, additionalBinaryDataProperties)
+        internal PathHierarchyTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, char? delimiter, char? replacement, int? maxTokenLength, bool? reverseTokenOrder, int? numberOfTokensToSkip) : base(odataType, name, additionalBinaryDataProperties)
         {
             Delimiter = delimiter;
             Replacement = replacement;
@@ -40,12 +40,6 @@ namespace Azure.Search.Documents.Indexes.Models
             ReverseTokenOrder = reverseTokenOrder;
             NumberOfTokensToSkip = numberOfTokensToSkip;
         }
-
-        /// <summary> The delimiter character to use. Default is "/". </summary>
-        public string Delimiter { get; set; }
-
-        /// <summary> A value that, if set, replaces the delimiter character. Default is "/". </summary>
-        public string Replacement { get; set; }
 
         /// <summary> The maximum token length. Default and maximum is 300. </summary>
         public int? MaxTokenLength { get; set; }

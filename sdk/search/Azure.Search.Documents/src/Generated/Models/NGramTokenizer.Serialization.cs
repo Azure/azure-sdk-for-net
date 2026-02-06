@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (TokenCharacterKind item in TokenChars)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<TokenCharacterKind> array = new List<TokenCharacterKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new TokenCharacterKind(item.GetString()));
+                        array.Add(item.GetString().ToTokenCharacterKind());
                     }
                     tokenChars = array;
                     continue;

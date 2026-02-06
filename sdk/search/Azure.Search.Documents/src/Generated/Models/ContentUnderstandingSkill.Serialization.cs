@@ -55,8 +55,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("chunkingProperties"u8);
                 writer.WriteObjectValue(ChunkingProperties, options);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,7 +91,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = default;
             ContentUnderstandingSkillChunkingProperties chunkingProperties = default;
-            string odataType0 = "#Microsoft.Skills.Util.ContentUnderstandingSkill";
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -160,11 +157,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     chunkingProperties = ContentUnderstandingSkillChunkingProperties.DeserializeContentUnderstandingSkillChunkingProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("@odata.type"u8))
-                {
-                    odataType0 = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -179,8 +171,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs,
                 additionalBinaryDataProperties,
                 extractionOptions ?? new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>(),
-                chunkingProperties,
-                odataType0);
+                chunkingProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

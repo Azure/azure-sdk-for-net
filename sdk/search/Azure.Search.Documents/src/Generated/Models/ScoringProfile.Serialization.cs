@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(FunctionAggregation))
             {
                 writer.WritePropertyName("functionAggregation"u8);
-                writer.WriteStringValue(FunctionAggregation.Value.ToString());
+                writer.WriteStringValue(FunctionAggregation.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    functionAggregation = new ScoringFunctionAggregation(prop.Value.GetString());
+                    functionAggregation = prop.Value.GetString().ToScoringFunctionAggregation();
                     continue;
                 }
                 if (options.Format != "W")

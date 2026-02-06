@@ -18,14 +18,6 @@ namespace Azure.Search.Documents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
-        internal SearchOptions()
-        {
-            Facets = new ChangeTrackingList<string>();
-            ScoringParameters = new ChangeTrackingList<string>();
-            VectorQueries = new ChangeTrackingList<VectorQuery>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>

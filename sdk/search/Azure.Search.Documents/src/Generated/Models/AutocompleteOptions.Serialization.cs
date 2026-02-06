@@ -40,7 +40,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("autocompleteMode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Filter))
             {
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    mode = new AutocompleteMode(prop.Value.GetString());
+                    mode = prop.Value.GetString().ToAutocompleteMode();
                     continue;
                 }
                 if (prop.NameEquals("filter"u8))

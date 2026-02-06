@@ -536,31 +536,8 @@ namespace Azure.Search.Documents.Models
     {
     }
 
-    // NOTE: QueryType is renamed to SearchQueryType in /Models/SearchQueryType.cs
-
-    /// <summary> SearchMode namespace customization. </summary>
-    [CodeGenType("SearchMode")]
-    public readonly partial struct SearchMode
-    {
-    }
-
-    /// <summary> ScoringStatistics namespace customization. </summary>
-    [CodeGenType("ScoringStatistics")]
-    public readonly partial struct ScoringStatistics
-    {
-    }
-
-    /// <summary> IndexActionType namespace customization. </summary>
-    [CodeGenType("IndexActionType")]
-    public readonly partial struct IndexActionType
-    {
-    }
-
-    /// <summary> AutocompleteMode namespace customization. </summary>
-    [CodeGenType("AutocompleteMode")]
-    public readonly partial struct AutocompleteMode
-    {
-    }
+    //NOTE: QueryType is renamed to SearchQueryType in /Models/SearchQueryType.cs
+    // NOTE: SearchMode, ScoringStatistics, IndexActionType, AutocompleteMode are defined as enums in TemporaryEnums.cs
 
     // NOTE: The following types are customized in /Models folder:
     // - SearchDocumentsResult (internal in SearchResults.cs)
@@ -964,83 +941,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    /// <summary> IndexerStatus namespace customization. </summary>
-    [CodeGenType("IndexerStatus")]
-    public readonly partial struct IndexerStatus
-    {
-    }
-
-    /// <summary> IndexerExecutionStatus namespace customization. </summary>
-    [CodeGenType("IndexerExecutionStatus")]
-    public readonly partial struct IndexerExecutionStatus
-    {
-    }
-
-    /// <summary> ScoringFunctionInterpolation namespace customization. </summary>
-    [CodeGenType("ScoringFunctionInterpolation")]
-    public readonly partial struct ScoringFunctionInterpolation
-    {
-    }
-
-    /// <summary> ScoringFunctionAggregation namespace customization. </summary>
-    [CodeGenType("ScoringFunctionAggregation")]
-    public readonly partial struct ScoringFunctionAggregation
-    {
-    }
-
-    /// <summary> TokenCharacterKind namespace customization. </summary>
-    [CodeGenType("TokenCharacterKind")]
-    public readonly partial struct TokenCharacterKind
-    {
-    }
-
-    /// <summary> MicrosoftTokenizerLanguage namespace customization. </summary>
-    [CodeGenType("MicrosoftTokenizerLanguage")]
-    public readonly partial struct MicrosoftTokenizerLanguage
-    {
-    }
-
-    /// <summary> MicrosoftStemmingTokenizerLanguage namespace customization. </summary>
-    [CodeGenType("MicrosoftStemmingTokenizerLanguage")]
-    public readonly partial struct MicrosoftStemmingTokenizerLanguage
-    {
-    }
-
-    /// <summary> CjkBigramTokenFilterScripts namespace customization. </summary>
-    [CodeGenType("CjkBigramTokenFilterScripts")]
-    public readonly partial struct CjkBigramTokenFilterScripts
-    {
-    }
-
-    /// <summary> EdgeNGramTokenFilterSide namespace customization. </summary>
-    [CodeGenType("EdgeNGramTokenFilterSide")]
-    public readonly partial struct EdgeNGramTokenFilterSide
-    {
-    }
-
-    /// <summary> PhoneticEncoder namespace customization. </summary>
-    [CodeGenType("PhoneticEncoder")]
-    public readonly partial struct PhoneticEncoder
-    {
-    }
-
-    /// <summary> SnowballTokenFilterLanguage namespace customization. </summary>
-    [CodeGenType("SnowballTokenFilterLanguage")]
-    public readonly partial struct SnowballTokenFilterLanguage
-    {
-    }
-
-    /// <summary> StemmerTokenFilterLanguage namespace customization. </summary>
-    [CodeGenType("StemmerTokenFilterLanguage")]
-    public readonly partial struct StemmerTokenFilterLanguage
-    {
-    }
-
-    /// <summary> StopwordsList namespace customization. </summary>
-    [CodeGenType("StopwordsList")]
-    public readonly partial struct StopwordsList
-    {
-    }
+    // NOTE: The following types are defined as enums in TemporaryEnums.cs:
+    // IndexerStatus, IndexerExecutionStatus, ScoringFunctionInterpolation, ScoringFunctionAggregation,
+    // TokenCharacterKind, MicrosoftTokenizerLanguage, MicrosoftStemmingTokenizerLanguage,
+    // EdgeNGramTokenFilterSide, PhoneticEncoder, SnowballTokenFilterLanguage, StemmerTokenFilterLanguage, StopwordsList
 
     // Class types for Indexes namespace
     /// <summary> SearchIndexerDataSourceConnection namespace customization. </summary>
@@ -1187,12 +1091,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    /// <summary> ListSynonymMapsResult namespace customization. </summary>
-    [CodeGenType("ListSynonymMapsResult")]
-    public partial class ListSynonymMapsResult
-    {
-    }
-
     /// <summary> SearchIndex namespace customization. </summary>
     [CodeGenType("SearchIndex")]
     public partial class SearchIndex
@@ -1217,27 +1115,9 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    /// <summary> AnalyzeResult namespace customization. </summary>
-    [CodeGenType("AnalyzeResult")]
-    public partial class AnalyzeResult
-    {
-    }
-
     /// <summary> AnalyzedTokenInfo namespace customization. </summary>
     [CodeGenType("AnalyzedTokenInfo")]
     public partial class AnalyzedTokenInfo
-    {
-    }
-
-    /// <summary> SearchServiceCounters namespace customization. </summary>
-    [CodeGenType("SearchServiceCounters")]
-    public partial class SearchServiceCounters
-    {
-    }
-
-    /// <summary> SearchServiceLimits namespace customization. </summary>
-    [CodeGenType("SearchServiceLimits")]
-    public partial class SearchServiceLimits
     {
     }
 
@@ -1833,11 +1713,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
     }
 
-    [CodeGenType("KeywordTokenizer")]
-    public partial class KeywordTokenizer
-    {
-    }
-
     // Token Filters
     /// <summary> TokenFilter namespace customization. </summary>
     [CodeGenType("TokenFilter")]
@@ -1866,18 +1741,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> DictionaryDecompounderTokenFilter namespace customization. </summary>
     [CodeGenType("DictionaryDecompounderTokenFilter")]
     public partial class DictionaryDecompounderTokenFilter
-    {
-    }
-
-    /// <summary> EdgeNGramTokenFilter namespace customization. </summary>
-    [CodeGenType("EdgeNGramTokenFilter")]
-    public partial class EdgeNGramTokenFilter
-    {
-    }
-
-    /// <summary> EdgeNGramTokenFilterV2 namespace customization. </summary>
-    [CodeGenType("EdgeNGramTokenFilterV2")]
-    public partial class EdgeNGramTokenFilterV2
     {
     }
 
@@ -2069,6 +1932,19 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> SearchIndexerIndexProjectionsParameters namespace customization. </summary>
     [CodeGenType("SearchIndexerIndexProjectionsParameters")]
     public partial class SearchIndexerIndexProjectionsParameters
+    {
+    }
+
+    // Similarity Algorithms
+    /// <summary> SimilarityAlgorithm namespace customization. </summary>
+    [CodeGenType("BM25Similarity")]
+    public partial class BM25Similarity
+    {
+    }
+
+    /// <summary> ClassicSimilarity namespace customization. </summary>
+    [CodeGenType("ClassicSimilarity")]
+    public partial class ClassicSimilarity
     {
     }
 

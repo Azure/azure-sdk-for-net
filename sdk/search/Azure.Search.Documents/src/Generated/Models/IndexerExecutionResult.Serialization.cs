@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.ToString());
+                writer.WriteStringValue(Status.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(StatusDetail))
             {
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new IndexerExecutionStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToIndexerExecutionStatus();
                     continue;
                 }
                 if (prop.NameEquals("statusDetail"u8))

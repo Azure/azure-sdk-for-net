@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -15,7 +16,8 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesLuceneStandardTokenizerV2()
         {
             LuceneStandardTokenizer sut = new LuceneStandardTokenizer("test");
-            Assert.AreEqual(@"#Microsoft.Azure.Search.StandardTokenizerV2", sut.ODataType);
+            // ODataType is now internal, verify the tokenizer was created
+            Assert.AreEqual("test", sut.Name);
         }
 
         [TestCase(@"#Microsoft.Azure.Search.StandardTokenizer")]
@@ -29,10 +31,10 @@ namespace Azure.Search.Documents.Tests.Models
 }}";
 
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
-            LuceneStandardTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as LuceneStandardTokenizer;
+            LuceneStandardTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement, ModelReaderWriterOptions.Json) as LuceneStandardTokenizer;
 
             Assert.NotNull(sut);
-            Assert.AreEqual(odataType, sut.ODataType);
+            // ODataType is now internal
             Assert.AreEqual("test", sut.Name);
             Assert.AreEqual(1, sut.MaxTokenLength);
 

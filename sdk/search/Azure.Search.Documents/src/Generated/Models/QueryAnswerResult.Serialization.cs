@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
@@ -54,17 +53,13 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("highlights"u8);
                 writer.WriteStringValue(Highlights);
             }
-            foreach (var item in AdditionalProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
-#endif
             }
         }
 
@@ -83,55 +78,6 @@ namespace Azure.Search.Documents.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQueryAnswerResult(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QueryAnswerResult DeserializeQueryAnswerResult(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            double? score = default;
-            string key = default;
-            string text = default;
-            string highlights = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("score"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    score = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("key"u8))
-                {
-                    key = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("text"u8))
-                {
-                    text = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("highlights"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        highlights = null;
-                        continue;
-                    }
-                    highlights = prop.Value.GetString();
-                    continue;
-                }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-            }
-            return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

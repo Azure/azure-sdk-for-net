@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("language"u8);
-            writer.WriteStringValue(Language.ToString());
+            writer.WriteStringValue(Language.ToSerialString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("language"u8))
                 {
-                    language = new SnowballTokenFilterLanguage(prop.Value.GetString());
+                    language = prop.Value.GetString().ToSnowballTokenFilterLanguage();
                     continue;
                 }
                 if (options.Format != "W")

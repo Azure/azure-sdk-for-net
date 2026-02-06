@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Legacy similarity algorithm which uses the Lucene TFIDFSimilarity implementation of TF-IDF. This variation of TF-IDF introduces static document length normalization as well as coordinating factors that penalize documents that only partially match the searched queries. </summary>
     public partial class ClassicSimilarity : SimilarityAlgorithm

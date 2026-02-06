@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Azure.Search.Documents.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
 using Azure.Search.Documents.Models;
@@ -466,7 +467,7 @@ namespace Azure.Search.Documents.Tests
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteIndexAsync(IndexName);
+                await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
                 RequiresCleanup = false;
 
                 await WaitForIndexDeletionAsync();
@@ -482,7 +483,7 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeSourceCleanup && !string.IsNullOrEmpty(KnowledgeSourceName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName);
+                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName, cancellationToken: CancellationToken.None);
                 RequiresKnowledgeSourceCleanup = false;
 
                 await WaitForKnowledgeSourceDeletionAsync();
@@ -498,7 +499,7 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeBaseCleanup && !string.IsNullOrEmpty(KnowledgeBaseName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName);
+                await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName, cancellationToken: CancellationToken.None);
                 RequiresKnowledgeBaseCleanup = false;
 
                 await WaitForKnowledgeBaseDeletionAsync();
@@ -610,27 +611,23 @@ namespace Azure.Search.Documents.Tests
                     knowledgeSources: new List<KnowledgeSourceReference>
                     {
                         new KnowledgeSourceReference(knowledgeSource.Name)
-                    },
-                    models: new List<KnowledgeBaseModel>
-                    {
-                        new KnowledgeBaseAzureOpenAIModel(
-                            new AzureOpenAIVectorizerParameters
-                            {
-                                ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                                ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                                DeploymentName = deploymentName,
-                                ModelName = AzureOpenAIModelName.Gpt41
-                            })
-                    },
-                    retrievalReasoningEffort: new KnowledgeRetrievalLowReasoningEffort(),
-                    KnowledgeRetrievalOutputMode.AnswerSynthesis,
-                    eTag: null,
-                    encryptionKey: null,
-                    description: "Description of the Knowledge Base",
-                    retrievalInstructions: "Instructions for the retrieval and answering behavior of the Knowledge Base",
-                    answerInstructions: "Instructions for the answer",
-                    serializedAdditionalRawData: null
-                    );
+                    })
+                {
+                    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort(),
+                    OutputMode = KnowledgeRetrievalOutputMode.AnswerSynthesis,
+                    Description = "Description of the Knowledge Base",
+                    RetrievalInstructions = "Instructions for the retrieval and answering behavior of the Knowledge Base",
+                    AnswerInstructions = "Instructions for the answer"
+                };
+                knowledgeAgent.Models.Add(
+                    new KnowledgeBaseAzureOpenAIModel(
+                        new AzureOpenAIVectorizerParameters
+                        {
+                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                            DeploymentName = deploymentName,
+                            ModelName = AzureOpenAIModelName.Gpt41
+                        }));
 
                 await client.CreateKnowledgeBaseAsync(knowledgeAgent);
                 RequiresKnowledgeBaseCleanup = true;

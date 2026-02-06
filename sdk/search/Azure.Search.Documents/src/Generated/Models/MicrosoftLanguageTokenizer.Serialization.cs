@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language.Value.ToString());
+                writer.WriteStringValue(Language.Value.ToSerialString());
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    language = new MicrosoftTokenizerLanguage(prop.Value.GetString());
+                    language = prop.Value.GetString().ToMicrosoftTokenizerLanguage();
                     continue;
                 }
                 if (options.Format != "W")

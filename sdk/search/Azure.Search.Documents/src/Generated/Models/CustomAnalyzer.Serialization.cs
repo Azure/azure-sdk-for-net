@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("tokenizer"u8);
-            writer.WriteStringValue(Tokenizer.ToString());
+            writer.WriteStringValue(TokenizerName.ToString());
             if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string odataType = "#Microsoft.Azure.Search.CustomAnalyzer";
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LexicalTokenizerName tokenizer = default;
+            LexicalTokenizerName tokenizerName = default;
             IList<TokenFilterName> tokenFilters = default;
             IList<string> charFilters = default;
             foreach (var prop in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("tokenizer"u8))
                 {
-                    tokenizer = new LexicalTokenizerName(prop.Value.GetString());
+                    tokenizerName = new LexicalTokenizerName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tokenFilters"u8))
@@ -161,7 +161,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 odataType,
                 name,
                 additionalBinaryDataProperties,
-                tokenizer,
+                tokenizerName,
                 tokenFilters ?? new ChangeTrackingList<TokenFilterName>(),
                 charFilters ?? new ChangeTrackingList<string>());
         }

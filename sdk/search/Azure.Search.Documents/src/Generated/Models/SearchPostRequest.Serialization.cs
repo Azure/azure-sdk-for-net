@@ -63,17 +63,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsCollectionDefined(HighlightFields))
             {
                 writer.WritePropertyName("highlight"u8);
-                writer.WriteStartArray();
-                foreach (string item in HighlightFields)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(string.Join(",", HighlightFields));
             }
             if (Optional.IsDefined(HighlightPostTag))
             {
@@ -93,17 +83,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsCollectionDefined(OrderBy))
             {
                 writer.WritePropertyName("orderby"u8);
-                writer.WriteStartArray();
-                foreach (string item in OrderBy)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(string.Join(",", OrderBy));
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -113,7 +93,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(ScoringStatistics))
             {
                 writer.WritePropertyName("scoringStatistics"u8);
-                writer.WriteStringValue(ScoringStatistics.Value.ToString());
+                writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
             }
             if (Optional.IsDefined(SessionId))
             {
@@ -153,22 +133,12 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsCollectionDefined(SearchFields))
             {
                 writer.WritePropertyName("searchFields"u8);
-                writer.WriteStartArray();
-                foreach (string item in SearchFields)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(string.Join(",", SearchFields));
             }
             if (Optional.IsDefined(SearchMode))
             {
                 writer.WritePropertyName("searchMode"u8);
-                writer.WriteStringValue(SearchMode.Value.ToString());
+                writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryLanguage))
             {
@@ -183,17 +153,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsCollectionDefined(Select))
             {
                 writer.WritePropertyName("select"u8);
-                writer.WriteStartArray();
-                foreach (string item in Select)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(string.Join(",", Select));
             }
             if (Optional.IsDefined(Skip))
             {
@@ -243,17 +203,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsCollectionDefined(SemanticFields))
             {
                 writer.WritePropertyName("semanticFields"u8);
-                writer.WriteStartArray();
-                foreach (string item in SemanticFields)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(string.Join(",", SemanticFields));
             }
             if (Optional.IsCollectionDefined(VectorQueries))
             {
@@ -394,19 +344,8 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    highlightFields = array;
+                    string stringValue = prop.Value.GetString();
+                    highlightFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("highlightPostTag"u8))
@@ -434,19 +373,8 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    orderBy = array;
+                    string stringValue = prop.Value.GetString();
+                    orderBy = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("queryType"u8))
@@ -464,7 +392,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    scoringStatistics = new ScoringStatistics(prop.Value.GetString());
+                    scoringStatistics = prop.Value.GetString().ToScoringStatistics();
                     continue;
                 }
                 if (prop.NameEquals("sessionId"u8))
@@ -518,19 +446,8 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    searchFields = array;
+                    string stringValue = prop.Value.GetString();
+                    searchFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("searchMode"u8))
@@ -539,7 +456,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchMode = new SearchMode(prop.Value.GetString());
+                    searchMode = prop.Value.GetString().ToSearchMode();
                     continue;
                 }
                 if (prop.NameEquals("queryLanguage"u8))
@@ -566,19 +483,8 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    @select = array;
+                    string stringValue = prop.Value.GetString();
+                    @select = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("skip"u8))
@@ -660,19 +566,8 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    semanticFields = array;
+                    string stringValue = prop.Value.GetString();
+                    semanticFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("vectorQueries"u8))

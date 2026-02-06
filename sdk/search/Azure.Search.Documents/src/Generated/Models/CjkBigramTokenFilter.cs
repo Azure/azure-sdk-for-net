@@ -36,9 +36,6 @@ namespace Azure.Search.Documents.Indexes.Models
             OutputUnigrams = outputUnigrams;
         }
 
-        /// <summary> The scripts to ignore. </summary>
-        public IList<CjkBigramTokenFilterScripts> IgnoreScripts { get; }
-
         /// <summary> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </summary>
         public bool? OutputUnigrams { get; set; }
     }

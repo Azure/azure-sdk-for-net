@@ -11,6 +11,35 @@ namespace Azure.Search.Documents.Models
 {
     public partial class FacetResult : IReadOnlyDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
+        public FacetResult()
+        {
+            Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>
+        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
+        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
+        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
+        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
+        /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
+        /// <param name="additionalProperties"></param>
+        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, BinaryData> additionalProperties)
+        {
+            Count = count;
+            Avg = avg;
+            Min = min;
+            Max = max;
+            Sum = sum;
+            Cardinality = cardinality;
+            Facets = facets;
+            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = (IReadOnlyDictionary<string, object>)additionalProperties.ToObjectDictionary();
+        }
         /// <summary>
         /// Gets the type of this facet.  Value facets count documents with a
         /// particular field value and Range facets count documents with a
@@ -20,13 +49,20 @@ namespace Azure.Search.Documents.Models
         {
             get
             {
-                if (Value != null) return FacetType.Value;
-                if (From != null || To != null) return FacetType.Range;
-                if (Sum.HasValue) return FacetType.Sum;
-                if (Avg.HasValue) return FacetType.Average;
-                if (Min.HasValue) return FacetType.Minimum;
-                if (Max.HasValue) return FacetType.Maximum;
-                if (Cardinality.HasValue) return FacetType.Cardinality;
+                if (Value != null)
+                    return FacetType.Value;
+                if (From != null || To != null)
+                    return FacetType.Range;
+                if (Sum.HasValue)
+                    return FacetType.Sum;
+                if (Avg.HasValue)
+                    return FacetType.Average;
+                if (Min.HasValue)
+                    return FacetType.Minimum;
+                if (Max.HasValue)
+                    return FacetType.Maximum;
+                if (Cardinality.HasValue)
+                    return FacetType.Cardinality;
 
                 // Default to Value if no specific facet type can be determined
                 return FacetType.Value;
@@ -75,7 +111,8 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public RangeFacetResult<T> AsRangeFacetResult<T>() where T : struct
         {
-            if (FacetType != FacetType.Range) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Range)
+            { throw new InvalidCastException(); }
             return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
         }
 
@@ -92,7 +129,8 @@ namespace Azure.Search.Documents.Models
         /// </exception>
         public ValueFacetResult<T> AsValueFacetResult<T>()
         {
-            if (FacetType != FacetType.Value) { throw new InvalidCastException(); }
+            if (FacetType != FacetType.Value)
+            { throw new InvalidCastException(); }
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
 
@@ -118,7 +156,6 @@ namespace Azure.Search.Documents.Models
             get => AdditionalProperties[key];
         }
 
-        // TODO: Remove this method once additionalProperties issue is fixed in generator
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static FacetResult DeserializeFacetResult(JsonElement element, ModelReaderWriterOptions options)

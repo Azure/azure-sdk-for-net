@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
@@ -16,11 +15,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class KeywordTokenizer : LexicalTokenizer, IJsonModel<KeywordTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="KeywordTokenizer"/> for deserialization. </summary>
-        internal KeywordTokenizer()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeywordTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -28,23 +22,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeywordTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BufferSize))
-            {
-                writer.WritePropertyName("bufferSize"u8);
-                writer.WriteNumberValue(BufferSize.Value);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -62,47 +39,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKeywordTokenizer(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeywordTokenizer DeserializeKeywordTokenizer(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "#Microsoft.Azure.Search.KeywordTokenizer";
-            string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            int? bufferSize = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("@odata.type"u8))
-                {
-                    odataType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("bufferSize"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bufferSize = prop.Value.GetInt32();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new KeywordTokenizer(odataType, name, additionalBinaryDataProperties, bufferSize);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

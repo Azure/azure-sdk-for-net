@@ -22,24 +22,24 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
-        /// <param name="resourceUrl"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
-        /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. </param>
+        /// <param name="authenticationIdentity"> The user-assigned managed identity used for outbound connections. </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureOpenAIVectorizerParameters(Uri resourceUrl, string deploymentName, string apiKey, SearchIndexerDataIdentity authIdentity, AzureOpenAIModelName? modelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureOpenAIVectorizerParameters(Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ResourceUrl = resourceUrl;
+            ResourceUri = resourceUri;
             DeploymentName = deploymentName;
             ApiKey = apiKey;
-            AuthIdentity = authIdentity;
+            AuthenticationIdentity = authenticationIdentity;
             ModelName = modelName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
-        public Uri ResourceUrl { get; set; }
+        public Uri ResourceUri { get; set; }
 
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
         public string DeploymentName { get; set; }
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. </summary>
-        public SearchIndexerDataIdentity AuthIdentity { get; set; }
+        public SearchIndexerDataIdentity AuthenticationIdentity { get; set; }
 
         /// <summary> The name of the embedding model that is deployed at the provided deploymentId path. </summary>
         public AzureOpenAIModelName? ModelName { get; set; }

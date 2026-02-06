@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    interpolation = new ScoringFunctionInterpolation(prop.Value.GetString());
+                    interpolation = prop.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

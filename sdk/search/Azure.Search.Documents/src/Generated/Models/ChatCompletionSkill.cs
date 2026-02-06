@@ -51,8 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="extraParameters"> Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry's extensibility pattern. </param>
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
-        /// <param name="odataType0"> A URI fragment specifying the type of skill. </param>
-        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, string authResourceId, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat, string odataType0) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, string authResourceId, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
@@ -67,7 +66,6 @@ namespace Azure.Search.Documents.Indexes.Models
             ExtraParameters = extraParameters;
             ExtraParametersBehavior = extraParametersBehavior;
             ResponseFormat = responseFormat;
-            OdataType = odataType0;
         }
 
         /// <summary> The url for the Web API. </summary>

@@ -40,10 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(WebApiVectorizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(WebApiParameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(WebApiParameters, options);
+                writer.WriteObjectValue(Parameters, options);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string vectorizerName = default;
             VectorSearchVectorizerKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WebApiVectorizerParameters webApiParameters = default;
+            WebApiVectorizerParameters parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    webApiParameters = WebApiVectorizerParameters.DeserializeWebApiVectorizerParameters(prop.Value, options);
+                    parameters = WebApiVectorizerParameters.DeserializeWebApiVectorizerParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebApiVectorizer(vectorizerName, kind, additionalBinaryDataProperties, webApiParameters);
+            return new WebApiVectorizer(vectorizerName, kind, additionalBinaryDataProperties, parameters);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

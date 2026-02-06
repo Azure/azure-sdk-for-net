@@ -46,7 +46,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms"u8);
-            writer.WriteStringValue(Synonyms);
+            writer.WriteStartArray();
+            foreach (string item in SynonymsList)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
@@ -101,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string format = default;
-            string synonyms = default;
+            IList<string> synonymsList = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -119,7 +129,19 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("synonyms"u8))
                 {
-                    synonyms = prop.Value.GetString();
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    synonymsList = array;
                     continue;
                 }
                 if (prop.NameEquals("encryptionKey"u8))
@@ -145,7 +167,7 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SynonymMap(
                 name,
                 format,
-                synonyms,
+                synonymsList,
                 encryptionKey,
                 etag,
                 additionalBinaryDataProperties);

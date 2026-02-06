@@ -42,14 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue<object>(item.Value, options);
             }
         }
 
@@ -79,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexProjectionMode? projectionMode = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("projectionMode"u8))
@@ -91,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     projectionMode = new IndexProjectionMode(prop.Value.GetString());
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetObject());
             }
             return new SearchIndexerIndexProjectionsParameters(projectionMode, additionalProperties);
         }

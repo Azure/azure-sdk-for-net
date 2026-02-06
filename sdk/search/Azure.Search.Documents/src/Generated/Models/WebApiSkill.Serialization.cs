@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -128,7 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
             TimeSpan? timeout = default;
             int? batchSize = default;
             int? degreeOfParallelism = default;
-            string authResourceId = default;
+            ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,7 +240,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authResourceId = null;
                         continue;
                     }
-                    authResourceId = prop.Value.GetString();
+                    authResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("authIdentity"u8))

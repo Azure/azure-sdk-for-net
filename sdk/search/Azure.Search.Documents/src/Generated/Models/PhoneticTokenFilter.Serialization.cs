@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Encoder))
             {
                 writer.WritePropertyName("encoder"u8);
-                writer.WriteStringValue(Encoder.Value.ToString());
+                writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplaceOriginalTokens))
             {
@@ -100,7 +100,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    encoder = new PhoneticEncoder(prop.Value.GetString());
+                    encoder = prop.Value.GetString().ToPhoneticEncoder();
                     continue;
                 }
                 if (prop.NameEquals("replace"u8))

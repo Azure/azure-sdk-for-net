@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -58,13 +59,13 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
-        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="avg"> The resulting total avg for the facet when a avg metric is requested. </param>
-        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
-        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
-        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
-        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
-        /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
+        /// <param name="count"></param>
+        /// <param name="avg"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <param name="sum"></param>
+        /// <param name="cardinality"></param>
+        /// <param name="facets"></param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
         public static FacetResult FacetResult(long? count = default, double? avg = default, double? min = default, double? max = default, double? sum = default, long? cardinality = default, IReadOnlyDictionary<string, IList<FacetResult>> facets = default, IDictionary<string, BinaryData> additionalProperties = default)
@@ -90,9 +91,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.QueryAnswerResult"/> instance for mocking. </returns>
-        public static QueryAnswerResult QueryAnswerResult(double? score = default, string key = default, string text = default, string highlights = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static QueryAnswerResult QueryAnswerResult(double? score = default, string key = default, string text = default, string highlights = default, IDictionary<string, object> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, object>();
 
             return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
@@ -385,9 +386,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.QueryCaptionResult"/> instance for mocking. </returns>
-        public static QueryCaptionResult QueryCaptionResult(string text = default, string highlights = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        public static QueryCaptionResult QueryCaptionResult(string text = default, string highlights = default, IReadOnlyDictionary<string, object> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, object>();
 
             return new QueryCaptionResult(text, highlights, additionalProperties);
         }
@@ -566,16 +567,18 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a synonym map definition. </summary>
         /// <param name="name"> The name of the synonym map. </param>
-        /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
+        /// <param name="synonymsList"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="etag"> The ETag of the synonym map. </param>
         /// <returns> A new <see cref="Indexes.Models.SynonymMap"/> instance for mocking. </returns>
-        public static SynonymMap SynonymMap(string name = default, string synonyms = default, SearchResourceEncryptionKey encryptionKey = default, string etag = default)
+        public static SynonymMap SynonymMap(string name = default, IEnumerable<string> synonymsList = default, SearchResourceEncryptionKey encryptionKey = default, string etag = default)
         {
+            synonymsList ??= new ChangeTrackingList<string>();
+
             return new SynonymMap(
                 name,
                 "solr",
-                synonyms,
+                synonymsList.ToList(),
                 encryptionKey,
                 etag,
                 additionalBinaryDataProperties: null);
@@ -605,16 +608,6 @@ namespace Azure.Search.Documents.Models
         public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = default)
         {
             return new SearchIndexerDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", additionalBinaryDataProperties: null, resourceId);
-        }
-
-        /// <summary> Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps. </summary>
-        /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
-        /// <returns> A new <see cref="Indexes.Models.ListSynonymMapsResult"/> instance for mocking. </returns>
-        public static ListSynonymMapsResult ListSynonymMapsResult(IEnumerable<SynonymMap> synonymMaps = default)
-        {
-            synonymMaps ??= new ChangeTrackingList<SynonymMap>();
-
-            return new ListSynonymMapsResult(synonymMaps.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
@@ -884,11 +877,11 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Allows you to take control over the process of converting text into indexable/searchable tokens. It's a user-defined configuration consisting of a single predefined tokenizer and one or more filters. The tokenizer is responsible for breaking text into tokens, and the filters for modifying tokens emitted by the tokenizer. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="tokenizer"> The name of the tokenizer to use to divide continuous text into a sequence of tokens, such as breaking a sentence into words. </param>
+        /// <param name="tokenizerName"> The name of the tokenizer to use to divide continuous text into a sequence of tokens, such as breaking a sentence into words. </param>
         /// <param name="tokenFilters"> A list of token filters used to filter out or modify the tokens generated by a tokenizer. For example, you can specify a lowercase filter that converts all characters to lowercase. The filters are run in the order in which they are listed. </param>
         /// <param name="charFilters"> A list of character filters used to prepare input text before it is processed by the tokenizer. For instance, they can replace certain characters or symbols. The filters are run in the order in which they are listed. </param>
         /// <returns> A new <see cref="Indexes.Models.CustomAnalyzer"/> instance for mocking. </returns>
-        public static CustomAnalyzer CustomAnalyzer(string name = default, LexicalTokenizerName tokenizer = default, IEnumerable<TokenFilterName> tokenFilters = default, IEnumerable<string> charFilters = default)
+        public static CustomAnalyzer CustomAnalyzer(string name = default, LexicalTokenizerName tokenizerName = default, IEnumerable<TokenFilterName> tokenFilters = default, IEnumerable<string> charFilters = default)
         {
             tokenFilters ??= new ChangeTrackingList<TokenFilterName>();
             charFilters ??= new ChangeTrackingList<string>();
@@ -897,7 +890,7 @@ namespace Azure.Search.Documents.Models
                 "#Microsoft.Azure.Search.CustomAnalyzer",
                 name,
                 additionalBinaryDataProperties: null,
-                tokenizer,
+                tokenizerName,
                 tokenFilters.ToList(),
                 charFilters.ToList());
         }
@@ -1044,7 +1037,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="reverseTokenOrder"> A value indicating whether to generate tokens in reverse order. Default is false. </param>
         /// <param name="numberOfTokensToSkip"> The number of initial tokens to skip. Default is 0. </param>
         /// <returns> A new <see cref="Indexes.Models.PathHierarchyTokenizer"/> instance for mocking. </returns>
-        public static PathHierarchyTokenizer PathHierarchyTokenizer(string name = default, string delimiter = default, string replacement = default, int? maxTokenLength = default, bool? reverseTokenOrder = default, int? numberOfTokensToSkip = default)
+        public static PathHierarchyTokenizer PathHierarchyTokenizer(string name = default, char? delimiter = default, char? replacement = default, int? maxTokenLength = default, bool? reverseTokenOrder = default, int? numberOfTokensToSkip = default)
         {
             return new PathHierarchyTokenizer(
                 "#Microsoft.Azure.Search.PathHierarchyTokenizerV2",
@@ -1162,40 +1155,6 @@ namespace Azure.Search.Documents.Models
                 minSubwordSize,
                 maxSubwordSize,
                 onlyLongestMatch);
-        }
-
-        /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. This token filter is implemented using Apache Lucene. </summary>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="minGram"> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </param>
-        /// <param name="maxGram"> The maximum n-gram length. Default is 2. </param>
-        /// <param name="side"> Specifies which side of the input the n-gram should be generated from. Default is "front". </param>
-        /// <returns> A new <see cref="Indexes.Models.EdgeNGramTokenFilter"/> instance for mocking. </returns>
-        public static EdgeNGramTokenFilter EdgeNGramTokenFilter(string name = default, int? minGram = default, int? maxGram = default, EdgeNGramTokenFilterSide? side = default)
-        {
-            return new EdgeNGramTokenFilter(
-                "#Microsoft.Azure.Search.EdgeNGramTokenFilter",
-                name,
-                additionalBinaryDataProperties: null,
-                minGram,
-                maxGram,
-                side);
-        }
-
-        /// <summary> Generates n-grams of the given size(s) starting from the front or the back of an input token. This token filter is implemented using Apache Lucene. </summary>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
-        /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
-        /// <param name="side"> Specifies which side of the input the n-gram should be generated from. Default is "front". </param>
-        /// <returns> A new <see cref="Indexes.Models.EdgeNGramTokenFilterV2"/> instance for mocking. </returns>
-        public static EdgeNGramTokenFilterV2 EdgeNGramTokenFilterV2(string name = default, int? minGram = default, int? maxGram = default, EdgeNGramTokenFilterSide? side = default)
-        {
-            return new EdgeNGramTokenFilterV2(
-                "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
-                name,
-                additionalBinaryDataProperties: null,
-                minGram,
-                maxGram,
-                side);
         }
 
         /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). This token filter is implemented using Apache Lucene. </summary>
@@ -1482,7 +1441,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Legacy similarity algorithm which uses the Lucene TFIDFSimilarity implementation of TF-IDF. This variation of TF-IDF introduces static document length normalization as well as coordinating factors that penalize documents that only partially match the searched queries. </summary>
-        /// <returns> A new <see cref="Models.ClassicSimilarity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.ClassicSimilarity"/> instance for mocking. </returns>
         public static ClassicSimilarity ClassicSimilarity()
         {
             return new ClassicSimilarity("#Microsoft.Azure.Search.ClassicSimilarity", additionalBinaryDataProperties: null);
@@ -1491,7 +1450,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Ranking function based on the Okapi BM25 similarity algorithm. BM25 is a TF-IDF-like algorithm that includes length normalization (controlled by the 'b' parameter) as well as term frequency saturation (controlled by the 'k1' parameter). </summary>
         /// <param name="k1"> This property controls the scaling function between the term frequency of each matching terms and the final relevance score of a document-query pair. By default, a value of 1.2 is used. A value of 0.0 means the score does not scale with an increase in term frequency. </param>
         /// <param name="b"> This property controls how the length of a document affects the relevance score. By default, a value of 0.75 is used. A value of 0.0 means no length normalization is applied, while a value of 1.0 means the score is fully normalized by the length of the document. </param>
-        /// <returns> A new <see cref="Models.BM25Similarity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.BM25Similarity"/> instance for mocking. </returns>
         public static BM25Similarity BM25Similarity(double? k1 = default, double? b = default)
         {
             return new BM25Similarity("#Microsoft.Azure.Search.BM25Similarity", additionalBinaryDataProperties: null, k1, b);
@@ -1638,30 +1597,30 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
-        /// <param name="resourceUrl"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
-        /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. </param>
+        /// <param name="authenticationIdentity"> The user-assigned managed identity used for outbound connections. </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureOpenAIVectorizerParameters"/> instance for mocking. </returns>
-        public static AzureOpenAIVectorizerParameters AzureOpenAIVectorizerParameters(Uri resourceUrl = default, string deploymentName = default, string apiKey = default, SearchIndexerDataIdentity authIdentity = default, AzureOpenAIModelName? modelName = default)
+        public static AzureOpenAIVectorizerParameters AzureOpenAIVectorizerParameters(Uri resourceUri = default, string deploymentName = default, string apiKey = default, SearchIndexerDataIdentity authenticationIdentity = default, AzureOpenAIModelName? modelName = default)
         {
             return new AzureOpenAIVectorizerParameters(
-                resourceUrl,
+                resourceUri,
                 deploymentName,
                 apiKey,
-                authIdentity,
+                authenticationIdentity,
                 modelName,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies a user-defined vectorizer for generating the vector embedding of a query string. Integration of an external vectorizer is achieved using the custom Web API interface of a skillset. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="webApiParameters"> Specifies the properties of the user-defined vectorizer. </param>
+        /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
         /// <returns> A new <see cref="Indexes.Models.WebApiVectorizer"/> instance for mocking. </returns>
-        public static WebApiVectorizer WebApiVectorizer(string vectorizerName = default, WebApiVectorizerParameters webApiParameters = default)
+        public static WebApiVectorizer WebApiVectorizer(string vectorizerName = default, WebApiVectorizerParameters parameters = default)
         {
-            return new WebApiVectorizer(vectorizerName, VectorSearchVectorizerKind.CustomWebApi, additionalBinaryDataProperties: null, webApiParameters);
+            return new WebApiVectorizer(vectorizerName, VectorSearchVectorizerKind.CustomWebApi, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Specifies the properties for connecting to a user-defined vectorizer. </summary>
@@ -1672,7 +1631,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="authResourceId"> Applies to custom endpoints that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the vectorization connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <returns> A new <see cref="Indexes.Models.WebApiVectorizerParameters"/> instance for mocking. </returns>
-        public static WebApiVectorizerParameters WebApiVectorizerParameters(Uri uri = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, string authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
+        public static WebApiVectorizerParameters WebApiVectorizerParameters(Uri uri = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, ResourceIdentifier authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
         {
             httpHeaders ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1825,16 +1784,6 @@ namespace Azure.Search.Documents.Models
                 tokenFilters.ToList(),
                 charFilters.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The result of testing an analyzer on text. </summary>
-        /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
-        /// <returns> A new <see cref="Indexes.Models.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens = default)
-        {
-            tokens ??= new ChangeTrackingList<AnalyzedTokenInfo>();
-
-            return new AnalyzeResult(tokens.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents an index alias, which describes a mapping from the alias name to an index. The alias name can be used in place of the index name for supported operations. </summary>
@@ -2552,29 +2501,29 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-        /// <param name="parsingMode"> Represents the parsing mode for indexing from an Azure blob data source. </param>
-        /// <param name="excludedFileNameExtensions"> Comma-delimited list of filename extensions to ignore when processing from Azure blob storage.  For example, you could exclude ".png, .mp4" to skip over those files during indexing. </param>
-        /// <param name="indexedFileNameExtensions"> Comma-delimited list of filename extensions to select when processing from Azure blob storage.  For example, you could focus indexing on specific application files ".docx, .pptx, .msg" to specifically include those file types. </param>
-        /// <param name="failOnUnsupportedContentType"> For Azure blobs, set to false if you want to continue indexing when an unsupported content type is encountered, and you don't know all the content types (file extensions) in advance. </param>
-        /// <param name="failOnUnprocessableDocument"> For Azure blobs, set to false if you want to continue indexing if a document fails indexing. </param>
-        /// <param name="indexStorageMetadataOnlyForOversizedDocuments"> For Azure blobs, set this property to true to still index storage metadata for blob content that is too large to process. Oversized blobs are treated as errors by default. For limits on blob size, see https://learn.microsoft.com/azure/search/search-limits-quotas-capacity. </param>
-        /// <param name="delimitedTextHeaders"> For CSV blobs, specifies a comma-delimited list of column headers, useful for mapping source fields to destination fields in an index. </param>
-        /// <param name="delimitedTextDelimiter"> For CSV blobs, specifies the end-of-line single-character delimiter for CSV files where each line starts a new document (for example, "|"). </param>
-        /// <param name="firstLineContainsHeaders"> For CSV blobs, indicates that the first (non-blank) line of each blob contains headers. </param>
-        /// <param name="markdownParsingSubmode"> Specifies the submode that will determine whether a markdown file will be parsed into exactly one search document or multiple search documents. Default is `oneToMany`. </param>
-        /// <param name="markdownHeaderDepth"> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </param>
-        /// <param name="documentRoot"> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </param>
-        /// <param name="dataToExtract"> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when "imageAction" is set to a value other than "none".  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </param>
-        /// <param name="imageAction"> Determines how to process embedded images and image files in Azure blob storage.  Setting the "imageAction" configuration to any value other than "none" requires that a skillset also be attached to that indexer. </param>
-        /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source. This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
-        /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
-        /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
-        /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </param>
+        /// <param name="parsingMode"></param>
+        /// <param name="excludedFileNameExtensions"></param>
+        /// <param name="indexedFileNameExtensions"></param>
+        /// <param name="failOnUnsupportedContentType"></param>
+        /// <param name="failOnUnprocessableDocument"></param>
+        /// <param name="indexStorageMetadataOnlyForOversizedDocuments"></param>
+        /// <param name="delimitedTextHeaders"></param>
+        /// <param name="delimitedTextDelimiter"></param>
+        /// <param name="firstLineContainsHeaders"></param>
+        /// <param name="markdownParsingSubmode"></param>
+        /// <param name="markdownHeaderDepth"></param>
+        /// <param name="documentRoot"></param>
+        /// <param name="dataToExtract"></param>
+        /// <param name="imageAction"></param>
+        /// <param name="allowSkillsetToReadFileData"></param>
+        /// <param name="pdfTextRotationAlgorithm"></param>
+        /// <param name="executionEnvironment"></param>
+        /// <param name="queryTimeout"></param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Indexes.Models.IndexingParametersConfiguration"/> instance for mocking. </returns>
-        public static IndexingParametersConfiguration IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode = default, string excludedFileNameExtensions = default, string indexedFileNameExtensions = default, bool? failOnUnsupportedContentType = default, bool? failOnUnprocessableDocument = default, bool? indexStorageMetadataOnlyForOversizedDocuments = default, string delimitedTextHeaders = default, string delimitedTextDelimiter = default, bool? firstLineContainsHeaders = default, MarkdownParsingSubmode? markdownParsingSubmode = default, MarkdownHeaderDepth? markdownHeaderDepth = default, string documentRoot = default, BlobIndexerDataToExtract? dataToExtract = default, BlobIndexerImageAction? imageAction = default, bool? allowSkillsetToReadFileData = default, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default, IndexerExecutionEnvironment? executionEnvironment = default, string queryTimeout = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static IndexingParametersConfiguration IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode = default, string excludedFileNameExtensions = default, string indexedFileNameExtensions = default, bool? failOnUnsupportedContentType = default, bool? failOnUnprocessableDocument = default, bool? indexStorageMetadataOnlyForOversizedDocuments = default, string delimitedTextHeaders = default, string delimitedTextDelimiter = default, bool? firstLineContainsHeaders = default, MarkdownParsingSubmode? markdownParsingSubmode = default, MarkdownHeaderDepth? markdownHeaderDepth = default, string documentRoot = default, BlobIndexerDataToExtract? dataToExtract = default, BlobIndexerImageAction? imageAction = default, bool? allowSkillsetToReadFileData = default, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = default, IndexerExecutionEnvironment? executionEnvironment = default, string queryTimeout = default, IDictionary<string, object> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, object>();
 
             return new IndexingParametersConfiguration(
                 parsingMode,
@@ -3166,7 +3115,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="globalDefaultAccentSensitive"> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
         /// <returns> A new <see cref="Indexes.Models.CustomEntityLookupSkill"/> instance for mocking. </returns>
-        public static CustomEntityLookupSkill CustomEntityLookupSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, CustomEntityLookupSkillLanguage? defaultLanguageCode = default, string entitiesDefinitionUri = default, IEnumerable<CustomEntity> inlineEntitiesDefinition = default, bool? globalDefaultCaseSensitive = default, bool? globalDefaultAccentSensitive = default, int? globalDefaultFuzzyEditDistance = default)
+        public static CustomEntityLookupSkill CustomEntityLookupSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, CustomEntityLookupSkillLanguage? defaultLanguageCode = default, Uri entitiesDefinitionUri = default, IEnumerable<CustomEntity> inlineEntitiesDefinition = default, bool? globalDefaultCaseSensitive = default, bool? globalDefaultAccentSensitive = default, int? globalDefaultFuzzyEditDistance = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3271,7 +3220,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="dataToExtract"> The type of data to be extracted for the skill. Will be set to 'contentAndMetadata' if not defined. </param>
         /// <param name="configuration"> A dictionary of configurations for the skill. </param>
         /// <returns> A new <see cref="Indexes.Models.DocumentExtractionSkill"/> instance for mocking. </returns>
-        public static DocumentExtractionSkill DocumentExtractionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string parsingMode = default, string dataToExtract = default, IDictionary<string, object> configuration = default)
+        public static DocumentExtractionSkill DocumentExtractionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, BlobIndexerParsingMode? parsingMode = default, BlobIndexerDataToExtract? dataToExtract = default, IDictionary<string, object> configuration = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3348,7 +3297,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="authResourceId"> Applies to custom skills that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the custom skill connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <returns> A new <see cref="Indexes.Models.WebApiSkill"/> instance for mocking. </returns>
-        public static WebApiSkill WebApiSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string uri = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, int? batchSize = default, int? degreeOfParallelism = default, string authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
+        public static WebApiSkill WebApiSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string uri = default, IDictionary<string, string> httpHeaders = default, string httpMethod = default, TimeSpan? timeout = default, int? batchSize = default, int? degreeOfParallelism = default, ResourceIdentifier authResourceId = default, SearchIndexerDataIdentity authIdentity = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3422,14 +3371,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="resourceUrl"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
-        /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. </param>
+        /// <param name="authenticationIdentity"> The user-assigned managed identity used for outbound connections. </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
         /// <param name="dimensions"> The number of dimensions the resulting output embeddings should have. Only supported in text-embedding-3 and later models. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureOpenAIEmbeddingSkill"/> instance for mocking. </returns>
-        public static AzureOpenAIEmbeddingSkill AzureOpenAIEmbeddingSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, Uri resourceUrl = default, string deploymentName = default, string apiKey = default, SearchIndexerDataIdentity authIdentity = default, AzureOpenAIModelName? modelName = default, int? dimensions = default)
+        public static AzureOpenAIEmbeddingSkill AzureOpenAIEmbeddingSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, Uri resourceUri = default, string deploymentName = default, string apiKey = default, SearchIndexerDataIdentity authenticationIdentity = default, AzureOpenAIModelName? modelName = default, int? dimensions = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3442,10 +3391,10 @@ namespace Azure.Search.Documents.Models
                 inputs.ToList(),
                 outputs.ToList(),
                 additionalBinaryDataProperties: null,
-                resourceUrl,
+                resourceUri,
                 deploymentName,
                 apiKey,
-                authIdentity,
+                authenticationIdentity,
                 modelName,
                 dimensions);
         }
@@ -3498,8 +3447,7 @@ namespace Azure.Search.Documents.Models
                 outputs.ToList(),
                 additionalBinaryDataProperties: null,
                 extractionOptions.ToList(),
-                chunkingProperties,
-                "#Microsoft.Skills.Util.ContentUnderstandingSkill");
+                chunkingProperties);
         }
 
         /// <summary> Controls the cardinality for chunking the content. </summary>
@@ -3558,8 +3506,7 @@ namespace Azure.Search.Documents.Models
                 commonModelParameters,
                 extraParameters,
                 extraParametersBehavior,
-                responseFormat,
-                "#Microsoft.Skills.Custom.ChatCompletionSkill");
+                responseFormat);
         }
 
         /// <summary> Common language model parameters for Chat Completions. If omitted, default values are used. </summary>
@@ -3830,9 +3777,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="projectionMode"> Defines behavior of the index projections in relation to the rest of the indexer. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerIndexProjectionsParameters"/> instance for mocking. </returns>
-        public static SearchIndexerIndexProjectionsParameters SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static SearchIndexerIndexProjectionsParameters SearchIndexerIndexProjectionsParameters(IndexProjectionMode? projectionMode = default, IDictionary<string, object> additionalProperties = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, object>();
 
             return new SearchIndexerIndexProjectionsParameters(projectionMode, additionalProperties);
         }

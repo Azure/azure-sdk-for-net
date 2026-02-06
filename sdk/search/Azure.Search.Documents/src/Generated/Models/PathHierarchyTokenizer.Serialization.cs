@@ -43,12 +43,12 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Delimiter))
             {
                 writer.WritePropertyName("delimiter"u8);
-                writer.WriteStringValue(Delimiter);
+                writer.WriteStringValue(Delimiter.Value);
             }
             if (Optional.IsDefined(Replacement))
             {
                 writer.WritePropertyName("replacement"u8);
-                writer.WriteStringValue(Replacement);
+                writer.WriteStringValue(Replacement.Value);
             }
             if (Optional.IsDefined(MaxTokenLength))
             {
@@ -95,8 +95,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string odataType = "#Microsoft.Azure.Search.PathHierarchyTokenizerV2";
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string delimiter = default;
-            string replacement = default;
+            char? delimiter = default;
+            char? replacement = default;
             int? maxTokenLength = default;
             bool? reverseTokenOrder = default;
             int? numberOfTokensToSkip = default;
@@ -114,12 +114,20 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("delimiter"u8))
                 {
-                    delimiter = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delimiter = prop.Value.GetChar();
                     continue;
                 }
                 if (prop.NameEquals("replacement"u8))
                 {
-                    replacement = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replacement = prop.Value.GetChar();
                     continue;
                 }
                 if (prop.NameEquals("maxTokenLength"u8))

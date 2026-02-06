@@ -7,26 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a function that boosts scores based on distance from a geographic location. </summary>
     public partial class DistanceScoringFunction : ScoringFunction
     {
-        /// <summary> Initializes a new instance of <see cref="DistanceScoringFunction"/>. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        /// <param name="parameters"> Parameter values for the distance scoring function. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="parameters"/> is null. </exception>
-        public DistanceScoringFunction(string fieldName, double boost, DistanceScoringParameters parameters) : base(fieldName, boost, "distance")
-        {
-            Argument.AssertNotNull(fieldName, nameof(fieldName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            Parameters = parameters;
-        }
-
         /// <summary> Initializes a new instance of <see cref="DistanceScoringFunction"/>. </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>

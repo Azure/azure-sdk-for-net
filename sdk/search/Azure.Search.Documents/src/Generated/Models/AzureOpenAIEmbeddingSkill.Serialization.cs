@@ -40,10 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ResourceUrl))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUrl.AbsoluteUri);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentName))
             {
@@ -55,10 +55,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthenticationIdentity))
             {
                 writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                writer.WriteObjectValue(AuthenticationIdentity, options);
             }
             if (Optional.IsDefined(ModelName))
             {
@@ -104,10 +104,10 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri resourceUrl = default;
+            Uri resourceUri = default;
             string deploymentName = default;
             string apiKey = default;
-            SearchIndexerDataIdentity authIdentity = default;
+            SearchIndexerDataIdentity authenticationIdentity = default;
             AzureOpenAIModelName? modelName = default;
             int? dimensions = default;
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    resourceUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deploymentId"u8))
@@ -177,7 +177,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    authenticationIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modelName"u8))
@@ -212,10 +212,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 inputs,
                 outputs,
                 additionalBinaryDataProperties,
-                resourceUrl,
+                resourceUri,
                 deploymentName,
                 apiKey,
-                authIdentity,
+                authenticationIdentity,
                 modelName,
                 dimensions);
         }

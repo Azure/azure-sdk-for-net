@@ -32,8 +32,5 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             ResourceId = resourceId;
         }
-
-        /// <summary> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </summary>
-        public string ResourceId { get; set; }
     }
 }

@@ -180,6 +180,8 @@ namespace Azure.Search.Documents
             _indexName = indexName;
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
+            Pipeline = options.Build(credential);
+            ClientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -226,34 +228,10 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
             _indexName = indexName;
+            Pipeline = options.Build(tokenCredential);
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
-        }
-
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="indexName"> The name of the index. </param>
-        /// <param name="name"> The name of the index. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public SearchClient(Uri endpoint, string indexName, string name, AzureKeyCredential credential, SearchClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new SearchClientOptions();
-
-            _endpoint = endpoint;
-            _indexName = indexName;
-            _name = name;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
-            _apiVersion = options.Version.ToVersionString();
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            ClientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary> Initializes a new instance of SearchClient. </summary>
@@ -277,9 +255,35 @@ namespace Azure.Search.Documents
             _indexName = indexName;
             _name = name;
             _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            Pipeline = options.Build(credential);
             _apiVersion = options.Version.ToVersionString();
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            ClientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/>, <paramref name="name"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="indexName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public SearchClient(Uri endpoint, string indexName, string name, AzureKeyCredential credential, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _indexName = indexName;
+            _name = name;
+            _keyCredential = credential;
+            Pipeline = options.Build(credential);
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -1473,14 +1477,14 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
         }
 
-         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
-            string searchText,
-            JsonTypeInfo<T> typeInfo,
-            string querySourceAuthorization,
-            bool? enableElevatedRead,
-            SearchOptions options,
-            bool async,
-            CancellationToken cancellationToken = default)
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+           string searchText,
+           JsonTypeInfo<T> typeInfo,
+           string querySourceAuthorization,
+           bool? enableElevatedRead,
+           SearchOptions options,
+           bool async,
+           CancellationToken cancellationToken = default)
         {
             if (options != null && searchText != null)
             {
@@ -1800,29 +1804,19 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
+        [ForwardsClientCalls]
         public virtual Response<AutocompleteResults> Autocomplete(
             string searchText,
             string suggesterName,
             AutocompleteOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(Autocomplete)}");
-            scope.Start();
-            try
-            {
-                return AutocompleteInternal(
-                    searchText,
-                    suggesterName,
-                    options,
-                    async: false,
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return AutocompleteInternal(
+                searchText,
+                suggesterName,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -1848,30 +1842,20 @@ namespace Azure.Search.Documents
         /// <returns>The result of Autocomplete query.</returns>
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
+        /// </exception>\
+        [ForwardsClientCalls]
         public virtual async Task<Response<AutocompleteResults>> AutocompleteAsync(
             string searchText,
             string suggesterName,
             AutocompleteOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(Autocomplete)}");
-            scope.Start();
-            try
-            {
-                return await AutocompleteInternal(
-                    searchText,
-                    suggesterName,
-                    options,
-                    async: true,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return await AutocompleteInternal(
+                searchText,
+                suggesterName,
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<Response<AutocompleteResults>> AutocompleteInternal(
@@ -1881,32 +1865,16 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            return async ?
-                await AutocompletePostAsync(
-                    searchText,
-                    suggesterName,
-                    options?.Mode,
-                    options?.Filter,
-                    options?.UseFuzzyMatching,
-                    options?.HighlightPostTag,
-                    options?.HighlightPreTag,
-                    options?.MinimumCoverage,
-                    options?.SearchFields,
-                    options?.Size,
-                    cancellationToken).ConfigureAwait(false) :
-                AutocompletePost(
-                    searchText,
-                    suggesterName,
-                    options?.Mode,
-                    options?.Filter,
-                    options?.UseFuzzyMatching,
-                    options?.HighlightPostTag,
-                    options?.HighlightPreTag,
-                    options?.MinimumCoverage,
-                    options?.SearchFields,
-                    options?.Size,
-                    cancellationToken);
+            options = options != null ? options.Clone() : new AutocompleteOptions();
+            options.SearchText = searchText;
+            options.SuggesterName = suggesterName;
+
+            var result = async ?
+                await AutocompletePostAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false) :
+                AutocompletePost(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((AutocompleteResults)result, result);
         }
+
         #endregion Autocomplete
 
         #region IndexDocuments

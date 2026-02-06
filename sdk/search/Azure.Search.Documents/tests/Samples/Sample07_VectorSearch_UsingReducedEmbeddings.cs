@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
@@ -63,7 +64,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 

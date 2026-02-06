@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteStringValue(Interpolation.Value.ToString());
+                writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);

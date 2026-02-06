@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("@search.action"u8);
-                writer.WriteStringValue(ActionType.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
             foreach (var item in AdditionalProperties)
             {
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    actionType = new IndexActionType(prop.Value.GetString());
+                    actionType = prop.Value.GetString().ToIndexActionType();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

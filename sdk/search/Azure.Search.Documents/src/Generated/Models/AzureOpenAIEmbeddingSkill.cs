@@ -33,24 +33,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceUrl"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
-        /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. </param>
+        /// <param name="authenticationIdentity"> The user-assigned managed identity used for outbound connections. </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
         /// <param name="dimensions"> The number of dimensions the resulting output embeddings should have. Only supported in text-embedding-3 and later models. </param>
-        internal AzureOpenAIEmbeddingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri resourceUrl, string deploymentName, string apiKey, SearchIndexerDataIdentity authIdentity, AzureOpenAIModelName? modelName, int? dimensions) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal AzureOpenAIEmbeddingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName, int? dimensions) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            ResourceUrl = resourceUrl;
+            ResourceUri = resourceUri;
             DeploymentName = deploymentName;
             ApiKey = apiKey;
-            AuthIdentity = authIdentity;
+            AuthenticationIdentity = authenticationIdentity;
             ModelName = modelName;
             Dimensions = dimensions;
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
-        public Uri ResourceUrl { get; set; }
+        public Uri ResourceUri { get; set; }
 
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
         public string DeploymentName { get; set; }
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. </summary>
-        public SearchIndexerDataIdentity AuthIdentity { get; set; }
+        public SearchIndexerDataIdentity AuthenticationIdentity { get; set; }
 
         /// <summary> The name of the embedding model that is deployed at the provided deploymentId path. </summary>
         public AzureOpenAIModelName? ModelName { get; set; }
