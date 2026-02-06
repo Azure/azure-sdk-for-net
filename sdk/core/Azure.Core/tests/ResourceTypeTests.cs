@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
         [TestCase]
         public void NullImplicitFromString()
         {
-            string from = null;
+            string from = null!;
             ResourceType to = from;
             Assert.AreEqual(default(ResourceType), to);
         }

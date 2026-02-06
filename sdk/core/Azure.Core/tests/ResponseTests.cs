@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ImplicitCastFromResponseTToNullFails()
         {
-            Response<string> response = null;
+            Response<string> response = null!;
             string s = response;
             Assert.IsNull(s);
         }
