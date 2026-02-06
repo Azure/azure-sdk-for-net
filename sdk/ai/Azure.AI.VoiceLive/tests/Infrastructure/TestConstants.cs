@@ -93,9 +93,9 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public const string MicrosoftLearnMcpServerLabel = "microsoft-learn";
 
         // ===== Foundry Agent Configuration =====
-        public const string TestFoundryAgentName = "test-agent";
+        public const string TestFoundryAgentName = "VoiceLiveIntegrationTestAgentV2";
         public const string TestFoundryAgentVersion = "1";
         public const string TestFoundryProjectName = "test-project";
-        public const string TestFoundryAgentDescription = "A test Foundry agent for integration testing";
+        public const string TestFoundryAgentDescription = "You are a helpful math assistant. When asked a math question, solve it step by step and provide the answer.";
     }
 }

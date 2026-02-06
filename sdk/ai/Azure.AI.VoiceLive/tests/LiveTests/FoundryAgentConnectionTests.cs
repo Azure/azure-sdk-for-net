@@ -23,51 +23,12 @@ namespace Azure.AI.VoiceLive.Tests
     /// </summary>
     public class FoundryAgentConnectionTests : VoiceLiveTestBase
     {
-        private string _testAgentId = string.Empty;
-        private const string AgentNamePrefix = "FoundryAgentConnectionTests";
-        private string _testAgentName = string.Empty;
-
         public FoundryAgentConnectionTests() : base(true)
         {
         }
 
         public FoundryAgentConnectionTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task SetupTestAgent()
-        {
-            // V2 FOUNDRY AGENTS: Voice Live only works with V2 (new Foundry) agents
-            var agentName = $"{AgentNamePrefix}-{DateTime.UtcNow:yyyyMMdd}";
-            _testAgentName = agentName;
-            _testAgentId = string.Empty; // Use environment or test constants
-
-            await Task.CompletedTask;
-        }
-
-        private VoiceLiveFoundryAgentDefinition CreateTestFoundryAgent()
-        {
-            // Use environment variables if available, fallback to test constants
-            var agentName = !string.IsNullOrEmpty(TestEnvironment.FoundryAgentName)
-                ? TestEnvironment.FoundryAgentName
-                : (!string.IsNullOrEmpty(_testAgentName)
-                    ? _testAgentName
-                    : TestConstants.TestFoundryAgentName);
-
-            var projectName = !string.IsNullOrEmpty(TestEnvironment.FoundryProjectName)
-                ? TestEnvironment.FoundryProjectName
-                : TestConstants.TestFoundryProjectName;
-
-            return new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: projectName)
-            {
-                AgentVersion = TestConstants.TestFoundryAgentVersion,
-                Description = TestConstants.TestFoundryAgentDescription,
-                AgentContextType = FoundryAgentContextType.AgentContext,
-                ReturnAgentResponseDirectly = false
-            };
         }
 
         [Test]
@@ -91,7 +52,7 @@ namespace Azure.AI.VoiceLive.Tests
         {
             // This test verifies that a session can be established with a Foundry agent configured
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
-            var foundryAgent = CreateTestFoundryAgent();
+            var foundryAgent = TestAgent.CreateFoundryAgentTool(TestEnvironment);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -116,7 +77,7 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that the session updated event includes the environment-configured agent
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var foundryAgent = CreateTestFoundryAgent();  // Uses environment or constants
+            var foundryAgent = TestAgent.CreateFoundryAgentTool(TestEnvironment);
 
             var options = new VoiceLiveSessionOptions
             {
@@ -155,19 +116,9 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that all configuration options are properly set on the agent
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-
-            var foundryAgent = new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                AgentVersion = TestConstants.TestFoundryAgentVersion,
-                Description = TestConstants.TestFoundryAgentDescription,
-                AgentContextType = FoundryAgentContextType.NoContext,
-                ReturnAgentResponseDirectly = true
-            };
+            var foundryAgent = TestAgent.CreateFoundryAgentTool(TestEnvironment);
+            foundryAgent.AgentContextType = FoundryAgentContextType.NoContext;
+            foundryAgent.ReturnAgentResponseDirectly = true;
 
             var options = new VoiceLiveSessionOptions
             {
@@ -187,7 +138,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             if (null != agentTool)
             {
-                Assert.AreEqual(agentName, agentTool.AgentName);
+                Assert.AreEqual(TestConstants.TestFoundryAgentName, agentTool.AgentName);
                 Assert.AreEqual(TestConstants.TestFoundryProjectName, agentTool.ProjectName);
                 Assert.AreEqual(TestConstants.TestFoundryAgentVersion, agentTool.AgentVersion);
                 Assert.AreEqual(TestConstants.TestFoundryAgentDescription, agentTool.Description);
@@ -255,23 +206,8 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that multiple Foundry agents can be configured in a single session
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-
-            var agent1 = new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                Description = "First test agent"
-            };
-
-            var agent2 = new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName + "-2",
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                Description = "Second test agent"
-            };
+            var agent1 = TestAgent.CreateFoundryAgentTool(TestEnvironment, description: "First test agent");
+            var agent2 = TestAgent.CreateFoundryAgentTool(TestEnvironment, agentName: TestConstants.TestFoundryAgentName + "-2", description: "Second test agent");
 
             var options = new VoiceLiveSessionOptions
             {
@@ -293,8 +229,8 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.AreEqual(2, agentTools.Count, $"Expected exactly 2 Foundry agent tools, found {agentTools.Count}");
 
             var agentNames = agentTools.Cast<VoiceLiveFoundryAgentDefinition>().Select(a => a.AgentName).ToList();
-            Assert.Contains(agentName, agentNames, "First agent not found in session tools");
-            Assert.Contains(agentName + "-2", agentNames, "Second agent not found in session tools");
+            Assert.Contains(TestConstants.TestFoundryAgentName, agentNames, "First agent not found in session tools");
+            Assert.Contains(TestConstants.TestFoundryAgentName + "-2", agentNames, "Second agent not found in session tools");
 
             TestContext.WriteLine($"✓ Session configured with {agentTools.Count} Foundry agents: {string.Join(", ", agentNames)}");
         }
@@ -306,17 +242,8 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that NoContext mode works correctly
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-
-            var agent = new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                AgentContextType = FoundryAgentContextType.NoContext,
-                Description = TestConstants.TestFoundryAgentDescription
-            };
+            var agent = TestAgent.CreateFoundryAgentTool(TestEnvironment);
+            agent.AgentContextType = FoundryAgentContextType.NoContext;
 
             var options = new VoiceLiveSessionOptions
             {
@@ -345,17 +272,8 @@ namespace Azure.AI.VoiceLive.Tests
             // This test verifies that AgentContext mode works correctly
             var client = GetLiveClient(new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2026_01_01_PREVIEW));
 
-            var agentName = !string.IsNullOrEmpty(_testAgentId)
-                ? _testAgentId
-                : TestConstants.TestFoundryAgentName;
-
-            var agent = new VoiceLiveFoundryAgentDefinition(
-                agentName: agentName,
-                projectName: TestConstants.TestFoundryProjectName)
-            {
-                AgentContextType = FoundryAgentContextType.AgentContext,
-                Description = TestConstants.TestFoundryAgentDescription
-            };
+            var agent = TestAgent.CreateFoundryAgentTool(TestEnvironment);
+            agent.AgentContextType = FoundryAgentContextType.AgentContext;
 
             var options = new VoiceLiveSessionOptions
             {
