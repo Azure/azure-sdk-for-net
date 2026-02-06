@@ -252,7 +252,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    // No name match found, try to match by type with the first unused flattened property
+                    // No name match found, try to match by type with unused flattened properties
                     var typeMatchIndex = -1;
                     for (int i = 0; i < flattenedProperties.Count; i++)
                     {
@@ -267,8 +267,6 @@ namespace Azure.Generator.Management.Visitors
                             typeMatchIndex = i;
                             break;
                         }
-                        // Stop at the first unused property if it doesn't match by type
-                        break;
                     }
 
                     if (typeMatchIndex >= 0)
