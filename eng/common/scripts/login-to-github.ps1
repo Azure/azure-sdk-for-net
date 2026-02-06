@@ -57,9 +57,17 @@ function New-GitHubAppJwt {
     [Parameter(Mandatory)] [string] $AppId
   )
 
-  function Base64UrlEncode($json) {
-    $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
-    $base64 = [Convert]::ToBase64String($bytes)
+  function Base64UrlEncode {
+    param(
+      [string]$Data,
+      [switch]$IsBase64String
+    )
+    if ($IsBase64String) {
+      $base64 = $Data
+    } else {
+      $bytes = [System.Text.Encoding]::UTF8.GetBytes($Data)
+      $base64 = [Convert]::ToBase64String($bytes)
+    }
     return $base64.TrimEnd('=') -replace '\+', '-' -replace '/', '_'
   }
 
@@ -70,7 +78,7 @@ function New-GitHubAppJwt {
   }
   $Now = [int][double]::Parse((Get-Date -UFormat %s))
   $Payload = @{
-      iat = $Now
+      iat = $Now - 10 # 10 seconds clock skew
       exp = $Now + 600  # 10 minutes
       iss = $AppId
   }
@@ -97,7 +105,7 @@ function New-GitHubAppJwt {
     throw "Azure Key Vault response does not contain a signature. Response: $($SignResultJson | ConvertTo-Json -Compress)"
   }
 
-  $Signature = $SignResultJson.signature
+  $Signature = Base64UrlEncode -Data $SignResultJson.signature -IsBase64String
   return "$UnsignedToken.$Signature"
 }
 

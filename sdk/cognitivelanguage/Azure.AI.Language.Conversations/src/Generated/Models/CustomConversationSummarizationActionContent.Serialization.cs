@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class CustomConversationSummarizationActionContent : IUtf8JsonSerializable, IJsonModel<CustomConversationSummarizationActionContent>
+    /// <summary> Supported parameters for a custom conversation summarization task. </summary>
+    public partial class CustomConversationSummarizationActionContent : IJsonModel<CustomConversationSummarizationActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomConversationSummarizationActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CustomConversationSummarizationActionContent"/> for deserialization. </summary>
+        internal CustomConversationSummarizationActionContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomConversationSummarizationActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomConversationSummarizationActionContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
@@ -60,20 +65,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
             writer.WritePropertyName("summaryAspects"u8);
             writer.WriteStartArray();
-            foreach (var item in SummaryAspects)
+            foreach (SummaryAspect item in SummaryAspects)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +87,27 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        CustomConversationSummarizationActionContent IJsonModel<CustomConversationSummarizationActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomConversationSummarizationActionContent IJsonModel<CustomConversationSummarizationActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomConversationSummarizationActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomConversationSummarizationActionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomConversationSummarizationActionContent(document.RootElement, options);
         }
 
-        internal static CustomConversationSummarizationActionContent DeserializeCustomConversationSummarizationActionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomConversationSummarizationActionContent DeserializeCustomConversationSummarizationActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,60 +119,59 @@ namespace Azure.AI.Language.Conversations.Models
             StringIndexType? stringIndexType = default;
             SummaryLengthBucket? summaryLength = default;
             IList<SummaryAspect> summaryAspects = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("loggingOptOut"u8))
+                if (prop.NameEquals("loggingOptOut"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    loggingOptOut = property.Value.GetBoolean();
+                    loggingOptOut = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("projectName"u8))
+                if (prop.NameEquals("projectName"u8))
                 {
-                    projectName = property.Value.GetString();
+                    projectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentName"u8))
+                if (prop.NameEquals("deploymentName"u8))
                 {
-                    deploymentName = property.Value.GetString();
+                    deploymentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sentenceCount"u8))
+                if (prop.NameEquals("sentenceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sentenceCount = property.Value.GetInt32();
+                    sentenceCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"u8))
+                if (prop.NameEquals("stringIndexType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    stringIndexType = new StringIndexType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summaryLength"u8))
+                if (prop.NameEquals("summaryLength"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    summaryLength = new SummaryLengthBucket(property.Value.GetString());
+                    summaryLength = new SummaryLengthBucket(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summaryAspects"u8))
+                if (prop.NameEquals("summaryAspects"u8))
                 {
                     List<SummaryAspect> array = new List<SummaryAspect>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SummaryAspect(item.GetString()));
                     }
@@ -171,10 +180,9 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CustomConversationSummarizationActionContent(
                 loggingOptOut,
                 projectName,
@@ -183,13 +191,16 @@ namespace Azure.AI.Language.Conversations.Models
                 stringIndexType,
                 summaryLength,
                 summaryAspects,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CustomConversationSummarizationActionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomConversationSummarizationActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -199,15 +210,20 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        CustomConversationSummarizationActionContent IPersistableModel<CustomConversationSummarizationActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomConversationSummarizationActionContent IPersistableModel<CustomConversationSummarizationActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomConversationSummarizationActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomConversationSummarizationActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomConversationSummarizationActionContent(document.RootElement, options);
                     }
                 default:
@@ -215,22 +231,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomConversationSummarizationActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomConversationSummarizationActionContent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCustomConversationSummarizationActionContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

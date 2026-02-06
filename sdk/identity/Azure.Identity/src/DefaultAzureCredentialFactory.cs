@@ -42,7 +42,7 @@ namespace Azure.Identity
         public TokenCredential[] CreateCredentialChain()
         {
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
+            string credentialSelection = Options.CredentialSource ?? EnvironmentVariables.CredentialSelection?.Trim().ToLowerInvariant();
 
             if (_customEnvironmentVariableName != null)
             {
@@ -364,6 +364,10 @@ namespace Azure.Identity
             var options = Options.Clone<AzureCliCredentialOptions>();
             options.TenantId = Options.TenantId;
             options.ProcessTimeout = Options.CredentialProcessTimeout;
+            if (!string.IsNullOrEmpty(Options.Subscription))
+            {
+                options.Subscription = Options.Subscription;
+            }
             options.IsChainedCredential = true;
 
             return new AzureCliCredential(Pipeline, default, options);

@@ -6,17 +6,6 @@ namespace Azure.Communication.ProgrammableConnectivity
         public static Azure.Communication.ProgrammableConnectivity.AzureCommunicationProgrammableConnectivityContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public static partial class CommunicationProgrammableConnectivityModelFactory
-    {
-        public static Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult DeviceLocationVerificationResult(bool verificationResult = false) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult NetworkRetrievalResult(string networkCode = null) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.NumberVerificationResult NumberVerificationResult(bool verificationResult = false) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent NumberVerificationWithoutCodeContent(Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null, string phoneNumber = null, string hashedPhoneNumber = null, System.Uri redirectUri = null) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent SimSwapRetrievalContent(string phoneNumber = null, Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult SimSwapRetrievalResult(System.DateTimeOffset? date = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent SimSwapVerificationContent(string phoneNumber = null, int? maxAgeHours = default(int?), Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null) { throw null; }
-        public static Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult SimSwapVerificationResult(bool verificationResult = false) { throw null; }
-    }
     public partial class DeviceLocation
     {
         protected DeviceLocation() { }
@@ -34,7 +23,11 @@ namespace Azure.Communication.ProgrammableConnectivity
         public double Latitude { get { throw null; } }
         public double Longitude { get { throw null; } }
         public Azure.Communication.ProgrammableConnectivity.NetworkIdentifier NetworkIdentifier { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent deviceLocationVerificationContent) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -45,7 +38,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         internal DeviceLocationVerificationResult() { }
         public bool VerificationResult { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -66,7 +63,10 @@ namespace Azure.Communication.ProgrammableConnectivity
         public Ipv4Address(string ipv4, int port) { }
         public string Ipv4 { get { throw null; } }
         public int Port { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.Ipv4Address JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Communication.ProgrammableConnectivity.Ipv4Address PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.Ipv4Address System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.Ipv4Address>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.Ipv4Address>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.Ipv4Address System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.Ipv4Address>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -78,7 +78,10 @@ namespace Azure.Communication.ProgrammableConnectivity
         public Ipv6Address(string ipv6, int port) { }
         public string Ipv6 { get { throw null; } }
         public int Port { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.Ipv6Address JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Communication.ProgrammableConnectivity.Ipv6Address PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.Ipv6Address System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.Ipv6Address>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.Ipv6Address>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.Ipv6Address System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.Ipv6Address>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -92,7 +95,10 @@ namespace Azure.Communication.ProgrammableConnectivity
         public Azure.Communication.ProgrammableConnectivity.Ipv6Address Ipv6Address { get { throw null; } set { } }
         public string NetworkAccessIdentifier { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.LocationDevice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Communication.ProgrammableConnectivity.LocationDevice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.LocationDevice System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.LocationDevice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.LocationDevice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.LocationDevice System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.LocationDevice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -104,7 +110,11 @@ namespace Azure.Communication.ProgrammableConnectivity
         public NetworkIdentifier(string identifierType, string identifier) { }
         public string Identifier { get { throw null; } }
         public string IdentifierType { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NetworkIdentifier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NetworkIdentifier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.NetworkIdentifier System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NetworkIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NetworkIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.NetworkIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.NetworkIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -115,7 +125,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         internal NetworkRetrievalResult() { }
         public string NetworkCode { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -139,7 +153,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         internal NumberVerificationResult() { }
         public bool VerificationResult { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Communication.ProgrammableConnectivity.NumberVerificationResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -150,7 +168,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         public NumberVerificationWithCodeContent(string apcCode) { }
         public string ApcCode { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent numberVerificationWithCodeContent) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,7 +186,11 @@ namespace Azure.Communication.ProgrammableConnectivity
         public Azure.Communication.ProgrammableConnectivity.NetworkIdentifier NetworkIdentifier { get { throw null; } }
         public string PhoneNumber { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -177,10 +203,10 @@ namespace Azure.Communication.ProgrammableConnectivity
         public ProgrammableConnectivityClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ProgrammableConnectivityClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Communication.ProgrammableConnectivity.DeviceLocation GetDeviceLocationClient(string apiVersion = "2024-02-09-preview") { throw null; }
-        public virtual Azure.Communication.ProgrammableConnectivity.DeviceNetwork GetDeviceNetworkClient(string apiVersion = "2024-02-09-preview") { throw null; }
-        public virtual Azure.Communication.ProgrammableConnectivity.NumberVerification GetNumberVerificationClient(string apiVersion = "2024-02-09-preview") { throw null; }
-        public virtual Azure.Communication.ProgrammableConnectivity.SimSwap GetSimSwapClient(string apiVersion = "2024-02-09-preview") { throw null; }
+        public virtual Azure.Communication.ProgrammableConnectivity.DeviceLocation GetDeviceLocationClient() { throw null; }
+        public virtual Azure.Communication.ProgrammableConnectivity.DeviceNetwork GetDeviceNetworkClient() { throw null; }
+        public virtual Azure.Communication.ProgrammableConnectivity.NumberVerification GetNumberVerificationClient() { throw null; }
+        public virtual Azure.Communication.ProgrammableConnectivity.SimSwap GetSimSwapClient() { throw null; }
     }
     public partial class ProgrammableConnectivityClientOptions : Azure.Core.ClientOptions
     {
@@ -189,6 +215,23 @@ namespace Azure.Communication.ProgrammableConnectivity
         {
             V2024_02_09_Preview = 1,
         }
+    }
+    public static partial class ProgrammableConnectivityModelFactory
+    {
+        public static Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationContent DeviceLocationVerificationContent(Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null, double latitude = 0, double longitude = 0, int accuracy = 0, Azure.Communication.ProgrammableConnectivity.LocationDevice device = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.DeviceLocationVerificationResult DeviceLocationVerificationResult(bool verificationResult = false) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.Ipv4Address Ipv4Address(string ipv4 = null, int port = 0) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.Ipv6Address Ipv6Address(string ipv6 = null, int port = 0) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.LocationDevice LocationDevice(string networkAccessIdentifier = null, string phoneNumber = null, Azure.Communication.ProgrammableConnectivity.Ipv4Address ipv4Address = null, Azure.Communication.ProgrammableConnectivity.Ipv6Address ipv6Address = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.NetworkIdentifier NetworkIdentifier(string identifierType = null, string identifier = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.NetworkRetrievalResult NetworkRetrievalResult(string networkCode = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.NumberVerificationResult NumberVerificationResult(bool verificationResult = false) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.NumberVerificationWithCodeContent NumberVerificationWithCodeContent(string apcCode = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.NumberVerificationWithoutCodeContent NumberVerificationWithoutCodeContent(Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null, string phoneNumber = null, string hashedPhoneNumber = null, System.Uri redirectUri = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent SimSwapRetrievalContent(string phoneNumber = null, Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult SimSwapRetrievalResult(System.DateTimeOffset? date = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent SimSwapVerificationContent(string phoneNumber = null, int? maxAgeHours = default(int?), Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier = null) { throw null; }
+        public static Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult SimSwapVerificationResult(bool verificationResult = false) { throw null; }
     }
     public partial class SimSwap
     {
@@ -208,7 +251,11 @@ namespace Azure.Communication.ProgrammableConnectivity
         public SimSwapRetrievalContent(Azure.Communication.ProgrammableConnectivity.NetworkIdentifier networkIdentifier) { }
         public Azure.Communication.ProgrammableConnectivity.NetworkIdentifier NetworkIdentifier { get { throw null; } }
         public string PhoneNumber { get { throw null; } set { } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent simSwapRetrievalContent) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,7 +266,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         internal SimSwapRetrievalResult() { }
         public System.DateTimeOffset? Date { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -232,7 +283,11 @@ namespace Azure.Communication.ProgrammableConnectivity
         public int? MaxAgeHours { get { throw null; } set { } }
         public Azure.Communication.ProgrammableConnectivity.NetworkIdentifier NetworkIdentifier { get { throw null; } }
         public string PhoneNumber { get { throw null; } set { } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent simSwapVerificationContent) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -243,7 +298,11 @@ namespace Azure.Communication.ProgrammableConnectivity
     {
         internal SimSwapVerificationResult() { }
         public bool VerificationResult { get { throw null; } }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult (Azure.Response response) { throw null; }
+        protected virtual Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,7 +312,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class CommunicationProgrammableConnectivityClientBuilderExtensions
+    public static partial class ProgrammableConnectivityClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClient, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions> AddProgrammableConnectivityClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClient, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions> AddProgrammableConnectivityClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

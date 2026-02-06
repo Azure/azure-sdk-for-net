@@ -17,6 +17,10 @@ namespace Encode.Duration._Property
     {
         internal Int32MillisecondsLargerUnitDurationProperty() => throw null;
 
+        protected virtual Int32MillisecondsLargerUnitDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Int32MillisecondsLargerUnitDurationProperty(Response response) => throw null;
+
         void IJsonModel<Int32MillisecondsLargerUnitDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode.Duration._Property
 
         Int32MillisecondsLargerUnitDurationProperty IPersistableModel<Int32MillisecondsLargerUnitDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Int32MillisecondsLargerUnitDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<Int32MillisecondsLargerUnitDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="int32MillisecondsLargerUnitDurationProperty"> The <see cref="Int32MillisecondsLargerUnitDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Int32MillisecondsLargerUnitDurationProperty int32MillisecondsLargerUnitDurationProperty) => throw null;
-
-        public static explicit operator Int32MillisecondsLargerUnitDurationProperty(Response response) => throw null;
     }
 }

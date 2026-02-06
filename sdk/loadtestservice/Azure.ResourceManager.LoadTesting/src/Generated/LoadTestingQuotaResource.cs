@@ -6,47 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
-    /// A Class representing a LoadTestingQuota along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadTestingQuotaResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLoadTestingQuotaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLoadTestingQuota method.
+    /// A class representing a LoadTestingQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadTestingQuotaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllLoadTestingQuota method.
     /// </summary>
     public partial class LoadTestingQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LoadTestingQuotaResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="quotaBucketName"> The quotaBucketName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string quotaBucketName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _loadTestingQuotaQuotasClientDiagnostics;
-        private readonly QuotasRestOperations _loadTestingQuotaQuotasRestClient;
+        private readonly ClientDiagnostics _loadTestMgmtClientClientDiagnostics;
+        private readonly LoadTestMgmtClient _loadTestMgmtClientRestClient;
         private readonly LoadTestingQuotaData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/locations/quotas";
 
-        /// <summary> Initializes a new instance of the <see cref="LoadTestingQuotaResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LoadTestingQuotaResource for mocking. </summary>
         protected LoadTestingQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LoadTestingQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LoadTestingQuotaResource(ArmClient client, LoadTestingQuotaData data) : this(client, data.Id)
@@ -55,71 +45,92 @@ namespace Azure.ResourceManager.LoadTesting
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LoadTestingQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadTestingQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _loadTestingQuotaQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string loadTestingQuotaQuotasApiVersion);
-            _loadTestingQuotaQuotasRestClient = new QuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingQuotaQuotasApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string loadTestingQuotaApiVersion);
+            _loadTestMgmtClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
+            _loadTestMgmtClientRestClient = new LoadTestMgmtClient(_loadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, loadTestingQuotaApiVersion ?? "2024-12-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LoadTestingQuotaData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="quotaBucketName"> The quotaBucketName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string quotaBucketName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the available quota for a quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_GetQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadTestingQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LoadTestingQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.Get");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _loadTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.LoadTesting
         /// Get the available quota for a quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_GetQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadTestingQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadTestingQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.Get");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _loadTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetQuotaRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LoadTestingQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,35 +192,45 @@ namespace Azure.ResourceManager.LoadTesting
         /// Check Quota Availability on quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}/checkAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}/checkAvailabilityQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_CheckAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_CheckAvailabilityQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadTestingQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Quota Bucket Request data. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckLoadTestingQuotaAvailabilityAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {
-                var response = await _loadTestingQuotaQuotasRestClient.CheckAvailabilityAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -215,35 +244,45 @@ namespace Azure.ResourceManager.LoadTesting
         /// Check Quota Availability on quota bucket per region per subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}/checkAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/quotas/{quotaBucketName}/checkAvailabilityQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quotas_CheckAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadTests_CheckAvailabilityQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadTestingQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadTestingQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Quota Bucket Request data. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<LoadTestingQuotaAvailabilityResult> CheckLoadTestingQuotaAvailability(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
+            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {
-                var response = _loadTestingQuotaQuotasRestClient.CheckAvailability(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadTestMgmtClientRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
