@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -701,6 +702,65 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.AreEqual("targets", operationContext.SecondaryContextualPathParameters[3].Key);
             Assert.AreEqual("targetName", operationContext.SecondaryContextualPathParameters[3].VariableName);
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableEnumToString_UsesNullConditional()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable enum type
+            var nullableEnumType = new CSharpType(typeof(DayOfWeek), isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", nullableEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use null-conditional: testParam?.ToString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableEnumToString_UsesDirectToString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable enum type
+            var methodParam = new ParameterProvider("testParam", $"", typeof(DayOfWeek));
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use direct ToString without null-conditional: testParam.ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
         }
     }
 }
