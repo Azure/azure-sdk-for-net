@@ -302,5 +302,95 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
             }
         }
+
+        [Test]
+        public void AzdJsonErrorOutput_ExtractsCleanMessage()
+        {
+            // Simulates azd returning JSON error with nested message
+            string rawJsonError = "{\"type\":\"consoleMessage\",\"timestamp\":\"2024-01-01T00:00:00Z\",\"data\":{\"message\":\"\\nERROR: fetching token: interactive login needed\"}}";
+            var testProcess = new TestProcess { Error = rawJsonError };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            // Should extract and trim the message, not show raw JSON
+            Assert.That(ex.Message, Does.Contain("ERROR: fetching token: interactive login needed"));
+            Assert.That(ex.Message, Does.Not.Contain("{\"type\":\"consoleMessage\""));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_WithWhitespace_TrimsProperly()
+        {
+            string jsonWithWhitespace = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"  \\n\\nERROR: token expired  \\n  \"}}";
+            var testProcess = new TestProcess { Error = jsonWithWhitespace };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain("ERROR: token expired"));
+            // Verify no leading/trailing whitespace in the extracted message
+            Assert.That(ex.Message, Does.Not.Contain("  \n\nERROR"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_InvalidJson_FallsBackToRawText()
+        {
+            string malformedJson = "{invalid json here";
+            var testProcess = new TestProcess { Error = malformedJson };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            // Should include raw text when JSON parsing fails
+            Assert.That(ex.Message, Does.Contain("{invalid json here"));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_MissingDataMessage_FallsBackToRawText()
+        {
+            string jsonWithoutMessage = "{\"type\":\"consoleMessage\",\"data\":{}}";
+            var testProcess = new TestProcess { Error = jsonWithoutMessage };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithoutMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_EmptyMessage_FallsBackToRawText()
+        {
+            string jsonWithEmptyMessage = "{\"type\":\"consoleMessage\",\"data\":{\"message\":\"\"}}";
+            var testProcess = new TestProcess { Error = jsonWithEmptyMessage };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain(jsonWithEmptyMessage));
+        }
+
+        [Test]
+        public void AzdJsonErrorOutput_PlainTextError_UsesAsIs()
+        {
+            string plainError = "ERROR: authentication required";
+            var testProcess = new TestProcess { Error = plainError };
+            AzureDeveloperCliCredential credential = InstrumentClient(
+                new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain(plainError));
+        }
     }
 }
