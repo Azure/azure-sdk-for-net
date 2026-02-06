@@ -145,6 +145,7 @@ namespace Azure.Core
             {
                 return null!;
             }
+
             return Create(content);
         }
 
@@ -158,6 +159,7 @@ namespace Azure.Core
             {
                 return null!;
             }
+
             return Create(content);
         }
 
@@ -171,6 +173,7 @@ namespace Azure.Core
             {
                 return null!;
             }
+
             return Create(content);
         }
 

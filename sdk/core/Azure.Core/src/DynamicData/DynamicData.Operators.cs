@@ -27,7 +27,6 @@ namespace Azure.Core.Serialization
             {
                 return false;
             }
-
             try
             {
                 return value._element.GetBoolean();
@@ -48,7 +47,6 @@ namespace Azure.Core.Serialization
             {
                 return null;
             }
-
             try
             {
                 return value._element.GetString();
@@ -69,7 +67,6 @@ namespace Azure.Core.Serialization
             {
                 return default;
             }
-
             try
             {
                 return value._element.GetByte();
