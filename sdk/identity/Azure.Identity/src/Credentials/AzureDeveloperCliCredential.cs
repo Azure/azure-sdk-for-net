@@ -270,46 +270,47 @@ namespace Azure.Identity
             string displayText = rawCliError;
 
             // Guard: skip processing if null/empty or doesn't start with brace
-            bool skipParsing = string.IsNullOrEmpty(rawCliError) || rawCliError.TrimStart()[0] != '{';
+            string trimmedError = rawCliError?.TrimStart();
+            bool skipParsing = string.IsNullOrEmpty(trimmedError) || trimmedError[0] != '{';
             if (skipParsing)
                 return displayText;
 
             JsonDocument jsonDoc = null;
-            bool parseSuccess = false;
             try
             {
                 jsonDoc = JsonDocument.Parse(rawCliError);
-                parseSuccess = true;
-            }
-            catch
-            {
-                parseSuccess = false;
-            }
 
-            if (parseSuccess && jsonDoc != null)
-            {
-                JsonElement root = jsonDoc.RootElement;
-                JsonElement dataObj;
-                bool foundData = root.TryGetProperty("data", out dataObj);
-
-                if (foundData)
+                if (jsonDoc != null)
                 {
-                    JsonElement msgObj;
-                    bool foundMsg = dataObj.TryGetProperty("message", out msgObj);
+                    JsonElement root = jsonDoc.RootElement;
+                    JsonElement dataObj;
+                    bool foundData = root.TryGetProperty("data", out dataObj);
 
-                    if (foundMsg)
+                    if (foundData)
                     {
-                        string msgText = msgObj.GetString();
-                        bool hasContent = !string.IsNullOrWhiteSpace(msgText);
+                        JsonElement msgObj;
+                        bool foundMsg = dataObj.TryGetProperty("message", out msgObj);
 
-                        if (hasContent)
+                        if (foundMsg)
                         {
-                            displayText = msgText.Trim();
+                            string msgText = msgObj.GetString();
+                            bool hasContent = !string.IsNullOrWhiteSpace(msgText);
+
+                            if (hasContent)
+                            {
+                                displayText = msgText.Trim();
+                            }
                         }
                     }
                 }
-
-                jsonDoc.Dispose();
+            }
+            catch
+            {
+                // Parsing failed, keep original output
+            }
+            finally
+            {
+                jsonDoc?.Dispose();
             }
 
             return displayText;
