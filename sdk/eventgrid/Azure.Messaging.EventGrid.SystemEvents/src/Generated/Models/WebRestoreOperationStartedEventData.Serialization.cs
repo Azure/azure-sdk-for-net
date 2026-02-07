@@ -17,6 +17,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(WebRestoreOperationStartedEventDataConverter))]
     public partial class WebRestoreOperationStartedEventData : IJsonModel<WebRestoreOperationStartedEventData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebRestoreOperationStartedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebRestoreOperationStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebRestoreOperationStartedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebRestoreOperationStartedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebRestoreOperationStartedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,23 +213,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WebRestoreOperationStartedEventData IPersistableModel<WebRestoreOperationStartedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebRestoreOperationStartedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebRestoreOperationStartedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebRestoreOperationStartedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebRestoreOperationStartedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebRestoreOperationStartedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -22,6 +22,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuestionAnsweringAuthoringProjectDeletionJobState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuestionAnsweringAuthoringProjectDeletionJobState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringProjectDeletionJobState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringAuthoringProjectDeletionJobState"/> from. </param>
+        public static explicit operator QuestionAnsweringAuthoringProjectDeletionJobState(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeQuestionAnsweringAuthoringProjectDeletionJobState(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuestionAnsweringAuthoringProjectDeletionJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -207,31 +231,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         QuestionAnsweringAuthoringProjectDeletionJobState IPersistableModel<QuestionAnsweringAuthoringProjectDeletionJobState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuestionAnsweringAuthoringProjectDeletionJobState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringProjectDeletionJobState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuestionAnsweringAuthoringProjectDeletionJobState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringProjectDeletionJobState)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuestionAnsweringAuthoringProjectDeletionJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuestionAnsweringAuthoringProjectDeletionJobState"/> from. </param>
-        public static explicit operator QuestionAnsweringAuthoringProjectDeletionJobState(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQuestionAnsweringAuthoringProjectDeletionJobState(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
