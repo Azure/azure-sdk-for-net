@@ -14,11 +14,11 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange connection. </summary>
-    public partial class ExchangeConnection : IJsonModel<ExchangeConnection>
+    public partial class PeeringExchangeConnection : IJsonModel<PeeringExchangeConnection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExchangeConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PeeringExchangeConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangeConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PeeringDBFacilityId))
             {
@@ -78,24 +78,24 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExchangeConnection IJsonModel<ExchangeConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PeeringExchangeConnection IJsonModel<PeeringExchangeConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExchangeConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PeeringExchangeConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangeConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExchangeConnection(document.RootElement, options);
+            return DeserializePeeringExchangeConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExchangeConnection DeserializeExchangeConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static PeeringExchangeConnection DeserializePeeringExchangeConnection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExchangeConnection(
+            return new PeeringExchangeConnection(
                 peeringDBFacilityId,
                 connectionState,
                 bgpSession,
@@ -161,43 +161,43 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExchangeConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PeeringExchangeConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExchangeConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExchangeConnection IPersistableModel<ExchangeConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PeeringExchangeConnection IPersistableModel<PeeringExchangeConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExchangeConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PeeringExchangeConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExchangeConnection(document.RootElement, options);
+                        return DeserializePeeringExchangeConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExchangeConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExchangeConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PeeringExchangeConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

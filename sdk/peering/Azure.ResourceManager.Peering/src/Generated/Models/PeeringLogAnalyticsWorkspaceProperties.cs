@@ -12,23 +12,23 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a Log Analytics Workspace. </summary>
-    public partial class LogAnalyticsWorkspaceProperties
+    public partial class PeeringLogAnalyticsWorkspaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsWorkspaceProperties"/>. </summary>
-        public LogAnalyticsWorkspaceProperties()
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
+        public PeeringLogAnalyticsWorkspaceProperties()
         {
             ConnectedAgents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsWorkspaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
         /// <param name="workspaceID"> The Workspace ID. </param>
         /// <param name="key"> The Workspace Key. </param>
         /// <param name="connectedAgents"> The list of connected agents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogAnalyticsWorkspaceProperties(string workspaceID, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringLogAnalyticsWorkspaceProperties(string workspaceID, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceID = workspaceID;
             Key = key;

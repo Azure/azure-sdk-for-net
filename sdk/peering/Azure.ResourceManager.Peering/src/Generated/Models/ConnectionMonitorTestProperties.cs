@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="path"> The path representing the Connection Monitor test. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorTestProperties(string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorTestProperties(string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceAgent = sourceAgent;
             Destination = destination;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Peering.Models
         public IReadOnlyList<string> Path { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

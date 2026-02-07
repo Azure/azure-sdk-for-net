@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Peering.Models
             }
             string peeringServiceLocation = default;
             string peeringServiceProvider = default;
-            ProvisioningState? provisioningState = default;
+            PeeringProvisioningState? provisioningState = default;
             string providerPrimaryPeeringLocation = default;
             string providerBackupPeeringLocation = default;
-            LogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default;
+            PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new PeeringProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("providerPrimaryPeeringLocation"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    logAnalyticsWorkspaceProperties = LogAnalyticsWorkspaceProperties.DeserializeLogAnalyticsWorkspaceProperties(prop.Value, options);
+                    logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

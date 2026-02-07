@@ -12,23 +12,23 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering location. </summary>
-    public partial class PeeringLocationPropertiesDirect
+    public partial class DirectPeeringLocationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesDirect"/>. </summary>
-        internal PeeringLocationPropertiesDirect()
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
+        internal DirectPeeringLocationProperties()
         {
             PeeringFacilities = new ChangeTrackingList<DirectPeeringFacility>();
             BandwidthOffers = new ChangeTrackingList<PeeringBandwidthOffer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesDirect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
         /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
         /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringLocationPropertiesDirect(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DirectPeeringLocationProperties(IList<DirectPeeringFacility> peeringFacilities, IList<PeeringBandwidthOffer> bandwidthOffers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringFacilities = peeringFacilities;
             BandwidthOffers = bandwidthOffers;

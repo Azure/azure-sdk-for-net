@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceProperties(string peeringServiceLocation, string peeringServiceProvider, ProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, LogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringServiceProperties(string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringServiceLocation = peeringServiceLocation;
             PeeringServiceProvider = peeringServiceProvider;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Peering.Models
         public string PeeringServiceProvider { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
 
         /// <summary> The primary peering (Microsoft/service provider) location to be used for customer traffic. </summary>
         public string ProviderPrimaryPeeringLocation { get; set; }
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Peering.Models
         public string ProviderBackupPeeringLocation { get; set; }
 
         /// <summary> The Log Analytics Workspace Properties. </summary>
-        public LogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
+        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get; set; }
     }
 }

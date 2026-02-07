@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering.Models
             string format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Models.PeeringLocation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringLocation)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering.Models
             string format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Models.PeeringLocation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePeeringLocation(document.RootElement, options);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Models.PeeringLocation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Models.PeeringLocation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

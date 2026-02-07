@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringRegisteredPrefixProperties(string prefix, PrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringRegisteredPrefixProperties(string prefix, PrefixValidationState? prefixValidationState, string peeringServicePrefixKey, string errorMessage, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Peering.Models
         public string ErrorMessage { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

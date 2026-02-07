@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState
+        public PeeringProvisioningState? ProvisioningState
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The Log Analytics Workspace Properties. </summary>
-        public LogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties
+        public PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties
         {
             get
             {

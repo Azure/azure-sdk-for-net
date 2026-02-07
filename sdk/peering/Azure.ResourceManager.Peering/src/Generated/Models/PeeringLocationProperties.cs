@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="PeeringLocationProperties"/>. </summary>
         /// <param name="direct"> The properties that define a direct peering location. </param>
         /// <param name="exchange"> The properties that define an exchange peering location. </param>
-        /// <param name="peeringLocation"> The name of the peering location. </param>
+        /// <param name="myLocation"> The name of the peering location. </param>
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringLocationProperties(PeeringLocationPropertiesDirect direct, PeeringLocationPropertiesExchange exchange, string peeringLocation, string country, string azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringLocationProperties(DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string myLocation, string country, string azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direct = direct;
             Exchange = exchange;
-            PeeringLocation = peeringLocation;
+            MyLocation = myLocation;
             Country = country;
             AzureRegion = azureRegion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties that define a direct peering location. </summary>
-        public PeeringLocationPropertiesDirect Direct { get; }
+        public DirectPeeringLocationProperties Direct { get; }
 
         /// <summary> The properties that define an exchange peering location. </summary>
         internal PeeringLocationPropertiesExchange Exchange { get; }
 
         /// <summary> The name of the peering location. </summary>
-        public string PeeringLocation { get; }
+        public string MyLocation { get; }
 
         /// <summary> The country in which the peering location exists. </summary>
         public string Country { get; }

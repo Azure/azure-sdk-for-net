@@ -12,24 +12,24 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering. </summary>
-    public partial class PeeringPropertiesDirect
+    public partial class DirectPeeringProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PeeringPropertiesDirect"/>. </summary>
-        public PeeringPropertiesDirect()
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
+        public DirectPeeringProperties()
         {
-            Connections = new ChangeTrackingList<DirectConnection>();
+            Connections = new ChangeTrackingList<PeeringDirectConnection>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringPropertiesDirect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
         /// <param name="peerAsn"> The reference of the peer ASN. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringPropertiesDirect(IList<DirectConnection> connections, bool? useForPeeringService, SubResource peerAsn, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, SubResource peerAsn, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
             UseForPeeringService = useForPeeringService;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The set of connections that constitute a direct peering. </summary>
-        public IList<DirectConnection> Connections { get; }
+        public IList<PeeringDirectConnection> Connections { get; }
 
         /// <summary> The flag that indicates whether or not the peering is used for peering service. </summary>
         public bool? UseForPeeringService { get; }

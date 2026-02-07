@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState
+        public PeeringProvisioningState? ProvisioningState
         {
             get
             {

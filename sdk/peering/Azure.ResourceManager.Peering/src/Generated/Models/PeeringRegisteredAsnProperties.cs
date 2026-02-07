@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringRegisteredAsnProperties(int? asn, string peeringServicePrefixKey, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringRegisteredAsnProperties(int? asn, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             PeeringServicePrefixKey = peeringServicePrefixKey;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Peering.Models
         public string PeeringServicePrefixKey { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

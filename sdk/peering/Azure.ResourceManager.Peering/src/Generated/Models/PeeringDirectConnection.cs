@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct connection. </summary>
-    public partial class DirectConnection
+    public partial class PeeringDirectConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DirectConnection"/>. </summary>
-        public DirectConnection()
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
+        public PeeringDirectConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DirectConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection. </param>
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, SessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, SessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;

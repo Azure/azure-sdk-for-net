@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange, options);
             }
-            if (Optional.IsDefined(PeeringLocation))
+            if (Optional.IsDefined(MyLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
-                writer.WriteStringValue(PeeringLocation);
+                writer.WriteStringValue(MyLocation);
             }
             if (Optional.IsDefined(Country))
             {
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            PeeringLocationPropertiesDirect direct = default;
+            DirectPeeringLocationProperties direct = default;
             PeeringLocationPropertiesExchange exchange = default;
-            string peeringLocation = default;
+            string myLocation = default;
             string country = default;
             string azureRegion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    direct = PeeringLocationPropertiesDirect.DeserializePeeringLocationPropertiesDirect(prop.Value, options);
+                    direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exchange"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (prop.NameEquals("peeringLocation"u8))
                 {
-                    peeringLocation = prop.Value.GetString();
+                    myLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("country"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringLocationProperties(
                 direct,
                 exchange,
-                peeringLocation,
+                myLocation,
                 country,
                 azureRegion,
                 additionalBinaryDataProperties);

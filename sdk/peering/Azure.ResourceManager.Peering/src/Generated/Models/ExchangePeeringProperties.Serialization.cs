@@ -14,11 +14,11 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange peering. </summary>
-    public partial class PeeringPropertiesExchange : IJsonModel<PeeringPropertiesExchange>
+    public partial class ExchangePeeringProperties : IJsonModel<ExchangePeeringProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PeeringPropertiesExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExchangePeeringProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringPropertiesExchange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringPropertiesExchange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
-                foreach (ExchangeConnection item in Connections)
+                foreach (PeeringExchangeConnection item in Connections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,30 +68,30 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringPropertiesExchange IJsonModel<PeeringPropertiesExchange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExchangePeeringProperties IJsonModel<ExchangePeeringProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringPropertiesExchange JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExchangePeeringProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringPropertiesExchange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringPropertiesExchange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePeeringPropertiesExchange(document.RootElement, options);
+            return DeserializeExchangePeeringProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PeeringPropertiesExchange DeserializePeeringPropertiesExchange(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExchangePeeringProperties DeserializeExchangePeeringProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ExchangeConnection> connections = default;
+            IList<PeeringExchangeConnection> connections = default;
             SubResource peerAsn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    List<ExchangeConnection> array = new List<ExchangeConnection>();
+                    List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExchangeConnection.DeserializeExchangeConnection(item, options));
+                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item, options));
                     }
                     connections = array;
                     continue;
@@ -124,47 +124,47 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringPropertiesExchange(connections ?? new ChangeTrackingList<ExchangeConnection>(), peerAsn, additionalBinaryDataProperties);
+            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeeringPropertiesExchange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExchangePeeringProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringPropertiesExchange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringPropertiesExchange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringPropertiesExchange IPersistableModel<PeeringPropertiesExchange>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExchangePeeringProperties IPersistableModel<ExchangePeeringProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringPropertiesExchange PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExchangePeeringProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringPropertiesExchange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePeeringPropertiesExchange(document.RootElement, options);
+                        return DeserializeExchangePeeringProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringPropertiesExchange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringPropertiesExchange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExchangePeeringProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

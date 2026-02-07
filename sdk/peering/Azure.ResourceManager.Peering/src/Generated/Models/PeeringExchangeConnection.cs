@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange connection. </summary>
-    public partial class ExchangeConnection
+    public partial class PeeringExchangeConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExchangeConnection"/>. </summary>
-        public ExchangeConnection()
+        /// <summary> Initializes a new instance of <see cref="PeeringExchangeConnection"/>. </summary>
+        public PeeringExchangeConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExchangeConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringExchangeConnection"/>. </summary>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExchangeConnection(int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringExchangeConnection(int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;

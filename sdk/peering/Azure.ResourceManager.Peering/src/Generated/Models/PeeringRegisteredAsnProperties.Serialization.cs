@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             int? asn = default;
             string peeringServicePrefixKey = default;
-            ProvisioningState? provisioningState = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new PeeringProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringProperties(PeeringPropertiesDirect direct, PeeringPropertiesExchange exchange, IList<ConnectivityProbe> connectivityProbes, string peeringLocation, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringProperties(DirectPeeringProperties direct, ExchangePeeringProperties exchange, IList<ConnectivityProbe> connectivityProbes, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direct = direct;
             Exchange = exchange;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The properties that define a direct peering. </summary>
-        public PeeringPropertiesDirect Direct { get; set; }
+        public DirectPeeringProperties Direct { get; set; }
 
         /// <summary> The properties that define an exchange peering. </summary>
-        public PeeringPropertiesExchange Exchange { get; set; }
+        public ExchangePeeringProperties Exchange { get; set; }
 
         /// <summary> The connectivity probes associated with the peering. </summary>
         public IList<ConnectivityProbe> ConnectivityProbes { get; } = new ChangeTrackingList<ConnectivityProbe>();
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Peering.Models
         public string PeeringLocation { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

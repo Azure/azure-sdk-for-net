@@ -14,11 +14,11 @@ using Azure.ResourceManager.Peering;
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering location. </summary>
-    public partial class PeeringLocationPropertiesDirect : IJsonModel<PeeringLocationPropertiesDirect>
+    public partial class DirectPeeringLocationProperties : IJsonModel<DirectPeeringLocationProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PeeringLocationPropertiesDirect>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DirectPeeringLocationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocationPropertiesDirect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringLocationPropertiesDirect)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(PeeringFacilities))
             {
@@ -73,24 +73,24 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringLocationPropertiesDirect IJsonModel<PeeringLocationPropertiesDirect>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DirectPeeringLocationProperties IJsonModel<DirectPeeringLocationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringLocationPropertiesDirect JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DirectPeeringLocationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocationPropertiesDirect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringLocationPropertiesDirect)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePeeringLocationPropertiesDirect(document.RootElement, options);
+            return DeserializeDirectPeeringLocationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PeeringLocationPropertiesDirect DeserializePeeringLocationPropertiesDirect(JsonElement element, ModelReaderWriterOptions options)
+        internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,47 +134,47 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringLocationPropertiesDirect(peeringFacilities ?? new ChangeTrackingList<DirectPeeringFacility>(), bandwidthOffers ?? new ChangeTrackingList<PeeringBandwidthOffer>(), additionalBinaryDataProperties);
+            return new DirectPeeringLocationProperties(peeringFacilities ?? new ChangeTrackingList<DirectPeeringFacility>(), bandwidthOffers ?? new ChangeTrackingList<PeeringBandwidthOffer>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeeringLocationPropertiesDirect>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DirectPeeringLocationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocationPropertiesDirect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringLocationPropertiesDirect)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringLocationPropertiesDirect IPersistableModel<PeeringLocationPropertiesDirect>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DirectPeeringLocationProperties IPersistableModel<DirectPeeringLocationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringLocationPropertiesDirect PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DirectPeeringLocationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringLocationPropertiesDirect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DirectPeeringLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePeeringLocationPropertiesDirect(document.RootElement, options);
+                        return DeserializeDirectPeeringLocationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringLocationPropertiesDirect)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringLocationPropertiesDirect>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DirectPeeringLocationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

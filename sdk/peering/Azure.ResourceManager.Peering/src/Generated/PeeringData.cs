@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering
         public PeeringKind Kind { get; set; }
 
         /// <summary> The properties that define a direct peering. </summary>
-        public PeeringPropertiesDirect Direct
+        public DirectPeeringProperties Direct
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The properties that define an exchange peering. </summary>
-        public PeeringPropertiesExchange Exchange
+        public ExchangePeeringProperties Exchange
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState
+        public PeeringProvisioningState? ProvisioningState
         {
             get
             {
