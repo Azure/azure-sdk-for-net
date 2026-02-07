@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
+
 ### Other Changes
 
 ## 1.51.0 (2026-01-29)
