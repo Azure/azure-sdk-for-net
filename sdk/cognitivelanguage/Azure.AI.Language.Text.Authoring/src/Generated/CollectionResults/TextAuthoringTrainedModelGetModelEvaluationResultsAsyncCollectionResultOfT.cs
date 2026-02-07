@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly string _stringIndexType;
         private readonly int? _maxCount;
         private readonly int? _skip;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -32,9 +32,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(TextAuthoringTrainedModel client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(TextAuthoringTrainedModel client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring
             _stringIndexType = stringIndexType;
             _maxCount = maxCount;
             _skip = skip;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
         }
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetModelEvaluationResultsRequest(nextLink, pageSize, _context) : _client.CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, _stringIndexType, _maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetModelEvaluationResults");
             scope.Start();

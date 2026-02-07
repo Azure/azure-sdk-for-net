@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly string _projectName;
         private readonly int? _maxCount;
         private readonly int? _skip;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetTrainedModelsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -27,15 +27,15 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetTrainedModelsCollectionResultOfT(TextAnalysisAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        public TextAnalysisAuthoringClientGetTrainedModelsCollectionResultOfT(TextAnalysisAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
             _maxCount = maxCount;
             _skip = skip;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTrainedModelsRequest(nextLink, pageSize, _context) : _client.CreateGetTrainedModelsRequest(_projectName, _maxCount, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetTrainedModels");
             scope.Start();

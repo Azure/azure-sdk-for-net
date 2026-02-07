@@ -16,6 +16,23 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> It is the response from a LUIS Generally Available application. </summary>
     public partial class LuisResult : IJsonModel<LuisResult>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LuisResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LuisResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLuisResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LuisResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LuisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -100,23 +117,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LuisResult IPersistableModel<LuisResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LuisResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LuisResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLuisResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LuisResult)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LuisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

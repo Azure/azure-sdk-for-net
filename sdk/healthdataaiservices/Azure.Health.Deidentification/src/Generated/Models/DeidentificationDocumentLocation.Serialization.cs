@@ -21,6 +21,23 @@ namespace Azure.Health.Deidentification
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeidentificationDocumentLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeidentificationDocumentLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeidentificationDocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -130,23 +147,6 @@ namespace Azure.Health.Deidentification
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DeidentificationDocumentLocation IPersistableModel<DeidentificationDocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeidentificationDocumentLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeidentificationDocumentLocation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidentificationDocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

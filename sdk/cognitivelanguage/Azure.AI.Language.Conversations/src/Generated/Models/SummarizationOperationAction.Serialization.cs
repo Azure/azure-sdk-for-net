@@ -16,6 +16,23 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Task definition for conversational summarization. </summary>
     public partial class SummarizationOperationAction : AnalyzeConversationOperationAction, IJsonModel<SummarizationOperationAction>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AnalyzeConversationOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSummarizationOperationAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SummarizationOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,23 +136,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SummarizationOperationAction IPersistableModel<SummarizationOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (SummarizationOperationAction)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeConversationOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SummarizationOperationAction>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSummarizationOperationAction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SummarizationOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

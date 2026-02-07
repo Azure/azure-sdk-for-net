@@ -16,6 +16,23 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The list key extra data kind. </summary>
     public partial class ListKey : ConversationEntityExtraInformation, IJsonModel<ListKey>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ConversationEntityExtraInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeListKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ListKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -109,23 +126,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ListKey IPersistableModel<ListKey>.Create(BinaryData data, ModelReaderWriterOptions options) => (ListKey)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationEntityExtraInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListKey>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeListKey(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ListKey)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -15,6 +15,23 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Boolean field extracted from the content. </summary>
     public partial class BooleanField : ContentField, IJsonModel<BooleanField>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BooleanField>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBooleanField(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BooleanField)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BooleanField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,23 +166,6 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BooleanField IPersistableModel<BooleanField>.Create(BinaryData data, ModelReaderWriterOptions options) => (BooleanField)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ContentField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BooleanField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBooleanField(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BooleanField)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BooleanField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

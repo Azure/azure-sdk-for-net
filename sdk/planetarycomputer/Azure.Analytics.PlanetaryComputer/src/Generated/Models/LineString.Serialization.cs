@@ -20,6 +20,23 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LineString>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLineString(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LineString)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LineString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -135,23 +152,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LineString IPersistableModel<LineString>.Create(BinaryData data, ModelReaderWriterOptions options) => (LineString)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LineString>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLineString(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LineString)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LineString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
