@@ -39,11 +39,11 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             var client = new OverrideClient(host, null);
             var removeOptionalParameter = client.GetRemoveOptionalParameterClient();
 
-            // Test convenience method with required parameters only
+            // Test convenience method using only the minimum required parameter, omitting optional parameters
             var response = await removeOptionalParameter.RemoveOptionalAsync("param1Value");
             Assert.AreEqual(204, response.Status);
 
-            // Verify that the convenience method exists with only required parameters
+            // Verify that the convenience method exists with required param1, optional param2, and without protocol-only parameters (param3, param4)
             Assert.IsNotNull(typeof(RemoveOptionalParameter).GetMethod("RemoveOptionalAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
             Assert.IsNotNull(typeof(RemoveOptionalParameter).GetMethod("RemoveOptional", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
 
@@ -66,7 +66,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             Assert.IsNotNull(typeof(ReorderParameters).GetMethod("ReorderAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
             Assert.IsNotNull(typeof(ReorderParameters).GetMethod("Reorder", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(CancellationToken) }));
 
-            // Verify that the protocol method exists with reordered parameters (param2, param1)
+            // Verify that the corresponding protocol methods exist with the expected parameter types
             Assert.IsNotNull(typeof(ReorderParameters).GetMethod("ReorderAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(RequestContext) }));
             Assert.IsNotNull(typeof(ReorderParameters).GetMethod("Reorder", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(RequestContext) }));
         });
