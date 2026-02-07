@@ -88,7 +88,6 @@ $(RepoRoot)sdk\keyvault\samples\keyvaultproxy\tests\AzureSamples.Security.KeyVau
 $(RepoRoot)sdk\logic\Azure.ResourceManager.Logic\tests\Azure.ResourceManager.Logic.Tests.csproj
 $(RepoRoot)sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\tests\Azure.ResourceManager.MachineLearning.Tests.csproj
 $(RepoRoot)sdk\managedserviceidentity\Azure.ResourceManager.ManagedServiceIdentities\tests\Azure.ResourceManager.ManagedServiceIdentities.Tests.csproj
-$(RepoRoot)sdk\mediaservices\Azure.ResourceManager.Media\tests\Azure.ResourceManager.Media.Tests.csproj
 $(RepoRoot)sdk\metricsadvisor\Azure.AI.MetricsAdvisor\tests\Azure.AI.MetricsAdvisor.Tests.csproj
 $(RepoRoot)sdk\mixedreality\Azure.MixedReality.Authentication\tests\Azure.MixedReality.Authentication.Tests\Azure.MixedReality.Authentication.Tests.csproj
 $(RepoRoot)sdk\mixedreality\Azure.MixedReality.Authentication\tests\Shared.Azure.MixedReality.Authentication.Tests\Shared.Azure.MixedReality.Authentication.Tests.csproj

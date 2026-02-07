@@ -13,95 +13,126 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary>
-    /// A class representing the SqlVmGroup data model.
-    /// A SQL virtual machine group.
-    /// </summary>
+    /// <summary> A SQL virtual machine group. </summary>
     public partial class SqlVmGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlVmGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SqlVmGroupData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlVmGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="sqlImageOffer"> SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016. </param>
-        /// <param name="sqlImageSku"> SQL image sku. </param>
-        /// <param name="scaleType"> Scale type. </param>
-        /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
-        /// <param name="clusterConfiguration"> Cluster type. </param>
-        /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, SqlVmGroupScaleType? scaleType, SqlVmClusterManagerType? clusterManagerType, SqlVmClusterConfiguration? clusterConfiguration, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
+        internal SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SqlVirtualMachineGroupProperties properties, string sqlVmGroupName) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            SqlImageOffer = sqlImageOffer;
-            SqlImageSku = sqlImageSku;
-            ScaleType = scaleType;
-            ClusterManagerType = clusterManagerType;
-            ClusterConfiguration = clusterConfiguration;
-            WindowsServerFailoverClusterDomainProfile = windowsServerFailoverClusterDomainProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            SqlVmGroupName = sqlVmGroupName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlVmGroupData"/> for deserialization. </summary>
-        internal SqlVmGroupData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        internal SqlVirtualMachineGroupProperties Properties { get; set; }
+
+        /// <summary> Name of the SQL virtual machine group. </summary>
+        public string SqlVmGroupName { get; }
 
         /// <summary> Provisioning state to track the async operation status. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016. </summary>
-        public string SqlImageOffer { get; set; }
+        public string SqlImageOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlImageOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineGroupProperties();
+                }
+                Properties.SqlImageOffer = value;
+            }
+        }
+
         /// <summary> SQL image sku. </summary>
-        public SqlVmGroupImageSku? SqlImageSku { get; set; }
+        public SqlVmGroupImageSku? SqlImageSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlImageSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineGroupProperties();
+                }
+                Properties.SqlImageSku = value.Value;
+            }
+        }
+
         /// <summary> Scale type. </summary>
-        public SqlVmGroupScaleType? ScaleType { get; }
+        public SqlVmGroupScaleType? ScaleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleType;
+            }
+        }
+
         /// <summary> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </summary>
-        public SqlVmClusterManagerType? ClusterManagerType { get; }
+        public SqlVmClusterManagerType? ClusterManagerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterManagerType;
+            }
+        }
+
         /// <summary> Cluster type. </summary>
-        public SqlVmClusterConfiguration? ClusterConfiguration { get; }
+        public SqlVmClusterConfiguration? ClusterConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterConfiguration;
+            }
+        }
+
         /// <summary> Cluster Active Directory domain profile. </summary>
-        public WindowsServerFailoverClusterDomainProfile WindowsServerFailoverClusterDomainProfile { get; set; }
+        public WindowsServerFailoverClusterDomainProfile WindowsServerFailoverClusterDomainProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WindowsServerFailoverClusterDomainProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlVirtualMachineGroupProperties();
+                }
+                Properties.WindowsServerFailoverClusterDomainProfile = value;
+            }
+        }
     }
 }

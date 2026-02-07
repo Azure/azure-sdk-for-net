@@ -280,10 +280,30 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType"
+                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "22",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "6"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   },
                   {
-                    "$id": "22",
+                    "$id": "23",
                     "kind": "body",
                     "name": "bulletPointsModelRequest",
                     "serializedName": "bulletPointsModelRequest",
@@ -299,7 +319,26 @@
                     "scope": "Spread",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.body"
+                    "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "24",
+                        "kind": "method",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$ref": "8"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.input",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": []
+                      }
+                    ]
                   }
                 ],
                 "responses": [
@@ -326,39 +365,10 @@
               },
               "parameters": [
                 {
-                  "$id": "23",
-                  "kind": "method",
-                  "name": "input",
-                  "serializedName": "input",
-                  "type": {
-                    "$ref": "8"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.input",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "24"
                 },
                 {
-                  "$id": "24",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "6"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "22"
                 }
               ],
               "response": {},

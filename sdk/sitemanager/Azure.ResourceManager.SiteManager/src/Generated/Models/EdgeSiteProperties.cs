@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SiteManager;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
     /// <summary> Site properties. </summary>
     public partial class EdgeSiteProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeSiteProperties"/>. </summary>
         public EdgeSiteProperties()
@@ -57,25 +29,29 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="siteAddress"> Physical address of the site. </param>
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSiteProperties(string displayName, string description, EdgeSiteAddressProperties siteAddress, IDictionary<string, string> labels, EdgeSiteProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeSiteProperties(string displayName, string description, EdgeSiteAddressProperties siteAddress, IDictionary<string, string> labels, EdgeSiteProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
             SiteAddress = siteAddress;
             Labels = labels;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> displayName of Site resource. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Description of Site resource. </summary>
         public string Description { get; set; }
+
         /// <summary> Physical address of the site. </summary>
         public EdgeSiteAddressProperties SiteAddress { get; set; }
+
         /// <summary> Key-value pairs for labeling the site resource. </summary>
         public IDictionary<string, string> Labels { get; }
+
         /// <summary> Provisioning state of last operation. </summary>
         public EdgeSiteProvisioningState? ProvisioningState { get; }
     }
