@@ -21,6 +21,7 @@ import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
 import "./vmgroup.tsp";
 import "./chaos.tsp";
+import "./sitemanager.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -42,6 +43,8 @@ namespace MgmtTypeSpec {
 
   @@clientLocation(Bars.get, "Bar");
   @@clientLocation(Bars.update, "Bar");
+
+  @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
 
   @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
   @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");

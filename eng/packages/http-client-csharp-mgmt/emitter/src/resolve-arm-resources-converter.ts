@@ -111,7 +111,9 @@ export function resolveArmResources(
   // In this case, parent information comes from ResolvedResource objects
   // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
-  for (const r of resources.filter(r => r.metadata.resourceIdPattern !== "")) {
+  for (const r of resources.filter(
+    (r) => r.metadata.resourceIdPattern !== ""
+  )) {
     const resolvedR = schemaToResolvedResource.get(r);
     if (resolvedR) {
       validResourceMap.set(resolvedR.resourceInstancePath, r);
@@ -119,14 +121,18 @@ export function resolveArmResources(
   }
 
   const parentLookup: ParentResourceLookupContext = {
-    getParentResource: (resource: ArmResourceSchema): ArmResourceSchema | undefined => {
+    getParentResource: (
+      resource: ArmResourceSchema
+    ): ArmResourceSchema | undefined => {
       const resolved = schemaToResolvedResource.get(resource);
       if (!resolved) return undefined;
 
       // Walk up the parent chain to find a valid parent
       let parent = resolved.parent;
       while (parent) {
-        const parentResource = validResourceMap.get(parent.resourceInstancePath);
+        const parentResource = validResourceMap.get(
+          parent.resourceInstancePath
+        );
         if (parentResource) {
           return parentResource;
         }
@@ -183,7 +189,7 @@ export function resolveArmResources(
     for (const method of client.methods) {
       const methodId = method.crossLanguageDefinitionId;
       const operation = method.operation;
-      
+
       // Skip if already included
       if (includedOperationIds.has(methodId)) {
         continue;
@@ -255,7 +261,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(createOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              createOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -273,7 +282,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(updateOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              updateOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -291,7 +303,10 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
             operationScope: resourceScope,
-            resourceScope: calculateResourceScope(deleteOp.path, resolvedResource)
+            resourceScope: calculateResourceScope(
+              deleteOp.path,
+              resolvedResource
+            )
           });
         }
       }
@@ -423,8 +438,21 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
     )
   ) {
     return ResourceScope.ManagementGroup;
+  } else if (hasMultipleProviderSegments(path)) {
+    // Paths with multiple /providers/ segments indicate extension resources
+    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+    return ResourceScope.Extension;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+}
+
+/**
+ * Check if a path has multiple /providers/ segments, indicating an extension resource
+ * that extends another ARM resource.
+ */
+function hasMultipleProviderSegments(path: string): boolean {
+  const providerMatches = path.match(/\/providers\//gi);
+  return providerMatches !== null && providerMatches.length > 1;
 }
 
 /**
@@ -449,7 +477,6 @@ function extractSingletonName(path: string): string | undefined {
 
   return undefined;
 }
-
 
 function calculateResourceScope(
   operationPath: string,

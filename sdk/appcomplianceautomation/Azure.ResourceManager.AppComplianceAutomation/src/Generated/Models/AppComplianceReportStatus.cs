@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct AppComplianceReportStatus : IEquatable<AppComplianceReportStatus>
     {
         private readonly string _value;
+        /// <summary> The report is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The report is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The report is under reviewing. </summary>
+        private const string ReviewingValue = "Reviewing";
+        /// <summary> The report is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppComplianceReportStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string FailedValue = "Failed";
-        private const string ReviewingValue = "Reviewing";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> The report is active. </summary>
         public static AppComplianceReportStatus Active { get; } = new AppComplianceReportStatus(ActiveValue);
+
         /// <summary> The report is failed. </summary>
         public static AppComplianceReportStatus Failed { get; } = new AppComplianceReportStatus(FailedValue);
+
         /// <summary> The report is under reviewing. </summary>
         public static AppComplianceReportStatus Reviewing { get; } = new AppComplianceReportStatus(ReviewingValue);
+
         /// <summary> The report is disabled. </summary>
         public static AppComplianceReportStatus Disabled { get; } = new AppComplianceReportStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="AppComplianceReportStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppComplianceReportStatus left, AppComplianceReportStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppComplianceReportStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppComplianceReportStatus left, AppComplianceReportStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceReportStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppComplianceReportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppComplianceReportStatus(string value) => new AppComplianceReportStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppComplianceReportStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppComplianceReportStatus?(string value) => value == null ? null : new AppComplianceReportStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppComplianceReportStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppComplianceReportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

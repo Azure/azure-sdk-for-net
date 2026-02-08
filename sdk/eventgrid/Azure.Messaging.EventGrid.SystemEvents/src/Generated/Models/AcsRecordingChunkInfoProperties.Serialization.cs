@@ -15,6 +15,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema for all properties of  Recording Chunk Information. </summary>
     public partial class AcsRecordingChunkInfoProperties : IJsonModel<AcsRecordingChunkInfoProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsRecordingChunkInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsRecordingChunkInfoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRecordingChunkInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -182,23 +199,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AcsRecordingChunkInfoProperties IPersistableModel<AcsRecordingChunkInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcsRecordingChunkInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingChunkInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsRecordingChunkInfoProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsRecordingChunkInfoProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsRecordingChunkInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

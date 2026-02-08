@@ -142,6 +142,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,6 +171,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -270,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateGetAppIdsRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateGetAppIdsRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -294,9 +296,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.AppendQuery("skip", skip, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -306,10 +308,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateNextGetAppIdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetAppIdsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -318,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateGetCountriesRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateGetCountriesRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -334,9 +337,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.AppendQuery("skip", skip, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -346,10 +349,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateNextGetCountriesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetCountriesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -378,7 +382,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateGetPredefinedUrlCategoriesRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateGetPredefinedUrlCategoriesRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -394,9 +398,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.AppendQuery("skip", skip, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -406,10 +410,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return message;
         }
 
-        internal HttpMessage CreateNextGetPredefinedUrlCategoriesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetPredefinedUrlCategoriesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string localRulestackName, string skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

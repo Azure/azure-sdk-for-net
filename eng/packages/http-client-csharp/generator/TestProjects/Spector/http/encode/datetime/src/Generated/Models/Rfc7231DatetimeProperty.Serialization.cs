@@ -17,6 +17,10 @@ namespace Encode.Datetime
     {
         internal Rfc7231DatetimeProperty() => throw null;
 
+        protected virtual Rfc7231DatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Rfc7231DatetimeProperty(Response response) => throw null;
+
         void IJsonModel<Rfc7231DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Encode.Datetime
 
         Rfc7231DatetimeProperty IPersistableModel<Rfc7231DatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual Rfc7231DatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<Rfc7231DatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="rfc7231DatetimeProperty"> The <see cref="Rfc7231DatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Rfc7231DatetimeProperty rfc7231DatetimeProperty) => throw null;
-
-        public static explicit operator Rfc7231DatetimeProperty(Response response) => throw null;
     }
 }

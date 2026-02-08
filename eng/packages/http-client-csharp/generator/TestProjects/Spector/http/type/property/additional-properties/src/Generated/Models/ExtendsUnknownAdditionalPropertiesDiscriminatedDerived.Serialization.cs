@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
     {
         internal ExtendsUnknownAdditionalPropertiesDiscriminatedDerived() => throw null;
 
+        protected override ExtendsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace _Type.Property.AdditionalProperties
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         ExtendsUnknownAdditionalPropertiesDiscriminatedDerived IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected override ExtendsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

@@ -15,6 +15,23 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document type info. </summary>
     public partial class DocumentTypeDetails : IJsonModel<DocumentTypeDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DocumentTypeDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDocumentTypeDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DocumentTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -296,23 +313,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         DocumentTypeDetails IPersistableModel<DocumentTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentTypeDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDocumentTypeDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DocumentTypeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

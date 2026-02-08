@@ -20,6 +20,23 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchPoolUsageMetrics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageMetrics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchPoolUsageMetrics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchPoolUsageMetrics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPoolUsageMetrics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,23 +173,6 @@ namespace Azure.Compute.Batch
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         BatchPoolUsageMetrics IPersistableModel<BatchPoolUsageMetrics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchPoolUsageMetrics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolUsageMetrics>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchPoolUsageMetrics(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchPoolUsageMetrics)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchPoolUsageMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

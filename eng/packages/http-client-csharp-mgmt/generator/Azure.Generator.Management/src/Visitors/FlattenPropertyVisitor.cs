@@ -89,6 +89,12 @@ namespace Azure.Generator.Management.Visitors
                         // If the flattened property is a value type, we need to ensure that we handle the nullability correctly.
                         var propertyParameter = flattenedProperty.AsParameter;
 
+                        // Skip if we've already processed this parameter (can happen when multiple flattened properties share the same underlying parameter)
+                        if (parameterMap.ContainsKey(propertyParameter))
+                        {
+                            continue;
+                        }
+
                         // The same parameter is used in public constructor, we need a new copy for model factory method with different nullability.
                         var updatedParameter = new ParameterProvider(propertyParameter.Name, propertyParameter.Description, propertyParameter.Type.InputType, propertyParameter.DefaultValue,
                             propertyParameter.IsRef, propertyParameter.IsOut, propertyParameter.IsIn, propertyParameter.IsParams, propertyParameter.Attributes, propertyParameter.Property,
@@ -478,7 +484,8 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.IsNullable || internalPropertyWireInfo.IsNullable,
                 innerPropertyWireInfo.IsDiscriminator,
                 innerPropertyWireInfo.SerializedName,
-                innerPropertyWireInfo.IsHttpMetadata);
+                innerPropertyWireInfo.IsHttpMetadata,
+                innerPropertyWireInfo.IsApiVersion);
         }
 
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)

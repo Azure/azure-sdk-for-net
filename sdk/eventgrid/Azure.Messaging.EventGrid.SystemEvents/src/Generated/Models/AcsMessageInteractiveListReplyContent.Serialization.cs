@@ -15,6 +15,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Message Interactive list reply content for a user to business message. </summary>
     public partial class AcsMessageInteractiveListReplyContent : IJsonModel<AcsMessageInteractiveListReplyContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsMessageInteractiveListReplyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageInteractiveListReplyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsMessageInteractiveListReplyContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsMessageInteractiveListReplyContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMessageInteractiveListReplyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,23 +155,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AcsMessageInteractiveListReplyContent IPersistableModel<AcsMessageInteractiveListReplyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcsMessageInteractiveListReplyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageInteractiveListReplyContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsMessageInteractiveListReplyContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsMessageInteractiveListReplyContent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsMessageInteractiveListReplyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -298,6 +298,7 @@ namespace System.ClientModel.Primitives
         public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0003")]
     public abstract partial class JsonModel<T> : System.ClientModel.Primitives.IJsonModel<T>, System.ClientModel.Primitives.IPersistableModel<T>
     {
         protected JsonModel() { }

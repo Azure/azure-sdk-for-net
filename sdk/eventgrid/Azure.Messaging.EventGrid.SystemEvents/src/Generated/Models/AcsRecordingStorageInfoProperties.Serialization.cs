@@ -15,6 +15,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema for all properties of Recording Storage Information. </summary>
     public partial class AcsRecordingStorageInfoProperties : IJsonModel<AcsRecordingStorageInfoProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsRecordingStorageInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingStorageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAcsRecordingStorageInfoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AcsRecordingStorageInfoProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsRecordingStorageInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,23 +143,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AcsRecordingStorageInfoProperties IPersistableModel<AcsRecordingStorageInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcsRecordingStorageInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsRecordingStorageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAcsRecordingStorageInfoProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AcsRecordingStorageInfoProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsRecordingStorageInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

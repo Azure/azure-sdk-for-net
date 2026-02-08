@@ -15,6 +15,10 @@ namespace _Type.Property.Optional
 {
     public partial class BooleanLiteralProperty : IJsonModel<BooleanLiteralProperty>
     {
+        protected virtual BooleanLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator BooleanLiteralProperty(Response response) => throw null;
+
         void IJsonModel<BooleanLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -29,13 +33,9 @@ namespace _Type.Property.Optional
 
         BooleanLiteralProperty IPersistableModel<BooleanLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual BooleanLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<BooleanLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="booleanLiteralProperty"> The <see cref="BooleanLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BooleanLiteralProperty booleanLiteralProperty) => throw null;
-
-        public static explicit operator BooleanLiteralProperty(Response response) => throw null;
     }
 }

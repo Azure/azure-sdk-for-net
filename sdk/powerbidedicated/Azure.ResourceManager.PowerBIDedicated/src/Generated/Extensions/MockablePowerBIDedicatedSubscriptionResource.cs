@@ -8,91 +8,86 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PowerBIDedicated;
 using Azure.ResourceManager.PowerBIDedicated.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePowerBIDedicatedSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _dedicatedCapacityCapacitiesClientDiagnostics;
-        private CapacitiesRestOperations _dedicatedCapacityCapacitiesRestClient;
-        private ClientDiagnostics _autoScaleVCoreClientDiagnostics;
-        private AutoScaleVCoresRestOperations _autoScaleVCoreRestClient;
+        private ClientDiagnostics _capacitiesClientDiagnostics;
+        private Capacities _capacitiesRestClient;
+        private ClientDiagnostics _autoScaleVCoresClientDiagnostics;
+        private AutoScaleVCores _autoScaleVCoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePowerBIDedicatedSubscriptionResource for mocking. </summary>
         protected MockablePowerBIDedicatedSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePowerBIDedicatedSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePowerBIDedicatedSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DedicatedCapacityCapacitiesClientDiagnostics => _dedicatedCapacityCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", DedicatedCapacityResource.ResourceType.Namespace, Diagnostics);
-        private CapacitiesRestOperations DedicatedCapacityCapacitiesRestClient => _dedicatedCapacityCapacitiesRestClient ??= new CapacitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DedicatedCapacityResource.ResourceType));
-        private ClientDiagnostics AutoScaleVCoreClientDiagnostics => _autoScaleVCoreClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", AutoScaleVCoreResource.ResourceType.Namespace, Diagnostics);
-        private AutoScaleVCoresRestOperations AutoScaleVCoreRestClient => _autoScaleVCoreRestClient ??= new AutoScaleVCoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutoScaleVCoreResource.ResourceType));
+        private ClientDiagnostics CapacitiesClientDiagnostics => _capacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Capacities CapacitiesRestClient => _capacitiesRestClient ??= new Capacities(CapacitiesClientDiagnostics, Pipeline, Endpoint, "2021-01-01");
+
+        private ClientDiagnostics AutoScaleVCoresClientDiagnostics => _autoScaleVCoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AutoScaleVCores AutoScaleVCoresRestClient => _autoScaleVCoresRestClient ??= new AutoScaleVCores(AutoScaleVCoresClientDiagnostics, Pipeline, Endpoint, "2021-01-01");
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capacities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetAllAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/capacities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capacities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,201 +95,55 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <returns> A collection of <see cref="DedicatedCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedCapacityResource> GetDedicatedCapacities(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Check the name availability in the target location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await DedicatedCapacityCapacitiesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check the name availability in the target location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The region name which the operation will lookup into. </param>
-        /// <param name="content"> The name of the capacity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
-            scope.Start();
-            try
-            {
-                var response = DedicatedCapacityCapacitiesRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetAllCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the auto scale v-cores for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoScaleVCores_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetBySubscriptionAsyncCollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context), data => new AutoScaleVCoreResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the auto scale v-cores for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/autoScaleVCores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoScaleVCores_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,8 +151,165 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <returns> A collection of <see cref="AutoScaleVCoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetBySubscriptionCollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context), data => new AutoScaleVCoreResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacitiesOperationGroup_ListSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusCapacitiesAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context);
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for PowerBI Dedicated resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacitiesOperationGroup_ListSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CapacitySku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CapacitiesGetSkusCapacitiesCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context);
+        }
+
+        /// <summary>
+        /// Check the name availability in the target location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacitiesOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckCapacityNameAvailabilityResult> response = Response.FromValue(CheckCapacityNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the name availability in the target location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PowerBIDedicated/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacitiesOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckCapacityNameAvailabilityResult> response = Response.FromValue(CheckCapacityNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
