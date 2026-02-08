@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringBandwidthOffer"/>. </summary>
-        internal PeeringBandwidthOffer()
+        public PeeringBandwidthOffer()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The name of the bandwidth offer. </summary>
-        public string OfferName { get; }
+        public string OfferName { get; set; }
 
         /// <summary> The value of the bandwidth offer in Mbps. </summary>
-        public int? ValueInMbps { get; }
+        public int? ValueInMbps { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
-        internal DirectPeeringFacility()
+        public DirectPeeringFacility()
         {
         }
 
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The address of the direct peering facility. </summary>
-        public string Address { get; }
+        public string Address { get; set; }
 
         /// <summary> The type of the direct peering. </summary>
-        public DirectPeeringType? DirectPeeringType { get; }
+        public DirectPeeringType? DirectPeeringType { get; set; }
 
         /// <summary> The PeeringDB.com ID of the facility. </summary>
-        public int? PeeringDBFacilityId { get; }
+        public int? PeeringDBFacilityId { get; set; }
 
         /// <summary> The PeeringDB.com URL of the facility. </summary>
-        public string PeeringDBFacilityLink { get; }
+        public string PeeringDBFacilityLink { get; set; }
     }
 }

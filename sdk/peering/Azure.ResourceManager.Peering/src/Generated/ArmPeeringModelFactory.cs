@@ -474,50 +474,6 @@ namespace Azure.ResourceManager.Peering.Models
             return new DirectPeeringLocationProperties(peeringFacilities.ToList(), bandwidthOffers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The properties that define a direct peering facility. </summary>
-        /// <param name="address"> The address of the direct peering facility. </param>
-        /// <param name="directPeeringType"> The type of the direct peering. </param>
-        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
-        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        /// <returns> A new <see cref="Models.DirectPeeringFacility"/> instance for mocking. </returns>
-        public static DirectPeeringFacility DirectPeeringFacility(string address = default, DirectPeeringType? directPeeringType = default, int? peeringDBFacilityId = default, string peeringDBFacilityLink = default)
-        {
-            return new DirectPeeringFacility(address, directPeeringType, peeringDBFacilityId, peeringDBFacilityLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The properties that define a peering bandwidth offer. </summary>
-        /// <param name="offerName"> The name of the bandwidth offer. </param>
-        /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
-        /// <returns> A new <see cref="Models.PeeringBandwidthOffer"/> instance for mocking. </returns>
-        public static PeeringBandwidthOffer PeeringBandwidthOffer(string offerName = default, int? valueInMbps = default)
-        {
-            return new PeeringBandwidthOffer(offerName, valueInMbps, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The properties that define an exchange peering facility. </summary>
-        /// <param name="exchangeName"> The name of the exchange peering facility. </param>
-        /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
-        /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>
-        /// <param name="microsoftIPv6Address"> The IPv6 address of Microsoft at the exchange peering facility. </param>
-        /// <param name="facilityIPv4Prefix"> The IPv4 prefixes associated with the exchange peering facility. </param>
-        /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
-        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
-        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
-        /// <returns> A new <see cref="Models.ExchangePeeringFacility"/> instance for mocking. </returns>
-        public static ExchangePeeringFacility ExchangePeeringFacility(string exchangeName = default, int? bandwidthInMbps = default, IPAddress microsoftIPv4Address = default, IPAddress microsoftIPv6Address = default, string facilityIPv4Prefix = default, string facilityIPv6Prefix = default, int? peeringDBFacilityId = default, string peeringDBFacilityLink = default)
-        {
-            return new ExchangePeeringFacility(
-                exchangeName,
-                bandwidthInMbps,
-                microsoftIPv4Address,
-                microsoftIPv6Address,
-                facilityIPv4Prefix,
-                facilityIPv6Prefix,
-                peeringDBFacilityId,
-                peeringDBFacilityLink,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The peering service country. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

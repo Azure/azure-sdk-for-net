@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExchangePeeringFacility"/>. </summary>
-        internal ExchangePeeringFacility()
+        public ExchangePeeringFacility()
         {
         }
 
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The name of the exchange peering facility. </summary>
-        public string ExchangeName { get; }
+        public string ExchangeName { get; set; }
 
         /// <summary> The bandwidth of the connection between Microsoft and the exchange peering facility. </summary>
-        public int? BandwidthInMbps { get; }
+        public int? BandwidthInMbps { get; set; }
 
         /// <summary> The IPv4 address of Microsoft at the exchange peering facility. </summary>
-        public IPAddress MicrosoftIPv4Address { get; }
+        public IPAddress MicrosoftIPv4Address { get; set; }
 
         /// <summary> The IPv6 address of Microsoft at the exchange peering facility. </summary>
-        public IPAddress MicrosoftIPv6Address { get; }
+        public IPAddress MicrosoftIPv6Address { get; set; }
 
         /// <summary> The IPv4 prefixes associated with the exchange peering facility. </summary>
-        public string FacilityIPv4Prefix { get; }
+        public string FacilityIPv4Prefix { get; set; }
 
         /// <summary> The IPv6 prefixes associated with the exchange peering facility. </summary>
-        public string FacilityIPv6Prefix { get; }
+        public string FacilityIPv6Prefix { get; set; }
 
         /// <summary> The PeeringDB.com ID of the facility. </summary>
-        public int? PeeringDBFacilityId { get; }
+        public int? PeeringDBFacilityId { get; set; }
 
         /// <summary> The PeeringDB.com URL of the facility. </summary>
-        public string PeeringDBFacilityLink { get; }
+        public string PeeringDBFacilityLink { get; set; }
     }
 }
