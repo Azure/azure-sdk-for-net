@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Command? command = default;
+            LookingGlassCommand? command = default;
             string output = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    command = new Command(prop.Value.GetString());
+                    command = new LookingGlassCommand(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("output"u8))

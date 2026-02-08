@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringLocation"/>. </summary>
-        internal PeeringLocation()
+        public PeeringLocation()
         {
         }
 
@@ -39,26 +39,42 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The kind of peering that the peering location supports. </summary>
-        public PeeringKind? Kind { get; }
+        public PeeringKind? Kind { get; set; }
 
         /// <summary> The properties that define a peering location. </summary>
-        internal PeeringLocationProperties Properties { get; }
+        internal PeeringLocationProperties Properties { get; set; }
 
         /// <summary> The properties that define a direct peering location. </summary>
         public DirectPeeringLocationProperties Direct
         {
             get
             {
-                return Properties.Direct;
+                return Properties is null ? default : Properties.Direct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringLocationProperties();
+                }
+                Properties.Direct = value;
             }
         }
 
         /// <summary> The name of the peering location. </summary>
-        public string MyLocation
+        public string PeeringLocationValue
         {
             get
             {
-                return Properties.MyLocation;
+                return Properties is null ? default : Properties.PeeringLocationValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringLocationProperties();
+                }
+                Properties.PeeringLocationValue = value;
             }
         }
 
@@ -67,7 +83,15 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.Country;
+                return Properties is null ? default : Properties.Country;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringLocationProperties();
+                }
+                Properties.Country = value;
             }
         }
 
@@ -76,7 +100,15 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
-                return Properties.AzureRegion;
+                return Properties is null ? default : Properties.AzureRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringLocationProperties();
+                }
+                Properties.AzureRegion = value.Value;
             }
         }
 
@@ -85,6 +117,10 @@ namespace Azure.ResourceManager.Peering.Models
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new PeeringLocationProperties();
+                }
                 return Properties.ExchangePeeringFacilities;
             }
         }

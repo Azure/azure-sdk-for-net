@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
-                writer.WriteStringValue(ConnectionIdentifier);
+                writer.WriteStringValue(ConnectionIdentifier.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering.Models
             int? peeringDBFacilityId = default;
             PeeringConnectionState? connectionState = default;
             PeeringBgpSession bgpSession = default;
-            string connectionIdentifier = default;
+            Guid? connectionIdentifier = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (prop.NameEquals("connectionIdentifier"u8))
                 {
-                    connectionIdentifier = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionIdentifier = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LookingGlassOutput(Command? command, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LookingGlassOutput(LookingGlassCommand? command, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Command = command;
             Output = output;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Invoked command. </summary>
-        public Command? Command { get; }
+        public LookingGlassCommand? Command { get; }
 
         /// <summary> Output of the command. </summary>
         public string Output { get; }

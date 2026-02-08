@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The resource tags. </summary>
-    public partial class PeeringResourceTagsPatch : IJsonModel<PeeringResourceTagsPatch>
+    public partial class PeeringServicePatch : PeeringResourceTagsPatch, IJsonModel<PeeringServicePatch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PeeringResourceTagsPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PeeringServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -27,66 +28,36 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringResourceTagsPatch IJsonModel<PeeringResourceTagsPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PeeringServicePatch IJsonModel<PeeringServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PeeringServicePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringResourceTagsPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PeeringResourceTagsPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePeeringResourceTagsPatch(document.RootElement, options);
+            return DeserializePeeringServicePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PeeringResourceTagsPatch DeserializePeeringResourceTagsPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static PeeringServicePatch DeserializePeeringServicePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,47 +93,59 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringResourceTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new PeeringServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeeringResourceTagsPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PeeringServicePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringResourceTagsPatch IPersistableModel<PeeringResourceTagsPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PeeringServicePatch IPersistableModel<PeeringServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (PeeringServicePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringResourceTagsPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PeeringResourceTagsPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePeeringResourceTagsPatch(document.RootElement, options);
+                        return DeserializePeeringServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringResourceTagsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PeeringServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="peeringServicePatch"> The <see cref="PeeringServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PeeringServicePatch peeringServicePatch)
+        {
+            if (peeringServicePatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(peeringServicePatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

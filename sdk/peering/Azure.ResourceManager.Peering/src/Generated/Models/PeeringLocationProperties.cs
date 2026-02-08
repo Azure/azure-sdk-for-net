@@ -18,47 +18,51 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringLocationProperties"/>. </summary>
-        internal PeeringLocationProperties()
+        public PeeringLocationProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringLocationProperties"/>. </summary>
         /// <param name="direct"> The properties that define a direct peering location. </param>
         /// <param name="exchange"> The properties that define an exchange peering location. </param>
-        /// <param name="myLocation"> The name of the peering location. </param>
+        /// <param name="peeringLocationValue"> The name of the peering location. </param>
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringLocationProperties(DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string myLocation, string country, AzureLocation? azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringLocationProperties(DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, AzureLocation? azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direct = direct;
             Exchange = exchange;
-            MyLocation = myLocation;
+            PeeringLocationValue = peeringLocationValue;
             Country = country;
             AzureRegion = azureRegion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties that define a direct peering location. </summary>
-        public DirectPeeringLocationProperties Direct { get; }
+        public DirectPeeringLocationProperties Direct { get; set; }
 
         /// <summary> The properties that define an exchange peering location. </summary>
-        internal PeeringLocationPropertiesExchange Exchange { get; }
+        internal PeeringLocationPropertiesExchange Exchange { get; set; }
 
         /// <summary> The name of the peering location. </summary>
-        public string MyLocation { get; }
+        public string PeeringLocationValue { get; set; }
 
         /// <summary> The country in which the peering location exists. </summary>
-        public string Country { get; }
+        public string Country { get; set; }
 
         /// <summary> The Azure region associated with the peering location. </summary>
-        public AzureLocation? AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; set; }
 
         /// <summary> The list of exchange peering facilities at the peering location. </summary>
         public IList<ExchangePeeringFacility> ExchangePeeringFacilities
         {
             get
             {
+                if (Exchange is null)
+                {
+                    Exchange = new PeeringLocationPropertiesExchange();
+                }
                 return Exchange.PeeringFacilities;
             }
         }

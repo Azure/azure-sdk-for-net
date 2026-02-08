@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DirectPeeringLocationProperties"/>. </summary>
-        internal DirectPeeringLocationProperties()
+        public DirectPeeringLocationProperties()
         {
             PeeringFacilities = new ChangeTrackingList<DirectPeeringFacility>();
             BandwidthOffers = new ChangeTrackingList<PeeringBandwidthOffer>();
