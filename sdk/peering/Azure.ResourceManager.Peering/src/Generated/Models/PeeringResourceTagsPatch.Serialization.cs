@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -164,5 +165,17 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PeeringResourceTagsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="peeringResourceTagsPatch"> The <see cref="PeeringResourceTagsPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PeeringResourceTagsPatch peeringResourceTagsPatch)
+        {
+            if (peeringResourceTagsPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(peeringResourceTagsPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

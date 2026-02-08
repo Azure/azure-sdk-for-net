@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<PeeringResource>> UpdateAsync(PeeringPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeeringResource>> UpdateAsync(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringPatch.ToRequestContent(patch), context);
+                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringData> response = Response.FromValue(PeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<PeeringResource> Update(PeeringPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<PeeringResource> Update(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringPatch.ToRequestContent(patch), context);
+                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringData> response = Response.FromValue(PeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PeeringPatch patch = new PeeringPatch();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

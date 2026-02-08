@@ -219,16 +219,6 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> The resource tags. </summary>
         /// <param name="tags"> Gets or sets the tags, a dictionary of descriptors arm object. </param>
-        /// <returns> A new <see cref="Models.PeeringPatch"/> instance for mocking. </returns>
-        public static PeeringPatch PeeringPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PeeringPatch(tags, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The resource tags. </summary>
-        /// <param name="tags"> Gets or sets the tags, a dictionary of descriptors arm object. </param>
         /// <returns> A new <see cref="Models.PeeringResourceTagsPatch"/> instance for mocking. </returns>
         public static PeeringResourceTagsPatch PeeringResourceTagsPatch(IDictionary<string, string> tags = default)
         {
@@ -278,16 +268,6 @@ namespace Azure.ResourceManager.Peering.Models
             connectedAgents ??= new ChangeTrackingList<string>();
 
             return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The resource tags. </summary>
-        /// <param name="tags"> Gets or sets the tags, a dictionary of descriptors arm object. </param>
-        /// <returns> A new <see cref="Models.PeeringServicePatch"/> instance for mocking. </returns>
-        public static PeeringServicePatch PeeringServicePatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PeeringServicePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
