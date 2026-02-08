@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateInvokeRequest(string subscriptionId, string command, string sourceType, string sourceLocation, string destinationIP, RequestContext context)
+        internal HttpMessage CreateInvokeLookingGlassRequest(string subscriptionId, string command, string sourceType, string sourceLocation, string destinationIP, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

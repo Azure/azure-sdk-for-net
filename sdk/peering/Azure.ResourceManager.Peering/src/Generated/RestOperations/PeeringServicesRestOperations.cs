@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        internal HttpMessage CreateInitializeConnectionMonitorRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateInitializePeeringServiceConnectionMonitorRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

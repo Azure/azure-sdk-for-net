@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             string prefix = default;
-            PrefixValidationState? prefixValidationState = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
             string peeringServicePrefixKey = default;
             string errorMessage = default;
             PeeringProvisioningState? provisioningState = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    prefixValidationState = new PrefixValidationState(prop.Value.GetString());
+                    prefixValidationState = new PeeringPrefixValidationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("peeringServicePrefixKey"u8))

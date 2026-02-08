@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (options.Format != "W" && Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
-                writer.WriteStringValue(AzureRegion);
+                writer.WriteStringValue(AzureRegion.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureService))
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             string prefix = default;
-            string azureRegion = default;
+            AzureLocation? azureRegion = default;
             string azureService = default;
             bool? isPrimaryRegion = default;
             string bgpCommunity = default;
@@ -116,7 +117,11 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (prop.NameEquals("azureRegion"u8))
                 {
-                    azureRegion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("azureService"u8))

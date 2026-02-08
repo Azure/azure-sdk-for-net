@@ -402,73 +402,37 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer's location
+        /// Initialize Peering Service for Connection Monitor functionality
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.CheckServiceProviderAvailabilityAsync(CheckServiceProviderAvailabilityInput, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitorAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckServiceProviderAvailabilityResponse>> CheckServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckServiceProviderAvailabilityInput content, CancellationToken cancellationToken = default)
+        public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePeeringSubscriptionResource(subscriptionResource).CheckServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer's location
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.CheckServiceProviderAvailability(CheckServiceProviderAvailabilityInput, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckServiceProviderAvailabilityResponse> CheckServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckServiceProviderAvailabilityInput content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).CheckServiceProviderAvailability(content, cancellationToken);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Initialize Peering Service for Connection Monitor functionality
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializeConnectionMonitorAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response> InitializeConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InitializeConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Initialize Peering Service for Connection Monitor functionality
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializeConnectionMonitor(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response InitializeConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).InitializeConnectionMonitor(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
         }
 
         /// <summary>
@@ -557,7 +521,7 @@ namespace Azure.ResourceManager.Peering
         /// Run looking glass functionality
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeAsync(LookingGlassCommand, LookingGlassSourceType, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlassAsync(LookingGlassCommand, LookingGlassSourceType, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -567,18 +531,18 @@ namespace Azure.ResourceManager.Peering
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<LookingGlassOutput>> InvokeAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Run looking glass functionality
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.Invoke(LookingGlassCommand, LookingGlassSourceType, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand, LookingGlassSourceType, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -588,11 +552,11 @@ namespace Azure.ResourceManager.Peering
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<LookingGlassOutput> Invoke(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).Invoke(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
         }
 
         /// <summary>
@@ -639,43 +603,43 @@ namespace Azure.ResourceManager.Peering
         /// Lists all of the available countries for peering service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountriesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceCountry> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available countries for peering service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceCountry> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available locations for peering service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocationsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -683,18 +647,18 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceLocation> GetAllAsync(this SubscriptionResource subscriptionResource, string country = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAllAsync(country, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available locations for peering service.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -702,47 +666,47 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceLocation> GetAll(this SubscriptionResource subscriptionResource, string country = default, CancellationToken cancellationToken = default)
+        public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAll(country, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available peering service locations for the specified kind of peering.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProvidersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PeeringServiceProvider> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the available peering service locations for the specified kind of peering.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PeeringServiceProvider> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of peering that the peering location supports. </param>
         /// <param name="properties"> The properties that define a peering location. </param>
-        internal PeeringLocation(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringKind? kind, PeeringLocationProperties properties) : base(id, name, resourceType, systemData)
+        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringKind? kind, PeeringLocationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Kind = kind;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The Azure region associated with the peering location. </summary>
-        public string AzureRegion
+        public AzureLocation? AzureRegion
         {
             get
             {

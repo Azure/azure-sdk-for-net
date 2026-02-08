@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
             int? bandwidthInMbps = default;
             int? provisionedBandwidthInMbps = default;
-            SessionAddressProvider? sessionAddressProvider = default;
+            PeeringSessionAddressProvider? sessionAddressProvider = default;
             bool? useForPeeringService = default;
             string microsoftTrackingId = default;
             int? peeringDBFacilityId = default;
-            ConnectionState? connectionState = default;
-            BgpSession bgpSession = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
             string connectionIdentifier = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    sessionAddressProvider = new SessionAddressProvider(prop.Value.GetString());
+                    sessionAddressProvider = new PeeringSessionAddressProvider(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("useForPeeringService"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    connectionState = new ConnectionState(prop.Value.GetString());
+                    connectionState = new PeeringConnectionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bgpSession"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = BgpSession.DeserializeBgpSession(prop.Value, options);
+                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentifier"u8))

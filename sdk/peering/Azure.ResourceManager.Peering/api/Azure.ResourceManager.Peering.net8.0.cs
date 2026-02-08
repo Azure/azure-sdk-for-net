@@ -33,7 +33,10 @@ namespace Azure.ResourceManager.Peering
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
         public string SourceAgent { get { throw null; } set { } }
         public int? TestFrequencyInSec { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.ConnectionMonitorTestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.ConnectionMonitorTestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.Peering
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.PeerAsnContactDetail> PeerContactDetail { get { throw null; } }
         public string PeerName { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeerAsnValidationState? ValidationState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeerAsnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeerAsnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeerAsnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeerAsnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -130,13 +136,17 @@ namespace Azure.ResourceManager.Peering
     public partial class PeeringData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>
     {
         public PeeringData(Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.ConnectivityProbe> ConnectivityProbes { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.DirectPeeringProperties Direct { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.ExchangePeeringProperties Exchange { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringKind Kind { get { throw null; } set { } }
         public string PeeringLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeeringData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeeringData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,10 +155,12 @@ namespace Azure.ResourceManager.Peering
     }
     public static partial class PeeringExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Peering.ConnectionMonitorTestResource GetConnectionMonitorTestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource> GetPeerAsn(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource>> GetPeerAsnAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -156,16 +168,12 @@ namespace Azure.ResourceManager.Peering
         public static Azure.ResourceManager.Peering.PeerAsnCollection GetPeerAsns(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Peering.PeeringResource> GetPeering(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> GetPeeringAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringResource GetPeeringResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringCollection GetPeerings(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeerings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeering(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeeringAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> GetPeeringService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> GetPeeringServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceCountry> GetPeeringServiceCountries(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -207,7 +215,10 @@ namespace Azure.ResourceManager.Peering
         public int? Asn { get { throw null; } set { } }
         public string PeeringServicePrefixKey { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeeringRegisteredAsnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeeringRegisteredAsnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -258,7 +269,10 @@ namespace Azure.ResourceManager.Peering
         public string Prefix { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState? PrefixValidationState { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeeringRegisteredPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeeringRegisteredPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -298,17 +312,17 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetAll(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetAllAsync(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetByPeering(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetByPeeringAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> GetPeeringRegisteredAsn(string registeredAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>> GetPeeringRegisteredAsnAsync(string registeredAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringRegisteredAsnCollection GetPeeringRegisteredAsns() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> GetPeeringRegisteredPrefix(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> GetPeeringRegisteredPrefixAsync(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringRegisteredPrefixCollection GetPeeringRegisteredPrefixes() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -318,8 +332,8 @@ namespace Azure.ResourceManager.Peering
         Azure.ResourceManager.Peering.PeeringData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> Update(Azure.ResourceManager.Peering.Models.PeeringPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> Update(Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PeeringServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringServiceResource>, System.Collections.IEnumerable
     {
@@ -348,7 +362,10 @@ namespace Azure.ResourceManager.Peering
         public string ProviderPrimaryPeeringLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeeringServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeeringServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -382,7 +399,10 @@ namespace Azure.ResourceManager.Peering
         public string Prefix { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState? PrefixValidationState { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.PeeringServicePrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.PeeringServicePrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -436,8 +456,8 @@ namespace Azure.ResourceManager.Peering
         Azure.ResourceManager.Peering.PeeringServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> Update(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> Update(Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Peering.Mocking
@@ -468,17 +488,17 @@ namespace Azure.ResourceManager.Peering.Mocking
         protected MockablePeeringSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixes(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetAll(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetAll(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetAll(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetAllAsync(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetAllAsync(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetAllAsync(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource> GetPeerAsn(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource>> GetPeerAsnAsync(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeerAsnCollection GetPeerAsns() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocations(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocationsAsync(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeerings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceCountry> GetPeeringServiceCountries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringServiceCountry> GetPeeringServiceCountriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceLocation> GetPeeringServiceLocations(string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -499,18 +519,27 @@ namespace Azure.ResourceManager.Peering.Models
     {
         public static Azure.ResourceManager.Peering.Models.CdnPeeringPrefix CdnPeeringPrefix(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string prefix = null, Azure.Core.AzureLocation? azureRegion = default(Azure.Core.AzureLocation?), string azureService = null, bool? isPrimaryRegion = default(bool?), string bgpCommunity = null) { throw null; }
         public static Azure.ResourceManager.Peering.ConnectionMonitorTestData ConnectionMonitorTestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string sourceAgent = null, string destination = null, int? destinationPort = default(int?), int? testFrequencyInSec = default(int?), bool? isTestSuccessful = default(bool?), System.Collections.Generic.IEnumerable<string> path = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.ConnectivityProbe ConnectivityProbe(string endpoint = null, string azureRegion = null, Azure.ResourceManager.Peering.Models.Protocol? protocol = default(Azure.ResourceManager.Peering.Models.Protocol?), System.Collections.Generic.IEnumerable<string> prefixesToAccesslist = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.DirectPeeringFacility DirectPeeringFacility(string address = null, Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), int? peeringDBFacilityId = default(int?), string peeringDBFacilityLink = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties DirectPeeringLocationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.DirectPeeringFacility> peeringFacilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer> bandwidthOffers = null) { throw null; }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringProperties DirectPeeringProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.PeeringDirectConnection> connections = null, bool? useForPeeringService = default(bool?), Azure.Core.ResourceIdentifier peerAsnId = null, Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?)) { throw null; }
-        public static Azure.ResourceManager.Peering.Models.LookingGlassOutput LookingGlassOutput(Azure.ResourceManager.Peering.Models.LookingGlassCommand? command = default(Azure.ResourceManager.Peering.Models.LookingGlassCommand?), string output = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.ExchangePeeringFacility ExchangePeeringFacility(string exchangeName = null, int? bandwidthInMbps = default(int?), System.Net.IPAddress microsoftIPv4Address = null, System.Net.IPAddress microsoftIPv6Address = null, string facilityIPv4Prefix = null, string facilityIPv6Prefix = null, int? peeringDBFacilityId = default(int?), string peeringDBFacilityLink = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.ExchangePeeringProperties ExchangePeeringProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.PeeringExchangeConnection> connections = null, Azure.Core.ResourceIdentifier peerAsnId = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.LookingGlassOutput LookingGlassOutput(Azure.ResourceManager.Peering.Models.Command? command = default(Azure.ResourceManager.Peering.Models.Command?), string output = null) { throw null; }
         public static Azure.ResourceManager.Peering.PeerAsnData PeerAsnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? peerAsn = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.PeerAsnContactDetail> peerContactDetail = null, string peerName = null, Azure.ResourceManager.Peering.Models.PeerAsnValidationState? validationState = default(Azure.ResourceManager.Peering.Models.PeerAsnValidationState?), string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer PeeringBandwidthOffer(string offerName = null, int? valueInMbps = default(int?)) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringBgpSession PeeringBgpSession(string sessionPrefixV4 = null, string sessionPrefixV6 = null, System.Net.IPAddress microsoftSessionIPv4Address = null, System.Net.IPAddress microsoftSessionIPv6Address = null, System.Net.IPAddress peerSessionIPv4Address = null, System.Net.IPAddress peerSessionIPv6Address = null, Azure.ResourceManager.Peering.Models.PeeringSessionStateV4? sessionStateV4 = default(Azure.ResourceManager.Peering.Models.PeeringSessionStateV4?), Azure.ResourceManager.Peering.Models.PeeringSessionStateV6? sessionStateV6 = default(Azure.ResourceManager.Peering.Models.PeeringSessionStateV6?), int? maxPrefixesAdvertisedV4 = default(int?), int? maxPrefixesAdvertisedV6 = default(int?), string md5AuthenticationKey = null) { throw null; }
-        public static Azure.ResourceManager.Peering.PeeringData PeeringData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Peering.Models.PeeringSku sku = null, Azure.ResourceManager.Peering.Models.PeeringKind kind = default(Azure.ResourceManager.Peering.Models.PeeringKind), Azure.ResourceManager.Peering.Models.DirectPeeringProperties direct = null, Azure.ResourceManager.Peering.Models.ExchangePeeringProperties exchange = null, string peeringLocation = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Peering.PeeringData PeeringData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Peering.Models.DirectPeeringProperties direct = null, Azure.ResourceManager.Peering.Models.ExchangePeeringProperties exchange = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.ConnectivityProbe> connectivityProbes = null, string peeringLocation = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?), Azure.ResourceManager.Peering.Models.PeeringSku sku = null, Azure.ResourceManager.Peering.Models.PeeringKind kind = default(Azure.ResourceManager.Peering.Models.PeeringKind)) { throw null; }
+        public static Azure.ResourceManager.Peering.PeeringData PeeringData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind, Azure.ResourceManager.Peering.Models.DirectPeeringProperties direct, Azure.ResourceManager.Peering.Models.ExchangePeeringProperties exchange, string peeringLocation, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringDirectConnection PeeringDirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider? sessionAddressProvider = default(Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider?), bool? useForPeeringService = default(bool?), string microsoftTrackingId = null, int? peeringDBFacilityId = default(int?), Azure.ResourceManager.Peering.Models.PeeringConnectionState? connectionState = default(Azure.ResourceManager.Peering.Models.PeeringConnectionState?), Azure.ResourceManager.Peering.Models.PeeringBgpSession bgpSession = null, string connectionIdentifier = null, string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.Peering.Models.PeeringExchangeConnection PeeringExchangeConnection(int? peeringDBFacilityId = default(int?), Azure.ResourceManager.Peering.Models.PeeringConnectionState? connectionState = default(Azure.ResourceManager.Peering.Models.PeeringConnectionState?), Azure.ResourceManager.Peering.Models.PeeringBgpSession bgpSession = null, System.Guid? connectionIdentifier = default(System.Guid?), string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.Peering.Models.PeeringLocation PeeringLocation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Peering.Models.PeeringKind? kind = default(Azure.ResourceManager.Peering.Models.PeeringKind?), Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties direct = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility> exchangePeeringFacilities = null, string peeringLocationValue = null, string country = null, Azure.Core.AzureLocation? azureRegion = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringExchangeConnection PeeringExchangeConnection(int? peeringDBFacilityId = default(int?), Azure.ResourceManager.Peering.Models.PeeringConnectionState? connectionState = default(Azure.ResourceManager.Peering.Models.PeeringConnectionState?), Azure.ResourceManager.Peering.Models.PeeringBgpSession bgpSession = null, string connectionIdentifier = null, string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringLocation PeeringLocation(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Peering.Models.PeeringKind? kind, Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties direct, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility> exchangePeeringFacilities, string peeringLocationValue, string country, Azure.Core.AzureLocation? azureRegion) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringLocation PeeringLocation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Peering.Models.PeeringKind? kind = default(Azure.ResourceManager.Peering.Models.PeeringKind?), Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties direct = null, string myLocation = null, string country = null, Azure.Core.AzureLocation? azureRegion = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility> exchangePeeringFacilities = null) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties PeeringLogAnalyticsWorkspaceProperties(string workspaceId = null, string key = null, System.Collections.Generic.IEnumerable<string> connectedAgents = null) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringReceivedRoute PeeringReceivedRoute(string prefix = null, string nextHop = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string trustAnchor = null, string receivedTimestamp = null) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringRegisteredAsnData PeeringRegisteredAsnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? asn = default(int?), string peeringServicePrefixKey = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringRegisteredPrefixData PeeringRegisteredPrefixData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string prefix = null, Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState? prefixValidationState = default(Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState?), string peeringServicePrefixKey = null, string errorMessage = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch PeeringResourceTagsPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringServiceCountry PeeringServiceCountry(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.Peering.PeeringServiceData PeeringServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, string peeringServiceLocation = null, string peeringServiceProvider = null, Azure.ResourceManager.Peering.Models.PeeringProvisioningState? provisioningState = default(Azure.ResourceManager.Peering.Models.PeeringProvisioningState?), string providerPrimaryPeeringLocation = null, string providerBackupPeeringLocation = null, Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = null) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringServiceLocation PeeringServiceLocation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string country = null, string state = null, Azure.Core.AzureLocation? azureRegion = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -522,13 +551,16 @@ namespace Azure.ResourceManager.Peering.Models
     }
     public partial class CdnPeeringPrefix : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix>
     {
-        public CdnPeeringPrefix() { }
+        internal CdnPeeringPrefix() { }
         public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
         public string AzureService { get { throw null; } }
         public string BgpCommunity { get { throw null; } }
         public bool? IsPrimaryRegion { get { throw null; } }
         public string Prefix { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.CdnPeeringPrefix System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.CdnPeeringPrefix System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -540,21 +572,62 @@ namespace Azure.ResourceManager.Peering.Models
         public CheckPeeringServiceProviderAvailabilityContent() { }
         public string PeeringServiceLocation { get { throw null; } set { } }
         public string PeeringServiceProvider { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Command : System.IEquatable<Azure.ResourceManager.Peering.Models.Command>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Command(string value) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.Command BgpRoute { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.Command Ping { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.Command Traceroute { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Peering.Models.Command other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Peering.Models.Command left, Azure.ResourceManager.Peering.Models.Command right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.Command (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.Command? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Peering.Models.Command left, Azure.ResourceManager.Peering.Models.Command right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ConnectivityProbe : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>
+    {
+        public ConnectivityProbe() { }
+        public string AzureRegion { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> PrefixesToAccesslist { get { throw null; } }
+        public Azure.ResourceManager.Peering.Models.Protocol? Protocol { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.ConnectivityProbe JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.ConnectivityProbe PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Peering.Models.ConnectivityProbe System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.Models.ConnectivityProbe System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ConnectivityProbe>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DirectPeeringFacility : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringFacility>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.DirectPeeringFacility>
     {
-        public DirectPeeringFacility() { }
-        public string Address { get { throw null; } set { } }
-        public Azure.ResourceManager.Peering.Models.DirectPeeringType? DirectPeeringType { get { throw null; } set { } }
-        public int? PeeringDBFacilityId { get { throw null; } set { } }
-        public string PeeringDBFacilityLink { get { throw null; } set { } }
+        internal DirectPeeringFacility() { }
+        public string Address { get { throw null; } }
+        public Azure.ResourceManager.Peering.Models.DirectPeeringType? DirectPeeringType { get { throw null; } }
+        public int? PeeringDBFacilityId { get { throw null; } }
+        public string PeeringDBFacilityLink { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringFacility JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringFacility PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.DirectPeeringFacility System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringFacility>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringFacility>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.DirectPeeringFacility System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.DirectPeeringFacility>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -563,10 +636,13 @@ namespace Azure.ResourceManager.Peering.Models
     }
     public partial class DirectPeeringLocationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties>
     {
-        public DirectPeeringLocationProperties() { }
+        internal DirectPeeringLocationProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer> BandwidthOffers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.DirectPeeringFacility> PeeringFacilities { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -580,7 +656,10 @@ namespace Azure.ResourceManager.Peering.Models
         public Azure.ResourceManager.Peering.Models.DirectPeeringType? DirectPeeringType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerAsnId { get { throw null; } set { } }
         public bool? UseForPeeringService { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.DirectPeeringProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.DirectPeeringProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.DirectPeeringProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.DirectPeeringProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.DirectPeeringProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -599,6 +678,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Internal { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Ix { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType IxRs { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.DirectPeeringType PeerProp { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Transit { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.DirectPeeringType Voice { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.DirectPeeringType other) { throw null; }
@@ -606,21 +686,25 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.DirectPeeringType left, Azure.ResourceManager.Peering.Models.DirectPeeringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.DirectPeeringType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.DirectPeeringType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.DirectPeeringType left, Azure.ResourceManager.Peering.Models.DirectPeeringType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExchangePeeringFacility : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility>
     {
-        public ExchangePeeringFacility() { }
-        public int? BandwidthInMbps { get { throw null; } set { } }
-        public string ExchangeName { get { throw null; } set { } }
-        public string FacilityIPv4Prefix { get { throw null; } set { } }
-        public string FacilityIPv6Prefix { get { throw null; } set { } }
-        public System.Net.IPAddress MicrosoftIPv4Address { get { throw null; } set { } }
-        public System.Net.IPAddress MicrosoftIPv6Address { get { throw null; } set { } }
-        public int? PeeringDBFacilityId { get { throw null; } set { } }
-        public string PeeringDBFacilityLink { get { throw null; } set { } }
+        internal ExchangePeeringFacility() { }
+        public int? BandwidthInMbps { get { throw null; } }
+        public string ExchangeName { get { throw null; } }
+        public string FacilityIPv4Prefix { get { throw null; } }
+        public string FacilityIPv6Prefix { get { throw null; } }
+        public System.Net.IPAddress MicrosoftIPv4Address { get { throw null; } }
+        public System.Net.IPAddress MicrosoftIPv6Address { get { throw null; } }
+        public int? PeeringDBFacilityId { get { throw null; } }
+        public string PeeringDBFacilityLink { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.ExchangePeeringFacility JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.ExchangePeeringFacility PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.ExchangePeeringFacility System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.ExchangePeeringFacility System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -632,7 +716,10 @@ namespace Azure.ResourceManager.Peering.Models
         public ExchangePeeringProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.PeeringExchangeConnection> Connections { get { throw null; } }
         public Azure.Core.ResourceIdentifier PeerAsnId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.ExchangePeeringProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.ExchangePeeringProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.ExchangePeeringProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ExchangePeeringProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.ExchangePeeringProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.ExchangePeeringProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.ExchangePeeringProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -652,6 +739,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LegacyPeeringsKind left, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LegacyPeeringsKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.LegacyPeeringsKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.LegacyPeeringsKind left, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -669,15 +757,19 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LookingGlassCommand left, Azure.ResourceManager.Peering.Models.LookingGlassCommand right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassCommand (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassCommand? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.LookingGlassCommand left, Azure.ResourceManager.Peering.Models.LookingGlassCommand right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LookingGlassOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.LookingGlassOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.LookingGlassOutput>
     {
         internal LookingGlassOutput() { }
-        public Azure.ResourceManager.Peering.Models.LookingGlassCommand? Command { get { throw null; } }
+        public Azure.ResourceManager.Peering.Models.Command? Command { get { throw null; } }
         public string Output { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.LookingGlassOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.LookingGlassOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.LookingGlassOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.LookingGlassOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.LookingGlassOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.LookingGlassOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.LookingGlassOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,6 +789,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.LookingGlassSourceType left, Azure.ResourceManager.Peering.Models.LookingGlassSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassSourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.LookingGlassSourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.LookingGlassSourceType left, Azure.ResourceManager.Peering.Models.LookingGlassSourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -706,7 +799,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string Email { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringRole? Role { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeerAsnContactDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeerAsnContactDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeerAsnContactDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeerAsnContactDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeerAsnContactDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeerAsnContactDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeerAsnContactDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -728,15 +824,19 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeerAsnValidationState left, Azure.ResourceManager.Peering.Models.PeerAsnValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeerAsnValidationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeerAsnValidationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeerAsnValidationState left, Azure.ResourceManager.Peering.Models.PeerAsnValidationState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PeeringBandwidthOffer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer>
     {
-        public PeeringBandwidthOffer() { }
-        public string OfferName { get { throw null; } set { } }
-        public int? ValueInMbps { get { throw null; } set { } }
+        internal PeeringBandwidthOffer() { }
+        public string OfferName { get { throw null; } }
+        public int? ValueInMbps { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringBandwidthOffer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -757,7 +857,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string SessionPrefixV6 { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringSessionStateV4? SessionStateV4 { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringSessionStateV6? SessionStateV6 { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringBgpSession JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringBgpSession PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringBgpSession System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringBgpSession>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringBgpSession>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringBgpSession System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringBgpSession>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -772,6 +875,7 @@ namespace Azure.ResourceManager.Peering.Models
         public PeeringConnectionState(string value) { throw null; }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState Active { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState Approved { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.PeeringConnectionState ExternalBlocker { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState None { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState PendingApproval { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringConnectionState ProvisioningCompleted { get { throw null; } }
@@ -785,6 +889,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringConnectionState left, Azure.ResourceManager.Peering.Models.PeeringConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringConnectionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringConnectionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringConnectionState left, Azure.ResourceManager.Peering.Models.PeeringConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -801,7 +906,10 @@ namespace Azure.ResourceManager.Peering.Models
         public int? ProvisionedBandwidthInMbps { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider? SessionAddressProvider { get { throw null; } set { } }
         public bool? UseForPeeringService { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringDirectConnection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringDirectConnection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringDirectConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringDirectConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringDirectConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringDirectConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringDirectConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -812,11 +920,14 @@ namespace Azure.ResourceManager.Peering.Models
     {
         public PeeringExchangeConnection() { }
         public Azure.ResourceManager.Peering.Models.PeeringBgpSession BgpSession { get { throw null; } set { } }
-        public System.Guid? ConnectionIdentifier { get { throw null; } set { } }
+        public string ConnectionIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringConnectionState? ConnectionState { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? PeeringDBFacilityId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringExchangeConnection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringExchangeConnection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringExchangeConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringExchangeConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringExchangeConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringExchangeConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringExchangeConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -836,6 +947,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringFamily left, Azure.ResourceManager.Peering.Models.PeeringFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringFamily (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringFamily? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringFamily left, Azure.ResourceManager.Peering.Models.PeeringFamily right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -852,6 +964,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringKind left, Azure.ResourceManager.Peering.Models.PeeringKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringKind left, Azure.ResourceManager.Peering.Models.PeeringKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -869,19 +982,23 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLearnedType left, Azure.ResourceManager.Peering.Models.PeeringLearnedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLearnedType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLearnedType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringLearnedType left, Azure.ResourceManager.Peering.Models.PeeringLearnedType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PeeringLocation : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringLocation>
     {
-        public PeeringLocation() { }
-        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties Direct { get { throw null; } set { } }
+        internal PeeringLocation() { }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
+        public string Country { get { throw null; } }
+        public Azure.ResourceManager.Peering.Models.DirectPeeringLocationProperties Direct { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Peering.Models.ExchangePeeringFacility> ExchangePeeringFacilities { get { throw null; } }
-        public Azure.ResourceManager.Peering.Models.PeeringKind? Kind { get { throw null; } set { } }
-        public string PeeringLocationValue { get { throw null; } set { } }
+        public Azure.ResourceManager.Peering.Models.PeeringKind? Kind { get { throw null; } }
+        public string MyLocation { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -900,6 +1017,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Internal { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Ix { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType IxRs { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType PeerProp { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Transit { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType Voice { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType other) { throw null; }
@@ -907,6 +1025,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType left, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType left, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -923,6 +1042,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringLocationsKind left, Azure.ResourceManager.Peering.Models.PeeringLocationsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringLocationsKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringLocationsKind left, Azure.ResourceManager.Peering.Models.PeeringLocationsKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -932,22 +1052,15 @@ namespace Azure.ResourceManager.Peering.Models
         public System.Collections.Generic.IReadOnlyList<string> ConnectedAgents { get { throw null; } }
         public string Key { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PeeringPatch : Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringPatch>
-    {
-        public PeeringPatch() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Peering.Models.PeeringPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Peering.Models.PeeringPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeeringPrefixValidationState : System.IEquatable<Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState>
@@ -967,6 +1080,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState left, Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState left, Azure.ResourceManager.Peering.Models.PeeringPrefixValidationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -976,6 +1090,7 @@ namespace Azure.ResourceManager.Peering.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PeeringProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Canceled { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Peering.Models.PeeringProvisioningState Succeeded { get { throw null; } }
@@ -985,6 +1100,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringProvisioningState left, Azure.ResourceManager.Peering.Models.PeeringProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringProvisioningState left, Azure.ResourceManager.Peering.Models.PeeringProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -998,7 +1114,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string ReceivedTimestamp { get { throw null; } }
         public string RpkiValidationState { get { throw null; } }
         public string TrustAnchor { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringReceivedRoute JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringReceivedRoute PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringReceivedRoute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringReceivedRoute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1009,7 +1128,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         public PeeringResourceTagsPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1033,13 +1155,17 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringRole left, Azure.ResourceManager.Peering.Models.PeeringRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringRole left, Azure.ResourceManager.Peering.Models.PeeringRole right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PeeringServiceCountry : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceCountry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceCountry>
     {
-        public PeeringServiceCountry() { }
+        internal PeeringServiceCountry() { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringServiceCountry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceCountry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceCountry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringServiceCountry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceCountry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1052,22 +1178,15 @@ namespace Azure.ResourceManager.Peering.Models
         public Azure.Core.AzureLocation? AzureRegion { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringServiceLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringServiceLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PeeringServicePatch : Azure.ResourceManager.Peering.Models.PeeringResourceTagsPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>
-    {
-        public PeeringServicePatch() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Peering.Models.PeeringServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Peering.Models.PeeringServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PeeringServicePrefixEvent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent>
     {
@@ -1077,7 +1196,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string EventSummary { get { throw null; } }
         public System.DateTimeOffset? EventTimestamp { get { throw null; } }
         public string EventType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServicePrefixEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1089,7 +1211,10 @@ namespace Azure.ResourceManager.Peering.Models
         public PeeringServiceProvider() { }
         public System.Collections.Generic.IList<string> PeeringLocations { get { throw null; } }
         public string ServiceProviderName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringServiceProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringServiceProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringServiceProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringServiceProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1109,6 +1234,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability left, Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability left, Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1125,6 +1251,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider left, Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider left, Azure.ResourceManager.Peering.Models.PeeringSessionAddressProvider right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1150,6 +1277,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV4? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV4 right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1175,6 +1303,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSessionStateV6? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 left, Azure.ResourceManager.Peering.Models.PeeringSessionStateV6 right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1192,6 +1321,7 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringSize left, Azure.ResourceManager.Peering.Models.PeeringSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSize (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringSize? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringSize left, Azure.ResourceManager.Peering.Models.PeeringSize right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1202,7 +1332,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringSize? Size { get { throw null; } }
         public Azure.ResourceManager.Peering.Models.PeeringTier? Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.PeeringSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.PeeringSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.PeeringSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.PeeringSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.PeeringSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1222,7 +1355,26 @@ namespace Azure.ResourceManager.Peering.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Peering.Models.PeeringTier left, Azure.ResourceManager.Peering.Models.PeeringTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.PeeringTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringTier left, Azure.ResourceManager.Peering.Models.PeeringTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Protocol : System.IEquatable<Azure.ResourceManager.Peering.Models.Protocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Protocol(string value) { throw null; }
+        public static Azure.ResourceManager.Peering.Models.Protocol ICMP { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.Protocol None { get { throw null; } }
+        public static Azure.ResourceManager.Peering.Models.Protocol TCP { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Peering.Models.Protocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Peering.Models.Protocol left, Azure.ResourceManager.Peering.Models.Protocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.Protocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Peering.Models.Protocol? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Peering.Models.Protocol left, Azure.ResourceManager.Peering.Models.Protocol right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RoutingPreferenceUnbilledPrefix : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix>
@@ -1231,7 +1383,10 @@ namespace Azure.ResourceManager.Peering.Models
         public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
         public int? PeerAsn { get { throw null; } }
         public string Prefix { get { throw null; } }
+        protected virtual Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

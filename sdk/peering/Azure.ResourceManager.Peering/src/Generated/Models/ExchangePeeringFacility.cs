@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
         /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, string microsoftIPv4Address, string microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExchangePeeringFacility(string exchangeName, int? bandwidthInMbps, IPAddress microsoftIPv4Address, IPAddress microsoftIPv6Address, string facilityIPv4Prefix, string facilityIPv6Prefix, int? peeringDBFacilityId, string peeringDBFacilityLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExchangeName = exchangeName;
             BandwidthInMbps = bandwidthInMbps;
@@ -51,10 +52,10 @@ namespace Azure.ResourceManager.Peering.Models
         public int? BandwidthInMbps { get; }
 
         /// <summary> The IPv4 address of Microsoft at the exchange peering facility. </summary>
-        public string MicrosoftIPv4Address { get; }
+        public IPAddress MicrosoftIPv4Address { get; }
 
         /// <summary> The IPv6 address of Microsoft at the exchange peering facility. </summary>
-        public string MicrosoftIPv6Address { get; }
+        public IPAddress MicrosoftIPv6Address { get; }
 
         /// <summary> The IPv4 prefixes associated with the exchange peering facility. </summary>
         public string FacilityIPv4Prefix { get; }

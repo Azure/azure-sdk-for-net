@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="family"> The family of the peering SKU. </param>
         /// <param name="size"> The size of the peering SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringSku(string name, Tier? tier, Family? family, Size? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringSku(string name, PeeringTier? tier, PeeringFamily? family, PeeringSize? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Peering.Models
         public string Name { get; set; }
 
         /// <summary> The tier of the peering SKU. </summary>
-        public Tier? Tier { get; }
+        public PeeringTier? Tier { get; }
 
         /// <summary> The family of the peering SKU. </summary>
-        public Family? Family { get; }
+        public PeeringFamily? Family { get; }
 
         /// <summary> The size of the peering SKU. </summary>
-        public Size? Size { get; }
+        public PeeringSize? Size { get; }
     }
 }

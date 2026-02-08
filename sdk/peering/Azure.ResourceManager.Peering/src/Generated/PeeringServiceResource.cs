@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PeeringServiceResource>> UpdateAsync(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PeeringServiceResource>> UpdateAsync(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _peeringServicesClientDiagnostics.CreateScope("PeeringServiceResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceTags.ToRequestContent(tags), context);
+                HttpMessage message = _peeringServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringServiceData> response = Response.FromValue(PeeringServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PeeringServiceResource> Update(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PeeringServiceResource> Update(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _peeringServicesClientDiagnostics.CreateScope("PeeringServiceResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceTags.ToRequestContent(tags), context);
+                HttpMessage message = _peeringServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringServiceData> response = Response.FromValue(PeeringServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringServiceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

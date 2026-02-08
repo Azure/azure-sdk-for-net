@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
-        /// <param name="workspaceID"> The Workspace ID. </param>
+        /// <param name="workspaceId"> The Workspace ID. </param>
         /// <param name="key"> The Workspace Key. </param>
         /// <param name="connectedAgents"> The list of connected agents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringLogAnalyticsWorkspaceProperties(string workspaceID, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringLogAnalyticsWorkspaceProperties(string workspaceId, string key, IReadOnlyList<string> connectedAgents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WorkspaceID = workspaceID;
+            WorkspaceId = workspaceId;
             Key = key;
             ConnectedAgents = connectedAgents;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Workspace ID. </summary>
-        public string WorkspaceID { get; }
+        public string WorkspaceId { get; }
 
         /// <summary> The Workspace Key. </summary>
         public string Key { get; }

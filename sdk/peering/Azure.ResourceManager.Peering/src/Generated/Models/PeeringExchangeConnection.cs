@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringExchangeConnection(int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringExchangeConnection(int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Peering.Models
         public int? PeeringDBFacilityId { get; set; }
 
         /// <summary> The state of the connection. </summary>
-        public ConnectionState? ConnectionState { get; }
+        public PeeringConnectionState? ConnectionState { get; }
 
         /// <summary> The BGP session associated with the connection. </summary>
-        public BgpSession BgpSession { get; set; }
+        public PeeringBgpSession BgpSession { get; set; }
 
         /// <summary> The unique identifier (GUID) for the connection. </summary>
         public string ConnectionIdentifier { get; set; }

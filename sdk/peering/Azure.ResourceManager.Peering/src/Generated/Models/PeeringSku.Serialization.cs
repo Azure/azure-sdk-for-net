@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             string name = default;
-            Tier? tier = default;
-            Family? family = default;
-            Size? size = default;
+            PeeringTier? tier = default;
+            PeeringFamily? family = default;
+            PeeringSize? size = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    tier = new Tier(prop.Value.GetString());
+                    tier = new PeeringTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("family"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    family = new Family(prop.Value.GetString());
+                    family = new PeeringFamily(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    size = new Size(prop.Value.GetString());
+                    size = new PeeringSize(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

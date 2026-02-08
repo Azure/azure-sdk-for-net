@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             int? peeringDBFacilityId = default;
-            ConnectionState? connectionState = default;
-            BgpSession bgpSession = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
             string connectionIdentifier = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    connectionState = new ConnectionState(prop.Value.GetString());
+                    connectionState = new PeeringConnectionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bgpSession"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = BgpSession.DeserializeBgpSession(prop.Value, options);
+                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentifier"u8))

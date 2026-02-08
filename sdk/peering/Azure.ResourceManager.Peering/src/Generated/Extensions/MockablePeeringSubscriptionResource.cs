@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Peering.Mocking
         private PeeringServices _peeringServicesRestClient;
         private ClientDiagnostics _peeringClientClientDiagnostics;
         private PeeringClient _peeringClientRestClient;
-        private ClientDiagnostics _cdnPeeringPrefixesClientDiagnostics;
-        private CdnPeeringPrefixes _cdnPeeringPrefixesRestClient;
-        private ClientDiagnostics _legacyPeeringsClientDiagnostics;
-        private LegacyPeerings _legacyPeeringsRestClient;
+        private ClientDiagnostics _listCdnPeeringPrefixesClientDiagnostics;
+        private ListCdnPeeringPrefixes _listCdnPeeringPrefixesRestClient;
+        private ClientDiagnostics _listLegacyPeeringsClientDiagnostics;
+        private ListLegacyPeerings _listLegacyPeeringsRestClient;
         private ClientDiagnostics _lookingGlassClientDiagnostics;
         private LookingGlass _lookingGlassRestClient;
-        private ClientDiagnostics _peeringLocationsClientDiagnostics;
-        private PeeringLocations _peeringLocationsRestClient;
-        private ClientDiagnostics _peeringServiceCountriesClientDiagnostics;
-        private PeeringServiceCountries _peeringServiceCountriesRestClient;
-        private ClientDiagnostics _peeringServiceLocationsClientDiagnostics;
-        private PeeringServiceLocations _peeringServiceLocationsRestClient;
+        private ClientDiagnostics _listPeeringLocationsClientDiagnostics;
+        private ListPeeringLocations _listPeeringLocationsRestClient;
+        private ClientDiagnostics _listPeeringServiceCountriesClientDiagnostics;
+        private ListPeeringServiceCountries _listPeeringServiceCountriesRestClient;
+        private ClientDiagnostics _listPeeringServiceLocationsClientDiagnostics;
+        private ListPeeringServiceLocations _listPeeringServiceLocationsRestClient;
         private ClientDiagnostics _peeringServiceProvidersClientDiagnostics;
         private PeeringServiceProviders _peeringServiceProvidersRestClient;
 
@@ -66,29 +66,29 @@ namespace Azure.ResourceManager.Peering.Mocking
 
         private PeeringClient PeeringClientRestClient => _peeringClientRestClient ??= new PeeringClient(PeeringClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ListCdnPeeringPrefixesClientDiagnostics => _listCdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnPeeringPrefixes CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixes(CdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ListCdnPeeringPrefixes ListCdnPeeringPrefixesRestClient => _listCdnPeeringPrefixesRestClient ??= new ListCdnPeeringPrefixes(ListCdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ListLegacyPeeringsClientDiagnostics => _listLegacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ListLegacyPeerings ListLegacyPeeringsRestClient => _listLegacyPeeringsRestClient ??= new ListLegacyPeerings(ListLegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private LookingGlass LookingGlassRestClient => _lookingGlassRestClient ??= new LookingGlass(LookingGlassClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics PeeringLocationsClientDiagnostics => _peeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ListPeeringLocationsClientDiagnostics => _listPeeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringLocations PeeringLocationsRestClient => _peeringLocationsRestClient ??= new PeeringLocations(PeeringLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ListPeeringLocations ListPeeringLocationsRestClient => _listPeeringLocationsRestClient ??= new ListPeeringLocations(ListPeeringLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics PeeringServiceCountriesClientDiagnostics => _peeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ListPeeringServiceCountriesClientDiagnostics => _listPeeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServiceCountries PeeringServiceCountriesRestClient => _peeringServiceCountriesRestClient ??= new PeeringServiceCountries(PeeringServiceCountriesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ListPeeringServiceCountries ListPeeringServiceCountriesRestClient => _listPeeringServiceCountriesRestClient ??= new ListPeeringServiceCountries(ListPeeringServiceCountriesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics PeeringServiceLocationsClientDiagnostics => _peeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ListPeeringServiceLocationsClientDiagnostics => _listPeeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PeeringServiceLocations PeeringServiceLocationsRestClient => _peeringServiceLocationsRestClient ??= new PeeringServiceLocations(PeeringServiceLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ListPeeringServiceLocations ListPeeringServiceLocationsRestClient => _listPeeringServiceLocationsRestClient ??= new ListPeeringServiceLocations(ListPeeringServiceLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServiceProvidersClientDiagnostics => _peeringServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -272,102 +272,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         }
 
         /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer's location
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Peering_CheckServiceProviderAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckServiceProviderAvailabilityResponse>> CheckServiceProviderAvailabilityAsync(CheckServiceProviderAvailabilityInput content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = PeeringClientClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.CheckServiceProviderAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PeeringClientRestClient.CreateCheckServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckServiceProviderAvailabilityInput.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckServiceProviderAvailabilityResponse> response = Response.FromValue(CheckServiceProviderAvailabilityResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if the peering service provider is present within 1000 miles of customer's location
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Peering/checkServiceProviderAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Peering_CheckServiceProviderAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckServiceProviderAvailabilityResponse> CheckServiceProviderAvailability(CheckServiceProviderAvailabilityInput content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = PeeringClientClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.CheckServiceProviderAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PeeringClientRestClient.CreateCheckServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckServiceProviderAvailabilityInput.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckServiceProviderAvailabilityResponse> response = Response.FromValue(CheckServiceProviderAvailabilityResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Initialize Peering Service for Connection Monitor functionality
         /// <list type="bullet">
         /// <item>
@@ -385,9 +289,9 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> InitializeConnectionMonitorAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InitializePeeringServiceConnectionMonitorAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PeeringServicesClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InitializeConnectionMonitor");
+            using DiagnosticScope scope = PeeringServicesClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor");
             scope.Start();
             try
             {
@@ -395,7 +299,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringServicesRestClient.CreateInitializeConnectionMonitorRequest(Id.SubscriptionId, context);
+                HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -424,9 +328,9 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response InitializeConnectionMonitor(CancellationToken cancellationToken = default)
+        public virtual Response InitializePeeringServiceConnectionMonitor(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PeeringServicesClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InitializeConnectionMonitor");
+            using DiagnosticScope scope = PeeringServicesClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor");
             scope.Start();
             try
             {
@@ -434,7 +338,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringServicesRestClient.CreateInitializeConnectionMonitorRequest(Id.SubscriptionId, context);
+                HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -475,7 +379,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CdnPeeringPrefixesGetAllAsyncCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new ListCdnPeeringPrefixesGetAllAsyncCollectionResultOfT(ListCdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
         }
 
         /// <summary>
@@ -508,7 +412,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CdnPeeringPrefixesGetAllCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new ListCdnPeeringPrefixesGetAllCollectionResultOfT(ListCdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
         }
 
         /// <summary>
@@ -544,8 +448,8 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetAllAsyncCollectionResultOfT(
-                LegacyPeeringsRestClient,
+            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new ListLegacyPeeringsGetAllAsyncCollectionResultOfT(
+                ListLegacyPeeringsRestClient,
                 Id.SubscriptionId,
                 peeringLocation,
                 kind.ToString(),
@@ -587,8 +491,8 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetAllCollectionResultOfT(
-                LegacyPeeringsRestClient,
+            return new PageableWrapper<PeeringData, PeeringResource>(new ListLegacyPeeringsGetAllCollectionResultOfT(
+                ListLegacyPeeringsRestClient,
                 Id.SubscriptionId,
                 peeringLocation,
                 kind.ToString(),
@@ -621,12 +525,12 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<LookingGlassOutput>> InvokeAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceLocation, nameof(sourceLocation));
             Argument.AssertNotNullOrEmpty(destinationIP, nameof(destinationIP));
 
-            using DiagnosticScope scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.Invoke");
+            using DiagnosticScope scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InvokeLookingGlass");
             scope.Start();
             try
             {
@@ -634,7 +538,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LookingGlassRestClient.CreateInvokeRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
+                HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LookingGlassOutput> response = Response.FromValue(LookingGlassOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -674,12 +578,12 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<LookingGlassOutput> Invoke(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual Response<LookingGlassOutput> InvokeLookingGlass(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceLocation, nameof(sourceLocation));
             Argument.AssertNotNullOrEmpty(destinationIP, nameof(destinationIP));
 
-            using DiagnosticScope scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.Invoke");
+            using DiagnosticScope scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InvokeLookingGlass");
             scope.Start();
             try
             {
@@ -687,7 +591,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LookingGlassRestClient.CreateInvokeRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
+                HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LookingGlassOutput> response = Response.FromValue(LookingGlassOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -730,7 +634,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringLocationsGetAllAsyncCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
+            return new ListPeeringLocationsGetAllAsyncCollectionResultOfT(ListPeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
         }
 
         /// <summary>
@@ -760,7 +664,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringLocationsGetAllCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
+            return new ListPeeringLocationsGetAllCollectionResultOfT(ListPeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
         }
 
         /// <summary>
@@ -782,13 +686,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringServiceCountry> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceCountriesGetAllAsyncCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(ListPeeringServiceCountriesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -810,13 +714,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringServiceCountry> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringServiceCountry> GetPeeringServiceCountries(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceCountriesGetAllCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new ListPeeringServiceCountriesGetPeeringServiceCountriesCollectionResultOfT(ListPeeringServiceCountriesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -839,13 +743,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringServiceLocation> GetAllAsync(string country = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(string country = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceLocationsGetAllAsyncCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new ListPeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(ListPeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
         }
 
         /// <summary>
@@ -868,13 +772,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringServiceLocation> GetAll(string country = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringServiceLocation> GetPeeringServiceLocations(string country = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceLocationsGetAllCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new ListPeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(ListPeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
         }
 
         /// <summary>
@@ -896,13 +800,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringServiceProvider> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceProvidersGetAllAsyncCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceProvidersGetPeeringServiceProvidersAsyncCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -924,13 +828,13 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringServiceProvider> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringServiceProvider> GetPeeringServiceProviders(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PeeringServiceProvidersGetAllCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceProvidersGetPeeringServiceProvidersCollectionResultOfT(PeeringServiceProvidersRestClient, Id.SubscriptionId, context);
         }
     }
 }

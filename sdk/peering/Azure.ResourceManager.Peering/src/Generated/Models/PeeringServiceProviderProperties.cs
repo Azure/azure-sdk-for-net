@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceProviderProperties"/>. </summary>
-        internal PeeringServiceProviderProperties()
+        public PeeringServiceProviderProperties()
         {
             PeeringLocations = new ChangeTrackingList<string>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The name of the service provider. </summary>
-        public string ServiceProviderName { get; }
+        public string ServiceProviderName { get; set; }
 
         /// <summary> The list of locations at which the service provider peers with Microsoft. </summary>
         public IList<string> PeeringLocations { get; } = new ChangeTrackingList<string>();

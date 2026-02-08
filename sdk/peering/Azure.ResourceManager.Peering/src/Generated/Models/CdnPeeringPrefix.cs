@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties that define a cdn peering prefix. </param>
-        internal CdnPeeringPrefix(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnPeeringPrefixProperties properties) : base(id, name, resourceType, systemData)
+        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnPeeringPrefixProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The Azure region. </summary>
-        public string AzureRegion
+        public AzureLocation? AzureRegion
         {
             get
             {

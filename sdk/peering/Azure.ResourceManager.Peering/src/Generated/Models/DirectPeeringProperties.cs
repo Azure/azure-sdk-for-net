@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
-        /// <param name="peerAsn"> The reference of the peer ASN. </param>
+        /// <param name="peerAsnId"> The reference of the peer ASN. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, SubResource peerAsn, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, ResourceIdentifier peerAsnId, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
             UseForPeeringService = useForPeeringService;
-            PeerAsn = peerAsn;
+            PeerAsnId = peerAsnId;
             DirectPeeringType = directPeeringType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,26 +46,9 @@ namespace Azure.ResourceManager.Peering.Models
         public bool? UseForPeeringService { get; }
 
         /// <summary> The reference of the peer ASN. </summary>
-        internal SubResource PeerAsn { get; set; }
+        public ResourceIdentifier PeerAsnId { get; set; }
 
         /// <summary> The type of direct peering. </summary>
         public DirectPeeringType? DirectPeeringType { get; set; }
-
-        /// <summary> The identifier of the referenced resource. </summary>
-        public string PeerAsnId
-        {
-            get
-            {
-                return PeerAsn is null ? default : PeerAsn.Id;
-            }
-            set
-            {
-                if (PeerAsn is null)
-                {
-                    PeerAsn = new SubResource();
-                }
-                PeerAsn.Id = value;
-            }
-        }
     }
 }

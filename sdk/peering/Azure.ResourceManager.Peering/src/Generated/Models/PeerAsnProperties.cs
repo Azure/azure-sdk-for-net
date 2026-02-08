@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="PeerAsnProperties"/>. </summary>
         public PeerAsnProperties()
         {
-            PeerContactDetail = new ChangeTrackingList<ContactDetail>();
+            PeerContactDetail = new ChangeTrackingList<PeerAsnContactDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeerAsnProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="validationState"> The validation state of the ASN associated with the peer. </param>
         /// <param name="errorMessage"> The error message for the validation state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeerAsnProperties(int? peerAsn, IList<ContactDetail> peerContactDetail, string peerName, ValidationState? validationState, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeerAsnProperties(int? peerAsn, IList<PeerAsnContactDetail> peerContactDetail, string peerName, PeerAsnValidationState? validationState, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeerAsn = peerAsn;
             PeerContactDetail = peerContactDetail;
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Peering.Models
         public int? PeerAsn { get; set; }
 
         /// <summary> The contact details of the peer. </summary>
-        public IList<ContactDetail> PeerContactDetail { get; } = new ChangeTrackingList<ContactDetail>();
+        public IList<PeerAsnContactDetail> PeerContactDetail { get; } = new ChangeTrackingList<PeerAsnContactDetail>();
 
         /// <summary> The name of the peer. </summary>
         public string PeerName { get; set; }
 
         /// <summary> The validation state of the ASN associated with the peer. </summary>
-        public ValidationState? ValidationState { get; }
+        public PeerAsnValidationState? ValidationState { get; }
 
         /// <summary> The error message for the validation state. </summary>
         public string ErrorMessage { get; }

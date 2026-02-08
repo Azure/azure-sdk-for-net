@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 throw new FormatException($"The model {nameof(PeeringLogAnalyticsWorkspaceProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceID))
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceID"u8);
-                writer.WriteStringValue(WorkspaceID);
+                writer.WriteStringValue(WorkspaceId);
             }
             if (options.Format != "W" && Optional.IsDefined(Key))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            string workspaceID = default;
+            string workspaceId = default;
             string key = default;
             IReadOnlyList<string> connectedAgents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 if (prop.NameEquals("workspaceID"u8))
                 {
-                    workspaceID = prop.Value.GetString();
+                    workspaceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("key"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceID, key, connectedAgents ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

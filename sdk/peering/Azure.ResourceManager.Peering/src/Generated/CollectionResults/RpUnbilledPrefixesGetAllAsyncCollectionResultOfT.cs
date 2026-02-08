@@ -15,7 +15,7 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class RpUnbilledPrefixesGetAllAsyncCollectionResultOfT : AsyncPageable<RpUnbilledPrefix>
+    internal partial class RpUnbilledPrefixesGetAllAsyncCollectionResultOfT : AsyncPageable<RoutingPreferenceUnbilledPrefix>
     {
         private readonly RpUnbilledPrefixes _client;
         private readonly string _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RpUnbilledPrefixesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RpUnbilledPrefix>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<RoutingPreferenceUnbilledPrefix>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 RpUnbilledPrefixListResult result = RpUnbilledPrefixListResult.FromResponse(response);
-                yield return Page<RpUnbilledPrefix>.FromValues((IReadOnlyList<RpUnbilledPrefix>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RoutingPreferenceUnbilledPrefix>.FromValues((IReadOnlyList<RoutingPreferenceUnbilledPrefix>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

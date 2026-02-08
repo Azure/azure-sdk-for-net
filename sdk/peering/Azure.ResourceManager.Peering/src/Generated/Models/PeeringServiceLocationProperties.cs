@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Peering.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationProperties"/>. </summary>
-        internal PeeringServiceLocationProperties()
+        public PeeringServiceLocationProperties()
         {
         }
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="state"> State of the customer. </param>
         /// <param name="azureRegion"> Azure region for the location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceLocationProperties(string country, string state, string azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringServiceLocationProperties(string country, string state, AzureLocation? azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Country = country;
             State = state;
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Country of the customer. </summary>
-        public string Country { get; }
+        public string Country { get; set; }
 
         /// <summary> State of the customer. </summary>
-        public string State { get; }
+        public string State { get; set; }
 
         /// <summary> Azure region for the location. </summary>
-        public string AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; set; }
     }
 }

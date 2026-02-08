@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.Peering;
 
@@ -47,12 +48,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(MicrosoftIPv4Address))
             {
                 writer.WritePropertyName("microsoftIPv4Address"u8);
-                writer.WriteStringValue(MicrosoftIPv4Address);
+                writer.WriteStringValue(MicrosoftIPv4Address.ToString());
             }
             if (Optional.IsDefined(MicrosoftIPv6Address))
             {
                 writer.WritePropertyName("microsoftIPv6Address"u8);
-                writer.WriteStringValue(MicrosoftIPv6Address);
+                writer.WriteStringValue(MicrosoftIPv6Address.ToString());
             }
             if (Optional.IsDefined(FacilityIPv4Prefix))
             {
@@ -118,8 +119,8 @@ namespace Azure.ResourceManager.Peering.Models
             }
             string exchangeName = default;
             int? bandwidthInMbps = default;
-            string microsoftIPv4Address = default;
-            string microsoftIPv6Address = default;
+            IPAddress microsoftIPv4Address = default;
+            IPAddress microsoftIPv6Address = default;
             string facilityIPv4Prefix = default;
             string facilityIPv6Prefix = default;
             int? peeringDBFacilityId = default;
@@ -143,12 +144,20 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (prop.NameEquals("microsoftIPv4Address"u8))
                 {
-                    microsoftIPv4Address = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("microsoftIPv6Address"u8))
                 {
-                    microsoftIPv6Address = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftIPv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("facilityIPv4Prefix"u8))

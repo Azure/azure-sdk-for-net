@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PeeringResource>> UpdateAsync(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PeeringResource>> UpdateAsync(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _peeringsClientDiagnostics.CreateScope("PeeringResource.Update");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceTags.ToRequestContent(tags), context);
+                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringData> response = Response.FromValue(PeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Peering
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tags"> The resource tags. </param>
+        /// <param name="patch"> The resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PeeringResource> Update(ResourceTags tags, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PeeringResource> Update(PeeringResourceTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _peeringsClientDiagnostics.CreateScope("PeeringResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceTags.ToRequestContent(tags), context);
+                HttpMessage message = _peeringsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PeeringResourceTagsPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringData> response = Response.FromValue(PeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,8 +426,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RpUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RpUnbilledPrefix> GetAllAsync(bool? consolidate = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetAllAsync(bool? consolidate = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -465,8 +465,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RpUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RpUnbilledPrefix> GetAll(bool? consolidate = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetAll(bool? consolidate = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<PeeringResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Peering
                 else
                 {
                     PeeringData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ResourceTags patch = new ResourceTags();
+                    PeeringResourceTagsPatch patch = new PeeringResourceTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

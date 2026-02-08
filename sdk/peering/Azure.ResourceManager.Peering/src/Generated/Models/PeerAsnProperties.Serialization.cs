@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
-                foreach (ContactDetail item in PeerContactDetail)
+                foreach (PeerAsnContactDetail item in PeerContactDetail)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             int? peerAsn = default;
-            IList<ContactDetail> peerContactDetail = default;
+            IList<PeerAsnContactDetail> peerContactDetail = default;
             string peerName = default;
-            ValidationState? validationState = default;
+            PeerAsnValidationState? validationState = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    List<ContactDetail> array = new List<ContactDetail>();
+                    List<PeerAsnContactDetail> array = new List<PeerAsnContactDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContactDetail.DeserializeContactDetail(item, options));
+                        array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item, options));
                     }
                     peerContactDetail = array;
                     continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    validationState = new ValidationState(prop.Value.GetString());
+                    validationState = new PeerAsnValidationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             return new PeerAsnProperties(
                 peerAsn,
-                peerContactDetail ?? new ChangeTrackingList<ContactDetail>(),
+                peerContactDetail ?? new ChangeTrackingList<PeerAsnContactDetail>(),
                 peerName,
                 validationState,
                 errorMessage,

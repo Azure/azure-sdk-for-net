@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Gets or sets the peering prefix properties. </param>
-        internal PeeringServicePrefixData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringServicePrefixProperties properties) : base(id, name, resourceType, systemData)
+        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeeringServicePrefixProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The prefix validation state. </summary>
-        public PrefixValidationState? PrefixValidationState
+        public PeeringPrefixValidationState? PrefixValidationState
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The prefix learned type. </summary>
-        public LearnedType? LearnedType
+        public PeeringLearnedType? LearnedType
         {
             get
             {

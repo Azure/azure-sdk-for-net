@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, SessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, ConnectionState? connectionState, BgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringDirectConnection(int? bandwidthInMbps, int? provisionedBandwidthInMbps, PeeringSessionAddressProvider? sessionAddressProvider, bool? useForPeeringService, string microsoftTrackingId, int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, string connectionIdentifier, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthInMbps = bandwidthInMbps;
             ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Peering.Models
         public int? ProvisionedBandwidthInMbps { get; }
 
         /// <summary> The field indicating if Microsoft provides session ip addresses. </summary>
-        public SessionAddressProvider? SessionAddressProvider { get; set; }
+        public PeeringSessionAddressProvider? SessionAddressProvider { get; set; }
 
         /// <summary> The flag that indicates whether or not the connection is used for peering service. </summary>
         public bool? UseForPeeringService { get; set; }
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Peering.Models
         public int? PeeringDBFacilityId { get; set; }
 
         /// <summary> The state of the connection. </summary>
-        public ConnectionState? ConnectionState { get; }
+        public PeeringConnectionState? ConnectionState { get; }
 
         /// <summary> The BGP session associated with the connection. </summary>
-        public BgpSession BgpSession { get; set; }
+        public PeeringBgpSession BgpSession { get; set; }
 
         /// <summary> The unique identifier (GUID) for the connection. </summary>
         public string ConnectionIdentifier { get; set; }

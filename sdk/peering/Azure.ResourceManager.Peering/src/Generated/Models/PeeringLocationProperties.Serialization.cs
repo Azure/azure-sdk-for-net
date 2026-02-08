@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
-                writer.WriteStringValue(AzureRegion);
+                writer.WriteStringValue(AzureRegion.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Peering.Models
             PeeringLocationPropertiesExchange exchange = default;
             string myLocation = default;
             string country = default;
-            string azureRegion = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (prop.NameEquals("azureRegion"u8))
                 {
-                    azureRegion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

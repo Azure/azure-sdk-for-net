@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="isPrimaryRegion"> The flag that indicates whether or not this is the primary region. </param>
         /// <param name="bgpCommunity"> The BGP Community. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnPeeringPrefixProperties(string prefix, string azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnPeeringPrefixProperties(string prefix, AzureLocation? azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Prefix = prefix;
             AzureRegion = azureRegion;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
         public string Prefix { get; }
 
         /// <summary> The Azure region. </summary>
-        public string AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; }
 
         /// <summary> The Azure service. </summary>
         public string AzureService { get; }

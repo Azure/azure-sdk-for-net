@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Initializes a new instance of <see cref="RpUnbilledPrefixListResult"/>. </summary>
         /// <param name="value"> The RpUnbilledPrefix items on this page. </param>
-        internal RpUnbilledPrefixListResult(IEnumerable<RpUnbilledPrefix> value)
+        internal RpUnbilledPrefixListResult(IEnumerable<RoutingPreferenceUnbilledPrefix> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="value"> The RpUnbilledPrefix items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RpUnbilledPrefixListResult(IList<RpUnbilledPrefix> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RpUnbilledPrefixListResult(IList<RoutingPreferenceUnbilledPrefix> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> The RpUnbilledPrefix items on this page. </summary>
-        public IList<RpUnbilledPrefix> Value { get; }
+        public IList<RoutingPreferenceUnbilledPrefix> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringLocationProperties(DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string myLocation, string country, string azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringLocationProperties(DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string myLocation, string country, AzureLocation? azureRegion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direct = direct;
             Exchange = exchange;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Peering.Models
         public string Country { get; }
 
         /// <summary> The Azure region associated with the peering location. </summary>
-        public string AzureRegion { get; }
+        public AzureLocation? AzureRegion { get; }
 
         /// <summary> The list of exchange peering facilities at the peering location. </summary>
         public IList<ExchangePeeringFacility> ExchangePeeringFacilities

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties that define a peer's ASN. </param>
-        internal PeerAsnData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeerAsnProperties properties) : base(id, name, resourceType, systemData)
+        internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeerAsnProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The contact details of the peer. </summary>
-        public IList<ContactDetail> PeerContactDetail
+        public IList<PeerAsnContactDetail> PeerContactDetail
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> The validation state of the ASN associated with the peer. </summary>
-        public ValidationState? ValidationState
+        public PeerAsnValidationState? ValidationState
         {
             get
             {

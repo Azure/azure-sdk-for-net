@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RpUnbilledPrefix item in Value)
+            foreach (RoutingPreferenceUnbilledPrefix item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            IList<RpUnbilledPrefix> value = default;
+            IList<RoutingPreferenceUnbilledPrefix> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RpUnbilledPrefix> array = new List<RpUnbilledPrefix>();
+                    List<RoutingPreferenceUnbilledPrefix> array = new List<RoutingPreferenceUnbilledPrefix>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RpUnbilledPrefix.DeserializeRpUnbilledPrefix(item, options));
+                        array.Add(RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(item, options));
                     }
                     value = array;
                     continue;

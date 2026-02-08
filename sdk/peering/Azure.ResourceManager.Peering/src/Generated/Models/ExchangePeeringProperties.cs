@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -25,12 +26,12 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <summary> Initializes a new instance of <see cref="ExchangePeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
-        /// <param name="peerAsn"> The reference of the peer ASN. </param>
+        /// <param name="peerAsnId"> The reference of the peer ASN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, SubResource peerAsn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExchangePeeringProperties(IList<PeeringExchangeConnection> connections, ResourceIdentifier peerAsnId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
-            PeerAsn = peerAsn;
+            PeerAsnId = peerAsnId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,23 +39,6 @@ namespace Azure.ResourceManager.Peering.Models
         public IList<PeeringExchangeConnection> Connections { get; }
 
         /// <summary> The reference of the peer ASN. </summary>
-        internal SubResource PeerAsn { get; set; }
-
-        /// <summary> The identifier of the referenced resource. </summary>
-        public string PeerAsnId
-        {
-            get
-            {
-                return PeerAsn is null ? default : PeerAsn.Id;
-            }
-            set
-            {
-                if (PeerAsn is null)
-                {
-                    PeerAsn = new SubResource();
-                }
-                PeerAsn.Id = value;
-            }
-        }
+        public ResourceIdentifier PeerAsnId { get; set; }
     }
 }

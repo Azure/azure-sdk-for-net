@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServicePrefixProperties(string prefix, PrefixValidationState? prefixValidationState, LearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringServicePrefixProperties(string prefix, PeeringPrefixValidationState? prefixValidationState, PeeringLearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Peering.Models
         public string Prefix { get; set; }
 
         /// <summary> The prefix validation state. </summary>
-        public PrefixValidationState? PrefixValidationState { get; }
+        public PeeringPrefixValidationState? PrefixValidationState { get; }
 
         /// <summary> The prefix learned type. </summary>
-        public LearnedType? LearnedType { get; }
+        public PeeringLearnedType? LearnedType { get; }
 
         /// <summary> The error message for validation state. </summary>
         public string ErrorMessage { get; }

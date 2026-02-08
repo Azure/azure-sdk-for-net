@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -49,10 +50,10 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(PeerAsnId))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                writer.WriteObjectValue(PeerAsn, options);
+                writer.WriteStringValue(PeerAsnId);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             IList<PeeringDirectConnection> connections = default;
             bool? useForPeeringService = default;
-            SubResource peerAsn = default;
+            ResourceIdentifier peerAsnId = default;
             DirectPeeringType? directPeeringType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    peerAsn = SubResource.DeserializeSubResource(prop.Value, options);
+                    peerAsnId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("directPeeringType"u8))
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsn, directPeeringType, additionalBinaryDataProperties);
+            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsnId, directPeeringType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

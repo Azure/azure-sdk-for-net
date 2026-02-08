@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             string prefix = default;
-            PrefixValidationState? prefixValidationState = default;
-            LearnedType? learnedType = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
+            PeeringLearnedType? learnedType = default;
             string errorMessage = default;
             IReadOnlyList<PeeringServicePrefixEvent> events = default;
             string peeringServicePrefixKey = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    prefixValidationState = new PrefixValidationState(prop.Value.GetString());
+                    prefixValidationState = new PeeringPrefixValidationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("learnedType"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    learnedType = new LearnedType(prop.Value.GetString());
+                    learnedType = new PeeringLearnedType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -44,10 +45,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(PeerAsnId))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                writer.WriteObjectValue(PeerAsn, options);
+                writer.WriteStringValue(PeerAsnId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             IList<PeeringExchangeConnection> connections = default;
-            SubResource peerAsn = default;
+            ResourceIdentifier peerAsnId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    peerAsn = SubResource.DeserializeSubResource(prop.Value, options);
+                    peerAsnId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Peering.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, additionalBinaryDataProperties);
+            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsnId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
