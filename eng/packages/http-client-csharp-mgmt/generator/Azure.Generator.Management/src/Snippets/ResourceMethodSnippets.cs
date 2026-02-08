@@ -110,13 +110,17 @@ namespace Azure.Generator.Management.Snippets
                 out var resultVariable);
             statements.Add(resultDeclaration);
 
-            // Response<T> response = Response.FromValue((T)result, result);
+            // For enum/extensible enum types: Response<T> response = Response.FromValue(new T(result.Content.ToString()), result);
+            // For model types: Response<T> response = Response.FromValue(T.FromResponse(result), result);
+            ValueExpression deserializedValue = responseGenericType.IsEnum
+                ? New.Instance(responseGenericType, resultVariable.Property("Content").InvokeToString())
+                : Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]);
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
+                    [deserializedValue, resultVariable]),
                 out var responseVar);
             responseVariable = responseVar.As<Response>();
             statements.Add(responseDeclaration);
