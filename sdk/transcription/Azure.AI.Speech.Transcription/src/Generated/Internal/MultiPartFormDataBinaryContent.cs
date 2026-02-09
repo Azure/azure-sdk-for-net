@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Speech.Transcription
 {
@@ -225,7 +226,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
             _multipartContent.CopyTo(stream, default, cancellationToken);
 #else
-            _multipartContent.CopyToAsync(stream).GetAwaiter().GetResult();
+#pragma warning disable AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+            _multipartContent.CopyToAsync(stream).EnsureCompleted();
+#pragma warning restore AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
 #endif
         }
 
