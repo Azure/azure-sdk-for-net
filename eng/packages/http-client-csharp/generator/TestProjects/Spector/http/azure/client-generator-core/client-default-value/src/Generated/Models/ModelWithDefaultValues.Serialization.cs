@@ -17,6 +17,10 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
     {
         internal ModelWithDefaultValues() => throw null;
 
+        protected virtual ModelWithDefaultValues PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ModelWithDefaultValues(Response response) => throw null;
+
         void IJsonModel<ModelWithDefaultValues>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
 
         ModelWithDefaultValues IPersistableModel<ModelWithDefaultValues>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ModelWithDefaultValues PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<ModelWithDefaultValues>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="modelWithDefaultValues"> The <see cref="ModelWithDefaultValues"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithDefaultValues modelWithDefaultValues) => throw null;
-
-        public static explicit operator ModelWithDefaultValues(Response response) => throw null;
     }
 }

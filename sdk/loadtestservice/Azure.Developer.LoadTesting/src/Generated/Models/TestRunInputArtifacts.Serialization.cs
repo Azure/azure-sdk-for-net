@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The input artifacts for the test run. </summary>
     public partial class TestRunInputArtifacts : IJsonModel<TestRunInputArtifacts>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestRunInputArtifacts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTestRunInputArtifacts(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TestRunInputArtifacts)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunInputArtifacts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -212,23 +229,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TestRunInputArtifacts IPersistableModel<TestRunInputArtifacts>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TestRunInputArtifacts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTestRunInputArtifacts(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TestRunInputArtifacts)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TestRunInputArtifacts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

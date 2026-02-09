@@ -97,7 +97,7 @@ public partial class ContainerAppManagedCertificate : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedCertificate.</param>
     public ContainerAppManagedCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -107,6 +107,7 @@ public partial class ContainerAppManagedCertificate : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _properties = DefineModelProperty<ManagedCertificateProperties>("Properties", ["properties"]);
@@ -121,6 +122,16 @@ public partial class ContainerAppManagedCertificate : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
+        /// <summary>
+        /// 2025-07-01.
+        /// </summary>
+        public static readonly string V2025_07_01 = "2025-07-01";
+
         /// <summary>
         /// 2025-01-01.
         /// </summary>

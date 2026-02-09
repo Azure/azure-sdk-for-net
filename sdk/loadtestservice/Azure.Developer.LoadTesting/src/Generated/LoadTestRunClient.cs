@@ -1288,13 +1288,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="executionFrom"> Start DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        public virtual Pageable<BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
             return new LoadTestRunClientGetTestRunsCollectionResult(
                 this,
@@ -1304,7 +1304,7 @@ namespace Azure.Developer.LoadTesting
                 executionFrom,
                 executionTo,
                 status,
-                maxpagesize,
+                maxPageSize,
                 createdByTypes,
                 testIds,
                 context);
@@ -1331,13 +1331,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="executionFrom"> Start DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
             return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
                 this,
@@ -1347,7 +1347,7 @@ namespace Azure.Developer.LoadTesting
                 executionFrom,
                 executionTo,
                 status,
-                maxpagesize,
+                maxPageSize,
                 createdByTypes,
                 testIds,
                 context);
@@ -1367,12 +1367,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="executionFrom"> Start DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LoadTestRun> GetTestRuns(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxpagesize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestRun> GetTestRuns(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestRunClientGetTestRunsCollectionResultOfT(
                 this,
@@ -1382,7 +1382,7 @@ namespace Azure.Developer.LoadTesting
                 executionFrom,
                 executionTo,
                 status,
-                maxpagesize,
+                maxPageSize,
                 createdByTypes,
                 testIds,
                 cancellationToken.ToRequestContext());
@@ -1402,12 +1402,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="executionFrom"> Start DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="executionTo"> End DateTime(RFC 3339 literal format) of test-run execution time filter range. </param>
         /// <param name="status"> Comma separated list of test run status. </param>
-        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="maxPageSize"> Number of results in response. </param>
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxpagesize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(
                 this,
@@ -1417,7 +1417,7 @@ namespace Azure.Developer.LoadTesting
                 executionFrom,
                 executionTo,
                 status,
-                maxpagesize,
+                maxPageSize,
                 createdByTypes,
                 testIds,
                 cancellationToken.ToRequestContext());

@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.OracleDatabase
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                dbSystemShape.ToString(),
+                dbSystemShape?.ToString(),
                 dbSystemId,
-                storageManagement.ToString(),
+                storageManagement?.ToString(),
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 context), data => new OracleDBVersionResource(Client, data));
         }
 
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.OracleDatabase
                 _dbVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
-                dbSystemShape.ToString(),
+                dbSystemShape?.ToString(),
                 dbSystemId,
-                storageManagement.ToString(),
+                storageManagement?.ToString(),
                 isUpgradeSupported,
                 isDatabaseSoftwareImageSupported,
-                shapeFamily.ToString(),
+                shapeFamily?.ToString(),
                 context), data => new OracleDBVersionResource(Client, data));
         }
 

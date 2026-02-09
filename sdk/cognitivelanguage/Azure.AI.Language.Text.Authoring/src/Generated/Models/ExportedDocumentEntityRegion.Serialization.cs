@@ -15,6 +15,23 @@ namespace Azure.AI.Language.Text.Authoring
     /// <summary> Represents a region in a document for entity labeling. </summary>
     public partial class ExportedDocumentEntityRegion : IJsonModel<ExportedDocumentEntityRegion>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportedDocumentEntityRegion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExportedDocumentEntityRegion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportedDocumentEntityRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -160,23 +177,6 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ExportedDocumentEntityRegion IPersistableModel<ExportedDocumentEntityRegion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportedDocumentEntityRegion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportedDocumentEntityRegion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExportedDocumentEntityRegion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportedDocumentEntityRegion)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportedDocumentEntityRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

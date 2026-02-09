@@ -17,6 +17,10 @@ namespace _Type.Model.Inheritance.NotDiscriminated
     {
         internal Siamese() => throw null;
 
+        protected override Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Siamese(Response response) => throw null;
+
         void IJsonModel<Siamese>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         Siamese IPersistableModel<Siamese>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected override Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<Siamese>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="siamese"> The <see cref="Siamese"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Siamese siamese) => throw null;
-
-        public static explicit operator Siamese(Response response) => throw null;
     }
 }
