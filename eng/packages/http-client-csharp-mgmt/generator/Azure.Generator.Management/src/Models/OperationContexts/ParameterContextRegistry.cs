@@ -65,21 +65,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         return GetEnumerator();
     }
 
-    private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "If-Match",
-        "If-None-Match",
-        "If-Modified-Since",
-        "If-Unmodified-Since",
-    };
-
-    private static readonly HashSet<Type> _matchConditionTypes = new()
-    {
-        typeof(MatchConditions),
-        typeof(RequestConditions),
-        typeof(ETag),
-    };
-
     public IReadOnlyList<ValueExpression> PopulateArguments(
         ScopedApi<ResourceIdentifier> idProperty,
         IReadOnlyList<ParameterProvider> requestParameters,
@@ -121,6 +106,14 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             {
                 arguments.Add(requestContext);
             }
+            else if (IsMatchConditionType(parameter.Type))
+            {
+                // Find the corresponding MatchConditions/RequestConditions/ETag parameter in the method parameters.
+                // This handles the case where the MatchConditionsHeadersVisitor has merged separate
+                // conditional header parameters into a single MatchConditions/RequestConditions/ETag parameter.
+                var matchConditionsParam = methodParameters.FirstOrDefault(p => IsMatchConditionType(p.Type));
+                arguments.Add(matchConditionsParam ?? (ValueExpression)Default);
+            }
             else
             {
                 // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
@@ -136,19 +129,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             if (methodParam != null)
             {
                 return Convert(methodParam, methodParam.Type, parameterToFind.Type);
-            }
-
-            // If the parameter is a conditional header (e.g., If-Match, If-None-Match),
-            // look for a MatchConditions/RequestConditions/ETag parameter in the method parameters.
-            // This handles the case where the MatchConditionsHeadersVisitor has merged separate
-            // conditional header parameters into a single MatchConditions/RequestConditions/ETag parameter.
-            if (IsConditionalHeaderParameter(parameterToFind))
-            {
-                var matchConditionsParam = FindMatchConditionsParameter(parameters);
-                if (matchConditionsParam != null)
-                {
-                    return matchConditionsParam;
-                }
             }
 
             return Default;
@@ -180,35 +160,10 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             // other unhandled cases, we will add when we need them in the future.
             return expression;
         }
+    }
 
-        static bool IsConditionalHeaderParameter(ParameterProvider parameter)
-        {
-            // Check if the parameter's serialized name is a conditional header
-            if (_conditionalHeaders.Contains(parameter.WireInfo.SerializedName))
-            {
-                return true;
-            }
-
-            // Check if the parameter's type is a match condition type (MatchConditions, RequestConditions, or ETag)
-            if (parameter.Type.IsFrameworkType && _matchConditionTypes.Contains(parameter.Type.FrameworkType))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        static ValueExpression? FindMatchConditionsParameter(IReadOnlyList<ParameterProvider> parameters)
-        {
-            foreach (var parameter in parameters)
-            {
-                if (parameter.Type.IsFrameworkType && _matchConditionTypes.Contains(parameter.Type.FrameworkType))
-                {
-                    return parameter;
-                }
-            }
-
-            return null;
-        }
+    private static bool IsMatchConditionType(CSharpType type)
+    {
+        return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions)) || type.Equals(typeof(ETag));
     }
 }
