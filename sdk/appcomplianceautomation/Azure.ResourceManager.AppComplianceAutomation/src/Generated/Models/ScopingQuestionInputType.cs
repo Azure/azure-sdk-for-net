@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ScopingQuestionInputType : IEquatable<ScopingQuestionInputType>
     {
         private readonly string _value;
+        /// <summary> The input type is a text box. </summary>
+        private const string NoneValue = "None";
+        /// <summary> The input content is text string. </summary>
+        private const string TextValue = "Text";
+        /// <summary> The input content should be an email address. </summary>
+        private const string EmailValue = "Email";
+        /// <summary> The input content should be multiline text. </summary>
+        private const string MultilineTextValue = "MultilineText";
+        /// <summary> The input content should be a URL. </summary>
+        private const string UrlValue = "Url";
+        /// <summary> The input content should be a number. </summary>
+        private const string NumberValue = "Number";
+        /// <summary> The input content should be a boolean. </summary>
+        private const string BooleanValue = "Boolean";
+        /// <summary> The input content should be a telephone number. </summary>
+        private const string TelephoneValue = "Telephone";
+        /// <summary> The input content should be Yes, No or Na. </summary>
+        private const string YesNoNaValue = "YesNoNa";
+        /// <summary> The input content should be a date. </summary>
+        private const string DateValue = "Date";
+        /// <summary> The input content is a Year, pick from the dropdown list. </summary>
+        private const string YearPickerValue = "YearPicker";
+        /// <summary> The input content is a single result seleted from the options. </summary>
+        private const string SingleSelectionValue = "SingleSelection";
+        /// <summary> The input content is a single result seleted from the dropdown options. </summary>
+        private const string SingleSelectDropdownValue = "SingleSelectDropdown";
+        /// <summary> The input content are multiple results seleted from the checkboxes. </summary>
+        private const string MultiSelectCheckboxValue = "MultiSelectCheckbox";
+        /// <summary> The input content are multiple results seleted from the dropdown options. </summary>
+        private const string MultiSelectDropdownValue = "MultiSelectDropdown";
+        /// <summary> The input content are result seleted from the custom dropdown options. </summary>
+        private const string MultiSelectDropdownCustomValue = "MultiSelectDropdownCustom";
+        /// <summary> The input content is a group of answers. </summary>
+        private const string GroupValue = "Group";
+        /// <summary> The input content is a uploaded file. </summary>
+        private const string UploadValue = "Upload";
 
         /// <summary> Initializes a new instance of <see cref="ScopingQuestionInputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScopingQuestionInputType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string TextValue = "Text";
-        private const string EmailValue = "Email";
-        private const string MultilineTextValue = "MultilineText";
-        private const string UrlValue = "Url";
-        private const string NumberValue = "Number";
-        private const string BooleanValue = "Boolean";
-        private const string TelephoneValue = "Telephone";
-        private const string YesNoNaValue = "YesNoNa";
-        private const string DateValue = "Date";
-        private const string YearPickerValue = "YearPicker";
-        private const string SingleSelectionValue = "SingleSelection";
-        private const string SingleSelectDropdownValue = "SingleSelectDropdown";
-        private const string MultiSelectCheckboxValue = "MultiSelectCheckbox";
-        private const string MultiSelectDropdownValue = "MultiSelectDropdown";
-        private const string MultiSelectDropdownCustomValue = "MultiSelectDropdownCustom";
-        private const string GroupValue = "Group";
-        private const string UploadValue = "Upload";
+            _value = value;
+        }
 
         /// <summary> The input type is a text box. </summary>
         public static ScopingQuestionInputType None { get; } = new ScopingQuestionInputType(NoneValue);
+
         /// <summary> The input content is text string. </summary>
         public static ScopingQuestionInputType Text { get; } = new ScopingQuestionInputType(TextValue);
+
         /// <summary> The input content should be an email address. </summary>
         public static ScopingQuestionInputType Email { get; } = new ScopingQuestionInputType(EmailValue);
+
         /// <summary> The input content should be multiline text. </summary>
         public static ScopingQuestionInputType MultilineText { get; } = new ScopingQuestionInputType(MultilineTextValue);
+
         /// <summary> The input content should be a URL. </summary>
         public static ScopingQuestionInputType Url { get; } = new ScopingQuestionInputType(UrlValue);
+
         /// <summary> The input content should be a number. </summary>
         public static ScopingQuestionInputType Number { get; } = new ScopingQuestionInputType(NumberValue);
+
         /// <summary> The input content should be a boolean. </summary>
         public static ScopingQuestionInputType Boolean { get; } = new ScopingQuestionInputType(BooleanValue);
+
         /// <summary> The input content should be a telephone number. </summary>
         public static ScopingQuestionInputType Telephone { get; } = new ScopingQuestionInputType(TelephoneValue);
+
         /// <summary> The input content should be Yes, No or Na. </summary>
         public static ScopingQuestionInputType YesNoNa { get; } = new ScopingQuestionInputType(YesNoNaValue);
+
         /// <summary> The input content should be a date. </summary>
         public static ScopingQuestionInputType Date { get; } = new ScopingQuestionInputType(DateValue);
+
         /// <summary> The input content is a Year, pick from the dropdown list. </summary>
         public static ScopingQuestionInputType YearPicker { get; } = new ScopingQuestionInputType(YearPickerValue);
+
         /// <summary> The input content is a single result seleted from the options. </summary>
         public static ScopingQuestionInputType SingleSelection { get; } = new ScopingQuestionInputType(SingleSelectionValue);
+
         /// <summary> The input content is a single result seleted from the dropdown options. </summary>
         public static ScopingQuestionInputType SingleSelectDropdown { get; } = new ScopingQuestionInputType(SingleSelectDropdownValue);
+
         /// <summary> The input content are multiple results seleted from the checkboxes. </summary>
         public static ScopingQuestionInputType MultiSelectCheckbox { get; } = new ScopingQuestionInputType(MultiSelectCheckboxValue);
+
         /// <summary> The input content are multiple results seleted from the dropdown options. </summary>
         public static ScopingQuestionInputType MultiSelectDropdown { get; } = new ScopingQuestionInputType(MultiSelectDropdownValue);
+
         /// <summary> The input content are result seleted from the custom dropdown options. </summary>
         public static ScopingQuestionInputType MultiSelectDropdownCustom { get; } = new ScopingQuestionInputType(MultiSelectDropdownCustomValue);
+
         /// <summary> The input content is a group of answers. </summary>
         public static ScopingQuestionInputType Group { get; } = new ScopingQuestionInputType(GroupValue);
+
         /// <summary> The input content is a uploaded file. </summary>
         public static ScopingQuestionInputType Upload { get; } = new ScopingQuestionInputType(UploadValue);
+
         /// <summary> Determines if two <see cref="ScopingQuestionInputType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScopingQuestionInputType left, ScopingQuestionInputType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScopingQuestionInputType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScopingQuestionInputType left, ScopingQuestionInputType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScopingQuestionInputType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScopingQuestionInputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScopingQuestionInputType(string value) => new ScopingQuestionInputType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScopingQuestionInputType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScopingQuestionInputType?(string value) => value == null ? null : new ScopingQuestionInputType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScopingQuestionInputType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScopingQuestionInputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

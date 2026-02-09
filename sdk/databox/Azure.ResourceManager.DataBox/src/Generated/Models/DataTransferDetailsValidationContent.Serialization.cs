@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataTransferDetailsValidationContent : IUtf8JsonSerializable, IJsonModel<DataTransferDetailsValidationContent>
+    /// <summary> Request to validate export and import data details. </summary>
+    public partial class DataTransferDetailsValidationContent : DataBoxValidationInputContent, IJsonModel<DataTransferDetailsValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTransferDetailsValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataTransferDetailsValidationContent"/> for deserialization. </summary>
+        internal DataTransferDetailsValidationContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataTransferDetailsValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +34,17 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataExportDetails)
+                foreach (DataExportDetails item in DataExportDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataImportDetails)
+                foreach (DataImportDetails item in DataImportDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -66,97 +71,100 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataTransferDetailsValidationContent IJsonModel<DataTransferDetailsValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataTransferDetailsValidationContent IJsonModel<DataTransferDetailsValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataTransferDetailsValidationContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataBoxValidationInputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataTransferDetailsValidationContent(document.RootElement, options);
         }
 
-        internal static DataTransferDetailsValidationContent DeserializeDataTransferDetailsValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataTransferDetailsValidationContent DeserializeDataTransferDetailsValidationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DataBoxValidationInputDiscriminator validationType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<DataExportDetails> dataExportDetails = default;
             IList<DataImportDetails> dataImportDetails = default;
             DataBoxSkuName deviceType = default;
             DataBoxJobTransferType transferType = default;
             DeviceModelName? model = default;
-            DataBoxValidationInputDiscriminator validationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dataExportDetails"u8))
+                if (prop.NameEquals("validationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    validationType = prop.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    continue;
+                }
+                if (prop.NameEquals("dataExportDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataExportDetails> array = new List<DataExportDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item, options));
                     }
                     dataExportDetails = array;
                     continue;
                 }
-                if (property.NameEquals("dataImportDetails"u8))
+                if (prop.NameEquals("dataImportDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataImportDetails> array = new List<DataImportDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item, options));
                     }
                     dataImportDetails = array;
                     continue;
                 }
-                if (property.NameEquals("deviceType"u8))
+                if (prop.NameEquals("deviceType"u8))
                 {
-                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    deviceType = prop.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (property.NameEquals("transferType"u8))
+                if (prop.NameEquals("transferType"u8))
                 {
-                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
+                    transferType = prop.Value.GetString().ToDataBoxJobTransferType();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = property.Value.GetString().ToDeviceModelName();
-                    continue;
-                }
-                if (property.NameEquals("validationType"u8))
-                {
-                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    model = prop.Value.GetString().ToDeviceModelName();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataTransferDetailsValidationContent(
                 validationType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
                 dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
                 deviceType,
@@ -164,10 +172,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
-        BinaryData IPersistableModel<DataTransferDetailsValidationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataTransferDetailsValidationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -177,15 +188,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataTransferDetailsValidationContent IPersistableModel<DataTransferDetailsValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataTransferDetailsValidationContent IPersistableModel<DataTransferDetailsValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataTransferDetailsValidationContent)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataBoxValidationInputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataTransferDetailsValidationContent(document.RootElement, options);
                     }
                 default:
@@ -193,6 +209,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataTransferDetailsValidationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

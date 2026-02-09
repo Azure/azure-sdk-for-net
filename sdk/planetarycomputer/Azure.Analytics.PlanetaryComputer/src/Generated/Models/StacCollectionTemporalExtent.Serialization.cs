@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#temporal-extent-object
-    /// 
     /// Represents the temporal extent of a STAC collection with time intervals.
     /// </summary>
     public partial class StacCollectionTemporalExtent : IJsonModel<StacCollectionTemporalExtent>
@@ -22,6 +21,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacCollectionTemporalExtent"/> for deserialization. </summary>
         internal StacCollectionTemporalExtent()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacCollectionTemporalExtent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionTemporalExtent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacCollectionTemporalExtent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacCollectionTemporalExtent)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -166,23 +182,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StacCollectionTemporalExtent IPersistableModel<StacCollectionTemporalExtent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacCollectionTemporalExtent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacCollectionTemporalExtent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacCollectionTemporalExtent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacCollectionTemporalExtent)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StacCollectionTemporalExtent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

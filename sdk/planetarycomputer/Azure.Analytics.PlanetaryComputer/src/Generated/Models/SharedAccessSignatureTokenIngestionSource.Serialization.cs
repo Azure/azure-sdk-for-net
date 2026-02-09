@@ -20,6 +20,23 @@ namespace Azure.Analytics.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureTokenIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSharedAccessSignatureTokenIngestionSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureTokenIngestionSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharedAccessSignatureTokenIngestionSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -126,23 +143,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SharedAccessSignatureTokenIngestionSource IPersistableModel<SharedAccessSignatureTokenIngestionSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharedAccessSignatureTokenIngestionSource)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override IngestionSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureTokenIngestionSource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSharedAccessSignatureTokenIngestionSource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SharedAccessSignatureTokenIngestionSource)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SharedAccessSignatureTokenIngestionSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

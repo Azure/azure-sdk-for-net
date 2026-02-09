@@ -19,11 +19,13 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp` directory to ensure the changes won't break CI.
 
 ### Azure Management Generator
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp-mgmt` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp-mgmt` directory to ensure the changes won't break CI.
 
 ## Local SDK Generation and Package Lifecycle (TypeSpec)
 

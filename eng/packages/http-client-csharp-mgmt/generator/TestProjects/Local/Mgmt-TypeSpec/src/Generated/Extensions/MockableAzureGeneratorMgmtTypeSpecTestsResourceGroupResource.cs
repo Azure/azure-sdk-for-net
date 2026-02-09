@@ -589,9 +589,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetResourceTypeTestResources().Get(resourceTypeTestResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SampleDatas in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SampleDatas and their operations over a SampleDataResource. </returns>
-        public virtual SampleDataCollection GetSampleDatas()
+        /// <summary> Gets a collection of SampleData in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SampleData and their operations over a SampleDataResource. </returns>
+        public virtual SampleDataCollection GetAllSampleData()
         {
             return GetCachedClient(client => new SampleDataCollection(client, Id));
         }
@@ -622,7 +622,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return await GetSampleDatas().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
+            return await GetAllSampleData().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,12 +651,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
 
-            return GetSampleDatas().Get(sampleDataName, cancellationToken);
+            return GetAllSampleData().Get(sampleDataName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of WorkloadNetworks and their operations over a WorkloadNetworksResource. </returns>
-        public virtual WorkloadNetworksCollection GetWorkloadNetworks()
+        public virtual WorkloadNetworksCollection GetAllWorkloadNetworks()
         {
             return GetCachedClient(client => new WorkloadNetworksCollection(client, Id));
         }
@@ -687,7 +687,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(workloadNetworkName, nameof(workloadNetworkName));
 
-            return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetAllWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             Argument.AssertNotNullOrEmpty(workloadNetworkName, nameof(workloadNetworkName));
 
-            return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
+            return GetAllWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
@@ -851,6 +851,80 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Targets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
+        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
+        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
+        /// <returns> An object representing collection of Targets and their operations over a TargetResource. </returns>
+        public virtual TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName)
+        {
+            return GetCachedClient(client => new TargetCollection(client, Id, parentProviderNamespace, parentResourceType, parentResourceName));
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
+        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
+        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TargetResource>> GetTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return await GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Target resource that extends a tracked regional resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Targets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
+        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
+        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TargetResource> GetTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
         }
 
         /// <summary>

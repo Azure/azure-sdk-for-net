@@ -40,7 +40,10 @@ namespace Azure.ResourceManager.LoadTesting
         public int? Limit { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? ProvisioningState { get { throw null; } }
         public int? Usage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.LoadTestingQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestingQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestingQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.LoadTestingQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestingQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -116,7 +119,10 @@ namespace Azure.ResourceManager.LoadTesting
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.LoadTestingResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestingResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.LoadTestingResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.LoadTestingResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.LoadTestingResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -166,7 +172,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingCmkEncryptionProperties() { }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity Identity { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -178,6 +187,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingCmkIdentity() { }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -197,6 +210,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType left, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType left, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -206,7 +220,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public string Description { get { throw null; } }
         public string DomainName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail> EndpointDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -217,7 +234,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal LoadTestingEndpointDetail() { }
         public int? Port { get { throw null; } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -229,7 +249,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         internal LoadTestingOutboundEnvironmentEndpoint() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency> Endpoints { get { throw null; } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -251,6 +274,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState left, Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState left, Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -259,7 +283,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingQuotaAvailabilityResult() { }
         public string AvailabilityStatus { get { throw null; } set { } }
         public bool? IsAvailable { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -273,7 +300,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public int? CurrentUsage { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions Dimensions { get { throw null; } set { } }
         public int? NewQuota { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -285,7 +315,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public LoadTestingQuotaBucketDimensions() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -299,7 +332,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

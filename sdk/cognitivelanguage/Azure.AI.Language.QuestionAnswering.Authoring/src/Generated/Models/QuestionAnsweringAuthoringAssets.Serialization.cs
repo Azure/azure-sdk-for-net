@@ -15,6 +15,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> All assets for this project. </summary>
     public partial class QuestionAnsweringAuthoringAssets : IJsonModel<QuestionAnsweringAuthoringAssets>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual QuestionAnsweringAuthoringAssets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuestionAnsweringAuthoringAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -155,23 +172,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         QuestionAnsweringAuthoringAssets IPersistableModel<QuestionAnsweringAuthoringAssets>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuestionAnsweringAuthoringAssets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringAssets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuestionAnsweringAuthoringAssets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringAssets)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuestionAnsweringAuthoringAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -582,6 +583,322 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual(1, operationContext.SecondaryContextualPathParameters.Count);
             Assert.AreEqual("examples", operationContext.SecondaryContextualPathParameters[0].Key);
             Assert.AreEqual("exampleName", operationContext.SecondaryContextualPathParameters[0].VariableName);
+        }
+
+        [TestCase]
+        public void ValidateContextualParameters_VariableKeySegment()
+        {
+            // Test path like /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}
+            // where {parentResourceType} is the key for {parentResourceName}
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}");
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
+
+            // Should have 6 parameters: subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceName, parentResourceType, targetName
+            // Note: When key is variable, the value (parentResourceName) is pushed after key (parentResourceType) to the stack,
+            // so in the final list, parentResourceName appears before parentResourceType due to stack LIFO behavior.
+            Assert.AreEqual(6, contextualParameters.Count);
+
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+
+            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
+            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+            Assert.AreEqual("id.ResourceGroupName", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentProviderNamespace comes from providers segment
+            Assert.AreEqual("providers", contextualParameters[2].Key);
+            Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses the variable key - appears first due to stack order
+            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Parent.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceType is a variable key - should use ResourceType().Type()
+            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.Parent.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+
+            Assert.AreEqual("targets", contextualParameters[5].Key);
+            Assert.AreEqual("targetName", contextualParameters[5].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[5].BuildValueExpression(_idVariable).ToDisplayString());
+        }
+
+        [TestCase]
+        public void ValidateContextualParameters_VariableKeySegment_ParentResource()
+        {
+            // Test path with variable key at parent level (without the child resource)
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}");
+            var operationContext = OperationContext.Create(requestPathPattern);
+            var contextualParameters = operationContext.ContextualPathParameters;
+
+            // Should have 5 parameters: subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceName, parentResourceType
+            Assert.AreEqual(5, contextualParameters.Count);
+
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+
+            Assert.AreEqual("resourceGroups", contextualParameters[1].Key);
+            Assert.AreEqual("resourceGroupName", contextualParameters[1].VariableName);
+
+            // parentProviderNamespace comes from providers segment
+            Assert.AreEqual("providers", contextualParameters[2].Key);
+            Assert.AreEqual("parentProviderNamespace", contextualParameters[2].VariableName);
+            Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceName uses the variable key - appears first due to stack order
+            Assert.AreEqual("parentResourceName", contextualParameters[3].Key);
+            Assert.AreEqual("parentResourceName", contextualParameters[3].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
+
+            // parentResourceType is a variable key
+            Assert.AreEqual("parentResourceType", contextualParameters[4].Key);
+            Assert.AreEqual("parentResourceType", contextualParameters[4].VariableName);
+            Assert.AreEqual("id.ResourceType.Type", contextualParameters[4].BuildValueExpression(_idVariable).ToDisplayString());
+        }
+
+        [Test]
+        public void ValidateSecondaryContextualParameters_VariableKeySegment()
+        {
+            // Test secondary contextual path with variable key segment
+            var primaryPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var secondaryPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Example/targets/{targetName}");
+
+            var mockFields = new Dictionary<string, FieldProvider>();
+            Func<string, FieldProvider> fieldSelector = name =>
+            {
+                if (!mockFields.TryGetValue(name, out var field))
+                {
+                    field = new FieldProvider(FieldModifiers.Private, typeof(string), name, enclosingType: null!);
+                    mockFields[name] = field;
+                }
+                return field;
+            };
+
+            var operationContext = OperationContext.Create(primaryPath, secondaryPath, fieldSelector);
+
+            // Primary should have subscriptionId and resourceGroupName
+            Assert.AreEqual(2, operationContext.ContextualPathParameters.Count);
+            Assert.AreEqual("subscriptionId", operationContext.ContextualPathParameters[0].VariableName);
+            Assert.AreEqual("resourceGroupName", operationContext.ContextualPathParameters[1].VariableName);
+
+            // Secondary should have parentProviderNamespace, parentResourceType, parentResourceName, and targetName
+            // Note: providers/Microsoft.Example is constant pair so skipped, targets/{targetName} has constant key
+            Assert.AreEqual(4, operationContext.SecondaryContextualPathParameters.Count);
+
+            Assert.AreEqual("providers", operationContext.SecondaryContextualPathParameters[0].Key);
+            Assert.AreEqual("parentProviderNamespace", operationContext.SecondaryContextualPathParameters[0].VariableName);
+
+            // parentResourceType is a variable key - should be included
+            Assert.AreEqual("parentResourceType", operationContext.SecondaryContextualPathParameters[1].Key);
+            Assert.AreEqual("parentResourceType", operationContext.SecondaryContextualPathParameters[1].VariableName);
+
+            // parentResourceName uses the variable key
+            Assert.AreEqual("parentResourceName", operationContext.SecondaryContextualPathParameters[2].Key);
+            Assert.AreEqual("parentResourceName", operationContext.SecondaryContextualPathParameters[2].VariableName);
+
+            Assert.AreEqual("targets", operationContext.SecondaryContextualPathParameters[3].Key);
+            Assert.AreEqual("targetName", operationContext.SecondaryContextualPathParameters[3].VariableName);
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableEnumToString_UsesNullConditional()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable enum type
+            var nullableEnumType = new CSharpType(typeof(DayOfWeek), isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", nullableEnumType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use null-conditional: testParam?.ToString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableEnumToString_UsesDirectToString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable enum type
+            var methodParam = new ParameterProvider("testParam", $"", typeof(DayOfWeek));
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use direct ToString without null-conditional: testParam.ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableResourceIdentifierToString_UsesNullConditional()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type with matching serialized name
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a nullable ResourceIdentifier type
+            var nullableResourceIdType = new CSharpType(typeof(ResourceIdentifier), isNullable: true);
+            var methodParam = new ParameterProvider("testParam", $"", nullableResourceIdType);
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use null-conditional: testParam?.ToString()
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableResourceIdentifierToString_UsesDirectToString()
+        {
+            // Set up a pass-through parameter mapping (ContextualParameter is null)
+            var mapping = new ParameterContextMapping("testParam", null);
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping> { mapping });
+
+            // Request parameter expects string type
+            var requestParam = new ParameterProvider("testParam", $"", typeof(string));
+            requestParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            // Method parameter is a non-nullable ResourceIdentifier type
+            var methodParam = new ParameterProvider("testParam", $"", typeof(ResourceIdentifier));
+            methodParam.Update(wireInfo: new WireInformation(default, "testParam"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestParam },
+                contextVariable,
+                new List<ParameterProvider> { methodParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should use direct ToString without null-conditional: testParam.ToString()
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain(".ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a MatchConditions type (processed by MatchConditionsHeadersVisitor),
+            // it should find the corresponding MatchConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is MatchConditions with empty serialized name (set by visitor)
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            // Method parameter is also MatchConditions (set by visitor on convenience method)
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_RequestConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a RequestConditions type, it should find the
+            // corresponding RequestConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            requestConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var methodConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            methodConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("requestConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_ReturnsDefaultWhenNoMethodParameter()
+        {
+            // When the request parameter is a MatchConditions type but no matching method parameter exists,
+            // it should return default
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider>());
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("default"));
         }
     }
 }
