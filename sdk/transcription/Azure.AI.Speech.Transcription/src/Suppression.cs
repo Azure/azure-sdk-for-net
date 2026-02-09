@@ -15,7 +15,3 @@ using System.Diagnostics.CodeAnalysis;
 // Response<T>/Task<Response<T>> (Azure.Core) because this SDK is built on System.ClientModel.
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<T>> from System.ClientModel rather than Task<Response<T>> from Azure.Core.", Scope = "member", Target = "~M:Azure.AI.Speech.Transcription.TranscriptionClient.TranscribeAsync(Azure.AI.Speech.Transcription.TranscriptionOptions,System.Threading.CancellationToken)~System.Threading.Tasks.Task{System.ClientModel.ClientResult{Azure.AI.Speech.Transcription.TranscriptionResult}}")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<T> from System.ClientModel rather than Response<T> from Azure.Core.", Scope = "member", Target = "~M:Azure.AI.Speech.Transcription.TranscriptionClient.Transcribe(Azure.AI.Speech.Transcription.TranscriptionOptions,System.Threading.CancellationToken)~System.ClientModel.ClientResult{Azure.AI.Speech.Transcription.TranscriptionResult}")]
-
-// AZC0102: Generated internal MultiPartFormDataBinaryContent.WriteTo uses GetAwaiter().GetResult()
-// in the netstandard2.0 code path because the synchronous CopyTo overload is not available.
-[assembly: SuppressMessage("Usage", "AZC0102", Justification = "Generated internal code uses GetAwaiter().GetResult() in netstandard2.0 fallback path where synchronous CopyTo is unavailable.", Scope = "member", Target = "~M:Azure.AI.Speech.Transcription.MultiPartFormDataBinaryContent.WriteTo(System.IO.Stream,System.Threading.CancellationToken)")]
