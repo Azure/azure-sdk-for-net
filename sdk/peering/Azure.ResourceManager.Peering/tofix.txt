@@ -1,12 +1,12 @@
 ================================================================================
   BREAKING CHANGES SUMMARY
 ================================================================================
-  Total unique errors : 18
+  Total unique errors : 16
   Error categories    : 1
   Affected classes    : 3
 ================================================================================
 
-┌─ Missing Members (MembersMustExist)  (18 errors)
+┌─ Missing Members (MembersMustExist)  (16 errors)
 │  These members existed in the public API contract but are missing in the new implementation.
 │  FIX: Add these members back to the implementation, or add entries to the API baseline/compat suppression file.
 │
@@ -27,8 +27,6 @@
 │      • Azure.Pageable<PeeringResource> GetPeeringsByLegacyPeering(Resources.SubscriptionResource, String, Models.LegacyPeeringsKind, Int32?, Models.DirectPeeringType?, CancellationToken)
 │      • Azure.AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(Resources.SubscriptionResource, String, Models.LegacyPeeringsKind, Int32?, Models.DirectPeeringType?, CancellationToken)
 │  ▸ PeeringResource
-│      • Azure.Pageable<Models.PeeringReceivedRoute> GetReceivedRoutes(String, String, String, String, String, CancellationToken)
-│      • Azure.AsyncPageable<Models.PeeringReceivedRoute> GetReceivedRoutesAsync(String, String, String, String, String, CancellationToken)
 │      • Azure.Pageable<Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(Boolean?, CancellationToken)
 │      • Azure.AsyncPageable<Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(Boolean?, CancellationToken)
 └───────────────────────────────────────────────────────────────────────────────
@@ -38,7 +36,7 @@
 ================================================================================
   [1] Add missing method(s) to Mocking.MockablePeeringSubscriptionResource: GetCdnPeeringPrefixes, GetCdnPeeringPrefixesAsync, GetPeeringLocations, GetPeeringLocationsAsync, GetPeeringsByLegacyPeering, GetPeeringsByLegacyPeeringAsync
   [2] Add missing method(s) to PeeringExtensions: CheckPeeringServiceProviderAvailability, CheckPeeringServiceProviderAvailabilityAsync, GetCdnPeeringPrefixes, GetCdnPeeringPrefixesAsync, GetPeeringLocations, GetPeeringLocationsAsync, GetPeeringsByLegacyPeering, GetPeeringsByLegacyPeeringAsync
-  [3] Add missing method(s) to PeeringResource: GetReceivedRoutes, GetReceivedRoutesAsync, GetRpUnbilledPrefixes, GetRpUnbilledPrefixesAsync
+  [3] Add missing method(s) to PeeringResource: GetRpUnbilledPrefixes, GetRpUnbilledPrefixesAsync
 
   Total actions: 3
 ================================================================================

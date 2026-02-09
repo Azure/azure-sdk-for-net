@@ -30008,7 +30008,7 @@
             {
               "$id": "2579",
               "kind": "paging",
-              "name": "listByPeering",
+              "name": "listReceivedRoutes",
               "accessibility": "public",
               "apiVersions": [
                 "2025-05-01"
@@ -30016,7 +30016,7 @@
               "doc": "Lists the prefixes received over the specified peering under the given subscription and resource group.",
               "operation": {
                 "$id": "2580",
-                "name": "listByPeering",
+                "name": "listReceivedRoutes",
                 "resourceName": "Peerings",
                 "doc": "Lists the prefixes received over the specified peering under the given subscription and resource group.",
                 "accessibility": "public",

@@ -509,13 +509,13 @@ namespace Azure.ResourceManager.Peering
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringReceivedRoute> GetByPeeringAsync(string prefix = default, string asPath = default, string originAsValidationState = default, string rpkiValidationState = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = default, string asPath = default, string originAsValidationState = default, string rpkiValidationState = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetByPeeringAsyncCollectionResultOfT(
+            return new ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -556,13 +556,13 @@ namespace Azure.ResourceManager.Peering
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringReceivedRoute> GetByPeering(string prefix = default, string asPath = default, string originAsValidationState = default, string rpkiValidationState = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = default, string asPath = default, string originAsValidationState = default, string rpkiValidationState = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReceivedRoutesGetByPeeringCollectionResultOfT(
+            return new ReceivedRoutesGetReceivedRoutesCollectionResultOfT(
                 _receivedRoutesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

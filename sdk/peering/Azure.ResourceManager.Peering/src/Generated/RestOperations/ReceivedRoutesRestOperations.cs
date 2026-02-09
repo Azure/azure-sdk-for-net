@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByPeeringRequest(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetReceivedRoutesRequest(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        internal HttpMessage CreateNextGetByPeeringRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetReceivedRoutesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

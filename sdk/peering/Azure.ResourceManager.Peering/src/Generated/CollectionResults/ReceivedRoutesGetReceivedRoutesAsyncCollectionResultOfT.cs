@@ -15,7 +15,7 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ReceivedRoutesGetByPeeringAsyncCollectionResultOfT : AsyncPageable<PeeringReceivedRoute>
+    internal partial class ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT : AsyncPageable<PeeringReceivedRoute>
     {
         private readonly ReceivedRoutes _client;
         private readonly string _subscriptionId;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Peering
         private readonly string _skipToken;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ReceivedRoutesGetByPeeringAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ReceivedRoutes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ReceivedRoutesGetByPeeringAsyncCollectionResultOfT(ReceivedRoutes client, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT(ReceivedRoutes client, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Peering
             _context = context;
         }
 
-        /// <summary> Gets the pages of ReceivedRoutesGetByPeeringAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ReceivedRoutesGetByPeeringAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ReceivedRoutesGetReceivedRoutesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PeeringReceivedRoute>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByPeeringRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _prefix, _asPath, _originAsValidationState, _rpkiValidationState, _skipToken, _context) : _client.CreateGetByPeeringRequest(_subscriptionId, _resourceGroupName, _peeringName, _prefix, _asPath, _originAsValidationState, _rpkiValidationState, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringResource.GetByPeering");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetReceivedRoutesRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _prefix, _asPath, _originAsValidationState, _rpkiValidationState, _skipToken, _context) : _client.CreateGetReceivedRoutesRequest(_subscriptionId, _resourceGroupName, _peeringName, _prefix, _asPath, _originAsValidationState, _rpkiValidationState, _skipToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
             scope.Start();
             try
             {
