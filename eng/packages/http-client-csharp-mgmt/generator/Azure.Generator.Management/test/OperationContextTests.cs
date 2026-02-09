@@ -821,5 +821,126 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Contain(".ToString()"));
             Assert.That(displayString, Does.Not.Contain("?.ToString()"));
         }
+
+        [TestCase]
+        public void PopulateArguments_ConditionalHeader_MatchesMatchConditionsParameter()
+        {
+            // Simulate the case where the create request method still has separate If-Match/If-None-Match
+            // parameters, but the operation method has a merged MatchConditions parameter
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is a conditional header (If-Match) with original string type
+            var requestIfMatch = new ParameterProvider("ifMatch", $"", typeof(string));
+            requestIfMatch.Update(wireInfo: new WireInformation(default, "If-Match"));
+
+            // Method parameter is a MatchConditions type (merged by MatchConditionsHeadersVisitor)
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestIfMatch },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should find the matchConditions parameter instead of returning default
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_ConditionalHeader_MatchesETagParameter()
+        {
+            // Simulate the case where the create request method has a conditional header (If-Match)
+            // but the operation method has an ETag parameter (single header case)
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is a conditional header (If-Match) with ETag type
+            var requestIfMatch = new ParameterProvider("ifMatch", $"",
+                new CSharpType(typeof(ETag)).WithNullable(true));
+            requestIfMatch.Update(wireInfo: new WireInformation(default, "If-Match"));
+
+            // Method parameter is also ETag type with matching serialized name
+            var methodIfMatch = new ParameterProvider("ifMatch", $"",
+                new CSharpType(typeof(ETag)).WithNullable(true));
+            methodIfMatch.Update(wireInfo: new WireInformation(default, "If-Match"));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestIfMatch },
+                contextVariable,
+                new List<ParameterProvider> { methodIfMatch });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should find the ifMatch parameter by serialized name
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("ifMatch"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsParameter_MatchesDirectly()
+        {
+            // Simulate the case where both create request and operation method have MatchConditions
+            // (both processed by MatchConditionsHeadersVisitor)
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is MatchConditions with empty serialized name
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            // Method parameter is also MatchConditions with empty serialized name
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should find the matchConditions parameter by serialized name match
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MultipleConditionalHeaders_MatchesSingleMatchConditionsParameter()
+        {
+            // Simulate the case where the create request method has separate If-Match and If-None-Match
+            // but the operation method has a single merged MatchConditions parameter
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestIfMatch = new ParameterProvider("ifMatch", $"", typeof(string));
+            requestIfMatch.Update(wireInfo: new WireInformation(default, "If-Match"));
+
+            var requestIfNoneMatch = new ParameterProvider("ifNoneMatch", $"", typeof(string));
+            requestIfNoneMatch.Update(wireInfo: new WireInformation(default, "If-None-Match"));
+
+            // Method parameter is a MatchConditions type
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestIfMatch, requestIfNoneMatch },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(2, arguments.Count);
+            // Both should resolve to the matchConditions parameter
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+            Assert.That(arguments[1].ToDisplayString(), Does.Contain("matchConditions"));
+        }
     }
 }
