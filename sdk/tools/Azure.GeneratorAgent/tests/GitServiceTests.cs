@@ -48,6 +48,12 @@ public class GitServiceTests
             return;
         }
 
+        if (!await IsGitAvailableAsync())
+        {
+            Assert.Ignore("Git is not available on the system");
+            return;
+        }
+
         // Act
         var commitSha = await gitService.GetLatestCommitAsync(repoRoot);
 
@@ -69,5 +75,32 @@ public class GitServiceTests
             dir = dir.Parent;
         }
         return null;
+    }
+
+    private static async Task<bool> IsGitAvailableAsync()
+    {
+        try
+        {
+            using var process = new System.Diagnostics.Process
+            {
+                StartInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "git",
+                    Arguments = "--version",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+            await process.WaitForExitAsync();
+            return process.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

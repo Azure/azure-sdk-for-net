@@ -51,13 +51,13 @@ public class RootCommandFactory
             sdkPathArgument
         };
 
-        generateCommand.SetHandler(async (string sdkPath) =>
+        generateCommand.SetHandler(async (InvocationContext context, string sdkPath, CancellationToken cancellationToken) =>
         {
             Logger.LogInformation("Generate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
+                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, cancellationToken).ConfigureAwait(false);
 
                 Logger.LogInformation("Generate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
@@ -65,6 +65,7 @@ public class RootCommandFactory
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Generate command failed");
+                context.ExitCode = 1;
             }
         }, sdkPathArgument);
 
@@ -79,13 +80,13 @@ public class RootCommandFactory
             sdkPathArgument
         };
 
-        migrateCommand.SetHandler(async (string sdkPath) =>
+        migrateCommand.SetHandler(async (InvocationContext context, string sdkPath, CancellationToken cancellationToken) =>
         {
             Logger.LogInformation("Migrate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
-                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
+                var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, cancellationToken).ConfigureAwait(false);
 
                 Logger.LogInformation("Migrate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Step 4 (Migration specific): Update tsp-location.yaml & .csproj
@@ -94,6 +95,7 @@ public class RootCommandFactory
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Migrate command failed");
+                context.ExitCode = 1;
             }
         }, sdkPathArgument);
 

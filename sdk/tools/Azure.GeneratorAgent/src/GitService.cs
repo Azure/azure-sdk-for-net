@@ -25,18 +25,18 @@ public sealed class GitService
     /// <summary>
     /// Gets the latest commit SHA from the repository.
     /// </summary>
-    /// <param name="repositoryPath">Path to the git repository.</param>
+    /// <param name="path">Path to any directory within a git repository.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The commit SHA.</returns>
     /// <exception cref="InvalidOperationException">Thrown when not a git repository or git command fails.</exception>
-    public async Task<string> GetLatestCommitAsync(string repositoryPath, CancellationToken cancellationToken = default)
+    public async Task<string> GetLatestCommitAsync(string path, CancellationToken cancellationToken = default)
     {
-        Logger.LogDebug("Getting latest commit from: {Path}", repositoryPath);
+        Logger.LogDebug("Getting latest commit from: {Path}", path);
 
-        var gitDir = Path.Combine(repositoryPath, ".git");
-        if (!Directory.Exists(gitDir))
+        var repositoryPath = FindRepositoryRoot(path);
+        if (repositoryPath == null)
         {
-            throw new InvalidOperationException($"Not a git repository: {repositoryPath}");
+            throw new InvalidOperationException($"Not within a git repository: {path}");
         }
 
         await EnsureGitAvailableAsync(cancellationToken).ConfigureAwait(false);
@@ -105,5 +105,29 @@ public sealed class GitService
         {
             throw new InvalidOperationException("Git is not available or not properly installed. Please ensure Git is installed and available on the system PATH.", ex);
         }
+    }
+
+    /// <summary>
+    /// Finds the git repository root by walking up the directory tree.
+    /// </summary>
+    /// <param name="startPath">Starting path to search from.</param>
+    /// <returns>The repository root path, or null if not found.</returns>
+    private static string? FindRepositoryRoot(string startPath)
+    {
+        var currentPath = Path.GetFullPath(startPath);
+        
+        while (currentPath != null)
+        {
+            var gitDir = Path.Combine(currentPath, ".git");
+            if (Directory.Exists(gitDir))
+            {
+                return currentPath;
+            }
+
+            var parent = Directory.GetParent(currentPath);
+            currentPath = parent?.FullName;
+        }
+
+        return null;
     }
 }
