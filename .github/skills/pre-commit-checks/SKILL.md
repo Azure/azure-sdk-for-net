@@ -27,7 +27,7 @@ For **every** csproj that had files change beneath it — src, tests, samples, p
 dotnet format <path-to-changed.csproj>
 ```
 
-Identify affected csproj files by finding the nearest `.csproj` above each changed `.cs` file. This fixes style/formatting issues and may modify `.cs` files.
+Identify affected csproj files by looking at the full changed file list: include any project where either (a) there is a changed `.cs` file with that `.csproj` as its nearest parent, or (b) the `.csproj` itself changed, or files such as `.props`, `.targets`, or `.md` changed under that project. This fixes style/formatting issues and may modify `.cs` files.
 
 ## 3. Conditionally run `dotnet build /t:GenerateCode` (per src csproj)
 
