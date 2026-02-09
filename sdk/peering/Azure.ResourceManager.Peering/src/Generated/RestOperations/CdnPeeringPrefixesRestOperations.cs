@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListPeeringLocations
+    internal partial class CdnPeeringPrefixes
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ListPeeringLocations for mocking. </summary>
-        protected ListPeeringLocations()
+        /// <summary> Initializes a new instance of CdnPeeringPrefixes for mocking. </summary>
+        protected CdnPeeringPrefixes()
         {
         }
 
-        /// <summary> Initializes a new instance of ListPeeringLocations. </summary>
+        /// <summary> Initializes a new instance of CdnPeeringPrefixes. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ListPeeringLocations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal CdnPeeringPrefixes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,19 +41,15 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string kind, string directPeeringType, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string peeringLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peeringLocations", false);
+            uri.AppendPath("/providers/Microsoft.Peering/cdnPeeringPrefixes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("kind", kind, true);
-            if (directPeeringType != null)
-            {
-                uri.AppendQuery("directPeeringType", directPeeringType, true);
-            }
+            uri.AppendQuery("peeringLocation", peeringLocation, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -62,10 +58,11 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string kind, string directPeeringType, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string peeringLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

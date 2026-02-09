@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListLegacyPeerings
+    internal partial class LegacyPeerings
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ListLegacyPeerings for mocking. </summary>
-        protected ListLegacyPeerings()
+        /// <summary> Initializes a new instance of LegacyPeerings for mocking. </summary>
+        protected LegacyPeerings()
         {
         }
 
-        /// <summary> Initializes a new instance of ListLegacyPeerings. </summary>
+        /// <summary> Initializes a new instance of LegacyPeerings. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ListLegacyPeerings(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal LegacyPeerings(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Peering
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

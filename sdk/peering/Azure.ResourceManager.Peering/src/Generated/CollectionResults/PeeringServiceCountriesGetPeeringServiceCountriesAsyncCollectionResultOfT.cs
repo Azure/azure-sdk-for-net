@@ -15,27 +15,27 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT : AsyncPageable<PeeringServiceCountry>
+    internal partial class PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT : AsyncPageable<PeeringServiceCountry>
     {
-        private readonly ListPeeringServiceCountries _client;
+        private readonly PeeringServiceCountries _client;
         private readonly string _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ListPeeringServiceCountries client used to send requests. </param>
+        /// <summary> Initializes a new instance of PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PeeringServiceCountries client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(ListPeeringServiceCountries client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(PeeringServiceCountries client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PeeringServiceCountry>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

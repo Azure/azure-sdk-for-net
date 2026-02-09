@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,9 +15,9 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListLegacyPeeringsGetAllCollectionResultOfT : Pageable<PeeringData>
+    internal partial class LegacyPeeringsGetAllAsyncCollectionResultOfT : AsyncPageable<PeeringData>
     {
-        private readonly ListLegacyPeerings _client;
+        private readonly LegacyPeerings _client;
         private readonly string _subscriptionId;
         private readonly string _peeringLocation;
         private readonly string _kind;
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.Peering
         private readonly string _directPeeringType;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ListLegacyPeeringsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ListLegacyPeerings client used to send requests. </param>
+        /// <summary> Initializes a new instance of LegacyPeeringsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LegacyPeerings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="asn"> The ASN number associated with a legacy peering. </param>
         /// <param name="directPeeringType"> The direct peering type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ListLegacyPeeringsGetAllCollectionResultOfT(ListLegacyPeerings client, string subscriptionId, string peeringLocation, string kind, int? asn, string directPeeringType, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LegacyPeeringsGetAllAsyncCollectionResultOfT(LegacyPeerings client, string subscriptionId, string peeringLocation, string kind, int? asn, string directPeeringType, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,16 +44,16 @@ namespace Azure.ResourceManager.Peering
             _context = context;
         }
 
-        /// <summary> Gets the pages of ListLegacyPeeringsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LegacyPeeringsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ListLegacyPeeringsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PeeringData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LegacyPeeringsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<PeeringData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -70,14 +71,14 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _peeringLocation, _kind, _asn, _directPeeringType, _context) : _client.CreateGetAllRequest(_subscriptionId, _peeringLocation, _kind, _asn, _directPeeringType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetAll");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListPeeringServiceCountries
+    internal partial class PeeringServiceLocations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ListPeeringServiceCountries for mocking. </summary>
-        protected ListPeeringServiceCountries()
+        /// <summary> Initializes a new instance of PeeringServiceLocations for mocking. </summary>
+        protected PeeringServiceLocations()
         {
         }
 
-        /// <summary> Initializes a new instance of ListPeeringServiceCountries. </summary>
+        /// <summary> Initializes a new instance of PeeringServiceLocations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ListPeeringServiceCountries(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PeeringServiceLocations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,14 +41,18 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPeeringServiceCountriesRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetPeeringServiceLocationsRequest(string subscriptionId, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peeringServiceCountries", false);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServiceLocations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (country != null)
+            {
+                uri.AppendQuery("country", country, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -57,10 +61,11 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        internal HttpMessage CreateNextGetPeeringServiceCountriesRequest(Uri nextPage, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetPeeringServiceLocationsRequest(Uri nextPage, string subscriptionId, string country, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

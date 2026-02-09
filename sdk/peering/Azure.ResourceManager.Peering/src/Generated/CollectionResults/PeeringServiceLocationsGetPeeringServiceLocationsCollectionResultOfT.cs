@@ -14,34 +14,31 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListPeeringLocationsGetAllCollectionResultOfT : Pageable<PeeringLocation>
+    internal partial class PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT : Pageable<PeeringServiceLocation>
     {
-        private readonly ListPeeringLocations _client;
+        private readonly PeeringServiceLocations _client;
         private readonly string _subscriptionId;
-        private readonly string _kind;
-        private readonly string _directPeeringType;
+        private readonly string _country;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ListPeeringLocationsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ListPeeringLocations client used to send requests. </param>
+        /// <summary> Initializes a new instance of PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PeeringServiceLocations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="directPeeringType"> The type of direct peering. </param>
+        /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ListPeeringLocationsGetAllCollectionResultOfT(ListPeeringLocations client, string subscriptionId, string kind, string directPeeringType, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(PeeringServiceLocations client, string subscriptionId, string country, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _kind = kind;
-            _directPeeringType = directPeeringType;
+            _country = country;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ListPeeringLocationsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ListPeeringLocationsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PeeringLocation>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<PeeringServiceLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,8 +48,8 @@ namespace Azure.ResourceManager.Peering
                 {
                     yield break;
                 }
-                PeeringLocationListResult result = PeeringLocationListResult.FromResponse(response);
-                yield return Page<PeeringLocation>.FromValues((IReadOnlyList<PeeringLocation>)result.Value, nextPage?.AbsoluteUri, response);
+                PeeringServiceLocationListResult result = PeeringServiceLocationListResult.FromResponse(response);
+                yield return Page<PeeringServiceLocation>.FromValues((IReadOnlyList<PeeringServiceLocation>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -66,8 +63,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _kind, _directPeeringType, _context) : _client.CreateGetAllRequest(_subscriptionId, _kind, _directPeeringType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPeeringServiceLocationsRequest(nextLink, _subscriptionId, _country, _context) : _client.CreateGetPeeringServiceLocationsRequest(_subscriptionId, _country, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetPeeringServiceLocations");
             scope.Start();
             try
             {

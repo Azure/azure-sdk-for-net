@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Peering.Mocking
         private PeeringServices _peeringServicesRestClient;
         private ClientDiagnostics _peeringClientClientDiagnostics;
         private PeeringClient _peeringClientRestClient;
-        private ClientDiagnostics _listCdnPeeringPrefixesClientDiagnostics;
-        private ListCdnPeeringPrefixes _listCdnPeeringPrefixesRestClient;
-        private ClientDiagnostics _listLegacyPeeringsClientDiagnostics;
-        private ListLegacyPeerings _listLegacyPeeringsRestClient;
+        private ClientDiagnostics _cdnPeeringPrefixesClientDiagnostics;
+        private CdnPeeringPrefixes _cdnPeeringPrefixesRestClient;
+        private ClientDiagnostics _legacyPeeringsClientDiagnostics;
+        private LegacyPeerings _legacyPeeringsRestClient;
         private ClientDiagnostics _lookingGlassClientDiagnostics;
         private LookingGlass _lookingGlassRestClient;
-        private ClientDiagnostics _listPeeringLocationsClientDiagnostics;
-        private ListPeeringLocations _listPeeringLocationsRestClient;
-        private ClientDiagnostics _listPeeringServiceCountriesClientDiagnostics;
-        private ListPeeringServiceCountries _listPeeringServiceCountriesRestClient;
-        private ClientDiagnostics _listPeeringServiceLocationsClientDiagnostics;
-        private ListPeeringServiceLocations _listPeeringServiceLocationsRestClient;
+        private ClientDiagnostics _peeringLocationsClientDiagnostics;
+        private PeeringLocations _peeringLocationsRestClient;
+        private ClientDiagnostics _peeringServiceCountriesClientDiagnostics;
+        private PeeringServiceCountries _peeringServiceCountriesRestClient;
+        private ClientDiagnostics _peeringServiceLocationsClientDiagnostics;
+        private PeeringServiceLocations _peeringServiceLocationsRestClient;
         private ClientDiagnostics _peeringServiceProvidersClientDiagnostics;
         private PeeringServiceProviders _peeringServiceProvidersRestClient;
 
@@ -66,29 +66,29 @@ namespace Azure.ResourceManager.Peering.Mocking
 
         private PeeringClient PeeringClientRestClient => _peeringClientRestClient ??= new PeeringClient(PeeringClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics ListCdnPeeringPrefixesClientDiagnostics => _listCdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CdnPeeringPrefixesClientDiagnostics => _cdnPeeringPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ListCdnPeeringPrefixes ListCdnPeeringPrefixesRestClient => _listCdnPeeringPrefixesRestClient ??= new ListCdnPeeringPrefixes(ListCdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private CdnPeeringPrefixes CdnPeeringPrefixesRestClient => _cdnPeeringPrefixesRestClient ??= new CdnPeeringPrefixes(CdnPeeringPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics ListLegacyPeeringsClientDiagnostics => _listLegacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LegacyPeeringsClientDiagnostics => _legacyPeeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ListLegacyPeerings ListLegacyPeeringsRestClient => _listLegacyPeeringsRestClient ??= new ListLegacyPeerings(ListLegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private LegacyPeerings LegacyPeeringsRestClient => _legacyPeeringsRestClient ??= new LegacyPeerings(LegacyPeeringsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics LookingGlassClientDiagnostics => _lookingGlassClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private LookingGlass LookingGlassRestClient => _lookingGlassRestClient ??= new LookingGlass(LookingGlassClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics ListPeeringLocationsClientDiagnostics => _listPeeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringLocationsClientDiagnostics => _peeringLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ListPeeringLocations ListPeeringLocationsRestClient => _listPeeringLocationsRestClient ??= new ListPeeringLocations(ListPeeringLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringLocations PeeringLocationsRestClient => _peeringLocationsRestClient ??= new PeeringLocations(PeeringLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics ListPeeringServiceCountriesClientDiagnostics => _listPeeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringServiceCountriesClientDiagnostics => _peeringServiceCountriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ListPeeringServiceCountries ListPeeringServiceCountriesRestClient => _listPeeringServiceCountriesRestClient ??= new ListPeeringServiceCountries(ListPeeringServiceCountriesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServiceCountries PeeringServiceCountriesRestClient => _peeringServiceCountriesRestClient ??= new PeeringServiceCountries(PeeringServiceCountriesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        private ClientDiagnostics ListPeeringServiceLocationsClientDiagnostics => _listPeeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PeeringServiceLocationsClientDiagnostics => _peeringServiceLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ListPeeringServiceLocations ListPeeringServiceLocationsRestClient => _listPeeringServiceLocationsRestClient ??= new ListPeeringServiceLocations(ListPeeringServiceLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private PeeringServiceLocations PeeringServiceLocationsRestClient => _peeringServiceLocationsRestClient ??= new PeeringServiceLocations(PeeringServiceLocationsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics PeeringServiceProvidersClientDiagnostics => _peeringServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Peering.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListCdnPeeringPrefixesGetAllAsyncCollectionResultOfT(ListCdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new CdnPeeringPrefixesGetAllAsyncCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListCdnPeeringPrefixesGetAllCollectionResultOfT(ListCdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
+            return new CdnPeeringPrefixesGetAllCollectionResultOfT(CdnPeeringPrefixesRestClient, Id.SubscriptionId, peeringLocation, context);
         }
 
         /// <summary>
@@ -448,13 +448,13 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new ListLegacyPeeringsGetAllAsyncCollectionResultOfT(
-                ListLegacyPeeringsRestClient,
+            return new AsyncPageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetAllAsyncCollectionResultOfT(
+                LegacyPeeringsRestClient,
                 Id.SubscriptionId,
                 peeringLocation,
                 kind.ToString(),
                 asn,
-                directPeeringType.ToString(),
+                directPeeringType?.ToString(),
                 context), data => new PeeringResource(Client, data));
         }
 
@@ -491,13 +491,13 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PeeringData, PeeringResource>(new ListLegacyPeeringsGetAllCollectionResultOfT(
-                ListLegacyPeeringsRestClient,
+            return new PageableWrapper<PeeringData, PeeringResource>(new LegacyPeeringsGetAllCollectionResultOfT(
+                LegacyPeeringsRestClient,
                 Id.SubscriptionId,
                 peeringLocation,
                 kind.ToString(),
                 asn,
-                directPeeringType.ToString(),
+                directPeeringType?.ToString(),
                 context), data => new PeeringResource(Client, data));
         }
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringLocationsGetAllAsyncCollectionResultOfT(ListPeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
+            return new PeeringLocationsGetAllAsyncCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType?.ToString(), context);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringLocationsGetAllCollectionResultOfT(ListPeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType.ToString(), context);
+            return new PeeringLocationsGetAllCollectionResultOfT(PeeringLocationsRestClient, Id.SubscriptionId, kind.ToString(), directPeeringType?.ToString(), context);
         }
 
         /// <summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(ListPeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceCountriesGetPeeringServiceCountriesAsyncCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringServiceCountriesGetPeeringServiceCountriesCollectionResultOfT(ListPeeringServiceCountriesRestClient, Id.SubscriptionId, context);
+            return new PeeringServiceCountriesGetPeeringServiceCountriesCollectionResultOfT(PeeringServiceCountriesRestClient, Id.SubscriptionId, context);
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(ListPeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
         }
 
         /// <summary>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Peering.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ListPeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(ListPeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
+            return new PeeringServiceLocationsGetPeeringServiceLocationsCollectionResultOfT(PeeringServiceLocationsRestClient, Id.SubscriptionId, country, context);
         }
 
         /// <summary>

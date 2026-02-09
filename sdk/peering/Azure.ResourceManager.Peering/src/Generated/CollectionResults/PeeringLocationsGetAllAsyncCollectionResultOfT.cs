@@ -15,21 +15,21 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    internal partial class ListPeeringLocationsGetAllAsyncCollectionResultOfT : AsyncPageable<PeeringLocation>
+    internal partial class PeeringLocationsGetAllAsyncCollectionResultOfT : AsyncPageable<PeeringLocation>
     {
-        private readonly ListPeeringLocations _client;
+        private readonly PeeringLocations _client;
         private readonly string _subscriptionId;
         private readonly string _kind;
         private readonly string _directPeeringType;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ListPeeringLocationsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ListPeeringLocations client used to send requests. </param>
+        /// <summary> Initializes a new instance of PeeringLocationsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PeeringLocations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ListPeeringLocationsGetAllAsyncCollectionResultOfT(ListPeeringLocations client, string subscriptionId, string kind, string directPeeringType, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PeeringLocationsGetAllAsyncCollectionResultOfT(PeeringLocations client, string subscriptionId, string kind, string directPeeringType, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Peering
             _context = context;
         }
 
-        /// <summary> Gets the pages of ListPeeringLocationsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PeeringLocationsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ListPeeringLocationsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PeeringLocationsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PeeringLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
