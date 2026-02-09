@@ -15,13 +15,13 @@
 
 - Total libraries: 402
 - Management Plane (MPG): 227
-  - Autorest/Swagger: 145
-  - New Emitter (TypeSpec): 81
-  - Old TypeSpec: 1
+  - Autorest/Swagger: 143
+  - New Emitter (TypeSpec): 84
+  - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 58
-  - New Emitter (TypeSpec): 30
-  - Old TypeSpec: 8
+  - New Emitter (TypeSpec): 31
+  - Old TypeSpec: 7
 - Provisioning: 31
   - Custom reflection-based generator: 31
 - No generator: 48
@@ -31,7 +31,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 30 / 38 (78.9%)
+**Migration Status**: 31 / 38 (81.6%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -41,7 +41,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | anomalydetector | Azure.AI.AnomalyDetector |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |
 | batch | Azure.Compute.Batch | ✅ |
-| cognitivelanguage | Azure.AI.Language.Conversations |  |
+| cognitivelanguage | Azure.AI.Language.Conversations | ✅ |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |
@@ -109,10 +109,8 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 | maps | Azure.Maps.TimeZones |
 | maps | Azure.Maps.Weather |
 | metricsadvisor | Azure.AI.MetricsAdvisor |
-| mixedreality | Azure.MixedReality.Authentication |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter |
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics |
-| objectanchors | Azure.MixedReality.ObjectAnchors.Conversion |
 | personalizer | Azure.AI.Personalizer |
 | purview | Azure.Analytics.Purview.Account |
 | purview | Azure.Analytics.Purview.Administration |
@@ -121,7 +119,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 | purview | Azure.Analytics.Purview.Sharing |
 | purview | Azure.Analytics.Purview.Workflows |
 | quantum | Azure.Quantum.Jobs |
-| remoterendering | Azure.MixedReality.RemoteRendering |
 | search | Azure.Search.Documents |
 | storage | Azure.Storage.Blobs |
 | storage | Azure.Storage.Blobs.Batch |
@@ -145,7 +142,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 58
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 81 / 82 (98.8%)
+**Migration Status**: 84 / 84 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -194,6 +191,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
+| loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
@@ -219,7 +217,8 @@ Libraries that provide resource management APIs for Azure services and have been
 | selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
-| sitemanager | Azure.ResourceManager.SiteManager |  |
+| sitemanager | Azure.ResourceManager.SiteManager | ✅ |
+| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | ✅ |
 | standbypool | Azure.ResourceManager.StandbyPool | ✅ |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
@@ -235,7 +234,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 145
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 143
 
 | Service | Library |
 | ------- | ------- |
@@ -311,7 +310,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | kusto | Azure.ResourceManager.Kusto |
 | labservices | Azure.ResourceManager.LabServices |
-| loadtestservice | Azure.ResourceManager.LoadTesting |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
 | machinelearningservices | Azure.ResourceManager.MachineLearning |
@@ -324,10 +322,8 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | maps | Azure.ResourceManager.Maps |
 | marketplace | Azure.ResourceManager.Marketplace |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
-| mediaservices | Azure.ResourceManager.Media |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
-| mixedreality | Azure.ResourceManager.MixedReality |
 | mobilenetwork | Azure.ResourceManager.MobileNetwork |
 | monitor | Azure.ResourceManager.Monitor |
 | netapp | Azure.ResourceManager.NetApp |
@@ -365,12 +361,12 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 14
 | securityinsights | Azure.ResourceManager.SecurityInsights |
 | servicebus | Azure.ResourceManager.ServiceBus |
 | servicefabric | Azure.ResourceManager.ServiceFabric |
+| servicegroups | Azure.ResourceManager.ServiceGroups |
 | servicelinker | Azure.ResourceManager.ServiceLinker |
 | signalr | Azure.ResourceManager.SignalR |
 | sphere | Azure.ResourceManager.Sphere |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
 | sqlmanagement | Azure.ResourceManager.Sql |
-| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine |
 | storage | Azure.ResourceManager.Storage |
 | storagecache | Azure.ResourceManager.StorageCache |
 | storagepool | Azure.ResourceManager.StoragePool |

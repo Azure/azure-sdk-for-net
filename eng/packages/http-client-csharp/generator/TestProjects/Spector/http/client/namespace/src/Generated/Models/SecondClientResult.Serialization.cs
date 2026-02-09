@@ -16,6 +16,10 @@ namespace Client.Clientnamespace.Second
     {
         internal SecondClientResult() => throw null;
 
+        protected virtual SecondClientResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator SecondClientResult(Response response) => throw null;
+
         void IJsonModel<SecondClientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -30,10 +34,6 @@ namespace Client.Clientnamespace.Second
 
         SecondClientResult IPersistableModel<SecondClientResult>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual SecondClientResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<SecondClientResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator SecondClientResult(Response response) => throw null;
     }
 }

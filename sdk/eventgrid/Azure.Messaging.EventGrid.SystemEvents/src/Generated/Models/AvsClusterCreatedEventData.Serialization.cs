@@ -22,6 +22,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AvsClusterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvsClusterCreatedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsClusterCreatedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsClusterCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -170,23 +187,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AvsClusterCreatedEventData IPersistableModel<AvsClusterCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvsClusterCreatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AvsClusterEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsClusterCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsClusterCreatedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsClusterCreatedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvsClusterCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

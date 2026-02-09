@@ -17,6 +17,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(WebBackupOperationFailedEventDataConverter))]
     public partial class WebBackupOperationFailedEventData : IJsonModel<WebBackupOperationFailedEventData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WebBackupOperationFailedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebBackupOperationFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebBackupOperationFailedEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebBackupOperationFailedEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebBackupOperationFailedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,23 +213,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WebBackupOperationFailedEventData IPersistableModel<WebBackupOperationFailedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebBackupOperationFailedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebBackupOperationFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebBackupOperationFailedEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebBackupOperationFailedEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WebBackupOperationFailedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

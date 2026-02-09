@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence end model. Either provide numberOfOccurrences if you want recurrence to end after a specified number of occurrences or provide endDate if you want recurrence to end after a specified end date. If both values are provided, a validation error will be thrown indicating that only one field should be provided. If neither value is provided, the recurrence will end when manually ended. </summary>
     public partial class RecurrenceEnd : IJsonModel<RecurrenceEnd>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecurrenceEnd PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceEnd>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecurrenceEnd(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecurrenceEnd)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecurrenceEnd>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -135,23 +152,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RecurrenceEnd IPersistableModel<RecurrenceEnd>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecurrenceEnd PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceEnd>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRecurrenceEnd(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecurrenceEnd)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecurrenceEnd>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Unknown version of AnalyzeConversationOperationResult. </summary>
     internal partial class UnknownAnalyzeConversationOperationResult : AnalyzeConversationOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationOperationResult"/>. </summary>
@@ -18,13 +17,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(lastUpdateDateTime, status, name, kind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationOperationResult"/> for deserialization. </summary>
-        internal UnknownAnalyzeConversationOperationResult()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, name, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

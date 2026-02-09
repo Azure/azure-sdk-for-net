@@ -21,6 +21,30 @@ namespace Azure.AI.Language.Text.Authoring
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PagedTextAnalysisAuthoringSupportedLanguage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePagedTextAnalysisAuthoringSupportedLanguage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringSupportedLanguage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringSupportedLanguage"/> from. </param>
+        public static explicit operator PagedTextAnalysisAuthoringSupportedLanguage(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedTextAnalysisAuthoringSupportedLanguage(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PagedTextAnalysisAuthoringSupportedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -145,31 +169,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         PagedTextAnalysisAuthoringSupportedLanguage IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedTextAnalysisAuthoringSupportedLanguage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePagedTextAnalysisAuthoringSupportedLanguage(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PagedTextAnalysisAuthoringSupportedLanguage)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedTextAnalysisAuthoringSupportedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedTextAnalysisAuthoringSupportedLanguage"/> from. </param>
-        public static explicit operator PagedTextAnalysisAuthoringSupportedLanguage(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedTextAnalysisAuthoringSupportedLanguage(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -17,6 +17,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [JsonConverter(typeof(MapsGeofenceEnteredEventDataConverter))]
     public partial class MapsGeofenceEnteredEventData : MapsGeofenceEventProperties, IJsonModel<MapsGeofenceEnteredEventData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MapsGeofenceEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceEnteredEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMapsGeofenceEnteredEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapsGeofenceEnteredEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MapsGeofenceEnteredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,23 +167,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         MapsGeofenceEnteredEventData IPersistableModel<MapsGeofenceEnteredEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MapsGeofenceEnteredEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MapsGeofenceEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceEnteredEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMapsGeofenceEnteredEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MapsGeofenceEnteredEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MapsGeofenceEnteredEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

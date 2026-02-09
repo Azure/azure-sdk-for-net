@@ -520,19 +520,84 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, options.Retry.Mode);
         }
 
+        [Test]
+        public void ConstructorAcceptsCustomDiagnosticsOptions()
+        {
+            var configData = new Dictionary<string, string>
+            {
+                { "TestClient:Diagnostics:ApplicationId", "TestApp" },
+                { "TestClient:Retry:MaxRetries", "5" }
+            };
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(configData)
+                .Build();
+
+            var customDiagnostics = new TestDiagnosticsOptions();
+            var options = new TestClientOptions(configuration.GetSection("TestClient"), customDiagnostics);
+
+            Assert.IsNotNull(options);
+            Assert.IsNotNull(options.Diagnostics);
+            Assert.AreSame(customDiagnostics, options.Diagnostics);
+            Assert.AreEqual(typeof(TestDiagnosticsOptions), options.Diagnostics.GetType());
+        }
+
+        [Test]
+        public void ConstructorWithCustomDiagnosticsOptionsPreservesDerivedType()
+        {
+            var configuration = new ConfigurationBuilder().Build();
+            var customDiagnostics = new TestDiagnosticsOptions();
+            var options = new TestClientOptions(configuration.GetSection("NonExistent"), customDiagnostics);
+
+            Assert.IsNotNull(options);
+            Assert.IsNotNull(options.Diagnostics);
+            Assert.AreSame(customDiagnostics, options.Diagnostics);
+            Assert.IsInstanceOf<TestDiagnosticsOptions>(options.Diagnostics);
+        }
+
+        [Test]
+        public void ConstructorWithNullDiagnosticsOptionsCreatesDefaultDiagnostics()
+        {
+            var configData = new Dictionary<string, string>
+            {
+                { "TestClient:Diagnostics:ApplicationId", "TestApp" }
+            };
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(configData)
+                .Build();
+
+            var options = new TestClientOptions(configuration.GetSection("TestClient"), null);
+
+            Assert.IsNotNull(options);
+            Assert.IsNotNull(options.Diagnostics);
+            Assert.AreEqual("TestApp", options.Diagnostics.ApplicationId);
+        }
+
         private class TestClientSettings : ClientSettings
         {
             public TestClientOptions Options { get; set; }
 
             protected override void BindCore(IConfigurationSection section)
             {
-                Options = new TestClientOptions(section);
+                Options = new TestClientOptions(section, null);
             }
         }
 
         private class TestClientOptions : ClientOptions
         {
-            public TestClientOptions(IConfigurationSection section) : base(section)
+            public TestClientOptions(IConfigurationSection section) : base(section, null)
+            {
+            }
+
+            public TestClientOptions(IConfigurationSection section, DiagnosticsOptions diagnostics) : base(section, diagnostics)
+            {
+            }
+        }
+
+        private class TestDiagnosticsOptions : DiagnosticsOptions
+        {
+            public TestDiagnosticsOptions() : base()
             {
             }
         }
