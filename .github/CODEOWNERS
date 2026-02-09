@@ -387,15 +387,6 @@
 # ServiceLabel: %Maps
 # ServiceOwners:                                                   @dubiety
 
-# PRLabel: %Mixed Reality
-/sdk/mixedreality/                                                 @crtreasu @rgarcia
-
-# PRLabel: %Mixed Reality
-/sdk/objectanchors/                                                @crtreasu @rgarcia
-
-# ServiceLabel: %Mixed Reality
-# ServiceOwners:                                                   @crtreasu @rgarcia
-
 # PRLabel: %Monitor
 /sdk/monitor/*                                                     @Azure/azure-sdk-write-monitor-data-plane
 
@@ -476,12 +467,6 @@
 
 # ServiceLabel: %Quantum
 # ServiceOwners:                                                   @xfield
-
-# PRLabel: %Remote Rendering
-/sdk/remoterendering/                                              @ChristopherManthei @FlorianBorn71 @MichaelZp0
-
-# ServiceLabel: %Remote Rendering
-# ServiceOwners:                                                   @ChristopherManthei @FlorianBorn71 @MichaelZp0
 
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/                                               @axisc @hmlam @sjkwak

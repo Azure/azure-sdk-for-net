@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The notification event filter when the event type is TriggerDisabled. </summary>
     public partial class TriggerDisabledNotificationEventFilter : TestsNotificationEventFilter, IJsonModel<TriggerDisabledNotificationEventFilter>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TriggerDisabledNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTriggerDisabledNotificationEventFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TriggerDisabledNotificationEventFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TriggerDisabledNotificationEventFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,23 +114,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         TriggerDisabledNotificationEventFilter IPersistableModel<TriggerDisabledNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (TriggerDisabledNotificationEventFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerDisabledNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTriggerDisabledNotificationEventFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TriggerDisabledNotificationEventFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TriggerDisabledNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -16,6 +16,30 @@ namespace Azure.Security.KeyVault.Administration.Models
 {
     internal partial class FullBackupDetailsInternal : IJsonModel<FullBackupDetailsInternal>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FullBackupDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFullBackupDetailsInternal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
+        public static explicit operator FullBackupDetailsInternal(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FullBackupDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -210,31 +234,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         FullBackupDetailsInternal IPersistableModel<FullBackupDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FullBackupDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FullBackupDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFullBackupDetailsInternal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FullBackupDetailsInternal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FullBackupDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FullBackupDetailsInternal"/> from. </param>
-        public static explicit operator FullBackupDetailsInternal(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFullBackupDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
