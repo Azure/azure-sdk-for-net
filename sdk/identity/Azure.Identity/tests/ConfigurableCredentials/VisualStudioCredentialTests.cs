@@ -44,7 +44,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
             {
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = TenantIdHint;
             }
-            var credential = _helper.GetCredentialFromConfig(config);
+
+            ConfigurableCredential credential;
+            using (new TestEnvVar("AZURE_TENANT_ID", null))
+            {
+                credential = _helper.GetCredentialFromConfig(config);
+            }
+
             return _helper.InstrumentCredential(credential, processService, fileSystem);
         }
 
@@ -55,7 +61,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
         {
             IConfiguration config = _helper.GetConfiguration();
             config["MyClient:Credential:CredentialProcessTimeout"] = timeout.ToString();
-            var credential = _helper.GetCredentialFromConfig(config);
+
+            ConfigurableCredential credential;
+            using (new TestEnvVar("AZURE_TENANT_ID", null))
+            {
+                credential = _helper.GetCredentialFromConfig(config);
+            }
+
             return _helper.InstrumentCredential(credential, processService, fileSystem);
         }
 
