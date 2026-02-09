@@ -108,9 +108,9 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             }
             else if (IsMatchConditionType(parameter.Type))
             {
-                // Find the corresponding MatchConditions/RequestConditions/ETag parameter in the method parameters.
+                // Find the corresponding MatchConditions/RequestConditions parameter in the method parameters.
                 // This handles the case where the MatchConditionsHeadersVisitor has merged separate
-                // conditional header parameters into a single MatchConditions/RequestConditions/ETag parameter.
+                // conditional header parameters into a single MatchConditions/RequestConditions parameter.
                 var matchConditionsParam = methodParameters.FirstOrDefault(p => IsMatchConditionType(p.Type));
                 arguments.Add(matchConditionsParam ?? (ValueExpression)Default);
             }
@@ -164,6 +164,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
     private static bool IsMatchConditionType(CSharpType type)
     {
-        return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions)) || type.Equals(typeof(ETag));
+        return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions));
     }
 }

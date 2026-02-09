@@ -879,33 +879,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
-        public void PopulateArguments_ETagType_FindsMethodParameterByType()
-        {
-            // When the request parameter is an ETag type (single header case from visitor),
-            // it should find the corresponding ETag method parameter by type
-            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
-
-            var requestETag = new ParameterProvider("ifMatch", $"",
-                new CSharpType(typeof(ETag)).WithNullable(true));
-            requestETag.Update(wireInfo: new WireInformation(default, "If-Match"));
-
-            var methodETag = new ParameterProvider("ifMatch", $"",
-                new CSharpType(typeof(ETag)).WithNullable(true));
-            methodETag.Update(wireInfo: new WireInformation(default, "If-Match"));
-
-            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
-
-            var arguments = registry.PopulateArguments(
-                _idVariable,
-                new List<ParameterProvider> { requestETag },
-                contextVariable,
-                new List<ParameterProvider> { methodETag });
-
-            Assert.AreEqual(1, arguments.Count);
-            Assert.That(arguments[0].ToDisplayString(), Does.Contain("ifMatch"));
-        }
-
-        [TestCase]
         public void PopulateArguments_MatchConditionsType_ReturnsDefaultWhenNoMethodParameter()
         {
             // When the request parameter is a MatchConditions type but no matching method parameter exists,
