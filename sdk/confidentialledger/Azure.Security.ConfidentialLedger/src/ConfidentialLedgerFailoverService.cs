@@ -17,9 +17,6 @@ namespace Azure.Security.ConfidentialLedger
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-    internal const string IdentityServiceBaseUrl = "https://identity.confidential-ledger.core.azure.com";
-    internal const string LedgerDomainSuffix = "confidential-ledger.azure.com";
-
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
@@ -65,7 +62,7 @@ namespace Azure.Security.ConfidentialLedger
             {
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"{IdentityServiceBaseUrl}/failover/{ledgerId}");
+                Uri failoverUrl = new Uri($"{ConfidentialLedgerClient.Default_Certificate_Endpoint}/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = await _pipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
@@ -87,7 +84,7 @@ namespace Azure.Security.ConfidentialLedger
                 // retrieving sync metadata
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"{IdentityServiceBaseUrl}/failover/{ledgerId}");
+                Uri failoverUrl = new Uri($"{ConfidentialLedgerClient.Default_Certificate_Endpoint}/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = _pipeline.ProcessMessage(message, new RequestContext());
@@ -159,8 +156,14 @@ namespace Azure.Security.ConfidentialLedger
 
                         if (!string.IsNullOrEmpty(failoverLedgerId))
                         {
-                            Uri endpoint = new UriBuilder(primaryEndpoint) { Host = $"{failoverLedgerId}.{LedgerDomainSuffix}" }.Uri;
-                            endpoints.Add(endpoint);
+                            string primaryHost = primaryEndpoint.Host;
+                            int dotIndex = primaryHost.IndexOf('.');
+                            if (dotIndex > 0)
+                            {
+                                string hostSuffix = primaryHost.Substring(dotIndex);
+                                Uri endpoint = new UriBuilder(primaryEndpoint) { Host = $"{failoverLedgerId}{hostSuffix}" }.Uri;
+                                endpoints.Add(endpoint);
+                            }
                         }
                     }
                 }
@@ -190,14 +193,7 @@ namespace Azure.Security.ConfidentialLedger
 
         private static bool IsRetriableFailure(RequestFailedException ex)
         {
-            // Include 404 and specific UnknownLedgerEntry error code.
-            return ex.Status == 404 ||
-                   string.Equals(ex.ErrorCode, "UnknownLedgerEntry", StringComparison.OrdinalIgnoreCase) ||
-                   ex.Status >= 500 ||
-                   ex.Status == 408 ||
-                   ex.Status == 429 ||
-                   ex.Status == 503 ||
-                   ex.Status == 504;
+            return ex.Status == 429 || ex.Status >= 500;
         }
 
         // Execute an operation only against discovered failover endpoints (skips primary). Used for specialized fallback flows.

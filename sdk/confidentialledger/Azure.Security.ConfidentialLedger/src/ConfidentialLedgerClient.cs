@@ -16,7 +16,8 @@ namespace Azure.Security.ConfidentialLedger
     [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
-        private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+        internal const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+        private readonly ConfidentialLedgerFailoverService _failoverService;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
