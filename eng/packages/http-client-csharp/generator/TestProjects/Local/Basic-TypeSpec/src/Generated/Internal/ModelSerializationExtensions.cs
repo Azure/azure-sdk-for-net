@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace BasicTypeSpec
 {
@@ -264,5 +265,20 @@ namespace BasicTypeSpec
             return BinaryData.FromString(element.GetRawText());
 #endif
         }
+
+        public static DateTimeOffset GetDateTimeOffset(this XElement element, string format) => format switch
+        {
+            "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
+            _ => TypeFormatters.ParseDateTimeOffset(element.Value, format)
+        };
+
+        public static TimeSpan GetTimeSpan(this XElement element, string format) => TypeFormatters.ParseTimeSpan(element.Value, format);
+
+        public static byte[] GetBytesFromBase64(this XElement element, string format) => format switch
+        {
+            "U" => TypeFormatters.FromBase64UrlString(element.Value),
+            "D" => Convert.FromBase64String(element.Value),
+            _ => throw new ArgumentException("Format is not supported: ", nameof(format))
+        };
     }
 }

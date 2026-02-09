@@ -22,6 +22,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceNotificationsResourceUpdatedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceNotificationsContainerServiceEventResourcesScheduledEventData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceNotificationsContainerServiceEventResourcesScheduledEventData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,23 +133,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ResourceNotificationsContainerServiceEventResourcesScheduledEventData IPersistableModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceNotificationsContainerServiceEventResourcesScheduledEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceNotificationsResourceUpdatedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceNotificationsContainerServiceEventResourcesScheduledEventData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceNotificationsContainerServiceEventResourcesScheduledEventData)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

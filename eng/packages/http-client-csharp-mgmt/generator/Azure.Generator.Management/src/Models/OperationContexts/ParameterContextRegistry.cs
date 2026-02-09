@@ -140,13 +140,13 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
 
             if (fromType.IsEnum && toType.FrameworkType == typeof(string))
             {
-                return expression.InvokeToString();
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 
             // Convert ResourceIdentifier to string by calling ToString()
             if (fromType.Equals(typeof(ResourceIdentifier)) && toType.IsFrameworkType && toType.FrameworkType == typeof(string))
             {
-                return expression.InvokeToString();
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
             }
 
             // other unhandled cases, we will add when we need them in the future.

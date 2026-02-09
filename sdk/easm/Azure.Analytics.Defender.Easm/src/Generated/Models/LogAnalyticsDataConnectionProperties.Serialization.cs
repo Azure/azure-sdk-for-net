@@ -15,6 +15,23 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The LogAnalyticsDataConnectionProperties. </summary>
     public partial class LogAnalyticsDataConnectionProperties : DataConnectionProperties, IJsonModel<LogAnalyticsDataConnectionProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLogAnalyticsDataConnectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -113,23 +130,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         LogAnalyticsDataConnectionProperties IPersistableModel<LogAnalyticsDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogAnalyticsDataConnectionProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLogAnalyticsDataConnectionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LogAnalyticsDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

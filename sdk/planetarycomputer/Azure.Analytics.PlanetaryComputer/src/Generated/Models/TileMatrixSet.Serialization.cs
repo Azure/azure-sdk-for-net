@@ -15,7 +15,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrixSet.json
-    /// 
     /// A definition of a tile matrix set following the Tile Matrix Set standard.
     /// For tileset metadata, such a description (in `tileMatrixSet` property) is only
     /// required for offline use,
@@ -27,6 +26,30 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/> for deserialization. </summary>
         internal TileMatrixSet()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TileMatrixSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTileMatrixSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TileMatrixSet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TileMatrixSet"/> from. </param>
+        public static explicit operator TileMatrixSet(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTileMatrixSet(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -305,31 +328,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         TileMatrixSet IPersistableModel<TileMatrixSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TileMatrixSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TileMatrixSet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTileMatrixSet(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TileMatrixSet)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TileMatrixSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TileMatrixSet"/> from. </param>
-        public static explicit operator TileMatrixSet(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTileMatrixSet(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

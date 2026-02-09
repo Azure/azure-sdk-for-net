@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
 
@@ -25,6 +27,42 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
     private bool? _enabledDistributedTracing;
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientPipelineOptions"/>.
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientPipelineOptions"/> from configuration.
+    /// </summary>
+    /// <param name="section">The configuration section to bind from.</param>
+    [Experimental("SCME0002")]
+    protected ClientPipelineOptions(IConfigurationSection section)
+    {
+        if (section is null)
+        {
+            return;
+        }
+
+        if (TimeSpan.TryParse(section["NetworkTimeout"], out TimeSpan networkTimeout))
+        {
+            NetworkTimeout = networkTimeout;
+        }
+
+        if (bool.TryParse(section["EnableDistributedTracing"], out bool enableTracing))
+        {
+            EnableDistributedTracing = enableTracing;
+        }
+
+        IConfigurationSection loggingSection = section.GetSection("ClientLoggingOptions");
+        if (loggingSection.Exists())
+        {
+            ClientLoggingOptions = new ClientLoggingOptions(loggingSection);
+        }
+    }
 
     #region Pipeline creation: Overrides of default pipeline policies
 

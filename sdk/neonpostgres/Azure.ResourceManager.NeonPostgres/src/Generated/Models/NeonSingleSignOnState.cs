@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     public readonly partial struct NeonSingleSignOnState : IEquatable<NeonSingleSignOnState>
     {
         private readonly string _value;
+        /// <summary> Initial state of the SSO resource. </summary>
+        private const string InitialValue = "Initial";
+        /// <summary> SSO is enabled for the organization. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> SSO is disabled for the organization. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="NeonSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NeonSingleSignOnState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitialValue = "Initial";
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
+            _value = value;
+        }
 
         /// <summary> Initial state of the SSO resource. </summary>
         public static NeonSingleSignOnState Initial { get; } = new NeonSingleSignOnState(InitialValue);
+
         /// <summary> SSO is enabled for the organization. </summary>
         public static NeonSingleSignOnState Enable { get; } = new NeonSingleSignOnState(EnableValue);
+
         /// <summary> SSO is disabled for the organization. </summary>
         public static NeonSingleSignOnState Disable { get; } = new NeonSingleSignOnState(DisableValue);
+
         /// <summary> Determines if two <see cref="NeonSingleSignOnState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NeonSingleSignOnState left, NeonSingleSignOnState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NeonSingleSignOnState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NeonSingleSignOnState left, NeonSingleSignOnState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NeonSingleSignOnState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NeonSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NeonSingleSignOnState(string value) => new NeonSingleSignOnState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NeonSingleSignOnState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NeonSingleSignOnState?(string value) => value == null ? null : new NeonSingleSignOnState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NeonSingleSignOnState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NeonSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

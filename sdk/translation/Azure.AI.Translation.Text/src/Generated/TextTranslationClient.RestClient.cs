@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateGetSupportedLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {

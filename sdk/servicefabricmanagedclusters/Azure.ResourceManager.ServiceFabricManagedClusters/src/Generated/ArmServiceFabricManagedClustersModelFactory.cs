@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Cluster level definition that represents the health policy used to evaluate the health of services belonging to a service type. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
-        /// 
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
@@ -127,7 +126,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
-        /// 
         /// The percentage represents the maximum tolerated percentage of partitions that can be unhealthy before the service is considered in error.
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
@@ -135,7 +133,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
-        /// 
         /// The percentage represents the maximum tolerated percentage of replicas that can be unhealthy before the partition is considered in error.
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
@@ -459,14 +456,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when <b>clusterUpgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
         /// <param name="clusterUpgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>clusterUpgradeMode</b> is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
         /// <param name="isAutoOSUpgradeEnabled"> Enables automatic OS upgrade for node types created using OS images with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
-        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The <b>networkSecurityRules</b> specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
         /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
         /// <param name="iPv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
@@ -741,7 +738,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. **Values:** -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
         /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
@@ -960,7 +957,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Describes a node type supported sku. </summary>
         /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> Specifies the tier of the node type. Possible Values: **Standard**. </param>
+        /// <param name="tier"> Specifies the tier of the node type. Possible Values: <b>Standard</b>. </param>
         /// <returns> A new <see cref="Models.NodeTypeSupportedSku"/> instance for mocking. </returns>
         public static NodeTypeSupportedSku NodeTypeSupportedSku(string name = default, string tier = default)
         {

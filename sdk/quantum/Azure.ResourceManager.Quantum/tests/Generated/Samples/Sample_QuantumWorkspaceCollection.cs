@@ -43,20 +43,28 @@ namespace Azure.ResourceManager.Quantum.Samples
             string workspaceName = "quantumworkspace1";
             QuantumWorkspaceData data = new QuantumWorkspaceData(new AzureLocation("West US"))
             {
-                Providers = {new QuantumProvider
-{
-ProviderId = "Honeywell",
-ProviderSku = "Basic",
-}, new QuantumProvider
-{
-ProviderId = "IonQ",
-ProviderSku = "Basic",
-}, new QuantumProvider
-{
-ProviderId = "OneQBit",
-ProviderSku = "Basic",
-}},
-                StorageAccount = "/subscriptions/1C4B2828-7D49-494F-933D-061373BE28C2/resourceGroups/quantumResourcegroup/providers/Microsoft.Storage/storageAccounts/testStorageAccount",
+                Properties = new QuantumWorkspaceProperties
+                {
+                    Providers =
+                    {
+                        new QuantumProvider
+                        {
+                            ProviderId = "Honeywell",
+                            ProviderSku = "Basic",
+                        },
+                        new QuantumProvider
+                        {
+                            ProviderId = "IonQ",
+                            ProviderSku = "Basic",
+                        },
+                        new QuantumProvider
+                        {
+                            ProviderId = "OneQBit",
+                            ProviderSku = "Basic",
+                        }
+                    },
+                    StorageAccount = new ResourceIdentifier("/subscriptions/1C4B2828-7D49-494F-933D-061373BE28C2/resourceGroups/quantumResourcegroup/providers/Microsoft.Storage/storageAccounts/testStorageAccount"),
+                }
             };
             ArmOperation<QuantumWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
             QuantumWorkspaceResource result = lro.Value;

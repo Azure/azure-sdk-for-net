@@ -14,10 +14,8 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Link model.
-    /// 
     /// Ref:
     /// http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml
-    /// 
     /// Represents a link.
     /// </summary>
     public partial class StacLink : IJsonModel<StacLink>
@@ -25,6 +23,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacLink"/> for deserialization. </summary>
         internal StacLink()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacLink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacLink)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -312,23 +327,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StacLink IPersistableModel<StacLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacLink>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacLink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacLink)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StacLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

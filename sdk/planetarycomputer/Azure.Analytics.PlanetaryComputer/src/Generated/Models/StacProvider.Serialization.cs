@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#provider-object
-    /// 
     /// Represents information about a data provider for STAC collections and items.
     /// </summary>
     public partial class StacProvider : IJsonModel<StacProvider>
@@ -22,6 +21,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacProvider"/> for deserialization. </summary>
         internal StacProvider()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StacProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacProvider>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStacProvider(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StacProvider)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -181,23 +197,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         StacProvider IPersistableModel<StacProvider>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StacProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StacProvider>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStacProvider(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StacProvider)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StacProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

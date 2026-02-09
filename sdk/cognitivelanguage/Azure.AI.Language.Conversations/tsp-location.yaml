@@ -1,4 +1,4 @@
 directory: specification/cognitiveservices/data-plane/LanguageAnalyzeConversations/
-commit: ecec2d136e6189917e34c8c94c39c79fbee2066d
+commit: 42e6e81eff76b47006d2e06562900b8b150d40c6
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

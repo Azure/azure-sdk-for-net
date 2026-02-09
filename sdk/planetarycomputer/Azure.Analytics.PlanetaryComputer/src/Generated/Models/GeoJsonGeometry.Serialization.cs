@@ -13,15 +13,8 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Represents a GeoJSON geometry object as defined by RFC 7946.
-    /// 
     /// Supported geometry types include:
-    /// - **Point**: A single geographic coordinate.
-    /// - **LineString**: A sequence of geographic coordinates forming a line.
-    /// - **Polygon**: A closed shape defined by linear rings.
-    /// - **MultiPoint**: A collection of Points.
-    /// - **MultiLineString**: A collection of LineStrings.
-    /// - **MultiPolygon**: A collection of Polygons.
-    /// 
+    /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
     /// Used for spatial filtering in STAC.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
     /// </summary>
@@ -31,6 +24,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/> for deserialization. </summary>
         internal GeoJsonGeometry()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGeoJsonGeometry(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -145,23 +155,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         GeoJsonGeometry IPersistableModel<GeoJsonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGeoJsonGeometry(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GeoJsonGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

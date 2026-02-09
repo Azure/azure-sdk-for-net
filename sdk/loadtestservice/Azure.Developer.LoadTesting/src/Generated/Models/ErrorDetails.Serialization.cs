@@ -15,6 +15,23 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Error details if there is any failure in load test run. </summary>
     public partial class ErrorDetails : IJsonModel<ErrorDetails>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeErrorDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -187,23 +204,6 @@ namespace Azure.Developer.LoadTesting
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         ErrorDetails IPersistableModel<ErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeErrorDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ErrorDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

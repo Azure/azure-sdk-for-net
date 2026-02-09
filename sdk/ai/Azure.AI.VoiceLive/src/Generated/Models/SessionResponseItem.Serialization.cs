@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, and <see cref="SessionResponseMcpApprovalResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionResponseItem))]
     public abstract partial class SessionResponseItem : IJsonModel<SessionResponseItem>
@@ -21,6 +21,23 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/> for deserialization. </summary>
         internal SessionResponseItem()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SessionResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSessionResponseItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SessionResponseItem)} does not support reading '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -105,6 +122,14 @@ namespace Azure.AI.VoiceLive
                         return ResponseFunctionCallItem.DeserializeResponseFunctionCallItem(element, options);
                     case "function_call_output":
                         return ResponseFunctionCallOutputItem.DeserializeResponseFunctionCallOutputItem(element, options);
+                    case "mcp_list_tools":
+                        return SessionResponseMcpListToolItem.DeserializeSessionResponseMcpListToolItem(element, options);
+                    case "mcp_call":
+                        return SessionResponseMcpCallItem.DeserializeSessionResponseMcpCallItem(element, options);
+                    case "mcp_approval_request":
+                        return SessionResponseMcpApprovalRequestItem.DeserializeSessionResponseMcpApprovalRequestItem(element, options);
+                    case "mcp_approval_response":
+                        return SessionResponseMcpApprovalResponseItem.DeserializeSessionResponseMcpApprovalResponseItem(element, options);
                 }
             }
             return UnknownSessionResponseItem.DeserializeUnknownSessionResponseItem(element, options);
@@ -129,23 +154,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         SessionResponseItem IPersistableModel<SessionResponseItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SessionResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSessionResponseItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SessionResponseItem)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SessionResponseItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         private readonly string _resourceGroupName;
         private readonly string _name;
         private readonly string _filter;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly RequestContext _context;
 
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ImagesGetByDisconnectedOperationCollectionResultOfT(Images client, Guid subscriptionId, string resourceGroupName, string name, string filter, int? top, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ImagesGetByDisconnectedOperationCollectionResultOfT(Images client, Guid subscriptionId, string resourceGroupName, string name, string filter, int? maxCount, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _name = name;
             _filter = filter;
-            _top = top;
+            _maxCount = maxCount;
             _skip = skip;
             _context = context;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByDisconnectedOperationRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _filter, _top, _skip, _context) : _client.CreateGetByDisconnectedOperationRequest(_subscriptionId, _resourceGroupName, _name, _filter, _top, _skip, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByDisconnectedOperationRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _filter, _maxCount, _skip, _context) : _client.CreateGetByDisconnectedOperationRequest(_subscriptionId, _resourceGroupName, _name, _filter, _maxCount, _skip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DisconnectedOperationsImageCollection.GetAll");
             scope.Start();
             try

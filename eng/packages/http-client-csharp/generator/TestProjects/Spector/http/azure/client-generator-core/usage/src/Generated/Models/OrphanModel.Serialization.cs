@@ -15,6 +15,8 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
     {
         internal OrphanModel() => throw null;
 
+        protected virtual OrphanModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<OrphanModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,8 +30,6 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         OrphanModel IPersistableModel<OrphanModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual OrphanModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<OrphanModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }

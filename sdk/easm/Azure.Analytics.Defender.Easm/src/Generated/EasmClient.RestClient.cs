@@ -18,11 +18,11 @@ namespace Azure.Analytics.Defender.Easm
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetAssetResourcesRequest(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
+        internal HttpMessage CreateGetAssetResourcesRequest(string filter, string @orderby, int? skip, int? maxPageSize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -40,9 +40,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             if (mark != null)
             {
@@ -68,13 +68,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetAssetResourcesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetAssetResourcesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -200,10 +201,12 @@ namespace Azure.Analytics.Defender.Easm
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -224,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetDataConnectionsRequest(int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDataConnectionsRequest(int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -234,9 +237,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -246,13 +249,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataConnectionsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDataConnectionsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -324,7 +328,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetDiscoveryGroupsRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDiscoveryGroupsRequest(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -338,9 +342,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -350,13 +354,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryGroupsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryGroupsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -443,7 +448,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetDiscoveryGroupRunsRequest(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDiscoveryGroupRunsRequest(string groupName, string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -459,9 +464,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -471,13 +476,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryGroupRunsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryGroupRunsRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -519,7 +525,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetDiscoveryTemplatesRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDiscoveryTemplatesRequest(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -533,9 +539,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -545,13 +551,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetDiscoveryTemplatesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDiscoveryTemplatesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -638,7 +645,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetSavedFiltersRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSavedFiltersRequest(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -652,9 +659,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -664,13 +671,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetSavedFiltersRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetSavedFiltersRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -726,7 +734,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetTasksRequest(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTasksRequest(string filter, string @orderby, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -744,9 +752,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -756,13 +764,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetTasksRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -853,6 +862,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            uri.UpdateQuery("api-version", _apiVersion);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -876,7 +886,7 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateGetPoliciesRequest(string filter, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetPoliciesRequest(string filter, int? skip, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -890,9 +900,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -902,13 +912,14 @@ namespace Azure.Analytics.Defender.Easm
             return message;
         }
 
-        internal HttpMessage CreateNextGetPoliciesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetPoliciesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
-            if (maxpagesize != null)
+            uri.UpdateQuery("api-version", _apiVersion);
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

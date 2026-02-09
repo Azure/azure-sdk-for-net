@@ -42,7 +42,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Union.validKey",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.Union"
           },
           "parameters": [],
           "response": {},
@@ -81,7 +82,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Union.validToken",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Authentication.Union"
           },
           "parameters": [],
           "response": {},

@@ -47,7 +47,6 @@ namespace Azure.AI.VoiceLive
         /// into your voice", "laugh frequently"). The instructions are not guaranteed
         /// to be followed by the model, but they provide guidance to the model on the
         /// desired behavior.
-        /// 
         /// Note that the server sets default instructions which will be used if this
         /// field is not set and are visible in the `session.created` event at the
         /// start of the session.
@@ -66,8 +65,12 @@ namespace Azure.AI.VoiceLive
         /// limit output tokens, or `inf` for the maximum available tokens for a
         /// given model. Defaults to `inf`.
         /// </param>
+        /// <param name="preGeneratedAssistantMessage">
+        /// Create the response with pre-generated assistant message. The message item would be
+        /// added into the conversation history and returned with synthesized audio output in the created response.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -81,6 +84,7 @@ namespace Azure.AI.VoiceLive
             ToolChoice = toolChoice;
             Temperature = temperature;
             MaxOutputTokens = maxOutputTokens;
+            PreGeneratedAssistantMessage = preGeneratedAssistantMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -114,7 +118,6 @@ namespace Azure.AI.VoiceLive
         /// into your voice", "laugh frequently"). The instructions are not guaranteed
         /// to be followed by the model, but they provide guidance to the model on the
         /// desired behavior.
-        /// 
         /// Note that the server sets default instructions which will be used if this
         /// field is not set and are visible in the `session.created` event at the
         /// start of the session.
@@ -223,5 +226,11 @@ namespace Azure.AI.VoiceLive
         /// </para>
         /// </summary>
         public BinaryData MaxOutputTokens { get; set; }
+
+        /// <summary>
+        /// Create the response with pre-generated assistant message. The message item would be
+        /// added into the conversation history and returned with synthesized audio output in the created response.
+        /// </summary>
+        public AssistantMessageItem PreGeneratedAssistantMessage { get; set; }
     }
 }

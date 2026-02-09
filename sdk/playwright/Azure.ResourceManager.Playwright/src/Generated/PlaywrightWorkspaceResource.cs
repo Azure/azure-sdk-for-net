@@ -665,8 +665,8 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Gets a collection of PlaywrightWorkspaceQuotas in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PlaywrightWorkspaceQuotas and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
+        /// <summary> Gets a collection of PlaywrightWorkspaceQuota in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of PlaywrightWorkspaceQuota and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
         public virtual PlaywrightWorkspaceQuotaCollection GetAllPlaywrightWorkspaceQuota()
         {
             return GetCachedClient(client => new PlaywrightWorkspaceQuotaCollection(client, Id));

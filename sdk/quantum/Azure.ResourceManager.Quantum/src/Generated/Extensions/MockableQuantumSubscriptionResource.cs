@@ -8,96 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Quantum;
 using Azure.ResourceManager.Quantum.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quantum.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableQuantumSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _quantumWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private Workspaces _workspacesRestClient;
+        private ClientDiagnostics _suiteOffersClientDiagnostics;
+        private SuiteOffers _suiteOffersRestClient;
         private ClientDiagnostics _offeringsClientDiagnostics;
-        private OfferingsRestOperations _offeringsRestClient;
-        private ClientDiagnostics _workspaceClientDiagnostics;
-        private WorkspaceRestOperations _workspaceRestClient;
+        private Offerings _offeringsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQuantumSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableQuantumSubscriptionResource for mocking. </summary>
         protected MockableQuantumSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQuantumSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableQuantumSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQuantumSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics QuantumWorkspaceWorkspacesClientDiagnostics => _quantumWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations QuantumWorkspaceWorkspacesRestClient => _quantumWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(QuantumWorkspaceResource.ResourceType));
-        private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OfferingsRestOperations OfferingsRestClient => _offeringsRestClient ??= new OfferingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private WorkspaceRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
+
+        private ClientDiagnostics SuiteOffersClientDiagnostics => _suiteOffersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SuiteOffers SuiteOffersRestClient => _suiteOffersRestClient ??= new SuiteOffers(SuiteOffersClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
+
+        private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuantumWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="QuantumWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,105 +101,109 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <returns> A collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuantumWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), QuantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetQuantumWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
-        /// Returns the list of all provider offerings available for the given location.
+        /// Returns the SuiteOffer resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offerings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SuiteOffers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuantumProviderDescription> GetOfferingsAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuantumSuiteOffer> GetSuiteOfferAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuantumProviderDescription.DeserializeQuantumProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SuiteOffersGetSuiteOfferAsyncCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
-        /// Returns the list of all provider offerings available for the given location.
+        /// Returns the SuiteOffer resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/suiteOffers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offerings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SuiteOffers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuantumProviderDescription> GetOfferings(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumSuiteOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuantumSuiteOffer> GetSuiteOffer(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuantumProviderDescription.DeserializeQuantumProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SuiteOffersGetSuiteOfferCollectionResultOfT(SuiteOffersRestClient, Guid.Parse(Id.SubscriptionId), context);
         }
 
         /// <summary>
-        /// Check the availability of the resource name.
+        /// Check the availability of the resource name for the given location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspace_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Location. </param>
-        /// <param name="content"> The name and type of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<WorkspaceNameAvailabilityResult>> CheckWorkspaceNameAvailabilityAsync(string locationName, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<WorkspaceNameAvailabilityResult>> CheckWorkspaceNameAvailabilityAsync(AzureLocation location, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = WorkspaceClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await WorkspaceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, locationName, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkspaceNameAvailabilityResult> response = Response.FromValue(WorkspaceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -214,37 +214,45 @@ namespace Azure.ResourceManager.Quantum.Mocking
         }
 
         /// <summary>
-        /// Check the availability of the resource name.
+        /// Check the availability of the resource name for the given location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspace_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="locationName"> Location. </param>
-        /// <param name="content"> The name and type of the resource. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<WorkspaceNameAvailabilityResult> CheckWorkspaceNameAvailability(string locationName, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<WorkspaceNameAvailabilityResult> CheckWorkspaceNameAvailability(AzureLocation location, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = WorkspaceClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability");
             scope.Start();
             try
             {
-                var response = WorkspaceRestClient.CheckNameAvailability(Id.SubscriptionId, locationName, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkspaceNameAvailabilityResult> response = Response.FromValue(WorkspaceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -252,6 +260,66 @@ namespace Azure.ResourceManager.Quantum.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Returns the list of all provider offerings available for the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offerings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Location. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuantumProviderOffer> GetProviderOfferingsAsync(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OfferingsGetProviderOfferingsAsyncCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
+        }
+
+        /// <summary>
+        /// Returns the list of all provider offerings available for the given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Offerings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> Location. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=kind eq 'v1'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuantumProviderOffer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuantumProviderOffer> GetProviderOfferings(AzureLocation locationName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OfferingsGetProviderOfferingsCollectionResultOfT(OfferingsRestClient, Guid.Parse(Id.SubscriptionId), locationName, filter, context);
         }
     }
 }

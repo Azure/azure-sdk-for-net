@@ -17,6 +17,30 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> Atlas relationship instance. </summary>
     public partial class AtlasRelationship : IJsonModel<AtlasRelationship>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasRelationship PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationship>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAtlasRelationship(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasRelationship"/> from. </param>
+        public static explicit operator AtlasRelationship(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAtlasRelationship(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -351,23 +375,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         AtlasRelationship IPersistableModel<AtlasRelationship>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AtlasRelationship PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationship>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAtlasRelationship(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AtlasRelationship)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasRelationship>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
@@ -381,13 +388,6 @@ namespace Azure.Analytics.Purview.DataMap
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(atlasRelationship, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasRelationship"/> from. </param>
-        public static explicit operator AtlasRelationship(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasRelationship(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

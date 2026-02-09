@@ -15,6 +15,23 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Address field value. </summary>
     public partial class AddressValue : IJsonModel<AddressValue>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AddressValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAddressValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AddressValue)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AddressValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -274,23 +291,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AddressValue IPersistableModel<AddressValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AddressValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AddressValue>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAddressValue(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AddressValue)} does not support reading '{options.Format}' format.");
-            }
-        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AddressValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

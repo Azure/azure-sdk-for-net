@@ -17,6 +17,10 @@ namespace Versioning.Removed
     {
         internal ModelV3() => throw null;
 
+        protected virtual ModelV3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator ModelV3(Response response) => throw null;
+
         void IJsonModel<ModelV3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -31,13 +35,9 @@ namespace Versioning.Removed
 
         ModelV3 IPersistableModel<ModelV3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        protected virtual ModelV3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
         string IPersistableModel<ModelV3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="modelV3"> The <see cref="ModelV3"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelV3 modelV3) => throw null;
-
-        public static explicit operator ModelV3(Response response) => throw null;
     }
 }
