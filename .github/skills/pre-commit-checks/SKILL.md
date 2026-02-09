@@ -11,7 +11,7 @@ Run these checks after making changes to SDK packages under `sdk/` and **before*
 
 ## 1. Determine scope from changed files
 
-- Run `git diff --name-only HEAD` (or compare against the base branch) to get all changed files.
+- Derive the changed file list from `git status --porcelain` (or by combining `git diff --name-only HEAD` with `git ls-files -o --exclude-standard`) so that **untracked (new) files are included**.
 - From the changed file list, extract **all unique ServiceDirectories** — the first path segment after `sdk/` (e.g., `sdk/storage/...` → `storage`, `sdk/ai/...` → `ai`).
 - For each ServiceDirectory, identify **all affected packages** = distinct `sdk/{ServiceDirectory}/{PackageName}/` paths.
 - For each affected package, identify:
