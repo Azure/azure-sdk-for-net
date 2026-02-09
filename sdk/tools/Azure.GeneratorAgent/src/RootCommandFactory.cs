@@ -12,9 +12,9 @@ namespace Azure.GeneratorAgent.Commands;
 /// </summary>
 public class RootCommandFactory
 {
-    private readonly SdkValidator Validator;
-    private readonly GitService GitService;
-    private readonly ILogger<RootCommandFactory> Logger;
+    private readonly SdkValidator _validator;
+    private readonly GitService _gitService;
+    private readonly ILogger<RootCommandFactory> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RootCommandFactory"/> class.
@@ -24,9 +24,9 @@ public class RootCommandFactory
     /// <param name="logger">Logger instance.</param>
     public RootCommandFactory(SdkValidator validator, GitService gitService, ILogger<RootCommandFactory> logger)
     {
-        Validator = validator;
-        GitService = gitService;
-        Logger = logger;
+        _validator = validator;
+        _gitService = gitService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -53,18 +53,18 @@ public class RootCommandFactory
 
         generateCommand.SetHandler(async (string sdkPath) =>
         {
-            Logger.LogInformation("Generate command called with SDK path: {SdkPath}", sdkPath);
+            _logger.LogInformation("Generate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
                 var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
 
-                Logger.LogInformation("Generate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
+                _logger.LogInformation("Generate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Generate command failed");
+                _logger.LogError(ex, "Generate command failed");
                 Environment.Exit(1);
             }
         }, sdkPathArgument);
@@ -82,19 +82,19 @@ public class RootCommandFactory
 
         migrateCommand.SetHandler(async (string sdkPath) =>
         {
-            Logger.LogInformation("Migrate command called with SDK path: {SdkPath}", sdkPath);
+            _logger.LogInformation("Migrate command called with SDK path: {SdkPath}", sdkPath);
 
             try
             {
                 var (validatedPath, commitSha) = await ValidateAndPrepareAsync(sdkPath, CancellationToken.None).ConfigureAwait(false);
 
-                Logger.LogInformation("Migrate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
+                _logger.LogInformation("Migrate workflow ready - Path: {Path}, Commit: {Commit}", validatedPath, commitSha);
                 // TODO: Step 4 (Migration specific): Update tsp-location.yaml & .csproj
                 // TODO: Continue with remaining workflow steps (Build → Parse → Fix)
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Migrate command failed");
+                _logger.LogError(ex, "Migrate command failed");
                 Environment.Exit(1);
             }
         }, sdkPathArgument);
@@ -107,10 +107,10 @@ public class RootCommandFactory
         CancellationToken cancellationToken)
     {
         // Step 1: Validate SDK path
-        var validatedPath = await Validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
+        var validatedPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
 
         // Step 2: Fetch latest commit ID
-        var commitSha = await GitService.GetLatestCommitAsync(validatedPath, cancellationToken).ConfigureAwait(false);
+        var commitSha = await _gitService.GetLatestCommitAsync(validatedPath, cancellationToken).ConfigureAwait(false);
 
         return (validatedPath, commitSha);
     }

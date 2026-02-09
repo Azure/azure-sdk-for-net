@@ -10,7 +10,7 @@ namespace Azure.GeneratorAgent.Services;
 /// </summary>
 public sealed class SdkValidator
 {
-    private readonly ILogger<SdkValidator> Logger;
+    private readonly ILogger<SdkValidator> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SdkValidator"/> class.
@@ -18,7 +18,7 @@ public sealed class SdkValidator
     /// <param name="logger">Logger instance.</param>
     public SdkValidator(ILogger<SdkValidator> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public sealed class SdkValidator
     /// <exception cref="ArgumentException">Thrown when validation fails.</exception>
     public Task<string> ValidateAsync(string sdkPath, CancellationToken cancellationToken = default)
     {
-        Logger.LogDebug("Validating SDK path: {SdkPath}", sdkPath);
+        _logger.LogDebug("Validating SDK path: {SdkPath}", sdkPath);
 
         if (string.IsNullOrWhiteSpace(sdkPath))
         {
@@ -56,7 +56,7 @@ public sealed class SdkValidator
             throw new FileNotFoundException($"No .csproj files found in: {srcPath}");
         }
 
-        Logger.LogInformation("SDK path validated successfully: {Path}", absolutePath);
+        _logger.LogInformation("SDK path validated successfully: {Path}", absolutePath);
         return Task.FromResult(absolutePath);
     }
 }

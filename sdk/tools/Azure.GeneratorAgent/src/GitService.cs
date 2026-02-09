@@ -11,7 +11,7 @@ namespace Azure.GeneratorAgent.Services;
 /// </summary>
 public sealed class GitService
 {
-    private readonly ILogger<GitService> Logger;
+    private readonly ILogger<GitService> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GitService"/> class.
@@ -19,7 +19,7 @@ public sealed class GitService
     /// <param name="logger">Logger instance.</param>
     public GitService(ILogger<GitService> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ public sealed class GitService
     /// <exception cref="InvalidOperationException">Thrown when not a git repository or git command fails.</exception>
     public async Task<string> GetLatestCommitAsync(string path, CancellationToken cancellationToken = default)
     {
-        Logger.LogDebug("Getting latest commit from: {Path}", path);
+        _logger.LogDebug("Getting latest commit from: {Path}", path);
 
         var repositoryPath = FindRepositoryRoot(path);
         if (repositoryPath == null)
@@ -62,12 +62,12 @@ public sealed class GitService
 
         if (process.ExitCode != 0)
         {
-            Logger.LogError("Git command failed: {Error}", error);
+            _logger.LogError("Git command failed: {Error}", error);
             throw new InvalidOperationException($"Git command failed: {error}");
         }
 
         var commitSha = output.Trim();
-        Logger.LogInformation("Latest commit SHA: {CommitSha}", commitSha);
+        _logger.LogInformation("Latest commit SHA: {CommitSha}", commitSha);
 
         return commitSha;
     }
